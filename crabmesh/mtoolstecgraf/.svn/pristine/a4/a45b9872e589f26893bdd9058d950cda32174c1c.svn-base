@@ -1,0 +1,15 @@
+window_sizes 1440 829 296 1138 630 120
+diagrams
+  active  classdiagram_ref 128002 // Data
+    1105 600 120 2 343 463
+  classdiagram_ref 128258 // Performer
+    978 750 120 2 60 274
+  classdiagram_ref 128514 // Parallel
+    782 600 100 2 120 210
+end
+show_stereotypes
+selected classdiagram_ref 128002 // Data
+open
+  classview_ref 128770 // Diagramas de Classes
+end
+end

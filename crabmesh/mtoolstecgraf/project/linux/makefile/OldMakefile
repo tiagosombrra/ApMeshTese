@@ -1,0 +1,126 @@
+slash	:= /
+empty	:=
+space	:= $(empty) $(empty)
+
+jmesh_obj	:= .jmesh.o
+pjmesh_obj	:= .pjmesh.o
+interface_obj	:= .interface.o
+pinterface_obj	:= .pinterface.o
+
+BIN_PJMESH	:= PJMesh
+BIN_JMESH	:= JMesh
+BIN_PINTERFACE	:= PInterface
+BIN_INTERFACE	:= Interface
+BIN_DIR		:= ../../../bin/made
+OBJ_DIR		:= ../../../bin/made/obj
+INC_DIR		:= ../../../header
+SRC_DIR		:= ../../../src
+
+DATA		:= Data
+JMESH		:= JMesh
+PARALLEL	:= Parallel
+PERFORMER	:= Performer
+PJMESH		:= PJMesh
+
+INTERFACE	:= Interface
+PINTERFACE	:= PInterface
+
+DEFINITIONS	:= Definitions.h
+INTERFACE_APP	:= App
+
+MPICC			:= mpiCC
+CC			:= g++
+#to use with valgrind
+#CFLAGS_EXTRA		:= -g3
+#to use with profiler
+#CFLAGS_EXTRA		:= -g3 -pg
+#to use with release version
+CFLAGS_EXTRA		:= -O3 -s
+CFLAGS_JMESH		:= -std=c++0x -W -Wall -Wextra -Wconversion -Woverloaded-virtual -Wold-style-cast $(CFLAGS_EXTRA)
+LD_FLAGS_JMESH		:= -std=c++0x
+CFLAGS_PJMESH		:= -fopenmp $(CFLAGS_JMESH)
+LD_FLAGS_PJMESH		:= -fopenmp $(LD_FLAGS_JMESH)
+CFLAGS_INTERFACE	:= $(CFLAGS_JMESH) `wx-config --cppflags` -DUSE_OPENGL=true
+LD_FLAGS_INTERFACE	:= $(LD_FLAGS_JMESH) `wx-config --libs --gl-libs` -lGLEW
+CFLAGS_PINTERFACE	:= $(CFLAGS_PJMESH) `wx-config --cppflags` -DUSE_OPENGL=true
+LD_FLAGS_PINTERFACE	:= $(LD_FLAGS_PJMESH) `wx-config --libs --gl-libs` -lGLEW
+
+SRC_DATA		:= $(wildcard $(SRC_DIR)/$(DATA)/*.cpp)
+SRC_JMESH		:= $(wildcard $(SRC_DIR)/$(JMESH)/*.cpp)
+SRC_PARALLEL		:= $(wildcard $(SRC_DIR)/$(PARALLEL)/*.cpp)
+SRC_PERFORMER		:= $(wildcard $(SRC_DIR)/$(PERFORMER)/*.cpp)
+SRC_PJMESH		:= $(wildcard $(SRC_DIR)/$(PJMESH)/*.cpp)
+SRC_INTERFACE		:= $(wildcard $(SRC_DIR)/$(INTERFACE)/*.cpp)
+SRC_PINTERFACE		:= $(wildcard $(SRC_DIR)/$(PINTERFACE)/*.cpp)
+SRC_BIN_PJMESH		:= $(SRC_DIR)/$(BIN_PJMESH).cpp
+SRC_BIN_JMESH		:= $(SRC_DIR)/$(BIN_JMESH).cpp
+HEADERS_JMESH		:= $(INC_DIR)/$(DATA)/$(DEFINITIONS) $(INC_DIR)/$(PERFORMER)/$(DEFINITIONS) $(INC_DIR)/$(JMESH)/$(DEFINITIONS)
+HEADERS_PJMESH		:= $(HEADERS_JMESH) $(INC_DIR)/$(PARALLEL)/$(DEFINITIONS) $(INC_DIR)/$(PJMESH)/$(DEFINITIONS) 
+HEADERS_INTERFACE	:= $(HEADERS_JMESH) $(INC_DIR)/$(INTERFACE)/$(DEFINITIONS)
+HEADERS_PINTERFACE	:= $(HEADERS_PJMESH) $(INC_DIR)/$(INTERFACE)/$(DEFINITIONS) $(INC_DIR)/$(PINTERFACE)/$(DEFINITIONS)
+
+OBJ_DATA_PJMESH		:= $(SRC_DATA:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pjmesh_obj))
+OBJ_JMESH_PJMESH	:= $(SRC_JMESH:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pjmesh_obj))
+OBJ_PARALLEL_PJMESH	:= $(SRC_PARALLEL:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pjmesh_obj))
+OBJ_PERFORMER_PJMESH	:= $(SRC_PERFORMER:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pjmesh_obj))
+OBJ_PJMESH_PJMESH	:= $(SRC_PJMESH:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pjmesh_obj))
+
+OBJ_DATA_JMESH		:= $(SRC_DATA:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(jmesh_obj))
+OBJ_JMESH_JMESH		:= $(SRC_JMESH:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(jmesh_obj))
+OBJ_PERFORMER_JMESH	:= $(SRC_PERFORMER:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(jmesh_obj))
+
+OBJ_DATA_PINTERFACE		:= $(SRC_DATA:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pinterface_obj))
+OBJ_JMESH_PINTERFACE		:= $(SRC_JMESH:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pinterface_obj))
+OBJ_PARALLEL_PINTERFACE		:= $(SRC_PARALLEL:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pinterface_obj))
+OBJ_PERFORMER_PINTERFACE	:= $(SRC_PERFORMER:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pinterface_obj))
+OBJ_PJMESH_PINTERFACE		:= $(SRC_PJMESH:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pinterface_obj))
+OBJ_INTERFACE_PINTERFACE	:= $(filter-out $(OBJ_DIR)/$(INTERFACE)/$(INTERFACE_APP)$(pinterface_obj),$(SRC_INTERFACE:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pinterface_obj)))
+OBJ_PINTERFACE_PINTERFACE	:= $(SRC_PINTERFACE:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(pinterface_obj))
+
+OBJ_DATA_INTERFACE	:= $(SRC_DATA:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(interface_obj))
+OBJ_JMESH_INTERFACE	:= $(SRC_JMESH:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(interface_obj))
+OBJ_PERFORMER_INTERFACE	:= $(SRC_PERFORMER:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(interface_obj))
+OBJ_INTERFACE_INTERFACE	:= $(SRC_INTERFACE:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(interface_obj))
+
+OBJ_BIN_PJMESH		:= $(OBJ_DATA_PJMESH) $(OBJ_PERFORMER_PJMESH) $(OBJ_JMESH_PJMESH) $(OBJ_PARALLEL_PJMESH) $(OBJ_PJMESH_PJMESH)
+OBJ_BIN_JMESH		:= $(OBJ_DATA_JMESH) $(OBJ_PERFORMER_JMESH) $(OBJ_JMESH_JMESH)
+OBJ_BIN_INTERFACE	:= $(OBJ_DATA_INTERFACE) $(OBJ_PERFORMER_INTERFACE) $(OBJ_JMESH_INTERFACE) $(OBJ_INTERFACE_INTERFACE)
+OBJ_BIN_PINTERFACE	:= $(OBJ_DATA_PINTERFACE) $(OBJ_PERFORMER_PINTERFACE) $(OBJ_JMESH_PINTERFACE) $(OBJ_PARALLEL_PINTERFACE) $(OBJ_PJMESH_PINTERFACE) $(OBJ_INTERFACE_PINTERFACE) $(OBJ_PINTERFACE_PINTERFACE)
+
+all: terminal_apps interface_apps
+
+terminal_apps: $(BIN_PJMESH) $(BIN_JMESH)
+
+interface_apps: $(BIN_PINTERFACE) $(BIN_INTERFACE)
+
+$(OBJ_DIR)%$(pjmesh_obj): $(SRC_DIR)%.cpp $(INC_DIR)%.h
+	$(MPICC) -I$(INC_DIR) -c $(CFLAGS_PJMESH) $< -o $@
+
+$(OBJ_DIR)%$(jmesh_obj): $(SRC_DIR)%.cpp $(INC_DIR)%.h
+	$(CC) -I$(INC_DIR) -c $(CFLAGS_JMESH) $< -o $@
+
+$(OBJ_DIR)%$(pinterface_obj): $(SRC_DIR)%.cpp $(INC_DIR)%.h
+	$(MPICC) -I$(INC_DIR) -c $(CFLAGS_PINTERFACE) $< -o $@
+
+$(OBJ_DIR)%$(interface_obj): $(SRC_DIR)%.cpp $(INC_DIR)%.h
+	$(CC) -I$(INC_DIR) -c $(CFLAGS_INTERFACE) $< -o $@
+
+$(BIN_PJMESH): $(OBJ_BIN_PJMESH)
+	$(MPICC) -I$(INC_DIR) $(CFLAGS_PJMESH) $(LD_FLAGS_PJMESH) $(SRC_BIN_PJMESH) $(OBJ_BIN_PJMESH) -o $(BIN_DIR)/$(BIN_PJMESH)
+
+$(BIN_JMESH): $(OBJ_BIN_JMESH)
+	$(CC) -I$(INC_DIR) $(CFLAGS_JMESH) $(LD_FLAGS_JMESH) $(SRC_BIN_JMESH) $(OBJ_BIN_JMESH) -o $(BIN_DIR)/$(BIN_JMESH)
+	
+$(BIN_PINTERFACE): $(OBJ_BIN_PINTERFACE)
+	$(MPICC) -I$(INC_DIR) $(CFLAGS_PINTERFACE) $(LD_FLAGS_PINTERFACE) $(OBJ_BIN_PINTERFACE) -o $(BIN_DIR)/$(BIN_PINTERFACE)
+
+$(BIN_INTERFACE): $(OBJ_BIN_INTERFACE)
+	$(CC) -I$(INC_DIR) $(CFLAGS_INTERFACE) $(LD_FLAGS_INTERFACE) $(OBJ_BIN_INTERFACE) -o $(BIN_DIR)/$(BIN_INTERFACE)
+
+clean:
+	-rm $(OBJ_BIN_PJMESH) $(BIN_DIR)/$(BIN_PJMESH) $(OBJ_BIN_JMESH) $(BIN_DIR)/$(BIN_JMESH) $(OBJ_BIN_INTERFACE) $(BIN_DIR)/$(BIN_INTERFACE) $(OBJ_BIN_PINTERFACE) $(BIN_DIR)/$(BIN_PINTERFACE) 2> /dev/null
+
+build: all
+
+rebuild: clean all
+

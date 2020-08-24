@@ -1,0 +1,3484 @@
+format 58
+"Parallel" // Parallel
+  revision 1
+  modified_by 2 "markos"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  cpp_namespace "Parallel"
+  classview 128386 "Parallel"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 144258 "Application"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 157442 // <generalisation>
+	relation 157442 ---|>
+	  a public
+	    cpp virtual default "${type}"
+	    classrelation_ref 157442 // <generalisation>
+	  b parent class_ref 136706 // Application
+      end
+
+      operation 296578 "Application"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "drive" type class_ref 144386 // MainDrive
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 296706 "~Application"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 296834 "setDrive"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "drive" type class_ref 144386 // MainDrive
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 296962 "setComm"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "comm" type class_ref 144514 // Communicator
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 297090 "makeCommunicator"
+	abstract const cpp_virtual protected return_type class_ref 144514 // Communicator
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 157570 // comm (<unidirectional association>)
+	relation 157570 --->
+	  a role_name "comm" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 157570 // comm (<unidirectional association>)
+	  b parent class_ref 144514 // Communicator
+      end
+    end
+
+    class 144386 "MainDrive"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 159490 // <generalisation>
+	relation 159490 ---|>
+	  a public
+	    cpp virtual default "${type}"
+	    classrelation_ref 159490 // <generalisation>
+	  b parent class_ref 136962 // MainDrive
+      end
+
+      operation 303490 "MainDrive"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	  param inout name "loadBalancer" type class_ref 145922 // LoadBalancer
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}, ${t1} * ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 303618 "~MainDrive"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 303746 "setComm"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "comm" type class_ref 144514 // Communicator
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 303874 "getComm"
+	const cpp_virtual public return_type class_ref 144514 // Communicator
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 304002 "setLoadBalancer"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "loadBalancer" type class_ref 145922 // LoadBalancer
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 304130 "makeLoadBalancer"
+	abstract const cpp_virtual protected return_type class_ref 145922 // LoadBalancer
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 159618 // comm (<unidirectional association>)
+	relation 159618 --->
+	  a role_name "comm" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 159618 // comm (<unidirectional association>)
+	  b parent class_ref 144514 // Communicator
+      end
+
+      classrelation 159746 // loadBalancer (<unidirectional association>)
+	relation 159746 --->
+	  a role_name "loadBalancer" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 159746 // loadBalancer (<unidirectional association>)
+	  b parent class_ref 145922 // LoadBalancer
+      end
+    end
+
+    class 144514 "Communicator"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 297858 "root"
+	abstract const cpp_virtual public explicit_return_type "Int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 297986 "rank"
+	abstract const cpp_virtual public explicit_return_type "Int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 298114 "numProcessors"
+	abstract const cpp_virtual public explicit_return_type "Int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 298242 "processorName"
+	abstract const cpp_virtual public explicit_return_type "std::string"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 298370 "isMaster"
+	abstract const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 298498 "isSlave"
+	abstract const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 298626 "isParallel"
+	abstract const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 298754 "isSerial"
+	abstract const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 298882 "numWorkers"
+	abstract const cpp_virtual public explicit_return_type "Int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 299010 "init"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 299138 "init"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param inout name "argc" explicit_type "Int"
+	  param inout name "argv" explicit_type "char"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, ${t1} * * & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 299266 "finalize"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 299394 "abort"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "error" explicit_type "Int"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 299522 "barrier"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 299650 "removeRequest"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 299778 "testRequest"
+	abstract cpp_virtual public return_type class_ref 145154 // TransferableObject
+	nparams 1
+	  param in name "id" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 299906 "waitRequest"
+	abstract cpp_virtual public return_type class_ref 145154 // TransferableObject
+	nparams 1
+	  param in name "id" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 300034 "syncSend"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "o" type class_ref 145154 // TransferableObject
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	  param in name "tag" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "process = -1 indicates that the object has to be broadcasted
+tag = -1 indicates that any tag can be used"
+      end
+
+      operation 300162 "syncSend"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "message" explicit_type "UInt"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 300290 "asyncSend"
+	abstract cpp_virtual public explicit_return_type "UInt"
+	nparams 3
+	  param in name "o" type class_ref 145154 // TransferableObject
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	  param in name "tag" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 300418 "asyncSend"
+	abstract cpp_virtual public explicit_return_type "UInt"
+	nparams 2
+	  param in name "message" explicit_type "UInt"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 300546 "syncReceive"
+	abstract cpp_virtual public return_type class_ref 145154 // TransferableObject
+	nparams 2
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	  param in name "tag" explicit_type "Int"
+	    defaultvalue "-2"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "process = -1 indicates that the object will be received from any source
+tag = -2 indicates that the object will be received from broadcasting
+tag = -1 indicates that any tag can be used"
+      end
+
+      operation 300674 "asyncReceive"
+	abstract cpp_virtual public explicit_return_type "UInt"
+	nparams 2
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	  param in name "tag" explicit_type "Int"
+	    defaultvalue "-2"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 300802 "reduce"
+	abstract const cpp_virtual public explicit_return_type "Real"
+	nparams 2
+	  param in name "data" explicit_type "Real"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "process = -1 indicates an allreduce"
+      end
+
+      operation 300930 "reduce"
+	abstract const cpp_virtual public explicit_return_type "Int"
+	nparams 2
+	  param in name "data" explicit_type "Int"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 301058 "unpack"
+	abstract const cpp_virtual public return_type class_ref 145154 // TransferableObject
+	nparams 1
+	  param inout name "p" type class_ref 145282 // Package
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 144642 "AsyncDynamicLoadBalancer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 157698 // <generalisation>
+	relation 157698 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 157698 // <generalisation>
+	  b parent class_ref 144770 // DynamicLoadBalancer
+      end
+
+      operation 297218 "AsyncDynamicLoadBalancer"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "numProcessors" explicit_type "Int"
+	    defaultvalue "0"
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} * ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} * ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+	comment "This class is a dynamic load balance which does not need to stop and
+ resume the execution of the program, it runs concurrently with the
+ computation (possibly in another thread)."
+      end
+
+      operation 297346 "AsyncDynamicLoadBalancer"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "numProcessors" explicit_type "Int"
+	  param in name "partitions" type class_ref 144898 // PartitionVector
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} * ${p2}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 297474 "~AsyncDynamicLoadBalancer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 144770 "DynamicLoadBalancer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 158466 // <generalisation>
+	relation 158466 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 158466 // <generalisation>
+	  b parent class_ref 145922 // LoadBalancer
+      end
+
+      operation 301186 "DynamicLoadBalancer"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "numProcessors" explicit_type "Int"
+	    defaultvalue "0"
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} * ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} * ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 301314 "DynamicLoadBalancer"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "numProcessors" explicit_type "Int"
+	  param in name "partitions" type class_ref 144898 // PartitionVector
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} * ${p2}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 301442 "~DynamicLoadBalancer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 301570 "isStatic"
+	const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 144898 "PartitionVector"
+      visibility package stereotype "typedef" base_type class_ref 145410 // Partition
+      cpp_decl "${comment}typedef std::vector<${type}*> ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 158082 // <dependency>
+	relation 158082 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 158082 // <dependency>
+	  b parent class_ref 145410 // Partition
+      end
+    end
+
+    class 145026 "Builder"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 157826 // <generalisation>
+	relation 157826 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 157826 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 297602 "Builder"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 297730 "~Builder"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 157954 // comm (<unidirectional association>)
+	relation 157954 --->
+	  a role_name "comm" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 157954 // comm (<unidirectional association>)
+	  b parent class_ref 144514 // Communicator
+      end
+    end
+
+    class 145154 "TransferableObject"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 314114 "TransferableObject"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "type" explicit_type "UInt"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 314242 "~TransferableObject"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+	comment "TransferableObject(Package &p, Int &position);"
+      end
+
+      operation 314370 "setType"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "type" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 314498 "getType"
+	cpp_virtual public explicit_return_type "UInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 314626 "pack"
+	abstract const cpp_virtual public return_type class_ref 145282 // Package
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "this method creates a package with the contents of the object, along
+ with the type as the first content item"
+      end
+
+      operation 314754 "unpack"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "p" type class_ref 145282 // Package
+	  param inout name "position" explicit_type "Int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "this method unpacks the contents of the package. the given position
+ is passed because the type of the object has already been extracted,
+ and does not need to be extracted again"
+      end
+
+      operation 314882 "free"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param inout name "p" type class_ref 145282 // Package
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 160770 "type"
+	protected explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 145282 "Package"
+      visibility package stereotype "typedef" explicit_base_type "std::pair<Int, char *>"
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "package size and package contents"
+    end
+
+    class 145410 "Partition"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 160514 // <generalisation>
+	relation 160514 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 160514 // <generalisation>
+	  b parent class_ref 145154 // TransferableObject
+      end
+
+      operation 310402 "Partition"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "type" explicit_type "LongInt"
+	  param in name "load" explicit_type "Real"
+	    defaultvalue "-1.0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 310530 "~Partition"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+	comment "Partition(Package &p, Int &position);"
+      end
+
+      operation 310658 "setLoad"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "load" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 310786 "getLoad"
+	const cpp_virtual public explicit_return_type "Real"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 160130 "load"
+	protected explicit_type "Real"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 145538 "Task"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 161410 // <generalisation>
+	relation 161410 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 161410 // <generalisation>
+	  b parent class_ref 145026 // Builder
+      end
+
+      classrelation 161538 // <generalisation>
+	relation 161538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 161538 // <generalisation>
+	  b parent class_ref 145154 // TransferableObject
+      end
+
+      operation 313218 "Task"
+	public explicit_return_type ""
+	nparams 4
+	  param in name "type" explicit_type "UInt"
+	  param inout name "c" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	  param inout name "b" type class_ref 136834 // Builder
+	    defaultvalue "NULL"
+	  param inout name "p" type class_ref 145410 // Partition
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} * ${p1}, ${t2} * ${p2}, ${t3} * ${p3}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 313346 "~Task"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 313474 "setBuilder"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "b" type class_ref 136834 // Builder
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 313602 "getBuilder"
+	const cpp_virtual public return_type class_ref 136834 // Builder
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 313730 "setPartition"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "p" type class_ref 145410 // Partition
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 313858 "getPartition"
+	const cpp_virtual public return_type class_ref 145410 // Partition
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 313986 "load"
+	const cpp_virtual public explicit_return_type "Real"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      class 147586 "anonymous7"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum  {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 160258 "STARTING"
+	  public type class_ref 147586 // anonymous7
+	  init_value "= 1"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 160386 "READY"
+	  public type class_ref 147586 // anonymous7
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 160514 "RUNNING"
+	  public type class_ref 147586 // anonymous7
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 160642 "FINISHED"
+	  public type class_ref 147586 // anonymous7
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      classrelation 161666 // starting (<directional composition>)
+	relation 161666 *-->
+	  a role_name "starting" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 161666 // starting (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 161794 // ready (<directional composition>)
+	relation 161794 *-->
+	  a role_name "ready" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 161794 // ready (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 161922 // running (<directional composition>)
+	relation 161922 *-->
+	  a role_name "running" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 161922 // running (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 162050 // finished (<directional composition>)
+	relation 162050 *-->
+	  a role_name "finished" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 162050 // finished (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 162178 // partition (<unidirectional association>)
+	relation 162178 --->
+	  a role_name "partition" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 162178 // partition (<unidirectional association>)
+	  b parent class_ref 145410 // Partition
+      end
+
+      classrelation 162306 // builder (<unidirectional association>)
+	relation 162306 --->
+	  a role_name "builder" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 162306 // builder (<unidirectional association>)
+	  b parent class_ref 136834 // Builder
+      end
+    end
+
+    class 145666 "TaskVector"
+      visibility package stereotype "typedef" base_type class_ref 145538 // Task
+      cpp_decl "${comment}typedef std::vector<${type}*> ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 158210 // <dependency>
+	relation 158210 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 158210 // <dependency>
+	  b parent class_ref 145538 // Task
+      end
+    end
+
+    class 145794 "PartitionsMap"
+      visibility package stereotype "typedef" base_type class_ref 144898 // PartitionVector
+      cpp_decl "${comment}typedef std::map<Int,${type}> ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 158338 // <dependency>
+	relation 158338 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 158338 // <dependency>
+	  b parent class_ref 144898 // PartitionVector
+      end
+    end
+
+    class 145922 "LoadBalancer"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 158722 // <generalisation>
+	relation 158722 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 158722 // <generalisation>
+	  b parent class_ref 145026 // Builder
+      end
+
+      operation 302210 "LoadBalancer"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "numProcessors" explicit_type "Int"
+	    defaultvalue "0"
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} * ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} * ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 302338 "LoadBalancer"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "numProcessors" explicit_type "Int"
+	  param in name "partitions" type class_ref 144898 // PartitionVector
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} * ${p2}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 302466 "~LoadBalancer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 302594 "setNumProcessors"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "numProcessors" explicit_type "Int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 302722 "setPartitions"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "partitions" type class_ref 144898 // PartitionVector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 302850 "getPartitionsMap"
+	const cpp_virtual public return_type class_ref 145794 // PartitionsMap
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 302978 "getPartitions"
+	const cpp_virtual public return_type class_ref 144898 // PartitionVector
+	nparams 1
+	  param in name "processor" explicit_type "Int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 303106 "isStatic"
+	abstract const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 303234 "isDynamic"
+	const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 303362 "needToBalance"
+	abstract const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      class 146306 "anonymous6"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum  {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 158722 "NOT_INIT"
+	  public type class_ref 146306 // anonymous6
+	  init_value "= 1"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 158850 "SUCCESS"
+	  public type class_ref 146306 // anonymous6
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 158978 "ERROR"
+	  public type class_ref 146306 // anonymous6
+	  init_value "= 100
+		"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      classrelation 158850 // notInit (<directional composition>)
+	relation 158850 *-->
+	  a role_name "notInit" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 158850 // notInit (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 158978 // success (<directional composition>)
+	relation 158978 *-->
+	  a role_name "success" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 158978 // success (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 159106 // error (<directional composition>)
+	relation 159106 *-->
+	  a role_name "error" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 159106 // error (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      attribute 159106 "numProcessors"
+	protected explicit_type "Int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 159234 // partitions (<directional composition>)
+	relation 159234 *-->
+	  a role_name "partitions" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 159234 // partitions (<directional composition>)
+	  b parent class_ref 144898 // PartitionVector
+      end
+
+      classrelation 159362 // partitionsMap (<directional composition>)
+	relation 159362 *-->
+	  a role_name "partitionsMap" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 159362 // partitionsMap (<directional composition>)
+	  b parent class_ref 145794 // PartitionsMap
+      end
+    end
+
+    class 146050 "GreedySerialStaticLoadBalancer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 158594 // <generalisation>
+	relation 158594 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 158594 // <generalisation>
+	  b parent class_ref 146178 // StaticLoadBalancer
+      end
+
+      operation 301698 "GreedySerialStaticLoadBalancer"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "numProcessors" explicit_type "Int"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 301826 "GreedySerialStaticLoadBalancer"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "numProcessors" explicit_type "Int"
+	  param in name "partitions" type class_ref 144898 // PartitionVector
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 301954 "~GreedySerialStaticLoadBalancer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 302082 "execute"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 146178 "StaticLoadBalancer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 161026 // <generalisation>
+	relation 161026 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 161026 // <generalisation>
+	  b parent class_ref 145922 // LoadBalancer
+      end
+
+      operation 312066 "StaticLoadBalancer"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "numProcessors" explicit_type "Int"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 312194 "StaticLoadBalancer"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "numProcessors" explicit_type "Int"
+	  param in name "partitions" type class_ref 144898 // PartitionVector
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 312322 "~StaticLoadBalancer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 312450 "isStatic"
+	const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 312578 "needToBalance"
+	const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 146434 "Message"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 159874 // <generalisation>
+	relation 159874 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 159874 // <generalisation>
+	  b parent class_ref 145154 // TransferableObject
+      end
+
+      operation 304258 "Message"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 304386 "Message"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "message" explicit_type "UInt"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 304514 "~Message"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+	comment "Message(Package &p, Int &position);"
+      end
+
+      operation 304642 "setMessage"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 304770 "getMessage"
+	const cpp_virtual public explicit_return_type "UInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 159234 "message"
+	protected explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 146562 "MPICommunicator"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 160002 // <generalisation>
+	relation 160002 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 160002 // <generalisation>
+	  b parent class_ref 144514 // Communicator
+      end
+
+      class 146690 "SendMode"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 159362 "NORMAL"
+	  public type class_ref 146690 // SendMode
+	  init_value "= 1"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 159490 "BLOCKING"
+	  public type class_ref 146690 // SendMode
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 159618 "BUFFERED"
+	  public type class_ref 146690 // SendMode
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 159746 "READY"
+	  public type class_ref 146690 // SendMode
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      operation 304898 "MPICommunicator"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 305026 "~MPICommunicator"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 305154 "root"
+	const cpp_virtual public explicit_return_type "Int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 305282 "rank"
+	const cpp_virtual public explicit_return_type "Int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 305410 "numProcessors"
+	const cpp_virtual public explicit_return_type "Int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 305538 "processorName"
+	const cpp_virtual public explicit_return_type "std::string"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 305666 "isMaster"
+	const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 305794 "isSlave"
+	const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 305922 "isParallel"
+	const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 306050 "isSerial"
+	const cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 306178 "numWorkers"
+	const cpp_virtual public explicit_return_type "Int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 306306 "init"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 306434 "init"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param inout name "argc" explicit_type "Int"
+	  param inout name "argv" explicit_type "char"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, ${t1} * * & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, ${t1} * * & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 306562 "finalize"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 306690 "abort"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "error" explicit_type "Int"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 306818 "barrier"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 306946 "removeRequest"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 307074 "testRequest"
+	cpp_virtual public return_type class_ref 145154 // TransferableObject
+	nparams 1
+	  param in name "id" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 307202 "waitRequest"
+	cpp_virtual public return_type class_ref 145154 // TransferableObject
+	nparams 1
+	  param in name "id" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 307330 "syncSend"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "message" explicit_type "UInt"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "virtual void syncSendRank(Int process = -1, enum SendMode mode = NORMAL);"
+      end
+
+      operation 307458 "syncSend"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "message" explicit_type "UInt"
+	  param in name "process" explicit_type "Int"
+	  param in name "mode" type class_ref 146690 // SendMode
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 307586 "syncSend"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "o" type class_ref 145154 // TransferableObject
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	  param in name "tag" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 307714 "syncSend"
+	cpp_virtual public explicit_return_type "void"
+	nparams 4
+	  param in name "o" type class_ref 145154 // TransferableObject
+	  param in name "process" explicit_type "Int"
+	  param in name "tag" explicit_type "Int"
+	  param in name "mode" type class_ref 146690 // SendMode
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 307842 "syncSend"
+	cpp_virtual public explicit_return_type "void"
+	nparams 4
+	  param in name "p" type class_ref 145282 // Package
+	  param in name "process" explicit_type "Int"
+	  param in name "tag" explicit_type "Int"
+	  param in name "mode" type class_ref 146690 // SendMode
+	    defaultvalue "NORMAL"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 307970 "asyncSend"
+	cpp_virtual public explicit_return_type "UInt"
+	nparams 2
+	  param in name "message" explicit_type "UInt"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "virtual void asyncSendRank(Int process = -1, enum SendMode mode = NORMAL);"
+      end
+
+      operation 308098 "asyncSend"
+	cpp_virtual public explicit_return_type "UInt"
+	nparams 3
+	  param in name "message" explicit_type "UInt"
+	  param in name "process" explicit_type "Int"
+	  param in name "mode" type class_ref 146690 // SendMode
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 308226 "asyncSend"
+	cpp_virtual public explicit_return_type "UInt"
+	nparams 3
+	  param in name "o" type class_ref 145154 // TransferableObject
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	  param in name "tag" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 308354 "asyncSend"
+	cpp_virtual public explicit_return_type "UInt"
+	nparams 4
+	  param in name "o" type class_ref 145154 // TransferableObject
+	  param in name "process" explicit_type "Int"
+	  param in name "tag" explicit_type "Int"
+	  param in name "mode" type class_ref 146690 // SendMode
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 308482 "asyncSend"
+	cpp_virtual public explicit_return_type "UInt"
+	nparams 4
+	  param in name "p" type class_ref 145282 // Package
+	  param in name "process" explicit_type "Int"
+	  param in name "tag" explicit_type "Int"
+	  param in name "mode" type class_ref 146690 // SendMode
+	    defaultvalue "NORMAL"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 308610 "syncReceive"
+	cpp_virtual public return_type class_ref 145154 // TransferableObject
+	nparams 2
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	  param in name "tag" explicit_type "Int"
+	    defaultvalue "-2"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 308738 "asyncReceive"
+	cpp_virtual public explicit_return_type "UInt"
+	nparams 2
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	  param in name "tag" explicit_type "Int"
+	    defaultvalue "-2"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 308866 "reduce"
+	const cpp_virtual public explicit_return_type "Real"
+	nparams 2
+	  param in name "data" explicit_type "Real"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 308994 "reduce"
+	const cpp_virtual public explicit_return_type "Int"
+	nparams 2
+	  param in name "data" explicit_type "Int"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 309122 "reduce"
+	const cpp_virtual public explicit_return_type "Real"
+	nparams 3
+	  param in name "data" explicit_type "Real"
+	  param in name "op" explicit_type "MPI::Op"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 309250 "reduce"
+	const cpp_virtual public explicit_return_type "Int"
+	nparams 3
+	  param in name "data" explicit_type "Int"
+	  param in name "op" explicit_type "MPI::Op"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 309378 "reduce"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 5
+	  param inout name "data" explicit_type "void"
+	  param inout name "result" explicit_type "void"
+	  param in name "op" explicit_type "MPI::Op"
+	  param in name "type" explicit_type "MPI::Datatype"
+	  param in name "process" explicit_type "Int"
+	    defaultvalue "-1"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}, ${t4} ${p4}${v4}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}, ${t1} * ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 309506 "send"
+	cpp_virtual protected explicit_return_type "UInt"
+	nparams 8
+	  param in name "sync" explicit_type "bool"
+	  param in name "mode" type class_ref 146690 // SendMode
+	  param in name "buffer" explicit_type "void"
+	  param in name "size" explicit_type "Int"
+	  param in name "type" explicit_type "MPI::Datatype"
+	  param in name "process" explicit_type "Int"
+	  param in name "tag" explicit_type "Int"
+	  param in name "addRequest" explicit_type "bool"
+	    defaultvalue "false"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} * ${p2}${v2}, ${t3} ${p3}${v3}, ${t4} ${p4}${v4}, ${t5} ${p5}${v5}, ${t6} ${p6}${v6}, ${t7} ${p7}${v7}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, const ${t2} * ${p2}, ${t3} ${p3}, ${t4} ${p4}, ${t5} ${p5}, ${t6} ${p6}, ${t7} ${p7}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 309634 "receive"
+	cpp_virtual protected explicit_return_type "UInt"
+	nparams 7
+	  param in name "sync" explicit_type "bool"
+	  param inout name "buffer" explicit_type "void"
+	  param in name "size" explicit_type "Int"
+	  param in name "type" explicit_type "MPI::Datatype"
+	  param in name "process" explicit_type "Int"
+	  param in name "tag" explicit_type "Int"
+	  param in name "addRequest" explicit_type "bool"
+	    defaultvalue "false"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}, ${t4} ${p4}${v4}, ${t5} ${p5}${v5}, ${t6} ${p6}${v6}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} * ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}, ${t5} ${p5}, ${t6} ${p6}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      class 146818 "Request"
+	visibility package stereotype "typedef" explicit_base_type "std::tuple<MPI::Request, Int , void *>"
+	cpp_decl "${comment}typedef ${type} ${name};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+      end
+
+      class 146946 "RequestMap"
+	visibility package stereotype "typedef" base_type class_ref 146818 // Request
+	cpp_decl "${comment}typedef std::map<UInt,${type}> ${name};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	classrelation 160130 // <dependency>
+	  relation 160130 -_->
+	    a default
+	      cpp default "#include in source"
+	      classrelation_ref 160130 // <dependency>
+	    b parent class_ref 146818 // Request
+	end
+      end
+
+      attribute 159874 "status"
+	protected explicit_type "MPI::Status"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 160002 "request"
+	protected explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 160258 // requests (<directional composition>)
+	relation 160258 *-->
+	  a role_name "requests" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 160258 // requests (<directional composition>)
+	  b parent class_ref 146946 // RequestMap
+      end
+    end
+
+    class 147074 "MPIMessage"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 160386 // <generalisation>
+	relation 160386 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 160386 // <generalisation>
+	  b parent class_ref 146434 // Message
+      end
+
+      operation 309762 "MPIMessage"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 309890 "MPIMessage"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "message" explicit_type "UInt"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 310018 "~MPIMessage"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+	comment "MPIMessage(Package &p, Int &position);"
+      end
+
+      operation 310146 "pack"
+	const cpp_virtual public return_type class_ref 145282 // Package
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 310274 "unpack"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "p" type class_ref 145282 // Package
+	  param inout name "position" explicit_type "Int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 147202 "Partitioner"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 160642 // <generalisation>
+	relation 160642 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 160642 // <generalisation>
+	  b parent class_ref 145026 // Builder
+      end
+
+      operation 310914 "Partitioner"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 311042 "~Partitioner"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 311170 "getPartitions"
+	const cpp_virtual public return_type class_ref 144898 // PartitionVector
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 311298 "numPartitions"
+	const cpp_virtual public explicit_return_type "UInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 311426 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 160770 // partitions (<directional composition>)
+	relation 160770 *-->
+	  a role_name "partitions" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 160770 // partitions (<directional composition>)
+	  b parent class_ref 144898 // PartitionVector
+      end
+    end
+
+    class 147330 "SpringSerialStaticLoadBalancer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 160898 // <generalisation>
+	relation 160898 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 160898 // <generalisation>
+	  b parent class_ref 146178 // StaticLoadBalancer
+      end
+
+      operation 311554 "SpringSerialStaticLoadBalancer"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "numProcessors" explicit_type "Int"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 311682 "SpringSerialStaticLoadBalancer"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "numProcessors" explicit_type "Int"
+	  param in name "partitions" type class_ref 144898 // PartitionVector
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 311810 "~SpringSerialStaticLoadBalancer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 311938 "execute"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 147458 "SyncDynamicLoadBalancer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 161154 // <generalisation>
+	relation 161154 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 161154 // <generalisation>
+	  b parent class_ref 144770 // DynamicLoadBalancer
+      end
+
+      operation 312706 "SyncDynamicLoadBalancer"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "slb" type class_ref 146178 // StaticLoadBalancer
+	    defaultvalue "NULL"
+	  param in name "numProcessors" explicit_type "Int"
+	    defaultvalue "0"
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}, ${t1} ${p1}, ${t2} * ${p2}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+	comment "This class is a dynamic load balancer which, when it needs to balance
+ the load, stops the concurrent execution of the program (all the
+ processes synchronize), applies a static load balancer, and then
+ resumes the execution."
+      end
+
+      operation 312834 "SyncDynamicLoadBalancer"
+	public explicit_return_type ""
+	nparams 4
+	  param inout name "slb" type class_ref 146178 // StaticLoadBalancer
+	  param in name "numProcessors" explicit_type "Int"
+	  param in name "partitions" type class_ref 144898 // PartitionVector
+	  param inout name "comm" type class_ref 144514 // Communicator
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} * ${p3}${v3}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} * ${p3}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 312962 "~SyncDynamicLoadBalancer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 313090 "setSlb"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "slb" type class_ref 146178 // StaticLoadBalancer
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 161282 // slb (<unidirectional association>)
+	relation 161282 --->
+	  a role_name "slb" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 161282 // slb (<unidirectional association>)
+	  b parent class_ref 146178 // StaticLoadBalancer
+      end
+    end
+  end
+
+  deploymentview 128386 "Parallel"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 138882 "Application"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 144258 // Application
+      end
+    end
+
+    artifact 139010 "AsyncDynamicLoadBalancer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 144642 // AsyncDynamicLoadBalancer
+      end
+    end
+
+    artifact 139138 "Builder"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 145026 // Builder
+      end
+    end
+
+    artifact 139266 "Communicator"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 144514 // Communicator
+      end
+    end
+
+    artifact 139394 "Definitions"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 145282 // Package
+	class_ref 144898 // PartitionVector
+	class_ref 145666 // TaskVector
+	class_ref 145794 // PartitionsMap
+      end
+    end
+
+    artifact 139522 "DynamicLoadBalancer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 144770 // DynamicLoadBalancer
+      end
+    end
+
+    artifact 139650 "GreedySerialStaticLoadBalancer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 146050 // GreedySerialStaticLoadBalancer
+      end
+    end
+
+    artifact 139778 "LoadBalancer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 145922 // LoadBalancer
+      end
+    end
+
+    artifact 139906 "MainDrive"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 144386 // MainDrive
+      end
+    end
+
+    artifact 140034 "Message"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 146434 // Message
+      end
+    end
+
+    artifact 140162 "MPICommunicator"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 146562 // MPICommunicator
+      end
+    end
+
+    artifact 140290 "MPIMessage"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 147074 // MPIMessage
+      end
+    end
+
+    artifact 140418 "Partition"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 145410 // Partition
+      end
+    end
+
+    artifact 140546 "Partitioner"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 147202 // Partitioner
+      end
+    end
+
+    artifact 140674 "SpringSerialStaticLoadBalancer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 147330 // SpringSerialStaticLoadBalancer
+      end
+    end
+
+    artifact 140802 "StaticLoadBalancer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 146178 // StaticLoadBalancer
+      end
+    end
+
+    artifact 140930 "SyncDynamicLoadBalancer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 147458 // SyncDynamicLoadBalancer
+      end
+    end
+
+    artifact 141058 "Task"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 145538 // Task
+      end
+    end
+
+    artifact 141186 "TransferableObject"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 145154 // TransferableObject
+      end
+    end
+  end
+end

@@ -1,0 +1,4219 @@
+format 58
+"Performer" // Performer
+  revision 1
+  modified_by 2 "markos"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  cpp_namespace "Performer"
+  classview 128130 "Performer"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 136706 "Application"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 139138 // <generalisation>
+	relation 139138 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 139138 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 223106 "Application"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 223234 "~Application"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 223362 "setInputFileName"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "inputFileName" explicit_type "std::string"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 223490 "getInputFileName"
+	const cpp_virtual public explicit_return_type "std::string"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 223618 "setOutputFileName"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "outputFileName" explicit_type "std::string"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 223746 "getOutputFileName"
+	const cpp_virtual public explicit_return_type "std::string"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 223874 "loadFile"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 224002 "saveFile"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 139266 // drive (<unidirectional association>)
+	relation 139266 --->
+	  a role_name "drive" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 139266 // drive (<unidirectional association>)
+	  b parent class_ref 136962 // MainDrive
+      end
+
+      attribute 145282 "inputFileName"
+	protected explicit_type "std::string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145410 "outputFileName"
+	protected explicit_type "std::string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 136834 "Builder"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 225282 "Builder"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 225410 "~Builder"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 225538 "setStatus"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "status" type class_ref 137346 // Status
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 225666 "getStatus"
+	const cpp_virtual public return_type class_ref 137346 // Status
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 225794 "setTolerance"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param in name "tolerance" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 225922 "getTolerance"
+	class_operation public explicit_return_type "Real"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 226050 "setStepByStep"
+	class_operation public explicit_return_type "void"
+	nparams 1
+	  param in name "stepByStep" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 226178 "isStepByStep"
+	class_operation public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 226306 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 226434 "draw"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 139906 // status (<directional composition>)
+	relation 139906 *-->
+	  a role_name "status" protected
+	    cpp mutable default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 139906 // status (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      attribute 145538 "tolerance"
+	class_attribute protected explicit_type "Real"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145666 "stepByStep"
+	class_attribute protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 140034 // auxiliary (<directional composition>)
+	relation 140034 *-->
+	  a role_name "auxiliary" protected
+	    cpp mutable default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 140034 // auxiliary (<directional composition>)
+	  b parent class_ref 132866 // ShapeList
+      end
+    end
+
+    class 136962 "MainDrive"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 142338 // <generalisation>
+	relation 142338 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 142338 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 234370 "MainDrive"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 234498 "~MainDrive"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 234626 "loadInputFile"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "inputFileName" explicit_type "std::string"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 234754 "saveInputFile"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "outputFileName" explicit_type "std::string"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 234882 "loadOutputFile"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "inputFileName" explicit_type "std::string"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 235010 "saveOutputFile"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "outputFileName" explicit_type "std::string"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 235138 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 137090 "BoundaryAdapter"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 139394 // <generalisation>
+	relation 139394 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 139394 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 224130 "BoundaryAdapter"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "boundary" type class_ref 129026 // Boundary
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 224258 "~BoundaryAdapter"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 224386 "setBoundary"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "boundary" type class_ref 129026 // Boundary
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 224514 "adapt"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "element" type class_ref 129666 // FrontElement
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 224642 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 139522 // boundary (<unidirectional association>)
+	relation 139522 --->
+	  a role_name "boundary" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 139522 // boundary (<unidirectional association>)
+	  b parent class_ref 129026 // Boundary
+      end
+    end
+
+    class 137218 "BoundaryBuilder"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 139650 // <generalisation>
+	relation 139650 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 139650 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 224770 "BoundaryBuilder"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 224898 "~BoundaryBuilder"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 225026 "getBoundary"
+	const cpp_virtual public return_type class_ref 129026 // Boundary
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 225154 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 139778 // boundary (<unidirectional association>)
+	relation 139778 --->
+	  a role_name "boundary" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 139778 // boundary (<unidirectional association>)
+	  b parent class_ref 129026 // Boundary
+      end
+    end
+
+    class 137346 "Status"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 242306 "Status"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "type" explicit_type "UInt"
+	    defaultvalue "0"
+	  param in name "message" explicit_type "std::string"
+	    defaultvalue "\"success\""
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 242434 "~Status"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 242562 "setType"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "type" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 242690 "getType"
+	const cpp_virtual public explicit_return_type "UInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 242818 "setMessage"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "message" explicit_type "std::string"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 242946 "getMessage"
+	const cpp_virtual public explicit_return_type "std::string"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 243074 "print"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "str" explicit_type "std::ostream"
+	    defaultvalue "std::cout"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 150274 "type"
+	protected explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 150402 "message"
+	protected explicit_type "std::string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 137474 "Clipper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 140162 // <generalisation>
+	relation 140162 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 140162 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      class 137602 "Type"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 145794 "UNKNOWN"
+	  public type class_ref 137602 // Type
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 145922 "EDGE"
+	  public type class_ref 137602 // Type
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 146050 "POLYGON"
+	  public type class_ref 137602 // Type
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 146178 "POLYHEDRON"
+	  public type class_ref 137602 // Type
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      class 137730 "Position"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 146306 "IN"
+	  public type class_ref 137730 // Position
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 146434 "ON"
+	  public type class_ref 137730 // Position
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 146562 "OUT"
+	  public type class_ref 137730 // Position
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      operation 226562 "Clipper"
+	public explicit_return_type ""
+	nparams 4
+	  param in name "dimension" explicit_type "UInt"
+	  param in name "box" type class_ref 130434 // Box
+	  param in name "s" type class_ref 130818 // GeometricShape
+	    defaultvalue "NULL"
+	  param in name "type" type class_ref 137602 // Type
+	    defaultvalue "UNKNOWN"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} * ${p2}${v2}, ${t3} ${p3}${v3}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, const ${t2} * ${p2}, ${t3} ${p3}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 226690 "Clipper"
+	public explicit_return_type ""
+	nparams 5
+	  param in name "dimension" explicit_type "UInt"
+	  param in name "min" type class_ref 128258 // Point
+	  param in name "max" type class_ref 128258 // Point
+	  param in name "s" type class_ref 130818 // GeometricShape
+	    defaultvalue "NULL"
+	  param in name "type" type class_ref 137602 // Type
+	    defaultvalue "UNKNOWN"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} * ${p3}${v3}, ${t4} ${p4}${v4}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} * ${p3}, ${t4} ${p4}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 226818 "~Clipper"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 226946 "setDimension"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "dimension" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 227074 "setBox"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "box" type class_ref 130434 // Box
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 227202 "setBox"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "min" type class_ref 128258 // Point
+	  param in name "max" type class_ref 128258 // Point
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 227330 "setShape"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "s" type class_ref 130818 // GeometricShape
+	  param in name "type" type class_ref 137602 // Type
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 227458 "setShape"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "e" type class_ref 132098 // Edge
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 227586 "setShape"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "p" type class_ref 133122 // Polygon
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 227714 "setShape"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "p" type class_ref 135554 // Polyhedron
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 227842 "getPoints"
+	const cpp_virtual public return_type class_ref 131970 // PointList
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 227970 "execute"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 228098 "interpolate"
+	const cpp_virtual protected explicit_return_type "Real"
+	nparams 3
+	  param in name "val1" explicit_type "Real"
+	  param in name "val2" explicit_type "Real"
+	  param in name "val" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 228226 "interpolate"
+	const cpp_virtual protected return_type class_ref 128258 // Point
+	nparams 4
+	  param in name "coord" explicit_type "UInt"
+	  param in name "p1" type class_ref 128258 // Point
+	  param in name "p2" type class_ref 128258 // Point
+	  param in name "val" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} ${p3}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 228354 "clipMin"
+	const cpp_virtual protected return_type class_ref 137730 // Position
+	nparams 3
+	  param in name "coord" explicit_type "UInt"
+	  param in name "p" type class_ref 128258 // Point
+	  param in name "val" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}enum ${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}enum ${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 228482 "clipMax"
+	const cpp_virtual protected return_type class_ref 137730 // Position
+	nparams 3
+	  param in name "coord" explicit_type "UInt"
+	  param in name "p" type class_ref 128258 // Point
+	  param in name "val" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}enum ${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}enum ${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 228610 "clip"
+	const cpp_virtual protected return_type class_ref 137730 // Position
+	nparams 4
+	  param in name "coord" explicit_type "UInt"
+	  param in name "p" type class_ref 128258 // Point
+	  param in name "val" explicit_type "Real"
+	  param in name "min" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}enum ${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}enum ${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 228738 "clip"
+	const cpp_virtual protected return_type class_ref 128258 // Point
+	nparams 7
+	  param in name "coord" explicit_type "UInt"
+	  param in name "p1" type class_ref 128258 // Point
+	  param in name "p2" type class_ref 128258 // Point
+	  param in name "val" explicit_type "Real"
+	  param in name "min" explicit_type "bool"
+	  param in name "pos1" type class_ref 137730 // Position
+	  param in name "pos2" type class_ref 137730 // Position
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} ${p3}${v3}, ${t4} ${p4}${v4}, ${t5} ${p5}${v5}, ${t6} ${p6}${v6}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} ${p3}, ${t4} ${p4}, ${t5} ${p5}, ${t6} ${p6}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 228866 "clip"
+	cpp_virtual protected explicit_return_type "void"
+	nparams 3
+	  param in name "coord" explicit_type "UInt"
+	  param in name "val" explicit_type "Real"
+	  param in name "min" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 228994 "clip"
+	cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "virtual void clipMin(UInt coord, Real val) const;
+virtual void clipMax(UInt coord, Real val) const;"
+      end
+
+      class 137858 "PositionVector"
+	visibility package stereotype "typedef" explicit_base_type "std::vector<enum Position>"
+	cpp_decl "${comment}typedef ${type} ${name};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+      end
+
+      attribute 146690 "dimension"
+	protected explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 140290 // type (<directional composition>)
+	relation 140290 *-->
+	  a role_name "type" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}enum ${type} ${name}${value};
+"
+	    classrelation_ref 140290 // type (<directional composition>)
+	  b parent class_ref 137602 // Type
+      end
+
+      classrelation 140418 // shape (<unidirectional association>)
+	relation 140418 --->
+	  a role_name "shape" const_relation protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 140418 // shape (<unidirectional association>)
+	  b parent class_ref 130818 // GeometricShape
+      end
+
+      classrelation 140546 // box (<directional composition>)
+	relation 140546 *-->
+	  a role_name "box" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 140546 // box (<directional composition>)
+	  b parent class_ref 130434 // Box
+      end
+
+      classrelation 140674 // points (<directional composition>)
+	relation 140674 *-->
+	  a role_name "points" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 140674 // points (<directional composition>)
+	  b parent class_ref 131970 // PointList
+      end
+    end
+
+    class 137986 "MeshOptimizer"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 143874 // <generalisation>
+	relation 143874 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 143874 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 239106 "MeshOptimizer"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "mesh" type class_ref 129922 // Mesh
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 239234 "~MeshOptimizer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 239362 "setMesh"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "mesh" type class_ref 129922 // Mesh
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 239490 "getMesh"
+	const cpp_virtual public return_type class_ref 129922 // Mesh
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 239618 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      class 139394 "anonymous3"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum  {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 149378 "NOT_INIT"
+	  public type class_ref 139394 // anonymous3
+	  init_value "= 0"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 149506 "INIT"
+	  public type class_ref 139394 // anonymous3
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 149634 "ENDED"
+	  public type class_ref 139394 // anonymous3
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      classrelation 144002 // notInit (<directional composition>)
+	relation 144002 *-->
+	  a role_name "notInit" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 144002 // notInit (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 144130 // init (<directional composition>)
+	relation 144130 *-->
+	  a role_name "init" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 144130 // init (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 144258 // ended (<directional composition>)
+	relation 144258 *-->
+	  a role_name "ended" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 144258 // ended (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 144386 // mesh (<unidirectional association>)
+	relation 144386 --->
+	  a role_name "mesh" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 144386 // mesh (<unidirectional association>)
+	  b parent class_ref 129922 // Mesh
+      end
+    end
+
+    class 138114 "MeshOptimizerList"
+      visibility package stereotype "typedef" base_type class_ref 137986 // MeshOptimizer
+      cpp_decl "${comment}typedef std::list<${type}*> ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 140802 // <dependency>
+	relation 140802 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 140802 // <dependency>
+	  b parent class_ref 137986 // MeshOptimizer
+      end
+    end
+
+    class 138242 "FrontAdvancer"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 140930 // <generalisation>
+	relation 140930 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 140930 // <generalisation>
+	  b parent class_ref 138370 // MeshGenerator
+      end
+
+      operation 229122 "FrontAdvancer"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "boundary" type class_ref 129026 // Boundary
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 229250 "~FrontAdvancer"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 229378 "setBoundary"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "boundary" type class_ref 129026 // Boundary
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 229506 "setIdFrontElement"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "idFrontElement" explicit_type "LongInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 229634 "getIdFrontElement"
+	const cpp_virtual public explicit_return_type "LongInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 229762 "execute"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      class 138498 "anonymous1"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum  {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 146818 "NOT_INIT"
+	  public type class_ref 138498 // anonymous1
+	  init_value "= 0"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 146946 "INIT"
+	  public type class_ref 138498 // anonymous1
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 147074 "ENDED"
+	  public type class_ref 138498 // anonymous1
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 147202 "REJECTED"
+	  public type class_ref 138498 // anonymous1
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 147330 "ERROR"
+	  public type class_ref 138498 // anonymous1
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      classrelation 141058 // notInit (<directional composition>)
+	relation 141058 *-->
+	  a role_name "notInit" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 141058 // notInit (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 141186 // init (<directional composition>)
+	relation 141186 *-->
+	  a role_name "init" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 141186 // init (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 141314 // ended (<directional composition>)
+	relation 141314 *-->
+	  a role_name "ended" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 141314 // ended (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 141442 // rejected (<directional composition>)
+	relation 141442 *-->
+	  a role_name "rejected" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 141442 // rejected (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 141570 // error (<directional composition>)
+	relation 141570 *-->
+	  a role_name "error" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 141570 // error (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      operation 229890 "makeMesh"
+	const cpp_virtual protected return_type class_ref 129922 // Mesh
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 230018 "makeFront"
+	const cpp_virtual protected return_type class_ref 132482 // Front
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 230146 "makeVertex"
+	const cpp_virtual protected return_type class_ref 129538 // Vertex
+	nparams 1
+	  param inout name "p" type class_ref 128258 // Point
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 230274 "isEmpty"
+	const cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "this method returns true if there is no more elements in the front
+ to advance, false otherwise"
+      end
+
+      operation 230402 "reject"
+	const cpp_virtual protected explicit_return_type "bool"
+	nparams 1
+	  param inout name "e" type class_ref 129666 // FrontElement
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "this method rejects a front element, meaning that the given element
+ cannot advance"
+      end
+
+      operation 230530 "advance"
+	cpp_virtual protected return_type class_ref 129794 // Element
+	nparams 3
+	  param inout name "e" type class_ref 129666 // FrontElement
+	  param inout name "v" type class_ref 129538 // Vertex
+	  param inout name "newFrontElements" type class_ref 130050 // FrontElementList
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${t0} * ${p0}, ${t1} * ${p1}, ${t2} & ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "this method advances a given front element to a given vertex, returning
+ the newly generated element and the newly generated front elements"
+      end
+
+      operation 230658 "next"
+	const cpp_virtual protected return_type class_ref 129666 // FrontElement
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "this method returns the next element to be advanced"
+      end
+
+      operation 230786 "makeElement"
+	abstract const cpp_virtual protected return_type class_ref 134018 // ElementTuple
+	nparams 2
+	  param in name "e" type class_ref 129666 // FrontElement
+	  param in name "p" type class_ref 128258 // Point
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, const ${t1} * ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "given a front element and a point, this method returns the vertex,
+ the front elements and the element that would be generated if this
+ point were valid for the given element. these entities will be used
+ exclusively for validity checks and will be deleted as soon as
+ possible (thus, the vertex created has to copy the given point)"
+      end
+
+      operation 230914 "rank"
+	const cpp_virtual protected explicit_return_type "Real"
+	nparams 3
+	  param in name "e" type class_ref 129666 // FrontElement
+	  param in name "v" type class_ref 129538 // Vertex
+	  param in name "ideal" type class_ref 132994 // PointVector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, const ${t1} * ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, const ${t1} * ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "//given a front element, and a point, this method returns the front
+		// elements that would be generated if this point were valid, along
+		// with the vertex created, containing the point. these front elements
+		// will be used for validity checks and will be deleted as soon as
+		// possible
+		virtual Data::FrontElementList makeFrontElements(
+			const Data::FrontElement *element, Data::Point *p,
+			Data::Vertex *&v) const = 0;
+
+		//given a front element, a list of front elements and a vertex (both
+		// created by the makeFrontElements() method), returns the element
+		// that would be generated by them. this element will be used for
+		// validity checks and will be deleted as soon as possible
+		virtual Data::Element *makeElement(const Data::FrontElement *element,
+			const Data::FrontElementList &elements, const Data::Vertex *v) const = 0;
+given a front element and a vertex, returns the rank of the vertex
+ with respect to the given front element. the ideal points are also
+ passed for tests, if needed"
+      end
+
+      operation 231042 "better"
+	abstract const cpp_virtual protected explicit_return_type "bool"
+	nparams 2
+	  param in name "rank1" explicit_type "Real"
+	  param in name "rank2" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "given two ranks, decides if rank1 is better than rank2"
+      end
+
+      operation 231170 "equal"
+	abstract const cpp_virtual protected explicit_return_type "bool"
+	nparams 2
+	  param in name "rank1" explicit_type "Real"
+	  param in name "rank2" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "given two ranks, decides if rank1 and rank2 are equal"
+      end
+
+      operation 231298 "better"
+	abstract const cpp_virtual protected explicit_return_type "bool"
+	nparams 3
+	  param in name "element" type class_ref 129666 // FrontElement
+	  param inout name "candidate" type class_ref 129538 // Vertex
+	  param inout name "old" type class_ref 129538 // Vertex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} * ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "given two vertices with equal ranks, decides which one is better, for
+ the given front element. if the candidate vertex is better than the
+ old vertex, return true. otherwise, return false."
+      end
+
+      operation 231426 "ideal"
+	abstract const cpp_virtual protected return_type class_ref 132994 // PointVector
+	nparams 1
+	  param in name "element" type class_ref 129666 // FrontElement
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "builds the ideal points for a given front element. these ideal points
+ are the ones that, ideally, would create a new element with the
+ given front element"
+      end
+
+      operation 231554 "radius"
+	abstract const cpp_virtual protected explicit_return_type "Real"
+	nparams 1
+	  param in name "element" type class_ref 129666 // FrontElement
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "given a front element, this method returns the radius for the
+ hyperspherical search region. the point that will create the new
+ element must not be outside this search region"
+      end
+
+      operation 231682 "restricted"
+	const cpp_virtual protected return_type class_ref 132994 // PointVector
+	nparams 2
+	  param in name "ideal" type class_ref 132994 // PointVector
+	  param in name "radius" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given some ideal points, remove those ones that are not satisfying
+ some constraint (for example, remove those points that are not
+ inside a predetermined box)"
+      end
+
+      operation 231810 "candidates"
+	const cpp_virtual protected return_type class_ref 130178 // VertexList
+	nparams 2
+	  param in name "ideal" type class_ref 132994 // PointVector
+	  param in name "radius" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given a list if ideal vertices and a radius, find the front vertices
+ that are candidates for generating a new element"
+      end
+
+      operation 231938 "isValid"
+	const cpp_virtual protected explicit_return_type "bool"
+	nparams 1
+	  param in name "element" type class_ref 129666 // FrontElement
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given a new front element, decide if it is valid, through validity
+ checks with the front"
+      end
+
+      operation 232066 "isValid"
+	const cpp_virtual protected explicit_return_type "bool"
+	nparams 2
+	  param in name "point" type class_ref 128258 // Point
+	  param in name "e" type class_ref 129666 // FrontElement
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, const ${t1} * ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, const ${t1} * ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given a new point (a newly inserted point), decide if it is valid or
+ not. that would be, for example, test if this point is not inside
+ any existing element and/or is does not intercept any existing front
+ element. the given front element is the one that would form the new
+ element"
+      end
+
+      operation 232194 "isValid"
+	abstract const cpp_virtual protected explicit_return_type "bool"
+	nparams 3
+	  param in name "element" type class_ref 129666 // FrontElement
+	  param inout name "point" type class_ref 128258 // Point
+	  param in name "radius" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "given a front element and a point candidate for insertion, test if,
+ according to the search radius found, the new element would be valid.
+ if radius is negative, then no insertion is available, meaning that
+ the given point was previously created."
+      end
+
+      operation 232322 "isValid"
+	const cpp_virtual protected explicit_return_type "bool"
+	nparams 2
+	  param in name "element" type class_ref 129666 // FrontElement
+	  param inout name "point" type class_ref 128258 // Point
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} * ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given a front element, test if it can advance to the given point. for
+ exemple, make all the new front elments and test if they are valid"
+      end
+
+      operation 232450 "isValid"
+	const cpp_virtual protected explicit_return_type "bool"
+	nparams 4
+	  param in name "element" type class_ref 129666 // FrontElement
+	  param inout name "point" type class_ref 128258 // Point
+	  param in name "inElement" explicit_type "bool"
+	  param in name "radius" explicit_type "Real"
+	    defaultvalue "-1.0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} * ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given a front element, test if it can advance to the given point. for
+ exemple, make all the new front elments and test if they are valid
+ (simply call this->isValid(element, point)). the inElement boolean
+ parameter is used to indicate that the point was newly created, and
+ should be tested for validity with the current front and the
+ existing mesh"
+      end
+
+      operation 232578 "valid"
+	const cpp_virtual protected return_type class_ref 130178 // VertexList
+	nparams 3
+	  param in name "element" type class_ref 129666 // FrontElement
+	  param inout name "candidates" type class_ref 130178 // VertexList
+	  param in name "radius" explicit_type "Real"
+	    defaultvalue "-1.0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} & ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given a front element and a list of candidate vertices for advancing,
+ decide which ones are valid. these candidates are existing vertices,
+ already present in the mesh. the search radius is also given, for
+ validity checks (if a candidate is too close to the element, with
+ respect to the search radius). obs.: the list of candidates passed
+ as parameter may be changed by the end of the method"
+      end
+
+      operation 232706 "valid"
+	const cpp_virtual protected return_type class_ref 130178 // VertexList
+	nparams 2
+	  param in name "element" type class_ref 129666 // FrontElement
+	  param inout name "candidates" type class_ref 132994 // PointVector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}, ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given a front element and a list of candidate points, decide which
+ ones are valid for advancing. these points do not exist in the mesh,
+ meaning that (possibly) one of them will be inserted. obs.: the list
+ of candidates passed as parameter may change"
+      end
+
+      operation 232834 "best"
+	const cpp_virtual protected return_type class_ref 129538 // Vertex
+	nparams 3
+	  param in name "element" type class_ref 129666 // FrontElement
+	  param inout name "valid" type class_ref 130178 // VertexList
+	  param in name "ideal" type class_ref 132994 // PointVector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}const ${t0} * ${p0}${v0}, ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}const ${t0} * ${p0}, ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given a list of vertices, decide which is thes best one for a
+ given element. the given list of vertices may be changed by the end
+ of this method. the ideal points found are also passed as argument,
+ for any needed test"
+      end
+
+      operation 232962 "best"
+	const cpp_virtual protected return_type class_ref 129538 // Vertex
+	nparams 2
+	  param in name "element" type class_ref 129666 // FrontElement
+	  param in name "insert" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}const ${t0} * ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}const ${t0} * ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "given an element, return the vertex which forms the best element
+ possible. the boolean insert is used to indicate if this front
+ advancer can insert, or not, new points (Steiner points). if insert
+ is false, then it will search, among all the existing vertices,
+ which one is the best. if insert is true, then it not only searches
+ for the best vertex but can also create a new vertex"
+      end
+
+      operation 233090 "best"
+	abstract const cpp_virtual protected return_type class_ref 129538 // Vertex
+	nparams 1
+	  param in name "element" type class_ref 129666 // FrontElement
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "given an element, return the vertex which forms the best element
+ possible"
+      end
+
+      classrelation 141698 // front (<unidirectional association>)
+	relation 141698 --->
+	  a role_name "front" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 141698 // front (<unidirectional association>)
+	  b parent class_ref 132482 // Front
+      end
+
+      classrelation 141826 // boundary (<unidirectional association>)
+	relation 141826 --->
+	  a role_name "boundary" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 141826 // boundary (<unidirectional association>)
+	  b parent class_ref 129026 // Boundary
+      end
+
+      attribute 147458 "idFrontElement"
+	protected explicit_type "LongInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 138370 "MeshGenerator"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 142850 // <generalisation>
+	relation 142850 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 142850 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 237186 "MeshGenerator"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 237314 "~MeshGenerator"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 237442 "setIdVertex"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "idVertex" explicit_type "LongInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 237570 "getIdVertex"
+	const cpp_virtual public explicit_return_type "LongInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 237698 "setIdElement"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "idElement" explicit_type "LongInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 237826 "getIdElement"
+	const cpp_virtual public explicit_return_type "LongInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 237954 "getMesh"
+	const cpp_virtual public return_type class_ref 129922 // Mesh
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 238082 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 142978 // mesh (<unidirectional association>)
+	relation 142978 --->
+	  a role_name "mesh" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 142978 // mesh (<unidirectional association>)
+	  b parent class_ref 129922 // Mesh
+      end
+
+      attribute 148354 "idVertex"
+	protected explicit_type "LongInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 148482 "idElement"
+	protected explicit_type "LongInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 138626 "GraphBuilder"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 141954 // <generalisation>
+	relation 141954 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 141954 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 233218 "GraphBuilder"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 233346 "~GraphBuilder"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 233474 "getGraph"
+	const cpp_virtual public return_type class_ref 134658 // Graph
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 233602 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 142082 // graph (<unidirectional association>)
+	relation 142082 --->
+	  a role_name "graph" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 142082 // graph (<unidirectional association>)
+	  b parent class_ref 134658 // Graph
+      end
+    end
+
+    class 138754 "LaplacianSmoother"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 142210 // <generalisation>
+	relation 142210 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 142210 // <generalisation>
+	  b parent class_ref 138882 // MeshSmoother
+      end
+
+      operation 233730 "LaplacianSmoother"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "mesh" type class_ref 129922 // Mesh
+	    defaultvalue "NULL"
+	  param in name "testAdjacency" explicit_type "bool"
+	    defaultvalue "true"
+	  param in name "factor" explicit_type "Real"
+	    defaultvalue "0.5"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 233858 "~LaplacianSmoother"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 233986 "setTestAdjacency"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "testAdjacency" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 234114 "setFactor"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "factor" explicit_type "Real"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 234242 "smooth"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "v" type class_ref 129538 // Vertex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 147586 "testAdjacency"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 147714 "factor"
+	protected explicit_type "Real"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 138882 "MeshSmoother"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 144514 // <generalisation>
+	relation 144514 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 144514 // <generalisation>
+	  b parent class_ref 137986 // MeshOptimizer
+      end
+
+      operation 239746 "MeshSmoother"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "mesh" type class_ref 129922 // Mesh
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 239874 "~MeshSmoother"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 240002 "smooth"
+	abstract const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "v" type class_ref 129538 // Vertex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 240130 "execute"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 144642 // vertices (<directional composition>)
+	relation 144642 *-->
+	  a role_name "vertices" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 144642 // vertices (<directional composition>)
+	  b parent class_ref 130178 // VertexList
+      end
+
+      attribute 149762 "currVertex"
+	private explicit_type "Data::VertexList::iterator"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 139010 "MeshBackTracker"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 142466 // <generalisation>
+	relation 142466 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 142466 // <generalisation>
+	  b parent class_ref 137986 // MeshOptimizer
+      end
+
+      operation 235266 "MeshBackTracker"
+	public explicit_return_type ""
+	nparams 4
+	  param inout name "mesh" type class_ref 129922 // Mesh
+	    defaultvalue "NULL"
+	  param inout name "boundary" type class_ref 129026 // Boundary
+	    defaultvalue "NULL"
+	  param inout name "front" type class_ref 132482 // Front
+	    defaultvalue "NULL"
+	  param in name "meshSorted" explicit_type "bool"
+	    defaultvalue "true"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} ${p3}${v3}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}, ${t1} * ${p1}, ${t2} * ${p2}, ${t3} ${p3}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 235394 "~MeshBackTracker"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 235522 "setBoundary"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "boundary" type class_ref 129026 // Boundary
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 235650 "setFront"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "front" type class_ref 132482 // Front
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 235778 "setMeshSorted"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "meshSorted" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 235906 "setIdVertex"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "idVertex" explicit_type "LongInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 236034 "getIdVertex"
+	const cpp_virtual public explicit_return_type "LongInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 236162 "setIdFrontElement"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "idFrontElement" explicit_type "LongInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 236290 "getIdFrontElement"
+	const cpp_virtual public explicit_return_type "LongInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 236418 "setIdElement"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "idElement" explicit_type "LongInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 236546 "getIdElement"
+	cpp_virtual public explicit_return_type "LongInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 236674 "invert"
+	class_operation protected explicit_return_type "void"
+	nparams 2
+	  param inout name "fel" type class_ref 129666 // FrontElement
+	  param inout name "e" type class_ref 129794 // Element
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}, ${t1} * ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 236802 "makeFront"
+	abstract const cpp_virtual protected return_type class_ref 132482 // Front
+	nparams 4
+	  param inout name "e" type class_ref 129794 // Element
+	  param inout name "deletedElements" type class_ref 131842 // ElementSet
+	  param inout name "deletedFrontElements" type class_ref 131714 // FrontElementSet
+	  param inout name "deletedVertices" type class_ref 131586 // VertexSet
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} * ${p0}${v0}, ${t1} & ${p1}${v1}, ${t2} & ${p2}${v2}, ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment "static void markAsDeleted(Data::VertexSet &deleted, Data::Vertex *v, Data::Mesh *mesh);
+static void markAsDeleted(Data::FrontElementSet &deleted, Data::FrontElement *e, Data::Mesh *mesh);
+static void markAsDeleted(Data::ElementSet &deleted, Data::Element *e, Data::Mesh *mesh);"
+      end
+
+      operation 236930 "insert"
+	abstract const cpp_virtual protected explicit_return_type "void"
+	nparams 2
+	  param inout name "elements" type class_ref 132354 // ElementList
+	  param inout name "e" type class_ref 129794 // Element
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, ${t1} * ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 237058 "sort"
+	const cpp_virtual protected return_type class_ref 132354 // ElementList
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 142594 // boundary (<unidirectional association>)
+	relation 142594 --->
+	  a role_name "boundary" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 142594 // boundary (<unidirectional association>)
+	  b parent class_ref 129026 // Boundary
+      end
+
+      classrelation 142722 // front (<unidirectional association>)
+	relation 142722 --->
+	  a role_name "front" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 142722 // front (<unidirectional association>)
+	  b parent class_ref 132482 // Front
+      end
+
+      attribute 147842 "meshSorted"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 147970 "idVertex"
+	protected explicit_type "LongInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 148098 "idFrontElement"
+	protected explicit_type "LongInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 148226 "idElement"
+	protected explicit_type "LongInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 139138 "MeshImprover"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 143106 // <generalisation>
+	relation 143106 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 143106 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 238210 "MeshImprover"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "mesh" type class_ref 129922 // Mesh
+	    defaultvalue "NULL"
+	  param in name "numImproves" explicit_type "UInt"
+	    defaultvalue "5"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}, ${t1} ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 238338 "~MeshImprover"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 238466 "setMesh"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "mesh" type class_ref 129922 // Mesh
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 238594 "setNumImproves"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "numImproves" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 238722 "setOptimizers"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "optimizers" type class_ref 138114 // MeshOptimizerList
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 238850 "add"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "opt" type class_ref 137986 // MeshOptimizer
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 238978 "execute"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      class 139266 "anonymous2"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum  {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 148610 "NOT_INIT"
+	  public type class_ref 139266 // anonymous2
+	  init_value "= 0"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 148738 "INIT"
+	  public type class_ref 139266 // anonymous2
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 148866 "ENDED"
+	  public type class_ref 139266 // anonymous2
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      classrelation 143234 // notInit (<directional composition>)
+	relation 143234 *-->
+	  a role_name "notInit" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 143234 // notInit (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 143362 // init (<directional composition>)
+	relation 143362 *-->
+	  a role_name "init" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 143362 // init (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 143490 // ended (<directional composition>)
+	relation 143490 *-->
+	  a role_name "ended" class_relation const_relation public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 143490 // ended (<directional composition>)
+	  b parent class_ref 137346 // Status
+      end
+
+      classrelation 143618 // mesh (<unidirectional association>)
+	relation 143618 --->
+	  a role_name "mesh" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 143618 // mesh (<unidirectional association>)
+	  b parent class_ref 129922 // Mesh
+      end
+
+      attribute 148994 "numImproves"
+	protected explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 143746 // optimizers (<directional composition>)
+	relation 143746 *-->
+	  a role_name "optimizers" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 143746 // optimizers (<directional composition>)
+	  b parent class_ref 138114 // MeshOptimizerList
+      end
+
+      attribute 149122 "step"
+	private explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 149250 "currOpt"
+	private explicit_type "MeshOptimizerList::iterator"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 139522 "MinTreeRefiner"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 144770 // <generalisation>
+	relation 144770 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 144770 // <generalisation>
+	  b parent class_ref 139650 // TreeRefiner
+      end
+
+      operation 240258 "MinTreeRefiner"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "tree" type class_ref 128130 // BoxTree
+	    defaultvalue "NULL"
+	  param in name "minLevel" explicit_type "UInt"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}, ${t1} ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 240386 "~MinTreeRefiner"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 240514 "setMinLevel"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "minLevel" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 240642 "getMinLevel"
+	const cpp_virtual public explicit_return_type "UInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 240770 "refine"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "n" type class_ref 131074 // TreeNode
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 240898 "refine"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "c" type class_ref 128770 // BoxTreeCell
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 241026 "findMinLevel"
+	abstract const cpp_virtual public explicit_return_type "UInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 241154 "execute"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 149890 "minLevel"
+	protected explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 139650 "TreeRefiner"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 145154 // <generalisation>
+	relation 145154 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 145154 // <generalisation>
+	  b parent class_ref 136834 // Builder
+      end
+
+      operation 243714 "TreeRefiner"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "tree" type class_ref 130946 // Tree
+	    defaultvalue "NULL"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 243842 "~TreeRefiner"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 243970 "setTree"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "tree" type class_ref 130946 // Tree
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 244098 "setIdNode"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "idNode" explicit_type "LongInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 244226 "getIdNode"
+	const cpp_virtual public explicit_return_type "LongInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 244354 "refine"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "n" type class_ref 131074 // TreeNode
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 244482 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 145282 // tree (<unidirectional association>)
+	relation 145282 --->
+	  a role_name "tree" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 145282 // tree (<unidirectional association>)
+	  b parent class_ref 130946 // Tree
+      end
+
+      attribute 150530 "idNode"
+	protected explicit_type "LongInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 139778 "NeighborTreeRefiner"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 144898 // <generalisation>
+	relation 144898 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 144898 // <generalisation>
+	  b parent class_ref 139650 // TreeRefiner
+      end
+
+      operation 241282 "NeighborTreeRefiner"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "tree" type class_ref 128130 // BoxTree
+	    defaultvalue "NULL"
+	  param in name "difference" explicit_type "UInt"
+	    defaultvalue "1"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}, ${t1} ${p1}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 241410 "~NeighborTreeRefiner"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 241538 "setDifference"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "difference" explicit_type "UInt"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 241666 "getDifference"
+	const cpp_virtual public explicit_return_type "UInt"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 241794 "findNeighbors"
+	const cpp_virtual public return_type class_ref 128642 // GraphNodeVector
+	nparams 1
+	  param in name "c" type class_ref 128770 // BoxTreeCell
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 241922 "refine"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "n" type class_ref 131074 // TreeNode
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 242050 "refine"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "c" type class_ref 128770 // BoxTreeCell
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 242178 "execute"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 150018 "difference"
+	protected explicit_type "UInt"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 150146 "refined"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 139906 "TreeGenerator"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 145026 // <generalisation>
+	relation 145026 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 145026 // <generalisation>
+	  b parent class_ref 138626 // GraphBuilder
+      end
+
+      operation 243202 "TreeGenerator"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 243330 "~TreeGenerator"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 243458 "getTree"
+	const cpp_virtual public return_type class_ref 130946 // Tree
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 243586 "execute"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128130 "Performer"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 132610 "Application"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 136706 // Application
+      end
+    end
+
+    artifact 132738 "BoundaryAdapter"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 137090 // BoundaryAdapter
+      end
+    end
+
+    artifact 132866 "BoundaryBuilder"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 137218 // BoundaryBuilder
+      end
+    end
+
+    artifact 132994 "Builder"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 136834 // Builder
+      end
+    end
+
+    artifact 133122 "Clipper"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 137474 // Clipper
+      end
+    end
+
+    artifact 133250 "Definitions"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 138114 // MeshOptimizerList
+      end
+    end
+
+    artifact 133378 "FrontAdvancer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 138242 // FrontAdvancer
+      end
+    end
+
+    artifact 133506 "GraphBuilder"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 138626 // GraphBuilder
+      end
+    end
+
+    artifact 133634 "LaplacianSmoother"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 138754 // LaplacianSmoother
+      end
+    end
+
+    artifact 133762 "MainDrive"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 136962 // MainDrive
+      end
+    end
+
+    artifact 133890 "MeshBackTracker"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 139010 // MeshBackTracker
+      end
+    end
+
+    artifact 134018 "MeshGenerator"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 138370 // MeshGenerator
+      end
+    end
+
+    artifact 134146 "MeshImprover"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 139138 // MeshImprover
+      end
+    end
+
+    artifact 134274 "MeshOptimizer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 137986 // MeshOptimizer
+      end
+    end
+
+    artifact 134402 "MeshSmoother"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 138882 // MeshSmoother
+      end
+    end
+
+    artifact 134530 "MinTreeRefiner"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 139522 // MinTreeRefiner
+      end
+    end
+
+    artifact 134658 "NeighborTreeRefiner"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 139778 // NeighborTreeRefiner
+      end
+    end
+
+    artifact 134786 "Status"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 137346 // Status
+      end
+    end
+
+    artifact 134914 "TreeGenerator"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 139906 // TreeGenerator
+      end
+    end
+
+    artifact 135042 "TreeRefiner"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 139650 // TreeRefiner
+      end
+    end
+  end
+end

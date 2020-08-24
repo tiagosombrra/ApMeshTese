@@ -1,0 +1,893 @@
+#This file is provided as is and with no warranty.
+#
+#This makefile provides make commands to compile several files distributed in
+#  several folders, each folder may be thought of as one separate moduule of
+#  the program.
+#Source files may be C files (.c) or C++ files (.cpp).
+#This makefile also provides commands to compile both command line interface
+#  (cli) and graphical user interface (gui) versions from the same source code.
+#
+#The suggested folder structure is:
+#
+#trunk/                -> As suggested by svn
+#  bin/                -> Folder of binary and object files
+#    made/             -> Folder of binary file created by this Makefile
+#      obj/            -> Folder where obj files will be created
+#        folder-0/     -> One folder per module
+#        folder-1/
+#        folder-2/
+#      lib/            -> Folder where the static library file will be created
+#  header/             -> Folder with header files
+#    folder-0/         -> One folder per module
+#    folder-1/
+#    folder-2/
+#  project/            -> Folder with project files, as makefile, codeblocks...
+#    linux/            -> Folder with linux projects
+#      makefile/       -> Folder with this Makefile file
+#  src/                -> Folder with source files
+#    folder-0/         -> One folder per module
+#    folder-1/
+#    folder-2/
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!! The variables defined below should be set for each program.     !!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+#Extensions for obj files in both cli and gui versions. Since gui objs and gui
+#  objs may have different libs, this separation is benefitial.
+gui_obj	:= .gui.o
+cli_obj	:= .cli.o
+gui_ftools_obj	:= .gui.f.o
+cli_ftools_obj	:= .cli.f.o
+gui_mtools_obj	:= .gui.m.o
+cli_mtools_obj	:= .cli.m.o
+gui_tecgraf_obj	:= .gui.t.o
+cli_tecgraf_obj	:= .cli.t.o
+
+#Name of the binary gui file.
+BIN_GUI	:= CRAbMeshGUI
+MTOOLS_BIN_GUI := MToolsGUI
+PMTOOLS_BIN_GUI := PMToolsGUI
+#Name of the binary cli file.
+BIN_CLI	:= CRAbMesh
+MTOOLS_BIN_CLI := MTools
+PMTOOLS_BIN_CLI := PMTools
+#Name of the library file
+LIB := libCRAbMesh
+MLIB := libMtools
+#Folder with binary files (suggested: trunk/bin/made).
+BIN_DIR	:= ../../../bin/made
+#Folder with obj files (suggested: trunk/bin/made/obj).
+OBJ_DIR	:= $(BIN_DIR)/obj
+#Folder with the lib file (suggested: trunk/bin/made/lib).
+LIB_DIR	:= $(BIN_DIR)/lib
+#Folder with header files (suggested: trunk/header).
+INC_DIR	:= ../../../header
+#Folder with header files (suggested: trunk/src).
+SRC_DIR	:= ../../../src
+
+#If another module is added, its folder should be added here.
+#These folders correspond to the modules of the program.
+BASIC_DIRS	:= Data Performer IO Parallel MJMesh TemplateMJMesh PMJMesh PMJMesh2 CRAbMesh
+PMTOOLS_DIRS	:= MTools PMTools PMTools2
+
+ifeq ($(splines), true)
+BASIC_DIRS	:= $(BASIC_DIRS) Data/Spline
+endif
+
+ifeq ($(numerical), true)
+BASIC_DIRS	:= $(BASIC_DIRS) Numerical
+endif
+
+ifeq ($(tecgraf), true)
+BASIC_DIRS	:= $(BASIC_DIRS) TecGraf TecGraf/Msh2D TecGraf/Msh3D TecGraf/MshSurf
+endif
+
+DIRS	:= $(BASIC_DIRS) Tools Jmesh PJmesh
+
+ifeq ($(mtools), serial)
+override mtools=true
+DIRS	:= $(BASIC_DIRS)
+PMTOOLS_DIRS	:= MTools
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_ONLY_MTOOLS=2
+BIN_CLI	:= $(MTOOLS_BIN_CLI)
+BIN_GUI	:= $(MTOOLS_BIN_GUI)
+else
+ifeq ($(mtools), parallel)
+override mtools=true
+override mpi=true
+DIRS	:= $(BASIC_DIRS)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_ONLY_MTOOLS=3
+BIN_CLI	:= $(PMTOOLS_BIN_CLI)
+BIN_GUI	:= $(PMTOOLS_BIN_GUI)
+else
+ifeq ($(mtools), only)
+override mtools=true
+DIRS	:= $(BASIC_DIRS)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_ONLY_MTOOLS=1
+else
+ifndef mtools
+override mtools=true
+endif
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_ONLY_MTOOLS=0
+endif
+endif
+endif
+
+ifdef libmtools
+override mtools=true
+else
+DIRS	:= $(DIRS) $(PMTOOLS_DIRS)
+endif
+
+MTOOLS_DIR := ../../../mtools
+
+FTOOLS_INC_DIR := $(MTOOLS_DIR)/ftools_v6
+FTOOLS_SRC_DIR := $(MTOOLS_DIR)/ftools_v6
+FTOOLS_DIRS := src
+
+FTOOLS_EXCLUDED_SRC := $(FTOOLS_SRC_DIR)/src/AdTree.cpp $(FTOOLS_SRC_DIR)/src/BSpline2D.cpp $(FTOOLS_SRC_DIR)/src/BSpline3D.cpp $(FTOOLS_SRC_DIR)/src/FemResults.cpp $(FTOOLS_SRC_DIR)/src/FileName.cpp $(FTOOLS_SRC_DIR)/src/FindMinimum.cpp $(FTOOLS_SRC_DIR)/src/FindRoot.cpp $(FTOOLS_SRC_DIR)/src/InterpFunc2D.cpp $(FTOOLS_SRC_DIR)/src/InterpFunc.cpp $(FTOOLS_SRC_DIR)/src/MeshBoundary.cpp $(FTOOLS_SRC_DIR)/src/MeshTools.cpp $(FTOOLS_SRC_DIR)/src/MeshTopo3D.cpp $(FTOOLS_SRC_DIR)/src/Mtx3x3.cpp $(FTOOLS_SRC_DIR)/src/PathMngr.cpp $(FTOOLS_SRC_DIR)/src/RangeTree2D.cpp  $(FTOOLS_SRC_DIR)/src/SequentialFile.cpp
+
+MTOOLS_INC_DIR := $(MTOOLS_DIR)/mtools_v7
+MTOOLS_SRC_DIR := $(MTOOLS_DIR)/mtools_v7
+MTOOLS_DIRS := Msh3D
+
+MTOOLS_EXCLUDED_SRC := $(MTOOLS_SRC_DIR)/Msh3D/ArbSurfMesher.cpp $(MTOOLS_SRC_DIR)/Msh3D/BaseSurfaceMesher.cpp $(MTOOLS_SRC_DIR)/Msh3D/BezIntersect.cpp $(MTOOLS_SRC_DIR)/Msh3D/CFTemplate3D.cpp $(MTOOLS_SRC_DIR)/Msh3D/ConvexHull.cpp $(MTOOLS_SRC_DIR)/Msh3D/CrackRegion3D.cpp $(MTOOLS_SRC_DIR)/Msh3D/CurveTracer.cpp $(MTOOLS_SRC_DIR)/Msh3D/EdgeSplits.cpp $(MTOOLS_SRC_DIR)/Msh3D/FaceEdgeTopoSort.cpp $(MTOOLS_SRC_DIR)/Msh3D/Flaw.cpp $(MTOOLS_SRC_DIR)/Msh3D/IntsctEdgeTopo.cpp $(MTOOLS_SRC_DIR)/Msh3D/LstSqrPlane.cpp $(MTOOLS_SRC_DIR)/Msh3D/MemDbg.cpp $(MTOOLS_SRC_DIR)/Msh3D/MshSmooth3D.cpp $(MTOOLS_SRC_DIR)/Msh3D/OpenCloseCrack.cpp $(MTOOLS_SRC_DIR)/Msh3D/PolySurfPatch.cpp $(MTOOLS_SRC_DIR)/Msh3D/RmshFlawFacets.cpp $(MTOOLS_SRC_DIR)/Msh3D/RmshIntersect.cpp $(MTOOLS_SRC_DIR)/Msh3D/RmshRegion3D.cpp $(MTOOLS_SRC_DIR)/Msh3D/SplineTopo3D.cpp $(MTOOLS_SRC_DIR)/Msh3D/SurfaceMapping.cpp $(MTOOLS_SRC_DIR)/Msh3D/SurfaceMesherBase.cpp $(MTOOLS_SRC_DIR)/Msh3D/SurfaceMesher.cpp $(MTOOLS_SRC_DIR)/Msh3D/SurfIntersect.cpp $(MTOOLS_SRC_DIR)/Msh3D/SurfLoops.cpp $(MTOOLS_SRC_DIR)/Msh3D/SurfMesh3D.cpp $(MTOOLS_SRC_DIR)/Msh3D/SurfMesh.cpp $(MTOOLS_SRC_DIR)/Msh3D/TempFlawIntsct.cpp $(MTOOLS_SRC_DIR)/Msh3D/TemplateIntersect.cpp $(MTOOLS_SRC_DIR)/Msh3D/TopoRecon.cpp $(MTOOLS_SRC_DIR)/Msh3D/TrimmedFace.cpp $(MTOOLS_SRC_DIR)/Msh3D/VertexReconstruct.cpp
+
+TECGRAF_DIR := ../../../tecgraf
+
+TECGRAF_GEOMLIB_DIR := $(TECGRAF_DIR)/geomlib
+TECGRAF_GEOMLIB_INC_DIR := $(TECGRAF_GEOMLIB_DIR)/include
+TECGRAF_GEOMLIB_SRC_DIR := $(TECGRAF_GEOMLIB_DIR)/src/classes
+TECGRAF_GEOMLIB_DIRS := . curves surfaces
+
+TECGRAF_RTREE_DIR := $(TECGRAF_DIR)/rtree
+TECGRAF_RTREE_INC_DIR := $(TECGRAF_RTREE_DIR)/include
+TECGRAF_RTREE_SRC_DIR := $(TECGRAF_RTREE_DIR)/src/classes
+TECGRAF_RTREE_DIRS := .
+
+TECGRAF_MSH_DIR := $(TECGRAF_DIR)/msh
+TECGRAF_MSH_AUX_DIR := $(TECGRAF_MSH_DIR)/auxiliary/trunk
+TECGRAF_MSH_AUX_INC_DIR := $(TECGRAF_MSH_AUX_DIR)/include
+TECGRAF_MSH_AUX_SRC_DIR := $(TECGRAF_MSH_AUX_DIR)/src
+TECGRAF_MSH_AUX_DIRS := .
+
+TECGRAF_MSH_2D_DIR := $(TECGRAF_MSH_DIR)/2d/trunk
+TECGRAF_MSH_2D_INC_DIR := $(TECGRAF_MSH_2D_DIR)/include
+TECGRAF_MSH_2D_SRC_DIR := $(TECGRAF_MSH_2D_DIR)/src
+TECGRAF_MSH_2D_DIRS := . auxiliary metrics seam template visibility
+
+TECGRAF_MSH_3D_DIR := $(TECGRAF_MSH_DIR)/3d/trunk
+TECGRAF_MSH_3D_INC_DIR := $(TECGRAF_MSH_3D_DIR)/include
+TECGRAF_MSH_3D_SRC_DIR := $(TECGRAF_MSH_3D_DIR)/src
+TECGRAF_MSH_3D_DIRS := . template
+
+TECGRAF_MSH_SURF_DIR := $(TECGRAF_MSH_DIR)/surf/trunk
+TECGRAF_MSH_SURF_INC_DIR := $(TECGRAF_MSH_SURF_DIR)/include
+TECGRAF_MSH_SURF_SRC_DIR := $(TECGRAF_MSH_SURF_DIR)/src
+TECGRAF_MSH_SURF_DIRS := . 3ddirect auxiliary import intersect structured template
+
+TECGRAF_EXCLUDED_SRC :=
+TECGRAF_EXCLUDED_SRC := $(TECGRAF_EXCLUDED_SRC) $(TECGRAF_MSH_2D_SRC_DIR)/seam/dtest.cpp $(TECGRAF_MSH_2D_SRC_DIR)/seam/memdbg.cpp
+#TECGRAF_EXCLUDED_SRC := $(TECGRAF_EXCLUDED_SRC) $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataAbstractMesh.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataBoundary.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataBox.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataChunk.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataDefinitions.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataEdge.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataEdge2D.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataElement.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataFront.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataFrontElement.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataGeometricShape.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataIdentifiable.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataMesh.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataPoint.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataPoint2D.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataState.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataVector.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataVector2D.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/DataVertex.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshBoundary.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshBoundaryBuilder.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshEdge2D.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshElement.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshFront.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshFrontElement.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshFrontElement2D.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshMesh.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/MJMeshVertex.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/PerformerBoundaryBuilder.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/PerformerBuilder.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/PerformerIdManager.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/PerformerSequentialIdManager.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/PerformerStatus.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/predicates.c $(TECGRAF_MSH_2D_SRC_DIR)/visibility/ToolsExternalTool.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/ToolsFrontElementVisibilityIdentifier.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/ToolsTool.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/ToolsVisibilityBasedVertexFinder.cpp $(TECGRAF_MSH_2D_SRC_DIR)/visibility/ToolsVisibilityIdentifier.cpp
+TECGRAF_EXCLUDED_SRC := $(TECGRAF_EXCLUDED_SRC) $(TECGRAF_MSH_2D_SRC_DIR)/visibility/predicates.c
+TECGRAF_EXCLUDED_SRC := $(TECGRAF_EXCLUDED_SRC) $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshAdvnFrt3D.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshAdvnFrt3D_new.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshBdryOct3D.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshElemExt3D.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshGeneMsh3D.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshInseKer3D.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshMainDef3D.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshMainDrive.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshPointTree.c $(TECGRAF_MSH_3D_SRC_DIR)/./JmeshRangeTree.c
+TECGRAF_EXCLUDED_SRC := $(TECGRAF_EXCLUDED_SRC) $(TECGRAF_MSH_SURF_SRC_DIR)/3ddirect/surf3d_draw.c $(TECGRAF_MSH_SURF_SRC_DIR)/auxiliary/geo.c
+
+#Compilers. MPI compilers build parallel programs.
+MPIRUN			:= mpirun
+MPICPP			:= mpicxx
+MPICC			:= mpicc
+CPP				:= g++
+CC				:= gcc
+
+#changing compiler path
+ifdef compiler-path
+PATH	:=	$(compiler-path)/bin:$(PATH)
+
+ifndef lib-path
+lib-path	:= $(compiler-path)
+endif
+
+ifndef incl-path
+incl-path	:= $(compiler-path)
+endif
+endif
+
+#workaround for ubuntu
+C_INCLUDE_PATH	:= /usr/lib/x86_64-linux-gnu:/usr/include/i386-linux-gnu
+#CPLUS_INCLUDE_PATH	:= /usr/include/i386-linux-gnu:/usr/lib/x86_64-linux-gnu
+CPLUS_INCLUDE_PATH	:= $(C_INCLUDE_PATH)
+
+INCLUDES_CLI	:= -I$(INC_DIR)
+
+#changing include path
+ifdef incl-path
+INCLUDES_CLI	:= -I$(incl-path)/include $(INCLUDES_CLI)
+endif
+
+LIB_PATHS	:= /usr/lib /usr/lib64 /usr/lib/x86_64-linux-gnu /usr/lib32 /usr/lib/i386-linux-gnu
+
+#changing library path
+ifdef lib-path
+LIB_PATHS	:= $(lib-path)/lib $(lib-path)/lib64 $(lib-path)/lib32 $(lib-path)/libexec $(LIB_PATHS)
+endif
+
+#LIBRARY_PATH	:= $(foreach DIR,$(LIB_PATHS),$(DIR):)$(LIBRARY_PATH)
+LD_LIBRARY_PATH	:= $(foreach DIR,$(LIB_PATHS),$(DIR):)$(LD_LIBRARY_PATH)
+
+empty:=
+space:= $(empty) $(empty)
+#LIBRARY_PATH	:= $(subst $(space),$(empty),$(LIBRARY_PATH))
+LD_LIBRARY_PATH	:= $(subst $(space),$(empty),$(LD_LIBRARY_PATH))
+LIBRARY_PATH	:= $(LD_LIBRARY_PATH)
+
+ifdef lib-path
+LD_FLAGS_CLI	:= $(foreach DIR, $(LIB_PATHS), -L$(DIR) -Wl,-rpath=$(DIR)) $(LD_FLAGS_CLI)
+endif
+
+export C_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH
+export LIBRARY_PATH
+
+#Changing MPI C compiler
+ifdef mpi-c-compiler
+MPICC	:= $(mpi-c-compiler)
+endif
+
+#Changing MPI C++ compiler
+ifdef mpi-cpp-compiler
+MPICPP	:= $(mpi-cpp-compiler)
+endif
+
+#Changing C compiler
+ifdef c-compiler
+CC	:= $(c-compiler)
+export OMPI_CC=$(CC)
+export MPICH_CC=$(CC)
+endif
+
+#Changing C++ compiler
+ifdef cpp-compiler
+CPP	:= $(cpp-compiler)
+export OMPI_CXX=$(CPP)
+export MPICH_CXX=$(CPP)
+endif
+
+#General flags.
+ifeq ($(mode), debug)
+#CFLAGS_CLI	:= -g -O1 $(CFLAGS_CLI)
+CFLAGS_CLI	:= -g3 -O0 $(CFLAGS_CLI)
+else ifeq ($(mode), gprof)
+CFLAGS_CLI	:= -g3 -O0 -pg $(CFLAGS_CLI)
+else ifeq ($(mode), callgrind)
+CFLAGS_CLI	:= -g -O2 -DNDEBUG -fno-omit-frame-pointer -fno-inline-functions -fno-inline-functions-called-once -fno-optimize-sibling-calls -fno-default-inline -fno-inline $(CFLAGS_CLI)
+else ifeq ($(mode), static)
+CFLAGS_CLI	:= -O3 -static -DNDEBUG $(CFLAGS_CLI)
+else
+CFLAGS_CLI	:= -O3 -s -DNDEBUG $(CFLAGS_CLI)
+endif
+
+#Include flags for C code (and C++) in cli version.
+CFLAGS_CLI	:= -W -Wall -Wextra -Wconversion $(CFLAGS_CLI)
+
+ifeq ($(openmp), false)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_OPENMP=false
+else
+CFLAGS_CLI	:= -fopenmp $(CFLAGS_CLI) -DUSE_OPENMP=true
+endif
+
+ifeq ($(timing), true)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_TIME_MEASUREMENTS=true
+else
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_TIME_MEASUREMENTS=false
+endif
+
+ifeq ($(mtools), false)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_MTOOLS=false
+else
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_MTOOLS=true
+ifndef libmtools
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(FTOOLS_DIRS), -I$(FTOOLS_INC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(MTOOLS_DIRS), -I$(MTOOLS_INC_DIR)/$(DIR))
+endif
+endif
+
+ifeq ($(old-mpi), true)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_OLD_MPI=true
+else
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_OLD_MPI=false
+endif
+
+ifeq ($(mpi), false)
+MPICPP		:= $(CPP)
+MPICC		:= $(CC)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_MPI=false
+else
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_MPI=true
+endif
+
+ifeq ($(splines), true)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_SPLINES=true
+endif
+
+ifeq ($(numerical), true)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_NUMERICAL=true
+endif
+
+ifeq ($(tecgraf), true)
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_TECGRAF=true -DUSE_TECGRAF_MSH=true -DUSE_TECGRAF_MSH_2D=true -DUSE_TECGRAF_MSH_3D=true -DUSE_TECGRAF_MSH_SURF=true
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_GEOMLIB_DIRS), -I$(TECGRAF_GEOMLIB_INC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_GEOMLIB_DIRS), -I$(TECGRAF_GEOMLIB_SRC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_RTREE_DIRS), -I$(TECGRAF_RTREE_INC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_RTREE_DIRS), -I$(TECGRAF_RTREE_SRC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_MSH_AUX_DIRS), -I$(TECGRAF_MSH_AUX_INC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_MSH_AUX_DIRS), -I$(TECGRAF_MSH_AUX_SRC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_MSH_2D_DIRS), -I$(TECGRAF_MSH_2D_INC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_MSH_2D_DIRS), -I$(TECGRAF_MSH_2D_SRC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_MSH_3D_DIRS), -I$(TECGRAF_MSH_3D_INC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_MSH_3D_DIRS), -I$(TECGRAF_MSH_3D_SRC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_MSH_SURF_DIRS), -I$(TECGRAF_MSH_SURF_INC_DIR)/$(DIR))
+INCLUDES_CLI	:= $(INCLUDES_CLI) $(foreach DIR, $(TECGRAF_MSH_SURF_DIRS), -I$(TECGRAF_MSH_SURF_SRC_DIR)/$(DIR))
+else
+CFLAGS_CLI	:= $(CFLAGS_CLI) -DUSE_TECGRAF=false
+endif
+
+ifeq ($(tinyxml), false)
+CPPFLAGS_CLI	:= $(CPPFLAGS_CLI) -DUSE_TINYXML=false
+else
+CPPFLAGS_CLI	:= $(CPPFLAGS_CLI) -DUSE_TINYXML=true
+endif
+
+ifeq ($(opencv), false)
+CPPFLAGS_GUI	:= $(CPPFLAGS_GUI) -DUSE_OPENCV=false
+else
+CPPFLAGS_GUI	:= $(CPPFLAGS_GUI) -DUSE_OPENCV=true
+LD_FLAGS_GUI	:= $(LD_FLAGS_GUI) -lopencv_highgui -lopencv_core
+endif
+
+CFLAGS_CLI	:= $(CFLAGS_CLI) $(INCLUDES_CLI)
+
+#Include flags for C++ code in cli version.
+CPPFLAGS_CLI	:= -Woverloaded-virtual -Wold-style-cast -DUSE_WORKER_FILE_LOADER=true $(CPPFLAGS_CLI) $(CFLAGS_CLI)
+
+ifeq ($(std), c++98)
+CPPFLAGS_CLI	:= -std=gnu++98 -DUSE_C__11=false $(CPPFLAGS_CLI)
+else
+CPPFLAGS_CLI	:= -std=c++0x -DUSE_C__11=true $(CPPFLAGS_CLI)
+endif
+
+INCLUDES_GUI	:= -I../../../images
+
+#Include flags for C code (and C++) in gui version.
+CFLAGS_GUI		:= $(CFLAGS_CLI)
+#Include flags for C++ code in gui version.
+CPPFLAGS_GUI	:= $(CPPFLAGS_CLI) $(CPPFLAGS_GUI) -DUSE_GUI=true -DUSE_WORKER_FILE_LOADER=false `wx-config --cppflags --version=3.0` $(INCLUDES_CLI) $(INCLUDES_GUI)
+
+#Linker flags in cli version.
+LD_FLAGS_CLI	:= $(LD_FLAGS_CLI)
+
+ifneq ($(tinyxml), false)
+LD_FLAGS_CLI	:= $(LD_FLAGS_CLI) -ltinyxml
+endif
+
+ifdef libmtools
+LD_FLAGS_CLI	:= $(LD_FLAGS_CLI) $(libmtools)
+endif
+
+ifneq ($(openmp), false)
+LD_FLAGS_CLI	:= $(LD_FLAGS_CLI) -fopenmp
+endif
+
+ifeq ($(mode), debug)
+LD_FLAGS_CLI	:= $(LD_FLAGS_CLI) -rdynamic
+else ifeq ($(mode), gprof)
+LD_FLAGS_CLI	:= $(LD_FLAGS_CLI) -rdynamic
+else ifeq ($(mode), callgrind)
+LD_FLAGS_CLI	:= $(LD_FLAGS_CLI) -rdynamic
+endif
+#Linker flags in gui version.
+LD_FLAGS_GUI	:= $(LD_FLAGS_CLI) $(LD_FLAGS_GUI) `wx-config --libs core,aui,adv,propgrid --gl-libs --version=3.0` -lGLEW -lglut -lGLU -lGL
+
+#Source file with main() function.
+SRC_BIN_CLI	:= $(SRC_DIR)/CRAbMesh.cpp
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!! The variables defined below should NOT be set for each program. !!!
+# !!!            DO NOT MESS UP WITH THE CODE FROM NOW ON.            !!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+#Discovering C and C++ source files in each folder for each module.
+SRCS_C	:= $(foreach DIR, $(DIRS), $(wildcard $(SRC_DIR)/$(DIR)/*.c))
+SRCS_CPP	:= $(foreach DIR, $(DIRS), $(wildcard $(SRC_DIR)/$(DIR)/*.cpp))
+SRCS_PMTOOLS_CPP	:= $(foreach DIR, $(PMTOOLS_DIRS), $(wildcard $(SRC_DIR)/$(DIR)/*.cpp))
+SRCS_FTOOLS_CPP	:= $(filter-out $(FTOOLS_EXCLUDED_SRC), $(foreach DIR, $(FTOOLS_DIRS), $(wildcard $(FTOOLS_SRC_DIR)/$(DIR)/*.cpp)))
+SRCS_MTOOLS_CPP	:= $(filter-out $(MTOOLS_EXCLUDED_SRC), $(foreach DIR, $(MTOOLS_DIRS), $(wildcard $(MTOOLS_SRC_DIR)/$(DIR)/*.cpp)))
+SRCS_TECGRAF_GEOMLIB_C	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_GEOMLIB_DIRS), $(wildcard $(TECGRAF_GEOMLIB_SRC_DIR)/$(DIR)/*.c)))
+SRCS_TECGRAF_GEOMLIB_CPP	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_GEOMLIB_DIRS), $(wildcard $(TECGRAF_GEOMLIB_SRC_DIR)/$(DIR)/*.cpp)))
+SRCS_TECGRAF_RTREE_C	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_RTREE_DIRS), $(wildcard $(TECGRAF_RTREE_SRC_DIR)/$(DIR)/*.c)))
+SRCS_TECGRAF_RTREE_CPP	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_RTREE_DIRS), $(wildcard $(TECGRAF_RTREE_SRC_DIR)/$(DIR)/*.cpp)))
+SRCS_TECGRAF_MSH_AUX_C	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_MSH_AUX_DIRS), $(wildcard $(TECGRAF_MSH_AUX_SRC_DIR)/$(DIR)/*.c)))
+SRCS_TECGRAF_MSH_AUX_CPP	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_MSH_AUX_DIRS), $(wildcard $(TECGRAF_MSH_AUX_SRC_DIR)/$(DIR)/*.cpp)))
+SRCS_TECGRAF_MSH_2D_C	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_MSH_2D_DIRS), $(wildcard $(TECGRAF_MSH_2D_SRC_DIR)/$(DIR)/*.c)))
+SRCS_TECGRAF_MSH_2D_CPP	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_MSH_2D_DIRS), $(wildcard $(TECGRAF_MSH_2D_SRC_DIR)/$(DIR)/*.cpp)))
+SRCS_TECGRAF_MSH_3D_C	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_MSH_3D_DIRS), $(wildcard $(TECGRAF_MSH_3D_SRC_DIR)/$(DIR)/*.c)))
+SRCS_TECGRAF_MSH_3D_CPP	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_MSH_3D_DIRS), $(wildcard $(TECGRAF_MSH_3D_SRC_DIR)/$(DIR)/*.cpp)))
+SRCS_TECGRAF_MSH_SURF_C	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_MSH_SURF_DIRS), $(wildcard $(TECGRAF_MSH_SURF_SRC_DIR)/$(DIR)/*.c)))
+SRCS_TECGRAF_MSH_SURF_CPP	:= $(filter-out $(TECGRAF_EXCLUDED_SRC), $(foreach DIR, $(TECGRAF_MSH_SURF_DIRS), $(wildcard $(TECGRAF_MSH_SURF_SRC_DIR)/$(DIR)/*.cpp)))
+
+#Discovering C and C++ obj files in each folder for each module (cli).
+CLI_OBJS	:= $(SRCS_CPP:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(cli_obj))
+CLI_OBJS	:= $(SRCS_C:$(SRC_DIR)%.c=$(OBJ_DIR)%$(cli_obj)) $(CLI_OBJS)
+CLI_PMTOOLS_OBJS	:= $(SRCS_PMTOOLS_CPP:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(cli_obj))
+CLI_FTOOLS_OBJS	:= $(SRCS_FTOOLS_CPP:$(FTOOLS_SRC_DIR)%.cpp=$(OBJ_DIR)%$(cli_ftools_obj))
+CLI_MTOOLS_OBJS	:= $(SRCS_MTOOLS_CPP:$(MTOOLS_SRC_DIR)%.cpp=$(OBJ_DIR)%$(cli_mtools_obj))
+CLI_TECGRAF_GEOMLIB_OBJS	:= $(SRCS_TECGRAF_GEOMLIB_CPP:$(TECGRAF_GEOMLIB_SRC_DIR)%.cpp=$(OBJ_DIR)/geomlib%$(cli_tecgraf_obj))
+CLI_TECGRAF_GEOMLIB_OBJS	:= $(SRCS_TECGRAF_GEOMLIB_C:$(TECGRAF_GEOMLIB_SRC_DIR)%.c=$(OBJ_DIR)/geomlib%$(cli_tecgraf_obj)) $(CLI_TECGRAF_GEOMLIB_OBJS)
+CLI_TECGRAF_RTREE_OBJS	:= $(SRCS_TECGRAF_RTREE_CPP:$(TECGRAF_RTREE_SRC_DIR)%.cpp=$(OBJ_DIR)/rtree%$(cli_tecgraf_obj))
+CLI_TECGRAF_RTREE_OBJS	:= $(SRCS_TECGRAF_RTREE_C:$(TECGRAF_RTREE_SRC_DIR)%.c=$(OBJ_DIR)/rtree%$(cli_tecgraf_obj)) $(CLI_TECGRAF_RTREE_OBJS)
+CLI_TECGRAF_MSH_AUX_OBJS	:= $(SRCS_TECGRAF_MSH_AUX_CPP:$(TECGRAF_MSH_AUX_SRC_DIR)%.cpp=$(OBJ_DIR)/msh/aux%$(cli_tecgraf_obj))
+CLI_TECGRAF_MSH_AUX_OBJS	:= $(SRCS_TECGRAF_MSH_AUX_C:$(TECGRAF_MSH_AUX_SRC_DIR)%.c=$(OBJ_DIR)/msh/aux%$(cli_tecgraf_obj)) $(CLI_TECGRAF_MSH_AUX_OBJS)
+CLI_TECGRAF_MSH_2D_OBJS	:= $(SRCS_TECGRAF_MSH_2D_CPP:$(TECGRAF_MSH_2D_SRC_DIR)%.cpp=$(OBJ_DIR)/msh/2d%$(cli_tecgraf_obj))
+CLI_TECGRAF_MSH_2D_OBJS	:= $(SRCS_TECGRAF_MSH_2D_C:$(TECGRAF_MSH_2D_SRC_DIR)%.c=$(OBJ_DIR)/msh/2d%$(cli_tecgraf_obj)) $(CLI_TECGRAF_MSH_2D_OBJS)
+CLI_TECGRAF_MSH_3D_OBJS	:= $(SRCS_TECGRAF_MSH_3D_CPP:$(TECGRAF_MSH_3D_SRC_DIR)%.cpp=$(OBJ_DIR)/msh/3d%$(cli_tecgraf_obj))
+CLI_TECGRAF_MSH_3D_OBJS	:= $(SRCS_TECGRAF_MSH_3D_C:$(TECGRAF_MSH_3D_SRC_DIR)%.c=$(OBJ_DIR)/msh/3d%$(cli_tecgraf_obj)) $(CLI_TECGRAF_MSH_3D_OBJS)
+CLI_TECGRAF_MSH_SURF_OBJS	:= $(SRCS_TECGRAF_MSH_SURF_CPP:$(TECGRAF_MSH_SURF_SRC_DIR)%.cpp=$(OBJ_DIR)/msh/surf%$(cli_tecgraf_obj))
+CLI_TECGRAF_MSH_SURF_OBJS	:= $(SRCS_TECGRAF_MSH_SURF_C:$(TECGRAF_MSH_SURF_SRC_DIR)%.c=$(OBJ_DIR)/msh/surf%$(cli_tecgraf_obj)) $(CLI_TECGRAF_MSH_SURF_OBJS)
+
+#Discovering C and C++ obj files in each folder for each module (gui).
+GUI_OBJS	:= $(SRCS_CPP:$(SRC_DIR)%.cpp=$(OBJ_DIR)%$(gui_obj))
+GUI_OBJS	:= $(SRCS_C:$(SRC_DIR)%.c=$(OBJ_DIR)%$(gui_obj)) $(GUI_OBJS)
+GUI_FTOOLS_OBJS	:= $(SRCS_FTOOLS_CPP:$(FTOOLS_SRC_DIR)%.cpp=$(OBJ_DIR)%$(gui_ftools_obj))
+GUI_MTOOLS_OBJS	:= $(SRCS_MTOOLS_CPP:$(MTOOLS_SRC_DIR)%.cpp=$(OBJ_DIR)%$(gui_mtools_obj))
+GUI_TECGRAF_GEOMLIB_OBJS	:= $(SRCS_TECGRAF_GEOMLIB_CPP:$(TECGRAF_GEOMLIB_SRC_DIR)%.cpp=$(OBJ_DIR)/geomlib%$(gui_tecgraf_obj))
+GUI_TECGRAF_GEOMLIB_OBJS	:= $(SRCS_TECGRAF_GEOMLIB_C:$(TECGRAF_GEOMLIB_SRC_DIR)%.c=$(OBJ_DIR)/geomlib%$(gui_tecgraf_obj)) $(GUI_TECGRAF_GEOMLIB_OBJS)
+GUI_TECGRAF_RTREE_OBJS	:= $(SRCS_TECGRAF_RTREE_CPP:$(TECGRAF_RTREE_SRC_DIR)%.cpp=$(OBJ_DIR)/rtree%$(gui_tecgraf_obj))
+GUI_TECGRAF_RTREE_OBJS	:= $(SRCS_TECGRAF_RTREE_C:$(TECGRAF_RTREE_SRC_DIR)%.c=$(OBJ_DIR)/rtree%$(gui_tecgraf_obj)) $(GUI_TECGRAF_RTREE_OBJS)
+GUI_TECGRAF_MSH_AUX_OBJS	:= $(SRCS_TECGRAF_MSH_AUX_CPP:$(TECGRAF_MSH_AUX_SRC_DIR)%.cpp=$(OBJ_DIR)/msh/aux%$(gui_tecgraf_obj))
+GUI_TECGRAF_MSH_AUX_OBJS	:= $(SRCS_TECGRAF_MSH_AUX_C:$(TECGRAF_MSH_AUX_SRC_DIR)%.c=$(OBJ_DIR)/msh/aux%$(gui_tecgraf_obj)) $(GUI_TECGRAF_MSH_AUX_OBJS)
+GUI_TECGRAF_MSH_2D_OBJS	:= $(SRCS_TECGRAF_MSH_2D_CPP:$(TECGRAF_MSH_2D_SRC_DIR)%.cpp=$(OBJ_DIR)/msh/2d%$(gui_tecgraf_obj))
+GUI_TECGRAF_MSH_2D_OBJS	:= $(SRCS_TECGRAF_MSH_2D_C:$(TECGRAF_MSH_2D_SRC_DIR)%.c=$(OBJ_DIR)/msh/2d%$(gui_tecgraf_obj)) $(GUI_TECGRAF_MSH_2D_OBJS)
+GUI_TECGRAF_MSH_3D_OBJS	:= $(SRCS_TECGRAF_MSH_3D_CPP:$(TECGRAF_MSH_3D_SRC_DIR)%.cpp=$(OBJ_DIR)/msh/3d%$(gui_tecgraf_obj))
+GUI_TECGRAF_MSH_3D_OBJS	:= $(SRCS_TECGRAF_MSH_3D_C:$(TECGRAF_MSH_3D_SRC_DIR)%.c=$(OBJ_DIR)/msh/3d%$(gui_tecgraf_obj)) $(GUI_TECGRAF_MSH_3D_OBJS)
+GUI_TECGRAF_MSH_SURF_OBJS	:= $(SRCS_TECGRAF_MSH_SURF_CPP:$(TECGRAF_MSH_SURF_SRC_DIR)%.cpp=$(OBJ_DIR)/msh/surf%$(gui_tecgraf_obj))
+GUI_TECGRAF_MSH_SURF_OBJS	:= $(SRCS_TECGRAF_MSH_SURF_C:$(TECGRAF_MSH_SURF_SRC_DIR)%.c=$(OBJ_DIR)/msh/surf%$(gui_tecgraf_obj)) $(GUI_TECGRAF_MSH_SURF_OBJS)
+
+CURRENT_CLI_OBJS	:= $(CLI_OBJS)
+CURRENT_GUI_OBJS	:= $(GUI_OBJS)
+ifndef libmtools
+ifeq ($(mtools), true)
+CURRENT_CLI_OBJS	:= $(CLI_FTOOLS_OBJS) $(CLI_MTOOLS_OBJS) $(CURRENT_CLI_OBJS)
+CURRENT_GUI_OBJS	:= $(GUI_FTOOLS_OBJS) $(GUI_MTOOLS_OBJS) $(CURRENT_GUI_OBJS)
+endif
+ifeq ($(tecgraf), true)
+CURRENT_CLI_OBJS	:= $(CLI_TECGRAF_GEOMLIB_OBJS) $(CLI_TECGRAF_RTREE_OBJS) $(CLI_TECGRAF_MSH_AUX_OBJS) $(CLI_TECGRAF_MSH_2D_OBJS) $(CLI_TECGRAF_MSH_3D_OBJS) $(CLI_TECGRAF_MSH_SURF_OBJS) $(CURRENT_CLI_OBJS)
+CURRENT_GUI_OBJS	:= $(GUI_TECGRAF_GEOMLIB_OBJS) $(GUI_TECGRAF_RTREE_OBJS) $(GUI_TECGRAF_MSH_AUX_OBJS) $(GUI_TECGRAF_MSH_2D_OBJS) $(GUI_TECGRAF_MSH_3D_OBJS) $(GUI_TECGRAF_MSH_SURF_OBJS) $(CURRENT_GUI_OBJS)
+endif
+endif
+
+ALL_CLI_OBJS	:= $(CLI_TECGRAF_GEOMLIB_OBJS) $(CLI_TECGRAF_RTREE_OBJS) $(CLI_TECGRAF_MSH_AUX_OBJS) $(CLI_TECGRAF_MSH_2D_OBJS) $(CLI_TECGRAF_MSH_3D_OBJS) $(CLI_TECGRAF_MSH_SURF_OBJS) $(CLI_FTOOLS_OBJS) $(CLI_MTOOLS_OBJS) $(CLI_OBJS)
+ALL_GUI_OBJS	:= $(GUI_TECGRAF_GEOMLIB_OBJS) $(GUI_TECGRAF_RTREE_OBJS) $(GUI_TECGRAF_MSH_AUX_OBJS) $(GUI_TECGRAF_MSH_2D_OBJS) $(GUI_TECGRAF_MSH_3D_OBJS) $(GUI_TECGRAF_MSH_SURF_OBJS) $(GUI_FTOOLS_OBJS) $(GUI_MTOOLS_OBJS) $(GUI_OBJS)
+ALL_OBJS	:= $(ALL_CLI_OBJS) $(ALL_GUI_OBJS)
+
+ALL_BINS	:= $(BIN_DIR)/$(BIN_CLI) $(BIN_DIR)/$(BIN_GUI) $(BIN_DIR)/$(MTOOLS_BIN_CLI) $(BIN_DIR)/$(MTOOLS_BIN_GUI) $(BIN_DIR)/$(PMTOOLS_BIN_CLI) $(BIN_DIR)/$(PMTOOLS_BIN_GUI)
+
+#If 'make all', then compile both cli and gui versions.
+all: cli gui
+
+#If 'make cli', then compile only cli version.
+cli: $(BIN_CLI)
+
+#If 'make gui', then compile only gui version.
+gui: $(BIN_GUI)
+
+#Compiling C++ source files from cli version.
+#$(OBJ_DIR)%$(cli_obj): $(SRC_DIR)%.cpp $(INC_DIR)%.h
+$(OBJ_DIR)%$(cli_obj): $(SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)%$(cli_ftools_obj): $(FTOOLS_SRC_DIR)%.cpp $(FTOOLS_INC_DIR)%.hpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)%$(cli_mtools_obj): $(MTOOLS_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/geomlib%$(cli_tecgraf_obj): $(TECGRAF_GEOMLIB_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/rtree%$(cli_tecgraf_obj): $(TECGRAF_RTREE_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/msh/aux%$(cli_tecgraf_obj): $(TECGRAF_MSH_AUX_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/msh/2d%$(cli_tecgraf_obj): $(TECGRAF_MSH_2D_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/msh/3d%$(cli_tecgraf_obj): $(TECGRAF_MSH_3D_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/msh/surf%$(cli_tecgraf_obj): $(TECGRAF_MSH_SURF_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_CLI) -c $< -o $@
+
+#Compiling C source files from cli version.
+$(OBJ_DIR)%$(cli_obj): $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/geomlib%$(cli_tecgraf_obj): $(TECGRAF_GEOMLIB_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/rtree%$(cli_tecgraf_obj): $(TECGRAF_RTREE_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/msh/aux%$(cli_tecgraf_obj): $(TECGRAF_MSH_AUX_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/msh/2d%$(cli_tecgraf_obj): $(TECGRAF_MSH_2D_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/msh/3d%$(cli_tecgraf_obj): $(TECGRAF_MSH_3D_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_CLI) -c $< -o $@
+$(OBJ_DIR)/msh/surf%$(cli_tecgraf_obj): $(TECGRAF_MSH_SURF_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_CLI) -c $< -o $@
+
+#Compiling C++ source files from gui version.
+########  workaround for timings in pmtools: including -I$(INC_DIR)
+#$(OBJ_DIR)%$(gui_obj): $(SRC_DIR)%.cpp $(INC_DIR)%.h
+$(OBJ_DIR)%$(gui_obj): $(SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)%$(gui_ftools_obj): $(FTOOLS_SRC_DIR)%.cpp $(FTOOLS_INC_DIR)%.hpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)%$(gui_mtools_obj): $(MTOOLS_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/geomlib%$(gui_tecgraf_obj): $(TECGRAF_GEOMLIB_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/rtree%$(gui_tecgraf_obj): $(TECGRAF_RTREE_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/msh/aux%$(gui_tecgraf_obj): $(TECGRAF_MSH_AUX_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/msh/2d%$(gui_tecgraf_obj): $(TECGRAF_MSH_2D_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/msh/3d%$(gui_tecgraf_obj): $(TECGRAF_MSH_3D_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/msh/surf%$(gui_tecgraf_obj): $(TECGRAF_MSH_SURF_SRC_DIR)%.cpp
+	@mkdir -p $(dir $@)
+	$(MPICPP) $(CPPFLAGS_GUI) -c $< -o $@
+
+#Compiling C source files from gui version.
+$(OBJ_DIR)%$(gui_obj): $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/geomlib%$(gui_tecgraf_obj): $(TECGRAF_GEOMLIB_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/rtree%$(gui_tecgraf_obj): $(TECGRAF_RTREE_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/msh/aux%$(gui_tecgraf_obj): $(TECGRAF_MSH_AUX_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/msh/2d%$(gui_tecgraf_obj): $(TECGRAF_MSH_2D_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/msh/3d%$(gui_tecgraf_obj): $(TECGRAF_MSH_3D_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_GUI) -c $< -o $@
+$(OBJ_DIR)/msh/surf%$(gui_tecgraf_obj): $(TECGRAF_MSH_SURF_SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(MPICC) $(CFLAGS_GUI) -c $< -o $@
+
+#Compiling cli version.
+$(BIN_CLI): $(CURRENT_CLI_OBJS)
+	@mkdir -p $(BIN_DIR)
+	@mkdir -p $(OBJ_DIR)
+	$(MPICPP) $(CPPFLAGS_CLI) $(CURRENT_CLI_OBJS) $(LD_FLAGS_CLI) $(SRC_BIN_CLI) -o $(BIN_DIR)/$(BIN_CLI)
+
+#Compiling gui version version.
+$(BIN_GUI): $(CURRENT_GUI_OBJS)
+	@mkdir -p $(BIN_DIR)
+	@mkdir -p $(OBJ_DIR)
+	$(MPICPP) $(CPPFLAGS_GUI) $(CURRENT_GUI_OBJS) $(LD_FLAGS_GUI) -o $(BIN_DIR)/$(BIN_GUI)
+
+#If 'make lib', then compile a static library.
+lib: $(CURRENT_CLI_OBJS)
+	@mkdir -p $(LIB_DIR)
+	ar rs $(LIB_DIR)/$(LIB).a $(CURRENT_CLI_OBJS)
+
+#If 'make mlib', then compile a static library of the mtools library.
+ifneq ($(mtools), true)
+mlib:
+	@echo "Please, define variable mtools=true"
+else
+mlib: $(CLI_FTOOLS_OBJS) $(CLI_MTOOLS_OBJS) $(CLI_PMTOOLS_OBJS)
+	@mkdir -p $(LIB_DIR)
+	ar rs $(LIB_DIR)/$(MLIB).a $(CLI_FTOOLS_OBJS) $(CLI_MTOOLS_OBJS) $(CLI_PMTOOLS_OBJS)
+endif
+
+#If 'make clean', then remove all object, binary and library files.
+clean:
+	@rm -f $(ALL_OBJS) $(ALL_BINS) $(LIB_DIR)/$(LIB).a $(LIB_DIR)/$(MLIB).a
+
+#If 'make', then compile all versions.
+build: all
+
+#If 'make rebuild', then remove all object, binary and library files, and compile everything.
+rebuild: clean all
+
+#If 'make static', then compile a static library.
+static: lib
+
+#if 'make version', then print the which compilers are being used and what their versions
+version:
+	which $(MPIRUN)
+	$(MPIRUN) --version
+	which $(MPICPP)
+	$(MPICPP) --version
+	which $(MPICC)
+	$(MPICC) --version
+	which $(CPP)
+	$(CPP) --version
+	which $(CC)
+	$(CC) --version
+
+#if 'make flags', then print the values of the flags
+flags:
+	@echo "Extensions"
+	@echo "gui_obj: $(gui_obj)"
+	@echo "cli_obj: $(cli_obj)"
+	@echo "gui_ftools_obj: $(gui_ftools_obj)"
+	@echo "cli_ftools_obj: $(cli_ftools_obj)"
+	@echo "gui_mtools_obj: $(gui_mtools_obj)"
+	@echo "cli_mtools_obj: $(cli_mtools_obj)"
+	@echo "gui_tecgraf_obj: $(gui_tecgraf_obj)"
+	@echo "cli_tecgraf_obj: $(cli_tecgraf_obj)"
+	@echo ""
+	@echo "Binary filenames"
+	@echo "BIN_GUI: $(BIN_GUI)"
+	@echo "MTOOLS_BIN_GUI: $(MTOOLS_BIN_GUI)"
+	@echo "PMTOOLS_BIN_GUI: $(PMTOOLS_BIN_GUI)"
+	@echo "BIN_CLI: $(BIN_CLI)"
+	@echo "MTOOLS_BIN_CLI: $(MTOOLS_BIN_CLI)"
+	@echo "PMTOOLS_BIN_CLI: $(PMTOOLS_BIN_CLI)"
+	@echo "LIB: $(LIB)"
+	@echo "MLIB: $(MLIB)"
+	@echo ""
+	@echo "Directories"
+	@echo "BIN_DIR: $(BIN_DIR)"
+	@echo "OBJ_DIR: $(OBJ_DIR)"
+	@echo "LIB_DIR: $(LIB_DIR)"
+	@echo "INC_DIR: $(INC_DIR)"
+	@echo "SRC_DIR: $(SRC_DIR)"
+	@echo "BASIC_DIRS: $(BASIC_DIRS)"
+	@echo "PMTOOLS_DIRS: $(PMTOOLS_DIRS)"
+	@echo "DIRS: $(DIRS)"
+	@echo "MTOOLS_DIR: $(MTOOLS_DIR)"
+	@echo "FTOOLS_INC_DIR: $(FTOOLS_INC_DIR)"
+	@echo "FTOOLS_SRC_DIR: $(FTOOLS_SRC_DIR)"
+	@echo "FTOOLS_DIRS: $(FTOOLS_DIRS)"
+	@echo "MTOOLS_INC_DIR: $(MTOOLS_INC_DIR)"
+	@echo "MTOOLS_SRC_DIR: $(MTOOLS_SRC_DIR)"
+	@echo "MTOOLS_DIRS: $(MTOOLS_DIRS)"
+	@echo "TECGRAF_DIR: $(TECGRAF_DIR)"
+	@echo "TECGRAF_GEOMLIB_DIR: $(TECGRAF_GEOMLIB_DIR)"
+	@echo "TECGRAF_GEOMLIB_INC_DIR: $(TECGRAF_GEOMLIB_INC_DIR)"
+	@echo "TECGRAF_GEOMLIB_SRC_DIR: $(TECGRAF_GEOMLIB_SRC_DIR)"
+	@echo "TECGRAF_GEOMLIB_DIRS: $(TECGRAF_GEOMLIB_DIRS)"
+	@echo "TECGRAF_RTREE_DIR: $(TECGRAF_RTREE_DIR)"
+	@echo "TECGRAF_RTREE_INC_DIR: $(TECGRAF_RTREE_INC_DIR)"
+	@echo "TECGRAF_RTREE_SRC_DIR: $(TECGRAF_RTREE_SRC_DIR)"
+	@echo "TECGRAF_RTREE_DIRS: $(TECGRAF_RTREE_DIRS)"
+	@echo "TECGRAF_MSH_DIR: $(TECGRAF_MSH_DIR)"
+	@echo "TECGRAF_MSH_AUX_DIR: $(TECGRAF_MSH_AUX_DIR)"
+	@echo "TECGRAF_MSH_AUX_INC_DIR: $(TECGRAF_MSH_AUX_INC_DIR)"
+	@echo "TECGRAF_MSH_AUX_SRC_DIR: $(TECGRAF_MSH_AUX_SRC_DIR)"
+	@echo "TECGRAF_MSH_AUX_DIRS: $(TECGRAF_MSH_AUX_DIRS)"
+	@echo "TECGRAF_MSH_2D_DIR: $(TECGRAF_MSH_2D_DIR)"
+	@echo "TECGRAF_MSH_2D_INC_DIR: $(TECGRAF_MSH_2D_INC_DIR)"
+	@echo "TECGRAF_MSH_2D_SRC_DIR: $(TECGRAF_MSH_2D_SRC_DIR)"
+	@echo "TECGRAF_MSH_2D_DIRS: $(TECGRAF_MSH_2D_DIRS)"
+	@echo "TECGRAF_MSH_3D_DIR: $(TECGRAF_MSH_3D_DIR)"
+	@echo "TECGRAF_MSH_3D_INC_DIR: $(TECGRAF_MSH_3D_INC_DIR)"
+	@echo "TECGRAF_MSH_3D_SRC_DIR: $(TECGRAF_MSH_3D_SRC_DIR)"
+	@echo "TECGRAF_MSH_3D_DIRS: $(TECGRAF_MSH_3D_DIRS)"
+	@echo "TECGRAF_MSH_SURF_DIR: $(TECGRAF_MSH_SURF_DIR)"
+	@echo "TECGRAF_MSH_SURF_INC_DIR: $(TECGRAF_MSH_SURF_INC_DIR)"
+	@echo "TECGRAF_MSH_SURF_SRC_DIR: $(TECGRAF_MSH_SURF_SRC_DIR)"
+	@echo "TECGRAF_MSH_SURF_DIRS: $(TECGRAF_MSH_SURF_DIRS)"
+	@echo ""
+	@echo "Excluded files"
+	@echo "FTOOLS_EXCLUDED_SRC: $(FTOOLS_EXCLUDED_SRC)"
+	@echo "MTOOLS_EXCLUDED_SRC: $(MTOOLS_EXCLUDED_SRC)"
+	@echo "TECGRAF_EXCLUDED_SRC: $(TECGRAF_EXCLUDED_SRC)"
+	@echo ""
+	@echo "Compilers"
+	@echo "MPIRUN: $(MPIRUN)"
+	@echo "MPICPP: $(MPICPP)"
+	@echo "MPICC: $(MPICC)"
+	@echo "CPP: $(CPP)"
+	@echo "CC: $(CC)"
+	@echo "OMPI_CC: $(OMPI_CC)"
+	@echo "MPICH_CC: $(MPICH_CC)"
+	@echo ""
+	@echo "Compiler configuration paths"
+	@echo "PATH: $(PATH)"
+	@echo "lib-path: $(lib-path)"
+	@echo "incl-path: $(incl-path)"
+	@echo "C_INCLUDE_PATH: $(C_INCLUDE_PATH)"
+	@echo "CPLUS_INCLUDE_PATH: $(CPLUS_INCLUDE_PATH)"
+	@echo "LIB_PATHS: $(LIB_PATHS)"
+	@echo "LD_LIBRARY_PATH: $(LD_LIBRARY_PATH)"
+	@echo "LIBRARY_PATH: $(LIBRARY_PATH)"
+	@echo ""
+	@echo "Includes and libs"
+	@echo "INCLUDES_CLI: $(INCLUDES_CLI)"
+	@echo "INCLUDES_GUI: $(INCLUDES_GUI)"
+	@echo "CFLAGS_CLI: $(CFLAGS_CLI)"
+	@echo "CPPFLAGS_CLI: $(CPPFLAGS_CLI)"
+	@echo "CFLAGS_GUI: $(CFLAGS_GUI)"
+	@echo "CPPFLAGS_GUI: $(CPPFLAGS_GUI)"
+	@echo "SRC_BIN_CLI: $(SRC_BIN_CLI)"
+	@echo "LD_FLAGS_CLI: $(LD_FLAGS_CLI)"
+	@echo "LD_FLAGS_GUI: $(LD_FLAGS_GUI)"
+	@echo ""
+	@echo "Source files"
+	@echo "SRCS_C: $(SRCS_C)"
+	@echo "SRCS_CPP: $(SRCS_CPP)"
+	@echo "SRCS_PMTOOLS_CPP: $(SRCS_PMTOOLS_CPP)"
+	@echo "SRCS_FTOOLS_CPP: $(SRCS_FTOOLS_CPP)"
+	@echo "SRCS_MTOOLS_CPP: $(SRCS_MTOOLS_CPP)"
+	@echo "SRCS_TECGRAF_GEOMLIB_C: $(SRCS_TECGRAF_GEOMLIB_C)"
+	@echo "SRCS_TECGRAF_GEOMLIB_CPP: $(SRCS_TECGRAF_GEOMLIB_CPP)"
+	@echo "SRCS_TECGRAF_RTREE_C: $(SRCS_TECGRAF_RTREE_C)"
+	@echo "SRCS_TECGRAF_RTREE_CPP: $(SRCS_TECGRAF_RTREE_CPP)"
+	@echo "SRCS_TECGRAF_MSH_AUX_C: $(SRCS_TECGRAF_MSH_AUX_C)"
+	@echo "SRCS_TECGRAF_MSH_AUX_CPP: $(SRCS_TECGRAF_MSH_AUX_CPP)"
+	@echo "SRCS_TECGRAF_MSH_2D_C: $(SRCS_TECGRAF_MSH_2D_C)"
+	@echo "SRCS_TECGRAF_MSH_2D_CPP: $(SRCS_TECGRAF_MSH_2D_CPP)"
+	@echo "SRCS_TECGRAF_MSH_3D_C: $(SRCS_TECGRAF_MSH_3D_C)"
+	@echo "SRCS_TECGRAF_MSH_3D_CPP: $(SRCS_TECGRAF_MSH_3D_CPP)"
+	@echo "SRCS_TECGRAF_MSH_SURF_C: $(SRCS_TECGRAF_MSH_SURF_C)"
+	@echo "SRCS_TECGRAF_MSH_SURF_CPP: $(SRCS_TECGRAF_MSH_SURF_CPP)"
+	@echo ""
+	@echo "Object files"
+	@echo "CLI_OBJS: $(CLI_OBJS)"
+	@echo "CLI_PMTOOLS_OBJS: $(CLI_PMTOOLS_OBJS)"
+	@echo "CLI_FTOOLS_OBJS: $(CLI_FTOOLS_OBJS)"
+	@echo "CLI_MTOOLS_OBJS: $(CLI_MTOOLS_OBJS)"
+	@echo "CLI_TECGRAF_GEOMLIB_OBJS: $(CLI_TECGRAF_GEOMLIB_OBJS)"
+	@echo "CLI_TECGRAF_RTREE_OBJS: $(CLI_TECGRAF_RTREE_OBJS)"
+	@echo "CLI_TECGRAF_MSH_AUX_OBJS: $(CLI_TECGRAF_MSH_AUX_OBJS)"
+	@echo "CLI_TECGRAF_MSH_2D_OBJS: $(CLI_TECGRAF_MSH_2D_OBJS)"
+	@echo "CLI_TECGRAF_MSH_3D_OBJS: $(CLI_TECGRAF_MSH_3D_OBJS)"
+	@echo "CLI_TECGRAF_MSH_SURF_OBJS: $(CLI_TECGRAF_MSH_SURF_OBJS)"
+	@echo "GUI_OBJS: $(GUI_OBJS)"
+	@echo "GUI_FTOOLS_OBJS: $(GUI_FTOOLS_OBJS)"
+	@echo "GUI_MTOOLS_OBJS: $(GUI_MTOOLS_OBJS)"
+	@echo "GUI_TECGRAF_GEOMLIB_OBJS: $(GUI_TECGRAF_GEOMLIB_OBJS)"
+	@echo "GUI_TECGRAF_RTREE_OBJS: $(GUI_TECGRAF_RTREE_OBJS)"
+	@echo "GUI_TECGRAF_MSH_AUX_OBJS: $(GUI_TECGRAF_MSH_AUX_OBJS)"
+	@echo "GUI_TECGRAF_MSH_2D_OBJS: $(GUI_TECGRAF_MSH_2D_OBJS)"
+	@echo "GUI_TECGRAF_MSH_3D_OBJS: $(GUI_TECGRAF_MSH_3D_OBJS)"
+	@echo "GUI_TECGRAF_MSH_SURF_OBJS: $(GUI_TECGRAF_MSH_SURF_OBJS)"
+	@echo "CURRENT_CLI_OBJS: $(CURRENT_CLI_OBJS)"
+	@echo "CURRENT_GUI_OBJS: $(CURRENT_GUI_OBJS)"
+	@echo "ALL_CLI_OBJS: $(ALL_CLI_OBJS)"
+	@echo "ALL_GUI_OBJS: $(ALL_GUI_OBJS)"
+	@echo "ALL_OBJS: $(ALL_OBJS)"
+	@echo "ALL_BINS: $(ALL_BINS)"
+
+#If 'make options', then print help message with options.
+options: help
+
+#If 'make help', then print help message with options.
+help:
+	@echo "Compilation options: mode, timing, mtools, std, compiler-path, lib-path, incl-path, old-mpi, openmp and mpi"
+	@echo "mode: debug, gprof, callgrind, static, release (default: release)"
+	@echo "mode=debug    : files are compiled with -g3 -O0"
+	@echo "mode=gprof    : files are compiled with -g3 -O0 -pg"
+	@echo "mode=callgrind: files are compiled with -g -O2 and other options"
+	@echo "mode=static   : files are compiled with -O3 -static"
+	@echo "mode=release  : files are compiled with -O3 -s"
+	@echo ""
+	@echo "timing: true, false (default: false)"
+	@echo "timing=true : show timing measurements for parallel modules"
+	@echo "timing=false: do not show timing measurements for parallel modules"
+	@echo ""
+	@echo "mtools: true, false, only, serial, parallel (default: true)"
+	@echo "mtools=true    : also compile modules for mtools mesh generator inside $(BIN_CLI)"
+	@echo "mtools=false   : do not compile modules for mtools mesh generator"
+	@echo "mtools=only    : compile only modules for mtools mesh generator inside $(BIN_CLI)"
+	@echo "mtools=serial  : compile only the serial module for mtools mesh generator"
+	@echo "mtools=parallel: compile only the parallel module for mtools mesh generator (enables compilation with MPI)"
+	@echo ""
+	@echo "numerical: true, false (default: false)"
+	@echo "numerical=true : compile classes for numerical methods"
+	@echo "numerical=false: do not compile classes for numerical methods"
+	@echo ""
+	@echo "splines: true, false (default: false)"
+	@echo "splines=true : compile classes for splines and surfaces"
+	@echo "splines=false: do not compile classes for splines and surfaces"
+	@echo ""
+	@echo "tinyxml: true, false (default: true)"
+	@echo "tinyxml=true : compile classes for reading xml files"
+	@echo "tinyxml=false: do not compile classes for reading xml files"
+	@echo ""
+	@echo "tecgraf: true, false (default: false)"
+	@echo "tecgraf=true : compile classes for dealing with stuff from TecGraf"
+	@echo "tecgraf=false: do not compile classes for dealing with stuff from TecGraf"
+	@echo ""
+	@echo "std: c++98, c++0x (default: c++0x)"
+	@echo "std=c++98: use the C++ 98 standard"
+	@echo "std=c++0x: use the C++ 11 standard"
+	@echo ""
+	@echo "c-compiler: (optional) change the C compiler (default: use system $(CC))"
+	@echo "example: c-compiler=gcc-4.7"
+	@echo ""
+	@echo "cpp-compiler: (optional) change the C++ compiler (default: use system $(CPP))"
+	@echo "example: cpp-compiler=g++-4.7"
+	@echo ""
+	@echo "mpi-c-compiler: (optional) change the MPI C compiler (default: use system $(MPICC))"
+	@echo "example: mpi-c-compiler=mpicc.openmpi"
+	@echo ""
+	@echo "mpi-cpp-compiler: (optional) change the MPI C++ compiler (default: use system $(MPICPP))"
+	@echo "example: mpi-cpp-compiler=mpicxx.openmpi"
+	@echo ""
+	@echo "compiler-path: (optional) change the compiler path (default: use system compiler)"
+	@echo "compiler-path: (optional) will use a compiler in a bin directory under given compiler-path (compiler-path/bin)"
+	@echo "compiler-path: (optional) will try to set variables lib-path and incl-path as compiler-path, if these are not set by the user"
+	@echo "example: compiler-path=$(HOME)/build"
+	@echo ""
+	@echo "lib-path: (optional) change the library path (default: use system libraries)"
+	@echo "lib-path: (optional) will add library directories lib, lib32, lib64 and libexec under given lib-path (lib-path/lib, lib-path/lib32, lib-path/lib64 and lib-path/libexec)"
+	@echo "lib-path: (optional) set automatically by compiler-path, if not set by user"
+	@echo "example: lib-path=$(HOME)/build"
+	@echo ""
+	@echo "incl-path: (optional) change the header path (default: use system headers)"
+	@echo "incl-path: (optional) will add header directory include under given incl-path (incl-path/include)"
+	@echo "incl-path: (optional) set automatically by compiler-path, if not set by user"
+	@echo "example: incl-path=$(HOME)/build"
+	@echo ""
+	@echo "libmtools: (optional) use the lib/libMtools library instead of compiling it from the source code"
+	@echo "example: libmtools=lib/libMtools.a"
+	@echo ""
+	@echo "old-mpi: true, false (default: false)"
+	@echo "old-mpi=true : use an old version of mpi (that does not define some datatypes and functions)"
+	@echo "old-mpi=false: use a current version of mpi"
+	@echo ""
+	@echo "openmp: true, false (default: true)"
+	@echo "openmp=true : compile using openmp"
+	@echo "openmp=false: do not compile using openmp (disable shared memory parallelism)"
+	@echo ""
+	@echo "mpi: true, false (default: true)"
+	@echo "mpi=true : use mpi compiler"
+	@echo "mpi=false: do not use mpi compiler (disable distributed memory parallelism)"
+	@echo ""
+	@echo "opencv: true, false (default: true)"
+	@echo "opencv=true : use opencv to save videos in gui"
+	@echo "opencv=false: do not use opencv to save videos in gui"
+	@echo ""
+	@echo "Builds: all, cli, gui, lib, clean, build, rebuild, static, options and help (default: all)"
+	@echo "all:     same as cli and gui"
+	@echo "cli:     compiles version with command line interface"
+	@echo "gui:     compiles version with graphical user interface"
+	@echo "lib:     builds static library (no interface)"
+	@echo "mlib:    builds static library only for mtools (no interface)"
+	@echo "clean:   deletes object, binary and library files"
+	@echo "build:   same as all"
+	@echo "rebuild: same as clean and all"
+	@echo "static:  same as lib"
+	@echo "version:	show version of compilers"
+	@echo "flags:	show values of flags"
+	@echo "options: same as help"
+	@echo "help:    shows this help message"

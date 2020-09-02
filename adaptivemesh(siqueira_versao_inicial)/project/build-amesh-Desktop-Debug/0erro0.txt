@@ -1,0 +1,34 @@
+P 1: ( 1, -1, 0.1)
+	u = 0 v = 0
+	2 elementos incidentes: T-1 T-4
+	Gd = 2.35424 Ga = -0.262985
+	Hd = 0.00329858 Ha = 0.251431
+	Cd = 2.35424 Ca = -0.262985
+	|Cd - Ca| = 2.61722
+
+P 2: ( 1, 1, 0)
+	u = 1 v = 0
+	2 elementos incidentes: T-1 T-2
+	Gd = 2.35159 Ga = 0
+	Hd = -0.102459 Ha = 0
+
+P 3: ( -1, -1, 0)
+	u = 0 v = 1
+	2 elementos incidentes: T-3 T-4
+	Gd = 2.35159 Ga = 0
+	Hd = -0.102459 Ha = 0
+
+P 4: ( -1, 1, 0)
+	u = 1 v = 1
+	2 elementos incidentes: T-2 T-3
+	Gd = 2.35619 Ga = 0
+	Hd = 0.00331456 Ha = 0
+
+P 5: ( 0, 0, 0.0015625)
+	u = 0.5 v = 0.5
+	4 elementos incidentes: T-1 T-2 T-3 T-4
+	Gd = -0.00011311 Ga = 0
+	Hd = -0.0991527 Ha = 0.00789559
+	Cd = -0.0991527 Ca = 0.00789559
+	|Cd - Ca| = 0.107048
+

@@ -71,6 +71,8 @@ class CurvaParametrica : public Curva
 		virtual double calcularTamanho ( const Ponto& p );
 		// calcula comprimento total "L" da curva
 		virtual void calcular_L (  );
+		// calcula a curvatuta da curva
+		virtual double calcularCurvatura(double t);
 		// calcula o comprimento de curva entre os parâmetros t1 e t2
 		double comprimento ( double t1, double t2 );
 		
@@ -78,7 +80,7 @@ class CurvaParametrica : public Curva
 		// curva mais próximo de p
 		double encontrar_t ( const Ponto& p );
 			
-		// encontra o ponto p na curva dado um parâmetro p
+		// encontra o ponto p na curva dado um parâmetro t
 		Ponto parametrizar ( double t );
 		
 		// calcula o gradiente no parâmetro t

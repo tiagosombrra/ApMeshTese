@@ -77,3 +77,10 @@ double CurvaturaAnalitica::gauss (  )
 
 	return ( fabs(resultado) <= TOLERANCIA ) ? 0.0 : resultado;
 }
+
+double CurvaturaAnalitica::curvaturaCurva()
+{
+  //formula curvatura
+  // k = |r'(t)Xr''(t)| / |r'(t)|³
+
+}

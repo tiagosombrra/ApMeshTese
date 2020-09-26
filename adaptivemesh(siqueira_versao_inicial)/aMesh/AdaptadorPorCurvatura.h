@@ -38,6 +38,7 @@ class AdaptadorPorCurvatura : public Adaptador
 	static void adaptaCurvas ( CoonsPatch& patch, const unsigned int );
 	static SubMalha* adaptaDominio ( CoonsPatch* patch, const unsigned int, double fator_dis = 1.0 );
 	virtual void fazNada ()=0;
+	static void curvaturaCurva(Curva* curva);
 
 	friend class GeradorAdaptativoPorCurvatura;
 };

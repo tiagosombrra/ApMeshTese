@@ -38,6 +38,8 @@ class CurvParamBezier : public CurvaParametrica
 		CurvParamBezier ( Ponto p0, Ponto p1, Ponto p2, Ponto p3 );
 		CurvParamBezier ( CurvParamBezier* );
 
+		double calcularCurvatura(double t);
+
 		~CurvParamBezier (  );
 };
 #endif

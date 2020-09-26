@@ -38,6 +38,8 @@ class Curva
 		virtual double calcularTamanho ( const Ponto& p ) {return -1; };
 		// calcula o comprimento total "L" da curva
 		virtual void calcular_L (  ) {};
+		// calcula a curvatuta da curva
+		virtual double calcularCurvatura(double t){return -1;};
 		
 		void inserePonto ( Ponto* p );
 		unsigned int getNumDePontos (  ) const { return ( int ) pontos.size(); };

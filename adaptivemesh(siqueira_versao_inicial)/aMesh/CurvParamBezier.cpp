@@ -117,7 +117,18 @@ CurvParamBezier::CurvParamBezier ( CurvParamBezier* antiga ) :
 CurvaParametrica ( antiga )
 {
 	this->P2 = antiga->P2;
-	this->P3 = antiga->P3;
+  this->P3 = antiga->P3;
+}
+
+double CurvParamBezier::calcularCurvatura(double t)
+{
+  //calculo primeira derivada vetor(t) ponto P0
+  double v0 = -3*P0.x*pow((1-t),2)+3*P1.x*(3*pow(t,2)-4*t+1)+3*P2.x*(2*t-3*pow(t,2))+3*p3.x*pow(t,2);
+  double v1 = -3*P0.y*pow((1-t),2)+3*P1.y*(3*pow(t,2)-4*t+1)+3*P2.y*(2*t-3*pow(t,2))+3*p3.y*pow(t,2);
+  double v2 = -3*P0.z*pow((1-t),2)+3*P1.z*(3*pow(t,2)-4*t+1)+3*P2.z*(2*t-3*pow(t,2))+3*p3.z*pow(t,2);
+
+  Vetor d1Vetor;
+
 }
 
 

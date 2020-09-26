@@ -38,7 +38,12 @@ double CurvaParametrica::calcularTamanho ( const Ponto& p )
 // calcula comprimento total "L" da curva
 void CurvaParametrica::calcular_L (  )
 {
-	this->L = comprimento ( 0.0, 1.0 );
+  this->L = comprimento ( 0.0, 1.0 );
+}
+
+double CurvaParametrica::calcularCurvatura(double t)
+{
+  return -1;
 }
 
 double CurvaParametrica::comprimento(double t1, double t2, int parts, int points)
@@ -541,8 +546,7 @@ double CurvaParametrica::pontoMedio ( double t_p1, double t_p2 )
 // retorna o ponto que fica na metade de um segmento
 Ponto CurvaParametrica::pontoMedio ( const Ponto& p1, const Ponto& p2 )
 {
-	return this->parametrizar ( this->pontoMedio( this->encontrar_t ( p1 ),
-																 this->encontrar_t ( p2 ) ) );
+	return this->parametrizar ( this->pontoMedio( this->encontrar_t ( p1 ), this->encontrar_t ( p2 ) ) );
 }
 
 

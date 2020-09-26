@@ -437,3 +437,8 @@ SubMalha* AdaptadorPorCurvatura::adaptaDominio ( CoonsPatch* patch, const unsign
 
 	return novaSub;
 }
+
+void AdaptadorPorCurvatura::curvaturaCurva(Curva* curva)
+{
+
+}

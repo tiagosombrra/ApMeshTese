@@ -38,6 +38,8 @@ class CurvaturaAnalitica : public Curvatura
 	
 		virtual double media (  );
 		virtual double gauss (  );
+		virtual double curvaturaCurva (  );
+
 		
 		CurvaturaAnalitica ( const Ponto& v, CoonsPatch& p );
 };

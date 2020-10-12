@@ -56,15 +56,23 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurva ( Curva* c, double exp, map <
 
 	// 1.2. Para cada segmento da curva
 	while ( proxi != pontos.end ( ) )
-	{
+	{    
+
 		//cout << "entrou no while" << endl;
 		// 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
 		h_velho = c->calcularTamanho ( *(*atual), *(*proxi) );
+
+        cout << "tamanho do segmento de curva"<<h_velho<< endl;
 
 		//cout << "calculou novo tamanho" << endl;
 
 		// 1.2.2. Calcule o ponto médio do segmento
 		C_seg = static_cast < CurvaParametrica* > ( c )->pontoMedio ( *(*atual), *(*proxi) );
+
+ //Teste para curvatura com a curva
+        t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
+        double k = c->calcularCurvatura(t);
+        cout << "curvatura  da curva = "<<k<<" com t = "<<t<< endl;
 
 		//cout << "determinou o ponto médio" << endl;
 

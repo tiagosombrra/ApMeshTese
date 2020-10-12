@@ -578,7 +578,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
   // 4. enquanto o erro global de uma malha gerada não for menor que o desejado
   while ( this->erro > EPSYLON )
     {
-      if (passo >= 6)
+      if (passo >= 3)
         {
           break;
         }

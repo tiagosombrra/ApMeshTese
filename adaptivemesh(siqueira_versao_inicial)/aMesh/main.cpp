@@ -90,7 +90,7 @@ Geometria *modelCurvaBezier(Geometria *geo){
   //==============================================================================
   // ============================= Patch 1 ===================================
 
-  Ponto* p00 = new Vertice ( 1.0, -1.0,  0.0 );
+  Ponto* p00 = new Vertice ( 1.0, -1.0,  0.1 );
   Ponto* p10 = new Vertice ( 0.5, -0.5,  0.0 );
   Ponto* p20 = new Vertice ( 1.5, 0.5,  0.0 );
   Ponto* p30 = new Vertice ( 1.0, 1.0,  0.0 );

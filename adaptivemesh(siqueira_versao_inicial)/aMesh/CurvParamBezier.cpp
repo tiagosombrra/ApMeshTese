@@ -121,13 +121,23 @@ CurvaParametrica ( antiga )
 }
 
 double CurvParamBezier::calcularCurvatura(double t)
-{
-  //calculo primeira derivada vetor(t) ponto P0
-  double v0 = -3*P0.x*pow((1-t),2)+3*P1.x*(3*pow(t,2)-4*t+1)+3*P2.x*(2*t-3*pow(t,2))+3*p3.x*pow(t,2);
-  double v1 = -3*P0.y*pow((1-t),2)+3*P1.y*(3*pow(t,2)-4*t+1)+3*P2.y*(2*t-3*pow(t,2))+3*p3.y*pow(t,2);
-  double v2 = -3*P0.z*pow((1-t),2)+3*P1.z*(3*pow(t,2)-4*t+1)+3*P2.z*(2*t-3*pow(t,2))+3*p3.z*pow(t,2);
+{  
+  //B'(t)= 3(1-t)²(P1-P0)+6t(1-t)(P2-P1)+3t²(P3-P2)
+  double v0 = 3*pow((1-t),2)*(P1.x-P0.x)+6*t*(1-t)*(P2.x-P1.x)+3*pow(t,2)*(P3.x-P2.x);
+  double v1 = 3*pow((1-t),2)*(P1.y-P0.y)+6*t*(1-t)*(P2.y-P1.y)+3*pow(t,2)*(P3.y-P2.y);
+  double v2 = 3*pow((1-t),2)*(P1.z-P0.z)+6*t*(1-t)*(P2.z-P1.z)+3*pow(t,2)*(P3.z-P2.z);
 
-  Vetor d1Vetor;
+  //B''(t)= 6(1-t)(P2-2P1+P0)+6t(P3-2P2+P1)
+  double v00 = 6*(1-t)*(P2.x-2*P1.x+P0.x)+6*t*(P3.x-2*P2.x+P1.x);
+  double v10 = 6*(1-t)*(P2.y-2*P1.y+P0.y)+6*t*(P3.y-2*P2.y+P1.y);
+  double v20 = 6*(1-t)*(P2.z-2*P1.z+P0.z)+6*t*(P3.z-2*P2.z+P1.z);
+
+  Vetor d1Vetor(v0,v1,v2);
+  Vetor d2Vetor(v00,v10,v20);
+
+  double k = ((d1Vetor.operator *(d2Vetor)).modulo())/(pow(d1Vetor.modulo(),3));
+
+  return k;
 
 }
 

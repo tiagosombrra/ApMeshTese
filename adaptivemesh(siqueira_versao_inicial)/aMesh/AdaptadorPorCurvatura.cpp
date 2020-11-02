@@ -443,7 +443,110 @@ SubMalha* AdaptadorPorCurvatura::adaptaDominio ( CoonsPatch* patch, const unsign
 		delete f;
 	}
 
-	return novaSub;
+    return novaSub;
+}
+
+list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaturaSuperficie(Curva *, double, map<Ponto *, Ponto *> &, double fator_dis)
+{
+    //cout << "entrou no adaptaCurva" << endl;
+        double h_velho = 0; // o tamanho velho de cada segmento
+        double h_novo = 0; // o tamanho novo de cada segmento
+        double h_par = 0; // tamanho paramétrico de cada segmento
+        double t = 0; // parametro correspondente ao ponto central do segmento
+        double f = DISCRETIZACAO_CURVA; //pow ( 2, exp ); // o fator de rediscretização
+        double ka = 0; // curvatura analítica do ponto central de um segmento
+        double kd = 0; // média das curvaturas discretas dos extremos de um segmento
+        list < double > parametros; // os parametros gerados na rediscretização
+        list < Ponto* > pontos; // os pontos da curva
+        list < Ponto* > :: iterator atual;
+        list < Ponto* > :: iterator proxi;
+        Ponto C_seg; // ponto médio do segmentos
+
+        static_cast < CurvaParametrica* > ( c )->ordenaLista ( );
+
+        pontos = c->getPontos ( );
+        atual = pontos.begin ( );
+        proxi = pontos.begin ( ); ++proxi;
+
+        // 1.1. Inicialize a árvore binária com a raiz para toda a curva
+        BinTree bt;
+
+        // 1.2. Para cada segmento da curva
+        while ( proxi != pontos.end ( ) )
+        {
+            //cout << "entrou no while" << endl;
+            // 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
+            h_velho = c->calcularTamanho ( *(*atual), *(*proxi) );
+
+            //cout << "calculou novo tamanho" << endl;
+
+            // 1.2.2. Calcule o ponto médio do segmento
+            C_seg = static_cast < CurvaParametrica* > ( c )->pontoMedio ( *(*atual), *(*proxi) );
+
+            //cout << "determinou o ponto médio" << endl;
+
+            // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
+            CurvaturaAnalitica ka_p0 (	C_seg, *((CoonsPatch *)c->getPatch( 0 )) );
+
+            Patch* ptch = c->getPatch( 1 );
+
+            // Se houver patch vizinho a curvatura será a maior dentre os dois patches
+            if ( ptch )
+            {
+                CurvaturaAnalitica ka_p1 (	C_seg, *((CoonsPatch *)ptch) );
+
+                double Ga_p0 = ka_p0.gauss ( );
+                double Ga_p1 = ka_p1.gauss ( );
+
+                ka = ( fabs(Ga_p0) > fabs(Ga_p1) ) ? Ga_p0 : Ga_p1;
+
+                if ( fabs ( ka ) < TOLERANCIA ) // testamos se ka é ZERO!
+                {
+                    double Ha_p0 = ka_p0.media ( );
+                    double Ha_p1 = ka_p1.media ( );
+
+                    ka = ( Ha_p0 > Ha_p1 ) ? Ha_p0 : Ha_p1;
+                    kd = ( ((Noh*)(*atual))->Hd + ((Noh*)(*proxi))->Hd ) / 2.0;
+                }
+                else
+                {
+                    kd = ( ((Noh*)(*atual))->Gd + ((Noh*)(*proxi))->Gd ) / 2.0;
+                }
+            }
+            else
+            {
+                ka = ka_p0.gauss ( );
+
+                if ( fabs ( ka ) < TOLERANCIA ) // testamos se ka é ZERO!
+                {
+                    ka = ka_p0.media ( );
+                    kd = ( ((Noh*)(*atual))->Hd + ((Noh*)(*proxi))->Hd ) / 2.0;
+                }
+                else
+                {
+                    kd = ( ((Noh*)(*atual))->Gd + ((Noh*)(*proxi))->Gd ) / 2.0;
+                }
+            }
+
+            // 1.2.4. O novo tamanho é calculado de acordo com os cenários
+            h_novo = novoTamanho ( ka, kd, f, h_velho );
+
+            //cout << "calculou novo tamanho" << endl;
+
+            // 1.2.5. Calcule o tamanho paramétrico
+            h_par = h_novo / c->get_L ( );
+
+            // 1.2.6. Encontre o parâmetro do ponto médio
+            t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
+
+            //cout << "encontrou t do ponto médio: " << t << endl;
+
+            bt.subdividir( t, h_par*fator_dis, (CurvaParametrica*)c );
+
+            //cout << "subdividiu a bintree" << endl;
+
+            ++proxi;
+            ++atual;
 }
 
 void AdaptadorPorCurvatura::curvaturaCurva(Curva* curva)

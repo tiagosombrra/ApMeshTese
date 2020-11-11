@@ -32,13 +32,14 @@ class AdaptadorPorCurvatura : public Adaptador
 {
 	static unsigned long int id_noh;
 	static unsigned long int id_ele;
-	static list < Ponto* > adaptaCurva ( Curva*, double, map < Ponto*, Ponto* > &, double fator_dis = 1.0 );
+    static list < Ponto* > adaptaCurvaByCurva ( Curva*, double, map < Ponto*, Ponto* > &, double fator_dis = 1.0 );
+    static list < Ponto* > adaptaCurvaBySuperficie ( Curva* c, double, map < Ponto*, Ponto* > &, double fator_dis = 1.0 );
+
 	static tuple <double, double> curvatura ( CurvaturaAnalitica& ka, CurvaturaDiscreta& kd );
 	static double novoTamanho ( const double, const double, const double, const double );
 	static void adaptaCurvas ( CoonsPatch& patch, const unsigned int );
 	static SubMalha* adaptaDominio ( CoonsPatch* patch, const unsigned int, double fator_dis = 1.0 );
 	virtual void fazNada ()=0;
-	static void curvaturaCurva(Curva* curva);
 
 	friend class GeradorAdaptativoPorCurvatura;
 };

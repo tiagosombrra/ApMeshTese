@@ -90,19 +90,19 @@ Geometria *modelCurvaBezier(Geometria *geo){
   //==============================================================================
   // ============================= Patch 1 ===================================
 
-  Ponto* p00 = new Vertice ( 1.0, -1.0,  0.1 );
+  Ponto* p00 = new Vertice ( 1.0, -1.0,  0.0 );
   Ponto* p10 = new Vertice ( 0.5, -0.5,  0.0 );
-  Ponto* p20 = new Vertice ( 1.5, 0.5,  0.0 );
+  Ponto* p20 = new Vertice ( 0.5, 0.5,  0.0 );
   Ponto* p30 = new Vertice ( 1.0, 1.0,  0.0 );
 
   Ponto* p01 = new Vertice ( 0.5, -1.0,  0.0 );
-  Ponto* p11 = new Vertice ( 0.5, -0.5,  0.0 );
-  Ponto* p21 = new Vertice ( 0.5, 0.5,  0.0 );
+  Ponto* p11 = new Vertice ( 0.5, -0.5,  1.0 );
+  Ponto* p21 = new Vertice ( 0.5, 0.5,  1.0 );
   Ponto* p31 = new Vertice ( 0.5, 1.0,  0.0 );
 
   Ponto* p02 = new Vertice ( -0.5,  -1.0,  0.0 );
-  Ponto* p12 = new Vertice ( -0.5,  -0.5,  0.0 );
-  Ponto* p22 = new Vertice ( -0.5,  0.5,  0.0 );
+  Ponto* p12 = new Vertice ( -0.5,  -0.5,  1.0 );
+  Ponto* p22 = new Vertice ( -0.5,  0.5,  1.0 );
   Ponto* p32 = new Vertice ( -0.5,  1.0,  0.0 );
 
   Ponto* p03 = new Vertice ( -1.0,  -1.0,  0.0 );
@@ -2247,4 +2247,3 @@ cout << Gz.getElem ( 0, 0) << " " << Gz.getElem ( 0, 1) << " " << Gz.getElem ( 0
 cout << Gz.getElem ( 1, 0) << " " << Gz.getElem ( 1, 1) << " " << Gz.getElem ( 1, 2) << " " << Gz.getElem ( 1, 3) << endl;
 cout << Gz.getElem ( 2, 0) << " " << Gz.getElem ( 2, 1) << " " << Gz.getElem ( 2, 2) << " " << Gz.getElem ( 2, 3) << endl;
 cout << Gz.getElem ( 3, 0) << " " << Gz.getElem ( 3, 1) << " " << Gz.getElem ( 3, 2) << " " << Gz.getElem ( 3, 3) << endl;*/
-

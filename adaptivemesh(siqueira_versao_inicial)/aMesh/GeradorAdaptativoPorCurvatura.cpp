@@ -578,7 +578,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
   // 4. enquanto o erro global de uma malha gerada não for menor que o desejado
   while ( this->erro > EPSYLON )
     {
-      if (passo >= 3)
+      if (passo >= 5)
         {
           break;
         }
@@ -599,11 +599,10 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
       //for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
       for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
         {
-          cout << "adaptando a curva " << i + 1 << endl;
-          novosPontos[i] = AdaptadorPorCurvatura::adaptaCurva ( geo->getCurva( i ), this->passo, mapaPontos );
-          //cout << endl;
-
-          //if (passo == 2) break;
+          cout << "adaptando a curva pela curvatura da curva " << i + 1 << endl;
+          novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), this->passo, mapaPontos );
+          geo->getCurva( i )->setPontos(novosPontos[i]);
+          novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), this->passo, mapaPontos );
         }
 
       cout << "atualizando as curvas" << endl;

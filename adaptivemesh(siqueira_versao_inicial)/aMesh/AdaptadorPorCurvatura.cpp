@@ -74,7 +74,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, double exp
 
 		// 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
 
-        double ka = c->calcularCurvatura(t);
+        ka = c->calcularCurvatura(t);
 
         kd = (c->calcularCurvatura(0.0) + c->calcularCurvatura(1.0)) / 2.0;
 

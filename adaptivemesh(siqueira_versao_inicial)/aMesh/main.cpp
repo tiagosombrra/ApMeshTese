@@ -48,7 +48,7 @@ int main(int argc, char **argv)
   if (argc == 1)
     {
       Geometria *geo = new Geometria;
-      M.setGeometria ( modelCurvaBezier(geo) );
+      M.setGeometria ( modelUtahteapot(geo) );
     }
   else
     {

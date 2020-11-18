@@ -62,7 +62,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, double exp
 		// 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
 		h_velho = c->calcularTamanho ( *(*atual), *(*proxi) );
 
-        cout << "tamanho do segmento de curva"<<h_velho<< endl;
+       // cout << "tamanho do segmento de curva"<<h_velho<< endl;
 
 		//cout << "calculou novo tamanho" << endl;
 
@@ -79,7 +79,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, double exp
         kd = (c->calcularCurvatura(0.0) + c->calcularCurvatura(1.0)) / 2.0;
 
 		// 1.2.4. O novo tamanho é calculado de acordo com os cenários
-		h_novo = novoTamanho ( ka, kd, f, h_velho );
+        h_novo = novoTamanho ( ka, kd, f, h_velho );
 
 		//cout << "calculou novo tamanho" << endl;
 
@@ -190,7 +190,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaBySuperficie (Curva* c, double
         // 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
         h_velho = c->calcularTamanho ( *(*atual), *(*proxi) );
 
-        cout << "tamanho do segmento de curva"<<h_velho<< endl;
+      //  cout << "tamanho do segmento de curva"<<h_velho<< endl;
 
         //cout << "calculou novo tamanho" << endl;
 
@@ -200,7 +200,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaBySuperficie (Curva* c, double
  //Teste para curvatura com a curva
         t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
         double k = c->calcularCurvatura(t);
-        cout << "curvatura  da curva = "<<k<<" com t = "<<t<< endl;
+        //cout << "curvatura  da curva = "<<k<<" com t = "<<t<< endl;
 
         //cout << "determinou o ponto médio" << endl;
 

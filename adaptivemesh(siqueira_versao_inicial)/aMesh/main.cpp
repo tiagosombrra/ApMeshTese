@@ -48,7 +48,7 @@ int main(int argc, char **argv)
   if (argc == 1)
     {
       Geometria *geo = new Geometria;
-      M.setGeometria ( modelNariz(geo) );
+      M.setGeometria ( modelUtahteapot(geo) );
     }
   else
     {
@@ -382,7 +382,7 @@ Geometria *modelBordaCurva(Geometria *geo){
   Vetor* Qv01 = new Vetor ( -10.0, 10.0, 0.0 );
   Vetor* Qv11 = new Vetor ( -10.0, 10.0, 0.0 );
 
-  Vetor* tw00 = new Vetor ( 0.0, 0.0, 10.0 );
+  Vetor* tw00 = new Vetor ( 0.0, 0.0, 0.0 );
   Vetor* tw10 = new Vetor ( 0.0, 0.0, 0.0 );
   Vetor* tw01 = new Vetor ( 0.0, 0.0, 0.0 );
   Vetor* tw11 = new Vetor ( 0.0, 0.0, 0.0 );

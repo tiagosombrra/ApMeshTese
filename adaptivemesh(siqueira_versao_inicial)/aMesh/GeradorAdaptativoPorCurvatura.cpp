@@ -118,7 +118,7 @@ void escreveMalha(Malha *malha, int passo)
 
   arq.close();
 
-  cout << "escreveu o arquivo para o passo " << passo << endl;
+//  cout << "escreveu o arquivo para o passo " << passo << endl;
 }
 
 
@@ -518,7 +518,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
           arquivo << endl;
 
           //
-          cout << "\t\tNjs = " << Njs << endl;
+        //  cout << "\t\tNjs = " << Njs << endl;
         }
 
       if (Njs > 0.0 && curvPower > 0.0) {
@@ -580,7 +580,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
   // 4. enquanto o erro global de uma malha gerada não for menor que o desejado
   while ( this->erro > EPSYLON )
     {
-      if (passo >= 5)
+      if (passo >= 4)
         {
           break;
         }
@@ -603,9 +603,9 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
         {
           cout << "adaptando a curva pela curvatura da curva " << i + 1 << endl;
 
-          novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), this->passo, mapaPontos );
-          //geo->getCurva( i )->setPontos(novosPontos[i]);
-          //novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), this->passo, mapaPontos );
+         novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), this->passo, mapaPontos );
+         geo->getCurva( i )->setPontos(novosPontos[i]);
+         novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), this->passo, mapaPontos );
         }
 
       cout << "atualizando as curvas" << endl;

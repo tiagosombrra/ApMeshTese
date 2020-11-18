@@ -1,0 +1,696 @@
+P 18: ( 1, -1, 0)
+	u = 0 v = 0
+	14 elementos incidentes: T-1 T-4 T-1 T-5 T-7 T-11 T-13 T-15 T-25 T-26 T-42 T-47 T-54 T-63
+	Gd = -1.62663 Ga = 0
+	Hd = 0 Ha = 0
+
+P 20: ( 0.909571, -0.897381, 0)
+	u = 0.0644386 v = 0
+	3 elementos incidentes: T-26 T-41 T-42
+	Gd = -30.5158 Ga = 0
+	Hd = 0 Ha = 0
+
+P 21: ( 0.832017, -0.784602, 0)
+	u = 0.128501 v = 0
+	3 elementos incidentes: T-29 T-39 T-41
+	Gd = -25.3466 Ga = 0
+	Hd = 0 Ha = 0
+
+P 22: ( 0.76738, -0.663962, 0)
+	u = 0.191909 v = 0
+	3 elementos incidentes: T-28 T-37 T-39
+	Gd = -26.0182 Ga = 0
+	Hd = 0 Ha = 0
+
+P 23: ( 0.715348, -0.537418, 0)
+	u = 0.254578 v = 0
+	3 elementos incidentes: T-25 T-31 T-37
+	Gd = -27.6461 Ga = 0
+	Hd = 0 Ha = 0
+
+P 24: ( 0.675457, -0.406494, 0)
+	u = 0.316594 v = 0
+	3 elementos incidentes: T-24 T-25 T-30
+	Gd = -31.7795 Ga = 0
+	Hd = 0 Ha = 0
+
+P 25: ( 0.647301, -0.272535, 0)
+	u = 0.378068 v = 0
+	3 elementos incidentes: T-22 T-24 T-33
+	Gd = -36.0747 Ga = 0
+	Hd = 0 Ha = 0
+
+P 26: ( 0.630554, -0.136681, 0)
+	u = 0.439153 v = 0
+	3 elementos incidentes: T-20 T-22 T-32
+	Gd = -37.9769 Ga = 0
+	Hd = 0 Ha = 0
+
+P 27: ( 0.625, 0, 0)
+	u = 0.5 v = 0
+	2 elementos incidentes: T-20 T-21
+	Gd = -66.4287 Ga = 0
+	Hd = 0 Ha = 0
+
+P 28: ( 0.630554, 0.136681, 0)
+	u = 0.560847 v = 0
+	4 elementos incidentes: T-21 T-23 T-34 T-48
+	Gd = -30.8453 Ga = 0
+	Hd = 0 Ha = 0
+
+P 29: ( 0.647301, 0.272535, 0)
+	u = 0.621932 v = 0
+	2 elementos incidentes: T-1 T-23
+	Gd = -122.708 Ga = 0
+	Hd = 0 Ha = 0
+
+P 30: ( 0.659934, 0.339816, 0)
+	u = 0.652609 v = 0
+	3 elementos incidentes: T-1 T-2 T-6
+	Gd = -63.9313 Ga = 0
+	Hd = 0 Ha = 0
+
+P 31: ( 0.675457, 0.406494, 0)
+	u = 0.683406 v = 0
+	3 elementos incidentes: T-2 T-3 T-5
+	Gd = -62.0172 Ga = 0
+	Hd = 0 Ha = 0
+
+P 32: ( 0.693921, 0.472447, 0)
+	u = 0.714354 v = 0
+	3 elementos incidentes: T-3 T-4 T-10
+	Gd = -59.96 Ga = 0
+	Hd = 0 Ha = 0
+
+P 33: ( 0.715348, 0.537418, 0)
+	u = 0.745422 v = 0
+	3 elementos incidentes: T-4 T-8 T-38
+	Gd = -54.8649 Ga = 0
+	Hd = 0 Ha = 0
+
+P 34: ( 0.76738, 0.663962, 0)
+	u = 0.808091 v = 0
+	4 elementos incidentes: T-38 T-40 T-49 T-50
+	Gd = -31.6189 Ga = 0
+	Hd = 0 Ha = 0
+
+P 35: ( 0.832017, 0.784602, 0)
+	u = 0.871499 v = 0
+	2 elementos incidentes: T-16 T-40
+	Gd = -92.7242 Ga = 0
+	Hd = 0 Ha = 0
+
+P 36: ( 0.869179, 0.842123, 0)
+	u = 0.903468 v = 0
+	3 elementos incidentes: T-12 T-16 T-17
+	Gd = -49.263 Ga = 0
+	Hd = 0 Ha = 0
+
+P 37: ( 0.909571, 0.897381, 0)
+	u = 0.935561 v = 0
+	3 elementos incidentes: T-11 T-17 T-18
+	Gd = -48.7068 Ga = 0
+	Hd = 0 Ha = 0
+
+P 38: ( 0.953184, 0.950097, 0)
+	u = 0.967749 v = 0
+	3 elementos incidentes: T-14 T-18 T-19
+	Gd = -47.1934 Ga = 0
+	Hd = 0 Ha = 0
+
+P 19: ( 1, 1, 0)
+	u = 1 v = 0
+	15 elementos incidentes: T-1 T-2 T-2 T-3 T-8 T-9 T-12 T-16 T-18 T-22 T-23 T-19 T-53 T-57 T-64
+	Gd = -1.6114 Ga = 0
+	Hd = 0 Ha = 0
+
+P 40: ( -1, 1, 0)
+	u = 1 v = 1
+	16 elementos incidentes: T-2 T-3 T-3 T-4 T-6 T-9 T-10 T-18 T-19 T-21 T-46 T-61 T-62 T-64 T-65 T-66
+	Gd = -1.78515 Ga = 0
+	Hd = 0 Ha = 0
+
+P 42: ( -1, -1, 0)
+	u = 0 v = 1
+	15 elementos incidentes: T-3 T-4 T-4 T-5 T-4 T-10 T-11 T-19 T-20 T-26 T-27 T-46 T-47 T-51 T-52
+	Gd = -1.66804 Ga = 0
+	Hd = 0 Ha = 0
+
+P 43: ( 0.825032, -0.889816, 0)
+	u = 0.0689235 v = 0.0598816
+	4 elementos incidentes: T-26 T-42 T-54 T-67
+	Gd = -1.52873e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 44: ( 0.766897, -0.814134, 0)
+	u = 0.112253 v = 0.0706589
+	6 elementos incidentes: T-26 T-29 T-41 T-67 T-68 T-71
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 45: ( 0.656714, -0.75019, 0)
+	u = 0.147039 v = 0.130884
+	5 elementos incidentes: T-27 T-68 T-71 T-72 T-73
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 46: ( 0.61709, -0.813716, 0)
+	u = 0.112485 v = 0.17238
+	7 elementos incidentes: T-27 T-54 T-58 T-59 T-63 T-67 T-68
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 47: ( 0.722185, -0.710011, 0)
+	u = 0.168206 v = 0.0673807
+	6 elementos incidentes: T-28 T-29 T-39 T-69 T-71 T-72
+	Gd = -1.02174e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 48: ( 0.677281, -0.588775, 0)
+	u = 0.229528 v = 0.0673464
+	6 elementos incidentes: T-28 T-31 T-37 T-69 T-70 T-78
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 49: ( 0.582261, -0.511301, 0)
+	u = 0.267143 v = 0.135249
+	6 elementos incidentes: T-70 T-75 T-78 T-79 T-96 T-97
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 50: ( 0.609816, -0.645418, 0)
+	u = 0.201303 v = 0.140098
+	6 elementos incidentes: T-69 T-70 T-72 T-73 T-74 T-75
+	Gd = 7.46084e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 51: ( 0.464183, -0.557477, 0)
+	u = 0.24485 v = 0.228056
+	7 elementos incidentes: T-74 T-75 T-95 T-96 T-98 T-107 T-108
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 52: ( 0.542972, -0.704429, 0)
+	u = 0.171109 v = 0.197514
+	5 elementos incidentes: T-27 T-58 T-73 T-74 T-107
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 53: ( 0.643296, -0.457239, 0)
+	u = 0.292831 v = 0.0641213
+	6 elementos incidentes: T-25 T-30 T-31 T-76 T-78 T-79
+	Gd = -2.416e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 54: ( 0.620392, -0.326385, 0)
+	u = 0.353544 v = 0.0595764
+	6 elementos incidentes: T-24 T-30 T-33 T-76 T-77 T-82
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 55: ( 0.57187, -0.264058, 0)
+	u = 0.381909 v = 0.106501
+	5 elementos incidentes: T-77 T-82 T-83 T-84 T-92
+	Gd = -1.8157e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 56: ( 0.573872, -0.377159, 0)
+	u = 0.330198 v = 0.120169
+	6 elementos incidentes: T-76 T-77 T-79 T-92 T-93 T-97
+	Gd = -2.3297e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 57: ( 0.604449, -0.193313, 0)
+	u = 0.413799 v = 0.0573589
+	6 elementos incidentes: T-22 T-32 T-33 T-80 T-82 T-83
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 58: ( 0.598164, -0.0292917, 0)
+	u = 0.48698 v = 0.0530121
+	7 elementos incidentes: T-20 T-21 T-32 T-34 T-80 T-81 T-113
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 59: ( 0.540636, -0.0083377, 0)
+	u = 0.496294 v = 0.124143
+	6 elementos incidentes: T-81 T-86 T-87 T-113 T-114 T-137
+	Gd = -9.42285e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 60: ( 0.552214, -0.151828, 0)
+	u = 0.432383 v = 0.116895
+	6 elementos incidentes: T-80 T-81 T-83 T-84 T-85 T-86
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 61: ( 0.475454, -0.148813, 0)
+	u = 0.433731 v = 0.187129
+	6 elementos incidentes: T-85 T-86 T-87 T-88 T-90 T-91
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 62: ( 0.513755, -0.281671, 0)
+	u = 0.373922 v = 0.163267
+	6 elementos incidentes: T-84 T-85 T-90 T-92 T-93 T-94
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 63: ( 0.466516, 0.00380887, 0)
+	u = 0.501693 v = 0.191553
+	6 elementos incidentes: T-87 T-88 T-89 T-137 T-138 T-143
+	Gd = -7.09112e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 64: ( 0.381552, 0.0321706, 0)
+	u = 0.514299 v = 0.255041
+	5 elementos incidentes: T-89 T-102 T-143 T-144 T-181
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 65: ( 0.361248, -0.126578, 0)
+	u = 0.443663 v = 0.270037
+	6 elementos incidentes: T-88 T-89 T-91 T-100 T-101 T-102
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 66: ( 0.397506, -0.337131, 0)
+	u = 0.348622 v = 0.253795
+	7 elementos incidentes: T-90 T-91 T-94 T-95 T-98 T-99 T-100
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 67: ( 0.196503, -0.278944, 0)
+	u = 0.37516 v = 0.373295
+	6 elementos incidentes: T-99 T-100 T-101 T-103 T-105 T-106
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 68: ( 0.249101, -0.521187, 0)
+	u = 0.2624 v = 0.352913
+	6 elementos incidentes: T-98 T-99 T-105 T-108 T-109 T-110
+	Gd = -1.76589e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 69: ( 0.220257, -0.0140355, 0)
+	u = 0.493762 v = 0.356356
+	7 elementos incidentes: T-101 T-102 T-103 T-104 T-181 T-182 T-192
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 70: ( 0.0320687, 0.0662231, 0)
+	u = 0.529444 v = 0.459491
+	5 elementos incidentes: T-104 T-192 T-193 T-194 T-202
+	Gd = -2.23732e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 71: ( -0.0108425, -0.158648, 0)
+	u = 0.429333 v = 0.482131
+	6 elementos incidentes: T-103 T-104 T-106 T-202 T-203 T-207
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 72: ( -0.0238362, -0.426052, 0)
+	u = 0.307472 v = 0.491982
+	6 elementos incidentes: T-43 T-105 T-106 T-110 T-206 T-207
+	Gd = -1.17503e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 73: ( 0.39179, -0.681918, 0)
+	u = 0.182732 v = 0.285079
+	5 elementos incidentes: T-58 T-59 T-107 T-108 T-109
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 74: ( 0.119014, -0.731435, 0)
+	u = 0.156979 v = 0.430677
+	7 elementos incidentes: T-43 T-47 T-51 T-59 T-63 T-109 T-110
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 75: ( 0.59173, 0.124874, 0)
+	u = 0.555576 v = 0.0677448
+	6 elementos incidentes: T-7 T-34 T-48 T-111 T-113 T-114
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 76: ( 0.596449, 0.246568, 0)
+	u = 0.61018 v = 0.0758211
+	6 elementos incidentes: T-7 T-111 T-112 T-117 T-118 T-126
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 77: ( 0.549448, 0.261725, 0)
+	u = 0.617035 v = 0.129022
+	6 elementos incidentes: T-112 T-126 T-127 T-129 T-139 T-140
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 78: ( 0.539126, 0.130964, 0)
+	u = 0.558294 v = 0.129137
+	6 elementos incidentes: T-111 T-112 T-114 T-137 T-138 T-139
+	Gd = -1.0664e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 79: ( 0.63958, 0.336239, 0)
+	u = 0.650969 v = 0.0347844
+	6 elementos incidentes: T-2 T-5 T-6 T-115 T-117 T-118
+	Gd = 4.08469e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 80: ( 0.656324, 0.413376, 0)
+	u = 0.686611 v = 0.0340468
+	6 elementos incidentes: T-3 T-5 T-10 T-115 T-116 T-121
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 81: ( 0.6349, 0.428486, 0)
+	u = 0.693666 v = 0.0661768
+	5 elementos incidentes: T-116 T-121 T-122 T-123 T-128
+	Gd = -3.9458e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 82: ( 0.611515, 0.349197, 0)
+	u = 0.656916 v = 0.0754823
+	6 elementos incidentes: T-115 T-116 T-118 T-126 T-127 T-128
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 83: ( 0.628259, 0.245634, 0)
+	u = 0.609758 v = 0.029409
+	6 elementos incidentes: T-1 T-6 T-7 T-23 T-48 T-117
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 84: ( 0.674411, 0.485188, 0)
+	u = 0.720397 v = 0.0347145
+	6 elementos incidentes: T-4 T-8 T-10 T-119 T-121 T-122
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 85: ( 0.69534, 0.566533, 0)
+	u = 0.759565 v = 0.0399542
+	6 elementos incidentes: T-8 T-9 T-38 T-49 T-119 T-120
+	Gd = -2.7789e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 86: ( 0.663591, 0.563725, 0)
+	u = 0.758195 v = 0.0732392
+	4 elementos incidentes: T-9 T-120 T-125 T-147
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 87: ( 0.643801, 0.496882, 0)
+	u = 0.725964 v = 0.0744752
+	6 elementos incidentes: T-119 T-120 T-122 T-123 T-124 T-125
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 88: ( 0.608302, 0.538084, 0)
+	u = 0.745744 v = 0.11827
+	7 elementos incidentes: T-124 T-125 T-131 T-132 T-147 T-148 T-162
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 89: ( 0.578003, 0.398795, 0)
+	u = 0.679827 v = 0.119649
+	7 elementos incidentes: T-123 T-124 T-127 T-128 T-129 T-130 T-131
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 90: ( 0.502948, 0.427687, 0)
+	u = 0.693293 v = 0.186426
+	6 elementos incidentes: T-130 T-131 T-132 T-133 T-135 T-136
+	Gd = -7.48834e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 91: ( 0.479506, 0.287364, 0)
+	u = 0.628664 v = 0.191654
+	6 elementos incidentes: T-129 T-130 T-135 T-140 T-141 T-142
+	Gd = -6.91782e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 92: ( 0.529742, 0.557424, 0)
+	u = 0.755124 v = 0.183283
+	6 elementos incidentes: T-132 T-133 T-134 T-162 T-163 T-168
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 93: ( 0.462182, 0.582524, 0)
+	u = 0.767397 v = 0.232181
+	5 elementos incidentes: T-134 T-168 T-169 T-170 T-184
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 94: ( 0.426085, 0.474572, 0)
+	u = 0.71536 v = 0.244762
+	6 elementos incidentes: T-133 T-134 T-136 T-184 T-185 T-189
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 95: ( 0.38696, 0.334587, 0)
+	u = 0.650212 v = 0.260641
+	6 elementos incidentes: T-135 T-136 T-142 T-183 T-188 T-189
+	Gd = -5.15526e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 96: ( 0.468109, 0.146615, 0)
+	u = 0.565286 v = 0.192986
+	6 elementos incidentes: T-138 T-139 T-140 T-141 T-143 T-144
+	Gd = -1.5023e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 97: ( 0.363573, 0.170495, 0)
+	u = 0.575971 v = 0.269499
+	6 elementos incidentes: T-141 T-142 T-144 T-181 T-182 T-183
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 98: ( 0.700807, 0.649776, 0)
+	u = 0.800897 v = 0.065109
+	7 elementos incidentes: T-9 T-13 T-49 T-50 T-145 T-147 T-148
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 99: ( 0.734936, 0.760062, 0)
+	u = 0.858239 v = 0.075089
+	6 elementos incidentes: T-13 T-145 T-146 T-151 T-152 T-155
+	Gd = -3.01258e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 100: ( 0.665782, 0.766155, 0)
+	u = 0.861511 v = 0.128754
+	6 elementos incidentes: T-146 T-155 T-156 T-158 T-164 T-165
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 101: ( 0.633201, 0.660834, 0)
+	u = 0.806501 v = 0.125771
+	6 elementos incidentes: T-145 T-146 T-148 T-162 T-163 T-164
+	Gd = -1.02425e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 102: ( 0.825225, 0.837058, 0)
+	u = 0.900598 v = 0.0348452
+	6 elementos incidentes: T-11 T-12 T-17 T-149 T-151 T-152
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 103: ( 0.86259, 0.896238, 0)
+	u = 0.934881 v = 0.0357825
+	6 elementos incidentes: T-11 T-14 T-18 T-149 T-150 T-153
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 104: ( 0.803617, 0.893141, 0)
+	u = 0.933044 v = 0.0761569
+	5 elementos incidentes: T-15 T-150 T-153 T-154 T-157
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 105: ( 0.770595, 0.839081, 0)
+	u = 0.901743 v = 0.0776998
+	6 elementos incidentes: T-149 T-150 T-152 T-155 T-156 T-157
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 106: ( 0.78842, 0.760253, 0)
+	u = 0.858341 v = 0.0288759
+	6 elementos incidentes: T-12 T-13 T-16 T-40 T-50 T-151
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 107: ( 0.879032, 0.934094, 0)
+	u = 0.957794 v = 0.0434306
+	5 elementos incidentes: T-14 T-19 T-53 T-153 T-154
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 108: ( 0.73314, 0.905946, 0)
+	u = 0.940677 v = 0.126099
+	6 elementos incidentes: T-15 T-53 T-55 T-56 T-57 T-154
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 109: ( 0.697002, 0.845196, 0)
+	u = 0.905214 v = 0.130061
+	6 elementos incidentes: T-15 T-55 T-156 T-157 T-158 T-159
+	Gd = -1.35153e-13 Ga = 0
+	Hd = 0 Ha = 0
+
+P 110: ( 0.569491, 0.840035, 0)
+	u = 0.902283 v = 0.206227
+	5 elementos incidentes: T-55 T-56 T-159 T-160 T-161
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 111: ( 0.569407, 0.767193, 0)
+	u = 0.86207 v = 0.192179
+	6 elementos incidentes: T-158 T-159 T-160 T-165 T-166 T-167
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 112: ( 0.289805, 0.855985, 0)
+	u = 0.91138 v = 0.355436
+	8 elementos incidentes: T-35 T-36 T-56 T-57 T-60 T-64 T-65 T-161
+	Gd = -8.07322e-15 Ga = 0
+	Hd = 0 Ha = 0
+
+P 113: ( 0.43223, 0.765751, 0)
+	u = 0.861294 v = 0.271877
+	6 elementos incidentes: T-35 T-160 T-161 T-167 T-172 T-173
+	Gd = 6.06118e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 114: ( 0.552991, 0.670189, 0)
+	u = 0.811265 v = 0.185115
+	6 elementos incidentes: T-163 T-164 T-165 T-166 T-168 T-169
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 115: ( 0.453017, 0.669585, 0)
+	u = 0.810957 v = 0.248112
+	6 elementos incidentes: T-166 T-167 T-169 T-170 T-171 T-172
+	Gd = -7.84247e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 116: ( 0.322076, 0.655502, 0)
+	u = 0.803796 v = 0.321484
+	6 elementos incidentes: T-171 T-172 T-173 T-174 T-176 T-177
+	Gd = 4.73834e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 117: ( 0.361588, 0.549853, 0)
+	u = 0.751444 v = 0.290813
+	6 elementos incidentes: T-170 T-171 T-176 T-184 T-185 T-186
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 118: ( 0.290957, 0.749199, 0)
+	u = 0.852433 v = 0.345541
+	5 elementos incidentes: T-35 T-36 T-173 T-174 T-175
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 119: ( 0.160947, 0.756944, 0)
+	u = 0.856568 v = 0.411463
+	4 elementos incidentes: T-36 T-60 T-175 T-180
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 120: ( 0.13668, 0.655446, 0)
+	u = 0.803767 v = 0.418316
+	6 elementos incidentes: T-174 T-175 T-177 T-178 T-179 T-180
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 121: ( 0.184257, 0.479811, 0)
+	u = 0.717844 v = 0.386233
+	7 elementos incidentes: T-176 T-177 T-178 T-186 T-187 T-190 T-191
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 122: ( -0.185261, 0.722266, 0)
+	u = 0.8382 v = 0.57562
+	7 elementos incidentes: T-44 T-45 T-60 T-65 T-66 T-179 T-180
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 123: ( -0.0756652, 0.499078, 0)
+	u = 0.727012 v = 0.518899
+	6 elementos incidentes: T-44 T-178 T-179 T-191 T-196 T-197
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 124: ( 0.213235, 0.247998, 0)
+	u = 0.610826 v = 0.363158
+	7 elementos incidentes: T-182 T-183 T-187 T-188 T-190 T-192 T-193
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 125: ( -0.0237212, 0.270817, 0)
+	u = 0.621154 v = 0.489694
+	6 elementos incidentes: T-190 T-191 T-193 T-194 T-195 T-196
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 126: ( -0.290291, 0.301425, 0)
+	u = 0.635062 v = 0.621432
+	6 elementos incidentes: T-195 T-196 T-197 T-198 T-200 T-201
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 127: ( -0.1916, 0.0340659, 0)
+	u = 0.515142 v = 0.572296
+	6 elementos incidentes: T-194 T-195 T-200 T-202 T-203 T-204
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 128: ( -0.322227, 0.536566, 0)
+	u = 0.745011 v = 0.638402
+	5 elementos incidentes: T-44 T-45 T-197 T-198 T-199
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 129: ( -0.528215, 0.691323, 0)
+	u = 0.822108 v = 0.739106
+	4 elementos incidentes: T-45 T-61 T-66 T-199
+	Gd = -1.71488e-14 Ga = 0
+	Hd = 0 Ha = 0
+
+P 130: ( -0.551318, 0.514068, 0)
+	u = 0.734183 v = 0.749935
+	5 elementos incidentes: T-61 T-62 T-198 T-199 T-201
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 131: ( -0.548577, 0.0074152, 0)
+	u = 0.503296 v = 0.747914
+	7 elementos incidentes: T-46 T-52 T-62 T-200 T-201 T-204 T-205
+	Gd = -2.69191e-15 Ga = 0
+	Hd = 0 Ha = 0
+
+P 132: ( -0.370016, -0.508089, 0)
+	u = 0.268682 v = 0.661221
+	5 elementos incidentes: T-43 T-51 T-52 T-205 T-206
+	Gd = -4.77191e-15 Ga = 0
+	Hd = 0 Ha = 0
+
+P 133: ( 0.507255, -0.414953, 0)
+	u = 0.312654 v = 0.181731
+	5 elementos incidentes: T-93 T-94 T-95 T-96 T-97
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 134: ( 0.315886, 0.418253, 0)
+	u = 0.688886 v = 0.309491
+	5 elementos incidentes: T-185 T-186 T-187 T-188 T-189
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+
+P 135: ( -0.240122, -0.223839, 0)
+	u = 0.400073 v = 0.596619
+	5 elementos incidentes: T-203 T-204 T-205 T-206 T-207
+	Gd = -1.29137e-14 Ga = 0
+	Hd = 0 Ha = 0
+

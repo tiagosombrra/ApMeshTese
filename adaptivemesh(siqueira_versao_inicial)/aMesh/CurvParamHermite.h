@@ -38,6 +38,9 @@ class CurvParamHermite : public CurvaParametrica
 		CurvParamHermite ( Ponto p0, Ponto p1, Vetor dp0, Vetor dp1 );
 		CurvParamHermite ( CurvParamHermite* );
 
+        double calcularCurvatura(double t);
+
+
 		~CurvParamHermite (  );
 };
 #endif

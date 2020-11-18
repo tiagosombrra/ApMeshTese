@@ -1,0 +1,30 @@
+P 1: ( -5, -5, 0)
+	u = 0 v = 0
+	6 elementos incidentes: T-1 T-4 T-1 T-4 T-1 T-4
+	Gd = -0.0314159 Ga = 0
+	Hd = 0 Ha = 0
+
+P 2: ( 5, -5, 0)
+	u = 1 v = 0
+	6 elementos incidentes: T-1 T-2 T-1 T-2 T-1 T-2
+	Gd = -0.0314159 Ga = 0
+	Hd = 0 Ha = 0
+
+P 3: ( 5, 5, 0)
+	u = 1 v = 1
+	6 elementos incidentes: T-2 T-3 T-2 T-3 T-2 T-3
+	Gd = -0.0314159 Ga = 0
+	Hd = 0 Ha = 0
+
+P 4: ( -5, 5, 0)
+	u = 0 v = 1
+	6 elementos incidentes: T-3 T-4 T-3 T-4 T-3 T-4
+	Gd = -0.0314159 Ga = 0
+	Hd = 0 Ha = 0
+
+P 5: ( 0, 0, 0)
+	u = 0.5 v = 0.5
+	4 elementos incidentes: T-1 T-2 T-3 T-4
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
+

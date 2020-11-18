@@ -48,7 +48,7 @@ int main(int argc, char **argv)
   if (argc == 1)
     {
       Geometria *geo = new Geometria;
-      M.setGeometria ( modelUtahteapot(geo) );
+      M.setGeometria ( modelNariz(geo) );
     }
   else
     {
@@ -96,13 +96,13 @@ Geometria *modelCurvaBezier(Geometria *geo){
   Ponto* p30 = new Vertice ( 1.0, 1.0,  0.0 );
 
   Ponto* p01 = new Vertice ( 0.5, -1.0,  0.0 );
-  Ponto* p11 = new Vertice ( 0.5, -0.5,  1.0 );
-  Ponto* p21 = new Vertice ( 0.5, 0.5,  1.0 );
+  Ponto* p11 = new Vertice ( 0.5, -0.5,  0.0 );
+  Ponto* p21 = new Vertice ( 0.5, 0.5,  0.0 );
   Ponto* p31 = new Vertice ( 0.5, 1.0,  0.0 );
 
   Ponto* p02 = new Vertice ( -0.5,  -1.0,  0.0 );
-  Ponto* p12 = new Vertice ( -0.5,  -0.5,  1.0 );
-  Ponto* p22 = new Vertice ( -0.5,  0.5,  1.0 );
+  Ponto* p12 = new Vertice ( -0.5,  -0.5,  0.0 );
+  Ponto* p22 = new Vertice ( -0.5,  0.5,  0.0 );
   Ponto* p32 = new Vertice ( -0.5,  1.0,  0.0 );
 
   Ponto* p03 = new Vertice ( -1.0,  -1.0,  0.0 );

@@ -409,7 +409,7 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial ( CoonsPatch* patch )
 // calcula o erro global da malha
 double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
 {
-  //	cout << "Calculando o erro global=================================" << endl;
+  cout << "Calculando o erro global=================================" << endl;
 
   unsigned int Ns = 0; // número de submalhas
   unsigned int Nv = 0; // número de vértices
@@ -430,7 +430,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
 
   Ns = malha->getNumDeSubMalhas ( );
 
-  //	cout << "Ns = " << Ns << endl;
+   cout << "Ns = " << Ns << endl;
 
   // Calcula o erro global de cada submalha
   for ( unsigned int i = 0; i < Ns; ++i )
@@ -521,7 +521,9 @@ double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
           cout << "\t\tNjs = " << Njs << endl;
         }
 
-      Njs =(double) sqrt( Njs / curvPower) / Nv;
+      if (Njs > 0.0 && curvPower > 0.0) {
+          Njs =(double) sqrt( Njs / curvPower) / Nv;
+      }
 
       //                cout << "\tNjs/Nv = " << Njs << endl;
 
@@ -602,8 +604,8 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
           cout << "adaptando a curva pela curvatura da curva " << i + 1 << endl;
 
           novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), this->passo, mapaPontos );
-          geo->getCurva( i )->setPontos(novosPontos[i]);
-          novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), this->passo, mapaPontos );
+          //geo->getCurva( i )->setPontos(novosPontos[i]);
+          //novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), this->passo, mapaPontos );
         }
 
       cout << "atualizando as curvas" << endl;

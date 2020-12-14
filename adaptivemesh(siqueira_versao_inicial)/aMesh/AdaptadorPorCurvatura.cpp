@@ -58,6 +58,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, double exp
 	while ( proxi != pontos.end ( ) )
 	{    
 
+        cout << "quantidade de patches curva "<<c->getNumDePatches()<< endl;
 		//cout << "entrou no while" << endl;
 		// 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
 		h_velho = c->calcularTamanho ( *(*atual), *(*proxi) );

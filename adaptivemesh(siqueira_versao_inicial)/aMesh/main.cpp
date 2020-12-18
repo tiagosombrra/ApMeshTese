@@ -30,6 +30,8 @@ bool geraMalha = true;
 
 Modelo M;
 
+Geometria *modelBook(Geometria *geo);
+Geometria *modelPlanBook(Geometria *geo);
 Geometria *modelTresPatches(Geometria *geo);
 Geometria *modelDoisPatchesPlanosCurva1(Geometria *geo);
 Geometria *modelDoisPatchesPlanosCurva(Geometria *geo);
@@ -50,7 +52,7 @@ int main(int argc, char **argv)
   if (argc == 1)
     {
       Geometria *geo = new Geometria;
-      M.setGeometria ( modelTresPatches(geo) );
+      M.setGeometria ( modelPlanBook(geo) );
     }
   else
     {
@@ -84,6 +86,153 @@ int main(int argc, char **argv)
     {
       cout <<"Erro ao ler modelo, por favor inserir modelo ou verificar se é válido"<<endl;
     }
+}
+
+
+Geometria *modelPlanBook(Geometria *geo){
+    //=============================== PATCH 1 ==================================
+    Ponto* p100 = new Vertice ( -2.00000, 1.00000, 0.00000 );
+    Ponto* p110 = new Vertice ( -2.00000, 0.50000, 0.00000 );
+    Ponto* p120 = new Vertice ( -2.00000, -0.50000, 0.00000 );
+    Ponto* p130 = new Vertice ( -2.00000, -1.00000, 0.00000 );
+
+    Ponto* p101 = new Vertice ( -1.50000, 1.00000, 0.00000 );
+    Ponto* p111 = new Vertice ( -1.50000, 0.50000, 0.00000 );
+    Ponto* p121 = new Vertice ( -1.50000, -0.50000, 0.00000 );
+    Ponto* p131 = new Vertice ( -1.50000, -1.00000, 0.00000 );
+
+    Ponto* p102 = new Vertice ( -0.50000, 1.00000, 0.00000 );
+    Ponto* p112 = new Vertice ( -0.50000, 0.50000, 0.00000 );
+    Ponto* p122 = new Vertice ( -0.50000, -0.50000, 0.00000 );
+    Ponto* p132 = new Vertice ( -0.50000, -1.00000, 0.00000 );
+
+    Ponto* p103 = new Vertice ( 0.00000, 1.00000, 0.00000 );
+    Ponto* p113 = new Vertice ( 0.00000, 0.50000, 0.00000 );
+    Ponto* p123 = new Vertice ( 0.00000, -0.50000, 0.00000 );
+    Ponto* p133 = new Vertice ( 0.00000, -1.00000, 0.00000 );
+
+    Curva* patch1_c1 = new CurvParamBezier ( *p100, *p110, *p120, *p130 );
+    Curva* patch1_c2 = new CurvParamBezier ( *p130, *p131, *p132, *p133 );
+    Curva* patch1_c3 = new CurvParamBezier ( *p103, *p113, *p123, *p133 );
+    Curva* patch1_c4 = new CurvParamBezier ( *p100, *p101, *p102, *p103 );
+
+    Patch* patch1 = new BezierPatch (	patch1_c1, patch1_c2, patch1_c3, patch1_c4,
+                                        *p111, *p121, *p112, *p122 );
+
+    geo->inserePatch ( patch1 );
+    geo->insereCurva ( patch1_c1 );
+    geo->insereCurva ( patch1_c2 );
+    geo->insereCurva ( patch1_c3 );
+    geo->insereCurva ( patch1_c4 );
+    //======================== FIM DO PATCH 1 ==================================
+
+    //=============================== PATCH 2 ==================================
+    Ponto* p200 = new Vertice ( 0.00000, 1.00000, 0.00000 );
+    Ponto* p210 = new Vertice ( 0.00000, 0.50000, 0.00000 );
+    Ponto* p220 = new Vertice ( 0.00000, -0.50000, 0.00000 );
+    Ponto* p230 = new Vertice ( 0.00000, -1.00000, 0.00000 );
+
+    Ponto* p201 = new Vertice ( 0.00000, 1.00000, 0.50000 );
+    Ponto* p211 = new Vertice ( 0.00000, 0.50000, 0.50000 );
+    Ponto* p221 = new Vertice ( 0.00000, -0.50000, 0.50000 );
+    Ponto* p231 = new Vertice ( 0.00000, -1.00000, 0.50000 );
+
+    Ponto* p202 = new Vertice ( 0.00000, 1.00000, 1.50000 );
+    Ponto* p212 = new Vertice ( 0.00000, 0.50000, 1.50000 );
+    Ponto* p222 = new Vertice ( 0.00000, -0.50000, 1.50000 );
+    Ponto* p232 = new Vertice ( 0.00000, -1.00000, 1.50000 );
+
+    Ponto* p203 = new Vertice ( 0.00000, 1.00000, 2.00000 );
+    Ponto* p213 = new Vertice ( 0.00000, 0.50000, 2.00000 );
+    Ponto* p223 = new Vertice ( 0.00000, -0.50000, 2.00000 );
+    Ponto* p233 = new Vertice ( 0.00000, -1.00000, 2.00000 );
+
+    //Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
+    Curva* patch2_c2 = new CurvParamBezier ( *p230, *p231, *p232, *p233 );
+    Curva* patch2_c3 = new CurvParamBezier ( *p203, *p213, *p223, *p233 );
+    Curva* patch2_c4 = new CurvParamBezier ( *p200, *p201, *p202, *p203 );
+
+    Patch* patch2 = new BezierPatch (	patch1_c3, patch2_c2, patch2_c3, patch2_c4,
+                                        *p211, *p221, *p212, *p222 );
+
+    geo->inserePatch ( patch2 );
+    //geo->insereCurva ( patch2_c1 );
+    geo->insereCurva ( patch2_c2 );
+    geo->insereCurva ( patch2_c3 );
+    geo->insereCurva ( patch2_c4 );
+    //======================== FIM DO PATCH 2 ==================================
+
+    //=============================== PATCH 3 ==================================
+    Ponto* p300 = new Vertice ( 0.00000, 1.00000, 0.00000 );
+    Ponto* p310 = new Vertice ( 0.00000, 0.50000, 0.00000 );
+    Ponto* p320 = new Vertice ( 0.00000, -0.50000, 0.00000 );
+    Ponto* p330 = new Vertice ( 0.00000, -1.00000, 0.00000 );
+
+    Ponto* p301 = new Vertice ( 0.50000, 1.00000, 0.00000 );
+    Ponto* p311 = new Vertice ( 0.50000, 0.50000, 0.00000 );
+    Ponto* p321 = new Vertice ( 0.50000, -0.50000, 0.00000 );
+    Ponto* p331 = new Vertice ( 0.50000, -1.00000, 0.00000 );
+
+    Ponto* p302 = new Vertice ( 1.50000, 1.00000, 0.00000 );
+    Ponto* p312 = new Vertice ( 1.50000, 0.50000, 0.00000 );
+    Ponto* p322 = new Vertice ( 1.50000, -0.50000, 0.00000 );
+    Ponto* p332 = new Vertice ( 1.50000, -1.00000, 0.00000 );
+
+    Ponto* p303 = new Vertice ( 2.00000, 1.00000, 0.00000 );
+    Ponto* p313 = new Vertice ( 2.00000, 0.50000, 0.00000 );
+    Ponto* p323 = new Vertice ( 2.00000, -0.50000, 0.00000 );
+    Ponto* p333 = new Vertice ( 2.00000, -1.00000, 0.00000 );
+
+    //Curva* patch3_c1 = new CurvParamBezier ( *p300, *p310, *p320, *p330 );
+    Curva* patch3_c2 = new CurvParamBezier ( *p330, *p331, *p332, *p333 );
+    Curva* patch3_c3 = new CurvParamBezier ( *p303, *p313, *p323, *p333 );
+    Curva* patch3_c4 = new CurvParamBezier ( *p300, *p301, *p302, *p303 );
+
+    Patch* patch3 = new BezierPatch (	patch1_c3, patch3_c2, patch3_c3, patch3_c4,
+                                        *p311, *p321, *p312, *p322 );
+
+    geo->inserePatch ( patch3 );
+    //geo->insereCurva ( patch3_c1 );
+    geo->insereCurva ( patch3_c2 );
+    geo->insereCurva ( patch3_c3 );
+    geo->insereCurva ( patch3_c4 );
+    //======================== FIM DO PATCH 3 ==================================
+
+    //=============================== PATCH 4 ==================================
+    Ponto* p400 = new Vertice ( -1.6515, 1.00000, 0.00000 );
+    Ponto* p410 = new Vertice ( -1.6515, 0.50000, 1.2885 );
+    Ponto* p420 = new Vertice ( -1.6515, -0.50000, 1.3025 );
+    Ponto* p430 = new Vertice ( -1.6515, -1.00000, 0.69391 );
+
+    Ponto* p401 = new Vertice ( -1.2387, 1.00000, 0.84601 );
+    Ponto* p411 = new Vertice ( -1.2387, 0.50000, 0.84601 );
+    Ponto* p421 = new Vertice ( -1.2387, -0.50000, 1.1102 );
+    Ponto* p431 = new Vertice ( -1.2387, -1.00000, 0.84601 );
+
+    Ponto* p402 = new Vertice ( -0.41304, 1.00000, 0.28181 );
+    Ponto* p412 = new Vertice ( -0.41304, 0.50000, 0.61175 );
+    Ponto* p422 = new Vertice ( -0.41304, -0.50000, 0.52431 );
+    Ponto* p432 = new Vertice ( -0.41304, -1.00000, 0.28181 );
+
+    Ponto* p403 = new Vertice ( 0.00000, 1.00000, 0.00000 );
+    Ponto* p413 = new Vertice ( 0.00000, 0.50000, 0.00000 );
+    Ponto* p423 = new Vertice ( 0.00000, -0.50000, 0.00000 );
+    Ponto* p433 = new Vertice ( 0.00000, -1.00000, 0.00000 );
+
+    Curva* patch4_c1 = new CurvParamBezier ( *p400, *p410, *p420, *p430 );
+    Curva* patch4_c2 = new CurvParamBezier ( *p430, *p431, *p432, *p433 );
+    //Curva* patch4_c3 = new CurvParamBezier ( *p403, *p413, *p423, *p433 );
+    Curva* patch4_c4 = new CurvParamBezier ( *p400, *p401, *p402, *p403 );
+
+    Patch* patch4 = new BezierPatch (	patch4_c1, patch4_c2, patch1_c3, patch4_c4,
+                                        *p411, *p421, *p412, *p422 );
+
+    geo->inserePatch ( patch4 );
+    geo->insereCurva ( patch4_c1 );
+    geo->insereCurva ( patch4_c2 );
+    //geo->insereCurva ( patch4_c3 );
+    geo->insereCurva ( patch4_c4 );
+    //======================== FIM DO PATCH 4 ==================================
 }
 
 Geometria *modelTresPatches(Geometria *geo){

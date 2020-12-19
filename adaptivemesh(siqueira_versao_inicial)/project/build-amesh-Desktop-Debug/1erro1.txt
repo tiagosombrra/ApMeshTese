@@ -1,154 +1,90 @@
-P 1: ( -2, 1, 0)
+P 3: ( 0, 1, 0)
 	u = 0 v = 0
-	4 elementos incidentes: T-1 T-4 T-1 T-4
-	Gd = -3.33067e-16 Ga = 0
+	8 elementos incidentes: T-1 T-4 T-1 T-4 T-5 T-8 T-9 T-12
+	Gd = -1.1781 Ga = 0
 	Hd = 0 Ha = 0
 
-P 2: ( -2, -1, 0)
+P 4: ( 0, -1, 0)
 	u = 1 v = 0
 	4 elementos incidentes: T-1 T-2 T-1 T-2
 	Gd = -3.33067e-16 Ga = 0
 	Hd = 0 Ha = 0
 
-P 3: ( 0, -1, 0)
+P 6: ( -2, -1, 0)
 	u = 1 v = 1
-	6 elementos incidentes: T-2 T-3 T-2 T-3 T-14 T-17
-	Gd = -0.892141 Ga = 0
+	4 elementos incidentes: T-2 T-3 T-2 T-3
+	Gd = -3.33067e-16 Ga = 0
 	Hd = 0 Ha = 0
 
-P 4: ( 0, 1, 0)
+P 8: ( -2, 1, 0)
 	u = 0 v = 1
-	8 elementos incidentes: T-3 T-4 T-3 T-4 T-5 T-8 T-9 T-12
-	Gd = -1.1781 Ga = 0
-	Hd = -0.589049 Ha = 0
+	4 elementos incidentes: T-3 T-4 T-3 T-4
+	Gd = -3.33067e-16 Ga = 0
+	Hd = 0 Ha = 0
 
-P 20: ( -1, 0, 0)
+P 25: ( -1, 0, 0)
 	u = 0.5 v = 0.5
 	4 elementos incidentes: T-1 T-2 T-3 T-4
 	Gd = 0 Ga = 0
 	Hd = 0 Ha = 0
 
-P 4: ( 0, 1, 0)
+P 3: ( 0, 1, 0)
 	u = 0 v = 0
-	8 elementos incidentes: T-3 T-4 T-3 T-4 T-5 T-8 T-9 T-12
+	8 elementos incidentes: T-1 T-4 T-1 T-4 T-5 T-8 T-9 T-12
 	Gd = -1.1781 Ga = 0
-	Hd = -0.589049 Ha = 0
+	Hd = 0 Ha = 0
 
-P 5: ( 0, -1, 0)
+P 11: ( 0, -1, 0)
 	u = 1 v = 0
 	4 elementos incidentes: T-5 T-6 T-5 T-6
 	Gd = -3.33067e-16 Ga = 0
 	Hd = 0 Ha = 0
 
-P 6: ( 0, -1, 2)
+P 12: ( 0, -1, 2)
 	u = 1 v = 1
 	4 elementos incidentes: T-6 T-7 T-6 T-7
 	Gd = -3.33067e-16 Ga = 0
 	Hd = 0 Ha = 0
 
-P 7: ( 0, 1, 2)
+P 14: ( 0, 1, 2)
 	u = 0 v = 1
 	4 elementos incidentes: T-7 T-8 T-7 T-8
 	Gd = -3.33067e-16 Ga = 0
 	Hd = 0 Ha = 0
 
-P 21: ( 0, 0, 1)
+P 26: ( 0, 0, 1)
 	u = 0.5 v = 0.5
 	4 elementos incidentes: T-5 T-6 T-7 T-8
 	Gd = 0 Ga = 0
 	Hd = 0 Ha = 0
 
-P 4: ( 0, 1, 0)
+P 3: ( 0, 1, 0)
 	u = 0 v = 0
-	8 elementos incidentes: T-3 T-4 T-3 T-4 T-5 T-8 T-9 T-12
+	8 elementos incidentes: T-1 T-4 T-1 T-4 T-5 T-8 T-9 T-12
 	Gd = -1.1781 Ga = 0
-	Hd = -0.589049 Ha = 0
+	Hd = 0 Ha = 0
 
-P 9: ( 0, -1, 0)
+P 19: ( 0, -1, 0)
 	u = 1 v = 0
 	4 elementos incidentes: T-9 T-10 T-9 T-10
 	Gd = -3.33067e-16 Ga = 0
 	Hd = 0 Ha = 0
 
-P 10: ( 2, -1, 0)
+P 20: ( 2, -1, 0)
 	u = 1 v = 1
 	4 elementos incidentes: T-10 T-11 T-10 T-11
 	Gd = -3.33067e-16 Ga = 0
 	Hd = 0 Ha = 0
 
-P 11: ( 2, 1, 0)
+P 22: ( 2, 1, 0)
 	u = 0 v = 1
 	4 elementos incidentes: T-11 T-12 T-11 T-12
 	Gd = -3.33067e-16 Ga = 0
 	Hd = 0 Ha = 0
 
-P 22: ( 1, 0, 0)
+P 27: ( 1, 0, 0)
 	u = 0.5 v = 0.5
 	4 elementos incidentes: T-9 T-10 T-11 T-12
 	Gd = 0 Ga = 0
 	Hd = 0 Ha = 0
-
-P 13: ( -1.6515, 1, 0)
-	u = 0 v = 0
-	3 elementos incidentes: T-13 T-16 T-13
-	Gd = 0.408197 Ga = 0.152346
-	Hd = 0.532836 Ha = -0.454648
-	Cd = 0.408197 Ca = 0.152346
-	|Cd - Ca| = 0.255851
-
-P 15: ( -1.6515, 0.184699, 0.994993)
-	u = 0.417664 v = 0
-	4 elementos incidentes: T-13 T-16 T-18 T-19
-	Gd = 0.295767 Ga = 0.492528
-	Hd = 2.07756 Ha = -1.02169
-	Cd = 0.295767 Ca = 0.492528
-	|Cd - Ca| = 0.19676
-
-P 14: ( -1.6515, -1, 0.69391)
-	u = 1 v = 0
-	3 elementos incidentes: T-13 T-14 T-16
-	Gd = -0.210201 Ga = 1.2219
-	Hd = 1.20752 Ha = -1.25916
-	Cd = -0.210201 Ca = 1.2219
-	|Cd - Ca| = 1.4321
-
-P 17: ( -0.779361, -1, 0.485667)
-	u = 1 v = 0.525024
-	3 elementos incidentes: T-14 T-16 T-18
-	Gd = -0.0882545 Ga = 0.120716
-	Hd = 0.682232 Ha = -0.697298
-	Cd = -0.0882545 Ca = 0.120716
-	|Cd - Ca| = 0.20897
-
-P 3: ( 0, -1, 0)
-	u = 1 v = 1
-	6 elementos incidentes: T-2 T-3 T-2 T-3 T-14 T-17
-	Gd = -0.892141 Ga = -0.641981
-	Hd = 0 Ha = 0.000954354
-	Cd = -0.892141 Ca = -0.641981
-	|Cd - Ca| = 0.250161
-
-P 18: ( 0, 1, 4.44089e-16)
-	u = 0 v = 1
-	4 elementos incidentes: T-15 T-16 T-15 T-17
-	Gd = -0.216367 Ga = -1.18842
-	Hd = 0.775499 Ha = 0.000954354
-	Cd = -0.216367 Ca = -1.18842
-	|Cd - Ca| = 0.972049
-
-P 19: ( -0.86688, 1, 0.431438)
-	u = 0 v = 0.477905
-	3 elementos incidentes: T-13 T-15 T-19
-	Gd = -1.00664 Ga = 0.384263
-	Hd = 1.96814 Ha = -0.927998
-	Cd = -1.00664 Ca = 0.384263
-	|Cd - Ca| = 1.39091
-
-P 23: ( -0.631766, 0.0358895, 0.547104)
-	u = 0.484047 v = 0.604972
-	5 elementos incidentes: T-14 T-15 T-17 T-18 T-19
-	Gd = 0.0634196 Ga = 0.0419979
-	Hd = 1.05648 Ha = -0.223556
-	Cd = 0.0634196 Ca = 0.0419979
-	|Cd - Ca| = 0.0214218
 

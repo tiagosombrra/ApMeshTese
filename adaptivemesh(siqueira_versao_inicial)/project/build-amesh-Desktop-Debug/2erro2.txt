@@ -1,298 +1,90 @@
-P 1: ( -2, 1, 0)
+P 3: ( 0, 1, 0)
 	u = 0 v = 0
-	6 elementos incidentes: T-1 T-4 T-1 T-4 T-3 T-4
-	Gd = -0.855554 Ga = 0
+	14 elementos incidentes: T-1 T-4 T-1 T-4 T-5 T-8 T-9 T-12 T-1 T-4 T-5 T-8 T-9 T-12
+	Gd = -1.683 Ga = 0
 	Hd = 0 Ha = 0
 
-P 2: ( -2, -1, 0)
+P 4: ( 0, -1, 0)
 	u = 1 v = 0
-	6 elementos incidentes: T-1 T-2 T-1 T-2 T-4 T-5
-	Gd = -0.787497 Ga = 0
+	6 elementos incidentes: T-1 T-2 T-1 T-2 T-1 T-2
+	Gd = -0.785398 Ga = 0
 	Hd = 0 Ha = 0
 
-P 3: ( 0, -1, 0)
+P 6: ( -2, -1, 0)
 	u = 1 v = 1
-	10 elementos incidentes: T-2 T-3 T-2 T-3 T-14 T-17 T-1 T-5 T-30 T-36
-	Gd = -1.9913 Ga = 0
+	6 elementos incidentes: T-2 T-3 T-2 T-3 T-2 T-3
+	Gd = -0.785398 Ga = 0
 	Hd = 0 Ha = 0
 
-P 5: ( 0, 0, 0)
-	u = 0.5 v = 1
-	11 elementos incidentes: T-1 T-2 T-6 T-7 T-8 T-12 T-13 T-27 T-28 T-36 T-37
-	Gd = -7.18417 Ga = 0
-	Hd = -2.39452 Ha = 0
-
-P 4: ( 0, 1, 0)
+P 8: ( -2, 1, 0)
 	u = 0 v = 1
-	13 elementos incidentes: T-3 T-4 T-3 T-4 T-5 T-8 T-9 T-12 T-2 T-7 T-11 T-12 T-16
-	Gd = -2.09422 Ga = 0
-	Hd = -0.418843 Ha = 0
+	6 elementos incidentes: T-3 T-4 T-3 T-4 T-3 T-4
+	Gd = -0.785398 Ga = 0
+	Hd = 0 Ha = 0
 
-P 6: ( -1, 1, 0)
-	u = 0 v = 0.5
-	3 elementos incidentes: T-2 T-3 T-6
+P 25: ( -1, 0, 0)
+	u = 0.5 v = 0.5
+	4 elementos incidentes: T-1 T-2 T-3 T-4
 	Gd = 0 Ga = 0
 	Hd = 0 Ha = 0
 
-P 28: ( -1, -0.015992, 0)
-	u = 0.507108 v = 0.5
-	5 elementos incidentes: T-1 T-3 T-4 T-5 T-6
-	Gd = -7.61296e-16 Ga = 0
-	Hd = 0 Ha = 0
-
-P 4: ( 0, 1, 0)
+P 3: ( 0, 1, 0)
 	u = 0 v = 0
-	13 elementos incidentes: T-3 T-4 T-3 T-4 T-5 T-8 T-9 T-12 T-2 T-7 T-11 T-12 T-16
-	Gd = -2.09422 Ga = 0
-	Hd = -0.418843 Ha = 0
-
-P 5: ( 0, 0, 0)
-	u = 0.5 v = 0
-	11 elementos incidentes: T-1 T-2 T-6 T-7 T-8 T-12 T-13 T-27 T-28 T-36 T-37
-	Gd = -7.18417 Ga = 0
-	Hd = -2.39452 Ha = 0
-
-P 7: ( 0, -1, 0)
-	u = 1 v = 0
-	6 elementos incidentes: T-5 T-6 T-5 T-6 T-8 T-9
-	Gd = -0.87146 Ga = 0
+	14 elementos incidentes: T-1 T-4 T-1 T-4 T-5 T-8 T-9 T-12 T-1 T-4 T-5 T-8 T-9 T-12
+	Gd = -1.683 Ga = 0
 	Hd = 0 Ha = 0
-
-P 8: ( 0, -1, 2)
-	u = 1 v = 1
-	6 elementos incidentes: T-6 T-7 T-6 T-7 T-9 T-10
-	Gd = -0.756032 Ga = 0
-	Hd = 0 Ha = 0
-
-P 9: ( 0, 1, 2)
-	u = 0 v = 1
-	6 elementos incidentes: T-7 T-8 T-7 T-8 T-10 T-11
-	Gd = -0.759932 Ga = 0
-	Hd = 0 Ha = 0
-
-P 29: ( 0, 0.015992, 0.78294)
-	u = 0.492892 v = 0.403125
-	5 elementos incidentes: T-7 T-8 T-9 T-10 T-11
-	Gd = 0 Ga = 0
-	Hd = 0 Ha = 0
-
-P 4: ( 0, 1, 0)
-	u = 0 v = 0
-	13 elementos incidentes: T-3 T-4 T-3 T-4 T-5 T-8 T-9 T-12 T-2 T-7 T-11 T-12 T-16
-	Gd = -2.09422 Ga = 0
-	Hd = -0.418843 Ha = 0
-
-P 5: ( 0, 0, 0)
-	u = 0.5 v = 0
-	11 elementos incidentes: T-1 T-2 T-6 T-7 T-8 T-12 T-13 T-27 T-28 T-36 T-37
-	Gd = -7.18417 Ga = 0
-	Hd = -2.39452 Ha = 0
 
 P 11: ( 0, -1, 0)
 	u = 1 v = 0
-	6 elementos incidentes: T-9 T-10 T-9 T-10 T-13 T-14
-	Gd = -0.87146 Ga = 0
+	6 elementos incidentes: T-5 T-6 T-5 T-6 T-5 T-6
+	Gd = -0.785398 Ga = 0
 	Hd = 0 Ha = 0
 
-P 12: ( 2, -1, 0)
+P 12: ( 0, -1, 2)
 	u = 1 v = 1
-	6 elementos incidentes: T-10 T-11 T-10 T-11 T-14 T-15
-	Gd = -0.756032 Ga = 0
+	6 elementos incidentes: T-6 T-7 T-6 T-7 T-6 T-7
+	Gd = -0.785398 Ga = 0
 	Hd = 0 Ha = 0
 
-P 13: ( 2, 1, 0)
+P 14: ( 0, 1, 2)
 	u = 0 v = 1
-	6 elementos incidentes: T-11 T-12 T-11 T-12 T-15 T-16
-	Gd = -0.759932 Ga = 0
+	6 elementos incidentes: T-7 T-8 T-7 T-8 T-7 T-8
+	Gd = -0.785398 Ga = 0
 	Hd = 0 Ha = 0
 
-P 30: ( 0.78294, 0.015992, 0)
-	u = 0.492892 v = 0.403125
-	5 elementos incidentes: T-12 T-13 T-14 T-15 T-16
+P 26: ( 0, 0, 1)
+	u = 0.5 v = 0.5
+	4 elementos incidentes: T-5 T-6 T-7 T-8
 	Gd = 0 Ga = 0
 	Hd = 0 Ha = 0
 
-P 15: ( -1.6515, 1, 0)
+P 3: ( 0, 1, 0)
 	u = 0 v = 0
-	4 elementos incidentes: T-13 T-16 T-13 T-17
-	Gd = -0.586844 Ga = 0.152346
-	Hd = 0.508563 Ha = -0.454648
-	Cd = -0.586844 Ca = 0.152346
-	|Cd - Ca| = 0.73919
+	14 elementos incidentes: T-1 T-4 T-1 T-4 T-5 T-8 T-9 T-12 T-1 T-4 T-5 T-8 T-9 T-12
+	Gd = -1.683 Ga = 0
+	Hd = 0 Ha = 0
 
-P 17: ( -1.6515, 0.686043, 0.577271)
-	u = 0.180612 v = 0
-	3 elementos incidentes: T-17 T-20 T-38
-	Gd = -1.11264 Ga = 0.149261
-	Hd = 4.73301 Ha = -0.805898
-	Cd = -1.11264 Ca = 0.149261
-	|Cd - Ca| = 1.2619
-
-P 18: ( -1.6515, 0.184699, 0.994993)
-	u = 0.417664 v = 0
-	3 elementos incidentes: T-20 T-22 T-33
-	Gd = 0.876575 Ga = 0.492528
-	Hd = 7.20991 Ha = -1.02169
-	Cd = 0.876575 Ca = 0.492528
-	|Cd - Ca| = 0.384048
-
-P 19: ( -1.6515, -0.458881, 1.05158)
-	u = 0.707943 v = 0
-	3 elementos incidentes: T-24 T-33 T-34
-	Gd = 1.69205 Ga = 0.954101
-	Hd = 5.81324 Ha = -1.13401
-	Cd = 1.69205 Ca = 0.954101
-	|Cd - Ca| = 0.73795
-
-P 16: ( -1.6515, -1, 0.69391)
+P 19: ( 0, -1, 0)
 	u = 1 v = 0
-	5 elementos incidentes: T-13 T-14 T-16 T-34 T-35
-	Gd = -2.0128 Ga = 1.2219
-	Hd = 1.09602 Ha = -1.25916
-	Cd = -2.0128 Ca = 1.2219
-	|Cd - Ca| = 3.2347
+	6 elementos incidentes: T-9 T-10 T-9 T-10 T-9 T-10
+	Gd = -0.785398 Ga = 0
+	Hd = 0 Ha = 0
 
-P 21: ( -1.20069, -1, 0.667499)
-	u = 1 v = 0.294365
-	3 elementos incidentes: T-19 T-25 T-35
-	Gd = -1.24781 Ga = 0.423425
-	Hd = 2.71171 Ha = -0.924063
-	Cd = -1.24781 Ca = 0.423425
-	|Cd - Ca| = 1.67123
-
-P 22: ( -0.779361, -1, 0.485667)
-	u = 1 v = 0.525024
-	3 elementos incidentes: T-18 T-19 T-26
-	Gd = -0.36005 Ga = 0.120716
-	Hd = 0.896992 Ha = -0.697298
-	Cd = -0.36005 Ca = 0.120716
-	|Cd - Ca| = 0.480766
-
-P 23: ( -0.382727, -1, 0.254079)
-	u = 1 v = 0.745031
-	2 elementos incidentes: T-18 T-30
-	Gd = -0.181638 Ga = -0.0759414
-	Hd = 1.0493 Ha = -0.434347
-	Cd = -0.181638 Ca = -0.0759414
-	|Cd - Ca| = 0.105696
-
-P 3: ( 0, -1, 0)
+P 20: ( 2, -1, 0)
 	u = 1 v = 1
-	10 elementos incidentes: T-2 T-3 T-2 T-3 T-14 T-17 T-1 T-5 T-30 T-36
-	Gd = -1.9913 Ga = -0.641981
-	Hd = 0 Ha = 0.000954354
-	Cd = -1.9913 Ca = -0.641981
-	|Cd - Ca| = 1.34932
+	6 elementos incidentes: T-10 T-11 T-10 T-11 T-10 T-11
+	Gd = -0.785398 Ga = 0
+	Hd = 0 Ha = 0
 
-P 5: ( 0, 0, 0)
-	u = 0.5 v = 1
-	11 elementos incidentes: T-1 T-2 T-6 T-7 T-8 T-12 T-13 T-27 T-28 T-36 T-37
-	Gd = -7.18417 Ga = -0.000833112
-	Hd = -2.39452 Ha = -0.27797
-	Cd = -7.18417 Ca = -0.000833112
-	|Cd - Ca| = 7.18334
-
-P 24: ( 0, 1, 4.44089e-16)
+P 22: ( 2, 1, 0)
 	u = 0 v = 1
-	6 elementos incidentes: T-15 T-16 T-15 T-17 T-32 T-37
-	Gd = -1.45056 Ga = -1.18842
-	Hd = 0.692156 Ha = 0.000954354
-	Cd = -1.45056 Ca = -1.18842
-	|Cd - Ca| = 0.262144
+	6 elementos incidentes: T-11 T-12 T-11 T-12 T-11 T-12
+	Gd = -0.785398 Ga = 0
+	Hd = 0 Ha = 0
 
-P 27: ( -0.412799, 1, 0.258996)
-	u = 0 v = 0.727545
-	3 elementos incidentes: T-21 T-29 T-32
-	Gd = -0.360287 Ga = 0.133585
-	Hd = 2.07427 Ha = -0.584525
-	Cd = -0.360287 Ca = 0.133585
-	|Cd - Ca| = 0.493872
-
-P 26: ( -0.86688, 1, 0.431438)
-	u = 0 v = 0.477905
-	3 elementos incidentes: T-21 T-23 T-31
-	Gd = -2.13806 Ga = 0.384263
-	Hd = 4.84777 Ha = -0.927998
-	Cd = -2.13806 Ca = 0.384263
-	|Cd - Ca| = 2.52232
-
-P 25: ( -1.33923, 1, 0.365179)
-	u = 0 v = 0.213167
-	3 elementos incidentes: T-17 T-31 T-38
-	Gd = -4.67739 Ga = 0.210021
-	Hd = 4.79171 Ha = -0.698373
-	Cd = -4.67739 Ca = 0.210021
-	|Cd - Ca| = 4.88742
-
-P 31: ( -1.29647, 0.604266, 0.719836)
-	u = 0.221876 v = 0.238748
-	6 elementos incidentes: T-20 T-22 T-23 T-31 T-38 T-39
-	Gd = 0.0627748 Ga = -0.0093467
-	Hd = 5.05633 Ha = -0.775651
-	Cd = 0.0627748 Ca = -0.0093467
-	|Cd - Ca| = 0.0721215
-
-P 32: ( -1.28233, 0.0557504, 0.908928)
-	u = 0.475215 v = 0.247096
-	6 elementos incidentes: T-22 T-24 T-33 T-39 T-40 T-41
-	Gd = 0.160736 Ga = 0.0951654
-	Hd = 3.32903 Ha = -0.415909
-	Cd = 0.160736 Ca = 0.0951654
-	|Cd - Ca| = 0.0655702
-
-P 33: ( -0.841559, -0.0270205, 0.683734)
-	u = 0.51201 v = 0.491539
-	6 elementos incidentes: T-40 T-41 T-42 T-43 T-45 T-46
-	Gd = 0.0592354 Ga = 0.0482857
-	Hd = 1.78618 Ha = -0.246392
-	Cd = 0.0592354 Ca = 0.0482857
-	|Cd - Ca| = 0.0109498
-
-P 34: ( -0.848201, 0.546201, 0.604612)
-	u = 0.250327 v = 0.487964
-	6 elementos incidentes: T-21 T-23 T-29 T-39 T-40 T-45
-	Gd = 0.0681758 Ga = 0.0516549
-	Hd = 2.61563 Ha = -0.412774
-	Cd = 0.0681758 Ca = 0.0516549
-	|Cd - Ca| = 0.0165209
-
-P 35: ( -1.26604, -0.530985, 0.894301)
-	u = 0.742317 v = 0.256648
-	6 elementos incidentes: T-24 T-25 T-34 T-35 T-41 T-42
-	Gd = 0.123507 Ga = 0.188036
-	Hd = 4.56954 Ha = -0.506537
-	Cd = 0.123507 Ca = 0.188036
-	|Cd - Ca| = 0.0645288
-
-P 36: ( -0.818028, -0.579264, 0.638278)
-	u = 0.765796 v = 0.504205
-	6 elementos incidentes: T-19 T-25 T-26 T-42 T-43 T-44
-	Gd = 0.067828 Ga = 0.0737504
-	Hd = 2.73466 Ha = -0.311084
-	Cd = 0.067828 Ca = 0.0737504
-	|Cd - Ca| = 0.00592243
-
-P 37: ( -0.379049, -0.650603, 0.323379)
-	u = 0.801316 v = 0.747185
-	6 elementos incidentes: T-18 T-26 T-27 T-30 T-36 T-44
-	Gd = -0.0117621 Ga = 0.0266055
-	Hd = 1.57997 Ha = -0.222391
-	Cd = -0.0117621 Ca = 0.0266055
-	|Cd - Ca| = 0.0383676
-
-P 38: ( -0.462843, -0.157171, 0.426652)
-	u = 0.570006 v = 0.698871
-	5 elementos incidentes: T-27 T-28 T-43 T-44 T-46
-	Gd = 0.0506419 Ga = 0.0400582
-	Hd = 1.85421 Ha = -0.203484
-	Cd = 0.0506419 Ca = 0.0400582
-	|Cd - Ca| = 0.0105838
-
-P 39: ( -0.398475, 0.437569, 0.356811)
-	u = 0.302079 v = 0.735848
-	6 elementos incidentes: T-28 T-29 T-32 T-37 T-45 T-46
-	Gd = 0.0264331 Ga = 0.0445942
-	Hd = 1.54515 Ha = -0.267143
-	Cd = 0.0264331 Ca = 0.0445942
-	|Cd - Ca| = 0.0181611
+P 27: ( 1, 0, 0)
+	u = 0.5 v = 0.5
+	4 elementos incidentes: T-9 T-10 T-11 T-12
+	Gd = 0 Ga = 0
+	Hd = 0 Ha = 0
 

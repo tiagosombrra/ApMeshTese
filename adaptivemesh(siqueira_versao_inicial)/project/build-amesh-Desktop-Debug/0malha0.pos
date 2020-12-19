@@ -8,14 +8,14 @@ Arquivo gerado pelo gerador de malhas de superficie do Daniel Siqueira
 'shell'
 
 %NODE
-20
+15
 
 %NODE.COORD
-20
-1 -2 1 0
-2 -2 -1 0
-3 0 1 0
-4 0 -1 0
+15
+1 0 1 0
+2 0 -1 0
+3 -2 1 0
+4 -2 -1 0
 5 -1 0 0
 6 0 1 0
 7 0 -1 0
@@ -27,11 +27,6 @@ Arquivo gerado pelo gerador de malhas de superficie do Daniel Siqueira
 13 2 1 0
 14 2 -1 0
 15 1 0 0
-16 -1.6515 1 0
-17 -1.6515 -1 0.69391
-18 0 1 4.44089e-16
-19 0 -1 1.9984e-15
-20 -0.82584 0 0.672879
 
 %MATERIAL
 1
@@ -53,10 +48,10 @@ Arquivo gerado pelo gerador de malhas de superficie do Daniel Siqueira
 1	3	1	1	3	1	1
 
 %ELEMENT
-16
+12
 
 %ELEMENT.T3
-16
+12
 1 1 1 1 1 2 5
 2 1 1 1 2 4 5
 3 1 1 1 4 3 5
@@ -69,9 +64,5 @@ Arquivo gerado pelo gerador de malhas de superficie do Daniel Siqueira
 10 1 1 1 12 14 15
 11 1 1 1 14 13 15
 12 1 1 1 13 11 15
-13 1 1 1 16 17 20
-14 1 1 1 17 19 20
-15 1 1 1 19 18 20
-16 1 1 1 18 16 20
 
 %END

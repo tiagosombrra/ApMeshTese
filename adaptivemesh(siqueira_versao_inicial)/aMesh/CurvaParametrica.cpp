@@ -20,6 +20,8 @@ double CurvaParametrica::calcularTamanho ( const Ponto& p1, const Ponto& p2 )
 	double t1 = encontrar_t ( p1 ); // parâmetro do ponto p1
 	double t2 = encontrar_t ( p2 ); // parâmetro do ponto p2
 
+   // cout<<t1<<t2<<endl;
+
 	if ( t1 < t2 )
 		return comprimento ( t1, t2 );
 	if ( t1 > t2 )

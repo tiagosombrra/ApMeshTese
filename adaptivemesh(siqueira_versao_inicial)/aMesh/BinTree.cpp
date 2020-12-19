@@ -99,15 +99,21 @@ void BinTree::subdividir ( double t, double t_par, CurvaParametrica *curv )
 	
 	if ( this->folha ( ) )
 	{
-		if ( ( this->get_tam() - t_par ) < TOLERANCIA ) return;
+
+        if ( ( this->get_tam() - t_par ) < TOLERANCIA )
+
+          return;
 		
 		subdividir(curv);
 	}
 	
 	double meio = curv->pontoMedio ( this->ti, this->tf );
 	
-	if (t <= meio + TOLERANCIA) this->filhoEsq->subdividir(t, t_par, curv);
-	if (t >= meio - TOLERANCIA) this->filhoDir->subdividir(t, t_par, curv);
+    if (t <= meio + TOLERANCIA)
+        this->filhoEsq->subdividir(t, t_par, curv);
+
+    if (t >= meio - TOLERANCIA)
+        this->filhoDir->subdividir(t, t_par, curv);
 
 }
 

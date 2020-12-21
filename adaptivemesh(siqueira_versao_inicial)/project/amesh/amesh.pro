@@ -55,7 +55,9 @@ SOURCES += \
     ../../aMesh/Triangulo.cpp \
     ../../aMesh/Vertice.cpp \
     ../../aMesh/Vetor.cpp \
-    ../../aMesh/main.cpp
+    ../../aMesh/main.cpp \
+    ../../aMesh/numerical/BisectionEquationRoot.cpp \
+    ../../aMesh/numerical/Function.cpp
 
 TRANSLATIONS += \
     amesh_pt_BR.ts
@@ -92,6 +94,7 @@ HEADERS += \
     ../../aMesh/Curvatura.h \
     ../../aMesh/CurvaturaAnalitica.h \
     ../../aMesh/CurvaturaDiscreta.h \
+    ../../aMesh/Definitions.h \
     ../../aMesh/Elemento.h \
     ../../aMesh/Geometria.h \
     ../../aMesh/Gerador.h \
@@ -111,4 +114,9 @@ HEADERS += \
     ../../aMesh/SubMalha.h \
     ../../aMesh/Triangulo.h \
     ../../aMesh/Vertice.h \
-    ../../aMesh/Vetor.h
+    ../../aMesh/Vetor.h \
+    ../../aMesh/numerical/BisectionEquationRoot.h \
+    ../../aMesh/numerical/EquationRoot.h \
+    ../../aMesh/numerical/EquationRootFunction.h \
+    ../../aMesh/numerical/Function.h \
+    ../../aMesh/numerical/MultiVariableFunction.h

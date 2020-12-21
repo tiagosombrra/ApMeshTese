@@ -310,70 +310,112 @@ double CurvaParametrica::comprimento ( double t1, double t2 )
 // encontra o parâmetro t de um dado ponto p na curva
 double CurvaParametrica::encontrar_t ( const Ponto& p )
 {
-	long double d_min = 1.0e50; // distância mínima entre p e a curva
-	long double di = 0; // distância do palpite até p
-	long double t_min = 0.0; // parâmetro do pondo da curva mais próximo a p
-	Ponto *pi = new Ponto; // ponto de palpite
 
-	for ( long double t = 0.0; t <= 1.0; t += DELTA )
-	{
-		*pi = parametrizar ( t );
-		di = pi->distanciaPara ( p );
-		if ( di < d_min )
-		{
-				d_min = di;
-				t_min = t;
-		}
-	}
+    // markos
+        struct DistanceFunction : public Data::Numerical::EquationRootFunction
+        {
+            const Ponto* pt;
+            CurvaParametrica* curva;
 
-	delete pi;
+            double min()
+            {
+                return 0.0;
+            };
 
-	return t_min;
+            double max()
+            {
+                return 1.0;
+            };
 
-	/* Método utilizando projeção vetorial, de forma
-		semelhante ao método da bisseção. Quanto mais próximo
-		p estiver dos extremos, menor será a precisão */
+            using Data::Numerical::EquationRootFunction::f;
 
-	double frp = DELTA; // fator de reposicionamento
-	double tm = 0.5; // método da bisseção
-	double delta_t = 0.0; // o quanto o parâmetro terá de percorrer
-	double d_P0 = this->P0.distanciaPara ( p ); // distância de P0 a p
-	double d_P1 = this->P1.distanciaPara ( p ); // distância de P1 a p
+            double f(double t)
+            {
+                Ponto p = curva->parametrizar(t);
 
-	// o ponto está muuuuito próximo de P0 ?
-	if ( d_P0 <= DELTA )
-		tm = 0.0; // retorna tm = 0.0
+                return pt->distanciaPara(p);
+            };
+        };
 
-	// o ponto está muuuuito próximo de P1 ?
-	if ( d_P1 <= DELTA )
-		tm = 1.0; // retorna tm = 1.0
+        DistanceFunction f;
+
+        f.curva = this;
+        f.pt = &p;
+
+        Data::Numerical::ClosestBisectionEquationRoot eqRoot;
+
+        bool ok = true;
+
+        double t = eqRoot.execute(&f, ok);
+
+        return ok ? t : -1.0;
+
+        // end markos
+
+//	long double d_min = 1.0e50; // distância mínima entre p e a curva
+//	long double di = 0; // distância do palpite até p
+//	long double t_min = 0.0; // parâmetro do pondo da curva mais próximo a p
+//	Ponto *pi = new Ponto; // ponto de palpite
+
+//	for ( long double t = 0.0; t <= 1.0; t += DELTA )
+//	{
+//		*pi = parametrizar ( t );
+//		di = pi->distanciaPara ( p );
+//		if ( di < d_min )
+//		{
+//				d_min = di;
+//				t_min = t;
+//		}
+//	}
+
+//	delete pi;
+
+//	return t_min;
+
+//	/* Método utilizando projeção vetorial, de forma
+//		semelhante ao método da bisseção. Quanto mais próximo
+//		p estiver dos extremos, menor será a precisão */
+
+//	double frp = DELTA; // fator de reposicionamento
+//	double tm = 0.5; // método da bisseção
+//	double delta_t = 0.0; // o quanto o parâmetro terá de percorrer
+//	double d_P0 = this->P0.distanciaPara ( p ); // distância de P0 a p
+//	double d_P1 = this->P1.distanciaPara ( p ); // distância de P1 a p
+
+//	// o ponto está muuuuito próximo de P0 ?
+//	if ( d_P0 <= DELTA )
+//		tm = 0.0; // retorna tm = 0.0
+
+//	// o ponto está muuuuito próximo de P1 ?
+//	if ( d_P1 <= DELTA )
+//		tm = 1.0; // retorna tm = 1.0
 
 
-	Ponto Si;
+//	Ponto Si;
 
-	do
-	{
-		// 1. cria Si (modificou T)
-		Si = this->parametrizar ( tm );
+//	do
+//	{
+//		// 1. cria Si (modificou T)
+//		Si = this->parametrizar ( tm );
 
-		// 2. cria Vj
-		Vetor Vj ( Si, p );
+//		// 2. cria Vj
+//		Vetor Vj ( Si, p );
 
-		// 3. cria Tu (modificou T)
-		Vetor Tu ( this->Qt ( tm ) );
+//		// 3. cria Tu (modificou T)
+//		Vetor Tu ( this->Qt ( tm ) );
 
-		// 4. calcula a projecao de Vj em Tu
-		delta_t = Vj ^ Tu;
+//		// 4. calcula a projecao de Vj em Tu
+//		delta_t = Vj ^ Tu;
 
-		// 5. calcula 'tm' (este eh o ultimo valor de 'tm' calculado)
-		tm += delta_t * frp;
-	}
-	while ( Si.distanciaPara ( p ) > TOLERANCIA );
+//		// 5. calcula 'tm' (este eh o ultimo valor de 'tm' calculado)
+//		tm += delta_t * frp;
+//	}
+//	while ( Si.distanciaPara ( p ) > TOLERANCIA );
 
-	if ( tm < DELTA ) tm = 0.0; // t está muito próximo a 0
-	else if ( tm > ( 1.0 - DELTA ) ) tm = 1.0; // t está muito próximo a 1
+//	if ( tm < DELTA ) tm = 0.0; // t está muito próximo a 0
+//	else if ( tm > ( 1.0 - DELTA ) ) tm = 1.0; // t está muito próximo a 1
 
-	return tm; // retorna o ultimo valor de 'tm' calculado
+//	return tm; // retorna o ultimo valor de 'tm' calculado
 }
 
 

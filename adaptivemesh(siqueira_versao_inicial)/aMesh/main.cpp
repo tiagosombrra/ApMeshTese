@@ -20,9 +20,9 @@ double TOLERANCIA = 0.0001;
 double TOLERANCIA_CURVATURA = 0.001;
 double TOLERANCIA_AFT = 0.0001;
 double PROPORCAO = 1.25; // proporção usada no avanço de fronteira
-double SUAVIZACAO = 5; // número de vezes que se dará a suavização laplaciana
+double SUAVIZACAO = 8; // número de vezes que se dará a suavização laplaciana
 double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
-double EPSYLON = -0.1;
+double EPSYLON = 0.01;
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
 
@@ -92,26 +92,6 @@ int main(int argc, char **argv)
 Geometria *modelPlanBook(Geometria *geo){
 
     //=============================== PATCH 1 ==================================
-    //    Ponto* p100 = new Vertice ( -2.00000, 1.00000, 0.00000 );
-    //    Ponto* p110 = new Vertice ( -2.00000, 0.50000, 0.00000 );
-    //    Ponto* p120 = new Vertice ( -2.00000, -0.50000, 0.00000 );
-    //    Ponto* p130 = new Vertice ( -2.00000, -1.00000, 0.00000 );
-
-    //    Ponto* p101 = new Vertice ( -1.50000, 1.00000, 0.00000 );
-    //    Ponto* p111 = new Vertice ( -1.50000, 0.50000, 0.00000 );
-    //    Ponto* p121 = new Vertice ( -1.50000, -0.50000, 0.00000 );
-    //    Ponto* p131 = new Vertice ( -1.50000, -1.00000, 0.00000 );
-
-    //    Ponto* p102 = new Vertice ( -0.50000, 1.00000, 0.00000 );
-    //    Ponto* p112 = new Vertice ( -0.50000, 0.50000, 0.00000 );
-    //    Ponto* p122 = new Vertice ( -0.50000, -0.50000, 0.00000 );
-    //    Ponto* p132 = new Vertice ( -0.50000, -1.00000, 0.00000 );
-
-    //    Ponto* p103 = new Vertice ( 0.00000, 1.00000, 0.00000 );
-    //    Ponto* p113 = new Vertice ( 0.00000, 0.50000, 0.00000 );
-    //    Ponto* p123 = new Vertice ( 0.00000, -0.50000, 0.00000 );
-    //    Ponto* p133 = new Vertice ( 0.00000, -1.00000, 0.00000 );
-
     Ponto* p100 = new Vertice ( 0.00000, 1.00000, 0.00000 );
     Ponto* p110 = new Vertice ( 0.00000, 0.50000, 0.00000 );
     Ponto* p120 = new Vertice ( 0.00000, -0.50000, 0.00000 );
@@ -220,41 +200,80 @@ Geometria *modelPlanBook(Geometria *geo){
     geo->insereCurva ( patch3_c4 );
     //======================== FIM DO PATCH 3 ==================================
 
-//    //=============================== PATCH 4 ==================================
-//    Ponto* p400 = new Vertice ( -1.6515, 1.00000, 0.69391 );
-//    Ponto* p410 = new Vertice ( -1.6515, 0.50000, 1.2885 );
-//    Ponto* p420 = new Vertice ( -1.6515, -0.50000, 1.3025 );
-//    Ponto* p430 = new Vertice ( -1.6515, -1.00000, 0.69391 );
+    //=============================== PATCH 4 ==================================
+    Ponto* p400 = new Vertice ( 0.00000, 1.00000, 0.00000 );
+    Ponto* p410 = new Vertice ( 0.00000, 0.50000, 0.00000 );
+    Ponto* p420 = new Vertice ( 0.00000, -0.50000, 0.00000 );
+    Ponto* p430 = new Vertice ( 0.00000, -1.00000, 0.00000 );
 
-//    Ponto* p401 = new Vertice ( -1.2387, 1.00000, 0.84601 );
-//    Ponto* p411 = new Vertice ( -1.2387, 0.50000, 0.84601 );
-//    Ponto* p421 = new Vertice ( -1.2387, -0.50000, 1.1102 );
-//    Ponto* p431 = new Vertice ( -1.2387, -1.00000, 0.84601 );
+    Ponto* p401 = new Vertice ( -0.50000, 1.00000, 1.00000 );
+    Ponto* p411 = new Vertice ( -0.50000, 0.50000, 1.00000 );
+    Ponto* p421 = new Vertice ( -0.50000, -0.50000, 1.00000 );
+    Ponto* p431 = new Vertice ( -0.50000, -1.00000, 1.00000 );
 
-//    Ponto* p402 = new Vertice ( -0.41304, 1.00000, 0.28181 );
-//    Ponto* p412 = new Vertice ( -0.41304, 0.50000, 0.61175 );
-//    Ponto* p422 = new Vertice ( -0.41304, -0.50000, 0.52431 );
-//    Ponto* p432 = new Vertice ( -0.41304, -1.00000, 0.28181 );
+    Ponto* p402 = new Vertice ( -1.50000, 1.00000, 1.00000 );
+    Ponto* p412 = new Vertice ( -1.50000, 0.50000, 1.00000 );
+    Ponto* p422 = new Vertice ( -1.50000, -0.50000, 1.00000 );
+    Ponto* p432 = new Vertice ( -1.50000, -1.00000, 1.00000 );
 
-//    Ponto* p403 = new Vertice ( 0.00000, 1.00000, 0.00000 );
-//    Ponto* p413 = new Vertice ( 0.00000, 0.50000, 0.00000 );
-//    Ponto* p423 = new Vertice ( 0.00000, -0.50000, 0.00000 );
-//    Ponto* p433 = new Vertice ( 0.00000, -1.00000, 0.00000 );
+    Ponto* p403 = new Vertice ( -2.00000, 1.00000, 1.00000 );
+    Ponto* p413 = new Vertice ( -2.00000, 0.50000, 1.00000 );
+    Ponto* p423 = new Vertice ( -2.00000, -0.50000, 0.50000 );
+    Ponto* p433 = new Vertice ( -2.00000, -1.00000, 1.00000 );
 
-//    Curva* patch4_c1 = new CurvParamBezier ( *p400, *p410, *p420, *p430 );
-//    Curva* patch4_c2 = new CurvParamBezier ( *p430, *p431, *p432, *p433 );
-//    //Curva* patch4_c3 = new CurvParamBezier ( *p403, *p413, *p423, *p433 );
-//    Curva* patch4_c4 = new CurvParamBezier ( *p400, *p401, *p402, *p403 );
 
-//    Patch* patch4 = new BezierPatch (	patch4_c1, patch4_c2, patch1_c1, patch4_c4,
-//                                        *p411, *p421, *p412, *p422 );
+    //Curva* patch4_c1 = new CurvParamBezier ( *p400, *p410, *p420, *p430 );
+    Curva* patch4_c2 = new CurvParamBezier ( *p430, *p431, *p432, *p433 );
+    Curva* patch4_c3 = new CurvParamBezier ( *p403, *p413, *p423, *p433 );
+    Curva* patch4_c4 = new CurvParamBezier ( *p400, *p401, *p402, *p403 );
 
-//    geo->inserePatch ( patch4 );
-//    geo->insereCurva ( patch4_c1 );
-//    geo->insereCurva ( patch4_c2 );
-//    //geo->insereCurva ( patch4_c3 );
-//    geo->insereCurva ( patch4_c4 );
-//    //======================== FIM DO PATCH 4 ==================================
+    Patch* patch4 = new BezierPatch (	patch1_c1, patch4_c2, patch4_c3, patch4_c4,
+                                        *p411, *p421, *p412, *p422 );
+
+    geo->inserePatch ( patch4 );
+    //geo->insereCurva ( patch4_c1 );
+    geo->insereCurva ( patch4_c2 );
+    geo->insereCurva ( patch4_c3 );
+    geo->insereCurva ( patch4_c4 );
+    //======================== FIM DO PATCH 4 ==================================
+
+    //=============================== PATCH 5 ==================================
+
+    Ponto* p500 = new Vertice ( 0.00000, 1.00000, 0.00000 );
+    Ponto* p510 = new Vertice ( 0.00000, 0.50000, 0.00000 );
+    Ponto* p520 = new Vertice ( 0.00000, -0.50000, 0.00000 );
+    Ponto* p530 = new Vertice ( 0.00000, -1.00000, 0.00000 );
+
+    Ponto* p501 = new Vertice ( 0.50000, 1.00000, 0.28371 );
+    Ponto* p511 = new Vertice ( 0.50000, 0.50000, 0.15342 );
+    Ponto* p521 = new Vertice ( 0.50000, -0.50000, 0.50617 );
+    Ponto* p531 = new Vertice ( 0.50000, -1.00000, 0.28371 );
+
+    Ponto* p502 = new Vertice ( 1.50000, 1.00000, 0.69502 );
+    Ponto* p512 = new Vertice ( 1.50000, 0.50000, 0.8342 );
+    Ponto* p522 = new Vertice ( 1.50000, -0.50000, 1.094 );
+    Ponto* p532 = new Vertice ( 1.50000, -1.00000, 0.8342 );
+
+    Ponto* p503 = new Vertice ( 2.00000, 1.00000, 0.96197 );
+    Ponto* p513 = new Vertice ( 2.00000, 0.50000, 0.96197 );
+    Ponto* p523 = new Vertice ( 2.00000, -0.50000, 1.2141 );
+    Ponto* p533 = new Vertice ( 2.00000, -1.00000, 0.76172 );
+
+
+    //Curva* patch5_c1 = new CurvParamBezier ( *p500, *p510, *p520, *p530 );
+    Curva* patch5_c2 = new CurvParamBezier ( *p530, *p531, *p532, *p533 );
+    Curva* patch5_c3 = new CurvParamBezier ( *p503, *p513, *p523, *p533 );
+    Curva* patch5_c4 = new CurvParamBezier ( *p500, *p501, *p502, *p503 );
+
+    Patch* patch5 = new BezierPatch (	patch1_c1, patch5_c2, patch5_c3, patch5_c4,
+                                        *p511, *p521, *p512, *p522 );
+
+    geo->inserePatch ( patch5 );
+    //geo->insereCurva ( patch5_c1 );
+    geo->insereCurva ( patch5_c2 );
+    geo->insereCurva ( patch5_c3 );
+    geo->insereCurva ( patch5_c4 );
+    //======================== FIM DO PATCH 5 ==================================
 }
 
 Geometria *modelTresPatches(Geometria *geo){

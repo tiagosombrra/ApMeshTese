@@ -20,6 +20,8 @@ using namespace std;
 #include "Matriz.h"
 #include "Vetor.h"
 #include "Curva.h"
+#include "numerical/EquationRootFunction.h"
+#include "numerical/BisectionEquationRoot.h"
 
 class CurvaParametrica : public Curva
 { 

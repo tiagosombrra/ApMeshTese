@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = amesh1.0.0
-DISTDIR = /home/tiago/TGS_Tese/adaptivemesh(siqueira_versao_inicial)/project/build-amesh-Desktop-Debug/.tmp/amesh1.0.0
+DISTDIR = /home/tiago/Github/tgs_tese/adaptivemesh(siqueira_versao_inicial)/project/build-amesh-Desktop-Debug/.tmp/amesh1.0.0
 LINK          = g++
 LFLAGS        = 
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Core.so -lpthread   
@@ -91,7 +91,9 @@ SOURCES       = ../../aMesh/AFT/AdvancingFront.cpp \
 		../../aMesh/Triangulo.cpp \
 		../../aMesh/Vertice.cpp \
 		../../aMesh/Vetor.cpp \
-		../../aMesh/main.cpp 
+		../../aMesh/main.cpp \
+		../../aMesh/numerical/BisectionEquationRoot.cpp \
+		../../aMesh/numerical/Function.cpp 
 OBJECTS       = AdvancingFront.o \
 		Boundary.o \
 		Quadtree.o \
@@ -131,7 +133,9 @@ OBJECTS       = AdvancingFront.o \
 		Triangulo.o \
 		Vertice.o \
 		Vetor.o \
-		main.o
+		main.o \
+		BisectionEquationRoot.o \
+		Function.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -229,6 +233,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../aMesh/Curvatura.h \
 		../../aMesh/CurvaturaAnalitica.h \
 		../../aMesh/CurvaturaDiscreta.h \
+		../../aMesh/Definitions.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Geometria.h \
 		../../aMesh/Gerador.h \
@@ -248,7 +253,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../aMesh/SubMalha.h \
 		../../aMesh/Triangulo.h \
 		../../aMesh/Vertice.h \
-		../../aMesh/Vetor.h ../../aMesh/AFT/AdvancingFront.cpp \
+		../../aMesh/Vetor.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h ../../aMesh/AFT/AdvancingFront.cpp \
 		../../aMesh/AFT/Boundary.cpp \
 		../../aMesh/AFT/Quadtree.cpp \
 		../../aMesh/AFT/QuadtreeCell.cpp \
@@ -287,7 +297,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../aMesh/Triangulo.cpp \
 		../../aMesh/Vertice.cpp \
 		../../aMesh/Vetor.cpp \
-		../../aMesh/main.cpp
+		../../aMesh/main.cpp \
+		../../aMesh/numerical/BisectionEquationRoot.cpp \
+		../../aMesh/numerical/Function.cpp
 QMAKE_TARGET  = amesh
 DESTDIR       = 
 TARGET        = amesh
@@ -465,8 +477,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../aMesh/AFT/AdvancingFront.h ../../aMesh/AFT/Boundary.h ../../aMesh/AFT/Quadtree.h ../../aMesh/AFT/QuadtreeCell.h ../../aMesh/Adaptador.h ../../aMesh/AdaptadorPorCurvatura.h ../../aMesh/Adjacente.h ../../aMesh/Arquivo.h ../../aMesh/Basics/Definitions.h ../../aMesh/Basics/Edge.h ../../aMesh/Basics/Face.h ../../aMesh/Basics/Shape.h ../../aMesh/Basics/Vertex.h ../../aMesh/BezierPatch.h ../../aMesh/BinTree.h ../../aMesh/CoonsPatch.h ../../aMesh/CurvParamBezier.h ../../aMesh/CurvParamHermite.h ../../aMesh/Curva.h ../../aMesh/CurvaParametrica.h ../../aMesh/Curvatura.h ../../aMesh/CurvaturaAnalitica.h ../../aMesh/CurvaturaDiscreta.h ../../aMesh/Elemento.h ../../aMesh/Geometria.h ../../aMesh/Gerador.h ../../aMesh/GeradorAdaptativo.h ../../aMesh/GeradorAdaptativoPorCurvatura.h ../../aMesh/HalfEdge.h ../../aMesh/HermitePatch.h ../../aMesh/Interface.h ../../aMesh/Malha.h ../../aMesh/Matriz.h ../../aMesh/Modelo.h ../../aMesh/Noh.h ../../aMesh/Patch.h ../../aMesh/Ponto.h ../../aMesh/QuadTree.h ../../aMesh/Renderizador.h ../../aMesh/SubMalha.h ../../aMesh/Triangulo.h ../../aMesh/Vertice.h ../../aMesh/Vetor.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../aMesh/AFT/AdvancingFront.cpp ../../aMesh/AFT/Boundary.cpp ../../aMesh/AFT/Quadtree.cpp ../../aMesh/AFT/QuadtreeCell.cpp ../../aMesh/Adaptador.cpp ../../aMesh/AdaptadorPorCurvatura.cpp ../../aMesh/Adjacente.cpp ../../aMesh/Arquivo.cpp ../../aMesh/Basics/Edge.cpp ../../aMesh/Basics/Face.cpp ../../aMesh/Basics/Shape.cpp ../../aMesh/Basics/Vertex.cpp ../../aMesh/BezierPatch.cpp ../../aMesh/BinTree.cpp ../../aMesh/CoonsPatch.cpp ../../aMesh/CurvParamBezier.cpp ../../aMesh/CurvParamHermite.cpp ../../aMesh/Curva.cpp ../../aMesh/CurvaParametrica.cpp ../../aMesh/Curvatura.cpp ../../aMesh/CurvaturaAnalitica.cpp ../../aMesh/CurvaturaDiscreta.cpp ../../aMesh/Elemento.cpp ../../aMesh/Geometria.cpp ../../aMesh/Gerador.cpp ../../aMesh/GeradorAdaptativo.cpp ../../aMesh/GeradorAdaptativoPorCurvatura.cpp ../../aMesh/HermitePatch.cpp ../../aMesh/Malha.cpp ../../aMesh/Matriz.cpp ../../aMesh/Modelo.cpp ../../aMesh/Noh.cpp ../../aMesh/Patch.cpp ../../aMesh/Ponto.cpp ../../aMesh/Renderizador.cpp ../../aMesh/SubMalha.cpp ../../aMesh/Triangulo.cpp ../../aMesh/Vertice.cpp ../../aMesh/Vetor.cpp ../../aMesh/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../aMesh/AFT/AdvancingFront.h ../../aMesh/AFT/Boundary.h ../../aMesh/AFT/Quadtree.h ../../aMesh/AFT/QuadtreeCell.h ../../aMesh/Adaptador.h ../../aMesh/AdaptadorPorCurvatura.h ../../aMesh/Adjacente.h ../../aMesh/Arquivo.h ../../aMesh/Basics/Definitions.h ../../aMesh/Basics/Edge.h ../../aMesh/Basics/Face.h ../../aMesh/Basics/Shape.h ../../aMesh/Basics/Vertex.h ../../aMesh/BezierPatch.h ../../aMesh/BinTree.h ../../aMesh/CoonsPatch.h ../../aMesh/CurvParamBezier.h ../../aMesh/CurvParamHermite.h ../../aMesh/Curva.h ../../aMesh/CurvaParametrica.h ../../aMesh/Curvatura.h ../../aMesh/CurvaturaAnalitica.h ../../aMesh/CurvaturaDiscreta.h ../../aMesh/Definitions.h ../../aMesh/Elemento.h ../../aMesh/Geometria.h ../../aMesh/Gerador.h ../../aMesh/GeradorAdaptativo.h ../../aMesh/GeradorAdaptativoPorCurvatura.h ../../aMesh/HalfEdge.h ../../aMesh/HermitePatch.h ../../aMesh/Interface.h ../../aMesh/Malha.h ../../aMesh/Matriz.h ../../aMesh/Modelo.h ../../aMesh/Noh.h ../../aMesh/Patch.h ../../aMesh/Ponto.h ../../aMesh/QuadTree.h ../../aMesh/Renderizador.h ../../aMesh/SubMalha.h ../../aMesh/Triangulo.h ../../aMesh/Vertice.h ../../aMesh/Vetor.h ../../aMesh/numerical/BisectionEquationRoot.h ../../aMesh/numerical/EquationRoot.h ../../aMesh/numerical/EquationRootFunction.h ../../aMesh/numerical/Function.h ../../aMesh/numerical/MultiVariableFunction.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../aMesh/AFT/AdvancingFront.cpp ../../aMesh/AFT/Boundary.cpp ../../aMesh/AFT/Quadtree.cpp ../../aMesh/AFT/QuadtreeCell.cpp ../../aMesh/Adaptador.cpp ../../aMesh/AdaptadorPorCurvatura.cpp ../../aMesh/Adjacente.cpp ../../aMesh/Arquivo.cpp ../../aMesh/Basics/Edge.cpp ../../aMesh/Basics/Face.cpp ../../aMesh/Basics/Shape.cpp ../../aMesh/Basics/Vertex.cpp ../../aMesh/BezierPatch.cpp ../../aMesh/BinTree.cpp ../../aMesh/CoonsPatch.cpp ../../aMesh/CurvParamBezier.cpp ../../aMesh/CurvParamHermite.cpp ../../aMesh/Curva.cpp ../../aMesh/CurvaParametrica.cpp ../../aMesh/Curvatura.cpp ../../aMesh/CurvaturaAnalitica.cpp ../../aMesh/CurvaturaDiscreta.cpp ../../aMesh/Elemento.cpp ../../aMesh/Geometria.cpp ../../aMesh/Gerador.cpp ../../aMesh/GeradorAdaptativo.cpp ../../aMesh/GeradorAdaptativoPorCurvatura.cpp ../../aMesh/HermitePatch.cpp ../../aMesh/Malha.cpp ../../aMesh/Matriz.cpp ../../aMesh/Modelo.cpp ../../aMesh/Noh.cpp ../../aMesh/Patch.cpp ../../aMesh/Ponto.cpp ../../aMesh/Renderizador.cpp ../../aMesh/SubMalha.cpp ../../aMesh/Triangulo.cpp ../../aMesh/Vertice.cpp ../../aMesh/Vetor.cpp ../../aMesh/main.cpp ../../aMesh/numerical/BisectionEquationRoot.cpp ../../aMesh/numerical/Function.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents amesh_pt_BR.ts $(DISTDIR)/
 
 
@@ -530,6 +542,12 @@ AdvancingFront.o: ../../aMesh/AFT/AdvancingFront.cpp ../../aMesh/AFT/AdvancingFr
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
 		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/Basics/Face.h \
 		../../aMesh/AFT/Boundary.h \
 		../../aMesh/AFT/Quadtree.h \
@@ -549,6 +567,12 @@ Boundary.o: ../../aMesh/AFT/Boundary.cpp ../../aMesh/AFT/Boundary.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
 		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/Basics/Edge.h \
 		../../aMesh/Basics/Vertex.h \
 		../../aMesh/AFT/QuadtreeCell.h \
@@ -570,6 +594,12 @@ Quadtree.o: ../../aMesh/AFT/Quadtree.cpp ../../aMesh/AFT/Quadtree.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
 		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/Basics/Face.h \
 		../../aMesh/AFT/Boundary.h \
 		../../aMesh/AFT/QuadtreeCell.h
@@ -589,6 +619,12 @@ QuadtreeCell.o: ../../aMesh/AFT/QuadtreeCell.cpp ../../aMesh/AFT/QuadtreeCell.h 
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
 		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/AFT/Quadtree.h \
 		../../aMesh/Basics/Vertex.h \
 		../../aMesh/Basics/Edge.h \
@@ -612,6 +648,12 @@ AdaptadorPorCurvatura.o: ../../aMesh/AdaptadorPorCurvatura.cpp ../../aMesh/Adapt
 		../../aMesh/CurvaParametrica.h \
 		../../aMesh/Vertice.h \
 		../../aMesh/Matriz.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/CurvaturaAnalitica.h \
 		../../aMesh/Curvatura.h \
 		../../aMesh/CurvaturaDiscreta.h \
@@ -663,6 +705,12 @@ Edge.o: ../../aMesh/Basics/Edge.cpp ../../aMesh/Basics/Edge.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
 		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/Basics/Vertex.h \
 		../../aMesh/AFT/QuadtreeCell.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Edge.o ../../aMesh/Basics/Edge.cpp
@@ -681,7 +729,13 @@ Face.o: ../../aMesh/Basics/Face.cpp ../../aMesh/Basics/Face.h \
 		../../aMesh/Noh.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
-		../../aMesh/Patch.h
+		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Face.o ../../aMesh/Basics/Face.cpp
 
 Shape.o: ../../aMesh/Basics/Shape.cpp ../../aMesh/Basics/Shape.h \
@@ -701,7 +755,13 @@ Vertex.o: ../../aMesh/Basics/Vertex.cpp ../../aMesh/Basics/Vertex.h \
 		../../aMesh/Noh.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
-		../../aMesh/Patch.h
+		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Vertex.o ../../aMesh/Basics/Vertex.cpp
 
 BezierPatch.o: ../../aMesh/BezierPatch.cpp ../../aMesh/CurvParamBezier.h \
@@ -715,6 +775,12 @@ BezierPatch.o: ../../aMesh/BezierPatch.cpp ../../aMesh/CurvParamBezier.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
 		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/BezierPatch.h \
 		../../aMesh/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BezierPatch.o ../../aMesh/BezierPatch.cpp
@@ -729,7 +795,13 @@ BinTree.o: ../../aMesh/BinTree.cpp ../../aMesh/BinTree.h \
 		../../aMesh/Noh.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
-		../../aMesh/Patch.h
+		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BinTree.o ../../aMesh/BinTree.cpp
 
 CoonsPatch.o: ../../aMesh/CoonsPatch.cpp ../../aMesh/CoonsPatch.h \
@@ -752,7 +824,13 @@ CurvParamBezier.o: ../../aMesh/CurvParamBezier.cpp ../../aMesh/CurvParamBezier.h
 		../../aMesh/Noh.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
-		../../aMesh/Patch.h
+		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvParamBezier.o ../../aMesh/CurvParamBezier.cpp
 
 CurvParamHermite.o: ../../aMesh/CurvParamHermite.cpp ../../aMesh/CurvParamHermite.h \
@@ -765,7 +843,13 @@ CurvParamHermite.o: ../../aMesh/CurvParamHermite.cpp ../../aMesh/CurvParamHermit
 		../../aMesh/Noh.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
-		../../aMesh/Patch.h
+		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvParamHermite.o ../../aMesh/CurvParamHermite.cpp
 
 Curva.o: ../../aMesh/Curva.cpp ../../aMesh/Curva.h \
@@ -786,7 +870,13 @@ CurvaParametrica.o: ../../aMesh/CurvaParametrica.cpp ../../aMesh/CurvaParametric
 		../../aMesh/Noh.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
-		../../aMesh/Patch.h
+		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvaParametrica.o ../../aMesh/CurvaParametrica.cpp
 
 Curvatura.o: ../../aMesh/Curvatura.cpp ../../aMesh/Curvatura.h \
@@ -894,6 +984,12 @@ GeradorAdaptativoPorCurvatura.o: ../../aMesh/GeradorAdaptativoPorCurvatura.cpp .
 		../../aMesh/Adaptador.h \
 		../../aMesh/CurvaParametrica.h \
 		../../aMesh/Matriz.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/BinTree.h \
 		../../aMesh/AFT/AdvancingFront.h \
 		../../aMesh/Basics/Definitions.h \
@@ -914,6 +1010,12 @@ HermitePatch.o: ../../aMesh/HermitePatch.cpp ../../aMesh/CurvParamHermite.h \
 		../../aMesh/Elemento.h \
 		../../aMesh/Triangulo.h \
 		../../aMesh/Patch.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/HermitePatch.h \
 		../../aMesh/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o HermitePatch.o ../../aMesh/HermitePatch.cpp
@@ -992,6 +1094,12 @@ main.o: ../../aMesh/main.cpp ../../aMesh/HermitePatch.h \
 		../../aMesh/CurvParamHermite.h \
 		../../aMesh/CurvaParametrica.h \
 		../../aMesh/Matriz.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
 		../../aMesh/CurvParamBezier.h \
 		../../aMesh/Modelo.h \
 		../../aMesh/Geometria.h \
@@ -1014,6 +1122,28 @@ main.o: ../../aMesh/main.cpp ../../aMesh/HermitePatch.h \
 		../../aMesh/Basics/Face.h \
 		../../aMesh/Basics/Vertex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../aMesh/main.cpp
+
+BisectionEquationRoot.o: ../../aMesh/numerical/BisectionEquationRoot.cpp ../../aMesh/numerical/BisectionEquationRoot.h \
+		../../aMesh/numerical/EquationRoot.h \
+		../../aMesh/numerical/EquationRootFunction.h \
+		../../aMesh/Definitions.h \
+		../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h \
+		../../aMesh/CurvaParametrica.h \
+		../../aMesh/Vertice.h \
+		../../aMesh/Ponto.h \
+		../../aMesh/Matriz.h \
+		../../aMesh/Vetor.h \
+		../../aMesh/Curva.h \
+		../../aMesh/Noh.h \
+		../../aMesh/Elemento.h \
+		../../aMesh/Triangulo.h \
+		../../aMesh/Patch.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BisectionEquationRoot.o ../../aMesh/numerical/BisectionEquationRoot.cpp
+
+Function.o: ../../aMesh/numerical/Function.cpp ../../aMesh/numerical/Function.h \
+		../../aMesh/numerical/MultiVariableFunction.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Function.o ../../aMesh/numerical/Function.cpp
 
 ####### Install
 

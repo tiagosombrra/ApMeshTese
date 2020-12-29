@@ -1,0 +1,132 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@tiagosombrra
+Learn Git and GitHub without any code!
+
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+github /
+gitignore
+
+3.2k
+112k
+
+    60.6k
+
+Code
+Pull requests 245
+Actions
+Projects
+Security
+
+    Insights
+
+gitignore/Qt.gitignore
+@martonmiklos
+martonmiklos Extend Qt.gitignore with qmlcache qrc files (#3322)
+Latest commit ef59ea5 on 12 Mar
+History
+15 contributors
+@martonmiklos
+@KoynovStas
+@timsueberkrueb
+@davidebeatrici
+@abrodkin
+@varhub
+@tsteinholz
+@nocnokneo
+@Ebola16
+@misterion
+@munkhoff
+@jspahrsummers
+54 lines (46 sloc) 624 Bytes
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dll
+*.dylib
+
+# Qt-es
+object_script.*.Release
+object_script.*.Debug
+*_plugin_import.cpp
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*build-*
+*.qm
+*.prl
+
+# Qt unit tests
+target_wrapper.*
+
+# QtCreator
+*.autosave
+
+# QtCreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+
+# QtCreator CMake
+CMakeLists.txt.user*
+
+# QtCreator 4.8< compilation database 
+compile_commands.json
+
+# QtCreator local machine specific files for imported projects
+*creator.user*
+
+*_qmlcache.qrc

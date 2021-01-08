@@ -2,8 +2,9 @@ QT -= gui
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
+QMAKE_CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
 
-INCLUDEPATH += ../apMesh/Headers/Adapter ../apMesh/Headers/Basic/ ../apMesh/Headers/Crabmesh/Aft/  ../apMesh/Headers/Crabmesh/Numerical/ ../apMesh/Headers/Curvature/ ../apMesh/Headers/Data/Curve/ ../apMesh/Headers/Data/Mesh/  ../apMesh/Headers/Data/Patch/  ../apMesh/Headers/Data/Tree/ ../apMesh/Headers/Data/ ../apMesh/Headers/Estimate/  ../apMesh/Headers/Generator/ ../apMesh/Headers/IO/ ../apMesh/Headers/TypeMethod/  ../apMesh/Headers/Timer/
+INCLUDEPATH += ../apMesh/Headers/Adapter ../apMesh/Headers/Basic/ ../apMesh/Headers/Crabmesh/Aft/  ../apMesh/Headers/Crabmesh/Numerical/ ../apMesh/Headers/Curvature/ ../apMesh/Headers/Data/Curve/ ../apMesh/Headers/Data/Matrix/ ../apMesh/Headers/Data/Mesh/  ../apMesh/Headers/Data/Patch/  ../apMesh/Headers/Data/Tree/ ../apMesh/Headers/Data/ ../apMesh/Headers/Estimate/  ../apMesh/Headers/Generator/ ../apMesh/Headers/IO/ ../apMesh/Headers/TypeMethod/  ../apMesh/Headers/Timer/
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -25,6 +26,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    ../../../../Downloads/mtoolstecgraf/header/Numerical/Definitions.h \
     ../apMesh/Headers/Adapter/Adaptador.h \
     ../apMesh/Headers/Adapter/AdaptadorPorCurvatura.h \
     ../apMesh/Headers/Basic/Definitions.h \
@@ -46,6 +48,7 @@ HEADERS += \
     ../apMesh/Headers/Data/Curve/CurvParamHermite.h \
     ../apMesh/Headers/Data/Curve/Curva.h \
     ../apMesh/Headers/Data/Curve/CurvaParametrica.h \
+    ../apMesh/Headers/Data/Definitions.h \
     ../apMesh/Headers/Data/Edge.h \
     ../apMesh/Headers/Data/Elemento.h \
     ../apMesh/Headers/Data/Face.h \
@@ -55,6 +58,7 @@ HEADERS += \
     ../apMesh/Headers/Data/Mesh/SubMalha.h \
     ../apMesh/Headers/Data/Modelo.h \
     ../apMesh/Headers/Data/Noh.h \
+    ../apMesh/Headers/Data/OStream.h \
     ../apMesh/Headers/Data/Patch/BezierPatch.h \
     ../apMesh/Headers/Data/Patch/CoonsPatch.h \
     ../apMesh/Headers/Data/Patch/HermitePatch.h \
@@ -68,7 +72,13 @@ HEADERS += \
     ../apMesh/Headers/Generator/Gerador.h \
     ../apMesh/Headers/Generator/GeradorAdaptativo.h \
     ../apMesh/Headers/Generator/GeradorAdaptativoPorCurvatura.h \
-    ../apMesh/Headers/IO/Arquivo.h
+    ../apMesh/Headers/IO/Arquivo.h \
+    ../apMesh/Headers/Numerical/ColumnMatrix.h \
+    ../apMesh/Headers/Numerical/Definitions.h \
+    ../apMesh/Headers/Numerical/IMatrix.h \
+    ../apMesh/Headers/Numerical/PermutationMatrix.h \
+    ../apMesh/Headers/Numerical/RowMatrix.h \
+    ../apMesh/Headers/Numerical/TMatrix.h
 
 SOURCES += \
     ../apMesh/Sources/Adapter/Adaptador.cpp \
@@ -97,6 +107,7 @@ SOURCES += \
     ../apMesh/Sources/Data/Mesh/SubMalha.cpp \
     ../apMesh/Sources/Data/Modelo.cpp \
     ../apMesh/Sources/Data/Noh.cpp \
+    ../apMesh/Sources/Data/OStream.cpp \
     ../apMesh/Sources/Data/Patch/BezierPatch.cpp \
     ../apMesh/Sources/Data/Patch/CoonsPatch.cpp \
     ../apMesh/Sources/Data/Patch/HermitePatch.cpp \
@@ -111,4 +122,5 @@ SOURCES += \
     ../apMesh/Sources/Generator/GeradorAdaptativo.cpp \
     ../apMesh/Sources/Generator/GeradorAdaptativoPorCurvatura.cpp \
     ../apMesh/Sources/IO/Arquivo.cpp \
+    ../apMesh/Sources/Numerical/IMatrix.cpp \
     ../apMesh/Sources/main.cpp

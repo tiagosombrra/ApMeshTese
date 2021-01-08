@@ -35,7 +35,7 @@
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP TRUE
+#define USE_OPENMP FALSE
 #endif //#ifndef USE_OPENMP
 
 #ifndef USE_OLD_MPI
@@ -51,7 +51,7 @@
 #endif //#ifndef USE_SPLINES
 
 #ifndef USE_NUMERICAL
-#define USE_NUMERICAL FALSE
+#define USE_NUMERICAL TRUE
 #endif //#ifndef USE_NUMERICAL
 
 #ifndef USE_TECGRAF

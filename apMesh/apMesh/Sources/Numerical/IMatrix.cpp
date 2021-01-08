@@ -1,11 +1,11 @@
-#include "Numerical/IMatrix.h"
+#include "../../Numerical/IMatrix.h"
 
 #if USE_NUMERICAL
 
-#include "Numerical/PermutationMatrix.h"
-#include "Numerical/ColumnMatrix.h"
-#include "Numerical/RowMatrix.h"
-#include "Data/OStream.h"
+#include "../../Numerical/PermutationMatrix.h"
+#include "../../Numerical/ColumnMatrix.h"
+#include "../../Numerical/RowMatrix.h"
+#include "../../Data/OStream.h"
 
 using namespace Data;
 using namespace Numerical;

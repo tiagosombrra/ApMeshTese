@@ -1,7 +1,7 @@
 #ifndef _NUMERICAL_TMATRIX_H_
 #define _NUMERICAL_TMATRIX_H_
 
-#include "Numerical/Definitions.h"
+#include "../../Numerical/Definitions.h"
 
 #if USE_NUMERICAL
 

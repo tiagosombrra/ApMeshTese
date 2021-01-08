@@ -1,7 +1,7 @@
 #ifndef _NUMERICAL_DEFINITIONS_H_
 #define _NUMERICAL_DEFINITIONS_H_
 
-#include "Data/Definitions.h"
+#include "../Data/Definitions.h"
 
 #if USE_NUMERICAL
 

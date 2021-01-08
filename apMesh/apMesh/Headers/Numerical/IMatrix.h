@@ -1,7 +1,7 @@
 #ifndef _NUMERICAL_IMATRIX_H_
 #define _NUMERICAL_IMATRIX_H_
 
-#include "Numerical/Definitions.h"
+#include "Definitions.h"
 
 #if USE_NUMERICAL
 

@@ -1,12 +1,12 @@
 #ifndef _NUMERICAL_ROW_MATRIX_H_
 #define _NUMERICAL_ROW_MATRIX_H_
 
-#include "Numerical/Definitions.h"
+#include "../../Numerical/Definitions.h"
 
 #if USE_NUMERICAL
 
-#include "Numerical/IMatrix.h"
-#include "Numerical/TMatrix.h"
+#include "../../Numerical/IMatrix.h"
+#include "../../Numerical/TMatrix.h"
 
 namespace Numerical
 {

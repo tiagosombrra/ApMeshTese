@@ -1,7 +1,7 @@
 #ifndef _DATA_OSTREAM_H_
 #define _DATA_OSTREAM_H_
 
-#include "Data/Definitions.h"
+#include "Definitions.h"
 
 namespace Data
 {

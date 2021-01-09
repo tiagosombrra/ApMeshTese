@@ -13,6 +13,7 @@ This source code is under GNU General Public License v3 */
 #define CurvParamHermite_h
 
 #include "CurvaParametrica.h"
+#include "../Numerical/IMatrix.h"
 
 class CurvParamHermite : public CurvaParametrica
 {

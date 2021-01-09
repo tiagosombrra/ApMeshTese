@@ -29,23 +29,23 @@ class HermitePatch : public CoonsPatch
 		/////////////////////////////////////////////////////
 
 
-		Matriz* U; // matriz do parâmetro u
-		Matriz* Gx; // matriz geométrica para coordenada x
-		Matriz* Gy; // matriz geométrica para coordenada y
-		Matriz* Gz; // matriz geométrica para coordenada z
-		Matriz* V; // matriz do parâmetro v
-//		Matriz* H; // matriz de Hermite
-		static const Matriz* H;  // matriz de Hermite
+        Matrix14d U; // matriz do parâmetro u
+        Matrix4d Gx; // matriz geométrica para coordenada x
+        Matrix4d Gy; // matriz geométrica para coordenada y
+        Matrix4d Gz; // matriz geométrica para coordenada z
+        Matrix41d V; // matriz do parâmetro v
+        Matrix4d H; // matriz de Hermite
+        //static const Matriz* H;  // matriz de Hermite
 
 		Ponto calculaPonto_u_v ( ); // faz a multiplicação das matrizes
 
 	public :
-		Matriz & getU  (  ) const { return *(this->U ); };
-		Matriz & getGx (  ) const { return *(this->Gx); };
-		Matriz & getGy (  ) const { return *(this->Gy); };
-		Matriz & getGz (  ) const { return *(this->Gz); };
-		Matriz & getV  (  ) const { return *(this->V ); };
-		const Matriz & getH  (  ) const { return *(this->H ); };
+        Matrix14d getU  (  ) const { return this->U; };
+        Matrix4d getGx (  ) const { return this->Gx; };
+        Matrix4d getGy (  ) const { return this->Gy; };
+        Matrix4d getGz (  ) const { return this->Gz; };
+        Matrix41d getV  (  ) const { return this->V; };
+        Matrix4d getH  (  ) const { return this->H; };
 
 		Ponto getPt00 (  ) const { return this->Pt00; };
 		Ponto getPt01 (  ) const { return this->Pt01; };

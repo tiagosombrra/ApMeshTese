@@ -12,10 +12,21 @@ This source code is under GNU General Public License v3 */
 #ifndef CurvaParametrica_h
 #define CurvaParametrica_h
 
+
+//Verificação do compilador
+#ifdef __APPLE__
+#include "Eigen/Eigen"
+#include "Eigen/Dense"
+#elif __linux__
+#include "Eigen/Eigen"
+#include "Eigen/Dense"
+#else
+#   error "Unknown compiler"
+#endif
+
+#include "Definitions.h"
 #include <iostream>
 #include <list>
-using namespace std;
-
 #include "Vertice.h"
 #include "Matriz.h"
 #include "Vetor.h"
@@ -23,21 +34,23 @@ using namespace std;
 #include "EquationRootFunction.h"
 #include "BisectionEquationRoot.h"
 
+using namespace std;
+
 class CurvaParametrica : public Curva
 { 
 	protected :
 		Ponto P0; // ponto inicial
-		Ponto P1; // ponto final
+        Ponto P1; // ponto final
 		
 		// matrizes geométricas
-		Matriz* Gx;
-		Matriz* Gy;
-		Matriz* Gz; 
+        Matrix41d Gx;
+        Matrix41d Gy;
+        Matrix41d Gz;
 		
-		Matriz* M; // matriz característica da curva
-		Matriz* T; // matriz dos parâmetros
+        Matrix4d M; // matriz característica da curva
+        Matrix14d T; // matriz dos parâmetros
 			
-		// retorna o ponto calculado por T x M x Gx,y,z
+        // retorna o ponto calculado por T x M x Gx,y,z
 		Ponto calculaPonto_t ( );
 	
 		double comprimento(double t1, double t2, int parts, int pontos);
@@ -46,26 +59,26 @@ class CurvaParametrica : public Curva
 	public :
 		list < double > parametros; // parâmetros dos pontos
 	
-		Matriz& getGx (  ) const { return *(this->Gx); };
-		Matriz& getGy (  ) const { return *(this->Gy); };
-		Matriz& getGz (  ) const { return *(this->Gz); };
-		Matriz& getM  (  ) const { return *(this->M ); };
-		Matriz& getT  (  ) const { return *(this->T ); };
+        Matrix41d getGx (  ) const;
+        Matrix41d getGy (  ) const;
+        Matrix41d getGz (  ) const;
+        Matrix4d getM  (  ) const;
+        Matrix14d getT  (  ) const;
 		
-		Ponto getP0 (  ) const { return this->P0; };
-		Ponto getP1 (  ) const { return this->P1; };
+        Ponto getP0 (  ) const;
+        Ponto getP1 (  ) const;
 		
-		void  setGx ( Matriz* G_x ){ this->Gx = G_x; };
-		void  setGy ( Matriz* G_y ){ this->Gy = G_y; };
-		void  setGz ( Matriz* G_z ){ this->Gz = G_z; };
+        void  setGx ( Matrix41d G_x );
+        void  setGy ( Matrix41d G_y );
+        void  setGz ( Matrix41d G_z );
 		
-		void  setM ( Matriz* M_ ){ this->M = M_; };
-		void  setT ( Matriz* T_ ){ this->T = T_; };
+        void  setM ( Matrix4d M_ );
+        void  setT ( Matrix14d T_ );
 
 
-		void setP0 ( const Ponto& p ) { this->P0 = p; };
-		void setP1 ( const Ponto& p ) { this->P1 = p; calcular_L (  ); };
-		void setPontos ( const Ponto& p0, const Ponto& p1 ) { this->P0 = p0; this->P1 = p1; };
+        void setP0 ( const Ponto& p );
+        void setP1 ( const Ponto& p );
+        void setPontos ( const Ponto& p0, const Ponto& p1 );
 						
 		// calcula o comprimento de curva de p1 a p2
 		virtual double calcularTamanho ( const Ponto& p1, const Ponto& p2 );

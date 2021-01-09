@@ -20,6 +20,7 @@ using namespace std;
 #include "Patch.h"
 #include "Curva.h"
 #include "Vetor.h"
+#include "Definitions.h"
 
 class Ponto;
 class Matriz;

@@ -14,6 +14,7 @@ This source code is under GNU General Public License v3 */
 
 #include "CoonsPatch.h"
 
+
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
 // cima em relação ao Patch !!!
 
@@ -29,45 +30,45 @@ class BezierPatch : public CoonsPatch
 		/////////////////////////////////////////////////////
 
 
-		Matriz* U;  // matriz do parâmetro u
-		Matriz* Gx; // Matriz geométrica (x)
-		Matriz* Gy; // Matriz geométrica (y)
-		Matriz* Gz; // Matriz geométrica (z)
-		Matriz* V;  // matriz do parâmetro v
-		//Matriz* B;  // matriz de Bezier
-		static const Matriz* B;  // matriz de Bezier
+        Matrix14d U;  // matriz do parâmetro u
+        Matrix4d Gx; // Matriz geométrica (x)
+        Matrix4d Gy; // Matriz geométrica (y)
+        Matrix4d Gz; // Matriz geométrica (z)
+        Matrix41d V;  // matriz do parâmetro v
+        Matrix4d B;  // matriz de Bezier
+        //static const Matrix4d* B;  // matriz de Bezier
 
 		Ponto calculaPonto_u_v ( ); // faz a multiplicação das matrizes
 
 	public :
-		Matriz & getU  (  ) const { return *( this->U  ); };
-		Matriz & getGx (  ) const { return *( this->Gx ); };
-		Matriz & getGy (  ) const { return *( this->Gy ); };
-		Matriz & getGz (  ) const { return *( this->Gz ); };
-		Matriz & getV  (  ) const { return *( this->V  ); };
-		const Matriz & getB  (  ) const { return *( this->B ); };
+        Matrix14d getU  (  ) const;
+        Matrix4d getGx (  ) const;
+        Matrix4d getGy (  ) const;
+        Matrix4d getGz (  ) const;
+        Matrix41d getV  (  ) const;
+        Matrix4d getB  (  ) const;
 
-		Ponto getPt00 (  ) const { return this->Pt00; };
-		Ponto getPt01 (  ) const { return this->Pt01; };
-		Ponto getPt02 (  ) const { return this->Pt02; };
-		Ponto getPt03 (  ) const { return this->Pt03; };
+        Ponto getPt00 (  ) const;
+        Ponto getPt01 (  ) const;
+        Ponto getPt02 (  ) const;
+        Ponto getPt03 (  ) const;
 
-		Ponto getPt10 (  ) const { return this->Pt10; };
-		Ponto getPt11 (  ) const { return this->Pt11; };
-		Ponto getPt12 (  ) const { return this->Pt12; };
-		Ponto getPt13 (  ) const { return this->Pt13; };
+        Ponto getPt10 (  ) const;
+        Ponto getPt11 (  ) const;
+        Ponto getPt12 (  ) const;
+        Ponto getPt13 (  ) const;
 
-		Ponto getPt20 (  ) const { return this->Pt20; };
-		Ponto getPt21 (  ) const { return this->Pt21; };
-		Ponto getPt22 (  ) const { return this->Pt22; };
-		Ponto getPt23 (  ) const { return this->Pt23; };
+        Ponto getPt20 (  ) const;
+        Ponto getPt21 (  ) const;
+        Ponto getPt22 (  ) const;
+        Ponto getPt23 (  ) const;
 
-		Ponto getPt30 (  ) const { return this->Pt30; };
-		Ponto getPt31 (  ) const { return this->Pt31; };
-		Ponto getPt32 (  ) const { return this->Pt32; };
-		Ponto getPt33 (  ) const { return this->Pt33; };
+        Ponto getPt30 (  ) const;
+        Ponto getPt31 (  ) const;
+        Ponto getPt32 (  ) const;
+        Ponto getPt33 (  ) const;
 
-		void mostraMatrizes ( );
+        void mostraMatrizes ( );
 
 		// encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
 		// ou a projeção desse ponto na superfície

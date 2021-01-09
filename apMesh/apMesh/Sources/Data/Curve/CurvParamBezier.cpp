@@ -14,48 +14,58 @@ This source code is under GNU General Public License v3 */
 CurvParamBezier::CurvParamBezier (  ) : CurvaParametrica (  )
 {
 	// 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Bezier
-	//
-	M->setElem( 0, 0,-1 ); M->setElem( 0, 1, 3 ); M->setElem( 0, 2,-3 ); M->setElem( 0, 3, 1 );
-	M->setElem( 1, 0, 3 ); M->setElem( 1, 1,-6 ); M->setElem( 1, 2, 3 ); M->setElem( 1, 3, 0 );
-	M->setElem( 2, 0,-3 ); M->setElem( 2, 1, 3 ); M->setElem( 2, 2, 0 ); M->setElem( 2, 3, 0 );
-	M->setElem( 3, 0, 1 ); M->setElem( 3, 1, 0 ); M->setElem( 3, 2, 0 ); M->setElem( 3, 3, 0 );
-	//
-	////////////////////////////////////////////////////////////////////////////
+    //
+//    M->setElem( 0, 0,-1 ); M->setElem( 0, 1, 3 ); M->setElem( 0, 2,-3 ); M->setElem( 0, 3, 1 );
+//    M->setElem( 1, 0, 3 ); M->setElem( 1, 1,-6 ); M->setElem( 1, 2, 3 ); M->setElem( 1, 3, 0 );
+//    M->setElem( 2, 0,-3 ); M->setElem( 2, 1, 3 ); M->setElem( 2, 2, 0 ); M->setElem( 2, 3, 0 );
+//    M->setElem( 3, 0, 1 ); M->setElem( 3, 1, 0 ); M->setElem( 3, 2, 0 ); M->setElem( 3, 3, 0 );
+
+    M<<-1, 3, -3, 1,
+        3,-6, 3, 0,
+       -3, 3, 0, 0,
+        1, 0, 0, 0;
 
 	// 2. Preenche as matrizes geométricas com G de Bezier
 	//
-	Gx->setElem( 0, 0, P0.x );
-	Gx->setElem( 1, 0, P1.x );
-	Gx->setElem( 2, 0, P2.x );
-	Gx->setElem( 3, 0, P3.x );
+//    Gx->setElem( 0, 0, P0.x );
+//    Gx->setElem( 1, 0, P1.x );
+//    Gx->setElem( 2, 0, P2.x );
+//    Gx->setElem( 3, 0, P3.x );
+//    Gy->setElem( 0, 0, P0.y );
+//    Gy->setElem( 1, 0, P1.y );
+//    Gy->setElem( 2, 0, P2.y );
+//    Gy->setElem( 3, 0, P3.y );
 
-	Gy->setElem( 0, 0, P0.y );
-	Gy->setElem( 1, 0, P1.y );
-	Gy->setElem( 2, 0, P2.y );
-	Gy->setElem( 3, 0, P3.y );
+//    Gz->setElem( 0, 0, P0.z );
+//    Gz->setElem( 1, 0, P1.z );
+//    Gz->setElem( 2, 0, P2.z );
+//    Gz->setElem( 3, 0, P3.z );
 
-	Gz->setElem( 0, 0, P0.z );
-	Gz->setElem( 1, 0, P1.z );
-	Gz->setElem( 2, 0, P2.z );
-	Gz->setElem( 3, 0, P3.z );
-	//
-	///////////////////////////
+    Gx<<P0.x,
+        P1.x,
+        P2.x,
+        P3.x;
 
-	Matriz m = this->getM() * this->getGx();
-	delete this->Gx;
-	this->Gx = new Matriz(m);
+    Gy<<P0.y,
+        P1.y,
+        P2.y,
+        P3.y;
 
-	m = this->getM() * this->getGy();
-	delete this->Gy;
-	this->Gy = new Matriz(m);
+    Gz<<P0.z,
+        P1.z,
+        P2.z,
+        P3.z;
+
+    Matrix41d m = this->getM() * this->getGx();
+    this->Gx = m;
+
+    m = this->getM() * this->getGy();
+    this->Gy = m;
 
 	m = this->getM() * this->getGz();
-	delete this->Gz;
-	this->Gz = new Matriz(m);
+    this->Gz = m;
 
-	delete this->M;
-
-	this->M = NULL;
+    delete &M;
 
 	// IMPORTANTE: Ao usar esse construtor, não esquecer de setar os pontos
 	// inicial e final e os vetores tangentes inicial e final !!!
@@ -65,45 +75,38 @@ CurvParamBezier::CurvParamBezier (  ) : CurvaParametrica (  )
 CurvParamBezier::CurvParamBezier ( Ponto p0, Ponto p1, Ponto p2, Ponto p3 )
 : CurvaParametrica ( p0, p1 ), P2( p2 ), P3( p3 )
 {
-	// 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Bezier
-	//
-	M->setElem( 0, 0,-1 ); M->setElem( 0, 1, 3 ); M->setElem( 0, 2,-3 ); M->setElem( 0, 3, 1 );
-	M->setElem( 1, 0, 3 ); M->setElem( 1, 1,-6 ); M->setElem( 1, 2, 3 ); M->setElem( 1, 3, 0 );
-	M->setElem( 2, 0,-3 ); M->setElem( 2, 1, 3 ); M->setElem( 2, 2, 0 ); M->setElem( 2, 3, 0 );
-	M->setElem( 3, 0, 1 ); M->setElem( 3, 1, 0 ); M->setElem( 3, 2, 0 ); M->setElem( 3, 3, 0 );
-	//
-	////////////////////////////////////////////////////////////////////////////
+    // 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Bezier
 
-	// 2. Preenche as matrizes geométricas com G de Bezier
-	//
-	Gx->setElem( 0, 0, P0.x );
-	Gx->setElem( 1, 0, P1.x );
-	Gx->setElem( 2, 0, P2.x );
-	Gx->setElem( 3, 0, P3.x );
+    M<<-1, 3, -3, 1,
+        3,-6, 3, 0,
+       -3, 3, 0, 0,
+        1, 0, 0, 0;
 
-	Gy->setElem( 0, 0, P0.y );
-	Gy->setElem( 1, 0, P1.y );
-	Gy->setElem( 2, 0, P2.y );
-	Gy->setElem( 3, 0, P3.y );
+    // 2. Preenche as matrizes geométricas com G de Bezier
 
-	Gz->setElem( 0, 0, P0.z );
-	Gz->setElem( 1, 0, P1.z );
-	Gz->setElem( 2, 0, P2.z );
-	Gz->setElem( 3, 0, P3.z );
-	//
-	///////////////////////////
+    Gx<<P0.x,
+        P1.x,
+        P2.x,
+        P3.x;
 
-	Matriz m = this->getM() * this->getGx();
-	delete this->Gx;
-	this->Gx = new Matriz(m);
+    Gy<<P0.y,
+        P1.y,
+        P2.y,
+        P3.y;
 
-	m = this->getM() * this->getGy();
-	delete this->Gy;
-	this->Gy = new Matriz(m);
+    Gz<<P0.z,
+        P1.z,
+        P2.z,
+        P3.z;
 
-	m = this->getM() * this->getGz();
-	delete this->Gz;
-	this->Gz = new Matriz(m);
+    Matrix41d m = this->getM() * this->getGx();
+    this->Gx = m;
+
+    m = this->getM() * this->getGy();
+    this->Gy = m;
+
+    m = this->getM() * this->getGz();
+    this->Gz = m;
 
 	// 3. Calcula o comprimento da curva
 	//
@@ -117,7 +120,7 @@ CurvParamBezier::CurvParamBezier ( CurvParamBezier* antiga ) :
 CurvaParametrica ( antiga )
 {
 	this->P2 = antiga->P2;
-  this->P3 = antiga->P3;
+    this->P3 = antiga->P3;
 }
 
 double CurvParamBezier::calcularCurvatura(double t)

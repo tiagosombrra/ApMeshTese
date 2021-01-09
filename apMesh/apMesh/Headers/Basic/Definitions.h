@@ -22,6 +22,15 @@
 #include <cmath>
 #include <ctime>
 
+//Verificação de sistema operacional
+#ifdef __APPLE__
+#include <Eigen/Eigen>
+#elif __linux__
+#include "Eigen/Eigen"
+#else
+#   error "Unknown compiler"
+#endif
+
 //debug
 #if USE_INTERFACE
 	#include <wx/wx.h>
@@ -30,6 +39,12 @@
 //endebug
 
 using namespace std;
+using namespace Eigen;
+
+typedef Matrix<double, 3, 3> Matrix3d;
+typedef Matrix<double, 4, 4> Matrix4d;
+typedef Matrix<double, 4, 1> Matrix41d;
+typedef Matrix<double, 1, 4> Matrix14d;
 
 namespace Par2DJMesh
 {

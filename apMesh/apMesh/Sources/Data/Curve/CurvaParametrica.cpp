@@ -425,15 +425,21 @@ Ponto CurvaParametrica::calculaPonto_t ( )
 	//  ALOCA um Ponto e retorna
 	//
 
-	Ponto C;
+    Ponto P;
 
 	// C = ( T * ( M * G ) )
+    Numerical::TMatrix<double,1,1> C;
 
-    C.x = ( this->getT() * ( /*this->getM() * */this->getGx() ) )(0,0);
-    C.y = ( this->getT() * ( /*this->getM() * */this->getGy() ) )(0,0);
-    C.z = ( this->getT() * ( /*this->getM() * */this->getGz() ) )(0,0);
+    C.multiply(this->getT(), this->getGx(), C);
+    P.x = C.getElement(0,0);
 
-	return C;
+    C.multiply(this->getT(), this->getGy(), C);
+    P.y = C.getElement(0,0);
+
+    C.multiply(this->getT(), this->getGz(), C);
+    P.z = C.getElement(0,0);
+
+    return P;
 }
 
 
@@ -446,10 +452,10 @@ Ponto CurvaParametrica::parametrizar ( double t )
 	//  -> usa calculaPonto_t
 	//
 
-    this->T( 0, 0) = t*t*t;
-    this->T( 0, 1) = t*t;
-    this->T( 0, 2) = t;
-    this->T( 0, 3) = 1;
+    this->T->setElement( 0, 0, t*t*t );
+    this->T->setElement( 0, 1, t*t );
+    this->T->setElement( 0, 2, t );
+    this->T->setElement( 0, 3, 1 );
 
 	return calculaPonto_t ( );
 }
@@ -467,10 +473,10 @@ Vetor CurvaParametrica::Qt ( double t )
 
 	Ponto P;
 
-    this->T( 0, 0) = 3*t*t;
-    this->T( 0, 1) = 2*t;
-    this->T( 0, 2) = 1;
-    this->T( 0, 3) = 0;
+    this->T->setElement( 0, 0, 3*t*t );
+    this->T->setElement( 0, 1, 2*t );
+    this->T->setElement( 0, 2, 1 );
+    this->T->setElement( 0, 3, 0 );
 
 	P = calculaPonto_t ( );
 	Vetor V( P );
@@ -530,52 +536,12 @@ double CurvaParametrica::pontoMedioBissecao ( double t1, double t2 )
     return -1.0;
 }
 
-Matrix41d CurvaParametrica::getGx() const {
-    return this->Gx;
-}
-
-Matrix41d CurvaParametrica::getGy() const {
-    return this->Gy;
-}
-
-Matrix41d CurvaParametrica::getGz() const {
-    return this->Gz;
-}
-
-Matrix4d CurvaParametrica::getM() const {
-    return this->M;
-}
-
-Matrix14d CurvaParametrica::getT() const {
-    return this->T;
-}
-
 Ponto CurvaParametrica::getP0() const {
     return this->P0;
 }
 
 Ponto CurvaParametrica::getP1() const {
     return this->P1;
-}
-
-void CurvaParametrica::setGx(Matrix41d G_x){
-    this->Gx = G_x;
-}
-
-void CurvaParametrica::setGy(Matrix41d G_y){
-    this->Gy = G_y;
-}
-
-void CurvaParametrica::setGz(Matrix41d G_z){
-    this->Gz = G_z;
-}
-
-void CurvaParametrica::setM(Matrix4d M_){
-    this->M = M_;
-}
-
-void CurvaParametrica::setT(Matrix14d T_){
-    this->T = T_;
 }
 
 void CurvaParametrica::setP0(const Ponto &p) {
@@ -688,31 +654,21 @@ void CurvaParametrica::atualizarParametros ( list < double > novaLista )
 
 CurvaParametrica::CurvaParametrica (  )
 {
-//	Gx = new Matriz ( 4, 1, "Gx" );
-//	Gy = new Matriz ( 4, 1, "Gy" );
-//	Gz = new Matriz ( 4, 1, "Gz" );
-//	M = new Matriz ( 4, 4, "M" );
-//	T = new Matriz ( 1, 4, "T" );
-    Gx.setZero(4,1);
-    Gy.setZero(4,1);
-    Gz.setZero(4,1);
-    M.setZero(4,4);
-    T.setZero(1,4);
+    Gx = new Matrix4x1();
+    Gy = new Matrix4x1();
+    Gz = new Matrix4x1();
+    M = new Matrix4x4();
+    T = new Matrix1x4();
 }
 
 
 CurvaParametrica::CurvaParametrica ( Ponto p0, Ponto p1 ) : P0( p0 ), P1( p1 )
 {
-//	Gx = new Matriz ( 4, 1, "Gx" );
-//	Gy = new Matriz ( 4, 1, "Gy" );
-//	Gz = new Matriz ( 4, 1, "Gz" );
-//	M = new Matriz ( 4, 4, "M" );
-//	T = new Matriz ( 1, 4, "T" );
-    Gx.setZero(4,1);
-    Gy.setZero(4,1);
-    Gz.setZero(4,1);
-    M.setZero(4,4);
-    T.setZero(1,4);
+    Gx = new Matrix4x1();
+    Gy = new Matrix4x1();
+    Gz = new Matrix4x1();
+    M = new Matrix4x4();
+    T = new Matrix1x4();
 }
 
 
@@ -731,9 +687,9 @@ Curva ( antiga )
 
 CurvaParametrica::~CurvaParametrica (  )
 {
-    delete &Gx;
-    delete &Gy;
-    delete &Gz;
-    delete &M;
-    delete &T;
+    delete Gx;
+    delete Gy;
+    delete Gz;
+    if ( this->M ) delete M;
+    delete T;
 }

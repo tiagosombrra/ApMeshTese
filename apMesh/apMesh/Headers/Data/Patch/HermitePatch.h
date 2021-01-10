@@ -13,6 +13,9 @@ This source code is under GNU General Public License v3 */
 #define HermitePatch_h
 
 #include "CoonsPatch.h"
+#include "Matrix1x4.h"
+#include "Matrix4x1.h"
+#include "Matrix4x4.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
 // cima em relação ao Patch !!!
@@ -29,23 +32,23 @@ class HermitePatch : public CoonsPatch
 		/////////////////////////////////////////////////////
 
 
-        Matrix14d U; // matriz do parâmetro u
-        Matrix4d Gx; // matriz geométrica para coordenada x
-        Matrix4d Gy; // matriz geométrica para coordenada y
-        Matrix4d Gz; // matriz geométrica para coordenada z
-        Matrix41d V; // matriz do parâmetro v
-        Matrix4d H; // matriz de Hermite
+        Matrix1x4 *U; // matriz do parâmetro u
+        Matrix4x4 *Gx; // matriz geométrica para coordenada x
+        Matrix4x4 *Gy; // matriz geométrica para coordenada y
+        Matrix4x4 *Gz; // matriz geométrica para coordenada z
+        Matrix4x1 *V; // matriz do parâmetro v
+        Matrix4x4 *H; // matriz de Hermite
         //static const Matriz* H;  // matriz de Hermite
 
 		Ponto calculaPonto_u_v ( ); // faz a multiplicação das matrizes
 
 	public :
-        Matrix14d getU  (  ) const { return this->U; };
-        Matrix4d getGx (  ) const { return this->Gx; };
-        Matrix4d getGy (  ) const { return this->Gy; };
-        Matrix4d getGz (  ) const { return this->Gz; };
-        Matrix41d getV  (  ) const { return this->V; };
-        Matrix4d getH  (  ) const { return this->H; };
+        Matrix1x4 & getU  (  ) const { return *(this->U ); };
+        Matrix4x4 & getGx (  ) const { return *(this->Gx); };
+        Matrix4x4 & getGy (  ) const { return *(this->Gy); };
+        Matrix4x4 & getGz (  ) const { return *(this->Gz); };
+        Matrix4x1 & getV  (  ) const { return *(this->V ); };
+        const Matrix4x4 & getH  (  ) const { return *(this->H ); };
 
 		Ponto getPt00 (  ) const { return this->Pt00; };
 		Ponto getPt01 (  ) const { return this->Pt01; };

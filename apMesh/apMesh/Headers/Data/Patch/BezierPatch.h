@@ -13,7 +13,9 @@ This source code is under GNU General Public License v3 */
 #define BezierPatch_h
 
 #include "CoonsPatch.h"
-
+#include "Matrix1x4.h"
+#include "Matrix4x1.h"
+#include "Matrix4x4.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
 // cima em relação ao Patch !!!
@@ -30,23 +32,23 @@ class BezierPatch : public CoonsPatch
 		/////////////////////////////////////////////////////
 
 
-        Matrix14d U;  // matriz do parâmetro u
-        Matrix4d Gx; // Matriz geométrica (x)
-        Matrix4d Gy; // Matriz geométrica (y)
-        Matrix4d Gz; // Matriz geométrica (z)
-        Matrix41d V;  // matriz do parâmetro v
-        Matrix4d B;  // matriz de Bezier
-        //static const Matrix4d* B;  // matriz de Bezier
+        Matrix1x4 *U;  // matriz do parâmetro u
+        Matrix4x4 *Gx; // Matriz geométrica (x)
+        Matrix4x4 *Gy; // Matriz geométrica (y)
+        Matrix4x4 *Gz; // Matriz geométrica (z)
+        Matrix4x1 *V;  // matriz do parâmetro v
+        //Matrix4d B;  // matriz de Bezier
+        Matrix4x4 *B;  // matriz de Bezier
 
 		Ponto calculaPonto_u_v ( ); // faz a multiplicação das matrizes
 
 	public :
-        Matrix14d getU  (  ) const;
-        Matrix4d getGx (  ) const;
-        Matrix4d getGy (  ) const;
-        Matrix4d getGz (  ) const;
-        Matrix41d getV  (  ) const;
-        Matrix4d getB  (  ) const;
+        Matrix1x4 & getU  (  ) const { return *( this->U  ); };
+        Matrix4x4 & getGx (  ) const { return *( this->Gx ); };
+        Matrix4x4 & getGy (  ) const { return *( this->Gy ); };
+        Matrix4x4 & getGz (  ) const { return *( this->Gz ); };
+        Matrix4x1 & getV  (  ) const { return *( this->V  ); };
+        Matrix4x4 & getB  (  ) const { return *( this->B ); };
 
         Ponto getPt00 (  ) const;
         Ponto getPt01 (  ) const;

@@ -12,18 +12,6 @@ This source code is under GNU General Public License v3 */
 #ifndef CurvaParametrica_h
 #define CurvaParametrica_h
 
-
-//Verificação do compilador
-#ifdef __APPLE__
-#include "Eigen/Eigen"
-#include "Eigen/Dense"
-#elif __linux__
-#include "Eigen/Eigen"
-#include "Eigen/Dense"
-#else
-#   error "Unknown compiler"
-#endif
-
 #include "Definitions.h"
 #include <iostream>
 #include <list>
@@ -33,6 +21,9 @@ This source code is under GNU General Public License v3 */
 #include "Curva.h"
 #include "EquationRootFunction.h"
 #include "BisectionEquationRoot.h"
+#include "Matrix1x4.h"
+#include "Matrix4x1.h"
+#include "Matrix4x4.h"
 
 using namespace std;
 
@@ -43,12 +34,12 @@ class CurvaParametrica : public Curva
         Ponto P1; // ponto final
 		
 		// matrizes geométricas
-        Matrix41d Gx;
-        Matrix41d Gy;
-        Matrix41d Gz;
+        Matrix4x1 *Gx;
+        Matrix4x1 *Gy;
+        Matrix4x1 *Gz;
 		
-        Matrix4d M; // matriz característica da curva
-        Matrix14d T; // matriz dos parâmetros
+        Matrix4x4 *M; // matriz característica da curva
+        Matrix1x4 *T; // matriz dos parâmetros
 			
         // retorna o ponto calculado por T x M x Gx,y,z
 		Ponto calculaPonto_t ( );
@@ -59,21 +50,21 @@ class CurvaParametrica : public Curva
 	public :
 		list < double > parametros; // parâmetros dos pontos
 	
-        Matrix41d getGx (  ) const;
-        Matrix41d getGy (  ) const;
-        Matrix41d getGz (  ) const;
-        Matrix4d getM  (  ) const;
-        Matrix14d getT  (  ) const;
+        Matrix4x1& getGx (  ) const { return *(this->Gx); };
+        Matrix4x1& getGy (  ) const { return *(this->Gy); };
+        Matrix4x1& getGz (  ) const { return *(this->Gz); };
+        Matrix4x4& getM  (  ) const { return *(this->M ); };
+        Matrix1x4& getT  (  ) const { return *(this->T ); };
 		
         Ponto getP0 (  ) const;
         Ponto getP1 (  ) const;
 		
-        void  setGx ( Matrix41d G_x );
-        void  setGy ( Matrix41d G_y );
-        void  setGz ( Matrix41d G_z );
-		
-        void  setM ( Matrix4d M_ );
-        void  setT ( Matrix14d T_ );
+        void  setGx ( Matrix4x1* G_x ){ this->Gx = G_x; };
+        void  setGy ( Matrix4x1* G_y ){ this->Gy = G_y; };
+        void  setGz ( Matrix4x1* G_z ){ this->Gz = G_z; };
+
+        void  setM ( Matrix4x4* M_ ){ this->M = M_; };
+        void  setT ( Matrix1x4* T_ ){ this->T = T_; };
 
 
         void setP0 ( const Ponto& p );

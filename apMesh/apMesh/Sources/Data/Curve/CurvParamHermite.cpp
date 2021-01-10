@@ -15,42 +15,47 @@ CurvParamHermite::CurvParamHermite (  ) : CurvaParametrica (  )
 {
 	// 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Hermite
 	//
-    M<<2, -2, 1, 1,
-      -3, 3, -2, -1,
-       0, 0, 1, 0,
-       1, 0, 0, 0;
+    M->setElement( 0, 0, 2 ); M->setElement( 0, 1,-2 ); M->setElement( 0, 2, 1 ); M->setElement( 0, 3, 1 );
+    M->setElement( 1, 0,-3 ); M->setElement( 1, 1, 3 ); M->setElement( 1, 2,-2 ); M->setElement( 1, 3,-1 );
+    M->setElement( 2, 0, 0 ); M->setElement( 2, 1, 0 ); M->setElement( 2, 2, 1 ); M->setElement( 2, 3, 0 );
+    M->setElement( 3, 0, 1 ); M->setElement( 3, 1, 0 ); M->setElement( 3, 2, 0 ); M->setElement( 3, 3, 0 );
 	//
 	////////////////////////////////////////////////////////////////////////////
 
 	// 2. Preenche as matrizes geométricas com G de Hermite
 	//
-    Gx<<P0.x,
-        P1.x,
-        DP0.x,
-        DP1.x;
+    Gx->setElement( 0, 0, P0.x );
+    Gx->setElement( 1, 0, P1.x );
+    Gx->setElement( 2, 0,DP0.x );
+    Gx->setElement( 3, 0,DP1.x );
 
-    Gy<<P0.y,
-        P1.y,
-        DP0.y,
-        DP1.y;
+    Gy->setElement( 0, 0, P0.y );
+    Gy->setElement( 1, 0, P1.y );
+    Gy->setElement( 2, 0,DP0.y );
+    Gy->setElement( 3, 0,DP1.y );
 
-    Gz<<P0.z,
-        P1.z,
-        DP0.z,
-        DP1.z;
+    Gz->setElement( 0, 0, P0.z );
+    Gz->setElement( 1, 0, P1.z );
+    Gz->setElement( 2, 0,DP0.z );
+    Gz->setElement( 3, 0,DP1.z );
 	//
 	///////////////////////////
 
-    Matrix41d m = this->getM() * this->getGx();
-    this->Gx = m;
+    Matrix4x1 m;
+    m.multiply(this->getM(), this->getGx(), m );
+    delete this->Gx;
+    this->Gx = new Matrix4x1(m);
 
-    m = this->getM() * this->getGy();
-    this->Gy = m;
+    m.multiply(this->getM(), this->getGy(), m );
+    delete this->Gy;
+    this->Gy = new Matrix4x1(m);
 
-	m = this->getM() * this->getGz();
-    this->Gz = m;
+    m.multiply(this->getM(), this->getGz(), m );
+    delete this->Gz;
+    this->Gz = new Matrix4x1(m);
 
-    delete &M;
+
+    delete M;
 
 	// IMPORTANTE: Ao usar esse construtor, não esquecer de setar os pontos
 	// inicial e final e os vetores tangentes inicial e final !!!
@@ -62,40 +67,44 @@ CurvParamHermite::CurvParamHermite ( Ponto p0, Ponto p1, Vetor dp0, Vetor dp1 )
 {
     // 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Hermite
     //
-    M<<2, -2, 1, 1,
-      -3, 3, -2, -1,
-       0, 0, 1, 0,
-       1, 0, 0, 0;
+    M->setElement( 0, 0, 2 ); M->setElement( 0, 1,-2 ); M->setElement( 0, 2, 1 ); M->setElement( 0, 3, 1 );
+    M->setElement( 1, 0,-3 ); M->setElement( 1, 1, 3 ); M->setElement( 1, 2,-2 ); M->setElement( 1, 3,-1 );
+    M->setElement( 2, 0, 0 ); M->setElement( 2, 1, 0 ); M->setElement( 2, 2, 1 ); M->setElement( 2, 3, 0 );
+    M->setElement( 3, 0, 1 ); M->setElement( 3, 1, 0 ); M->setElement( 3, 2, 0 ); M->setElement( 3, 3, 0 );
     //
     ////////////////////////////////////////////////////////////////////////////
 
     // 2. Preenche as matrizes geométricas com G de Hermite
     //
-    Gx<<P0.x,
-        P1.x,
-        DP0.x,
-        DP1.x;
+    Gx->setElement( 0, 0, P0.x );
+    Gx->setElement( 1, 0, P1.x );
+    Gx->setElement( 2, 0,DP0.x );
+    Gx->setElement( 3, 0,DP1.x );
 
-    Gy<<P0.y,
-        P1.y,
-        DP0.y,
-        DP1.y;
+    Gy->setElement( 0, 0, P0.y );
+    Gy->setElement( 1, 0, P1.y );
+    Gy->setElement( 2, 0,DP0.y );
+    Gy->setElement( 3, 0,DP1.y );
 
-    Gz<<P0.z,
-        P1.z,
-        DP0.z,
-        DP1.z;
+    Gz->setElement( 0, 0, P0.z );
+    Gz->setElement( 1, 0, P1.z );
+    Gz->setElement( 2, 0,DP0.z );
+    Gz->setElement( 3, 0,DP1.z );
     //
     ///////////////////////////
 
-    Matrix41d m = this->getM() * this->getGx();
-    this->Gx = m;
+    Matrix4x1 m;
+    m.multiply(this->getM(), this->getGx(), m );
+    delete this->Gx;
+    this->Gx = new Matrix4x1(m);
 
-    m = this->getM() * this->getGy();
-    this->Gy = m;
+    m.multiply(this->getM(), this->getGy(), m );
+    delete this->Gy;
+    this->Gy = new Matrix4x1(m);
 
-    m = this->getM() * this->getGz();
-    this->Gz = m;
+    m.multiply(this->getM(), this->getGz(), m );
+    delete this->Gz;
+    this->Gz = new Matrix4x1(m);
 
 
 	// 3. Calcula o comprimento da curva

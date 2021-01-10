@@ -4,7 +4,7 @@
 #include "../Numerical/IMatrix.h"
 #include "../Numerical/TMatrix.h"
 
-class Matrix1x4 : public Numerical::IMatrix, public Numerical::TMatrix<double, 1,4>
+class Matrix1x4 : public Numerical::TMatrix<double, 1,4>
 {
 public:
     Matrix1x4();

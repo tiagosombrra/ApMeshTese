@@ -17,6 +17,16 @@ Numerical::IMatrix::~IMatrix()
 
 }
 
+UInt IMatrix::numRows() const
+{
+    return 0;
+}
+
+UInt IMatrix::numCols() const
+{
+ return 0;
+}
+
 Real Numerical::IMatrix::getElement(UInt i, UInt j) const
 {
     return const_cast<IMatrix *>(this)->element(i, j);
@@ -293,6 +303,16 @@ std::string Numerical::IMatrix::text() const
     }
 
     return str.str();
+}
+
+IMatrix *IMatrix::clone() const
+{
+
+}
+
+Real &IMatrix::element(UInt i, UInt j)
+{
+
 }
 
 bool Numerical::IMatrix::isMultipliable(const IMatrix *first, const IMatrix *second)

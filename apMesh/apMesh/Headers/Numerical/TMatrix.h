@@ -8,15 +8,23 @@
 namespace Numerical
 {
     template <typename Type, UInt rows, UInt cols>
-    class TMatrix
+    class TMatrix : public Numerical::IMatrix
     {
     public:
 
         TMatrix();
         TMatrix(const TMatrix<Type, rows, cols> &m);
 
-        //Type element(UInt i, UInt j) const;
+        Type element(UInt i, UInt j) const;
         Type &element(UInt i, UInt j);
+
+        void swapLine(UInt line1, UInt line2);
+        double *A;
+        void swap(double &x, double &y) const;
+        //TMatrix<Type, rows, cols> transpose() const;
+
+
+
 
     protected:
 
@@ -50,7 +58,6 @@ namespace Numerical
 
         UInt rows;
         UInt cols;
-
         Type *elements;
     };
 }
@@ -67,12 +74,12 @@ Numerical::TMatrix<Type, rows, cols>::TMatrix(const TMatrix<Type, rows, cols> &m
     this->copyFrom(m);
 }
 
-/*template <typename Type, Data::UInt rows, Data::UInt cols>
+template <typename Type, Data::UInt rows, Data::UInt cols>
 Type Numerical::TMatrix<Type, rows, cols>::element(UInt i, UInt j) const
 {
     //return this->elements[i*cols + j];
     return this->elements[i][j];
-}*/
+}
 
 template <typename Type, Data::UInt rows, Data::UInt cols>
 Type &Numerical::TMatrix<Type, rows, cols>::element(UInt i, UInt j)
@@ -80,6 +87,43 @@ Type &Numerical::TMatrix<Type, rows, cols>::element(UInt i, UInt j)
     //return this->elements[i*cols + j];
     return this->elements[i][j];
 }
+
+template<typename Type, Data::UInt rows, Data::UInt cols>
+void Numerical::TMatrix<Type, rows, cols>::swapLine(Data::UInt line1, Data::UInt line2)
+{
+    if ( !(
+        (0 <= line1) && ( line1 < rows ) &&
+        (0 <= line2) && ( line2 < rows )
+        )
+    )
+        return;
+
+    for (int col = 0; col < cols; col++)
+        swap(
+            A[rows * col + line1],
+            A[rows * col + line2]
+                );
+}
+
+template<typename Type, Data::UInt rows, Data::UInt cols>
+void Numerical::TMatrix<Type, rows, cols>::swap(double &x, double &y) const
+{
+    double aux;
+    aux = x;
+    x = y;
+    y = aux;
+}
+
+//template<typename Type, Data::UInt rows, Data::UInt cols>
+//Numerical::TMatrix<Type, rows, cols> Numerical::TMatrix<Type, rows, cols>::transpose() const
+//{
+//    TMatrix<Type, rows, cols> transpose;
+//    for(int i = 0; i < rows; i++)
+//        for(int j = 0; j < cols; j++)
+//            transpose.setElement( i, j, this->getElement(j, i) );
+
+//    return transpose;
+//}
 
 template <typename Type, Data::UInt rows, Data::UInt cols>
 void Numerical::TMatrix<Type, rows, cols>::copyFrom(const TMatrix<Type, rows, cols> &m)

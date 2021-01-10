@@ -13,8 +13,8 @@ namespace Numerical
 
         virtual ~IMatrix();
 
-		virtual UInt numRows() const = 0;
-		virtual UInt numCols() const = 0;
+        virtual UInt numRows() const;
+        virtual UInt numCols() const;
 		virtual Real getElement(UInt i, UInt j) const;
 		virtual void setElement(UInt i, UInt j, Real element);
 
@@ -37,11 +37,11 @@ namespace Numerical
 
 		virtual std::string text() const;
 
-		virtual IMatrix *clone() const = 0;
+        virtual IMatrix *clone() const;
 
     protected:
 
-        virtual Real &element(UInt i, UInt j) = 0;
+        virtual Real &element(UInt i, UInt j);
 
     public:
 

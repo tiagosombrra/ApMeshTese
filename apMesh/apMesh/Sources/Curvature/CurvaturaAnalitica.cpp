@@ -82,5 +82,6 @@ double CurvaturaAnalitica::curvaturaCurva()
 {
   //formula curvatura
   // k = |r'(t)Xr''(t)| / |r'(t)|³
+    return -1;
 
 }

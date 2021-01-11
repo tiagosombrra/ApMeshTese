@@ -603,9 +603,9 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
         {
           cout << "adaptando a curva pela curvatura da curva " << i + 1 << endl;
 
-         novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), this->passo, mapaPontos );
+         novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), mapaPontos );
          geo->getCurva( i )->setPontos(novosPontos[i]);
-         novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), this->passo, mapaPontos );
+         novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), mapaPontos );
         }
 
       cout << "atualizando as curvas" << endl;

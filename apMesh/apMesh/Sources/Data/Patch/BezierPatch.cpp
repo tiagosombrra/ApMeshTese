@@ -14,52 +14,57 @@ This source code is under GNU General Public License v3 */
 
 extern double TOLERANCIA; // distância máxima entre dois pontos
 
-Matrix4x4 *iniciaMatrizBezier ( )
+Matrix4x4 iniciaMatrizBezier ( )
 {
-    Matrix4x4 *m = new Matrix4x4();
+    //    m->setElement( 0, 0,-1 ); m->setElement( 0, 1, 3 ); m->setElement( 0, 2,-3 ); m->setElement( 0, 3, 1 );
+    //    m->setElement( 1, 0, 3 ); m->setElement( 1, 1,-6 ); m->setElement( 1, 2, 3 ); m->setElement( 1, 3, 0 );
+    //    m->setElement( 2, 0,-3 ); m->setElement( 2, 1, 3 ); m->setElement( 2, 2, 0 ); m->setElement( 2, 3, 0 );
+    //    m->setElement( 3, 0, 1 ); m->setElement( 3, 1, 0 ); m->setElement( 3, 2, 0 ); m->setElement( 3, 3, 0 );
 
-    m->setElement( 0, 0,-1 ); m->setElement( 0, 1, 3 ); m->setElement( 0, 2,-3 ); m->setElement( 0, 3, 1 );
-    m->setElement( 1, 0, 3 ); m->setElement( 1, 1,-6 ); m->setElement( 1, 2, 3 ); m->setElement( 1, 3, 0 );
-    m->setElement( 2, 0,-3 ); m->setElement( 2, 1, 3 ); m->setElement( 2, 2, 0 ); m->setElement( 2, 3, 0 );
-    m->setElement( 3, 0, 1 ); m->setElement( 3, 1, 0 ); m->setElement( 3, 2, 0 ); m->setElement( 3, 3, 0 );
+    Matrix4x4 B;
 
-    return m;
+    B(0,0) = -1; B(0,1) = 3;  B(0,2) = -3; B(0,3) = 1;
+    B(1,0) = 3;  B(1,1) = -6; B(1,2) = 3;  B(1,3) = 0;
+    B(2,0) = -3; B(2,1) = 3;  B(2,2) = 0;  B(2,3) = 0;
+    B(3,0) = 1;  B(3,1) = 0;  B(3,2) = 0;  B(3,3) = 0;
+
+    return B;
 }
 
 
 void BezierPatch::mostraMatrizes ( )
 {
-    cout << "U:\n" <<
-            this->getU().getElement( 0, 0 ) <<" "<< this->getU().getElement( 0, 1 ) <<" "<< this->getU().getElement( 0, 2 ) <<" "<< this->getU().getElement( 0, 3 ) << endl;
-    cout << "B:\n" <<
-            this->getB().getElement( 0, 0 ) <<" "<< this->getB().getElement( 0, 1 ) <<" "<< this->getB().getElement( 0, 2 ) <<" "<< this->getB().getElement( 0, 3 ) << "\n" <<
-            this->getB().getElement( 1, 0 ) <<" "<< this->getB().getElement( 1, 1 ) <<" "<< this->getB().getElement( 1, 2 ) <<" "<< this->getB().getElement( 1, 3 ) << "\n" <<
-            this->getB().getElement( 2, 0 ) <<" "<< this->getB().getElement( 2, 1 ) <<" "<< this->getB().getElement( 2, 2 ) <<" "<< this->getB().getElement( 2, 3 ) << "\n" <<
-            this->getB().getElement( 3, 0 ) <<" "<< this->getB().getElement( 3, 1 ) <<" "<< this->getB().getElement( 3, 2 ) <<" "<< this->getB().getElement( 3, 3 ) << endl;
+    cout << "U:\n" << U;
+    //  this->getU().getElement( 0, 0 ) <<" "<< this->getU().getElement( 0, 1 ) <<" "<< this->getU().getElement( 0, 2 ) <<" "<< this->getU().getElement( 0, 3 ) << endl;
+    cout << "B:\n" << B;
+    //            this->getB().getElement( 0, 0 ) <<" "<< this->getB().getElement( 0, 1 ) <<" "<< this->getB().getElement( 0, 2 ) <<" "<< this->getB().getElement( 0, 3 ) << "\n" <<
+    //            this->getB().getElement( 1, 0 ) <<" "<< this->getB().getElement( 1, 1 ) <<" "<< this->getB().getElement( 1, 2 ) <<" "<< this->getB().getElement( 1, 3 ) << "\n" <<
+    //            this->getB().getElement( 2, 0 ) <<" "<< this->getB().getElement( 2, 1 ) <<" "<< this->getB().getElement( 2, 2 ) <<" "<< this->getB().getElement( 2, 3 ) << "\n" <<
+    //            this->getB().getElement( 3, 0 ) <<" "<< this->getB().getElement( 3, 1 ) <<" "<< this->getB().getElement( 3, 2 ) <<" "<< this->getB().getElement( 3, 3 ) << endl;
 
-    cout << "Gx:\n" <<
-            this->getGx().getElement( 0, 0 ) <<" "<< this->getGx().getElement( 0, 1 ) <<" "<< this->getGx().getElement( 0, 2 ) <<" "<< this->getGx().getElement( 0, 3 ) << "\n" <<
-            this->getGx().getElement( 1, 0 ) <<" "<< this->getGx().getElement( 1, 1 ) <<" "<< this->getGx().getElement( 1, 2 ) <<" "<< this->getGx().getElement( 1, 3 ) << "\n" <<
-            this->getGx().getElement( 2, 0 ) <<" "<< this->getGx().getElement( 2, 1 ) <<" "<< this->getGx().getElement( 2, 2 ) <<" "<< this->getGx().getElement( 2, 3 ) << "\n" <<
-            this->getGx().getElement( 3, 0 ) <<" "<< this->getGx().getElement( 3, 1 ) <<" "<< this->getGx().getElement( 3, 2 ) <<" "<< this->getGx().getElement( 3, 3 ) << endl;
+    cout << "Gx:\n" << Gx;
+    //            this->getGx().getElement( 0, 0 ) <<" "<< this->getGx().getElement( 0, 1 ) <<" "<< this->getGx().getElement( 0, 2 ) <<" "<< this->getGx().getElement( 0, 3 ) << "\n" <<
+    //            this->getGx().getElement( 1, 0 ) <<" "<< this->getGx().getElement( 1, 1 ) <<" "<< this->getGx().getElement( 1, 2 ) <<" "<< this->getGx().getElement( 1, 3 ) << "\n" <<
+    //            this->getGx().getElement( 2, 0 ) <<" "<< this->getGx().getElement( 2, 1 ) <<" "<< this->getGx().getElement( 2, 2 ) <<" "<< this->getGx().getElement( 2, 3 ) << "\n" <<
+    //            this->getGx().getElement( 3, 0 ) <<" "<< this->getGx().getElement( 3, 1 ) <<" "<< this->getGx().getElement( 3, 2 ) <<" "<< this->getGx().getElement( 3, 3 ) << endl;
 
-    cout << "Gy:\n" <<
-            this->getGy().getElement( 0, 0 ) <<" "<< this->getGy().getElement( 0, 1 ) <<" "<< this->getGy().getElement( 0, 2 ) <<" "<< this->getGy().getElement( 0, 3 ) << "\n" <<
-            this->getGy().getElement( 1, 0 ) <<" "<< this->getGy().getElement( 1, 1 ) <<" "<< this->getGy().getElement( 1, 2 ) <<" "<< this->getGy().getElement( 1, 3 ) << "\n" <<
-            this->getGy().getElement( 2, 0 ) <<" "<< this->getGy().getElement( 2, 1 ) <<" "<< this->getGy().getElement( 2, 2 ) <<" "<< this->getGy().getElement( 2, 3 ) << "\n" <<
-            this->getGy().getElement( 3, 0 ) <<" "<< this->getGy().getElement( 3, 1 ) <<" "<< this->getGy().getElement( 3, 2 ) <<" "<< this->getGy().getElement( 3, 3 ) << endl;
+    cout << "Gy:\n" << Gy;
+    //            this->getGy().getElement( 0, 0 ) <<" "<< this->getGy().getElement( 0, 1 ) <<" "<< this->getGy().getElement( 0, 2 ) <<" "<< this->getGy().getElement( 0, 3 ) << "\n" <<
+    //            this->getGy().getElement( 1, 0 ) <<" "<< this->getGy().getElement( 1, 1 ) <<" "<< this->getGy().getElement( 1, 2 ) <<" "<< this->getGy().getElement( 1, 3 ) << "\n" <<
+    //            this->getGy().getElement( 2, 0 ) <<" "<< this->getGy().getElement( 2, 1 ) <<" "<< this->getGy().getElement( 2, 2 ) <<" "<< this->getGy().getElement( 2, 3 ) << "\n" <<
+    //            this->getGy().getElement( 3, 0 ) <<" "<< this->getGy().getElement( 3, 1 ) <<" "<< this->getGy().getElement( 3, 2 ) <<" "<< this->getGy().getElement( 3, 3 ) << endl;
 
-    cout << "Gz:\n" <<
-            this->getGz().getElement( 0, 0 ) <<" "<< this->getGz().getElement( 0, 1 ) <<" "<< this->getGz().getElement( 0, 2 ) <<" "<< this->getGz().getElement( 0, 3 ) << "\n" <<
-            this->getGz().getElement( 1, 0 ) <<" "<< this->getGz().getElement( 1, 1 ) <<" "<< this->getGz().getElement( 1, 2 ) <<" "<< this->getGz().getElement( 1, 3 ) << "\n" <<
-            this->getGz().getElement( 2, 0 ) <<" "<< this->getGz().getElement( 2, 1 ) <<" "<< this->getGz().getElement( 2, 2 ) <<" "<< this->getGz().getElement( 2, 3 ) << "\n" <<
-            this->getGz().getElement( 3, 0 ) <<" "<< this->getGz().getElement( 3, 1 ) <<" "<< this->getGz().getElement( 3, 2 ) <<" "<< this->getGz().getElement( 3, 3 ) << endl;
+    cout << "Gz:\n" << Gz;
+    //            this->getGz().getElement( 0, 0 ) <<" "<< this->getGz().getElement( 0, 1 ) <<" "<< this->getGz().getElement( 0, 2 ) <<" "<< this->getGz().getElement( 0, 3 ) << "\n" <<
+    //            this->getGz().getElement( 1, 0 ) <<" "<< this->getGz().getElement( 1, 1 ) <<" "<< this->getGz().getElement( 1, 2 ) <<" "<< this->getGz().getElement( 1, 3 ) << "\n" <<
+    //            this->getGz().getElement( 2, 0 ) <<" "<< this->getGz().getElement( 2, 1 ) <<" "<< this->getGz().getElement( 2, 2 ) <<" "<< this->getGz().getElement( 2, 3 ) << "\n" <<
+    //            this->getGz().getElement( 3, 0 ) <<" "<< this->getGz().getElement( 3, 1 ) <<" "<< this->getGz().getElement( 3, 2 ) <<" "<< this->getGz().getElement( 3, 3 ) << endl;
 
-    cout << "V:\n" <<
-            this->getV().getElement( 0, 0 ) << "\n" <<
-            this->getV().getElement( 1, 0 ) << "\n" <<
-            this->getV().getElement( 2, 0 ) << "\n" <<
-            this->getV().getElement( 3, 0 ) << endl;
+    cout << "V:\n" << V;
+    //            this->getV().getElement( 0, 0 ) << "\n" <<
+    //            this->getV().getElement( 1, 0 ) << "\n" <<
+    //            this->getV().getElement( 2, 0 ) << "\n" <<
+    //            this->getV().getElement( 3, 0 ) << endl;
 }
 
 
@@ -87,22 +92,22 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
 
         p_i = this->parametrizar ( u_i, v_i ); // palpite inicial
 
-        Numerical::TMatrix<double, 3,3> A;
-        A.setElement ( 0,0, Tu.x );	A.setElement ( 0,1, Tv.x );	A.setElement ( 0,2, p_i.x - p.x );
-        A.setElement ( 1,0, Tu.y );	A.setElement ( 1,1, Tv.y );	A.setElement ( 1,2, p_i.y - p.y );
-        A.setElement ( 2,0, Tu.z );	A.setElement ( 2,1, Tv.z );	A.setElement ( 2,2, p_i.z - p.z );
+        Matrix<double, 3,3> A;
+        A(0,0) = Tu.x;	A(0,1) = Tv.x;	A(0,2) = p_i.x - p.x;
+        A(1,0) = Tu.y;	A(1,1) = Tv.y;	A(1,2) = p_i.y - p.y;
+        A(2,0) = Tu.z;	A(2,1) = Tv.z;	A(2,2) = p_i.z - p.z;
 
 
         int k = 0;
-        double pivo = A.getElement(0,0);
+        double pivo = A(0,0);
 
         while ( fabs(pivo) < TOLERANCIA and k < 3 )
         {
             ++k;
-            pivo = A.getElement(k,0);
+            pivo = A(k,0);
         }
 
-        A.swapLine( k, 0 );
+        A.row(k).swap(A.row(0));
 
         if ( fabs(pivo) < TOLERANCIA )
         {
@@ -112,39 +117,37 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
             return make_tuple ( -1.0 , -1.0 );
         }
 
-        double A_10 = A.getElement(1,0);
-        double A_20 = A.getElement(2,0);
+        double A_10 = A(1,0);
+        double A_20 = A(2,0);
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A.setElement ( 0,j, static_cast <double > ( A.getElement( 0, j ) ) / pivo );
-            A.setElement ( 1,j, A.getElement( 1, j ) - A_10*( A.getElement( 0, j ) ) );
-            A.setElement ( 2,j, A.getElement( 2, j ) - A_20*( A.getElement( 0, j ) ) );
+            A(0,j) = static_cast<double >(A(0, j)/pivo);
+            A(1,j) = A(1,j) - A_10*(A(0,j));
+            A(2,j) = A(2,j) - A_20*(A(0,j));
         }
 
-        pivo = A.getElement(1,1);
+        pivo = A(1,1);
 
         if ( fabs(pivo) < TOLERANCIA )
         {
-            pivo = A.getElement(2,1);
-            A.swapLine( 2, 1 );
-
-
+            pivo = A(2,1);
+            A.row(2).swap(A.row(1));
         }
 
-        double A_01 = A.getElement(0,1);
-        double A_21 = A.getElement(2,1);
+        double A_01 = A(0,1);
+        double A_21 = A(2,1);
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A.setElement ( 1,j, static_cast <double > ( A.getElement( 1, j ) ) / pivo );
-            A.setElement ( 0,j, A.getElement( 0, j ) - A_01*( A.getElement( 1, j ) ) );
-            A.setElement ( 2,j, A.getElement( 2, j ) - A_21*( A.getElement( 1, j ) ) );
+            A(1,j) = static_cast<double>(A(1,j)/pivo);
+            A(0,j) = A(0,j) - A_01*(A(1,j));
+            A(2,j) = A(2,j) - A_21*(A(1,j));
         }
 
 
-        delta_u =  A.getElement( 0, 2 );
-        delta_v =  A.getElement( 1, 2 );
+        delta_u =  A(0,2);
+        delta_v =  A(1,2);
 
         u_i += delta_u;
         v_i += delta_v;
@@ -173,6 +176,30 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
 
 // faz as multiplicações necessárias para 'parametrizar ( u, v )' e para as
 // derivadas parciais
+Matrix1x4 BezierPatch::getU() const {
+    return this->U;
+}
+
+Matrix4x4 BezierPatch::getGx() const {
+    return this->Gx;
+}
+
+Matrix4x4 BezierPatch::getGy() const {
+    return this->Gy;
+}
+
+Matrix4x4 BezierPatch::getGz() const {
+    return this->Gz;
+}
+
+Matrix4x1 BezierPatch::getV() const {
+    return this->V;
+}
+
+Matrix4x4 BezierPatch::getB() const {
+    return this->B;
+}
+
 Ponto BezierPatch::calculaPonto_u_v ( )
 {
     //  ALOCA um Ponto e o retorna
@@ -180,37 +207,28 @@ Ponto BezierPatch::calculaPonto_u_v ( )
     Ponto C;
 
     // C = ( U * ( B * ( G * ( Bt * V ) ) ) )
-    //    C.x =	(	this->getU  ( ) *
-    //                (	//this->getB  ( ) *
-    //                    (	this->getGx ( ) *
-    //                        ( 	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
-    //                            this->getV  ( ) ) ) ) ).getElement( 0, 0 );
 
-    Numerical::TMatrix<double, 1,1> resultV;
-    Numerical::TMatrix<double, 1,4> resultU;
-    Numerical::IMatrix::multiply(this->getU(), this->getGx ( ), resultU);
-    Numerical::IMatrix::multiply(resultU, this->getV(), resultV);
-    C.x = resultV.getElement(0,0);
+    this->getU() * this->getGx() * this->getV();
 
-    //    C.y =	(	this->getU  ( ) *
-    //                (	//this->getB  ( ) *
-    //                    (	this->getGy ( ) *
-    //                        ( 	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
-    //                            this->getV  ( ) ) ) ) )( 0, 0 );
+    double x = (this->getU())(0,0);
 
-    Numerical::IMatrix::multiply(this->getU(), this->getGy ( ), resultU);
-    Numerical::IMatrix::multiply(resultU, this->getV(), resultV);
-    C.y = resultV.getElement(0,0);
+    C.x =	(	this->getU  ( ) *
+                        (	//this->getB  ( ) *
+                                (	this->getGx ( ) *
+                                        ( 	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
+                                                this->getV  ( ) ) ) ) )( 0, 0 );
 
-    //    C.z =	(	this->getU  ( ) *
-    //                (	//this->getB  ( ) *
-    //                    (	this->getGz ( ) *
-    //                        (	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
-    //                            this->getV  ( ) ) ) ) )( 0, 0 );
+    C.y =	(	this->getU  ( ) *
+                        (	//this->getB  ( ) *
+                                (	this->getGy ( ) *
+                                        ( 	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
+                                                this->getV  ( ) ) ) ) )( 0, 0 );
 
-    Numerical::IMatrix::multiply(this->getU(), this->getGz ( ), resultU);
-    Numerical::IMatrix::multiply(resultU, this->getV(), resultV);
-    C.y = resultV.getElement(0,0);
+    C.z =	(	this->getU  ( ) *
+                        (	//this->getB  ( ) *
+                                (	this->getGz ( ) *
+                                        (	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
+                                                this->getV  ( ) ) ) ) )( 0, 0 );
 
     //	cout << "calculaPonto_u_v () = " << C.x << " " << C.y << " " << C.z << endl;
     return C;
@@ -292,15 +310,15 @@ Ponto BezierPatch::parametrizar ( double u, double v )
     //  -> usa 'calculaPonto_u_v ( )'
     //
 
-    this->U->setElement ( 0, 0, u*u*u );
-    this->U->setElement ( 0, 1, u*u );
-    this->U->setElement ( 0, 2, u );
-    this->U->setElement ( 0, 3, 1 );
+    this->U(0,0) = u*u*u;
+    this->U(0,1) = u*u;
+    this->U(0,2) = u;
+    this->U(0,3) = 1;
 
-    this->V->setElement ( 0, 0, v*v*v );
-    this->V->setElement ( 1, 0, v*v );
-    this->V->setElement ( 2, 0, v );
-    this->V->setElement ( 3, 0, 1 );
+    this->V(0,0) = v*v*v;
+    this->V(1,0) = v*v;
+    this->V(2,0) = v;
+    this->V(3,0) = 1;
 
     return calculaPonto_u_v ( );
 }
@@ -319,15 +337,15 @@ Vetor BezierPatch::Qu ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, 3*u*u );
-    this->U->setElement ( 0, 1, 2*u );
-    this->U->setElement ( 0, 2, 1 );
-    this->U->setElement ( 0, 3, 0 );
+    this->U( 0, 0) = 3*u*u;
+    this->U( 0, 1) = 2*u;
+    this->U( 0, 2) = 1;
+    this->U( 0, 3) = 0;
 
-    this->V->setElement ( 0, 0, v*v*v );
-    this->V->setElement ( 1, 0, v*v );
-    this->V->setElement ( 2, 0, v );
-    this->V->setElement ( 3, 0, 1 );
+    this->V( 0, 0) = v*v*v;
+    this->V( 1, 0) = v*v;
+    this->V( 2, 0) = v;
+    this->V( 3, 0) = 1;
 
     P = calculaPonto_u_v ( );
     Vetor V ( P );
@@ -349,15 +367,15 @@ Vetor BezierPatch::Qv ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, u*u*u );
-    this->U->setElement ( 0, 1, u*u );
-    this->U->setElement ( 0, 2, u );
-    this->U->setElement ( 0, 3, 1 );
+    this->U( 0, 0) = u*u*u;
+    this->U( 0, 1) = u*u;
+    this->U( 0, 2) = u;
+    this->U( 0, 3) = 1;
 
-    this->V->setElement ( 0, 0, 3*v*v );
-    this->V->setElement ( 1, 0, 2*v );
-    this->V->setElement ( 2, 0, 1 );
-    this->V->setElement ( 3, 0, 0 );
+    this->V( 0, 0) = 3*v*v;
+    this->V( 1, 0) = 2*v;
+    this->V( 2, 0) = 1;
+    this->V( 3, 0) = 0;
 
     P = calculaPonto_u_v ( );
     Vetor V ( P );
@@ -379,15 +397,15 @@ Vetor BezierPatch::Quu ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, 6*u );
-    this->U->setElement ( 0, 1, 2 );
-    this->U->setElement ( 0, 2, 0 );
-    this->U->setElement ( 0, 3, 0 );
+    this->U( 0, 0) = 6*u;
+    this->U( 0, 1) = 2;
+    this->U( 0, 2) = 0;
+    this->U( 0, 3) = 0;
 
-    this->V->setElement ( 0, 0, v*v*v );
-    this->V->setElement ( 1, 0, v*v );
-    this->V->setElement ( 2, 0, v );
-    this->V->setElement ( 3, 0, 1 );
+    this->V( 0, 0) = v*v*v;
+    this->V( 1, 0) = v*v;
+    this->V( 2, 0) = v;
+    this->V( 3, 0) = 1;
 
 
     P = calculaPonto_u_v ( );
@@ -410,15 +428,16 @@ Vetor BezierPatch::Quv ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, 3*u*u );
-    this->U->setElement ( 0, 1, 2*u );
-    this->U->setElement ( 0, 2, 1 );
-    this->U->setElement ( 0, 3, 0 );
+    this->U( 0, 0) = 3*u*u;
+    this->U( 0, 1) = 2*u;
+    this->U( 0, 2) = 1;
+    this->U( 0, 3) = 0;
 
-    this->V->setElement ( 0, 0, 3*v*v );
-    this->V->setElement ( 1, 0, 2*v );
-    this->V->setElement ( 2, 0, 1 );
-    this->V->setElement ( 3, 0, 0 );
+    this->V( 0, 0) = 3*v*v;
+    this->V( 1, 0) = 2*v;
+    this->V( 2, 0) = 1;
+    this->V( 3, 0) = 0;
+
     P = calculaPonto_u_v ( );
     Vetor V ( P );
 
@@ -446,15 +465,16 @@ Vetor BezierPatch::Qvv ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, u*u*u );
-    this->U->setElement ( 0, 1, u*u );
-    this->U->setElement ( 0, 2, u );
-    this->U->setElement ( 0, 3, 1 );
+    this->U( 0, 0) = u*u*u;
+    this->U( 0, 1) = u*u;
+    this->U( 0, 2) = u;
+    this->U( 0, 3) = 1;
 
-    this->V->setElement ( 0, 0, 6*v );
-    this->V->setElement ( 1, 0, 2 );
-    this->V->setElement ( 2, 0, 0 );
-    this->V->setElement ( 3, 0, 0 );
+    this->V( 0, 0) = 6*v;
+    this->V( 1, 0) = 2;
+    this->V( 2, 0) = 0;
+    this->V( 3, 0) = 0;
+
     P = calculaPonto_u_v ( );
     Vetor V ( P );
 
@@ -516,11 +536,15 @@ Vetor BezierPatch::Qvv ( const Ponto& p )
 //		C1
 BezierPatch::BezierPatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
                            Ponto Pt_11, Ponto Pt_21, Ponto Pt_12, Ponto Pt_22,
-                           bool sinal_c1, bool sinal_c2, bool sinal_c3, bool sinal_c4 ) : CoonsPatch ( )
+                           bool sinal_c1 , bool sinal_c2, bool sinal_c3, bool sinal_c4 ) : CoonsPatch ( )
 {
+    this->sinal_c1 = sinal_c1;
+    this->sinal_c2 = sinal_c2;
+    this->sinal_c3 = sinal_c3;
+    this->sinal_c4 = sinal_c4;
+
     // As curvas devem ser definidas da esquerda para a direita, de baixo para
     // cima em relação ao Patch !!!
-
     // 1. Inclui as curvas na lista de curvas de CoonsPatch
     //
     this->curvas.push_back ( C1 );
@@ -528,15 +552,13 @@ BezierPatch::BezierPatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
     this->curvas.push_back ( C3 );
     this->curvas.push_back ( C4 );
     //
-    //////////////////////////////
-
     // 2. Coloca o Patch na lista das curvas
     //
     static_cast < CurvParamBezier* > ( C1 )->inserePatch ( this );
     static_cast < CurvParamBezier* > ( C2 )->inserePatch ( this );
     static_cast < CurvParamBezier* > ( C3 )->inserePatch ( this );
     static_cast < CurvParamBezier* > ( C4 )->inserePatch ( this );
-
+    //
     // 3. Seta os atributos de acordo com as curvas
     //
     this->Pt00 = static_cast < CurvParamBezier* > ( C1 )->P0;
@@ -560,80 +582,61 @@ BezierPatch::BezierPatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
     this->Pt12 = Pt_12;
     this->Pt22 = Pt_22;
     //
-    ///////////////////////////////////////
-
     // 4. Aloca espaço para as matrizes
     //
-    this->U  = new Matrix1x4();
-    this->V  = new Matrix4x1();
-    this->Gx = new Matrix4x4();
-    this->Gy = new Matrix4x4();
-    this->Gz = new Matrix4x4();
+    this->U.setZero(1,4);
+    this->V.setZero(4,1);
+    this->Gx.setZero(4,4);
+    this->Gy.setZero(4,4);
+    this->Gz.setZero(4,4);
     //
-    ////////////////////////////////////
-
-    //
-    ////////////////////////////////////////////////////////////////////////////
-
     // 5. Preenche as matrizes geométricas com G de Bezier
     //
     // Gx:
     // 2x2 superior esquerdo
-    Gx->setElement( 0, 0, this->Pt00.x ); Gx->setElement( 0, 1, this->Pt01.x );
-    Gx->setElement( 1, 0, this->Pt10.x ); Gx->setElement( 1, 1, this->Pt11.x );
+    Gx(0,0) = this->Pt00.x; Gx(0,1) = this->Pt01.x;
+    Gx(1,0) = this->Pt10.x; Gx(1,1) = this->Pt11.x;
     // 2x2 inferior esquerdo
-    Gx->setElement( 2, 0, this->Pt20.x ); Gx->setElement( 2, 1, this->Pt21.x );
-    Gx->setElement( 3, 0, this->Pt30.x ); Gx->setElement( 3, 1, this->Pt31.x );
+    Gx(2,0) = this->Pt20.x; Gx(2,1) = this->Pt21.x;
+    Gx(3,0) = this->Pt30.x; Gx(3,1) = this->Pt31.x;
     // 2x2 superior direito
-    Gx->setElement( 0, 2, this->Pt02.x ); Gx->setElement( 0, 3, this->Pt03.x );
-    Gx->setElement( 1, 2, this->Pt12.x ); Gx->setElement( 1, 3, this->Pt13.x );
+    Gx(0,2) = this->Pt02.x; Gx(0,3) = this->Pt03.x;
+    Gx(1,2) = this->Pt12.x; Gx(1,3) = this->Pt13.x;
     // 2x2 inferior direito
-    Gx->setElement( 2, 2, this->Pt22.x ); Gx->setElement( 2, 3, this->Pt23.x );
-    Gx->setElement( 3, 2, this->Pt32.x ); Gx->setElement( 3, 3, this->Pt33.x );
+    Gx(2,2) = this->Pt22.x; Gx(2,3) = this->Pt23.x;
+    Gx(3,2) = this->Pt32.x; Gx(3,3) = this->Pt33.x;
     //
     // Gy:
     // 2x2 superior esquerdo
-    Gy->setElement( 0, 0, this->Pt00.y ); Gy->setElement( 0, 1, this->Pt01.y );
-    Gy->setElement( 1, 0, this->Pt10.y ); Gy->setElement( 1, 1, this->Pt11.y );
+    Gy(0,0) = this->Pt00.y; Gy(0,1) = this->Pt01.y;
+    Gy(1,0) = this->Pt10.y; Gy(1,1) = this->Pt11.y;
     // 2x2 inferior esquerdo
-    Gy->setElement( 2, 0, this->Pt20.y ); Gy->setElement( 2, 1, this->Pt21.y );
-    Gy->setElement( 3, 0, this->Pt30.y ); Gy->setElement( 3, 1, this->Pt31.y );
+    Gy(2,0) = this->Pt20.y; Gy(2,1) = this->Pt21.y;
+    Gy(3,0) = this->Pt30.y; Gy(3,1) = this->Pt31.y;
     // 2x2 superior direito
-    Gy->setElement( 0, 2, this->Pt02.y ); Gy->setElement( 0, 3, this->Pt03.y );
-    Gy->setElement( 1, 2, this->Pt12.y ); Gy->setElement( 1, 3, this->Pt13.y );
+    Gy(0,2) = this->Pt02.y; Gy(0,3) = this->Pt03.y;
+    Gy(1,2) = this->Pt12.y; Gy(1,3) = this->Pt13.y;
     // 2x2 inferior direito
-    Gy->setElement( 2, 2, this->Pt22.y ); Gy->setElement( 2, 3, this->Pt23.y );
-    Gy->setElement( 3, 2, this->Pt32.y ); Gy->setElement( 3, 3, this->Pt33.y );
+    Gy(2,2) = this->Pt22.y; Gy(2,3) = this->Pt23.y;
+    Gy(3,2) = this->Pt32.y; Gy(3,3) = this->Pt33.y;
     //
     // Gz:
     // 2x2 superior esquerdo
-    Gz->setElement( 0, 0, this->Pt00.z ); Gz->setElement( 0, 1, this->Pt01.z );
-    Gz->setElement( 1, 0, this->Pt10.z ); Gz->setElement( 1, 1, this->Pt11.z );
+    Gz(0,0) = this->Pt00.z; Gz(0,1) = this->Pt01.z;
+    Gz(1,0) = this->Pt10.z; Gz(1,1) = this->Pt11.z;
     // 2x2 inferior esquerdo
-    Gz->setElement( 2, 0, this->Pt20.z ); Gz->setElement( 2, 1, this->Pt21.z );
-    Gz->setElement( 3, 0, this->Pt30.z ); Gz->setElement( 3, 1, this->Pt31.z );
+    Gz(2,0) = this->Pt20.z; Gz(2,1) = this->Pt21.z;
+    Gz(3,0) = this->Pt30.z; Gz(3,1) = this->Pt31.z;
     // 2x2 superior direito
-    Gz->setElement( 0, 2, this->Pt02.z ); Gz->setElement( 0, 3, this->Pt03.z );
-    Gz->setElement( 1, 2, this->Pt12.z ); Gz->setElement( 1, 3, this->Pt13.z );
+    Gz(0,2) = this->Pt02.z; Gz(0,3) = this->Pt03.z;
+    Gz(1,2) = this->Pt12.z; Gz(1,3) = this->Pt13.z;
     // 2x2 inferior direito
-    Gz->setElement( 2, 2, this->Pt22.z ); Gz->setElement( 2, 3, this->Pt23.z );
-    Gz->setElement( 3, 2, this->Pt32.z ); Gz->setElement( 3, 3, this->Pt33.z );
+    Gz(2,2) = this->Pt22.z; Gz(2,3) = this->Pt23.z;
+    Gz(3,2) = this->Pt32.z; Gz(3,3) = this->Pt33.z;
     //
-    //////////////
-
-    Matrix4x4 resultB;
-    Matrix4x4 resultG;
-    Numerical::IMatrix::multiply(this->getB(), this->getGx( ), resultB);
-    Numerical::IMatrix::multiply(resultB, this->getB(), resultG);
-    this->Gx = new Matrix4x4(resultG);
-
-    Numerical::IMatrix::multiply(this->getB(), this->getGy( ), resultB);
-    Numerical::IMatrix::multiply(resultB, this->getB(), resultG);
-    this->Gy = new Matrix4x4(resultG);
-
-    Numerical::IMatrix::multiply(this->getB(), this->getGz( ), resultB);
-    Numerical::IMatrix::multiply(resultB, this->getB(), resultG);
-    this->Gz = new Matrix4x4(resultG);
+    this->Gx = this->getB() * this->getGx() * this->getB();
+    this->Gy = this->getB() * this->getGy() * this->getB();
+    this->Gz = this->getB() * this->getGz() * this->getB();
 }
 
 
@@ -649,6 +652,12 @@ BezierPatch :: BezierPatch (	Ponto Pt_00, Ponto Pt_01, Ponto Pt_02, Ponto Pt_03,
       Pt20 (Pt_20), Pt21 (Pt_21), Pt22 (Pt_22), Pt23 (Pt_23),
       Pt30 (Pt_30), Pt31 (Pt_31), Pt32 (Pt_32), Pt33 (Pt_33)
 {
+
+    this->sinal_c1 = sinal_c1;
+    this->sinal_c2 = sinal_c2;
+    this->sinal_c3 = sinal_c3;
+    this->sinal_c4 = sinal_c4;
+
     // 1. Inclui as curvas na lista de curvas de CoonsPatch
     //
     this->curvas.push_back ( new CurvParamBezier ( Pt00, Pt10, Pt20, Pt30 ) );
@@ -656,78 +665,62 @@ BezierPatch :: BezierPatch (	Ponto Pt_00, Ponto Pt_01, Ponto Pt_02, Ponto Pt_03,
     this->curvas.push_back ( new CurvParamBezier ( Pt03, Pt13, Pt23, Pt33 ) );
     this->curvas.push_back ( new CurvParamBezier ( Pt00, Pt01, Pt02, Pt03 ) );
     //
-    //////////////////////////////
-
-
     // 2. Aloca espaço para as matrizes
     //
-    this->U  = new Matrix1x4();
-    this->V  = new Matrix4x1();
-    this->Gx = new Matrix4x4();
-    this->Gy = new Matrix4x4();
-    this->Gz = new Matrix4x4();
+    this->U.setZero(1,4);
+    this->V.setZero(4,1);
+    this->Gx.setZero(4,4);
+    this->Gy.setZero(4,4);
+    this->Gz.setZero(4,4);
     //
     ////////////////////////////////////
 
     // 3. Preenche as matrizes geométricas com G de Bezier
     //
-    // Gx:
     // 2x2 superior esquerdo
-    Gx->setElement( 0, 0, this->Pt00.x ); Gx->setElement( 0, 1, this->Pt01.x );
-    Gx->setElement( 1, 0, this->Pt10.x ); Gx->setElement( 1, 1, this->Pt11.x );
+    Gx(0,0) = this->Pt00.x; Gx(0,1) = this->Pt01.x;
+    Gx(1,0) = this->Pt10.x; Gx(1,1) = this->Pt11.x;
     // 2x2 inferior esquerdo
-    Gx->setElement( 2, 0, this->Pt20.x ); Gx->setElement( 2, 1, this->Pt21.x );
-    Gx->setElement( 3, 0, this->Pt30.x ); Gx->setElement( 3, 1, this->Pt31.x );
+    Gx(2,0) = this->Pt20.x; Gx(2,1) = this->Pt21.x;
+    Gx(3,0) = this->Pt30.x; Gx(3,1) = this->Pt31.x;
     // 2x2 superior direito
-    Gx->setElement( 0, 2, this->Pt02.x ); Gx->setElement( 0, 3, this->Pt03.x );
-    Gx->setElement( 1, 2, this->Pt12.x ); Gx->setElement( 1, 3, this->Pt13.x );
+    Gx(0,2) = this->Pt02.x; Gx(0,3) = this->Pt03.x;
+    Gx(1,2) = this->Pt12.x; Gx(1,3) = this->Pt13.x;
     // 2x2 inferior direito
-    Gx->setElement( 2, 2, this->Pt22.x ); Gx->setElement( 2, 3, this->Pt23.x );
-    Gx->setElement( 3, 2, this->Pt32.x ); Gx->setElement( 3, 3, this->Pt33.x );
+    Gx(2,2) = this->Pt22.x; Gx(2,3) = this->Pt23.x;
+    Gx(3,2) = this->Pt32.x; Gx(3,3) = this->Pt33.x;
     //
     // Gy:
     // 2x2 superior esquerdo
-    Gy->setElement( 0, 0, this->Pt00.y ); Gy->setElement( 0, 1, this->Pt01.y );
-    Gy->setElement( 1, 0, this->Pt10.y ); Gy->setElement( 1, 1, this->Pt11.y );
+    Gy(0,0) = this->Pt00.y; Gy(0,1) = this->Pt01.y;
+    Gy(1,0) = this->Pt10.y; Gy(1,1) = this->Pt11.y;
     // 2x2 inferior esquerdo
-    Gy->setElement( 2, 0, this->Pt20.y ); Gy->setElement( 2, 1, this->Pt21.y );
-    Gy->setElement( 3, 0, this->Pt30.y ); Gy->setElement( 3, 1, this->Pt31.y );
+    Gy(2,0) = this->Pt20.y; Gy(2,1) = this->Pt21.y;
+    Gy(3,0) = this->Pt30.y; Gy(3,1) = this->Pt31.y;
     // 2x2 superior direito
-    Gy->setElement( 0, 2, this->Pt02.y ); Gy->setElement( 0, 3, this->Pt03.y );
-    Gy->setElement( 1, 2, this->Pt12.y ); Gy->setElement( 1, 3, this->Pt13.y );
+    Gy(0,2) = this->Pt02.y; Gy(0,3) = this->Pt03.y;
+    Gy(1,2) = this->Pt12.y; Gy(1,3) = this->Pt13.y;
     // 2x2 inferior direito
-    Gy->setElement( 2, 2, this->Pt22.y ); Gy->setElement( 2, 3, this->Pt23.y );
-    Gy->setElement( 3, 2, this->Pt32.y ); Gy->setElement( 3, 3, this->Pt33.y );
+    Gy(2,2) = this->Pt22.y; Gy(2,3) = this->Pt23.y;
+    Gy(3,2) = this->Pt32.y; Gy(3,3) = this->Pt33.y;
     //
     // Gz:
     // 2x2 superior esquerdo
-    Gz->setElement( 0, 0, this->Pt00.z ); Gz->setElement( 0, 1, this->Pt01.z );
-    Gz->setElement( 1, 0, this->Pt10.z ); Gz->setElement( 1, 1, this->Pt11.z );
+    Gz(0,0) = this->Pt00.z; Gz(0,1) = this->Pt01.z;
+    Gz(1,0) = this->Pt10.z; Gz(1,1) = this->Pt11.z;
     // 2x2 inferior esquerdo
-    Gz->setElement( 2, 0, this->Pt20.z ); Gz->setElement( 2, 1, this->Pt21.z );
-    Gz->setElement( 3, 0, this->Pt30.z ); Gz->setElement( 3, 1, this->Pt31.z );
+    Gz(2,0) = this->Pt20.z; Gz(2,1) = this->Pt21.z;
+    Gz(3,0) = this->Pt30.z; Gz(3,1) = this->Pt31.z;
     // 2x2 superior direito
-    Gz->setElement( 0, 2, this->Pt02.z ); Gz->setElement( 0, 3, this->Pt03.z );
-    Gz->setElement( 1, 2, this->Pt12.z ); Gz->setElement( 1, 3, this->Pt13.z );
+    Gz(0,2) = this->Pt02.z; Gz(0,3) = this->Pt03.z;
+    Gz(1,2) = this->Pt12.z; Gz(1,3) = this->Pt13.z;
     // 2x2 inferior direito
-    Gz->setElement( 2, 2, this->Pt22.z ); Gz->setElement( 2, 3, this->Pt23.z );
-    Gz->setElement( 3, 2, this->Pt32.z ); Gz->setElement( 3, 3, this->Pt33.z );
+    Gz(2,2) = this->Pt22.z; Gz(2,3) = this->Pt23.z;
+    Gz(3,2) = this->Pt32.z; Gz(3,3) = this->Pt33.z;
     //
-    //////////////
-
-    Matrix4x4 resultB;
-    Matrix4x4 resultG;
-    Numerical::IMatrix::multiply(this->getB(), this->getGx( ), resultB);
-    Numerical::IMatrix::multiply(resultB, this->getB(), resultG);
-    this->Gx = new Matrix4x4(resultG);
-
-    Numerical::IMatrix::multiply(this->getB(), this->getGy( ), resultB);
-    Numerical::IMatrix::multiply(resultB, this->getB(), resultG);
-    this->Gy = new Matrix4x4(resultG);
-
-    Numerical::IMatrix::multiply(this->getB(), this->getGz( ), resultB);
-    Numerical::IMatrix::multiply(resultB, this->getB(), resultG);
-    this->Gz = new Matrix4x4(resultG);
+    this->Gx = this->getB() * this->getGx() * this->getB();
+    this->Gy = this->getB() * this->getGy() * this->getB();
+    this->Gz = this->getB() * this->getGz() * this->getB();
 }
 
 
@@ -738,16 +731,16 @@ BezierPatch::BezierPatch ( BezierPatch *antigo ) : CoonsPatch ( antigo )
     this->Pt01 = antigo->Pt01;   this->Pt11 = antigo->Pt11;   this->Pt21 = antigo->Pt21;   this->Pt31 = antigo->Pt31;
     this->Pt00 = antigo->Pt00;   this->Pt10 = antigo->Pt10;   this->Pt20 = antigo->Pt20;   this->Pt30 = antigo->Pt30;
 
-    this->Gx = new Matrix4x4; this->Gx->copy(antigo->Gx, this->Gx);
-    this->Gy = new Matrix4x4; this->Gy->copy(antigo->Gy, this->Gy);
-    this->Gz = new Matrix4x4; this->Gz->copy(antigo->Gz, this->Gz);
-    this->U = new Matrix1x4; this->U->copy(antigo->U, this->U);
-    this->V = new Matrix4x1; this->V->copy(antigo->V, this->V);
+    this->Gx = antigo->Gx;
+    this->Gy = antigo->Gy;
+    this->Gz = antigo->Gz;
+    this->U = antigo->U;
+    this->V = antigo->V;
 }
 
 
 BezierPatch::~BezierPatch (  )
 {
-    if ( V ) delete V;
-    if ( U ) delete U;
+    delete &V;
+    delete &U;
 }

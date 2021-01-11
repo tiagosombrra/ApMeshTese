@@ -54,9 +54,6 @@ HEADERS += \
     ../apMesh/Headers/Data/Elemento.h \
     ../apMesh/Headers/Data/Face.h \
     ../apMesh/Headers/Data/Geometria.h \
-    ../apMesh/Headers/Data/Matrix1x4.h \
-    ../apMesh/Headers/Data/Matrix4x1.h \
-    ../apMesh/Headers/Data/Matrix4x4.h \
     ../apMesh/Headers/Data/Matriz.h \
     ../apMesh/Headers/Data/Mesh/Malha.h \
     ../apMesh/Headers/Data/Mesh/SubMalha.h \
@@ -106,9 +103,6 @@ SOURCES += \
     ../apMesh/Sources/Data/Elemento.cpp \
     ../apMesh/Sources/Data/Face.cpp \
     ../apMesh/Sources/Data/Geometria.cpp \
-    ../apMesh/Sources/Data/Matrix1x4.cpp \
-    ../apMesh/Sources/Data/Matrix4x1.cpp \
-    ../apMesh/Sources/Data/Matrix4x4.cpp \
     ../apMesh/Sources/Data/Matriz.cpp \
     ../apMesh/Sources/Data/Mesh/Malha.cpp \
     ../apMesh/Sources/Data/Mesh/SubMalha.cpp \

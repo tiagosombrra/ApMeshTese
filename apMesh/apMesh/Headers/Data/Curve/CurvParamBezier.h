@@ -16,30 +16,30 @@ This source code is under GNU General Public License v3 */
 
 class CurvParamBezier : public CurvaParametrica
 {
-		Ponto P2; // vetor tangente no ponto inicial
-		Ponto P3; // vetor tangente no ponto final
+    Ponto P2; // vetor tangente no ponto inicial
+    Ponto P3; // vetor tangente no ponto final
 
-	public:
+public:
 
-	    Ponto getP2 ( ) const { return this->P2; };
-	    Ponto getP3 ( ) const { return this->P3; };
+    Ponto getP2 ( ) const;
+    Ponto getP3 ( ) const;
 
-		void setP2 ( const Ponto& p ) { this->P2 = p; };
-		void setP3 ( const Ponto& p ) { this->P3 = p; };
+    void setP2 (const Ponto &p);
+    void setP3 (const Ponto &p);
 
-		friend class BezierPatch; // patch de Bezier pode acessar os atributos
+    friend class BezierPatch; // patch de Bezier pode acessar os atributos
 
-		// IMPORTANTE: Ao usar o construtor default, não esquecer de setar
-		// os pontos de controle !!!
-		CurvParamBezier (  );
+    // IMPORTANTE: Ao usar o construtor default, não esquecer de setar
+    // os pontos de controle !!!
+    CurvParamBezier (  );
 
-		// Esse construtor é mais recomendado !!! Evita erros ao esquecer de setar
-		// os valores indicados na observação do construtor default !!!
-		CurvParamBezier ( Ponto p0, Ponto p1, Ponto p2, Ponto p3 );
-		CurvParamBezier ( CurvParamBezier* );
+    // Esse construtor é mais recomendado !!! Evita erros ao esquecer de setar
+    // os valores indicados na observação do construtor default !!!
+    CurvParamBezier ( Ponto p0, Ponto p1, Ponto p2, Ponto p3 );
+    CurvParamBezier ( CurvParamBezier* );
 
-		double calcularCurvatura(double t);
+    double calcularCurvatura(double t);
 
-		~CurvParamBezier (  );
+    ~CurvParamBezier (  );
 };
 #endif

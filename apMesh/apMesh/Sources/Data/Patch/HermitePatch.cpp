@@ -14,54 +14,57 @@ This source code is under GNU General Public License v3 */
 
 extern double TOLERANCIA; // distância máxima entre dois pontos
 
-static Matrix4x4 *iniciaMatrizHermite ( )
+Matrix4x4 iniciaMatrizHermite ( )
 {
-    Matrix4x4 *m = new Matrix4x4();
+    Matrix4x4 M;
+    //    m->setElement( 0, 0, 2 ); m->setElement( 0, 1,-2 ); m->setElement( 0, 2, 1 ); m->setElement( 0, 3, 1 );
+    //    m->setElement( 1, 0,-3 ); m->setElement( 1, 1, 3 ); m->setElement( 1, 2,-2 ); m->setElement( 1, 3,-1 );
+    //    m->setElement( 2, 0, 0 ); m->setElement( 2, 1, 0 ); m->setElement( 2, 2, 1 ); m->setElement( 2, 3, 0 );
+    //    m->setElement( 3, 0, 1 ); m->setElement( 3, 1, 0 ); m->setElement( 3, 2, 0 ); m->setElement( 3, 3, 0 );
+    M(0,0) = 2;  M(0,1) = -2; M(0,2) = 1;  M(0,3) = 1;
+    M(1,0) = -3; M(1,1) = 3;  M(1,2) = -2; M(1,3) = -1;
+    M(2,0) = 0;  M(2,1) = 0;  M(2,2) = 1;  M(2,3) = 0;
+    M(3,0) = 1;  M(3,1) = 0;  M(3,2) = 0;  M(3,3) = 0;
 
-    m->setElement( 0, 0, 2 ); m->setElement( 0, 1,-2 ); m->setElement( 0, 2, 1 ); m->setElement( 0, 3, 1 );
-    m->setElement( 1, 0,-3 ); m->setElement( 1, 1, 3 ); m->setElement( 1, 2,-2 ); m->setElement( 1, 3,-1 );
-    m->setElement( 2, 0, 0 ); m->setElement( 2, 1, 0 ); m->setElement( 2, 2, 1 ); m->setElement( 2, 3, 0 );
-    m->setElement( 3, 0, 1 ); m->setElement( 3, 1, 0 ); m->setElement( 3, 2, 0 ); m->setElement( 3, 3, 0 );
-
-    return m;
+    return M;
 }
 
 
 void HermitePatch::mostraMatrizes ( )
 {
 
-    cout << "U:\n" <<
-    this->getU().getElement( 0, 0 ) <<" "<< this->getU().getElement( 0, 1 ) <<" "<< this->getU().getElement( 0, 2 ) <<" "<< this->getU().getElement( 0, 3 ) << endl;
+    cout << "U:\n" << U;
+    //    this->getU().getElement( 0, 0 ) <<" "<< this->getU().getElement( 0, 1 ) <<" "<< this->getU().getElement( 0, 2 ) <<" "<< this->getU().getElement( 0, 3 ) << endl;
 
-    cout << "H:\n" <<
-    this->getH().getElement( 0, 0 ) <<" "<< this->getH().getElement( 0, 1 ) <<" "<< this->getH().getElement( 0, 2 ) <<" "<< this->getH().getElement( 0, 3 ) << "\n" <<
-    this->getH().getElement( 1, 0 ) <<" "<< this->getH().getElement( 1, 1 ) <<" "<< this->getH().getElement( 1, 2 ) <<" "<< this->getH().getElement( 1, 3 ) << "\n" <<
-    this->getH().getElement( 2, 0 ) <<" "<< this->getH().getElement( 2, 1 ) <<" "<< this->getH().getElement( 2, 2 ) <<" "<< this->getH().getElement( 2, 3 ) << "\n" <<
-    this->getH().getElement( 3, 0 ) <<" "<< this->getH().getElement( 3, 1 ) <<" "<< this->getH().getElement( 3, 2 ) <<" "<< this->getH().getElement( 3, 3 ) << endl;
+    cout << "H:\n" << H;
+    //    this->getH().getElement( 0, 0 ) <<" "<< this->getH().getElement( 0, 1 ) <<" "<< this->getH().getElement( 0, 2 ) <<" "<< this->getH().getElement( 0, 3 ) << "\n" <<
+    //    this->getH().getElement( 1, 0 ) <<" "<< this->getH().getElement( 1, 1 ) <<" "<< this->getH().getElement( 1, 2 ) <<" "<< this->getH().getElement( 1, 3 ) << "\n" <<
+    //    this->getH().getElement( 2, 0 ) <<" "<< this->getH().getElement( 2, 1 ) <<" "<< this->getH().getElement( 2, 2 ) <<" "<< this->getH().getElement( 2, 3 ) << "\n" <<
+    //    this->getH().getElement( 3, 0 ) <<" "<< this->getH().getElement( 3, 1 ) <<" "<< this->getH().getElement( 3, 2 ) <<" "<< this->getH().getElement( 3, 3 ) << endl;
 
-    cout << "Gx:\n" <<
-    this->getGx().getElement( 0, 0 ) <<" "<< this->getGx().getElement( 0, 1 ) <<" "<< this->getGx().getElement( 0, 2 ) <<" "<< this->getGx().getElement( 0, 3 ) << "\n" <<
-    this->getGx().getElement( 1, 0 ) <<" "<< this->getGx().getElement( 1, 1 ) <<" "<< this->getGx().getElement( 1, 2 ) <<" "<< this->getGx().getElement( 1, 3 ) << "\n" <<
-    this->getGx().getElement( 2, 0 ) <<" "<< this->getGx().getElement( 2, 1 ) <<" "<< this->getGx().getElement( 2, 2 ) <<" "<< this->getGx().getElement( 2, 3 ) << "\n" <<
-    this->getGx().getElement( 3, 0 ) <<" "<< this->getGx().getElement( 3, 1 ) <<" "<< this->getGx().getElement( 3, 2 ) <<" "<< this->getGx().getElement( 3, 3 ) << endl;
+    cout << "Gx:\n" << Gx;
+    //    this->getGx().getElement( 0, 0 ) <<" "<< this->getGx().getElement( 0, 1 ) <<" "<< this->getGx().getElement( 0, 2 ) <<" "<< this->getGx().getElement( 0, 3 ) << "\n" <<
+    //    this->getGx().getElement( 1, 0 ) <<" "<< this->getGx().getElement( 1, 1 ) <<" "<< this->getGx().getElement( 1, 2 ) <<" "<< this->getGx().getElement( 1, 3 ) << "\n" <<
+    //    this->getGx().getElement( 2, 0 ) <<" "<< this->getGx().getElement( 2, 1 ) <<" "<< this->getGx().getElement( 2, 2 ) <<" "<< this->getGx().getElement( 2, 3 ) << "\n" <<
+    //    this->getGx().getElement( 3, 0 ) <<" "<< this->getGx().getElement( 3, 1 ) <<" "<< this->getGx().getElement( 3, 2 ) <<" "<< this->getGx().getElement( 3, 3 ) << endl;
 
-    cout << "Gy:\n" <<
-    this->getGy().getElement( 0, 0 ) <<" "<< this->getGy().getElement( 0, 1 ) <<" "<< this->getGy().getElement( 0, 2 ) <<" "<< this->getGy().getElement( 0, 3 ) << "\n" <<
-    this->getGy().getElement( 1, 0 ) <<" "<< this->getGy().getElement( 1, 1 ) <<" "<< this->getGy().getElement( 1, 2 ) <<" "<< this->getGy().getElement( 1, 3 ) << "\n" <<
-    this->getGy().getElement( 2, 0 ) <<" "<< this->getGy().getElement( 2, 1 ) <<" "<< this->getGy().getElement( 2, 2 ) <<" "<< this->getGy().getElement( 2, 3 ) << "\n" <<
-    this->getGy().getElement( 3, 0 ) <<" "<< this->getGy().getElement( 3, 1 ) <<" "<< this->getGy().getElement( 3, 2 ) <<" "<< this->getGy().getElement( 3, 3 ) << endl;
+    cout << "Gy:\n" << Gy;
+    //    this->getGy().getElement( 0, 0 ) <<" "<< this->getGy().getElement( 0, 1 ) <<" "<< this->getGy().getElement( 0, 2 ) <<" "<< this->getGy().getElement( 0, 3 ) << "\n" <<
+    //    this->getGy().getElement( 1, 0 ) <<" "<< this->getGy().getElement( 1, 1 ) <<" "<< this->getGy().getElement( 1, 2 ) <<" "<< this->getGy().getElement( 1, 3 ) << "\n" <<
+    //    this->getGy().getElement( 2, 0 ) <<" "<< this->getGy().getElement( 2, 1 ) <<" "<< this->getGy().getElement( 2, 2 ) <<" "<< this->getGy().getElement( 2, 3 ) << "\n" <<
+    //    this->getGy().getElement( 3, 0 ) <<" "<< this->getGy().getElement( 3, 1 ) <<" "<< this->getGy().getElement( 3, 2 ) <<" "<< this->getGy().getElement( 3, 3 ) << endl;
 
-    cout << "Gz:\n" <<
-    this->getGz().getElement( 0, 0 ) <<" "<< this->getGz().getElement( 0, 1 ) <<" "<< this->getGz().getElement( 0, 2 ) <<" "<< this->getGz().getElement( 0, 3 ) << "\n" <<
-    this->getGz().getElement( 1, 0 ) <<" "<< this->getGz().getElement( 1, 1 ) <<" "<< this->getGz().getElement( 1, 2 ) <<" "<< this->getGz().getElement( 1, 3 ) << "\n" <<
-    this->getGz().getElement( 2, 0 ) <<" "<< this->getGz().getElement( 2, 1 ) <<" "<< this->getGz().getElement( 2, 2 ) <<" "<< this->getGz().getElement( 2, 3 ) << "\n" <<
-    this->getGz().getElement( 3, 0 ) <<" "<< this->getGz().getElement( 3, 1 ) <<" "<< this->getGz().getElement( 3, 2 ) <<" "<< this->getGz().getElement( 3, 3 ) << endl;
+    cout << "Gz:\n" << Gz;
+    //    this->getGz().getElement( 0, 0 ) <<" "<< this->getGz().getElement( 0, 1 ) <<" "<< this->getGz().getElement( 0, 2 ) <<" "<< this->getGz().getElement( 0, 3 ) << "\n" <<
+    //    this->getGz().getElement( 1, 0 ) <<" "<< this->getGz().getElement( 1, 1 ) <<" "<< this->getGz().getElement( 1, 2 ) <<" "<< this->getGz().getElement( 1, 3 ) << "\n" <<
+    //    this->getGz().getElement( 2, 0 ) <<" "<< this->getGz().getElement( 2, 1 ) <<" "<< this->getGz().getElement( 2, 2 ) <<" "<< this->getGz().getElement( 2, 3 ) << "\n" <<
+    //    this->getGz().getElement( 3, 0 ) <<" "<< this->getGz().getElement( 3, 1 ) <<" "<< this->getGz().getElement( 3, 2 ) <<" "<< this->getGz().getElement( 3, 3 ) << endl;
 
-    cout << "V:\n" <<
-    this->getV().getElement( 0, 0 ) << "\n" <<
-    this->getV().getElement( 1, 0 ) << "\n" <<
-    this->getV().getElement( 2, 0 ) << "\n" <<
-    this->getV().getElement( 3, 0 ) << endl;
+    cout << "V:\n" << V;
+    //    this->getV().getElement( 0, 0 ) << "\n" <<
+    //    this->getV().getElement( 1, 0 ) << "\n" <<
+    //    this->getV().getElement( 2, 0 ) << "\n" <<
+    //    this->getV().getElement( 3, 0 ) << endl;
 
 }
 
@@ -89,21 +92,21 @@ tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
 
         p_i = this->parametrizar ( u_i, v_i ); // palpite inicial
 
-        Numerical::TMatrix<double, 3,3> A;
-        A.setElement ( 0,0, Tu.x );	A.setElement ( 0,1, Tv.x );	A.setElement ( 0,2, p_i.x - p.x );
-        A.setElement ( 1,0, Tu.y );	A.setElement ( 1,1, Tv.y );	A.setElement ( 1,2, p_i.y - p.y );
-        A.setElement ( 2,0, Tu.z );	A.setElement ( 2,1, Tv.z );	A.setElement ( 2,2, p_i.z - p.z );
+        Matrix<double, 3,3> A;
+        A(0,0) = Tu.x;	A(0,1) = Tv.x;	A(0,2) = p_i.x - p.x;
+        A(1,0) = Tu.y;	A(1,1) = Tv.y;	A(1,2) = p_i.y - p.y;
+        A(2,0) = Tu.z;	A(2,1) = Tv.z;	A(2,2) = p_i.z - p.z;
 
         int k = 0;
-        double pivo = A.getElement( 0, 0 );
+        double pivo = A(0,0);
 
         while ( fabs(pivo) < TOLERANCIA and k < 3 )
         {
             ++k;
-            pivo = A.getElement( k, 0 );
+            pivo = A(k,0);
         }
 
-        A.swapLine(k,0);
+        A.row(k).swap(A.row(0));
 
         if ( fabs(pivo) < TOLERANCIA )
         {
@@ -113,37 +116,36 @@ tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
             return make_tuple ( -1.0 , -1.0 );
         }
 
-        double A_10 = A.getElement(1,0);
-        double A_20 = A.getElement(2,0);
+        double A_10 = A(1,0);
+        double A_20 = A(2,0);
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A.setElement ( 0,j, static_cast <double > ( A.getElement( 0, j ) ) / pivo );
-            A.setElement ( 1,j, A.getElement( 1, j ) - A_10*( A.getElement( 0, j ) ) );
-            A.setElement ( 2,j, A.getElement( 2, j ) - A_20*( A.getElement( 0, j ) ) );
+            A(0,j) = static_cast<double >(A(0, j)/pivo);
+            A(1,j) = A(1,j) - A_10*(A(0,j));
+            A(2,j) = A(2,j) - A_20*(A(0,j));
         }
 
-        pivo = A.getElement( 1,1 );
+        pivo = A(1,1);
 
         if ( fabs(pivo) < TOLERANCIA )
         {
-            pivo = A.getElement( 2,1 );
-            A.swapLine(2,1);
+            pivo = A(2,1);
+            A.row(2).swap(A.row(1));
         }
 
-        double A_01 = A.getElement( 0, 1 );
-        double A_21 = A.getElement( 2, 1 );
+        double A_01 = A(0,1);
+        double A_21 = A(2,1);
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A.setElement ( 1,j, static_cast <double > ( A.getElement( 1, j ) ) / pivo );
-            A.setElement ( 0,j, A.getElement( 0, j ) - A_01*( A.getElement( 1, j ) ) );
-            A.setElement ( 2,j, A.getElement( 2, j ) - A_21*( A.getElement( 1, j ) ) );
+            A(1,j) = static_cast<double>(A(1,j)/pivo);
+            A(0,j) = A(0,j) - A_01*(A(1,j));
+            A(2,j) = A(2,j) - A_21*(A(1,j));
         }
 
-
-        delta_u =  A.getElement( 0, 2 );
-        delta_v =  A.getElement( 1, 2 );
+        delta_u =  A(0,2);
+        delta_v =  A(1,2);
 
         u_i += delta_u;
         v_i += delta_v;
@@ -179,40 +181,114 @@ Ponto HermitePatch::calculaPonto_u_v ( )
     Ponto C;
 
     // C = ( U * ( H * ( G * ( Ht * V ) ) ) )
-//    C.x =	(	this->getU  ( ) *
-//                (	//this->getH  ( ) *
-//                    (	this->getGx ( ) *
-//                        (//(	this->getH ( ) ).transposta ( ) *
-//                         this->getV  ( ) ) ) ) )( 0, 0 );
+    C.x =	(	this->getU  ( ) *
+                        (	//this->getH  ( ) *
+                                (	this->getGx ( ) *
+                                        (//(	this->getH ( ) ).transposta ( ) *
+                                         this->getV  ( ) ) ) ) )( 0, 0 );
 
-    Numerical::TMatrix<double, 1,1> resultV;
-    Numerical::TMatrix<double, 1,4> resultU;
-    Numerical::IMatrix::multiply(this->getU(), this->getGx ( ), resultU);
-    Numerical::IMatrix::multiply(resultU, this->getV(), resultV);
-    C.x = resultV.getElement(0,0);
+    C.y =	(	this->getU  ( ) *
+                        (//	this->getH  ( ) *
+                         (	this->getGy ( ) *
+                                (//(	this->getH ( ) ).transposta ( ) *
+                                 this->getV  ( ) ) ) ) )( 0, 0 );
 
-//    C.y =	(	this->getU  ( ) *
-//                (//	this->getH  ( ) *
-//                 (	this->getGy ( ) *
-//                    (//(	this->getH ( ) ).transposta ( ) *
-//                     this->getV  ( ) ) ) ) )( 0, 0 );
-
-    Numerical::IMatrix::multiply(this->getU(), this->getGy ( ), resultU);
-    Numerical::IMatrix::multiply(resultU, this->getV(), resultV);
-    C.y = resultV.getElement(0,0);
-
-//    C.z =	(	this->getU  ( ) *
-//                (//	this->getH  ( ) *
-//                 (	this->getGz ( ) *
-//                    (//(	this->getH ( ) ).transposta ( ) *
-//                     this->getV  ( ) ) ) ) )( 0, 0 );
-
-    Numerical::IMatrix::multiply(this->getU(), this->getGz ( ), resultU);
-    Numerical::IMatrix::multiply(resultU, this->getV(), resultV);
-    C.y = resultV.getElement(0,0);
+    C.z =	(	this->getU  ( ) *
+                        (//	this->getH  ( ) *
+                         (	this->getGz ( ) *
+                                (//(	this->getH ( ) ).transposta ( ) *
+                                 this->getV  ( ) ) ) ) )( 0, 0 );
 
     //cout << "calculaPonto_u_v () = " << C.x << " " << C.y << " " << C.z << endl;
     return C;
+}
+
+Matrix1x4 HermitePatch::getU() const {
+    return this->U;
+}
+
+Matrix4x4 HermitePatch::getGx() const {
+    return this->Gx;
+}
+
+Matrix4x4 HermitePatch::getGy() const {
+    return this->Gy;
+}
+
+Matrix4x4 HermitePatch::getGz() const {
+    return this->Gz;
+}
+
+Matrix4x1 HermitePatch::getV() const {
+    return this->V;
+}
+
+Matrix4x4 HermitePatch::getH() const {
+    return this->H;
+}
+
+Ponto HermitePatch::getPt00() const {
+    return this->Pt00;
+}
+
+Ponto HermitePatch::getPt01() const {
+    return this->Pt01;
+}
+
+Ponto HermitePatch::getPt10() const {
+    return this->Pt10;
+}
+
+Ponto HermitePatch::getPt11() const {
+    return this->Pt11;
+}
+
+Vetor HermitePatch::getQu00() const {
+    return this->Qu00;
+}
+
+Vetor HermitePatch::getQu01() const {
+    return this->Qu01;
+}
+
+Vetor HermitePatch::getQu10() const {
+    return this->Qu10;
+}
+
+Vetor HermitePatch::getQu11() const {
+    return this->Qu11;
+}
+
+Vetor HermitePatch::getQv00() const {
+    return this->Qv00;
+}
+
+Vetor HermitePatch::getQv01() const {
+    return this->Qv01;
+}
+
+Vetor HermitePatch::getQv10() const {
+    return this->Qv10;
+}
+
+Vetor HermitePatch::getQv11() const {
+    return this->Qv11;
+}
+
+Vetor HermitePatch::getTw00() const {
+    return this->Tw00;
+}
+
+Vetor HermitePatch::getTw01() const {
+    return this->Tw01;
+}
+
+Vetor HermitePatch::getTw10() const {
+    return this->Tw10;
+}
+
+Vetor HermitePatch::getTw11() const {
+    return this->Tw11;
 }
 
 
@@ -227,16 +303,15 @@ Ponto HermitePatch::parametrizar ( double u, double v )
     //  -> usa 'calculaPonto_u_v ( )'
     //
 
-    this->U->setElement ( 0, 0, u*u*u );
-    this->U->setElement ( 0, 1, u*u );
-    this->U->setElement ( 0, 2, u );
-    this->U->setElement ( 0, 3, 1 );
+    this->U(0,0) = u*u*u;
+    this->U(0,1) = u*u;
+    this->U(0,2) = u;
+    this->U(0,3) = 1;
 
-    this->V->setElement ( 0, 0, v*v*v );
-    this->V->setElement ( 1, 0, v*v );
-    this->V->setElement ( 2, 0, v );
-    this->V->setElement ( 3, 0, 1 );
-
+    this->V(0,0) = v*v*v;
+    this->V(1,0) = v*v;
+    this->V(2,0) = v;
+    this->V(3,0) = 1;
 
     return calculaPonto_u_v ( );
 }
@@ -255,16 +330,15 @@ Vetor HermitePatch::Qu ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, 3*u*u );
-    this->U->setElement ( 0, 1, 2*u );
-    this->U->setElement ( 0, 2, 1 );
-    this->U->setElement ( 0, 3, 0 );
+    this->U( 0, 0) = 3*u*u;
+    this->U( 0, 1) = 2*u;
+    this->U( 0, 2) = 1;
+    this->U( 0, 3) = 0;
 
-    this->V->setElement ( 0, 0, v*v*v );
-    this->V->setElement ( 1, 0, v*v );
-    this->V->setElement ( 2, 0, v );
-    this->V->setElement ( 3, 0, 1 );
-
+    this->V( 0, 0) = v*v*v;
+    this->V( 1, 0) = v*v;
+    this->V( 2, 0) = v;
+    this->V( 3, 0) = 1;
 
 
     P = calculaPonto_u_v ( );
@@ -287,16 +361,15 @@ Vetor HermitePatch::Qv ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, u*u*u );
-    this->U->setElement ( 0, 1, u*u );
-    this->U->setElement ( 0, 2, u );
-    this->U->setElement ( 0, 3, 1 );
+    this->U( 0, 0) = u*u*u;
+    this->U( 0, 1) = u*u;
+    this->U( 0, 2) = u;
+    this->U( 0, 3) = 1;
 
-    this->V->setElement ( 0, 0, 3*v*v );
-    this->V->setElement ( 1, 0, 2*v );
-    this->V->setElement ( 2, 0, 1 );
-    this->V->setElement ( 3, 0, 0 );
-
+    this->V( 0, 0) = 3*v*v;
+    this->V( 1, 0) = 2*v;
+    this->V( 2, 0) = 1;
+    this->V( 3, 0) = 0;
     P = calculaPonto_u_v ( );
     Vetor V ( P );
 
@@ -317,15 +390,15 @@ Vetor HermitePatch::Quu ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, 6*u );
-    this->U->setElement ( 0, 1, 2 );
-    this->U->setElement ( 0, 2, 0 );
-    this->U->setElement ( 0, 3, 0 );
+    this->U( 0, 0) = 6*u;
+    this->U( 0, 1) = 2;
+    this->U( 0, 2) = 0;
+    this->U( 0, 3) = 0;
 
-    this->V->setElement ( 0, 0, v*v*v );
-    this->V->setElement ( 1, 0, v*v );
-    this->V->setElement ( 2, 0, v );
-    this->V->setElement ( 3, 0, 1 );
+    this->V( 0, 0) = v*v*v;
+    this->V( 1, 0) = v*v;
+    this->V( 2, 0) = v;
+    this->V( 3, 0) = 1;
 
     P = calculaPonto_u_v ( );
     Vetor V ( P );
@@ -347,15 +420,15 @@ Vetor HermitePatch::Quv ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, 3*u*u );
-    this->U->setElement ( 0, 1, 2*u );
-    this->U->setElement ( 0, 2, 1 );
-    this->U->setElement ( 0, 3, 0 );
+    this->U( 0, 0) = 3*u*u;
+    this->U( 0, 1) = 2*u;
+    this->U( 0, 2) = 1;
+    this->U( 0, 3) = 0;
 
-    this->V->setElement ( 0, 0, 3*v*v );
-    this->V->setElement ( 1, 0, 2*v );
-    this->V->setElement ( 2, 0, 1 );
-    this->V->setElement ( 3, 0, 0 );
+    this->V( 0, 0) = 3*v*v;
+    this->V( 1, 0) = 2*v;
+    this->V( 2, 0) = 1;
+    this->V( 3, 0) = 0;
 
     P = calculaPonto_u_v ( );
     Vetor V ( P );
@@ -384,15 +457,15 @@ Vetor HermitePatch::Qvv ( double u, double v )
 
     Ponto P;
 
-    this->U->setElement ( 0, 0, u*u*u );
-    this->U->setElement ( 0, 1, u*u );
-    this->U->setElement ( 0, 2, u );
-    this->U->setElement ( 0, 3, 1 );
+    this->U( 0, 0) = u*u*u;
+    this->U( 0, 1) = u*u;
+    this->U( 0, 2) = u;
+    this->U( 0, 3) = 1;
 
-    this->V->setElement ( 0, 0, 6*v );
-    this->V->setElement ( 1, 0, 2 );
-    this->V->setElement ( 2, 0, 0 );
-    this->V->setElement ( 3, 0, 0 );
+    this->V( 0, 0) = 6*v;
+    this->V( 1, 0) = 2;
+    this->V( 2, 0) = 0;
+    this->V( 3, 0) = 0;
 
     P = calculaPonto_u_v ( );
     Vetor V ( P );
@@ -457,6 +530,12 @@ HermitePatch::HermitePatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
                              Vetor TW_00, Vetor TW_10, Vetor TW_01, Vetor TW_11,
                              bool sinal_c1, bool sinal_c2, bool sinal_c3, bool sinal_c4 ) : CoonsPatch ( )
 {
+
+    this->sinal_c1 = sinal_c1;
+    this->sinal_c2 = sinal_c2;
+    this->sinal_c3 = sinal_c3;
+    this->sinal_c4 = sinal_c4;
+
     // As curvas devem ser definidas da esquerda para a direita, de baixo para
     // cima em relação ao Patch !!!
 
@@ -503,78 +582,60 @@ HermitePatch::HermitePatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
 
     // 4. Aloca espaço para as matrizes
     //
-    this->U  = new Matrix1x4();
-    this->V  = new Matrix4x1();
-    this->Gx = new Matrix4x4();
-    this->Gy = new Matrix4x4();
-    this->Gz = new Matrix4x4();
+    this->U.setZero(1,4);
+    this->V.setZero(4,1);
+    this->Gx.setZero(4,4);
+    this->Gy.setZero(4,4);
+    this->Gz.setZero(4,4);
     //
-    ////////////////////////////////////
-
-    //
-    ////////////////////////////////////////////////////////////////////////////
-
     // 5. Preenche as matrizes geométricas com G de Hermited
     //
     // Gx:
     // 2x2 superior esquerdo
-    Gx->setElement( 0, 0, this->Pt00.x ); Gx->setElement( 0, 1, this->Pt01.x );
-    Gx->setElement( 1, 0, this->Pt10.x ); Gx->setElement( 1, 1, this->Pt11.x );
+    Gx(0,0) = this->Pt00.x; Gx(0,1) = this->Pt01.x;
+    Gx(1,0) = this->Pt10.x; Gx(1,1) = this->Pt11.x;
     // 2x2 inferior esquerdo
-    Gx->setElement( 2, 0, this->Qu00.x ); Gx->setElement( 2, 1, this->Qu01.x );
-    Gx->setElement( 3, 0, this->Qu10.x ); Gx->setElement( 3, 1, this->Qu11.x );
+    Gx(2,0) = this->Qu00.x; Gx(2,1) = this->Qu01.x;
+    Gx(3,0) = this->Qu10.x; Gx(3,1) = this->Qu11.x;
     // 2x2 superior direito
-    Gx->setElement( 0, 2, this->Qv00.x ); Gx->setElement( 0, 3, this->Qv01.x );
-    Gx->setElement( 1, 2, this->Qv10.x ); Gx->setElement( 1, 3, this->Qv11.x );
+    Gx(0,2) = this->Qv00.x; Gx(0,3) = this->Qv01.x;
+    Gx(1,2) = this->Qv10.x; Gx(1,3) = this->Qv11.x;
     // 2x2 inferior direito
-    Gx->setElement( 2, 2, this->Tw00.x ); Gx->setElement( 2, 3, this->Tw01.x );
-    Gx->setElement( 3, 2, this->Tw10.x ); Gx->setElement( 3, 3, this->Tw11.x );
+    Gx(2,2) = this->Tw00.x; Gx(2,3) = this->Tw01.x;
+    Gx(3,2) = this->Tw10.x; Gx(3,3) = this->Tw11.x;
     //
     // Gy:
     // 2x2 superior esquerdo
-    Gy->setElement( 0, 0, this->Pt00.y ); Gy->setElement( 0, 1, this->Pt01.y );
-    Gy->setElement( 1, 0, this->Pt10.y ); Gy->setElement( 1, 1, this->Pt11.y );
+    Gy(0,0) = this->Pt00.y; Gy(0,1) = this->Pt01.y;
+    Gy(1,0) = this->Pt10.y; Gy(1,1) = this->Pt11.y;
     // 2x2 inferior esquerdo
-    Gy->setElement( 2, 0, this->Qu00.y ); Gy->setElement( 2, 1, this->Qu01.y );
-    Gy->setElement( 3, 0, this->Qu10.y ); Gy->setElement( 3, 1, this->Qu11.y );
+    Gy(2,0) = this->Qu00.y; Gy(2,1) = this->Qu01.y;
+    Gy(3,0) = this->Qu10.y; Gy(3,1) = this->Qu11.y;
     // 2x2 superior direito
-    Gy->setElement( 0, 2, this->Qv00.y ); Gy->setElement( 0, 3, this->Qv01.y );
-    Gy->setElement( 1, 2, this->Qv10.y ); Gy->setElement( 1, 3, this->Qv11.y );
+    Gy(0,2) = this->Qv00.y; Gy(0,3) = this->Qv01.y;
+    Gy(1,2) = this->Qv10.y; Gy(1,3) = this->Qv11.y;
     // 2x2 inferior direito
-    Gy->setElement( 2, 2, this->Tw00.y ); Gy->setElement( 2, 3, this->Tw01.y );
-    Gy->setElement( 3, 2, this->Tw10.y ); Gy->setElement( 3, 3, this->Tw11.y );
+    Gy(2,2) = this->Tw00.y; Gy(2,3) = this->Tw01.y;
+    Gy(3,2) = this->Tw10.y; Gy(3,3) = this->Tw11.y;
     //
     // Gz:
     // 2x2 superior esquerdo
-    Gz->setElement( 0, 0, this->Pt00.z ); Gz->setElement( 0, 1, this->Pt01.z );
-    Gz->setElement( 1, 0, this->Pt10.z ); Gz->setElement( 1, 1, this->Pt11.z );
+    Gz(0,0) = this->Pt00.z; Gz(0,1) = this->Pt01.z;
+    Gz(1,0) = this->Pt10.z; Gz(1,1) = this->Pt11.z;
     // 2x2 inferior esquerdo
-    Gz->setElement( 2, 0, this->Qu00.z ); Gz->setElement( 2, 1, this->Qu01.z );
-    Gz->setElement( 3, 0, this->Qu10.z ); Gz->setElement( 3, 1, this->Qu11.z );
+    Gz(2,0) = this->Qu00.z; Gz(2,1) = this->Qu01.z;
+    Gz(3,0) = this->Qu10.z; Gz(3,1) = this->Qu11.z;
     // 2x2 superior direito
-    Gz->setElement( 0, 2, this->Qv00.z ); Gz->setElement( 0, 3, this->Qv01.z );
-    Gz->setElement( 1, 2, this->Qv10.z ); Gz->setElement( 1, 3, this->Qv11.z );
+    Gz(0,2) = this->Qv00.z; Gz(0,3) = this->Qv01.z;
+    Gz(1,2) = this->Qv10.z; Gz(1,3) = this->Qv11.z;
     // 2x2 inferior direito
-    Gz->setElement( 2, 2, this->Tw00.z ); Gz->setElement( 2, 3, this->Tw01.z );
-    Gz->setElement( 3, 2, this->Tw10.z ); Gz->setElement( 3, 3, this->Tw11.z );
+    Gz(2,2) = this->Tw00.z; Gz(2,3) = this->Tw01.z;
+    Gz(3,2) = this->Tw10.z; Gz(3,3) = this->Tw11.z;
     //
-    //////////////
 
-    Matrix4x4 resultH;
-    Matrix4x4 resultG;
-
-    Numerical::IMatrix::multiply(this->getH(), this->getGx( ), resultH);
-    Numerical::IMatrix::multiply(resultH, this->getH().transpose(), resultG);
-    this->Gx = new Matrix4x4(resultG);
-
-    Numerical::IMatrix::multiply(this->getH(), this->getGy( ), resultH);
-    Numerical::IMatrix::multiply(resultH, this->getH().transpose(), resultG);
-    this->Gy = new Matrix4x4(resultG);
-
-    Numerical::IMatrix::multiply(this->getH(), this->getGz( ), resultH);
-    Numerical::IMatrix::multiply(resultH, this->getH().transpose(), resultG);
-    this->Gz = new Matrix4x4(resultG);
-
+    this->Gx = this->getH() * this->getGx() * this->getH();
+    this->Gy = this->getH() * this->getGy() * this->getH();
+    this->Gz = this->getH() * this->getGz() * this->getH();
 }
 
 
@@ -678,16 +739,16 @@ HermitePatch::HermitePatch ( HermitePatch *antigo ) : CoonsPatch ( antigo )
     this->Qu00 = antigo->Qu00;   this->Qu01 = antigo->Qu01;   this->Tw00 = antigo->Tw00;   this->Tw01 = antigo->Tw01;
     this->Qu10 = antigo->Qu10;   this->Qu11 = antigo->Qu11;   this->Tw10 = antigo->Tw10;   this->Tw11 = antigo->Tw11;
 
-    this->Gx = new Matrix4x4; this->Gx->copy(antigo->Gx, this->Gx);
-    this->Gy = new Matrix4x4; this->Gy->copy(antigo->Gy, this->Gy);
-    this->Gz = new Matrix4x4; this->Gz->copy(antigo->Gz, this->Gz);
-    this->U = new Matrix1x4; this->U->copy(antigo->U, this->U);
-    this->V = new Matrix4x1; this->V->copy(antigo->V, this->V);
+    this->Gx = antigo->Gx;
+    this->Gy = antigo->Gy;
+    this->Gz = antigo->Gz;
+    this->U = antigo->U;
+    this->V = antigo->V;
 }
 
 
 HermitePatch::~HermitePatch (  )
 {
-    if ( V ) delete V;
-    if ( U ) delete U;
+    delete &V;
+    delete &U;
 }

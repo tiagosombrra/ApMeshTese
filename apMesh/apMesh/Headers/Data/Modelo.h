@@ -26,8 +26,8 @@ class Modelo
 		vector <Malha*> malhas;
 
 	public :
-		void setGeometria ( Geometria* g ) { this->geometria = g; };
-		Geometria* getGeometria ( ) {	return this->geometria; };
+        void setGeometria ( Geometria* g );
+        Geometria* getGeometria ( );
 		
 		void insereMalha ( Malha* m );
 		unsigned int getNumDeMalhas (  ) const { return ( int ) malhas.size(); };

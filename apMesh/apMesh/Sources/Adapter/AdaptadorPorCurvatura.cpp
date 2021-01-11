@@ -29,7 +29,7 @@ extern double DISCRETIZACAO_INTER;
 unsigned long int AdaptadorPorCurvatura::id_noh = 1;
 unsigned long int AdaptadorPorCurvatura::id_ele = 1;
 
-list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, double exp, map < Ponto*, Ponto* > & mapaPontos, double fator_dis )
+list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, map < Ponto*, Ponto* > & mapaPontos, double fator_dis )
 {
     //cout << "entrou no adaptaCurva" << endl;
     double h_velho = 0; // o tamanho velho de cada segmento
@@ -157,7 +157,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, double exp
     return novosPontos;
 }
 
-list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaBySuperficie (Curva* c, double exp, map < Ponto*, Ponto* > & mapaPontos, double fator_dis )
+list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaBySuperficie (Curva* c, map < Ponto*, Ponto* > & mapaPontos, double fator_dis )
 {
     //cout << "entrou no adaptaCurva" << endl;
     double h_velho = 0; // o tamanho velho de cada segmento
@@ -198,7 +198,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaBySuperficie (Curva* c, double
 
         //Teste para curvatura com a curva
         t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
-        double k = c->calcularCurvatura(t);
+        //double k = c->calcularCurvatura(t);
         //cout << "curvatura  da curva = "<<k<<" com t = "<<t<< endl;
 
         //cout << "determinou o ponto médio" << endl;
@@ -340,7 +340,7 @@ double AdaptadorPorCurvatura::novoTamanho ( const double ka, const double kd, co
 
 // Usa a QuadTree. Gera uma nova malha e atualiza a malha do patch. A malha
 // gerada deve ser inserida no modelo pelo Gerador Adaptativo
-SubMalha* AdaptadorPorCurvatura::adaptaDominio ( CoonsPatch* patch, const unsigned int exp, double fator_dis )
+SubMalha* AdaptadorPorCurvatura::adaptaDominio ( CoonsPatch* patch, double fator_dis )
 {
     SubMalha* novaSub = new SubMalha;
     double fator = DISCRETIZACAO_INTER; //pow ( 2, exp ); // o fator de rediscretização

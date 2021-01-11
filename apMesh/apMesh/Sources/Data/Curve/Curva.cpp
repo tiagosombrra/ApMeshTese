@@ -11,14 +11,39 @@ This source code is under GNU General Public License v3 */
 
 #include "Curva.h"
 
-void Curva::inserePonto ( Ponto* p )
+void Curva::setId(short i) {
+    this->Id = i;
+}
+
+double Curva::calcularTamanho(const Ponto &, const Ponto &) {
+
+    return -1;
+}
+
+double Curva::calcularTamanho(const Ponto &) {
+    return -1;
+}
+
+void Curva::calcular_L() {
+
+}
+
+double Curva::calcularCurvatura(double){
+    return -1;
+}
+
+void Curva::inserePonto (Ponto* p)
 {
-	this->pontos.push_back ( p );
+    this->pontos.push_back (p);
+}
+
+unsigned int Curva::getNumDePontos() const {
+    return ( int ) pontos.size();
 }
 
 Ponto* Curva::getPonto ( const unsigned int i )
 {
-	list <Ponto*>::iterator it = this->pontos.begin();
+    list <Ponto*>::iterator it = this->pontos.begin();
 	advance ( it, i );
 	
 	return *it;
@@ -34,9 +59,13 @@ void Curva::inserePatch ( Patch* p )
 	this->patches.push_back ( p );
 }
 
+unsigned int Curva::getNumDePatches() const {
+    return ( int ) patches.size();
+}
+
 Patch* Curva::getPatch ( const unsigned int i )
 {
-	return (i < this->patches.size()) ? this->patches[i] : NULL;
+    return (i < this->patches.size()) ? this->patches[i] : NULL;
 }
 
 // verifica se uma curva é de borda
@@ -46,6 +75,10 @@ bool Curva::estaNaBorda (  )
 		return true;
 	
 	return false;
+}
+
+Curva::Curva() {
+
 }
 
 

@@ -28,8 +28,20 @@ Curva* CoonsPatch::getCurva ( const unsigned int i )
 	return (i < this->curvas.size()) ? this->curvas[i] : NULL;
 }
 
+CoonsPatch::CoonsPatch() {
+
+}
+
+CoonsPatch::CoonsPatch(CoonsPatch *antigo) : Patch ( antigo ) {
+
+}
+
+CoonsPatch::CoonsPatch(vector<Curva *> listaDeCurvas) : curvas ( listaDeCurvas ) {
+
+}
+
 CoonsPatch::~CoonsPatch ( )
 {
-	// 1. apaga a lista de curvas
-	this->curvas.clear ( );
+    // 1. apaga a lista de curvas
+    this->curvas.clear ( );
 }

@@ -13,7 +13,6 @@ using namespace std;
 #include "CurvParamBezier.h"
 #include "Modelo.h"
 #include "GeradorAdaptativoPorCurvatura.h"
-#include "Matriz.h"
 
 double DELTA = 0.0001;
 double TOLERANCIA = 0.0001;
@@ -274,6 +273,8 @@ Geometria *modelPlanBook(Geometria *geo){
     geo->insereCurva ( patch5_c3 );
     geo->insereCurva ( patch5_c4 );
     //======================== FIM DO PATCH 5 ==================================
+
+    return geo;
 }
 
 Geometria *modelTresPatches(Geometria *geo){

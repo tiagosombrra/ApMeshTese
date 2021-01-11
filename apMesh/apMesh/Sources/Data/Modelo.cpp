@@ -11,9 +11,17 @@ This source code is under GNU General Public License v3 */
 
 #include "Modelo.h"
 
+void Modelo::setGeometria(Geometria *g) {
+    this->geometria = g;
+}
+
+Geometria *Modelo::getGeometria() {
+    return this->geometria;
+}
+
 void Modelo::insereMalha ( Malha* m )
 {
-	this->malhas.push_back ( m );
+    this->malhas.push_back ( m );
 }
 
 Malha* Modelo::getMalha ( const unsigned int i )

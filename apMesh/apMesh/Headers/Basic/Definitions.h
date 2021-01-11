@@ -21,17 +21,15 @@
 #include <cfloat>
 #include <cmath>
 #include <ctime>
-#include "../Numerical/IMatrix.h"
-#include "../Numerical/TMatrix.h"
 
-////Verificação de sistema operacional
-//#ifdef __APPLE__
-//#include <Eigen/Eigen>
-//#elif __linux__
-//#include "Eigen/Eigen"
-//#else
-//#   error "Unknown compiler"
-//#endif
+//Verificação de sistema operacional
+#ifdef __APPLE__
+#include <Eigen/Eigen>
+#elif __linux__
+#include "Eigen/Eigen"
+#else
+#   error "Unknown compiler"
+#endif
 
 //debug
 #if USE_INTERFACE
@@ -41,12 +39,13 @@
 //endebug
 
 using namespace std;
-//using namespace Eigen;
+using namespace Eigen;
 
-//typedef Matrix<double, 3, 3> Matrix3d;
-//typedef Matrix<double, 4, 4> Matrix4d;
-//typedef Matrix<double, 4, 1> Matrix41d;
-//typedef Matrix<double, 1, 4> Matrix14d;
+typedef Matrix<double, 4, 4> Matrix4x4;
+typedef Matrix<double, 4, 1> Matrix4x1;
+typedef Matrix<double, 1, 4> Matrix1x4;
+typedef Matrix<double, 1, 1> Matrix1x1;
+
 
 //typedef Numerical::IMatrix
 

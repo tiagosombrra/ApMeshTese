@@ -22,8 +22,8 @@ using namespace std;
 #include "Vetor.h"
 #include "Definitions.h"
 
-class Ponto;
-class Matriz;
+struct Ponto;
+//class Matriz;
 
 class CoonsPatch : public Patch
 {
@@ -58,9 +58,9 @@ class CoonsPatch : public Patch
 		virtual Vetor Qvu ( const Ponto& p ) = 0;
 		virtual Vetor Qvv ( const Ponto& p ) = 0;
 				
-		CoonsPatch ( ) {};
-		CoonsPatch ( CoonsPatch * antigo) : Patch ( antigo ) {};
-		CoonsPatch ( vector <Curva*> listaDeCurvas ) : curvas ( listaDeCurvas ) {};
+        CoonsPatch ( );
+        CoonsPatch ( CoonsPatch * antigo);
+        CoonsPatch ( vector <Curva*> listaDeCurvas );
 		virtual ~CoonsPatch ( );
 };
 

@@ -29,14 +29,10 @@ struct Ponto
 		bool operator== ( const Ponto& p ) const; // comparação
 		double distanciaPara ( const Ponto& p ) const;
 
-		void mostraPonto (  ) { cout << "Ponto " << this->id << " = ( "
-								<< this->x << ", "
-								<< this->y << ", "
-								<< this->z << ")" << endl; }
+        void mostraPonto ( );
 
-		Ponto (  ) {};
-		Ponto ( double _x, double _y, double _z ) : x(_x), y(_y), z(_z) {};
-		Ponto ( double _x, double _y, double _z, unsigned long i )
-			: id ( i ), x ( _x ), y ( _y ), z ( _z ) {};
+        Ponto ( );
+        Ponto ( double _x, double _y, double _z );
+        Ponto ( double _x, double _y, double _z, unsigned long i );
 };
 #endif

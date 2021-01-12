@@ -9,73 +9,73 @@ using namespace Par2DJMesh::Basics;
 
 namespace Par2DJMesh
 {
-    namespace Basics
-    {
-		class Face : public Shape
-		{
-		private:
-#if USE_OPENGL
-			bool highlighted;
-#endif //#if USE_OPENGL
+namespace Basics
+{
+class Face : public Shape
+{
+private:
+//#if USE_OPENGL
+//    bool highlighted;
+//#endif //#if USE_OPENGL
 
-			Vertex *v[3];
-			Vertex *mid;
+    Vertex *v[3];
+    Vertex *mid;
 
-		private:
-			Vertex *makeMid();
+private:
+    Vertex *makeMid();
 
-		public:
-			double h;
-		
-			Face(Vertex *v1 = NULL, Vertex *v2 = NULL, Vertex *v3 = NULL, long int id = 0);
-			Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid);
-			~Face();
+public:
+    double h;
 
-			void setV1(Vertex *v);
-			void setV2(Vertex *v);
-			void setV3(Vertex *v);
-			void setVertices(Vertex *v1, Vertex *v2, Vertex *v3);
-			Vertex *getV1();
-			Vertex *getV2();
-			Vertex *getV3();
+    Face(Vertex *v1 = NULL, Vertex *v2 = NULL, Vertex *v3 = NULL, long int id = 0);
+    Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid);
+    ~Face();
 
-			Vertex *getMid();
-			Vertex *circumcenter();
-			Vertex *incenter();
+    void setV1(Vertex *v);
+    void setV2(Vertex *v);
+    void setV3(Vertex *v);
+    void setVertices(Vertex *v1, Vertex *v2, Vertex *v3);
+    Vertex *getV1();
+    Vertex *getV2();
+    Vertex *getV3();
 
-			double surface();
-			double orientedSurface();
+    Vertex *getMid();
+    Vertex *circumcenter();
+    Vertex *incenter();
 
-			bool in(double x, double y);
-			bool in(Vertex *v);
-			bool on(Vertex *v);
-			bool out(double x, double y);
-			bool out(Vertex *v);
+    double surface();
+    double orientedSurface();
 
-			void barycentricCoordinates(Vertex *v, double &l1, double &l2, double &l3);
+    bool in(double x, double y);
+    bool in(Vertex *v);
+    bool on(Vertex *v);
+    bool out(double x, double y);
+    bool out(Vertex *v);
 
-			double gama();
-			double quality();
-			bool isBad();
+    void barycentricCoordinates(Vertex *v, double &l1, double &l2, double &l3);
 
-			bool hasEdge(Vertex *v1, Vertex *v2);
-			bool hasEdge(Edge *e);
-			bool isAdjacent(Face *f);
+    double gama();
+    double quality();
+    bool isBad();
 
-			//testa se uma face intercepta outra
-			bool hits(Face *f);
-			bool hits(Edge *e);
+    bool hasEdge(Vertex *v1, Vertex *v2);
+    bool hasEdge(Edge *e);
+    bool isAdjacent(Face *f);
 
-			string getText();
+    //testa se uma face intercepta outra
+    bool hits(Face *f);
+    bool hits(Edge *e);
 
-#if USE_OPENGL
-			void highlight();
-			void unhighlight();
+    string getText();
 
-			void draw();
-#endif //#if USE_OPENGL
-		};
-	}
+//#if USE_OPENGL
+//    void highlight();
+//    void unhighlight();
+
+//    void draw();
+//#endif //#if USE_OPENGL
+};
+}
 }
 
 #endif //#ifndef _FACE_H_

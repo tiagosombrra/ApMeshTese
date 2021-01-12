@@ -11,11 +11,11 @@ Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, long int id) : Shape(id)
     
     h = 0.0;
 
-#if USE_OPENGL
-    //setColor(0.0, 0.0, 0.0);
-    setColor(1.0, 0.0, 0.0);
-    highlighted = false;
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//    //setColor(0.0, 0.0, 0.0);
+//    setColor(1.0, 0.0, 0.0);
+//    highlighted = false;
+//#endif //#if USE_OPENGL
 }
 
 Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid) : Shape(id)
@@ -30,11 +30,11 @@ Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid) : Shape(id)
     
     h = 0.0;
 
-#if USE_OPENGL
-    //setColor(0.0, 0.0, 0.0);
-    setColor(1.0, 0.0, 0.0);
-    highlighted = false;
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//    //setColor(0.0, 0.0, 0.0);
+//    setColor(1.0, 0.0, 0.0);
+//    highlighted = false;
+//#endif //#if USE_OPENGL
 }
 
 Face::~Face()
@@ -55,7 +55,7 @@ Vertex *Face::makeMid()
     if (v[0] && v[1] && v[2])
     {
         m->setPosition((v[0]->getX() + v[1]->getX() + v[2]->getX())/3.0,
-            (v[0]->getY() + v[1]->getY() + v[2]->getY())/3.0);
+                (v[0]->getY() + v[1]->getY() + v[2]->getY())/3.0);
 
         //cout << "triangulo " << id << ", meio = ( " << m->getX() << ", " << m->getY() << " )" << endl;
     }
@@ -86,9 +86,9 @@ void Face::setVertices(Vertex *v1, Vertex *v2, Vertex *v3)
     
     if (mid)
     {
-    	delete mid;
-    	
-    	mid = NULL;
+        delete mid;
+
+        mid = NULL;
     }
 
     mid = makeMid();
@@ -169,7 +169,7 @@ double Face::surface()
 
 double Face::orientedSurface()
 {
-	return v[0]->orientedSurface(v[1], v[2]);
+    return v[0]->orientedSurface(v[1], v[2]);
 }
 
 bool Face::in(double x, double y)
@@ -294,35 +294,35 @@ bool Face::isBad()
 {
     static const double gamaEquil = 4.0/sqrt(3.0);
 
-	//gama/gama* = gama()/gama(de um triangulo equilatero de lado 1)
+    //gama/gama* = gama()/gama(de um triangulo equilatero de lado 1)
     return (gama()/gamaEquil > 1.5);
 }
 
 bool Face::hasEdge(Vertex *v1, Vertex *v2)
 {
-	return (((this->v[0] == v1) && (this->v[1] == v2)) ||
-			((this->v[0] == v2) && (this->v[1] == v1)) ||
-			((this->v[1] == v1) && (this->v[2] == v2)) ||
-			((this->v[1] == v2) && (this->v[2] == v1)) ||
-			((this->v[2] == v1) && (this->v[0] == v2)) ||
-			((this->v[2] == v2) && (this->v[0] == v1)));
+    return (((this->v[0] == v1) && (this->v[1] == v2)) ||
+            ((this->v[0] == v2) && (this->v[1] == v1)) ||
+            ((this->v[1] == v1) && (this->v[2] == v2)) ||
+            ((this->v[1] == v2) && (this->v[2] == v1)) ||
+            ((this->v[2] == v1) && (this->v[0] == v2)) ||
+            ((this->v[2] == v2) && (this->v[0] == v1)));
 }
 
 bool Face::hasEdge(Edge *e)
 {
-	return hasEdge(e->getV1(), e->getV2());
+    return hasEdge(e->getV1(), e->getV2());
 }
 
 bool Face::isAdjacent(Face *f)
 {
-	if ((f == NULL) || (f == this))
-	{
-		return false;
-	}
+    if ((f == NULL) || (f == this))
+    {
+        return false;
+    }
 
-	return ((hasEdge(f->v[0], f->v[1])) ||
-			(hasEdge(f->v[1], f->v[2])) ||
-			(hasEdge(f->v[2], f->v[0])));
+    return ((hasEdge(f->v[0], f->v[1])) ||
+            (hasEdge(f->v[1], f->v[2])) ||
+            (hasEdge(f->v[2], f->v[0])));
 }
 
 bool Face::hits(Face *f)
@@ -330,11 +330,11 @@ bool Face::hits(Face *f)
     static bool intercept = false;
 
     if ((in(f->v[0])) ||
-        (in(f->v[1])) ||
-        (in(f->v[2])) ||
-        (f->in(v[0])) ||
-        (f->in(v[1])) ||
-        (f->in(v[2])))
+            (in(f->v[1])) ||
+            (in(f->v[2])) ||
+            (f->in(v[0])) ||
+            (f->in(v[1])) ||
+            (f->in(v[2])))
     {
         intercept = true;
     }
@@ -434,9 +434,9 @@ bool Face::hits(Face *f)
 
 bool Face::hits(Edge *e)
 {
-	return ((e->intercept(v[0], v[1])) ||
-		(e->intercept(v[1], v[2])) ||
-		(e->intercept(v[2], v[0])));
+    return ((e->intercept(v[0], v[1])) ||
+            (e->intercept(v[1], v[2])) ||
+            (e->intercept(v[2], v[0])));
 }
 
 string Face::getText()
@@ -450,34 +450,34 @@ string Face::getText()
     return s;
 }
 
-#if USE_OPENGL
-void Face::highlight()
-{
-    highlighted = true;
-}
+//#if USE_OPENGL
+//void Face::highlight()
+//{
+//    highlighted = true;
+//}
 
-void Face::unhighlight()
-{
-    highlighted = false;
-}
+//void Face::unhighlight()
+//{
+//    highlighted = false;
+//}
 
-void Face::draw()
-{
-    if (!highlighted)
-    {
-        return;
-    }
+//void Face::draw()
+//{
+//    if (!highlighted)
+//    {
+//        return;
+//    }
 
-    //glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+//    //glEnable(GL_LINE_SMOOTH);
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//    //glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
 
-    glColor3d(r, g, b);
-    glBegin(GL_TRIANGLES);
-        glVertex2d(v[0]->getX(), v[0]->getY());
-        glVertex2d(v[1]->getX(), v[1]->getY());
-        glVertex2d(v[2]->getX(), v[2]->getY());
-    glEnd();
-}
-#endif //#if USE_OPENGL
+//    glColor3d(r, g, b);
+//    glBegin(GL_TRIANGLES);
+//    glVertex2d(v[0]->getX(), v[0]->getY());
+//    glVertex2d(v[1]->getX(), v[1]->getY());
+//    glVertex2d(v[2]->getX(), v[2]->getY());
+//    glEnd();
+//}
+//#endif //#if USE_OPENGL

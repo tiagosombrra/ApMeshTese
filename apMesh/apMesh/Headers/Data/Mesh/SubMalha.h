@@ -23,23 +23,23 @@ class Patch;
 
 class SubMalha
 {
-		Patch* patch;
-		vector <Noh*> nos;
-		vector <Elemento*> elementos;
-		
-	public :
-		void setPatch ( Patch* p );
-		Patch* getPatch (  ) const ;
-	
-		void insereNoh ( Noh* n );
-                unsigned int getNumDeNos (  ) const { return ( unsigned int ) nos.size(); }
-		Noh* getNoh ( const unsigned int i ); // retorna o i-ésimo nó
+    Patch* patch;
+    vector <Noh*> nos;
+    vector <Elemento*> elementos;
 
-		void insereElemento ( Elemento* elem );
-                unsigned int getNumDeElementos (  ) const { return ( unsigned int ) elementos.size(); }
-		Elemento* getElemento ( const unsigned int i ); // retorna o i-ésimo elemento
+public :
+    void setPatch ( Patch* p );
+    Patch* getPatch (  ) const ;
 
-		~SubMalha (  );
+    void insereNoh ( Noh* n );
+    unsigned int getNumDeNos (  ) const { return ( unsigned int ) nos.size(); }
+    Noh* getNoh ( const unsigned int i ); // retorna o i-ésimo nó
+
+    void insereElemento ( Elemento* elem );
+    unsigned int getNumDeElementos (  ) const { return ( unsigned int ) elementos.size(); }
+    Elemento* getElemento ( const unsigned int i ); // retorna o i-ésimo elemento
+
+    ~SubMalha (  );
 };
 
 #endif

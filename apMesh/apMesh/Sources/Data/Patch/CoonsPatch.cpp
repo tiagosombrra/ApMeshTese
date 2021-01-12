@@ -13,19 +13,19 @@ This source code is under GNU General Public License v3 */
 
 void CoonsPatch::insereCurva ( Curva* c )
 {
-	this->curvas.push_back ( c );
+    this->curvas.push_back ( c );
 }
 
 Curva* CoonsPatch::getCurva ( const unsigned int i )
 {
-	// adicionar excessão caso i > curvas.size();
-	/*list <Curva*>::iterator it = this->curvas.begin();
+    // adicionar excessão caso i > curvas.size();
+    /*list <Curva*>::iterator it = this->curvas.begin();
 
-	advance ( it, i );
+    advance ( it, i );
 
-	return *it;*/
-	
-	return (i < this->curvas.size()) ? this->curvas[i] : NULL;
+    return *it;*/
+
+    return (i < this->curvas.size()) ? this->curvas[i] : NULL;
 }
 
 CoonsPatch::CoonsPatch() {

@@ -14,27 +14,24 @@ This source code is under GNU General Public License v3 */
 
 #include <vector>
 #include <map>
-using namespace std;
-
 #include "Curva.h"
 #include "HermitePatch.h"
+using namespace std;
 
 class Geometria
 {
-		vector <Curva*> curvas;
-		vector <Patch*> patches;
+    vector <Curva*> curvas;
+    vector <Patch*> patches;
 
-	public :
-		void insereCurva ( Curva* c );
-		unsigned int getNumDeCurvas (  ) const { return ( int ) curvas.size(); };
-		Curva* getCurva ( const unsigned int i ); // retorna a i-ésima curva
-
-		void inserePatch ( Patch* p );
-		unsigned int getNumDePatches (  ) const { return ( int ) patches.size(); };
-		Patch* getPatch ( const unsigned int i ); // retorna o i-ésimo patch
-
-		Geometria ( ) {};
-		Geometria ( Geometria* );
-		~Geometria (  );
+public :
+    void insereCurva ( Curva* c );
+    unsigned int getNumDeCurvas (  ) const;
+    Curva* getCurva ( const unsigned int i ); // retorna a i-ésima curva
+    void inserePatch ( Patch* p );
+    unsigned int getNumDePatches (  ) const;
+    Patch* getPatch ( const unsigned int i ); // retorna o i-ésimo patch
+    Geometria ( );
+    Geometria ( Geometria* );
+    ~Geometria (  );
 };
 #endif

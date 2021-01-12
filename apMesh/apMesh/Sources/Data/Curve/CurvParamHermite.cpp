@@ -11,14 +11,30 @@ This source code is under GNU General Public License v3 */
 
 #include "CurvParamHermite.h"
 
+Vetor CurvParamHermite::getDP0() const {
+    return this->DP0;
+}
+
+Vetor CurvParamHermite::getDP1() const {
+    return this->DP1;
+}
+
+void CurvParamHermite::setDP0(const Vetor &v) {
+    this->DP0 = v;
+}
+
+void CurvParamHermite::setDP1(const Vetor &v) {
+    this->DP1 = v;
+}
+
 CurvParamHermite::CurvParamHermite (  ) : CurvaParametrica (  )
 {
     // 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Hermite
     //
-//    M->setElement( 0, 0, 2 ); M->setElement( 0, 1,-2 ); M->setElement( 0, 2, 1 ); M->setElement( 0, 3, 1 );
-//    M->setElement( 1, 0,-3 ); M->setElement( 1, 1, 3 ); M->setElement( 1, 2,-2 ); M->setElement( 1, 3,-1 );
-//    M->setElement( 2, 0, 0 ); M->setElement( 2, 1, 0 ); M->setElement( 2, 2, 1 ); M->setElement( 2, 3, 0 );
-//    M->setElement( 3, 0, 1 ); M->setElement( 3, 1, 0 ); M->setElement( 3, 2, 0 ); M->setElement( 3, 3, 0 );
+    //    M->setElement( 0, 0, 2 ); M->setElement( 0, 1,-2 ); M->setElement( 0, 2, 1 ); M->setElement( 0, 3, 1 );
+    //    M->setElement( 1, 0,-3 ); M->setElement( 1, 1, 3 ); M->setElement( 1, 2,-2 ); M->setElement( 1, 3,-1 );
+    //    M->setElement( 2, 0, 0 ); M->setElement( 2, 1, 0 ); M->setElement( 2, 2, 1 ); M->setElement( 2, 3, 0 );
+    //    M->setElement( 3, 0, 1 ); M->setElement( 3, 1, 0 ); M->setElement( 3, 2, 0 ); M->setElement( 3, 3, 0 );
     M(0,0) = 2;  M(0,1) = -2; M(0,2) = 1;  M(0,3) = 1;
     M(1,0) = -3; M(1,1) = 3;  M(1,2) = -2; M(1,3) = -1;
     M(2,0) = 0;  M(2,1) = 0;  M(2,2) = 1;  M(2,3) = 0;
@@ -28,26 +44,26 @@ CurvParamHermite::CurvParamHermite (  ) : CurvaParametrica (  )
 
     // 2. Preenche as matrizes geométricas com G de Hermite
     //
-//    Gx->setElement( 0, 0, P0.x );
-//    Gx->setElement( 1, 0, P1.x );
-//    Gx->setElement( 2, 0,DP0.x );
-//    Gx->setElement( 3, 0,DP1.x );
+    //    Gx->setElement( 0, 0, P0.x );
+    //    Gx->setElement( 1, 0, P1.x );
+    //    Gx->setElement( 2, 0,DP0.x );
+    //    Gx->setElement( 3, 0,DP1.x );
     Gx(0,0) = P0.x;
     Gx(1,0) = P1.x;
     Gx(2,0) = DP0.x;
     Gx(3,0) = DP1.x;
-//    Gy->setElement( 0, 0, P0.y );
-//    Gy->setElement( 1, 0, P1.y );
-//    Gy->setElement( 2, 0,DP0.y );
-//    Gy->setElement( 3, 0,DP1.y );
+    //    Gy->setElement( 0, 0, P0.y );
+    //    Gy->setElement( 1, 0, P1.y );
+    //    Gy->setElement( 2, 0,DP0.y );
+    //    Gy->setElement( 3, 0,DP1.y );
     Gy(0,0) = P0.y;
     Gy(1,0) = P1.y;
     Gy(2,0) = DP0.y;
     Gy(3,0) = DP1.y;
-//    Gz->setElement( 0, 0, P0.z );
-//    Gz->setElement( 1, 0, P1.z );
-//    Gz->setElement( 2, 0,DP0.z );
-//    Gz->setElement( 3, 0,DP1.z );
+    //    Gz->setElement( 0, 0, P0.z );
+    //    Gz->setElement( 1, 0, P1.z );
+    //    Gz->setElement( 2, 0,DP0.z );
+    //    Gz->setElement( 3, 0,DP1.z );
     Gz(0,0) = P0.z;
     Gz(1,0) = P1.z;
     Gz(2,0) = DP0.z;
@@ -70,10 +86,10 @@ CurvParamHermite::CurvParamHermite ( Ponto p0, Ponto p1, Vetor dp0, Vetor dp1 )
 {
     // 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Hermite
     //
-//    M->setElement( 0, 0, 2 ); M->setElement( 0, 1,-2 ); M->setElement( 0, 2, 1 ); M->setElement( 0, 3, 1 );
-//    M->setElement( 1, 0,-3 ); M->setElement( 1, 1, 3 ); M->setElement( 1, 2,-2 ); M->setElement( 1, 3,-1 );
-//    M->setElement( 2, 0, 0 ); M->setElement( 2, 1, 0 ); M->setElement( 2, 2, 1 ); M->setElement( 2, 3, 0 );
-//    M->setElement( 3, 0, 1 ); M->setElement( 3, 1, 0 ); M->setElement( 3, 2, 0 ); M->setElement( 3, 3, 0 );
+    //    M->setElement( 0, 0, 2 ); M->setElement( 0, 1,-2 ); M->setElement( 0, 2, 1 ); M->setElement( 0, 3, 1 );
+    //    M->setElement( 1, 0,-3 ); M->setElement( 1, 1, 3 ); M->setElement( 1, 2,-2 ); M->setElement( 1, 3,-1 );
+    //    M->setElement( 2, 0, 0 ); M->setElement( 2, 1, 0 ); M->setElement( 2, 2, 1 ); M->setElement( 2, 3, 0 );
+    //    M->setElement( 3, 0, 1 ); M->setElement( 3, 1, 0 ); M->setElement( 3, 2, 0 ); M->setElement( 3, 3, 0 );
     M(0,0) = 2;  M(0,1) = -2; M(0,2) = 1;  M(0,3) = 1;
     M(1,0) = -3; M(1,1) = 3;  M(1,2) = -2; M(1,3) = -1;
     M(2,0) = 0;  M(2,1) = 0;  M(2,2) = 1;  M(2,3) = 0;
@@ -81,26 +97,26 @@ CurvParamHermite::CurvParamHermite ( Ponto p0, Ponto p1, Vetor dp0, Vetor dp1 )
     //
     // 2. Preenche as matrizes geométricas com G de Hermite
     //
-//    Gx->setElement( 0, 0, P0.x );
-//    Gx->setElement( 1, 0, P1.x );
-//    Gx->setElement( 2, 0,DP0.x );
-//    Gx->setElement( 3, 0,DP1.x );
+    //    Gx->setElement( 0, 0, P0.x );
+    //    Gx->setElement( 1, 0, P1.x );
+    //    Gx->setElement( 2, 0,DP0.x );
+    //    Gx->setElement( 3, 0,DP1.x );
     Gx(0,0) = P0.x;
     Gx(1,0) = P1.x;
     Gx(2,0) = DP0.x;
     Gx(3,0) = DP1.x;
-//    Gy->setElement( 0, 0, P0.y );
-//    Gy->setElement( 1, 0, P1.y );
-//    Gy->setElement( 2, 0,DP0.y );
-//    Gy->setElement( 3, 0,DP1.y );
+    //    Gy->setElement( 0, 0, P0.y );
+    //    Gy->setElement( 1, 0, P1.y );
+    //    Gy->setElement( 2, 0,DP0.y );
+    //    Gy->setElement( 3, 0,DP1.y );
     Gy(0,0) = P0.y;
     Gy(1,0) = P1.y;
     Gy(2,0) = DP0.y;
     Gy(3,0) = DP1.y;
-//    Gz->setElement( 0, 0, P0.z );
-//    Gz->setElement( 1, 0, P1.z );
-//    Gz->setElement( 2, 0,DP0.z );
-//    Gz->setElement( 3, 0,DP1.z );
+    //    Gz->setElement( 0, 0, P0.z );
+    //    Gz->setElement( 1, 0, P1.z );
+    //    Gz->setElement( 2, 0,DP0.z );
+    //    Gz->setElement( 3, 0,DP1.z );
     Gz(0,0) = P0.z;
     Gz(1,0) = P1.z;
     Gz(2,0) = DP0.z;

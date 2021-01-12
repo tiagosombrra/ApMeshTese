@@ -8,14 +8,14 @@ namespace Data
 {
 namespace Numerical
 {
-	class Function : public Data::Numerical::MultiVariableFunction<1>
-	{
-	public:
+class Function : public Data::Numerical::MultiVariableFunction<1>
+{
+public:
 
-        virtual double f(double x) = 0;
+    virtual double f(double x) = 0;
 
-        virtual double f(const double x[1]);
-	};
+    virtual double f(const double x[1]);
+};
 }
 }
 

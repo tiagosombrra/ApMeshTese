@@ -20,24 +20,24 @@ class Noh;
 
 class Elemento
 {
-	protected :
-		unsigned long id;
-		double area;
-		Vetor normal;
+protected :
+    unsigned long id;
+    double area;
+    Vetor normal;
 
-	public :	
-		void setId ( unsigned long i ) { this->id = i; };
-                unsigned long getId ( ) { return this->id; };
-	
-		double getArea ( ) const { return this->area; };
-		Vetor getNormal ( ) const { return this->normal; };
-		
-		virtual Noh getN ( unsigned const int ) const =0;
-		virtual double getAngulo ( const Noh& n )=0;
-		virtual void calcularArea ( )=0;
-		virtual void calcularNormal ( )=0;
-		
-		virtual ~Elemento () { };
+public :
+    void setId ( unsigned long i );
+    unsigned long getId ( );
+
+    double getArea ( ) const;
+    Vetor getNormal ( ) const;
+
+    virtual Noh getN ( unsigned const int ) const =0;
+    virtual double getAngulo ( const Noh& n )=0;
+    virtual void calcularArea ( )=0;
+    virtual void calcularNormal ( )=0;
+
+    virtual ~Elemento ();
 };
 
 #endif

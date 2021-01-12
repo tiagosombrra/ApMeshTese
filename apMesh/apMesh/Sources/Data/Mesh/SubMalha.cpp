@@ -15,62 +15,62 @@ This source code is under GNU General Public License v3 */
 
 void SubMalha::setPatch ( Patch* m )
 {
-	this->patch = m;
+    this->patch = m;
 }
 
 
 Patch* SubMalha::getPatch (  ) const
 {
-	return this->patch;
+    return this->patch;
 }
 
 void SubMalha::insereNoh ( Noh* n )
 {
-	this->nos.push_back ( n );
+    this->nos.push_back ( n );
 }
 
 Noh* SubMalha::getNoh ( const unsigned int i )
 {
-	/*// adicionar excessão caso i > nos.size();
-	list <Noh*>::iterator it = this->nos.begin();
-	
-	advance ( it, i );
-	
-	return *it;*/
-	return (i < this->nos.size()) ? this->nos[i] : NULL;
+    /*// adicionar excessão caso i > nos.size();
+    list <Noh*>::iterator it = this->nos.begin();
+
+    advance ( it, i );
+
+    return *it;*/
+    return (i < this->nos.size()) ? this->nos[i] : NULL;
 }
 
 void SubMalha::insereElemento ( Elemento* elem )
 {
-	this->elementos.push_back ( elem );
+    this->elementos.push_back ( elem );
 }
 
 Elemento* SubMalha::getElemento ( const unsigned int i )
 {
-	// adicionar excessão caso i > elementos.size();
-	/*list <Elemento*>::iterator it = this->elementos.begin();
-	
-	advance ( it, i );
-	
-	return *it;*/
-	return (i < this->elementos.size()) ? this->elementos[i] : NULL;
+    // adicionar excessão caso i > elementos.size();
+    /*list <Elemento*>::iterator it = this->elementos.begin();
+
+    advance ( it, i );
+
+    return *it;*/
+    return (i < this->elementos.size()) ? this->elementos[i] : NULL;
 }
 
 SubMalha::~SubMalha (  )
 {
-	// 1. apaga a lista de nós
-	while ( !this->nos.empty ( ) )
-	{
-		Noh* N = this->nos.back ( );
-		this->nos.pop_back ( );
-		delete N;
-	}
-	
-	// 2. apaga a lista de elementos
-	while ( !this->elementos.empty ( ) )
-	{
-		Elemento* E = this->elementos.back ( );
-		this->elementos.pop_back ( );
-		delete E;
-	}
+    // 1. apaga a lista de nós
+    while ( !this->nos.empty ( ) )
+    {
+        Noh* N = this->nos.back ( );
+        this->nos.pop_back ( );
+        delete N;
+    }
+
+    // 2. apaga a lista de elementos
+    while ( !this->elementos.empty ( ) )
+    {
+        Elemento* E = this->elementos.back ( );
+        this->elementos.pop_back ( );
+        delete E;
+    }
 }

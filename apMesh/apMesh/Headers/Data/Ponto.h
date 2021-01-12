@@ -19,20 +19,16 @@ using namespace std;
 
 struct Ponto
 {
-		unsigned long id; // identificador
-
-		// coordenadas
-		double x;
-		double y;
-		double z;
-
-		bool operator== ( const Ponto& p ) const; // comparação
-		double distanciaPara ( const Ponto& p ) const;
-
-        void mostraPonto ( );
-
-        Ponto ( );
-        Ponto ( double _x, double _y, double _z );
-        Ponto ( double _x, double _y, double _z, unsigned long i );
+    unsigned long id; // identificador
+    // coordenadas
+    double x;
+    double y;
+    double z;
+    bool operator== ( const Ponto& p ) const; // comparação
+    double distanciaPara ( const Ponto& p ) const;
+    void mostraPonto ( );
+    Ponto ( );
+    Ponto ( double _x, double _y, double _z );
+    Ponto ( double _x, double _y, double _z, unsigned long i );
 };
 #endif

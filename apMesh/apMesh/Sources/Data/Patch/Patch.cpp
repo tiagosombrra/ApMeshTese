@@ -14,31 +14,31 @@ This source code is under GNU General Public License v3 */
 
 void Patch::setMalha ( SubMalha* m )
 {
-	this->malha = m;
+    this->malha = m;
 }
 
 
 SubMalha* Patch::getMalha (  ) const
 {
-	return this->malha;
+    return this->malha;
 }
 
 
 Patch::Patch ( )
 {
-	this->malha = NULL;
+    this->malha = NULL;
 }
 
 
 Patch::Patch ( Patch * )
 {
-	this->malha = NULL;
+    this->malha = NULL;
 }
 
 
 Patch::~Patch ( )
 {
-	// não delete o que não for alocado com new!
-	//if ( this->malha != NULL )
-	//	delete this->malha;
+    // não delete o que não for alocado com new!
+    //if ( this->malha != NULL )
+    //	delete this->malha;
 }

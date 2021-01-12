@@ -7,13 +7,13 @@ namespace Data
 {
 namespace Numerical
 {
-    template <int n>
-	class MultiVariableFunction
-	{
-	public:
+template <int n>
+class MultiVariableFunction
+{
+public:
 
-        virtual double f(const double x[n]) = 0;
-	};
+    virtual double f(const double x[n]) = 0;
+};
 }
 }
 

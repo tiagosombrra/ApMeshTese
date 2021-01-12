@@ -11,58 +11,58 @@ using namespace Par2DJMesh::Basics;
 
 namespace Par2DJMesh
 {
-    namespace AFT
-    {
-		class Boundary : public Shape
-		{
-		private:
-			VertexList boundary;
-			EdgeList edges;
-			
-			long int lastVertexId;
-			long int lastEdgeId;
+namespace AFT
+{
+class Boundary : public Shape
+{
+private:
+    VertexList boundary;
+    EdgeList edges;
 
-			Vertex *first;
+    long int lastVertexId;
+    long int lastEdgeId;
 
-		private:
-			Edge *makeEdge(Vertex *v);
+    Vertex *first;
 
-		public:
-			Boundary();
-			~Boundary();
+private:
+    Edge *makeEdge(Vertex *v);
 
-			void setBoundary(VertexList boundary);
-			VertexList getBoundary();
+public:
+    Boundary();
+    ~Boundary();
 
-			void setEdges(EdgeList edges);
-			EdgeList getEdges();
+    void setBoundary(VertexList boundary);
+    VertexList getBoundary();
 
-			long int getLastVertexId();
-			long int getLastEdgeId();
+    void setEdges(EdgeList edges);
+    EdgeList getEdges();
 
-			Vertex *addVertex(double x, double y, CurvaParametrica *c);
-			Vertex *addVertex(long int id, double x, double y);
-			bool close(CurvaParametrica *c);
+    long int getLastVertexId();
+    long int getLastEdgeId();
 
-			Edge *getEdge(long int id);
-			Vertex *getVertex(long int id);
+    Vertex *addVertex(double x, double y, CurvaParametrica *c);
+    Vertex *addVertex(long int id, double x, double y);
+    bool close(CurvaParametrica *c);
 
-			void getBox(double *minX, double *minY, double *maxX, double *maxY);
+    Edge *getEdge(long int id);
+    Vertex *getVertex(long int id);
 
-			bool belongs(Edge *e);
-			bool belongs(Vertex *v1, Vertex *v2);
-			
-			string getText();
+    void getBox(double *minX, double *minY, double *maxX, double *maxY);
 
-#if USE_OPENGL
-			void highlight();
-			void unhighlight();
+    bool belongs(Edge *e);
+    bool belongs(Vertex *v1, Vertex *v2);
 
-			void draw();
-			void drawNormals();
-#endif //#if USE_OPENGL
-		};
-    }
+    string getText();
+
+//#if USE_OPENGL
+//    void highlight();
+//    void unhighlight();
+
+//    void draw();
+//    void drawNormals();
+//#endif //#if USE_OPENGL
+};
+}
 }
 
 #endif //#ifndef _BOUNDARY_H_

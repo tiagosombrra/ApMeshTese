@@ -200,7 +200,7 @@ Matrix4x4 BezierPatch::getB() const {
     return this->B;
 }
 
-Ponto BezierPatch::calculaPonto_u_v ( )
+Ponto BezierPatch::calculaPonto_u_v ()
 {
     //  ALOCA um Ponto e o retorna
     //
@@ -208,27 +208,23 @@ Ponto BezierPatch::calculaPonto_u_v ( )
 
     // C = ( U * ( B * ( G * ( Bt * V ) ) ) )
 
-    this->getU() * this->getGx() * this->getV();
-
-    double x = (this->getU())(0,0);
-
     C.x =	(	this->getU  ( ) *
-                        (	//this->getB  ( ) *
-                                (	this->getGx ( ) *
-                                        ( 	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
-                                                this->getV  ( ) ) ) ) )( 0, 0 );
+                (	//this->getB  ( ) *
+                    (	this->getGx ( ) *
+                        ( 	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
+                            this->getV  ( ) ) ) ) )( 0, 0 );
 
     C.y =	(	this->getU  ( ) *
-                        (	//this->getB  ( ) *
-                                (	this->getGy ( ) *
-                                        ( 	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
-                                                this->getV  ( ) ) ) ) )( 0, 0 );
+                (	//this->getB  ( ) *
+                    (	this->getGy ( ) *
+                        ( 	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
+                            this->getV  ( ) ) ) ) )( 0, 0 );
 
     C.z =	(	this->getU  ( ) *
-                        (	//this->getB  ( ) *
-                                (	this->getGz ( ) *
-                                        (	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
-                                                this->getV  ( ) ) ) ) )( 0, 0 );
+                (	//this->getB  ( ) *
+                    (	this->getGz ( ) *
+                        (	//this->getB  ( ) *   // só é getB ao invés de getB().transposta pois a matriz de Bezier é simétrica
+                            this->getV  ( ) ) ) ) )( 0, 0 );
 
     //	cout << "calculaPonto_u_v () = " << C.x << " " << C.y << " " << C.z << endl;
     return C;
@@ -320,7 +316,7 @@ Ponto BezierPatch::parametrizar ( double u, double v )
     this->V(2,0) = v;
     this->V(3,0) = 1;
 
-    return calculaPonto_u_v ( );
+    return calculaPonto_u_v ();
 }
 
 
@@ -347,7 +343,7 @@ Vetor BezierPatch::Qu ( double u, double v )
     this->V( 2, 0) = v;
     this->V( 3, 0) = 1;
 
-    P = calculaPonto_u_v ( );
+    P = calculaPonto_u_v ();
     Vetor V ( P );
 
     return V;
@@ -377,7 +373,7 @@ Vetor BezierPatch::Qv ( double u, double v )
     this->V( 2, 0) = 1;
     this->V( 3, 0) = 0;
 
-    P = calculaPonto_u_v ( );
+    P = calculaPonto_u_v ();
     Vetor V ( P );
 
     return V;
@@ -408,7 +404,7 @@ Vetor BezierPatch::Quu ( double u, double v )
     this->V( 3, 0) = 1;
 
 
-    P = calculaPonto_u_v ( );
+    P = calculaPonto_u_v ();
     Vetor V ( P );
 
     return V;
@@ -438,7 +434,7 @@ Vetor BezierPatch::Quv ( double u, double v )
     this->V( 2, 0) = 1;
     this->V( 3, 0) = 0;
 
-    P = calculaPonto_u_v ( );
+    P = calculaPonto_u_v ();
     Vetor V ( P );
 
     return V;
@@ -475,7 +471,7 @@ Vetor BezierPatch::Qvv ( double u, double v )
     this->V( 2, 0) = 0;
     this->V( 3, 0) = 0;
 
-    P = calculaPonto_u_v ( );
+    P = calculaPonto_u_v ();
     Vetor V ( P );
 
     return V;
@@ -608,7 +604,7 @@ BezierPatch::BezierPatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
     //
     // Gy:
     // 2x2 superior esquerdo
-    Gy(0,0) = this->Pt00.y; Gy(0,1) = this->Pt01.y;
+    this->Gy(0,0) = this->Pt00.y; Gy(0,1) = this->Pt01.y;
     Gy(1,0) = this->Pt10.y; Gy(1,1) = this->Pt11.y;
     // 2x2 inferior esquerdo
     Gy(2,0) = this->Pt20.y; Gy(2,1) = this->Pt21.y;
@@ -633,6 +629,10 @@ BezierPatch::BezierPatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
     // 2x2 inferior direito
     Gz(2,2) = this->Pt22.z; Gz(2,3) = this->Pt23.z;
     Gz(3,2) = this->Pt32.z; Gz(3,3) = this->Pt33.z;
+    //
+    //6.Preenche a Matriz de Bezier
+    //
+    this->B = iniciaMatrizBezier();
     //
     this->Gx = this->getB() * this->getGx() * this->getB();
     this->Gy = this->getB() * this->getGy() * this->getB();
@@ -717,6 +717,10 @@ BezierPatch :: BezierPatch (	Ponto Pt_00, Ponto Pt_01, Ponto Pt_02, Ponto Pt_03,
     // 2x2 inferior direito
     Gz(2,2) = this->Pt22.z; Gz(2,3) = this->Pt23.z;
     Gz(3,2) = this->Pt32.z; Gz(3,3) = this->Pt33.z;
+    //
+    //6.Preenche a Matriz de Bezier
+    //
+    this->B = iniciaMatrizBezier();
     //
     this->Gx = this->getB() * this->getGx() * this->getB();
     this->Gy = this->getB() * this->getGy() * this->getB();

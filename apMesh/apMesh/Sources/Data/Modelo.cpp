@@ -24,33 +24,40 @@ void Modelo::insereMalha ( Malha* m )
     this->malhas.push_back ( m );
 }
 
-Malha* Modelo::getMalha ( const unsigned int i )
-{
-	// adicionar excessão caso i > malhas.size();
-	/*list <Malha*>::iterator it = this->malhas.begin();
-
-	advance ( it, i );
-
-	return *it;*/
-	
-	return (i < this->malhas.size()) ? this->malhas[i] : NULL;
+unsigned int Modelo::getNumDeMalhas() const {
+    return ( int ) malhas.size();
 }
 
+Malha* Modelo::getMalha ( const unsigned int i )
+{
+    // adicionar excessão caso i > malhas.size();
+    /*list <Malha*>::iterator it = this->malhas.begin();
+
+    advance ( it, i );
+
+    return *it;*/
+
+    return (i < this->malhas.size()) ? this->malhas[i] : NULL;
+}
+
+Modelo::Modelo() {
+
+}
 
 Modelo::Modelo ( Geometria* g )
 {
-	this->geometria = g;
+    this->geometria = g;
 }
 
 Modelo::~Modelo (  )
 {	
-	// 1. apaga a lista de malha
-	while ( !this->malhas.empty ( ) )
-	{
-		Malha* M = this->malhas.back ( );
-		this->malhas.pop_back ( );
-		delete M;
-	}
-	
+    // 1. apaga a lista de malha
+    while ( !this->malhas.empty ( ) )
+    {
+        Malha* M = this->malhas.back ( );
+        this->malhas.pop_back ( );
+        delete M;
+    }
+
 
 }

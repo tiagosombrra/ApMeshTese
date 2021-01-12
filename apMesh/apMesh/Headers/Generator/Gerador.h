@@ -22,17 +22,17 @@ extern double EPSYLON; // define a qualidade mínima da malha
 
 class Gerador
 {
-	protected :
-		unsigned int passo;
-		
-		virtual SubMalha* malhaInicial ( );
-		virtual double erroGlobal ( );
-		
-	public :
-		double erro; // erro global da malha
-	
-		Gerador (  );
-		Gerador ( Modelo& modelo );
+protected :
+    unsigned int passo;
+
+    virtual SubMalha* malhaInicial ( );
+    virtual double erroGlobal ( );
+
+public :
+    double erro; // erro global da malha
+
+    Gerador (  );
+    //Gerador ( Modelo& modelo );
 };
 
 #endif

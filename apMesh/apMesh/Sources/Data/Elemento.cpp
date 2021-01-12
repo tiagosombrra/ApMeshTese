@@ -10,3 +10,22 @@ Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
 #include "Elemento.h"
+
+void Elemento::setId(unsigned long i) {
+    this->id = i;
+}
+
+unsigned long Elemento::getId() {
+    return this->id;
+}
+
+double Elemento::getArea() const {
+    return this->area;
+}
+
+Vetor Elemento::getNormal() const {
+    return this->normal;
+}
+
+Elemento::~Elemento() {
+}

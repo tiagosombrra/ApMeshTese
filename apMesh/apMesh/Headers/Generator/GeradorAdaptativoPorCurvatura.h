@@ -27,14 +27,14 @@ using namespace std;
 
 class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo
 {
-		
-		// gera a malha inicial e insere na lista de malhas do modelo
-		// a lista de pontos da curva é preenchida durante a geração
-		virtual SubMalha* malhaInicial ( CoonsPatch* );
-		virtual double erroGlobal ( Malha* malha );
-	
-	public :
-		GeradorAdaptativoPorCurvatura ( Modelo& );
+
+    // gera a malha inicial e insere na lista de malhas do modelo
+    // a lista de pontos da curva é preenchida durante a geração
+    virtual SubMalha* malhaInicial ( CoonsPatch* );
+    virtual double erroGlobal ( Malha* malha );
+
+public :
+    GeradorAdaptativoPorCurvatura ( Modelo& );
 };
 
 #endif

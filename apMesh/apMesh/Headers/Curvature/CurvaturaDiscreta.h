@@ -23,19 +23,19 @@ class Elemento;
 
 class CurvaturaDiscreta : public Curvatura
 {
-		Noh p;
-		list <Elemento*> elementos; // lista dos elementos de 'm' incidentes em 'n'
-		double A; // área dos elementos incidentes em 'n'
-		double fator;	// assume M_PI ou 2 * M_PI
-		double sum_phi; // soma dos ângulos em 'n'
-		
-		void ordenaAdjacencia ( const Noh& n );
-		
-	public :
-		virtual double media ( );
-		virtual double gauss ( );
-		
-		CurvaturaDiscreta ( const Noh& n );
+    Noh p;
+    list <Elemento*> elementos; // lista dos elementos de 'm' incidentes em 'n'
+    double A; // área dos elementos incidentes em 'n'
+    double fator;	// assume M_PI ou 2 * M_PI
+    double sum_phi; // soma dos ângulos em 'n'
+
+    void ordenaAdjacencia ( const Noh& n );
+
+public :
+    virtual double media ( );
+    virtual double gauss ( );
+
+    CurvaturaDiscreta ( const Noh& n );
 };
 
 #endif

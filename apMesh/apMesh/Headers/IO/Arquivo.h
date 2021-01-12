@@ -24,21 +24,21 @@ using namespace std;
 
 class Arquivo
 {
-		string nome;
-		ifstream entrada;
-		list < string > curvas;
-		list < string > patches;
-	
-		void lerCurvas( const string leitura ); // lê todas as curvas do arquivo
-		void lerPatches( const string leitura ); // lê todos os patches do arquivo
-		void criarCurvasPara ( Modelo& modelo ); // cria as curvas a partir da list
-		void criarPatchesPara ( Modelo& modelo ); // cria os patches a partir da list
-		char* convertaString( string fonte );
-		
-	public :
-		string getNome() { return nome; };
-		void lerArquivoPara ( Modelo& modelo );
-		Arquivo ( const char* nome );
-		~Arquivo();
+    string nome;
+    ifstream entrada;
+    list < string > curvas;
+    list < string > patches;
+
+    void lerCurvas( const string leitura ); // lê todas as curvas do arquivo
+    void lerPatches( const string leitura ); // lê todos os patches do arquivo
+    void criarCurvasPara (); // cria as curvas a partir da list
+    void criarPatchesPara (); // cria os patches a partir da list
+    char* convertaString( string fonte );
+
+public :
+    string getNome();
+    void lerArquivoPara ( /*Modelo& modelo*/ );
+    Arquivo ( const char* nome );
+    ~Arquivo();
 };
 #endif

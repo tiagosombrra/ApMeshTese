@@ -13,13 +13,13 @@ This source code is under GNU General Public License v3 */
 
 SubMalha* Gerador::malhaInicial ( )
 {
-	SubMalha* sub = 0;
-	return sub;
+    SubMalha* sub = 0;
+    return sub;
 }
-		
+
 double Gerador::erroGlobal ( )
 {
-	return 1;
+    return 1;
 }
 
 
@@ -27,5 +27,6 @@ Gerador::Gerador (  )
 { }
 
 
-Gerador::Gerador ( Modelo& modelo )
-{ }
+//Gerador::Gerador ( Modelo& modelo ){
+
+//}

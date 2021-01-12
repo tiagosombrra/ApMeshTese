@@ -16,8 +16,8 @@ This source code is under GNU General Public License v3 */
 
 struct Vertice : public Ponto
 {
-		Vertice () {};
-		Vertice ( double x, double y, double z) : Ponto ( x, y, z) {};
-		Vertice ( Ponto* p ) { this->x = p->x; this->y = p->y; this->z = p->z; };
+    Vertice ();
+    Vertice ( double x, double y, double z);
+    Vertice ( Ponto* p );
 };
 #endif

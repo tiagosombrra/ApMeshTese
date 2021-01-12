@@ -23,14 +23,14 @@ using namespace std;
 // OBS: Essa classe foi implementada para triâgulos !!!
 class Adjacente
 {
-	static bool confirmaEsq ( const Noh& noh, const Elemento& P, const Elemento& U );
-	static bool confirmaDir ( const Noh& noh, const Elemento& P, const Elemento& U );
-	static Elemento* esquerdo ( const Noh& noh, Elemento* elem, list < Elemento* > &lista );
-	static Elemento* direito ( const Noh& noh, Elemento* elem, list < Elemento* > &lista );
-	static short concavidade ( const Noh& noh, const Elemento& pri, const Elemento& seg );
-	static double angulo ( const Elemento& pri, const Elemento& seg );
-	virtual void naoFazNada ( ) = 0;
-	
-	friend class CurvaturaDiscreta;
+    static bool confirmaEsq ( const Noh& noh, const Elemento& P, const Elemento& U );
+    static bool confirmaDir ( const Noh& noh, const Elemento& P, const Elemento& U );
+    static Elemento* esquerdo ( const Noh& noh, Elemento* elem, list < Elemento* > &lista );
+    static Elemento* direito ( const Noh& noh, Elemento* elem, list < Elemento* > &lista );
+    static short concavidade ( const Noh& noh, const Elemento& pri, const Elemento& seg );
+    static double angulo ( const Elemento& pri, const Elemento& seg );
+    virtual void naoFazNada ( ) = 0;
+
+    friend class CurvaturaDiscreta;
 };
 #endif

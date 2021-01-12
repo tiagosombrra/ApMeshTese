@@ -16,13 +16,13 @@ This source code is under GNU General Public License v3 */
 
 class GeradorAdaptativo : public Gerador
 {
-	protected :
-		virtual SubMalha* malhaInicial ( );
-		virtual double erroGlobal ( );
-		
-	public :
-		GeradorAdaptativo (  );
-		GeradorAdaptativo ( Modelo& modelo );
+protected :
+    virtual SubMalha* malhaInicial ( );
+    virtual double erroGlobal ( );
+
+public :
+    GeradorAdaptativo (  );
+    //GeradorAdaptativo ( Modelo& modelo );
 };
 
 #endif

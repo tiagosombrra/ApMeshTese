@@ -7,18 +7,18 @@ Vertex::Vertex(double x, double y, long int id) : Shape(id)
 {
     setPosition(x, y);
 
-#if USE_OPENGL
-    setSize(1.0);
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//    setSize(1.0);
+//#endif //#if USE_OPENGL
 
-#if DEBUG_MODE
-	h = 0.0;
-#endif //#if DEBUG_MODE
+//#if DEBUG_MODE
+//    h = 0.0;
+//#endif //#if DEBUG_MODE
 }
 
 Vertex::~Vertex()
 {
-	adjacentEdges.clear();
+    adjacentEdges.clear();
 }
 
 void Vertex::setX(double x)
@@ -53,26 +53,26 @@ void Vertex::getPosition(double *x, double *y)
     *y = this->y;
 }
 
-#if USE_OPENGL
-void Vertex::setSize(double size)
-{
-    this->size = size;
-}
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//void Vertex::setSize(double size)
+//{
+//    this->size = size;
+//}
+//#endif //#if USE_OPENGL
 
 void Vertex::addAdjacentEdge(Edge *e)
 {
-	adjacentEdges.insert(e);
+    adjacentEdges.insert(e);
 }
 
 void Vertex::removeAdjacentEdge(Edge *e)
 {
-	adjacentEdges.erase(e);
+    adjacentEdges.erase(e);
 }
 
 EdgeSet Vertex::getAdjacentEdges()
 {
-	return adjacentEdges;
+    return adjacentEdges;
 }
 
 void Vertex::sum(Vertex *v)
@@ -209,8 +209,8 @@ double Vertex::surface(Vertex *v1, Vertex *v2)
 double Vertex::orientedSurface(Vertex *v1, Vertex *v2)
 {
     return (    x * v1->y - v1->x *     y +
-            v1->x * v2->y - v2->x * v1->y +
-            v2->x *     y -     x * v2->y)/2.0;
+                v1->x * v2->y - v2->x * v1->y +
+                v2->x *     y -     x * v2->y)/2.0;
 }
 
 bool Vertex::counterClockWise(Vertex *v1, Vertex *v2)
@@ -236,33 +236,33 @@ bool Vertex::matches(Vertex *v)
     return ((x == v->x) && (y == v->y));
 }
 
-#if USE_OPENGL
-void Vertex::highlight()
-{
-    setSize(5.0);
+//#if USE_OPENGL
+//void Vertex::highlight()
+//{
+//    setSize(5.0);
 
-    //debug
-    for (EdgeSet::iterator iter = adjacentEdges.begin();
-		 iter != adjacentEdges.end(); iter++)
-	{
-		(*iter)->highlight(false);
-	}
-	//endebug
-}
+//    //debug
+//    for (EdgeSet::iterator iter = adjacentEdges.begin();
+//         iter != adjacentEdges.end(); iter++)
+//    {
+//        (*iter)->highlight(false);
+//    }
+//    //endebug
+//}
 
-void Vertex::unhighlight()
-{
-    setSize(1.0);
+//void Vertex::unhighlight()
+//{
+//    setSize(1.0);
 
-    //debug
-    for (EdgeSet::iterator iter = adjacentEdges.begin();
-		 iter != adjacentEdges.end(); iter++)
-	{
-		(*iter)->unhighlight(false);
-	}
-	//endebug
-}
-#endif //#if USE_OPENGL
+//    //debug
+//    for (EdgeSet::iterator iter = adjacentEdges.begin();
+//         iter != adjacentEdges.end(); iter++)
+//    {
+//        (*iter)->unhighlight(false);
+//    }
+//    //endebug
+//}
+//#endif //#if USE_OPENGL
 
 string Vertex::getText()
 {
@@ -275,35 +275,35 @@ string Vertex::getText()
     return s;
 }
 
-#if USE_OPENGL
-void Vertex::draw()
-{
-    glPointSize(size);
+//#if USE_OPENGL
+//void Vertex::draw()
+//{
+//    glPointSize(size);
 
-    glColor3d(r, g, b);
-    glBegin(GL_POINTS);
-        glVertex2d(x, y);
-	glEnd();
+//    glColor3d(r, g, b);
+//    glBegin(GL_POINTS);
+//    glVertex2d(x, y);
+//    glEnd();
 
-	glPointSize(1.0);
-}
+//    glPointSize(1.0);
+//}
 
-#if DEBUG_MODE
-void Vertex::drawCircle()
-{
-    int numLines = 40;
+//#if DEBUG_MODE
+//void Vertex::drawCircle()
+//{
+//    int numLines = 40;
 
-    double angle = 2.0*M_PI/(double)numLines;
+//    double angle = 2.0*M_PI/(double)numLines;
 
-    glColor3d(1.0, 0.0, 1.0);
+//    glColor3d(1.0, 0.0, 1.0);
 
-    glBegin(GL_LINE_LOOP);
-    for(int i = 1; i <= numLines; i++)
-    {
-        glVertex2d(x + cos(i*angle)*h, y + sin(i*angle)*h);
-    }
-    glEnd();
-}
-#endif //#if DEBUG_MODE
+//    glBegin(GL_LINE_LOOP);
+//    for(int i = 1; i <= numLines; i++)
+//    {
+//        glVertex2d(x + cos(i*angle)*h, y + sin(i*angle)*h);
+//    }
+//    glEnd();
+//}
+//#endif //#if DEBUG_MODE
 
-#endif //#if USE_OPENGL
+//#endif //#if USE_OPENGL

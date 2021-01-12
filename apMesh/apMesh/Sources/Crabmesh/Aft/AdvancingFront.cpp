@@ -8,10 +8,10 @@
 #include "QuadtreeCell.h"
 
 AdvancingFront::AdvancingFront(
-	double factor,
-	double tolerance,
-	unsigned int numImproves,
-	double phi) : Shape()
+        double factor,
+        double tolerance,
+        unsigned int numImproves,
+        double phi) : Shape()
 {
     boundary = new Boundary();
     quadtree = new Quadtree(boundary, factor);
@@ -26,10 +26,10 @@ AdvancingFront::AdvancingFront(
 }
 
 AdvancingFront::AdvancingFront(
-	Boundary *boundary,
-	Quadtree *quadtree,
-	double tolerance,
-	unsigned int numImproves) : Shape()
+        Boundary *boundary,
+        Quadtree *quadtree,
+        double tolerance,
+        unsigned int numImproves) : Shape()
 {
     setBoundary(boundary);
     setQuadtree(quadtree);
@@ -86,73 +86,73 @@ AdvancingFront::~AdvancingFront()
 
 void AdvancingFront::makeInitialFront()
 {
-	front = boundary->getEdges();
+    front = boundary->getEdges();
 
-	for (EdgeList::iterator iter = front.begin();
-		 iter != front.end(); iter++)
-	{
-		/*//cout << "aresta (" <<
-			(*iter)->getV1()->getX() << ", " << (*iter)->getV1()->getY() << ") e (" << 
-			(*iter)->getV2()->getX() << ", " << (*iter)->getV2()->getY() << ")" << endl;*/
-		
-		vertices.push_back((*iter)->getV1());
+    for (EdgeList::iterator iter = front.begin();
+         iter != front.end(); iter++)
+    {
+        /*//cout << "aresta (" <<
+            (*iter)->getV1()->getX() << ", " << (*iter)->getV1()->getY() << ") e (" <<
+            (*iter)->getV2()->getX() << ", " << (*iter)->getV2()->getY() << ")" << endl;*/
 
-		if ((*iter)->getV1()->getId() > lastVertexId)
-		{
-			lastVertexId = (*iter)->getV1()->getId();
-		}
+        vertices.push_back((*iter)->getV1());
 
-		edges.push_back((*iter));
+        if ((*iter)->getV1()->getId() > lastVertexId)
+        {
+            lastVertexId = (*iter)->getV1()->getId();
+        }
 
-		if ((*iter)->getId() > lastEdgeId)
-		{
-			lastEdgeId = (*iter)->getId();
-		}
-	}
+        edges.push_back((*iter));
 
-	EdgeList quadtreeFront = quadtree->getFront();
+        if ((*iter)->getId() > lastEdgeId)
+        {
+            lastEdgeId = (*iter)->getId();
+        }
+    }
 
-	while (!quadtreeFront.empty())
-	{
-		Edge *e = quadtreeFront.front();
-		quadtreeFront.pop_front();
+    EdgeList quadtreeFront = quadtree->getFront();
 
-		front.push_back(e);
+    while (!quadtreeFront.empty())
+    {
+        Edge *e = quadtreeFront.front();
+        quadtreeFront.pop_front();
 
-		bool found = false;
+        front.push_back(e);
 
-		for (VertexList::iterator iter = vertices.begin();
-			 iter != vertices.end(); iter++)
-		{
-			if ((*iter) == e->getV1())
-			{
-				found = true;
+        bool found = false;
 
-				break;
-			}
-		}
+        for (VertexList::iterator iter = vertices.begin();
+             iter != vertices.end(); iter++)
+        {
+            if ((*iter) == e->getV1())
+            {
+                found = true;
 
-		if (!found)
-		{
-			vertices.push_back(e->getV1());
+                break;
+            }
+        }
 
-			if (e->getV1()->getId() > lastVertexId)
-			{
-				lastVertexId = e->getV1()->getId();
-			}
-		}
+        if (!found)
+        {
+            vertices.push_back(e->getV1());
 
-		edges.push_back(e);
+            if (e->getV1()->getId() > lastVertexId)
+            {
+                lastVertexId = e->getV1()->getId();
+            }
+        }
 
-		if (e->getId() > lastEdgeId)
-		{
-			lastEdgeId = e->getId();
-		}
-	}
+        edges.push_back(e);
 
-	lastVertexId = quadtree->vertexId() - 1;
-	lastEdgeId = quadtree->edgeId() - 1;
-	lastFaceId = quadtree->faceId() - 1;
+        if (e->getId() > lastEdgeId)
+        {
+            lastEdgeId = e->getId();
+        }
+    }
+
+    lastVertexId = quadtree->vertexId() - 1;
+    lastEdgeId = quadtree->edgeId() - 1;
+    lastFaceId = quadtree->faceId() - 1;
 }
 
 void AdvancingFront::sortFront()
@@ -222,15 +222,15 @@ bool AdvancingFront::interceptionTest(Edge *e, Vertex *candidate, bool inFaceTes
 
     if (onlyFrontEdges)
     {
-    	testEdges = &front;
+        testEdges = &front;
     }
 
     for (EdgeList::iterator iter = testEdges->begin();
          iter != testEdges->end(); iter++)
     {
         if (((*iter)->intercept(e->getV1(), candidate)) ||
-            ((*iter)->intercept(candidate, e->getV2())) ||
-            false)//((*iter)->intercept(candidate)))
+                ((*iter)->intercept(candidate, e->getV2())) ||
+                false)//((*iter)->intercept(candidate)))
         {
             intercepts = true;
 
@@ -250,15 +250,15 @@ bool AdvancingFront::interceptionTest(Edge *e, Vertex *candidate, bool inFaceTes
              iter != frontVertices.end(); iter++)
         {
             if (((*iter) == e->getV1()) ||
-                ((*iter) == e->getV2()) ||
-                ((*iter) == candidate))
+                    ((*iter) == e->getV2()) ||
+                    ((*iter) == candidate))
             {
                 continue;
             }
 
             if (((*iter)->matches(e->getV1())) ||
-                ((*iter)->matches(e->getV2())) ||
-                ((*iter)->matches(candidate)))
+                    ((*iter)->matches(e->getV2())) ||
+                    ((*iter)->matches(candidate)))
             {
                 continue;
             }
@@ -313,9 +313,9 @@ Vertex *AdvancingFront::makeIdealVertex(Edge *e, double &h)
     v->scalarMultiplication(h);
     v->sum(e->getMid());
 
-#if DEBUG_MODE
-    v->h = h;
-#endif //#if DEBUG_MODE
+//#if DEBUG_MODE
+//    v->h = h;
+//#endif //#if DEBUG_MODE
 
     return v;
 }
@@ -336,7 +336,7 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
         Vertex *candidate = (*iter);
 
         if ((candidate == e->getV1()) || (candidate == e->getV2()) ||
-            (candidate->matches(e->getV1())) || (candidate->matches(e->getV2())))
+                (candidate->matches(e->getV1())) || (candidate->matches(e->getV2())))
         {
             continue;
         }
@@ -411,15 +411,15 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
             //testa se best estah perto demais de alguma outra edge da fronteira
 
             for (EdgeList::iterator iter = edges.begin();
-					 iter != edges.end(); iter++)
-				{
-					if ((*iter)->intercept(best))
-					{
-						tooClose = true;
+                 iter != edges.end(); iter++)
+            {
+                if ((*iter)->intercept(best))
+                {
+                    tooClose = true;
 
-						break;
-					}
-				}
+                    break;
+                }
+            }
 
             if (tooClose)
             {
@@ -500,11 +500,11 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
                 }
 
                 if ((candidateEdge1) &&
-                    (candidateEdge2) &&
-                    (candidateEdge1->accordingToNormal(e->getV1(), true)) &&
-                    (candidateEdge1->accordingToNormal(e->getV2(), true)) &&
-                    (candidateEdge2->accordingToNormal(e->getV1(), true)) &&
-                    (candidateEdge2->accordingToNormal(e->getV2(), true)))
+                        (candidateEdge2) &&
+                        (candidateEdge1->accordingToNormal(e->getV1(), true)) &&
+                        (candidateEdge1->accordingToNormal(e->getV2(), true)) &&
+                        (candidateEdge2->accordingToNormal(e->getV1(), true)) &&
+                        (candidateEdge2->accordingToNormal(e->getV2(), true)))
                 {
                     maxAngle = angle;
                     best = candidate;
@@ -605,31 +605,31 @@ Edge *AdvancingFront::findEdge(Vertex *v1, Vertex *v2)
 
 EdgeList AdvancingFront::findAdjacentEdges(Vertex *v)
 {
-	EdgeList adjacency;
+    EdgeList adjacency;
 
-	EdgeSet adjacentEdges = v->getAdjacentEdges();
+    EdgeSet adjacentEdges = v->getAdjacentEdges();
 
-	adjacency.insert(adjacency.end(), adjacentEdges.begin(), adjacentEdges.end());
+    adjacency.insert(adjacency.end(), adjacentEdges.begin(), adjacentEdges.end());
 
-	return adjacency;
+    return adjacency;
 }
 
 FaceList AdvancingFront::findAdjacentFaces(const FaceList &faces, Vertex *v)
 {
-	FaceList adjacency;
+    FaceList adjacency;
 
-	for (FaceList::const_iterator iter = faces.begin();
-		 iter != faces.end(); iter++)
-	{
-		if (((*iter)->getV1() == v) ||
-			((*iter)->getV2() == v) ||
-			((*iter)->getV3() == v))
-		{
-			adjacency.push_back((*iter));
-		}
-	}
+    for (FaceList::const_iterator iter = faces.begin();
+         iter != faces.end(); iter++)
+    {
+        if (((*iter)->getV1() == v) ||
+                ((*iter)->getV2() == v) ||
+                ((*iter)->getV3() == v))
+        {
+            adjacency.push_back((*iter));
+        }
+    }
 
-	return adjacency;
+    return adjacency;
 }
 
 void AdvancingFront::removeFromFront(Vertex *v1, Vertex *v2, Vertex *v3)
@@ -642,113 +642,113 @@ void AdvancingFront::removeFromFront(Vertex *v1, Vertex *v2, Vertex *v3)
     bool remove = true;
 
     for (EdgeSet::iterator iter = adjacentEdges.begin();
-		 iter != adjacentEdges.end(); iter++)
-	{
-		if ((*iter)->isFree())
-		{
-			remove = false;
+         iter != adjacentEdges.end(); iter++)
+    {
+        if ((*iter)->isFree())
+        {
+            remove = false;
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 
-	if (remove)
-	{
-		frontVertices.remove(v1);
-	}
+    if (remove)
+    {
+        frontVertices.remove(v1);
+    }
 
-	//verifica se v2 eh adjacente a alguma aresta livre, ou seja,
+    //verifica se v2 eh adjacente a alguma aresta livre, ou seja,
     //da fronteira corrente. se for adjacente, nao remove. se nao for
     //adjacente, remove
-	adjacentEdges = v2->getAdjacentEdges();
+    adjacentEdges = v2->getAdjacentEdges();
 
     remove = true;
 
     for (EdgeSet::iterator iter = adjacentEdges.begin();
-		 iter != adjacentEdges.end(); iter++)
-	{
-		if ((*iter)->isFree())
-		{
-			remove = false;
+         iter != adjacentEdges.end(); iter++)
+    {
+        if ((*iter)->isFree())
+        {
+            remove = false;
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 
-	if (remove)
-	{
-		frontVertices.remove(v2);
-	}
+    if (remove)
+    {
+        frontVertices.remove(v2);
+    }
 
     //verifica se v3 eh adjacente a alguma aresta livre, ou seja,
     //da fronteira corrente. se for adjacente, nao remove. se nao for
     //adjacente, remove
-	adjacentEdges = v3->getAdjacentEdges();
+    adjacentEdges = v3->getAdjacentEdges();
 
     remove = true;
 
     for (EdgeSet::iterator iter = adjacentEdges.begin();
-		 iter != adjacentEdges.end(); iter++)
-	{
-		if ((*iter)->isFree())
-		{
-			remove = false;
+         iter != adjacentEdges.end(); iter++)
+    {
+        if ((*iter)->isFree())
+        {
+            remove = false;
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 
-	if (remove)
-	{
-		frontVertices.remove(v3);
-	}
+    if (remove)
+    {
+        frontVertices.remove(v3);
+    }
 }
 
 enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
 {
-	//cout << "AdvancingFront::makeMesh(frontBased = " << frontBased << ", geometryPhase = " << geometryPhase << ")" << endl;
+    //cout << "AdvancingFront::makeMesh(frontBased = " << frontBased << ", geometryPhase = " << geometryPhase << ")" << endl;
 
-	frontVertices.clear();
+    frontVertices.clear();
 
-	for (EdgeList::iterator iter = front.begin();
+    for (EdgeList::iterator iter = front.begin();
          iter != front.end(); iter++)
     {
         frontVertices.push_back((*iter)->getV1());
     }
 
-   
+
     Edge *last = NULL;
 
-	if (frontBased && geometryPhase)
-	{
-	    last = new Edge();
+    if (frontBased && geometryPhase)
+    {
+        last = new Edge();
         front.push_back(last);
-	}
+    }
 
-	while (true)
-	{
-		Edge *e = NULL;
+    while (true)
+    {
+        Edge *e = NULL;
 
-		if (frontBased)
-		{
-		    if (front.empty())
-		    {
-		        break;
-		    }
+        if (frontBased)
+        {
+            if (front.empty())
+            {
+                break;
+            }
 
-		    e = front.front();
-		    front.pop_front();
-		}
-		else
-		{
-		    if (rejected.empty())
-		    {
-		        break;
-		    }
+            e = front.front();
+            front.pop_front();
+        }
+        else
+        {
+            if (rejected.empty())
+            {
+                break;
+            }
 
-		    e = rejected.front();
-		    rejected.pop_front();
-		}
+            e = rejected.front();
+            rejected.pop_front();
+        }
 
         if (frontBased && (e == last))
         {
@@ -761,42 +761,42 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
         Vertex *best = NULL;
         bool existed = findBestVertex(e, best, geometryPhase);
 
-   
-		if (!best)
+
+        if (!best)
         {
             if (frontBased)
             {
-            	rejected.push_back(e);
+                rejected.push_back(e);
 
-	            continue;
-	        }
-	        else
-	        {
-#if USE_OPENGL
-                    e->setColor(1.0, 0.0, 0.0);
+                continue;
+            }
+            else
+            {
+//#if USE_OPENGL
+//                e->setColor(1.0, 0.0, 0.0);
 
-	            for (EdgeList::iterator iter = rejected.begin();
-	                 iter != rejected.end(); iter++)
-	            {
-	                (*iter)->setColor(1.0, 0.0, 1.0);
-	            }
-#endif //#if USE_OPENGL
-	            rejected.push_front(e);
+//                for (EdgeList::iterator iter = rejected.begin();
+//                     iter != rejected.end(); iter++)
+//                {
+//                    (*iter)->setColor(1.0, 0.0, 1.0);
+//                }
+//#endif //#if USE_OPENGL
+                rejected.push_front(e);
 
-	            return (geometryPhase) ? ADVF_GEOMETRY_EDGE_REJECTED_TWICE : ADVF_TOPOLOGY_EDGE_REJECTED_TWICE;
-	        }
+                return (geometryPhase) ? ADVF_GEOMETRY_EDGE_REJECTED_TWICE : ADVF_TOPOLOGY_EDGE_REJECTED_TWICE;
+            }
         }
 
         if (geometryPhase && !existed && !quadtree->in(best))
         {
             if (frontBased)
             {
-	            rejected.push_back(e);
-	        }
-	        else
-	        {
-	        	front.push_back(e);
-	        }
+                rejected.push_back(e);
+            }
+            else
+            {
+                front.push_back(e);
+            }
 
             vertices.remove(best);
             innerVertices.remove(best);
@@ -820,8 +820,8 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
         {
             if (frontBased)
             {
-	            front.remove(e1);
-	        }
+                front.remove(e1);
+            }
 
             rejected.remove(e1);
 
@@ -829,26 +829,26 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
         }
         else
         {
-        	e1 = new Edge(e->getV1(), best, ++lastEdgeId);
+            e1 = new Edge(e->getV1(), best, ++lastEdgeId);
 
-        	e->getV1()->addAdjacentEdge(e1);
-        	best->addAdjacentEdge(e1);
+            e->getV1()->addAdjacentEdge(e1);
+            best->addAdjacentEdge(e1);
 
-#if USE_OPENGL
-            e1->setColor(0.0, 0.0, 1.0);
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//            e1->setColor(0.0, 0.0, 1.0);
+//#endif //#if USE_OPENGL
 
             innerEdges.push_back(e1);
             edges.push_back(e1);
 
             if (frontBased)
             {
-            	insertInFront(last, e1);
+                insertInFront(last, e1);
             }
             else
             {
-	            rejected.push_back(e1);
-				}
+                rejected.push_back(e1);
+            }
 
             quadtree->findCell(e1);
         }
@@ -857,8 +857,8 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
         {
             if (frontBased)
             {
-	            front.remove(e2);
-				}
+                front.remove(e2);
+            }
 
             rejected.remove(e2);
 
@@ -866,26 +866,26 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
         }
         else
         {
-        	e2 = new Edge(best, e->getV2(), ++lastEdgeId);
+            e2 = new Edge(best, e->getV2(), ++lastEdgeId);
 
-        	e->getV2()->addAdjacentEdge(e2);
-        	best->addAdjacentEdge(e2);
+            e->getV2()->addAdjacentEdge(e2);
+            best->addAdjacentEdge(e2);
 
-#if USE_OPENGL
-            e2->setColor(0.0, 0.0, 1.0);
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//            e2->setColor(0.0, 0.0, 1.0);
+//#endif //#if USE_OPENGL
 
             innerEdges.push_back(e2);
             edges.push_back(e2);
 
             if (frontBased)
             {
-            	insertInFront(last, e2);
+                insertInFront(last, e2);
             }
             else
             {
-	            rejected.push_back(e2);
-				}
+                rejected.push_back(e2);
+            }
 
             quadtree->findCell(e2);
         }
@@ -897,169 +897,169 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
         Face *f = new Face(e->getV1(), e->getV2(), best, ++lastFaceId);
 
         mesh.push_back(f);
-	}
+    }
 
     return geometryPhase ? ADVF_GEOMETRY_MESH_DONE : ADVF_TOPOLOGY_MESH_DONE;
 }
 
 void AdvancingFront::fillMesh()
 {
-	/*for (FaceList::iterator iter = mesh.begin();
-		  iter != mesh.end(); iter++)
-	{
-		//cout << "triangulo "
-			  << "(" << (*iter)->getV1()->getX() << ", " << (*iter)->getV1()->getY() << ") "
-			  << "(" << (*iter)->getV2()->getX() << ", " << (*iter)->getV2()->getY() << ") "
-			  << "(" << (*iter)->getV3()->getX() << ", " << (*iter)->getV3()->getY() << ") "
-			  <<  endl;
-	}*/
-	
-	VertexList quadVertices = quadtree->getVertices();
+    /*for (FaceList::iterator iter = mesh.begin();
+          iter != mesh.end(); iter++)
+    {
+        //cout << "triangulo "
+              << "(" << (*iter)->getV1()->getX() << ", " << (*iter)->getV1()->getY() << ") "
+              << "(" << (*iter)->getV2()->getX() << ", " << (*iter)->getV2()->getY() << ") "
+              << "(" << (*iter)->getV3()->getX() << ", " << (*iter)->getV3()->getY() << ") "
+              <<  endl;
+    }*/
 
-	while (!quadVertices.empty())
-	{
-		Vertex *v = quadVertices.front();
-		quadVertices.pop_front();
+    VertexList quadVertices = quadtree->getVertices();
 
-		innerVertices.push_back(v);
+    while (!quadVertices.empty())
+    {
+        Vertex *v = quadVertices.front();
+        quadVertices.pop_front();
 
-		bool found = false;
+        innerVertices.push_back(v);
 
-		for (VertexList::iterator iter = vertices.begin();
-			 iter != vertices.end(); iter++)
-		{
-			if ((*iter) == v)
-			{
-				found = true;
+        bool found = false;
 
-				break;
-			}
-		}
+        for (VertexList::iterator iter = vertices.begin();
+             iter != vertices.end(); iter++)
+        {
+            if ((*iter) == v)
+            {
+                found = true;
 
-		if (!found)
-		{
-			vertices.push_back(v);
-		}
-	}
+                break;
+            }
+        }
 
-	EdgeList quadEdges = quadtree->getEdges();
+        if (!found)
+        {
+            vertices.push_back(v);
+        }
+    }
 
-	while (!quadEdges.empty())
-	{
-		Edge *e = quadEdges.front();
-		quadEdges.pop_front();
+    EdgeList quadEdges = quadtree->getEdges();
 
-		innerEdges.push_back(e);
+    while (!quadEdges.empty())
+    {
+        Edge *e = quadEdges.front();
+        quadEdges.pop_front();
 
-		bool found = false;
+        innerEdges.push_back(e);
 
-		for (EdgeList::iterator iter = edges.begin();
-			 iter != edges.end(); iter++)
-		{
-			if ((*iter) == e)
-			{
-				found = true;
+        bool found = false;
 
-				break;
-			}
-		}
+        for (EdgeList::iterator iter = edges.begin();
+             iter != edges.end(); iter++)
+        {
+            if ((*iter) == e)
+            {
+                found = true;
 
-		if (!found)
-		{
-			edges.push_back(e);
-		}
-	}
+                break;
+            }
+        }
 
-	FaceList quadMesh = quadtree->getMesh();
+        if (!found)
+        {
+            edges.push_back(e);
+        }
+    }
 
-	mesh.insert(mesh.end(), quadMesh.begin(), quadMesh.end());
+    FaceList quadMesh = quadtree->getMesh();
+
+    mesh.insert(mesh.end(), quadMesh.begin(), quadMesh.end());
 }
 
 bool AdvancingFront::laplacianSmoothing(bool &changed)
 {
-	changed = false;
-	
-	static const bool testNegativeFaces = false;
+    changed = false;
 
-	for (VertexList::iterator iter = innerVertices.begin();
-		 iter != innerVertices.end(); iter++)
-	{
-		Vertex *v = (*iter);
+    static const bool testNegativeFaces = false;
 
-		double weight = 1.0;
+    for (VertexList::iterator iter = innerVertices.begin();
+         iter != innerVertices.end(); iter++)
+    {
+        Vertex *v = (*iter);
 
-		double oldx = v->getX();
-		double oldy = v->getY();
+        double weight = 1.0;
 
-		double numx, numy, den;
-		numx = numy = den = 0.0;
+        double oldx = v->getX();
+        double oldy = v->getY();
 
-		EdgeList adjacency = findAdjacentEdges(v);
+        double numx, numy, den;
+        numx = numy = den = 0.0;
 
-		while (!adjacency.empty())
-		{
-			Edge *e = adjacency.front();
+        EdgeList adjacency = findAdjacentEdges(v);
 
-			adjacency.pop_front();
+        while (!adjacency.empty())
+        {
+            Edge *e = adjacency.front();
 
-			Vertex *v2 = (e->getV1() == v) ? e->getV2() : e->getV1();
+            adjacency.pop_front();
 
-			numx += weight*(v2->getX() - oldx);
-			numy += weight*(v2->getY() - oldy);
+            Vertex *v2 = (e->getV1() == v) ? e->getV2() : e->getV1();
 
-			den += weight;
-		}
+            numx += weight*(v2->getX() - oldx);
+            numy += weight*(v2->getY() - oldy);
 
-		den = (den > tolerance) ? phi/den : 0;
+            den += weight;
+        }
 
-		numx *= den;
-		numy *= den;
+        den = (den > tolerance) ? phi/den : 0;
 
-		double newx = oldx + numx;
-		double newy = oldy + numy;
+        numx *= den;
+        numy *= den;
 
-		v->setPosition(newx, newy);
+        double newx = oldx + numx;
+        double newy = oldy + numy;
 
-		if (testNegativeFaces)
-		{
-			FaceList faces = findAdjacentFaces(mesh, v);
+        v->setPosition(newx, newy);
 
-			bool negativeSurface = false;
+        if (testNegativeFaces)
+        {
+            FaceList faces = findAdjacentFaces(mesh, v);
 
-			for (FaceList::iterator iter2 = faces.begin();
-				 iter2 != faces.end(); iter2++)
-			{
-				if ((*iter2)->orientedSurface() <= Shape::tolerance)
-				{
-					negativeSurface = true;
+            bool negativeSurface = false;
 
-					break;
-				}
-			}
+            for (FaceList::iterator iter2 = faces.begin();
+                 iter2 != faces.end(); iter2++)
+            {
+                if ((*iter2)->orientedSurface() <= Shape::tolerance)
+                {
+                    negativeSurface = true;
 
-			if (negativeSurface)
-			{
-				v->setPosition(oldx, oldy);
-			}
-			else
-			{
-				changed = true;
-			}
-		}
-		else
-		{
-			changed = true;
-		}
-	}
+                    break;
+                }
+            }
 
-	//para ajeitar o mid e o vector das innerEdges
-	for (EdgeList::iterator iter = innerEdges.begin();
-		 iter != innerEdges.end(); iter++)
-	{
-		(*iter)->setVertices((*iter)->getV1(), (*iter)->getV2());
-	}
+            if (negativeSurface)
+            {
+                v->setPosition(oldx, oldy);
+            }
+            else
+            {
+                changed = true;
+            }
+        }
+        else
+        {
+            changed = true;
+        }
+    }
 
-	return true;
+    //para ajeitar o mid e o vector das innerEdges
+    for (EdgeList::iterator iter = innerEdges.begin();
+         iter != innerEdges.end(); iter++)
+    {
+        (*iter)->setVertices((*iter)->getV1(), (*iter)->getV2());
+    }
+
+    return true;
 }
 
 void AdvancingFront::setBoundarySorted(bool boundarySorted)
@@ -1069,12 +1069,12 @@ void AdvancingFront::setBoundarySorted(bool boundarySorted)
 
 void AdvancingFront::setNumImproves(unsigned int numImproves)
 {
-	this->numImproves = numImproves;
+    this->numImproves = numImproves;
 }
 
 unsigned int AdvancingFront::getNumImproves()
 {
-	return numImproves;
+    return numImproves;
 }
 
 bool AdvancingFront::isBoundarySorted()
@@ -1236,7 +1236,7 @@ enum MethodStatus AdvancingFront::makeTopologyBasedMesh()
     
     if (rejected.empty())
     {
-    	return ADVF_TOPOLOGY_MESH_DONE;
+        return ADVF_TOPOLOGY_MESH_DONE;
     }
 
     while (!rejected.empty())
@@ -1244,19 +1244,19 @@ enum MethodStatus AdvancingFront::makeTopologyBasedMesh()
         Edge *e = rejected.front();
         rejected.pop_front();
 
-#if USE_OPENGL
-        if (boundary->belongs(e))
-        {
-//figura
-            //e->setColor(1.0, 1.0, 1.0);
-            e->setColor(0.0, 0.0, 0.0);
-//endfigura
-        }
-        else
-        {
-            e->setColor(0.0, 0.0, 1.0);
-        }
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//        if (boundary->belongs(e))
+//        {
+//            //figura
+//            //e->setColor(1.0, 1.0, 1.0);
+//            e->setColor(0.0, 0.0, 0.0);
+//            //endfigura
+//        }
+//        else
+//        {
+//            e->setColor(0.0, 0.0, 1.0);
+//        }
+//#endif //#if USE_OPENGL
 
         front.push_back(e);
     }
@@ -1265,7 +1265,7 @@ enum MethodStatus AdvancingFront::makeTopologyBasedMesh()
     
     if (!rejected.empty())
     {
-    	//cout << "rejected nao tah vazio, mas era para estar" << endl;
+        //cout << "rejected nao tah vazio, mas era para estar" << endl;
     }
 
     if (status == ADVF_TOPOLOGY_MESH_DONE)
@@ -1280,9 +1280,9 @@ enum MethodStatus AdvancingFront::improveMesh()
 {
     for (unsigned int i = 0; i < numImproves; i++)
     {
-		bool movedSomeVertex;
+        bool movedSomeVertex;
 
-		laplacianSmoothing(movedSomeVertex);
+        laplacianSmoothing(movedSomeVertex);
     }
 
     return IMPR_IMPROVEMENT_DONE;
@@ -1329,7 +1329,7 @@ bool AdvancingFront::execute(const FaceList &oldmesh)
     
     if (status != QUAD_MAKE_TEMPLATE_BASED_MESH_DONE)
     {
-    	return false;
+        return false;
     }
     
     cout << "gerou malha por templates" << endl;
@@ -1350,16 +1350,16 @@ bool AdvancingFront::execute(const FaceList &oldmesh)
     if (status == ADVF_GEOMETRY_EDGE_REJECTED_TWICE)
     {
         status = makeTopologyBasedMesh();
-    
-    		//cout << methodNotices[status] << endl;
+
+        //cout << methodNotices[status] << endl;
         
         if (status != ADVF_TOPOLOGY_MESH_DONE)
         {
-	        	return false;
-	     }
+            return false;
+        }
     }
     
-   cout << "gerou malha por avanco de fronteira - topologia" << endl;
+    cout << "gerou malha por avanco de fronteira - topologia" << endl;
 
     fillMesh();
 
@@ -1384,79 +1384,79 @@ string AdvancingFront::getText()
     return s;
 }
 
-#if USE_OPENGL
-void AdvancingFront::highlight()
-{
+//#if USE_OPENGL
+//void AdvancingFront::highlight()
+//{
 
-}
+//}
 
-void AdvancingFront::unhighlight()
-{
+//void AdvancingFront::unhighlight()
+//{
 
-}
+//}
 
-void AdvancingFront::draw()
-{
-    static Edge e;
+//void AdvancingFront::draw()
+//{
+//    static Edge e;
 
-	//figura
-	//e.setColor(0.0, 0.0, 1.0);
-	//endfigura
+//    //figura
+//    //e.setColor(0.0, 0.0, 1.0);
+//    //endfigura
 
-    if (!edges.empty())
-    {
-		for (FaceList::iterator iter = mesh.begin();
-			 iter != mesh.end(); iter++)
-		{
-			(*iter)->draw();
-		}
+//    if (!edges.empty())
+//    {
+//        for (FaceList::iterator iter = mesh.begin();
+//             iter != mesh.end(); iter++)
+//        {
+//            (*iter)->draw();
+//        }
 
-		for (EdgeList::iterator iter = edges.begin();
-			 iter != edges.end(); iter++)
-		{
-			(*iter)->draw();
-		}
-    }
-    else
-    {
-    	for (FaceList::iterator iter = mesh.begin();
-			 iter != mesh.end(); iter++)
-		{
-			e.setVertices((*iter)->getV1(), (*iter)->getV2());
-			e.draw();
-			e.setVertices((*iter)->getV2(), (*iter)->getV3());
-			e.draw();
-			e.setVertices((*iter)->getV3(), (*iter)->getV1());
-			e.draw();
-		}
-    }
+//        for (EdgeList::iterator iter = edges.begin();
+//             iter != edges.end(); iter++)
+//        {
+//            (*iter)->draw();
+//        }
+//    }
+//    else
+//    {
+//        for (FaceList::iterator iter = mesh.begin();
+//             iter != mesh.end(); iter++)
+//        {
+//            e.setVertices((*iter)->getV1(), (*iter)->getV2());
+//            e.draw();
+//            e.setVertices((*iter)->getV2(), (*iter)->getV3());
+//            e.draw();
+//            e.setVertices((*iter)->getV3(), (*iter)->getV1());
+//            e.draw();
+//        }
+//    }
 
-    for (VertexList::iterator iter = vertices.begin();
-         iter != vertices.end(); iter++)
-    {
-        (*iter)->highlight();
+//    for (VertexList::iterator iter = vertices.begin();
+//         iter != vertices.end(); iter++)
+//    {
+//        (*iter)->highlight();
 
-        (*iter)->draw();
+//        (*iter)->draw();
 
-        (*iter)->unhighlight();
-    }
+//        (*iter)->unhighlight();
+//    }
 
-    e.setVertices(NULL, NULL);
+//    e.setVertices(NULL, NULL);
 
-#if DEBUG_MODE
-	if (!vertices.empty())
-	{
-		vertices.back()->drawCircle();
-	}
-#endif //#if DEBUG_MODE
-}
+//#if DEBUG_MODE
+//    if (!vertices.empty())
+//    {
+//        vertices.back()->drawCircle();
+//    }
+//#endif //#if DEBUG_MODE
+//}
 
-void AdvancingFront::drawNormals()
-{
-    for (EdgeList::iterator iter = edges.begin();
-         iter != edges.end(); iter++)
-    {
-        (*iter)->drawNormal();
-    }
-}
-#endif //#if USE_OPENGL
+//void AdvancingFront::drawNormals()
+//{
+//    for (EdgeList::iterator iter = edges.begin();
+//         iter != edges.end(); iter++)
+//    {
+//        (*iter)->drawNormal();
+//    }
+//}
+//#endif //#if USE_OPENGL

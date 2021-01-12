@@ -23,25 +23,25 @@ This source code is under GNU General Public License v3 */
 
 class CurvaturaAnalitica : public Curvatura
 {
-		Vetor Qu;
-		Vetor Qv;
-		Vetor Quu;
-		Vetor Quv;
-		Vetor Qvv;
-		Vetor prod;
-	
-		double A;
-		double B;
-		double C;
-		
-	public :
-	
-		virtual double media (  );
-		virtual double gauss (  );
-		virtual double curvaturaCurva (  );
+    Vetor Qu;
+    Vetor Qv;
+    Vetor Quu;
+    Vetor Quv;
+    Vetor Qvv;
+    Vetor prod;
 
-		
-		CurvaturaAnalitica ( const Ponto& v, CoonsPatch& p );
+    double A;
+    double B;
+    double C;
+
+public :
+
+    virtual double media (  );
+    virtual double gauss (  );
+    virtual double curvaturaCurva (  );
+
+
+    CurvaturaAnalitica ( const Ponto& v, CoonsPatch& p );
 };
 
 #endif

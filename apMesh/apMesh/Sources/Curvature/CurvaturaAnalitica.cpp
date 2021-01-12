@@ -17,71 +17,71 @@ extern double TOLERANCIA;
 
 CurvaturaAnalitica::CurvaturaAnalitica ( const Ponto& v, CoonsPatch& p )
 {
-	tuple < double, double > t = p.encontrar_u_v ( v );
+    tuple < double, double > t = p.encontrar_u_v ( v );
 
-	this->Qu = p.Qu ( get < 0 > ( t ), get < 1 > ( t ) );
-	this->Qv = p.Qv ( get < 0 > ( t ), get < 1 > ( t ) );
-	this->Quu = p.Quu ( get < 0 > ( t ), get < 1 > ( t ) );
-	this->Quv = p.Quv ( get < 0 > ( t ), get < 1 > ( t ) );
-	this->Qvv = p.Qvv ( get < 0 > ( t ), get < 1 > ( t ) );
-	// Vetor * Vetor -> produto vetorial
-	this->prod = Qu * Qv;
+    this->Qu = p.Qu ( get < 0 > ( t ), get < 1 > ( t ) );
+    this->Qv = p.Qv ( get < 0 > ( t ), get < 1 > ( t ) );
+    this->Quu = p.Quu ( get < 0 > ( t ), get < 1 > ( t ) );
+    this->Quv = p.Quv ( get < 0 > ( t ), get < 1 > ( t ) );
+    this->Qvv = p.Qvv ( get < 0 > ( t ), get < 1 > ( t ) );
+    // Vetor * Vetor -> produto vetorial
+    this->prod = Qu * Qv;
 
-	//cout << "==========================================================" << endl;
-	//cout << "P - " << v.id << ": ( " << get < 0 > ( t ) << ", " << get < 1 > ( t ) << ")" << endl;
-	//cout << "Qu ( " << Qu.x << ", " << Qu.y << ", " << Qu.z << " )" << endl;
-	//cout << "Qv ( " << Qv.x << ", " << Qv.y << ", " << Qv.z << " )" << endl;
-	//cout << "Quu ( " << Quu.x << ", " << Quu.y << ", " << Quu.z << " )" << endl;
-	//cout << "Quv ( " << Quv.x << ", " << Quv.y << ", " << Quv.z << " )" << endl;
-	//cout << "Qvv ( " << Qvv.x << ", " << Qvv.y << ", " << Qvv.z << " )" << endl;
+    //cout << "==========================================================" << endl;
+    //cout << "P - " << v.id << ": ( " << get < 0 > ( t ) << ", " << get < 1 > ( t ) << ")" << endl;
+    //cout << "Qu ( " << Qu.x << ", " << Qu.y << ", " << Qu.z << " )" << endl;
+    //cout << "Qv ( " << Qv.x << ", " << Qv.y << ", " << Qv.z << " )" << endl;
+    //cout << "Quu ( " << Quu.x << ", " << Quu.y << ", " << Quu.z << " )" << endl;
+    //cout << "Quv ( " << Quv.x << ", " << Quv.y << ", " << Quv.z << " )" << endl;
+    //cout << "Qvv ( " << Qvv.x << ", " << Qvv.y << ", " << Qvv.z << " )" << endl;
 
-	//if ( 0 == prod.modulo() )
-		//cout << "Qu X Qv = 0 no ponto p" << v.id << " (" << v.x << ", " << v.y << ", " << v.z << ")" << endl;
+    //if ( 0 == prod.modulo() )
+    //cout << "Qu X Qv = 0 no ponto p" << v.id << " (" << v.x << ", " << v.y << ", " << v.z << ")" << endl;
 
-	// Vetor ^ Vetor -> produto escalar
-	this->A = prod ^ Quu;
-	this->B = prod ^ Quv;
-	this->C = prod ^ Qvv;
+    // Vetor ^ Vetor -> produto escalar
+    this->A = prod ^ Quu;
+    this->B = prod ^ Quv;
+    this->C = prod ^ Qvv;
 
-//	cout << "A = " << this->A << endl;
-//	cout << "B = " << this->B << endl;
-//	cout << "C = " << this->C << endl;
+    //	cout << "A = " << this->A << endl;
+    //	cout << "B = " << this->B << endl;
+    //	cout << "C = " << this->C << endl;
 }
 
 double CurvaturaAnalitica::media (  )
 {
-	// Vetor ^ Vetor -> produto escalar
-	if ( prod.modulo () <= TOLERANCIA ) return 0.0; // regra de L'Hôpital
+    // Vetor ^ Vetor -> produto escalar
+    if ( prod.modulo () <= TOLERANCIA ) return 0.0; // regra de L'Hôpital
 
-	// H = ( A.|Qv|² - 2.B.Qu.Qv + C.|Qu|² ) / ( 2.| Qu x Qv |³ )
-	double resultado = ( static_cast <double> (	A * Qv.modulo ()*Qv.modulo ()
-												- 2 * B * (Qu ^ Qv)
-												+ C * Qu.modulo ()*Qu.modulo ()	) /
-												( 2 * pow ( prod.modulo (), 3 ) ) );
+    // H = ( A.|Qv|² - 2.B.Qu.Qv + C.|Qu|² ) / ( 2.| Qu x Qv |³ )
+    double resultado = ( static_cast <double> (	A * Qv.modulo ()*Qv.modulo ()
+                                                - 2 * B * (Qu ^ Qv)
+                                                + C * Qu.modulo ()*Qu.modulo ()	) /
+                         ( 2 * pow ( prod.modulo (), 3 ) ) );
 
-	//cout << "Ha = " << resultado << endl;
-	//cout << "==========================================================" << endl;
+    //cout << "Ha = " << resultado << endl;
+    //cout << "==========================================================" << endl;
 
-	return ( fabs(resultado) <= TOLERANCIA ) ? 0.0 : resultado;
+    return ( fabs(resultado) <= TOLERANCIA ) ? 0.0 : resultado;
 }
 
 double CurvaturaAnalitica::gauss (  )
 {
-	if ( prod.modulo () <= TOLERANCIA ) return 0.0; // regra de L'Hôpital
+    if ( prod.modulo () <= TOLERANCIA ) return 0.0; // regra de L'Hôpital
 
-	// K = ( A.C - B² ) / | Qu x Qv |⁴
-	double resultado = static_cast <double> (	this->A * this->C - pow ( this->B, 2 ) ) /
-												pow ( this->prod.modulo(), 4 );
+    // K = ( A.C - B² ) / | Qu x Qv |⁴
+    double resultado = static_cast <double> (	this->A * this->C - pow ( this->B, 2 ) ) /
+            pow ( this->prod.modulo(), 4 );
 
-	//cout << "Ga = " << resultado << endl;
+    //cout << "Ga = " << resultado << endl;
 
-	return ( fabs(resultado) <= TOLERANCIA ) ? 0.0 : resultado;
+    return ( fabs(resultado) <= TOLERANCIA ) ? 0.0 : resultado;
 }
 
 double CurvaturaAnalitica::curvaturaCurva()
 {
-  //formula curvatura
-  // k = |r'(t)Xr''(t)| / |r'(t)|³
+    //formula curvatura
+    // k = |r'(t)Xr''(t)| / |r'(t)|³
     return -1;
 
 }

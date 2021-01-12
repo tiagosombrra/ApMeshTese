@@ -13,35 +13,27 @@ This source code is under GNU General Public License v3 */
 #define CurvParamHermite_h
 
 #include "CurvaParametrica.h"
-#include "../Numerical/IMatrix.h"
 
 class CurvParamHermite : public CurvaParametrica
 {
-		Vetor DP0; // vetor tangente no ponto inicial
-		Vetor DP1; // vetor tangente no ponto final
+    Vetor DP0; // vetor tangente no ponto inicial
+    Vetor DP1; // vetor tangente no ponto final
 
-	public:
+public:
 
-	    Vetor getDP0 ( ) const { return this->DP0; };
-	    Vetor getDP1 ( ) const { return this->DP1; };
-
-		void setDP0 ( const Vetor& v ) { this->DP0 = v; };
-		void setDP1 ( const Vetor& v ) { this->DP1 = v; };
-
-		friend class HermitePatch; // patch de Hermite pode acessar os atributos
-
-		// IMPORTANTE: Ao usar o construtor default, não esquecer de setar
-		// os pontos inicial e final e os vetores tangentes inicial e final !!!
-		CurvParamHermite (  );
-
-		// Esse construtor é mais recomendado !!! Evita erros ao esquecer de setar
-		// os valores indicados na observação do construtor default !!!
-		CurvParamHermite ( Ponto p0, Ponto p1, Vetor dp0, Vetor dp1 );
-		CurvParamHermite ( CurvParamHermite* );
-
-        double calcularCurvatura(double t);
-
-
-		~CurvParamHermite (  );
+    Vetor getDP0 ( ) const;
+    Vetor getDP1 ( ) const;
+    void setDP0 ( const Vetor& v );
+    void setDP1 ( const Vetor& v );
+    friend class HermitePatch; // patch de Hermite pode acessar os atributos
+    // IMPORTANTE: Ao usar o construtor default, não esquecer de setar
+    // os pontos inicial e final e os vetores tangentes inicial e final !!!
+    CurvParamHermite (  );
+    // Esse construtor é mais recomendado !!! Evita erros ao esquecer de setar
+    // os valores indicados na observação do construtor default !!!
+    CurvParamHermite ( Ponto p0, Ponto p1, Vetor dp0, Vetor dp1 );
+    CurvParamHermite ( CurvParamHermite* );
+    double calcularCurvatura(double t);
+    ~CurvParamHermite (  );
 };
 #endif

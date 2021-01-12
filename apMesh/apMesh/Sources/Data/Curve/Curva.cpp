@@ -44,19 +44,19 @@ unsigned int Curva::getNumDePontos() const {
 Ponto* Curva::getPonto ( const unsigned int i )
 {
     list <Ponto*>::iterator it = this->pontos.begin();
-	advance ( it, i );
-	
-	return *it;
+    advance ( it, i );
+
+    return *it;
 }
 
 void Curva::setPontos ( list < Ponto* > novaLista )
 {
-	this->pontos = novaLista;
+    this->pontos = novaLista;
 }
 
 void Curva::inserePatch ( Patch* p )
 {
-	this->patches.push_back ( p );
+    this->patches.push_back ( p );
 }
 
 unsigned int Curva::getNumDePatches() const {
@@ -71,10 +71,10 @@ Patch* Curva::getPatch ( const unsigned int i )
 // verifica se uma curva é de borda
 bool Curva::estaNaBorda (  )
 {
-	if ( this->getNumDePatches() == 1 )
-		return true;
-	
-	return false;
+    if ( this->getNumDePatches() == 1 )
+        return true;
+
+    return false;
 }
 
 Curva::Curva() {
@@ -84,25 +84,25 @@ Curva::Curva() {
 
 Curva::Curva( Curva * antiga )
 {
-	this->Id = antiga->Id;
-	this->L = antiga->L;
-	this->pontos = antiga->pontos;
+    this->Id = antiga->Id;
+    this->L = antiga->L;
+    this->pontos = antiga->pontos;
 }
 
 
 Curva::~Curva (  )
 {
-	// 1. apaga a lista de pontos
-	while ( !this->pontos.empty ( ) )
-	{
-		Ponto* P = this->pontos.back ( );
-		this->pontos.pop_back ( );
-		delete P;               
-	}
+    // 1. apaga a lista de pontos
+    while ( !this->pontos.empty ( ) )
+    {
+        Ponto* P = this->pontos.back ( );
+        this->pontos.pop_back ( );
+        delete P;
+    }
 
-	// 3. apaga a lista de pontos
-	this->pontos.clear ( );
-	
-	// 4. apaga a lista de patches
-	this->patches.clear ( );
+    // 3. apaga a lista de pontos
+    this->pontos.clear ( );
+
+    // 4. apaga a lista de patches
+    this->patches.clear ( );
 }

@@ -20,14 +20,14 @@ using namespace std;
 
 class Malha
 {
-		vector <SubMalha*> subMalhas;
+    vector <SubMalha*> subMalhas;
 
-	public :
-		void insereSubMalha ( SubMalha* sub );
-		unsigned int getNumDeSubMalhas (  ) const;
-		SubMalha* getSubMalha ( const unsigned int i ); // retorna a i-ésima submalha
+public :
+    void insereSubMalha ( SubMalha* sub );
+    unsigned int getNumDeSubMalhas (  ) const;
+    SubMalha* getSubMalha ( const unsigned int i ); // retorna a i-ésima submalha
 
-		~Malha (  );
+    ~Malha (  );
 };
 
 #endif

@@ -58,18 +58,18 @@ VertexList Boundary::getBoundary()
 void Boundary::setEdges(EdgeList edges)
 {
     for (EdgeList::iterator iter = edges.begin();
-		 iter != edges.end(); iter++)
-	{
-		(*iter)->setInBoundary(false);
-	}
+         iter != edges.end(); iter++)
+    {
+        (*iter)->setInBoundary(false);
+    }
 
     this->edges = edges;
 
     for (EdgeList::iterator iter = edges.begin();
-		 iter != edges.end(); iter++)
-	{
-		(*iter)->setInBoundary(true);
-	}
+         iter != edges.end(); iter++)
+    {
+        (*iter)->setInBoundary(true);
+    }
 }
 
 EdgeList Boundary::getEdges()
@@ -93,13 +93,13 @@ Vertex *Boundary::addVertex(double x, double y, CurvaParametrica *c)
 
     v = new Vertex(x, y, ++lastVertexId);
 
-#if USE_OPENGL
-    //figura
-    //v->setSize(3.0);
-    //v->setSize(1.0);
-    v->setColor(0.0, 0.0, 0.0);
-    //endfigura
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//    //figura
+//    //v->setSize(3.0);
+//    //v->setSize(1.0);
+//    v->setColor(0.0, 0.0, 0.0);
+//    //endfigura
+//#endif //#if USE_OPENGL
 
     if (!first)
     {
@@ -113,11 +113,11 @@ Vertex *Boundary::addVertex(double x, double y, CurvaParametrica *c)
         
         e->makeParamMid();
 
-////figura
-//#if USE_OPENGL
-//e->setColor(0.0, 0.0, 0.0);
-//#endif //#if USE_OPENGL
-////endfigura
+        ////figura
+        //#if USE_OPENGL
+        //e->setColor(0.0, 0.0, 0.0);
+        //#endif //#if USE_OPENGL
+        ////endfigura
 
         edges.push_back(e);
 
@@ -163,11 +163,11 @@ bool Boundary::close(CurvaParametrica *c)
 
     first = NULL;
 
-////figura
-//#if USE_OPENGL
-//e->setColor(0.0, 0.0, 0.0);
-//#endif //#if USE_OPENGL
-////endfigura
+    ////figura
+    //#if USE_OPENGL
+    //e->setColor(0.0, 0.0, 0.0);
+    //#endif //#if USE_OPENGL
+    ////endfigura
 
     e->setInBoundary(true);
 
@@ -272,38 +272,38 @@ string Boundary::getText()
     return s;
 }
 
-#if USE_OPENGL
-void Boundary::highlight()
-{
+//#if USE_OPENGL
+//void Boundary::highlight()
+//{
 
-}
+//}
 
-void Boundary::unhighlight()
-{
+//void Boundary::unhighlight()
+//{
 
-}
+//}
 
-void Boundary::draw()
-{
-    for (EdgeList::iterator iter = edges.begin();
-         iter != edges.end(); iter++)
-    {
-        (*iter)->draw();
-    }
+//void Boundary::draw()
+//{
+//    for (EdgeList::iterator iter = edges.begin();
+//         iter != edges.end(); iter++)
+//    {
+//        (*iter)->draw();
+//    }
 
-    for (VertexList::iterator iter = boundary.begin();
-         iter != boundary.end(); iter++)
-    {
-        (*iter)->draw();
-    }
-}
+//    for (VertexList::iterator iter = boundary.begin();
+//         iter != boundary.end(); iter++)
+//    {
+//        (*iter)->draw();
+//    }
+//}
 
-void Boundary::drawNormals()
-{
-    for (EdgeList::iterator iter = edges.begin();
-         iter != edges.end(); iter++)
-    {
-        (*iter)->drawNormal();
-    }
-}
-#endif //#if USE_OPENGL
+//void Boundary::drawNormals()
+//{
+//    for (EdgeList::iterator iter = edges.begin();
+//         iter != edges.end(); iter++)
+//    {
+//        (*iter)->drawNormal();
+//    }
+//}
+//#endif //#if USE_OPENGL

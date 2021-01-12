@@ -16,17 +16,17 @@ extern double TOLERANCIA; // distância máxima entre dois pontos
 
 Matrix4x4 iniciaMatrizHermite ( )
 {
-    Matrix4x4 M;
+    Matrix4x4 H;
     //    m->setElement( 0, 0, 2 ); m->setElement( 0, 1,-2 ); m->setElement( 0, 2, 1 ); m->setElement( 0, 3, 1 );
     //    m->setElement( 1, 0,-3 ); m->setElement( 1, 1, 3 ); m->setElement( 1, 2,-2 ); m->setElement( 1, 3,-1 );
     //    m->setElement( 2, 0, 0 ); m->setElement( 2, 1, 0 ); m->setElement( 2, 2, 1 ); m->setElement( 2, 3, 0 );
     //    m->setElement( 3, 0, 1 ); m->setElement( 3, 1, 0 ); m->setElement( 3, 2, 0 ); m->setElement( 3, 3, 0 );
-    M(0,0) = 2;  M(0,1) = -2; M(0,2) = 1;  M(0,3) = 1;
-    M(1,0) = -3; M(1,1) = 3;  M(1,2) = -2; M(1,3) = -1;
-    M(2,0) = 0;  M(2,1) = 0;  M(2,2) = 1;  M(2,3) = 0;
-    M(3,0) = 1;  M(3,1) = 0;  M(3,2) = 0;  M(3,3) = 0;
+    H(0,0) = 2;  H(0,1) = -2; H(0,2) = 1;  H(0,3) = 1;
+    H(1,0) = -3; H(1,1) = 3;  H(1,2) = -2; H(1,3) = -1;
+    H(2,0) = 0;  H(2,1) = 0;  H(2,2) = 1;  H(2,3) = 0;
+    H(3,0) = 1;  H(3,1) = 0;  H(3,2) = 0;  H(3,3) = 0;
 
-    return M;
+    return H;
 }
 
 
@@ -182,22 +182,22 @@ Ponto HermitePatch::calculaPonto_u_v ( )
 
     // C = ( U * ( H * ( G * ( Ht * V ) ) ) )
     C.x =	(	this->getU  ( ) *
-                        (	//this->getH  ( ) *
-                                (	this->getGx ( ) *
-                                        (//(	this->getH ( ) ).transposta ( ) *
-                                         this->getV  ( ) ) ) ) )( 0, 0 );
+                (	//this->getH  ( ) *
+                    (	this->getGx ( ) *
+                        (//(	this->getH ( ) ).transposta ( ) *
+                         this->getV  ( ) ) ) ) )( 0, 0 );
 
     C.y =	(	this->getU  ( ) *
-                        (//	this->getH  ( ) *
-                         (	this->getGy ( ) *
-                                (//(	this->getH ( ) ).transposta ( ) *
-                                 this->getV  ( ) ) ) ) )( 0, 0 );
+                (//	this->getH  ( ) *
+                 (	this->getGy ( ) *
+                    (//(	this->getH ( ) ).transposta ( ) *
+                     this->getV  ( ) ) ) ) )( 0, 0 );
 
     C.z =	(	this->getU  ( ) *
-                        (//	this->getH  ( ) *
-                         (	this->getGz ( ) *
-                                (//(	this->getH ( ) ).transposta ( ) *
-                                 this->getV  ( ) ) ) ) )( 0, 0 );
+                (//	this->getH  ( ) *
+                 (	this->getGz ( ) *
+                    (//(	this->getH ( ) ).transposta ( ) *
+                     this->getV  ( ) ) ) ) )( 0, 0 );
 
     //cout << "calculaPonto_u_v () = " << C.x << " " << C.y << " " << C.z << endl;
     return C;
@@ -632,7 +632,10 @@ HermitePatch::HermitePatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
     Gz(2,2) = this->Tw00.z; Gz(2,3) = this->Tw01.z;
     Gz(3,2) = this->Tw10.z; Gz(3,3) = this->Tw11.z;
     //
-
+    //6. Iniciar matrix Hermite
+    //
+    this->H = iniciaMatrizHermite();
+    //
     this->Gx = this->getH() * this->getGx() * this->getH();
     this->Gy = this->getH() * this->getGy() * this->getH();
     this->Gz = this->getH() * this->getGz() * this->getH();
@@ -738,6 +741,8 @@ HermitePatch::HermitePatch ( HermitePatch *antigo ) : CoonsPatch ( antigo )
     this->Pt10 = antigo->Pt10;   this->Pt11 = antigo->Pt11;   this->Qv10 = antigo->Qv10;   this->Qv11 = antigo->Qv11;
     this->Qu00 = antigo->Qu00;   this->Qu01 = antigo->Qu01;   this->Tw00 = antigo->Tw00;   this->Tw01 = antigo->Tw01;
     this->Qu10 = antigo->Qu10;   this->Qu11 = antigo->Qu11;   this->Tw10 = antigo->Tw10;   this->Tw11 = antigo->Tw11;
+
+    this->H = iniciaMatrizHermite();
 
     this->Gx = antigo->Gx;
     this->Gy = antigo->Gy;

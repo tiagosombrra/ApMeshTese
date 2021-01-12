@@ -6,9 +6,9 @@ Shape::Shape(long int id)
 {
     setId(id);
     //setTolerance(0.001);
-#if USE_OPENGL
-    setColor(1.0, 1.0, 1.0);
-#endif //#if USE_OPENGL
+//#if USE_OPENGL
+//    setColor(1.0, 1.0, 1.0);
+//#endif //#if USE_OPENGL
 }
 
 Shape::~Shape()
@@ -31,48 +31,48 @@ void Shape::setTolerance(double tolerance)
     Shape::tolerance = tolerance;
 }
 
-#if USE_OPENGL
-void Shape::setColor(double r, double g, double b)
-{
-    setR(r);
-    setG(g);
-    setB(b);
-}
+//#if USE_OPENGL
+//void Shape::setColor(double r, double g, double b)
+//{
+//    setR(r);
+//    setG(g);
+//    setB(b);
+//}
 
-void Shape::setR(double r)
-{
-    this->r = r;
-}
+//void Shape::setR(double r)
+//{
+//    this->r = r;
+//}
 
-void Shape::setG(double g)
-{
-    this->g = g;
-}
+//void Shape::setG(double g)
+//{
+//    this->g = g;
+//}
 
-void Shape::setB(double b)
-{
-    this->b = b;
-}
+//void Shape::setB(double b)
+//{
+//    this->b = b;
+//}
 
-double Shape::getR()
-{
-    return r;
-}
+//double Shape::getR()
+//{
+//    return r;
+//}
 
-double Shape::getG()
-{
-    return g;
-}
+//double Shape::getG()
+//{
+//    return g;
+//}
 
-double Shape::getB()
-{
-    return b;
-}
+//double Shape::getB()
+//{
+//    return b;
+//}
 
-void Shape::getColor(double *r, double *g, double *b)
-{
-    *r = this->r;
-    *g = this->g;
-    *b = this->b;
-}
-#endif //#if USE_OPENGL
+//void Shape::getColor(double *r, double *g, double *b)
+//{
+//    *r = this->r;
+//    *g = this->g;
+//    *b = this->b;
+//}
+//#endif //#if USE_OPENGL

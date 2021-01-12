@@ -13,36 +13,36 @@ This source code is under GNU General Public License v3 */
 
 void Malha::insereSubMalha ( SubMalha* sub )
 {
-	this->subMalhas.push_back ( sub );
+    this->subMalhas.push_back ( sub );
 }
 
 
 unsigned int Malha::getNumDeSubMalhas (  ) const
 {
-	return ( unsigned int ) this->subMalhas.size();
+    return ( unsigned int ) this->subMalhas.size();
 }
 
 
 SubMalha* Malha::getSubMalha ( const unsigned int i )
 {
-	// adicionar excessão caso i > malhas.size();
-	/*list <SubMalha*>::iterator it = this->subMalhas.begin();
-	
-	advance ( it, i );
-	
-	return *it;*/
-	
-	return (i < this->subMalhas.size()) ? this->subMalhas[i] : NULL;
+    // adicionar excessão caso i > malhas.size();
+    /*list <SubMalha*>::iterator it = this->subMalhas.begin();
+
+    advance ( it, i );
+
+    return *it;*/
+
+    return (i < this->subMalhas.size()) ? this->subMalhas[i] : NULL;
 }
 
 
 Malha::~Malha (  )
 {
-	// 1. apaga a lista de SubMalhas
-	while ( !this->subMalhas.empty ( ) )
-	{
-		SubMalha* SM = this->subMalhas.back ( );
-		this->subMalhas.pop_back ( );
-		delete SM;
-	}
+    // 1. apaga a lista de SubMalhas
+    while ( !this->subMalhas.empty ( ) )
+    {
+        SubMalha* SM = this->subMalhas.back ( );
+        this->subMalhas.pop_back ( );
+        delete SM;
+    }
 }

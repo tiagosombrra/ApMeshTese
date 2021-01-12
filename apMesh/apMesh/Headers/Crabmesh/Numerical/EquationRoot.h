@@ -8,13 +8,13 @@ namespace Data
 {
 namespace Numerical
 {
-	class EquationRoot
-	{
-	public:
+class EquationRoot
+{
+public:
 
-        virtual double execute(EquationRootFunction *function) = 0;
+    virtual double execute(EquationRootFunction *function) = 0;
 
-	};
+};
 }
 }
 

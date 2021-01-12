@@ -16,16 +16,16 @@ class SubMalha;
 
 class Patch
 {
-	protected :
-		SubMalha* malha;
-		
-	public :
-		void setMalha ( SubMalha* m );
-		SubMalha* getMalha (  ) const ;
+protected :
+    SubMalha* malha;
 
-		Patch  ( );
-		Patch ( Patch * );
-		~Patch ( );
+public :
+    void setMalha ( SubMalha* m );
+    SubMalha* getMalha (  ) const ;
+
+    Patch  ( );
+    Patch ( Patch * );
+    ~Patch ( );
 };
 
 #endif

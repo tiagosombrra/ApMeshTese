@@ -54,10 +54,12 @@ Modelo::~Modelo (  )
     // 1. apaga a lista de malha
     while ( !this->malhas.empty ( ) )
     {
-        Malha* M = this->malhas.back ( );
+        Malha *M = this->malhas.back ( );
         this->malhas.pop_back ( );
         delete M;
     }
+
+  //  cout<<"saida Modelo"<<endl;
 
 
 }

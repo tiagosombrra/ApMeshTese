@@ -41,8 +41,8 @@ Malha::~Malha (  )
     // 1. apaga a lista de SubMalhas
     while ( !this->subMalhas.empty ( ) )
     {
-        SubMalha* SM = this->subMalhas.back ( );
+        //SubMalha* SM = this->subMalhas.back ( );
         this->subMalhas.pop_back ( );
-        delete SM;
+        //delete SM;
     }
 }

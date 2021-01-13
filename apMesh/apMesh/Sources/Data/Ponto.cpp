@@ -15,6 +15,11 @@ using namespace std;
 
 Ponto::Ponto() {
 
+    this->id = -1;
+    this->x = 0;
+    this->y = 0;
+    this->z = 0;
+
 }
 
 Ponto::Ponto(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {

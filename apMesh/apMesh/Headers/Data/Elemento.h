@@ -13,8 +13,9 @@ This source code is under GNU General Public License v3 */
 #define Elemento_h
 
 #include <iostream>
-using namespace std;
 #include "Vetor.h"
+
+using namespace std;
 
 class Noh;
 

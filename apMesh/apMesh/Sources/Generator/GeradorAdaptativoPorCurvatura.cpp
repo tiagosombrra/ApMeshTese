@@ -418,6 +418,77 @@ double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
     double Nj = 0; // erro global da malha
     SubMalha* sub = 0;
 
+    Ns = malha->getNumDeSubMalhas ( );
+
+    // Calcula o erro global de cada submalha
+    for ( unsigned int i = 0; i < Ns; ++i )
+    {
+        sub = malha->getSubMalha ( i );
+        Nv = sub->getNumDeNos ( );
+        Njs = 0.0;
+        curvPower = 0.0;
+
+        // Calcula o erro relativo para cada nó e soma a Nj
+        for ( unsigned int j = 0; j < Nv; ++j )
+        {
+            Ponto *n = sub->getNoh ( j );
+            Patch *p = sub->getPatch (  );
+            CurvaturaAnalitica ka (	*( static_cast < Noh* > ( n ) ), *( static_cast < CoonsPatch* > ( p ) ) );
+            CurvaturaDiscreta kd ( *( static_cast < Noh* > ( n ) ) );
+            double Ga = ka.gauss();
+            double Gd = kd.gauss();
+            double Ha = ka.media();
+            double Hd = kd.media();
+            // atualiza as curvaturas do nó ( para que não sejam recalculadas na
+            // adaptação das curvas e do domínio )
+            ((Noh*)n)->Ga = Ga;
+            ((Noh*)n)->Gd = Gd;
+            ((Noh*)n)->Ha = Ha;
+            ((Noh*)n)->Hd = Hd;
+
+            double power = 0.0;
+            double diff = 0.0;
+
+            if ( fabs ( Ga ) >= TOLERANCIA )
+            {
+                diff = Gd - Ga;
+                power = pow( diff, 2);
+                Njs += power;
+                curvPower += pow(Ga, 2);
+            }
+            else if ( fabs ( Ha ) >= TOLERANCIA )
+            {
+                diff = Hd - Ha;
+                power = pow( diff, 2);
+                Njs += power;
+                curvPower += pow(Ha, 2);
+            }
+        }
+
+        if (Njs > 0.0 && curvPower > 0.0) {
+            Njs =(double) sqrt( Njs / curvPower) / Nv;
+        }
+
+        Nj += Njs;
+    }
+
+
+    Nj /= Ns; // o erro global é a média do erro das submalhas
+
+    return Nj;
+}
+
+void GeradorAdaptativoPorCurvatura::saveErroMesh(Malha *malha)
+{
+    cout << "Salvando a Malha com "<< malha->getNumDeSubMalhas ( )<<" subMalhas"<< endl;
+
+    unsigned int Ns = 0; // número de submalhas
+    unsigned int Nv = 0; // número de vértices
+    double Njs = 0; // erro global da submalha
+    double curvPower = 0.0;
+    //double Nj = 0; // erro global da malha
+    SubMalha* sub = 0;
+
 
     // Escreve arquivo com as curvaturas
     stringstream nome;
@@ -430,44 +501,25 @@ double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
 
     Ns = malha->getNumDeSubMalhas ( );
 
-    cout << "Ns = " << Ns << endl;
-
     // Calcula o erro global de cada submalha
     for ( unsigned int i = 0; i < Ns; ++i )
     {
-        //		cout << "for " << i << " to " << Ns-1 << " do\n{" << endl;
         sub = malha->getSubMalha ( i );
         Nv = sub->getNumDeNos ( );
         Njs = 0.0;
         curvPower = 0.0;
 
-        //		cout << "\tNv = " << Nv << endl;
         // Calcula o erro relativo para cada nó e soma a Nj
         for ( unsigned int j = 0; j < Nv; ++j )
         {
-            //			cout << "\tfor j = " << j << " to " << Nv-1 << " do\n\t{" << endl;
-
             Ponto *n = sub->getNoh ( j );
             Patch *p = sub->getPatch (  );
-
-            // APAGAR
-            //			cout << "\t\t";
-            //			n->mostraPonto();
-
-
             CurvaturaAnalitica ka (	*( static_cast < Noh* > ( n ) ), *( static_cast < CoonsPatch* > ( p ) ) );
-
             CurvaturaDiscreta kd ( *( static_cast < Noh* > ( n ) ) );
-
             double Ga = ka.gauss();
             double Gd = kd.gauss();
             double Ha = ka.media();
             double Hd = kd.media();
-
-            // APAGAR
-            //                                cout << "\t\tCurvaturas:\n\t\t\tGa = " << Ga << ", Gd = " << Gd
-            //                                         << "\n\t\t\tHa = " << Ha << ", Hd = " << Hd << endl;
-
             // atualiza as curvaturas do nó ( para que não sejam recalculadas na
             // adaptação das curvas e do domínio )
             ((Noh*)n)->Ga = Ga;
@@ -517,30 +569,17 @@ double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
 
             arquivo << endl;
 
-            //
-            //  cout << "\t\tNjs = " << Njs << endl;
+
         }
 
         if (Njs > 0.0 && curvPower > 0.0) {
             Njs =(double) sqrt( Njs / curvPower) / Nv;
         }
-
-        //                cout << "\tNjs/Nv = " << Njs << endl;
-
-        Nj += Njs;
     }
 
     arquivo.close();
 
-    //        cout << "Nj" << " = " << Nj << " / " << Ns << endl;
-
-    Nj /= Ns; // o erro global é a média do erro das submalhas
-
-    //        cout << "Nj = " << Nj << endl;
-
-    cout << "===========================================================" << endl;
-
-    return Nj;
+    cout << "Malha salva com sucesso!!!" << endl;
 }
 
 

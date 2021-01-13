@@ -19,6 +19,7 @@ bool Adjacente::confirmaEsq ( const Noh& noh, const Elemento& P, const Elemento&
 {
     //	quem é o noh para P? ( n1, n2 ou n3? )
     //	se noh = P.n1 então verifique se U possui a sequência P.n1 P.n3
+
     if ( noh == P.getN ( 1 ) )
     {
         if (

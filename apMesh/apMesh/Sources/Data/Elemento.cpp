@@ -28,4 +28,5 @@ Vetor Elemento::getNormal() const {
 }
 
 Elemento::~Elemento() {
+
 }

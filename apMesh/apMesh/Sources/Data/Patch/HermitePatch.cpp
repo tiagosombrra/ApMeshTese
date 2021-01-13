@@ -121,7 +121,7 @@ tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A(0,j) = static_cast<double >(A(0, j)/pivo);
+            A(0,j) = static_cast<double >(A(0, j))/pivo;
             A(1,j) = A(1,j) - A_10*(A(0,j));
             A(2,j) = A(2,j) - A_20*(A(0,j));
         }
@@ -139,7 +139,7 @@ tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A(1,j) = static_cast<double>(A(1,j)/pivo);
+            A(1,j) = static_cast<double>(A(1,j))/pivo;
             A(0,j) = A(0,j) - A_01*(A(1,j));
             A(2,j) = A(2,j) - A_21*(A(1,j));
         }
@@ -636,9 +636,9 @@ HermitePatch::HermitePatch ( Curva* C1, Curva* C2, Curva* C3, Curva* C4,
     //
     this->H = iniciaMatrizHermite();
     //
-    this->Gx = this->getH() * this->getGx() * this->getH();
-    this->Gy = this->getH() * this->getGy() * this->getH();
-    this->Gz = this->getH() * this->getGz() * this->getH();
+    this->Gx = this->getH() * this->getGx() * this->getH().transpose();
+    this->Gy = this->getH() * this->getGy() * this->getH().transpose();
+    this->Gz = this->getH() * this->getGz() * this->getH().transpose();
 }
 
 
@@ -756,4 +756,5 @@ HermitePatch::~HermitePatch (  )
 {
     delete &V;
     delete &U;
+    delete &H;
 }

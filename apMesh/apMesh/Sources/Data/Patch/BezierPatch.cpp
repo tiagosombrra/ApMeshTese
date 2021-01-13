@@ -122,7 +122,7 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A(0,j) = static_cast<double >(A(0, j)/pivo);
+            A(0,j) = static_cast<double >(A(0, j))/pivo;
             A(1,j) = A(1,j) - A_10*(A(0,j));
             A(2,j) = A(2,j) - A_20*(A(0,j));
         }

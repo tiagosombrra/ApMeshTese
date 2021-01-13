@@ -39,6 +39,6 @@ Patch::Patch ( Patch * )
 Patch::~Patch ( )
 {
     // não delete o que não for alocado com new!
-    //if ( this->malha != NULL )
-    //	delete this->malha;
+    if ( this->malha != NULL )
+        delete this->malha;
 }

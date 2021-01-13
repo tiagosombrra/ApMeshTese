@@ -32,6 +32,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo
     // a lista de pontos da curva é preenchida durante a geração
     virtual SubMalha* malhaInicial ( CoonsPatch* );
     virtual double erroGlobal ( Malha* malha );
+    virtual void saveErroMesh(Malha *malha);
 
 public :
     GeradorAdaptativoPorCurvatura ( Modelo& );

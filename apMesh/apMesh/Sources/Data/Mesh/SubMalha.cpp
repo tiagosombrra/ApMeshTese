@@ -73,4 +73,5 @@ SubMalha::~SubMalha (  )
         this->elementos.pop_back ( );
         delete E;
     }
+
 }

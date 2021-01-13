@@ -26,7 +26,7 @@ void CurvaturaDiscreta::ordenaAdjacencia ( const Noh& n )
     list < Elemento* > nova_lista;
     nova_lista = n.guarda_chuva;
 
-    Noh n1 = n;
+   // Noh n1 = n;
 
     //		retire o primeiro elemento E da nova_lista e insira em elementos
     Elemento *E = nova_lista.front ( );
@@ -61,7 +61,7 @@ void CurvaturaDiscreta::ordenaAdjacencia ( const Noh& n )
         this->fator = M_PI; // n está na borda !!!
         E = this->elementos.front ( );
 
-        bool adjDir = true; // encontrou um adjacente à esquerda
+        bool adjDir = true; // encontrou um adjacente à direita
 
         while ( adjDir )
         {

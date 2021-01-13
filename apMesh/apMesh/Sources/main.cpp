@@ -18,14 +18,12 @@ double DELTA = 0.0001;
 double TOLERANCIA = 0.0001;
 double TOLERANCIA_CURVATURA = 0.001;
 double TOLERANCIA_AFT = 0.0001;
-double PROPORCAO = 1.25; // proporção usada no avanço de fronteira
-double SUAVIZACAO = 8; // número de vezes que se dará a suavização laplaciana
+double PROPORCAO = 0.6; // proporção usada no avanço de fronteira
+double SUAVIZACAO = 7; // número de vezes que se dará a suavização laplaciana
 double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
-double EPSYLON = 0.01;
+double EPSYLON = 0.02;
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
-
-bool geraMalha = true;
 
 Geometria *modelBook(Geometria *geo);
 Geometria *modelPlanBook(Geometria *geo);
@@ -46,12 +44,13 @@ Geometria *modelUtahteapot(Geometria *geo);
 
 int main(int argc, char **argv)
 {
+    bool geraMalha = true;
     Modelo M;
 
     if (argc == 1)
     {
         Geometria *geo = new Geometria;
-        M.setGeometria ( modelCurvaBezier(geo) );
+        M.setGeometria ( modelUtahteapot(geo) );
     }
     else
     {
@@ -85,6 +84,8 @@ int main(int argc, char **argv)
     {
         cout <<"Erro ao ler modelo, por favor inserir modelo ou verificar se é válido"<<endl;
     }
+
+    return 0;
 }
 
 
@@ -570,7 +571,7 @@ Geometria *modelCurvaBezier(Geometria *geo){
     Ponto* p30 = new Vertice ( 1.0, 1.0,  0.0 );
 
     Ponto* p01 = new Vertice ( 0.5, -1.0,  0.0 );
-    Ponto* p11 = new Vertice ( 0.5, -0.5,  0.0 );
+    Ponto* p11 = new Vertice ( 0.5, -0.5,  0.5 );
     Ponto* p21 = new Vertice ( 0.5, 0.5,  0.0 );
     Ponto* p31 = new Vertice ( 0.5, 1.0,  0.0 );
 
@@ -777,10 +778,8 @@ Geometria *modelBaseCircular(Geometria *geo){
     Curva* c4 = new CurvParamHermite ( *p00, *p01, *Qv00, *Qv01 );
 
     Patch* patch1 = new HermitePatch ( c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11 );
-    //Patch* patch2 = new HermitePatch ( c1, c2, c3, c4, *tw_00, *tw_10, *tw_01, *tw_11 );
 
     geo->inserePatch ( patch1 );
-    //geo->inserePatch ( patch2 );
     geo->insereCurva ( c1 );
     geo->insereCurva ( c2 );
     geo->insereCurva ( c3 );

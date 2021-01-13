@@ -415,9 +415,9 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial ( CoonsPatch* patch )
 double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
 {
 
-#if USE_PRINT_ERRO
+#if USE_PRINT_COMENT
     cout << "Calculando o erro global..." << endl;
-#endif //#if USE_PRINT_ERRO
+#endif //#if USE_PRINT_COMENT
 
     unsigned int Ns = 0; // número de submalhas
     unsigned int Nv = 0; // número de vértices
@@ -620,7 +620,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
     this->erro = this->erroGlobal ( malha );
 
 #if USE_PRINT_ERRO
-    cout << "ERRO " << this->passo << " = " << this->erro << endl;
+    cout << "ERRO  " << this->passo << " = " << this->erro << endl;
 #endif //#if USE_PRINT_ERRO
 
     escreveMalha(malha, passo);

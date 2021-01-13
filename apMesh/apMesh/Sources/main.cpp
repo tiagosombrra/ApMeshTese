@@ -77,9 +77,10 @@ int main(int argc, char **argv)
         cout <<"time full: "<< totalMethodTime << endl;
 #endif //#if USE_PRINT_TIME
 
+#if USE_PRINT_ERRO
+        cout << "Erro global final = " << adaptiveMesh.erro << endl;
+#endif //#if USE_PRINT_ERRO
 
-
-        cout << "Erro global = " << adaptiveMesh.erro << endl;
     }
     else
     {

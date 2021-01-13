@@ -50,14 +50,12 @@ int main(int argc, char **argv)
     if (argc == 1)
     {
         Geometria *geo = new Geometria;
-        M.setGeometria ( modelUtahteapot(geo) );
+        M.setGeometria ( modelLadoDescendente(geo) );
     }
     else
     {
         string s(argv[1]);
         geraMalha = false;
-        //Geometria *geo = lerMalha(s);
-        //M.setGeometria( geo );
     }
 
     if ( geraMalha )
@@ -75,7 +73,10 @@ int main(int argc, char **argv)
         double totalMethodTime = 0;
         totalMethodTime += methodTimeEnd - methodTimeStart;
 
-        cout <<"time full: "<< totalMethodTime <<"==================================================" << endl;
+#if USE_PRINT_TIME
+        cout <<"time full: "<< totalMethodTime << endl;
+#endif //#if USE_PRINT_TIME
+
 
 
         cout << "Erro global = " << adaptiveMesh.erro << endl;

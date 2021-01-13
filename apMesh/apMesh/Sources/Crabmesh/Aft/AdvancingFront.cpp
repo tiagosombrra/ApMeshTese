@@ -313,9 +313,9 @@ Vertex *AdvancingFront::makeIdealVertex(Edge *e, double &h)
     v->scalarMultiplication(h);
     v->sum(e->getMid());
 
-//#if DEBUG_MODE
-//    v->h = h;
-//#endif //#if DEBUG_MODE
+    //#if DEBUG_MODE
+    //    v->h = h;
+    //#endif //#if DEBUG_MODE
 
     return v;
 }
@@ -772,15 +772,15 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
             }
             else
             {
-//#if USE_OPENGL
-//                e->setColor(1.0, 0.0, 0.0);
+                //#if USE_OPENGL
+                //                e->setColor(1.0, 0.0, 0.0);
 
-//                for (EdgeList::iterator iter = rejected.begin();
-//                     iter != rejected.end(); iter++)
-//                {
-//                    (*iter)->setColor(1.0, 0.0, 1.0);
-//                }
-//#endif //#if USE_OPENGL
+                //                for (EdgeList::iterator iter = rejected.begin();
+                //                     iter != rejected.end(); iter++)
+                //                {
+                //                    (*iter)->setColor(1.0, 0.0, 1.0);
+                //                }
+                //#endif //#if USE_OPENGL
                 rejected.push_front(e);
 
                 return (geometryPhase) ? ADVF_GEOMETRY_EDGE_REJECTED_TWICE : ADVF_TOPOLOGY_EDGE_REJECTED_TWICE;
@@ -834,9 +834,9 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
             e->getV1()->addAdjacentEdge(e1);
             best->addAdjacentEdge(e1);
 
-//#if USE_OPENGL
-//            e1->setColor(0.0, 0.0, 1.0);
-//#endif //#if USE_OPENGL
+            //#if USE_OPENGL
+            //            e1->setColor(0.0, 0.0, 1.0);
+            //#endif //#if USE_OPENGL
 
             innerEdges.push_back(e1);
             edges.push_back(e1);
@@ -871,9 +871,9 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased, bool geometryPhase)
             e->getV2()->addAdjacentEdge(e2);
             best->addAdjacentEdge(e2);
 
-//#if USE_OPENGL
-//            e2->setColor(0.0, 0.0, 1.0);
-//#endif //#if USE_OPENGL
+            //#if USE_OPENGL
+            //            e2->setColor(0.0, 0.0, 1.0);
+            //#endif //#if USE_OPENGL
 
             innerEdges.push_back(e2);
             edges.push_back(e2);
@@ -1244,19 +1244,19 @@ enum MethodStatus AdvancingFront::makeTopologyBasedMesh()
         Edge *e = rejected.front();
         rejected.pop_front();
 
-//#if USE_OPENGL
-//        if (boundary->belongs(e))
-//        {
-//            //figura
-//            //e->setColor(1.0, 1.0, 1.0);
-//            e->setColor(0.0, 0.0, 0.0);
-//            //endfigura
-//        }
-//        else
-//        {
-//            e->setColor(0.0, 0.0, 1.0);
-//        }
-//#endif //#if USE_OPENGL
+        //#if USE_OPENGL
+        //        if (boundary->belongs(e))
+        //        {
+        //            //figura
+        //            //e->setColor(1.0, 1.0, 1.0);
+        //            e->setColor(0.0, 0.0, 0.0);
+        //            //endfigura
+        //        }
+        //        else
+        //        {
+        //            e->setColor(0.0, 0.0, 1.0);
+        //        }
+        //#endif //#if USE_OPENGL
 
         front.push_back(e);
     }
@@ -1290,7 +1290,10 @@ enum MethodStatus AdvancingFront::improveMesh()
 
 bool AdvancingFront::execute(const FaceList &oldmesh)
 {
+
+#if USE_PRINT_COMENT
     cout << "tolerancia usada pelo AFT " << Shape::tolerance << endl;
+#endif //#if USE_PRINT_COMENT
     
     enum MethodStatus status;
     
@@ -1305,7 +1308,9 @@ bool AdvancingFront::execute(const FaceList &oldmesh)
         return false;
     }
     
+#if USE_PRINT_COMENT
     cout << "gerou a quadtree" << endl;
+#endif //#if USE_PRINT_COMENT
 
     /*if (quadtree->refineToLevel() != QUAD_REFINE_TO_LEVEL_DONE)
     {
@@ -1321,7 +1326,10 @@ bool AdvancingFront::execute(const FaceList &oldmesh)
         return false;
     }
     
+#if USE_PRINT_COMENT
     cout << "refinou a quadtree" << endl;
+#endif //#if USE_PRINT_COMENT
+
     
     status = quadtree->makeTemplateBasedMesh();
     
@@ -1332,15 +1340,17 @@ bool AdvancingFront::execute(const FaceList &oldmesh)
         return false;
     }
     
+#if USE_PRINT_COMENT
     cout << "gerou malha por templates" << endl;
+#endif //#if USE_PRINT_COMENT
 
     makeInitialFront();
 
     status = makeGeometryBasedMesh();
-    
-    //cout << methodNotices[status] << endl;
-    
+
+#if USE_PRINT_COMENT
     cout << "gerou malha por avanco de fronteira - geometria" << endl;
+#endif //#if USE_PRINT_COMENT
 
     if ((status != ADVF_GEOMETRY_MESH_DONE) && (status != ADVF_GEOMETRY_EDGE_REJECTED_TWICE))
     {
@@ -1350,8 +1360,6 @@ bool AdvancingFront::execute(const FaceList &oldmesh)
     if (status == ADVF_GEOMETRY_EDGE_REJECTED_TWICE)
     {
         status = makeTopologyBasedMesh();
-
-        //cout << methodNotices[status] << endl;
         
         if (status != ADVF_TOPOLOGY_MESH_DONE)
         {
@@ -1359,20 +1367,22 @@ bool AdvancingFront::execute(const FaceList &oldmesh)
         }
     }
     
+#if USE_PRINT_COMENT
     cout << "gerou malha por avanco de fronteira - topologia" << endl;
+#endif //#if USE_PRINT_COMENT
 
     fillMesh();
 
     status = improveMesh();
     
-    //cout << methodNotices[status] << endl;
-
     if (status != IMPR_IMPROVEMENT_DONE)
     {
         return false;
     }
     
+#if USE_PRINT_COMENT
     cout << "melhorou a malha" << endl;
+#endif //#if USE_PRINT_COMENT
 
     return true;
 }

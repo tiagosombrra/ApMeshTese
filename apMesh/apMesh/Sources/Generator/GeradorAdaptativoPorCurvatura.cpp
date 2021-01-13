@@ -164,7 +164,12 @@ void escreveElementos( int passo, SubMalha *sub, int i )
 // a lista de pontos da curva é preenchida durante a geração da malha inicial
 SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial ( CoonsPatch* patch )
 {
+
+#if USE_PRINT_COMENT
     cout << "Pegando as curvas" << endl;
+#endif //#if USE_PRINT_COMENT
+
+
     Curva* c1 = patch->getCurva ( 0 );
     Curva* c2 = patch->getCurva ( 1 );
     Curva* c3 = patch->getCurva ( 2 );
@@ -409,7 +414,10 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial ( CoonsPatch* patch )
 // calcula o erro global da malha
 double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
 {
-    cout << "Calculando o erro global=================================" << endl;
+
+#if USE_PRINT_ERRO
+    cout << "Calculando o erro global..." << endl;
+#endif //#if USE_PRINT_ERRO
 
     unsigned int Ns = 0; // número de submalhas
     unsigned int Nv = 0; // número de vértices
@@ -594,13 +602,14 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
     // 1. Gera a malha inicial
     for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
     {
-        cout << "gera a malha inicial para patch " << i << endl;
-        patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
 
+#if USE_PRINT_COMENT
+        cout << "gera a malha inicial para patch " << i << endl;
+#endif //#if USE_PRINT_COMENT
+
+        patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
         SubMalha* sub = this->malhaInicial ( static_cast < CoonsPatch* > ( patch ) );
         malha->insereSubMalha ( sub );
-
-        //escreveElementos ( this->passo, sub, i );
     }
 
 
@@ -610,7 +619,9 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
     // 3. Calcula o erro global para a malha inicial
     this->erro = this->erroGlobal ( malha );
 
-    cout << "*************** ERRO " << this->passo << " = " << this->erro << endl;
+#if USE_PRINT_ERRO
+    cout << "ERRO " << this->passo << " = " << this->erro << endl;
+#endif //#if USE_PRINT_ERRO
 
     escreveMalha(malha, passo);
 
@@ -640,21 +651,30 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
         //for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
         for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
         {
+
+#if USE_PRINT_COMENT
             cout << "adaptando a curva pela curvatura da curva " << i + 1 << endl;
+#endif //#if USE_PRINT_COMENT
 
             novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), mapaPontos );
             geo->getCurva( i )->setPontos(novosPontos[i]);
             novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), mapaPontos );
         }
 
+#if USE_PRINT_COMENT
         cout << "atualizando as curvas" << endl;
+#endif //#if USE_PRINT_COMENT
+
         // 4.3. Atualiza a discretização das curvas
         for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
         {
             geo->getCurva( i )->setPontos(novosPontos[i]);
         }
 
+#if USE_PRINT_COMENT
         cout << "adaptando os patches" << endl;
+#endif //#if USE_PRINT_COMENT
+
         // 4.4. Adapta as patches
         //#pragma omp parallel for
         for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
@@ -663,16 +683,19 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
 
             SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio ( p, this->passo );
 
+#if USE_PRINT_COMENT
             cout << "submalha tem " << sub->getNumDeElementos () << " elementos" << endl;
+#endif //#if USE_PRINT_COMENT
 
             sub->setPatch(p);
-
-            //escreveElementos ( this->passo, sub, i );
 
             malha->insereSubMalha(sub);
         }
 
+#if USE_PRINT_COMENT
         cout << "atualizando os patches" << endl;
+#endif //#if USE_PRINT_COMENT
+
         // 4.5. Atualiza os patches
         for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
         {
@@ -685,11 +708,12 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
         // 4.7. Escreve um artigo "neutral file" da malha gerada
         escreveMalha(malha, passo);
 
-        cout << "calculando o erro" << endl;
-
-        // 4.4. Calcula o erro global para a malha
+        // 4.7. Calcula o erro global para a malha
         this->erro = this->erroGlobal ( malha );
-        cout << "*************** ERRO  " << this->passo << " = " << this->erro << endl;
-        //break;
+
+#if USE_PRINT_ERRO
+        cout << "ERRO  " << this->passo << " = " << this->erro << endl;
+#endif //#if USE_PRINT_COMENT
+
     }
 }

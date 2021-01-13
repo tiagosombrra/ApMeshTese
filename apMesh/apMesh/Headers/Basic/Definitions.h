@@ -1,14 +1,12 @@
 #ifndef _DEFINITIONS_H_
 #define _DEFINITIONS_H_
 
-//#define DEBUG_MODE              false
-//#define USE_INTERFACE           false
-//#define USE_OPENGL              (USE_INTERFACE)
-
-//#if USE_OPENGL
-//#include <GL/gl.h>
-//#include <GL/glu.h>
-//#endif //#if USE_OPENGL
+#define USE_PRINT_RESULT       false
+#define USE_PRINT_COMENT       false
+#define USE_PRINT_ERRO         true
+#define USE_PRINT_TIME         true
+#define USE_OPENMP             false
+#define USE_OPENMPI            false
 
 #include <iostream>
 #include <fstream>
@@ -31,13 +29,6 @@
 #   error "Unknown compiler"
 #endif
 
-////debug
-//#if USE_INTERFACE
-//#include <wx/wx.h>
-//#include <wx/msgdlg.h>
-//#endif //#if USE_INTERFACE
-////endebug
-
 using namespace std;
 using namespace Eigen;
 
@@ -45,9 +36,6 @@ typedef Matrix<double, 4, 4> Matrix4x4;
 typedef Matrix<double, 4, 1> Matrix4x1;
 typedef Matrix<double, 1, 4> Matrix1x4;
 typedef Matrix<double, 1, 1> Matrix1x1;
-
-
-//typedef Numerical::IMatrix
 
 namespace Par2DJMesh
 {

@@ -63,6 +63,26 @@ public :
     Ponto getPt32 (  ) const;
     Ponto getPt33 (  ) const;
 
+    void setPt00(Ponto value);
+    void setPt01(Ponto value);
+    void setPt02(Ponto value);
+    void setPt03(Ponto value);
+
+    void setPt10(Ponto value);
+    void setPt11(Ponto value);
+    void setPt12(Ponto value);
+    void setPt13(Ponto value);
+
+    void setPt20(Ponto value);
+    void setPt21(Ponto value);
+    void setPt22(Ponto value);
+    void setPt23(Ponto value);
+
+    void setPt30(Ponto value);
+    void setPt31(Ponto value);
+    void setPt32(Ponto value);
+    void setPt33(Ponto value);
+
     bool sinal_c1;
     bool sinal_c2;
     bool sinal_c3;
@@ -114,6 +134,9 @@ public :
                    bool sinal_c4 = true );
 
     BezierPatch ( BezierPatch * );
+
+    BezierPatch ();
+
 
     ~BezierPatch ( );
 };

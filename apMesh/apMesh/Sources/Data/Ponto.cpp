@@ -31,12 +31,32 @@ Ponto::Ponto(double _x, double _y, double _z, unsigned long i)
 
 }
 
+unsigned long Ponto::getId() const
+{
+    return id;
+}
+
+void Ponto::setId(unsigned long value)
+{
+    id = value;
+}
+
 bool Ponto::operator== ( const Ponto& p )const
 {
     if (	( fabs( this->x - p.x ) <= 0.000001 ) and
-            ( fabs( this->y - p.y ) <= 0.000001 ) and
+                ( fabs( this->y - p.y ) <= 0.000001 ) and
             ( fabs( this->z - p.z ) <= 0.000001 )
             ) return true;
+
+    return false;
+}
+
+bool Ponto::operator==(const Ponto *p) const
+{
+    if (	( fabs( this->x - p->x ) <= 0.000001 ) and
+        ( fabs( this->y - p->y ) <= 0.000001 ) and
+        ( fabs( this->z - p->z ) <= 0.000001 )
+        ) return true;
 
     return false;
 }

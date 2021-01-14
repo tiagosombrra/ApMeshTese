@@ -155,7 +155,10 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
 
         if ( ++iMax > 50000 )
         {
+#if USE_PRINT_COMENT
             cout << "iMax alcançado!" << endl;
+#endif //#if USE_PRINT_COMENT
+
             break;
         }
         //cout << "u = " << u_i << " " << "v = " << v_i << endl;
@@ -292,6 +295,70 @@ Ponto BezierPatch::getPt32() const {
 
 Ponto BezierPatch::getPt33() const {
     return this->Pt33;
+}
+
+void BezierPatch::setPt00(Ponto value){
+    Pt00 = value;
+}
+
+void BezierPatch::setPt01(Ponto value){
+    Pt01 = value;
+}
+
+void BezierPatch::setPt02(Ponto value){
+    Pt02 = value;
+}
+
+void BezierPatch::setPt03(Ponto value){
+    Pt03 = value;
+}
+
+void BezierPatch::setPt10(Ponto value){
+    Pt10 = value;
+}
+
+void BezierPatch::setPt11(Ponto value){
+    Pt11 = value;
+}
+
+void BezierPatch::setPt12(Ponto value){
+    Pt12 = value;
+}
+
+void BezierPatch::setPt13(Ponto value){
+    Pt13 = value;
+}
+
+void BezierPatch::setPt20(Ponto value){
+    Pt20 = value;
+}
+
+void BezierPatch::setPt21(Ponto value){
+    Pt21 = value;
+}
+
+void BezierPatch::setPt22(Ponto value){
+    Pt22 = value;
+}
+
+void BezierPatch::setPt23(Ponto value){
+    Pt23 = value;
+}
+
+void BezierPatch::setPt30(Ponto value){
+    Pt30 = value;
+}
+
+void BezierPatch::setPt31(Ponto value){
+    Pt31 = value;
+}
+
+void BezierPatch::setPt32(Ponto value){
+    Pt32 = value;
+}
+
+void BezierPatch::setPt33(Ponto value){
+    Pt33 = value;
 }
 
 
@@ -742,6 +809,10 @@ BezierPatch::BezierPatch ( BezierPatch *antigo ) : CoonsPatch ( antigo )
     this->V = antigo->V;
 }
 
+BezierPatch::BezierPatch()
+{
+
+}
 
 BezierPatch::~BezierPatch (  )
 {

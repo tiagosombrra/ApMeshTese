@@ -25,10 +25,15 @@ struct Ponto
     double y;
     double z;
     bool operator== ( const Ponto& p ) const; // comparação
+    bool operator== ( const Ponto* p ) const; // comparação
     double distanciaPara ( const Ponto& p ) const;
     void mostraPonto ( );
     Ponto ( );
     Ponto ( double _x, double _y, double _z );
     Ponto ( double _x, double _y, double _z, unsigned long i );
+
+public:
+    unsigned long getId() const;
+    void setId(unsigned long value);
 };
 #endif

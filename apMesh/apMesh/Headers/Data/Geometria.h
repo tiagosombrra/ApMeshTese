@@ -16,6 +16,7 @@ This source code is under GNU General Public License v3 */
 #include <map>
 #include "Curva.h"
 #include "HermitePatch.h"
+#include "CurvParamBezier.h"
 using namespace std;
 
 class Geometria
@@ -30,6 +31,7 @@ public :
     void inserePatch ( Patch* p );
     unsigned int getNumDePatches (  ) const;
     Patch* getPatch ( const unsigned int i ); // retorna o i-ésimo patch
+    CurvParamBezier* verifyCurveGeometria(Ponto*, Ponto*, Ponto*, Ponto*);
     Geometria ( );
     Geometria ( Geometria* );
     ~Geometria (  );

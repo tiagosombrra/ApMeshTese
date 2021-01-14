@@ -153,7 +153,9 @@ tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
 
         if ( ++iMax > 50000 )
         {
+#if USE_PRINT_COMENT
             cout << "iMax alcançado!" << endl;
+#endif //#if USE_PRINT_COMENT
             break;
         }
         //cout << "u = " << u_i << " " << "v = " << v_i << endl;

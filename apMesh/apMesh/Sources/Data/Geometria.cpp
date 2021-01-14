@@ -46,6 +46,22 @@ Patch* Geometria::getPatch ( const unsigned int i )
     return (i < this->patches.size()) ? this->patches[i] : NULL;
 }
 
+CurvParamBezier *Geometria::verifyCurveGeometria(Ponto *p0, Ponto *p1, Ponto *p2, Ponto *p3)
+{
+    for (vector<Curva*>::iterator it = this->curvas.begin(); it != this->curvas.end(); it++)
+    {
+        if (static_cast<CurvParamBezier*>(*it)->getP0().operator==(p0) and
+            static_cast<CurvParamBezier*>(*it)->getP1().operator==(p1) and
+            static_cast<CurvParamBezier*>(*it)->getP2().operator==(p2) and
+            static_cast<CurvParamBezier*>(*it)->getP3().operator==(p3))
+        {
+            return static_cast<CurvParamBezier*>(*it);
+        }
+    }
+
+    return NULL;
+}
+
 Geometria::Geometria() {
 
 }

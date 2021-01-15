@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "Arquivo.h"
+#include "../../Headers/IO/Arquivo.h"
 
 // ler as linhas que definem as curvas
 void Arquivo::lerCurvas ( const string leitura )

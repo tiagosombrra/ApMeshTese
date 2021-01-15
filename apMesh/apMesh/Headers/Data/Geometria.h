@@ -14,9 +14,9 @@ This source code is under GNU General Public License v3 */
 
 #include <vector>
 #include <map>
-#include "Curva.h"
-#include "HermitePatch.h"
-#include "CurvParamBezier.h"
+#include "../Data/Curve/Curva.h"
+#include "../Data/Patch/HermitePatch.h"
+#include "../Data/Curve/CurvParamBezier.h"
 using namespace std;
 
 class Geometria

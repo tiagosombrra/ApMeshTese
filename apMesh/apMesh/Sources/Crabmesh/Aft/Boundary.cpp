@@ -1,9 +1,5 @@
-#include "Boundary.h"
+#include "../../../Headers/Crabmesh/Aft/Boundary.h"
 
-#include "Edge.h"
-#include "Vertex.h"
-#include "QuadtreeCell.h"
-#include "Quadtree.h"
 
 Boundary::Boundary() : Shape()
 {

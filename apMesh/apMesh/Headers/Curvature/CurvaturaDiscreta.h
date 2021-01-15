@@ -14,6 +14,7 @@ This source code is under GNU General Public License v3 */
 
 #include <cmath>
 #include <list>
+#include <cstdlib>
 
 using namespace std;
 

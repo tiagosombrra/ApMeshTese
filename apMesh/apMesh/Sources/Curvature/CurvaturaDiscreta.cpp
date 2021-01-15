@@ -9,9 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "CurvaturaDiscreta.h"
-
-#include <cstdlib>
+#include "../../Headers/Curvature/CurvaturaDiscreta.h"
 
 // Kim, S. J., Jeong, W. K. e Kim, C. H. LOD generation with discrete curva-
 // ture error metric. Em Proceedings of 2nd Korea Israel Bi-National Conference on

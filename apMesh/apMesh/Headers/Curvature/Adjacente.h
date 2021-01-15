@@ -17,8 +17,8 @@ This source code is under GNU General Public License v3 */
 #include <list>
 using namespace std;
 
-#include "Triangulo.h"
-#include "Noh.h"
+#include "../Data/Triangulo.h"
+#include "../Data/Noh.h"
 
 // OBS: Essa classe foi implementada para triâgulos !!!
 class Adjacente

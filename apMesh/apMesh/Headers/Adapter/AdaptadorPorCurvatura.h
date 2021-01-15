@@ -14,19 +14,22 @@ This source code is under GNU General Public License v3 */
 
 #include <cmath>
 #include <map>
+#include <cstdlib>
 
 #include "Adaptador.h"
-#include "CoonsPatch.h"
-#include "SubMalha.h"
-#include "CurvaParametrica.h"
-#include "CurvaturaAnalitica.h"
-#include "CurvaturaDiscreta.h"
-#include "BinTree.h"
-#include "AdvancingFront.h"
-#include "Boundary.h"
-#include "Face.h"
-#include "Vertex.h"
-#include "Definitions.h"
+#include "../Data/Patch/CoonsPatch.h"
+#include "../Data/Mesh/SubMalha.h"
+#include "../Data/Curve/CurvaParametrica.h"
+#include "../Curvature/CurvaturaAnalitica.h"
+#include "../Curvature/CurvaturaDiscreta.h"
+#include "../Data/Tree/BinTree.h"
+#include "../Crabmesh/Aft/AdvancingFront.h"
+#include "../Crabmesh/Aft/Boundary.h"
+#include "../Data/Face.h"
+#include "../Data/Vertex.h"
+#include "../Basic/Definitions.h"
+#include "../Data/Edge.h"
+#include "../Data/Face.h"
 
 class AdaptadorPorCurvatura : public Adaptador
 {

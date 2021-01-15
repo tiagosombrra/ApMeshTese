@@ -1,9 +1,9 @@
 #ifndef _DATA_NUMERICAL_EQUATION_ROOT_FUNCTION_H_
 #define _DATA_NUMERICAL_EQUATION_ROOT_FUNCTION_H_
 
-#include "Definitions.h"
+#include "../../Basic/Definitions.h"
 #include "Function.h"
-#include "CurvaParametrica.h"
+#include "../../Data/Curve/CurvaParametrica.h"
 
 namespace Data
 {

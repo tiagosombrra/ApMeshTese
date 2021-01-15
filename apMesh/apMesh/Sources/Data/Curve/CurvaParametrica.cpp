@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "CurvaParametrica.h"
+#include "../../../Headers/Data/Curve/CurvaParametrica.h"
 
 extern double DELTA; // distância entre um parâmetro e outro
 extern double TOLERANCIA; // distância máxima entre dois pontos

@@ -16,9 +16,9 @@ This source code is under GNU General Public License v3 */
 #include <vector>
 using namespace std;
 
-#include "Noh.h"
-#include "Triangulo.h"
-#include "Patch.h"
+#include "../Noh.h"
+#include "../Triangulo.h"
+#include "../Patch/Patch.h"
 
 class Curva
 {

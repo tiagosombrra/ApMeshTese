@@ -1,11 +1,4 @@
-#include "QuadtreeCell.h"
-
-#include "Boundary.h"
-#include "Quadtree.h"
-#include "Vertex.h"
-#include "Edge.h"
-#include "Face.h"
-//#include "App/MainDrive.h"
+#include "../../../Headers/Crabmesh/Aft/QuadtreeCell.h"
 
 QuadtreeCell::QuadtreeCell(long int id,
                            //MainDrive *mainDrive,

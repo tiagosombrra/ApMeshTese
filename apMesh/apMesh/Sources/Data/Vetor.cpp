@@ -9,8 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "Vetor.h"
-#include <cmath>
+#include "../../Headers/Data/Vetor.h"
 
 Vetor::Vetor () : x(0), y(0), z(0) { }
 

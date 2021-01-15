@@ -13,6 +13,7 @@ This source code is under GNU General Public License v3 */
 #define HermitePatch_h
 
 #include "CoonsPatch.h"
+#include "../../Data/Curve/CurvParamHermite.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
 // cima em relação ao Patch !!!

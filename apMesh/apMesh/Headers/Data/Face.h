@@ -1,8 +1,10 @@
 #ifndef _FACE_H_
 #define _FACE_H_
 
-#include "Definitions.h"
-#include "Shape.h"
+#include "../Basic/Definitions.h"
+#include "../Crabmesh/Aft/Shape.h"
+#include "Vertex.h"
+#include "Edge.h"
 
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::Basics;

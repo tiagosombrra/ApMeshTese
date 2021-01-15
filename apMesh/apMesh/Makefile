@@ -1,49 +1,60 @@
-PROGRAMA = teste
+PROGRAMA = apMesh
 
-FONTES =	Modelo.cpp \
-			Geometria.cpp \
-			Curva.cpp \
-			CurvaParametrica.cpp \
-			CurvParamHermite.cpp \
-			CurvParamBezier.cpp \
-			Patch.cpp \
-			CoonsPatch.cpp \
-			HermitePatch.cpp \
-			BezierPatch.cpp \
-			Ponto.cpp \
-			Vertice.cpp \
-			Matriz.cpp \
-			Vetor.cpp \
-			Malha.cpp \
-			SubMalha.cpp \
-			Noh.cpp \
-			Elemento.cpp \
-			Triangulo.cpp \
-			Curvatura.cpp \
-			CurvaturaAnalitica.cpp \
-			CurvaturaDiscreta.cpp \
-			Adjacente.cpp \
-			Gerador.cpp \
-			GeradorAdaptativo.cpp \
-			GeradorAdaptativoPorCurvatura.cpp \
-			Adaptador.cpp \
-			AdaptadorPorCurvatura.cpp \
-			BinTree.cpp \
-			AFT/AdvancingFront.cpp \
-			AFT/Boundary.cpp \
-			AFT/Quadtree.cpp \
-			AFT/QuadtreeCell.cpp \
-			Basics/Face.cpp \
-			Basics/Edge.cpp \
-			Basics/Vertex.cpp \
-			Basics/Shape.cpp \
-			main.cpp
+FONTES = Sources/Adapter/Adaptador.cpp \
+    Sources/Adapter/AdaptadorPorCurvatura.cpp \
+    Sources/Crabmesh/Aft/AdvancingFront.cpp \
+    Sources/Crabmesh/Aft/Boundary.cpp \
+    Sources/Crabmesh/Aft/Quadtree.cpp \
+    Sources/Crabmesh/Aft/QuadtreeCell.cpp \
+    Sources/Crabmesh/Aft/Shape.cpp \
+    Sources/Crabmesh/Numerical/BisectionEquationRoot.cpp \
+    Sources/Crabmesh/Numerical/Function.cpp \
+    Sources/Curvature/Adjacente.cpp \
+    Sources/Curvature/Curvatura.cpp \
+    Sources/Curvature/CurvaturaAnalitica.cpp \
+    Sources/Curvature/CurvaturaDiscreta.cpp \
+    Sources/Data/Curve/CurvParamBezier.cpp \
+    Sources/Data/Curve/CurvParamHermite.cpp \
+    Sources/Data/Curve/Curva.cpp \
+    Sources/Data/Curve/CurvaParametrica.cpp \
+    Sources/Data/Edge.cpp \
+    Sources/Data/Elemento.cpp \
+    Sources/Data/Face.cpp \
+    Sources/Data/Geometria.cpp \
+    Sources/Data/Mesh/Malha.cpp \
+    Sources/Data/Mesh/SubMalha.cpp \
+    Sources/Data/Modelo.cpp \
+    Sources/Data/Noh.cpp \
+    Sources/Data/Patch/BezierPatch.cpp \
+    Sources/Data/Patch/CoonsPatch.cpp \
+    Sources/Data/Patch/HermitePatch.cpp \
+    Sources/Data/Patch/Patch.cpp \
+    Sources/Data/Ponto.cpp \
+    Sources/Data/Tree/BinTree.cpp \
+    Sources/Data/Triangulo.cpp \
+    Sources/Data/Vertex.cpp \
+    Sources/Data/Vertice.cpp \
+    Sources/Data/Vetor.cpp \
+    Sources/Generator/Gerador.cpp \
+    Sources/Generator/GeradorAdaptativo.cpp \
+    Sources/Generator/GeradorAdaptativoPorCurvatura.cpp \
+    Sources/IO/Arquivo.cpp \
+    Sources/IO/Modelos3d.cpp \
+    Sources/IO/ReaderPatches.cpp \
+    Sources/main.cpp
 
 OBJETOS = $(FONTES:.cpp=.o)
 
+CC            = gcc
+CXX           = g++
+
+CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC
+CXXFLAGS      = -pipe -pg -O3 -fopenmp -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC
+LFLAGS        = -pg -O3 -fopenmp
+
 #CFLAGS = -c -g3 -Wall -lm -pipe -std=c++0x -pg -fopenmp
-CFLAGS = -c -O3 -Wall -lm -pipe -std=c++0x -pg
-LDFLAGS = -pg -O3
+#CFLAGS = -c -O3 -Wall -lm -pipe -std=c++0x -pg
+#LDFLAGS = -pg -O3 -fopenmp
 
 COMPILADOR = g++
 
@@ -51,13 +62,14 @@ COMPILADOR = g++
 all: $(FONTES) $(PROGRAMA)
 
 $(PROGRAMA): $(OBJETOS)
-	$(COMPILADOR) $(LDFLAGS) $(OBJETOS) -o $@
+	$(COMPILADOR) $(LFLAGS) $(OBJETOS) -o $@
 
 .cpp.o:
-	$(COMPILADOR) $(CFLAGS) $< -o $@
-
+	#$(COMPILADOR) $(CFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 clean:
-	rm -rfv *.o AFT/*.o Basics/*.o $(PROGRAMA)
+	rm -rfv *.o Sources/Adapter/*.o Sources/Crabmesh/Aft/*.o  Sources/Crabmesh/Numerical/*.o Sources/Curvature/*.o Sources/Data/*.o Sources/Data/Curve/*.o Sources/Data/Mesh/*.o Sources/Data/Patch/*.o Sources/Data/Tree/*.o Sources/Generator/*.o Sources/IO/*.o $(PROGRAMA)
 
 exec:
 	./$(PROGRAMA)
+	

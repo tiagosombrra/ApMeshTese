@@ -1,7 +1,7 @@
 #ifndef _DATA_NUMERICAL_MULTI_VARIABLE_FUNCTION_H_
 #define _DATA_NUMERICAL_MULTI_VARIABLE_FUNCTION_H_
 
-#include "Definitions.h"
+#include "../../Basic/Definitions.h"
 
 namespace Data
 {

@@ -12,6 +12,8 @@ This source code is under GNU General Public License v3 */
 #ifndef Patch_h
 #define Patch_h
 
+#include "../../Data/Mesh/SubMalha.h"
+
 class SubMalha;
 
 class Patch

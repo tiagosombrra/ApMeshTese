@@ -1,11 +1,4 @@
-#include "AdvancingFront.h"
-
-#include "Vertex.h"
-#include "Edge.h"
-#include "Face.h"
-#include "Boundary.h"
-#include "Quadtree.h"
-#include "QuadtreeCell.h"
+#include "../../../Headers/Crabmesh/Aft/AdvancingFront.h"
 
 AdvancingFront::AdvancingFront(
         double factor,

@@ -12,15 +12,14 @@ This source code is under GNU General Public License v3 */
 #ifndef CurvaParametrica_h
 #define CurvaParametrica_h
 
-#include "Definitions.h"
 #include <iostream>
 #include <list>
-#include "Vertice.h"
-//#include "Matriz.h"
-#include "Vetor.h"
+#include "../../Basic/Definitions.h"
+#include "../Vertice.h"
+#include "../Vetor.h"
 #include "Curva.h"
-#include "EquationRootFunction.h"
-#include "BisectionEquationRoot.h"
+#include "../../Crabmesh/Numerical/EquationRootFunction.h"
+#include "../../Crabmesh/Numerical/BisectionEquationRoot.h"
 
 using namespace std;
 

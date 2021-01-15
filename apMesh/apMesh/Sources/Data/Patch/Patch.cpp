@@ -9,8 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "SubMalha.h"
-#include "Patch.h"
+#include "../../../Headers/Data/Patch/Patch.h"
 
 void Patch::setMalha ( SubMalha* m )
 {

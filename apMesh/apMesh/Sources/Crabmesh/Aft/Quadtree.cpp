@@ -1,10 +1,5 @@
-#include "Quadtree.h"
+#include "../../../Headers/Crabmesh/Aft/Quadtree.h"
 
-#include "Vertex.h"
-#include "Edge.h"
-#include "Face.h"
-#include "Boundary.h"
-#include "QuadtreeCell.h"
 
 void escreve(Quadtree *q, int i)
 {

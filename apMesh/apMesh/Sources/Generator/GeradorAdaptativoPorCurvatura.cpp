@@ -10,16 +10,8 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "GeradorAdaptativoPorCurvatura.h"
+#include "../../Headers/Generator/GeradorAdaptativoPorCurvatura.h"
 
-#include <sstream>
-#include <fstream>
-#include <string>
-
-static unsigned long int idv = 1;
-static unsigned long int ide = 1;
-extern double TOLERANCIA;
-extern double TOLERANCIA_CURVATURA;
 
 void escreveMalha(Malha *malha, int passo)
 {
@@ -411,6 +403,80 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial ( CoonsPatch* patch )
 }
 
 
+
+
+#if USE_OPENMP
+double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
+{
+#if USE_PRINT_COMENT
+    cout << "Calculando o erro global..." << endl;
+#endif //#if USE_PRINT_COMENT
+
+    unsigned int Ns = 0; // número de submalhas
+    double Nj = 0.0; // erro global da malha
+
+    Ns = malha->getNumDeSubMalhas ( );
+
+    // Calcula o erro global de cada submalha (OMP)
+#pragma omp parallel for num_threads(NUM_THREADS) firstprivate(Ns) reduction(+ :Nj)
+    for ( unsigned int i = 0; i < Ns; ++i )
+    {
+        SubMalha* sub = malha->getSubMalha ( i );
+        unsigned int Nv = sub->getNumDeNos ( );
+        double curvPower = 0.0;
+        double Njs = 0.0;
+
+        // Calcula o erro relativo para cada nó e soma a Nj
+        for ( unsigned int j = 0; j < Nv; ++j )
+        {
+            Ponto *n = sub->getNoh ( j );
+            Patch *p = sub->getPatch (  );
+            CurvaturaAnalitica ka (	*( static_cast < Noh* > ( n ) ), *( static_cast < CoonsPatch* > ( p ) ) );
+            CurvaturaDiscreta kd ( *( static_cast < Noh* > ( n ) ) );
+            double Ga = ka.gauss();
+            double Gd = kd.gauss();
+            double Ha = ka.media();
+            double Hd = kd.media();
+            // atualiza as curvaturas do nó ( para que não sejam recalculadas na
+            // adaptação das curvas e do domínio )
+            ((Noh*)n)->Ga = Ga;
+            ((Noh*)n)->Gd = Gd;
+            ((Noh*)n)->Ha = Ha;
+            ((Noh*)n)->Hd = Hd;
+
+            double power = 0.0;
+            double diff = 0.0;
+
+            if ( fabs ( Ga ) >= TOLERANCIA )
+            {
+                diff = Gd - Ga;
+                power = pow( diff, 2);
+                Njs += power;
+                curvPower += pow(Ga, 2);
+            }
+            else if ( fabs ( Ha ) >= TOLERANCIA )
+            {
+                diff = Hd - Ha;
+                power = pow( diff, 2);
+                Njs += power;
+                curvPower += pow(Ha, 2);
+            }
+        }
+
+        if (Njs > 0.0 && curvPower > 0.0) {
+            Njs =(double) sqrt( Njs / curvPower) / Nv;
+        }
+
+        Nj += Njs;
+
+    } //Parallel for
+
+
+    Nj /= Ns; // o erro global é a média do erro das submalhas
+
+    return Nj;
+}
+#else
 // calcula o erro global da malha
 double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
 {
@@ -485,6 +551,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
 
     return Nj;
 }
+#endif //#if USE_OPENMP
 
 void GeradorAdaptativoPorCurvatura::saveErroMesh(Malha *malha)
 {
@@ -593,13 +660,14 @@ void GeradorAdaptativoPorCurvatura::saveErroMesh(Malha *malha)
 
 GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
 {
-    CoonsPatch* patch;
+    CoonsPatch* patch = NULL;
     Geometria* geo = modelo.getGeometria ( );
     Malha* malha = new Malha;
 
     this->passo = 0;
 
     // 1. Gera a malha inicial
+//#pragma omp parallel for num_threads(NUM_THREADS) firstprivate(patch, geo)
     for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
     {
 
@@ -608,7 +676,8 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
 #endif //#if USE_PRINT_COMENT
 
         patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
-        SubMalha* sub = this->malhaInicial ( static_cast < CoonsPatch* > ( patch ) );
+        SubMalha *sub = this->malhaInicial ( static_cast < CoonsPatch* > ( patch ) );
+//#pragma omp critical
         malha->insereSubMalha ( sub );
     }
 
@@ -617,7 +686,13 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
     modelo.insereMalha ( malha );
 
     // 3. Calcula o erro global para a malha inicial
+
+#if USE_OPENMP
+    this->erro = this->erroGlobalOmp( malha );
+#else
     this->erro = this->erroGlobal ( malha );
+#endif //#USE_OPENMP
+
 
 #if USE_PRINT_ERRO
     cout << "ERRO  " << this->passo << " = " << this->erro << endl;
@@ -709,7 +784,11 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
         escreveMalha(malha, passo);
 
         // 4.7. Calcula o erro global para a malha
+#if USE_OPENMP
+        this->erro = this->erroGlobalOmp( malha );
+#else
         this->erro = this->erroGlobal ( malha );
+#endif //#USE_OPENMP
 
 #if USE_PRINT_ERRO
         cout << "ERRO  " << this->passo << " = " << this->erro << endl;

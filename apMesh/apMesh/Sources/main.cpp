@@ -1,18 +1,14 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <sys/time.h>
-#include "HermitePatch.h"
-#include "BezierPatch.h"
-#include "Vertice.h"
-#include "Vetor.h"
-#include "CurvParamHermite.h"
-#include "CurvParamBezier.h"
-#include "Modelo.h"
-#include "GeradorAdaptativoPorCurvatura.h"
-#include "Modelos3d.h"
-#include "Definitions.h"
-#include "ReaderPatches.h"
+#include "../Headers/Data/Patch/HermitePatch.h"
+#include "../Headers/Data/Patch/BezierPatch.h"
+#include "../Headers/Data/Vertice.h"
+#include "../Headers/Data/Vetor.h"
+#include "../Headers/Data/Curve/CurvParamHermite.h"
+#include "../Headers/Data/Curve/CurvParamBezier.h"
+#include "../Headers/Data/Modelo.h"
+#include "../Headers/Generator/GeradorAdaptativoPorCurvatura.h"
+#include "../Headers/IO/Modelos3d.h"
+#include "../Headers/Basic/Definitions.h"
+#include "../Headers/IO/ReaderPatches.h"
 
 double DELTA = 0.0001;
 double TOLERANCIA = 0.0001;
@@ -24,11 +20,13 @@ double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
 double EPSYLON = 0.03;
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
+int NUM_THREADS = omp_get_num_threads();
 
 string entrada;
 
 // argv[0] = "executavel: ./apmesh",
-// argv[1] = "entrada",       OBS: Projects-> Comands line arguments -> ../../apMesh/Entrada/monte_clark.bp
+// argv[1] = "entrada",       OBS: Projects-> Comands line arguments -> ../../apMesh/Entrada/mountain_289_patches.bp
+
 
 int main(int argc, char **argv)
 {
@@ -41,7 +39,7 @@ int main(int argc, char **argv)
     if (argc == 1)
     {
         Modelos3d modelos3d;
-        M.setGeometria ( modelos3d.modelPlanBook(geo) );
+        M.setGeometria ( modelos3d.modelUtahteapot(geo) );
     }
     else
     {

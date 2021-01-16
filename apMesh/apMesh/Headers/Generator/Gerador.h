@@ -14,8 +14,8 @@ This source code is under GNU General Public License v3 */
 
 #include <cmath>
 
-#include "Modelo.h"
-#include "SubMalha.h"
+#include "../Data/Modelo.h"
+#include "../Data/Mesh/SubMalha.h"
 
 extern double TOLERANCIA;
 extern double EPSYLON; // define a qualidade mínima da malha

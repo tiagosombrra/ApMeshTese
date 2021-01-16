@@ -14,7 +14,8 @@ This source code is under GNU General Public License v3 */
 
 #include <iostream>
 #include <vector>
-
+#include "../Noh.h"
+#include "../Elemento.h"
 using namespace std;
 
 class Noh;

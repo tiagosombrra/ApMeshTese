@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "Ponto.h"
+#include "../../Headers/Data/Ponto.h"
 
 using namespace std;
 

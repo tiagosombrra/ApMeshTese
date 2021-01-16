@@ -1,7 +1,4 @@
-#include "Vertex.h"
-//debug
-#include "Edge.h"
-//endebug
+#include "../../Headers/Data/Vertex.h"
 
 Vertex::Vertex(double x, double y, long int id) : Shape(id)
 {

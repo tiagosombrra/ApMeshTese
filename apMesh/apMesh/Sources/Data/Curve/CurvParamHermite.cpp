@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "CurvParamHermite.h"
+#include "../../../Headers/Data/Curve/CurvParamHermite.h"
 
 Vetor CurvParamHermite::getDP0() const {
     return this->DP0;

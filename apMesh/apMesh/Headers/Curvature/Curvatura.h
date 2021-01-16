@@ -12,7 +12,7 @@ This source code is under GNU General Public License v3 */
 #ifndef Curvatura_h
 #define Curvatura_h
 
-#include "Noh.h"
+#include "../Data/Noh.h"
 
 struct Curvatura
 {

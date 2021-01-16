@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "CoonsPatch.h"
+#include "../../../Headers/Data/Patch/CoonsPatch.h"
 
 void CoonsPatch::insereCurva ( Curva* c )
 {

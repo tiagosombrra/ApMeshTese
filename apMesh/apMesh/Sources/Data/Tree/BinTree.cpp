@@ -10,7 +10,7 @@ Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
 
-#include "BinTree.h"
+#include "../../../Headers/Data/Tree/BinTree.h"
 
 extern double TOLERANCIA;
 

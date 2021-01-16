@@ -3,11 +3,11 @@ QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
 #LIBS += -fopenmp
-QMAKE_CXXFLAGS += -pg -O3 #-fopenmp   -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
-QMAKE_LFLAGS += -pg -O3 #-fopenmp  -std=gnu++0x#-march=native #-m64 #-mavx
+QMAKE_CXXFLAGS += -pg -O3 -fopenmp #   -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
+QMAKE_LFLAGS += -pg -O3 -fopenmp #  -std=gnu++0x#-march=native #-m64 #-mavx
 #QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
 
-INCLUDEPATH += ../apMesh/Libs/Eigen ../apMesh/Headers/Adapter ../apMesh/Headers/Basic/ ../apMesh/Headers/Crabmesh/Aft/  ../apMesh/Headers/Crabmesh/Numerical/ ../apMesh/Headers/Curvature/ ../apMesh/Headers/Data/Curve/ ../apMesh/Headers/Data/Matrix/ ../apMesh/Headers/Data/Mesh/  ../apMesh/Headers/Data/Patch/  ../apMesh/Headers/Data/Tree/ ../apMesh/Headers/Data/ ../apMesh/Headers/Estimate/  ../apMesh/Headers/Generator/ ../apMesh/Headers/IO/ ../apMesh/Headers/TypeMethod/  ../apMesh/Headers/Timer/
+#INCLUDEPATH += ../apMesh/Libs/Eigen ../apMesh/Headers/Adapter ../apMesh/Headers/Basic/ ../apMesh/Headers/Crabmesh/Aft/  ../apMesh/Headers/Crabmesh/Numerical/ ../apMesh/Headers/Curvature/ ../apMesh/Headers/Data/Curve/ ../apMesh/Headers/Data/Matrix/ ../apMesh/Headers/Data/Mesh/  ../apMesh/Headers/Data/Patch/  ../apMesh/Headers/Data/Tree/ ../apMesh/Headers/Data/ ../apMesh/Headers/Estimate/  ../apMesh/Headers/Generator/ ../apMesh/Headers/IO/ ../apMesh/Headers/TypeMethod/  ../apMesh/Headers/Timer/
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -54,7 +54,6 @@ HEADERS += \
     ../apMesh/Headers/Data/Elemento.h \
     ../apMesh/Headers/Data/Face.h \
     ../apMesh/Headers/Data/Geometria.h \
-    ../apMesh/Headers/Data/Matriz.h \
     ../apMesh/Headers/Data/Mesh/Malha.h \
     ../apMesh/Headers/Data/Mesh/SubMalha.h \
     ../apMesh/Headers/Data/Modelo.h \
@@ -98,7 +97,6 @@ SOURCES += \
     ../apMesh/Sources/Data/Elemento.cpp \
     ../apMesh/Sources/Data/Face.cpp \
     ../apMesh/Sources/Data/Geometria.cpp \
-    ../apMesh/Sources/Data/Matriz.cpp \
     ../apMesh/Sources/Data/Mesh/Malha.cpp \
     ../apMesh/Sources/Data/Mesh/SubMalha.cpp \
     ../apMesh/Sources/Data/Modelo.cpp \

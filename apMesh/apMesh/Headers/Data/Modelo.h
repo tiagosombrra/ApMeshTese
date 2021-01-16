@@ -16,7 +16,7 @@ This source code is under GNU General Public License v3 */
 #include <list>
 #include "Ponto.h"
 #include "Geometria.h"
-#include "Malha.h"
+#include "../Data/Mesh/Malha.h"
 using namespace std;
 
 class Modelo

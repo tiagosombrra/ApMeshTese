@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "CurvaturaAnalitica.h"
+#include "../../Headers/Curvature/CurvaturaAnalitica.h"
 extern double TOLERANCIA;
 
 // Dill, J. C. (1981). An Application of Color Graphics to the Display of Surface Curvature.

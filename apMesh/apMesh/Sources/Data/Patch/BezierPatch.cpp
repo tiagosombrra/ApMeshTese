@@ -9,8 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "CurvParamBezier.h"
-#include "BezierPatch.h"
+#include "../../../Headers/Data/Patch/BezierPatch.h"
 
 extern double TOLERANCIA; // distância máxima entre dois pontos
 

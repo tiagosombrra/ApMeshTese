@@ -15,8 +15,10 @@ This source code is under GNU General Public License v3 */
 #include <tuple>
 #include <iostream>
 #include <list>
+#include "../Curve/CurvaParametrica.h"
+
 using namespace std;
-#include "CurvaParametrica.h"
+
 
 struct BinTree
 {

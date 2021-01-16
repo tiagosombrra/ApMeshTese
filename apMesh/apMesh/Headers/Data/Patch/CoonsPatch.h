@@ -18,9 +18,9 @@ This source code is under GNU General Public License v3 */
 using namespace std;
 
 #include "Patch.h"
-#include "Curva.h"
-#include "Vetor.h"
-#include "Definitions.h"
+#include "../Curve/Curva.h"
+#include "../Vetor.h"
+#include "../../Basic/Definitions.h"
 
 struct Ponto;
 //class Matriz;

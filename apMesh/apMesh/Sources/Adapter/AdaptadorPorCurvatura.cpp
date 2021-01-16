@@ -9,13 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "AdaptadorPorCurvatura.h"
-
-#include "Vertex.h"
-#include "Edge.h"
-#include "Face.h"
-#include <cstdlib>
-
+#include "../../Headers/Adapter/AdaptadorPorCurvatura.h"
 
 extern double TOLERANCIA;
 extern double TOLERANCIA_AFT;
@@ -53,7 +47,42 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, map < Pont
 
     // 1.1. Inicialize a árvore binária com a raiz para toda a curva
     BinTree bt;
+//#pragma omp parallel for num_threads(NUM_THREADS) firstprivate(atual,proxi) shared(bt)
+//    // 1.2. Para cada segmento da curva
+//    for (int i = 0; i < pontos.size(); ++i)
+//    {
+//        // 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
+//        h_velho = c->calcularTamanho ( *(*atual), *(*proxi) );
 
+//        // cout << "tamanho do segmento de curva"<<h_velho<< endl;
+
+//        //cout << "calculou novo tamanho" << endl;
+
+//        // 1.2.2. Calcule o ponto médio do segmento
+//        C_seg = static_cast < CurvaParametrica* > ( c )->pontoMedio ( *(*atual), *(*proxi) );
+
+//        // 1.2.2.1 Encontre o parâmetro do ponto médio
+//        t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
+
+//        // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
+
+//        ka = c->calcularCurvatura(t);
+
+//        kd = (c->calcularCurvatura(0) + c->calcularCurvatura(1)) / 2.0;
+
+//        // 1.2.4. O novo tamanho é calculado de acordo com os cenários
+//        h_novo = novoTamanho ( ka, kd, f, h_velho );
+
+//        //cout << "calculou novo tamanho" << endl;
+
+//        // 1.2.5. Calcule o tamanho paramétrico
+//        h_par = h_novo / c->get_L ( );
+
+//        bt.subdividir( t, h_par*fator_dis, (CurvaParametrica*)c );
+
+//        ++proxi;
+//        ++atual;
+//    }
     // 1.2. Para cada segmento da curva
     while ( proxi != pontos.end ( ) )
     {
@@ -76,7 +105,7 @@ list < Ponto* > AdaptadorPorCurvatura::adaptaCurvaByCurva ( Curva* c, map < Pont
 
         ka = c->calcularCurvatura(t);
 
-        kd = (c->calcularCurvatura(0.0) + c->calcularCurvatura(1.0)) / 2.0;
+        kd = (c->calcularCurvatura(0) + c->calcularCurvatura(1)) / 2.0;
 
         // 1.2.4. O novo tamanho é calculado de acordo com os cenários
         h_novo = novoTamanho ( ka, kd, f, h_velho );

@@ -9,9 +9,8 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "Noh.h"
-#include "Elemento.h"
-#include "SubMalha.h"
+
+#include "../../../Headers/Data/Mesh/SubMalha.h"
 
 void SubMalha::setPatch ( Patch* m )
 {

@@ -1,8 +1,9 @@
 #ifndef _VERTEX_H_
 #define _VERTEX_H_
 
-#include "Definitions.h"
-#include "Shape.h"
+#include "../Basic/Definitions.h"
+#include "../Crabmesh/Aft/Shape.h"
+#include "Edge.h"
 
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::Basics;

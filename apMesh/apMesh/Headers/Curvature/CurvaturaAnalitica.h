@@ -16,9 +16,9 @@ This source code is under GNU General Public License v3 */
 
 #include <tuple>
 
-#include "Vertice.h"
-#include "Vetor.h"
-#include "CoonsPatch.h"
+#include "../Data/Vertice.h"
+#include "../Data/Vetor.h"
+#include "../Data/Patch/CoonsPatch.h"
 #include "Curvatura.h"
 
 class CurvaturaAnalitica : public Curvatura

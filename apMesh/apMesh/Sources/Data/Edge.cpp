@@ -1,8 +1,5 @@
-#include "Edge.h"
+#include "../../Headers/Data/Edge.h"
 
-#include "Vertex.h"
-#include "QuadtreeCell.h"
-#include "CurvaParametrica.h"
 
 Edge::Edge(Vertex *v1, Vertex *v2, long int id) : Shape(id)
 {

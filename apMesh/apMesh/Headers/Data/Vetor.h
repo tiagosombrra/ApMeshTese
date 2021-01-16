@@ -13,6 +13,7 @@ This source code is under GNU General Public License v3 */
 #define Vetor_h
 
 #include "Ponto.h"
+#include <cmath>
 
 struct Vetor
 {		

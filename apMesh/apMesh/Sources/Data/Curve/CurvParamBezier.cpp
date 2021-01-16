@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "CurvParamBezier.h"
+#include "../../../Headers/Data/Curve/CurvParamBezier.h"
 
 Ponto CurvParamBezier::getP2() const {
     return this->P2;

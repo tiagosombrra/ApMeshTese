@@ -1,7 +1,7 @@
 #ifndef _DATA_NUMERICAL_BISECTION_EQUATION_ROOT_H_
 #define _DATA_NUMERICAL_BISECTION_EQUATION_ROOT_H_
 
-#include "Definitions.h"
+#include "../../Basic/Definitions.h"
 #include "EquationRoot.h"
 
 namespace Data

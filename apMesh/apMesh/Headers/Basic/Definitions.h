@@ -1,11 +1,12 @@
 #ifndef _DEFINITIONS_H_
 #define _DEFINITIONS_H_
 
+
 #define USE_PRINT_RESULT       false
 #define USE_PRINT_COMENT       false
 #define USE_PRINT_ERRO         true
 #define USE_PRINT_TIME         true
-#define USE_OPENMP             false
+#define USE_OPENMP             true
 #define USE_OPENMPI            false
 
 #include <iostream>
@@ -19,12 +20,14 @@
 #include <cfloat>
 #include <cmath>
 #include <ctime>
+#include <cstdlib>
+#include <sys/time.h>
 
 //Verificação de sistema operacional
 #ifdef __APPLE__
 #include <Eigen/Eigen>
 #elif __linux__
-#include "Eigen/Eigen"
+#include "../../Libs/Eigen/Eigen/Eigen"
 #else
 #   error "Unknown compiler"
 #endif

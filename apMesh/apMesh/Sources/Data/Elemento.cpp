@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "Elemento.h"
+#include "../../Headers/Data/Elemento.h"
 
 void Elemento::setId(unsigned long i) {
     this->id = i;

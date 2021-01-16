@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "Vertice.h"
+#include "../../Headers/Data/Vertice.h"
 
 Vertice::Vertice() {
 

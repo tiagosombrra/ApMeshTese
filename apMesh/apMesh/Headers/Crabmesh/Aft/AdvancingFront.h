@@ -1,8 +1,15 @@
 #ifndef _ADVANCING_FRONT_H_
 #define _ADVANCING_FRONT_H_
 
-#include "Definitions.h"
+#include "../../Basic/Definitions.h"
 #include "Shape.h"
+#include "../../Data/Vertex.h"
+#include "../../Data/Edge.h"
+#include "../../Data/Face.h"
+#include "Boundary.h"
+#include "Quadtree.h"
+#include "QuadtreeCell.h"
+
 
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;

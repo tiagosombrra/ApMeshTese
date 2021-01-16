@@ -5,9 +5,9 @@
 #include <list>
 #include <fstream>
 #include <sstream>
-#include "BezierPatch.h"
-#include "Ponto.h"
-#include "HermitePatch.h"
+#include "../Data/Patch/BezierPatch.h"
+#include "../Data/Ponto.h"
+#include "../Data/Patch/HermitePatch.h"
 
 extern std::string entrada;
 

@@ -1,9 +1,12 @@
 #ifndef _EDGE_H_
 #define _EDGE_H_
 
-#include "Definitions.h"
-#include "Shape.h"
-#include "CurvaParametrica.h"
+#include "../Basic/Definitions.h"
+#include "../Crabmesh/Aft/Shape.h"
+#include "../Data/Curve/CurvaParametrica.h"
+#include "Vertex.h"
+#include "../Crabmesh/Aft/QuadtreeCell.h"
+#include "../Data/Curve/CurvaParametrica.h"
 
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::Basics;

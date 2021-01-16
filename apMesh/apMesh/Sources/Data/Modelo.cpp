@@ -9,7 +9,7 @@ Orientador: Creto Augusto Vidal
 Co-Orientador: Joaquim Bento Cavalcante
 This source code is under GNU General Public License v3 */
 
-#include "Modelo.h"
+#include "../../Headers/Data/Modelo.h"
 
 void Modelo::setGeometria(Geometria *g) {
     this->geometria = g;

@@ -13,6 +13,8 @@ This source code is under GNU General Public License v3 */
 #define BezierPatch_h
 
 #include "CoonsPatch.h"
+#include "../../Data/Curve/CurvParamBezier.h"
+
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
 // cima em relação ao Patch !!!

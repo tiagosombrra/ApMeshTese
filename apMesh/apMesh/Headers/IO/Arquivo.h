@@ -18,7 +18,7 @@ This source code is under GNU General Public License v3 */
 #include <cstring>
 #include <cstdlib>
 #include <list>
-#include "Modelo.h"
+#include "../Data/Modelo.h"
 
 using namespace std;
 

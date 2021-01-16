@@ -698,7 +698,9 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
     cout << "ERRO  " << this->passo << " = " << this->erro << endl;
 #endif //#if USE_PRINT_ERRO
 
+#if USE_SAVE_MESH
     escreveMalha(malha, passo);
+#endif //#USE_SAVE_MESH
 
     this->erro = 1.0;
 
@@ -781,7 +783,10 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
         modelo.insereMalha ( malha );
 
         // 4.7. Escreve um artigo "neutral file" da malha gerada
-        escreveMalha(malha, passo);
+
+#if USE_SAVE_MESH
+    escreveMalha(malha, passo);
+#endif //#USE_SAVE_MESH
 
         // 4.7. Calcula o erro global para a malha
 #if USE_OPENMP

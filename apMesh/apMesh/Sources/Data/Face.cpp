@@ -18,7 +18,7 @@ Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, long int id) : Shape(id)
 //#endif //#if USE_OPENGL
 }
 
-Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid) : Shape(id)
+Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid, long int id) : Shape(id)
 {
     this->mid = NULL;
 

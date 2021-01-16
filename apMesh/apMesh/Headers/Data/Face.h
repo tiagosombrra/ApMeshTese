@@ -28,7 +28,7 @@ public:
     double h;
 
     Face(Vertex *v1 = NULL, Vertex *v2 = NULL, Vertex *v3 = NULL, long int id = 0);
-    Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid);
+    Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid, long int id);
     ~Face();
 
     void setV1(Vertex *v);

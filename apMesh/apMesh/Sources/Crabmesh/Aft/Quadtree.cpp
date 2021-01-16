@@ -487,6 +487,8 @@ void Quadtree::addFront(Edge *e)
 {
     front.push_back(e);
 
+    e->setFree(true);
+
     //GAMBIARRA
     e->setInBoundary(true);
 }

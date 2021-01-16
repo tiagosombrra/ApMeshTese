@@ -330,6 +330,11 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
 
     VertexList bestVertices;
 
+    //debug markos
+    //std::cerr << std::boolalpha << "geometryPhase = " << geometryPhase << "; frontVertices.size() = " << frontVertices.size() << "; ";
+    //int matches = 0, outbox = 0, outdistance = 0, outnormal = 0, intercepted = 0;
+    //endebug markos
+
     for (VertexList::iterator iter = frontVertices.begin();
          iter != frontVertices.end(); iter++)
     {
@@ -338,13 +343,22 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
         if ((candidate == e->getV1()) || (candidate == e->getV2()) ||
                 (candidate->matches(e->getV1())) || (candidate->matches(e->getV2())))
         {
+            //matches++;
             continue;
         }
 
         if (geometryPhase)
         {
+            if ((candidate->getX() < best->getX() - h) || (candidate->getX() > best->getX() + h) ||
+                (candidate->getY() < best->getY() - h) || (candidate->getY() > best->getY() + h))
+            {
+                //outbox++;
+                continue;
+            }
+
             if (candidate->distance(best) > h)
             {
+                //outdistance++;
                 continue;
             }
 
@@ -359,11 +373,17 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
 
                 best = NULL;
 
+                //std::cerr << "matches = " << matches << "; outbox = " << outbox << "; outdistance = " << outdistance << "; outnormal = " << outnormal <<
+                //            "; intercepted = " << intercepted << "; bestVertices.size() = " << bestVertices.size() << "; return = false, NULL; reason = dist < 0.0" << std::endl;
+
                 return false;
             }
             else if (dist <= h*0.1)
             {
                 //continue;
+
+                //std::cerr << "matches = " << matches << "; outbox = " << outbox << "; outdistance = " << outdistance << "; outnormal = " << outnormal <<
+                //            "; intercepted = " << intercepted << "; bestVertices.size() = " << bestVertices.size() << "; return = false,  NULL; reason = dist < h*0.1" << std::endl;
 
                 bestVertices.clear();
 
@@ -378,6 +398,7 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
         {
             if (!(e->accordingToNormal(candidate)))
             {
+                //outnormal++;
                 continue;
             }
         }
@@ -390,7 +411,14 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
         {
             bestVertices.push_back(candidate);
         }
+        //else
+        //{
+            //intercepted++;
+        //}
     }
+
+    //std::cerr << "matches = " << matches << "; outbox = " << outbox << "; outdistance = " << outdistance << "; outnormal = " << outnormal <<
+    //            "; intercepted = " << intercepted << "; bestVertices.size() = " << bestVertices.size() << "; return = ";
 
     if (geometryPhase && bestVertices.empty())
     {
@@ -401,6 +429,8 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
             delete best;
 
             best = NULL;
+
+            //std::cerr << "false,  NULL; reason = intercept == true" << std::endl;
 
             return false;
         }
@@ -427,6 +457,8 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
 
                 best = NULL;
 
+                //std::cerr << "false,  NULL; reason = tooClose == true" << std::endl;
+
                 return false;
             }
             else
@@ -438,6 +470,8 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
                 vertices.push_back(best);
             }
         }
+
+        //std::cerr << "false, NOTNULL; reason = new vertex not close to existing" << std::endl;
 
         vertexExistedBefore = false;
     }
@@ -514,9 +548,13 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
 
         delete v1;
         delete v2;
+
+        //std::cerr << "true, NOTNULL; reason = existing vertex" << std::endl;
     }
     else
     {
+        //std::cerr << "false, NOTNULL; reason = new vertex" << std::endl;
+
         vertexExistedBefore = false;
     }
 

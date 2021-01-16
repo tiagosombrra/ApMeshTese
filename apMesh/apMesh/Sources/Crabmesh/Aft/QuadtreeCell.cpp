@@ -290,6 +290,8 @@ Edge *QuadtreeCell::makeE(Vertex *v1, Vertex *v2)
     v1->addAdjacentEdge(e);
     v2->addAdjacentEdge(e);
 
+    e->setFree(false);
+
     return e;
 }
 

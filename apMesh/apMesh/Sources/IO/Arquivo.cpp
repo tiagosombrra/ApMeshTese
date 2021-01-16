@@ -48,8 +48,8 @@ string Arquivo::getNome() {
 // criar as curvas
 void Arquivo::criarCurvasPara(/*Modelo& modelo*/)
 {
-    char* temp;
-    char* str;
+    char* temp = NULL;
+    char* str = NULL;
     double pt0[3]; // ponto inicial
     double pt1[3]; // ponto final
     double dpt0[3]; // derivada no ponto inicial
@@ -131,8 +131,8 @@ void Arquivo::criarCurvasPara(/*Modelo& modelo*/)
 // criar os patches
 void Arquivo::criarPatchesPara ( /*Modelo& modelo*/ )
 {
-    char* temp;
-    char* str;
+    char* temp = NULL;
+    char* str = NULL;
 
     list<string>::iterator itr = this->patches.begin();
     list<string>::iterator fim = this->patches.end();

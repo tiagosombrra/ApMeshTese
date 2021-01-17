@@ -20,7 +20,7 @@ double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
 double EPSYLON = 0.03;
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
-int NUM_THREADS = omp_get_num_threads();
+int NUM_THREADS = 2;
 
 string entrada;
 
@@ -30,6 +30,8 @@ string entrada;
 
 int main(int argc, char **argv)
 {
+    cout<<"NUM_THREADS"<<NUM_THREADS<<endl;
+
     bool geraMalha = true;
     Modelo M;
     std::list<BezierPatch*> listBezierPt;

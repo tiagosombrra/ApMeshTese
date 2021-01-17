@@ -73,3 +73,5 @@ clean:
 exec:
 	./$(PROGRAMA)
 	
+	
+	

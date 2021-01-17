@@ -20,7 +20,7 @@ double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
 double EPSYLON = 0.03;
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
-int NUM_THREADS = 2;
+int NUM_THREADS = 8;
 
 string entrada;
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     if (argc == 1)
     {
         Modelos3d modelos3d;
-        M.setGeometria ( modelos3d.modelUtahteapot(geo) );
+        M.setGeometria ( modelos3d.modelPlanBook(geo) );
     }
     else
     {

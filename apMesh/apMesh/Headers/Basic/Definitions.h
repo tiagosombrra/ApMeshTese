@@ -8,7 +8,7 @@
 #define USE_PRINT_TIME         true
 #define USE_OPENMP             false
 #define USE_OPENMPI            false
-#define USE_SAVE_MESH          false
+#define USE_SAVE_MESH          true
 
 #include <iostream>
 #include <fstream>

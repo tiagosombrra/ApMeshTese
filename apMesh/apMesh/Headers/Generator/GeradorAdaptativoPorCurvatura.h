@@ -27,6 +27,7 @@ This source code is under GNU General Public License v3 */
 #include "../Curvature/CurvaturaDiscreta.h"
 #include "../Adapter/AdaptadorPorCurvatura.h"
 #include "../Basic/Definitions.h"
+#include "../Timer/Timer.h"
 
 using namespace std;
 
@@ -45,13 +46,13 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo
     void saveErroMesh(Malha *malha);
 
 #if USE_OPENMP
-    virtual double erroGlobalOmp ( Malha* malha );
+    virtual double erroGlobalOmp ( Malha* malha);
 #else
-    virtual double erroGlobal ( Malha* malha );
+    virtual double erroGlobal ( Malha* malha);
 #endif //#USE_OPENMP
 
 public :
-    GeradorAdaptativoPorCurvatura ( Modelo& );
+    GeradorAdaptativoPorCurvatura ( Modelo&, Timer *timer);
 };
 
 #endif

@@ -49,9 +49,9 @@ OBJETOS = $(FONTES:.cpp=.o)
 CC            = gcc
 CXX           = g++
 
-CFLAGS        = -O3 -fopenmp -g -std=gnu++11 -Wall -W #-D_REENTRANT -fPIC
-CXXFLAGS      = -O3 -fopenmp -g -std=gnu++11 -Wall -W #-D_REENTRANT -fPIC #-pg
-LFLAGS        = -O3 -fopenmp #-pg
+CFLAGS        = -O3 -fopenmp -g -std=gnu++11 -Wall -W 
+CXXFLAGS      = -O3 -fopenmp -g -std=gnu++11 -Wall -W 
+LFLAGS        = -O3 -fopenmp
 
 #CFLAGS = -c -g3 -Wall -lm -pipe -std=c++0x -pg -fopenmp
 #CFLAGS = -c -O3 -Wall -lm -pipe -std=c++0x -pg

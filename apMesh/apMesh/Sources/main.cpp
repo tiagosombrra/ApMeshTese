@@ -21,7 +21,7 @@ double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
 double EPSYLON = 0.03;
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
-int NUM_THREADS = 8;
+int NUM_THREADS = 16;
 
 std::set<Ponto*> listAllPointsModel;
 std::set<SubMalha*> listAllSubMalhaModel;
@@ -48,8 +48,6 @@ int main(int argc, char **argv)
 
     // contador do tempo de inicialização em segundos em todos os processos
     timer->initTime(10); // Full
-    timer->initTime(0);  // Inicialização
-
 
     bool geraMalha = true;
     Modelo M;
@@ -175,7 +173,7 @@ int main(int argc, char **argv)
         gettimeofday(&t, NULL);
         double methodTimeStart = static_cast<double>(t.tv_sec) + static_cast<double>(t.tv_usec)*0.000001;
 
-        GeradorAdaptativoPorCurvatura adaptiveMesh ( M );
+        GeradorAdaptativoPorCurvatura adaptiveMesh ( M, timer );
 
         //pra o calculo do tempo real
         gettimeofday(&t, NULL);

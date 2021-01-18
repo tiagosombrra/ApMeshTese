@@ -478,7 +478,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
 }
 #else
 // calcula o erro global da malha
-double GeradorAdaptativoPorCurvatura::erroGlobal ( Malha* malha )
+double GeradorAdaptativoPorCurvatura::erroGlobal (Malha* malha)
 {
 
 #if USE_PRINT_COMENT
@@ -658,7 +658,7 @@ void GeradorAdaptativoPorCurvatura::saveErroMesh(Malha *malha)
 }
 
 
-GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
+GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , Timer *timer)
 {
     CoonsPatch* patch = NULL;
     Geometria* geo = modelo.getGeometria ( );
@@ -667,7 +667,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
     this->passo = 0;
 
     // 1. Gera a malha inicial
-//#pragma omp parallel for num_threads(NUM_THREADS) firstprivate(patch, geo)
+    //#pragma omp parallel for num_threads(NUM_THREADS) firstprivate(patch, geo)
     for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
     {
 
@@ -677,7 +677,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
 
         patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
         SubMalha *sub = this->malhaInicial ( static_cast < CoonsPatch* > ( patch ) );
-//#pragma omp critical
+        //#pragma omp critical
         malha->insereSubMalha ( sub );
     }
 
@@ -688,9 +688,14 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
     // 3. Calcula o erro global para a malha inicial
 
 #if USE_OPENMP
+    timer->initTime(7); // Calculo do erro
     this->erro = this->erroGlobalOmp( malha );
+    timer->endTime(7); // Calculo do erro
 #else
+    timer->initTime(7); // Calculo do erro
     this->erro = this->erroGlobal ( malha );
+    timer->endTime(7); // Calculo do erro
+
 #endif //#USE_OPENMP
 
 
@@ -785,19 +790,25 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura ( Modelo& modelo )
         // 4.7. Escreve um artigo "neutral file" da malha gerada
 
 #if USE_SAVE_MESH
-    escreveMalha(malha, passo);
+        escreveMalha(malha, passo);
 #endif //#USE_SAVE_MESH
 
         // 4.7. Calcula o erro global para a malha
 #if USE_OPENMP
+        timer->initTime(7); // Calculo do erro
         this->erro = this->erroGlobalOmp( malha );
+        timer->endTime(7); // Calculo do erro
 #else
+        timer->initTime(7); // Calculo do erro
         this->erro = this->erroGlobal ( malha );
+        timer->endTime(7); // Calculo do erro
 #endif //#USE_OPENMP
 
 #if USE_PRINT_ERRO
         cout << "ERRO  " << this->passo << " = " << this->erro << endl;
 #endif //#if USE_PRINT_COMENT
 
+      timer->endTime(10); // Full
+      timer->writeTimeFile();
     }
 }

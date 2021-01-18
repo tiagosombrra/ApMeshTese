@@ -73,7 +73,8 @@ HEADERS += \
     ../apMesh/Headers/Generator/GeradorAdaptativoPorCurvatura.h \
     ../apMesh/Headers/IO/Arquivo.h \
     ../apMesh/Headers/IO/Modelos3d.h \
-    ../apMesh/Headers/IO/ReaderPatches.h
+    ../apMesh/Headers/IO/ReaderPatches.h \ \
+    ../apMesh/Headers/Timer/Timer.h
 
 SOURCES += \
     ../apMesh/Sources/Adapter/Adaptador.cpp \
@@ -117,4 +118,5 @@ SOURCES += \
     ../apMesh/Sources/IO/Arquivo.cpp \
     ../apMesh/Sources/IO/Modelos3d.cpp \
     ../apMesh/Sources/IO/ReaderPatches.cpp \
-    ../apMesh/Sources/main.cpp
+    ../apMesh/Sources/Timer/Timer.cpp \
+    ../apMesh/Sources/main.cpp \

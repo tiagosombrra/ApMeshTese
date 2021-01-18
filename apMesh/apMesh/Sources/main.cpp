@@ -9,6 +9,7 @@
 #include "../Headers/IO/Modelos3d.h"
 #include "../Headers/Basic/Definitions.h"
 #include "../Headers/IO/ReaderPatches.h"
+#include "../Headers/Timer/Timer.h"
 
 double DELTA = 0.0001;
 double TOLERANCIA = 0.0001;
@@ -22,7 +23,16 @@ double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
 int NUM_THREADS = 8;
 
-string entrada;
+std::set<Ponto*> listAllPointsModel;
+std::set<SubMalha*> listAllSubMalhaModel;
+#if USE_OPENMPI
+int RANK_MPI, SIZE_MPI;
+#endif //#if USE_OPENMPI
+
+std::string nameModel;
+std::string entrada;
+std::string numberProcess;
+std::string WRITE_MESH;
 
 // argv[0] = "executavel: ./apmesh",
 // argv[1] = "entrada",       OBS: Projects-> Comands line arguments -> ../../apMesh/Entrada/mountain_289_patches.bp
@@ -30,7 +40,16 @@ string entrada;
 
 int main(int argc, char **argv)
 {
-    cout<<"NUM_THREADS"<<NUM_THREADS<<endl;
+#if USE_OPENMP
+    cout<<"NUM_THREADS: "<<NUM_THREADS<<endl;
+#endif //#USE_OPENMP
+    // Criação e inicialização do contador de tempo com todos os valores 0(zero)
+    Timer* timer = new Timer();
+
+    // contador do tempo de inicialização em segundos em todos os processos
+    timer->initTime(10); // Full
+    timer->initTime(0);  // Inicialização
+
 
     bool geraMalha = true;
     Modelo M;

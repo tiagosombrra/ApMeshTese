@@ -6,9 +6,19 @@
 #define USE_PRINT_COMENT       false
 #define USE_PRINT_ERRO         true
 #define USE_PRINT_TIME         true
-#define USE_OPENMP             false
+#define USE_OPENMP             true
 #define USE_OPENMPI            false
 #define USE_SAVE_MESH          true
+
+#if USE_OPENMPI
+    #include "mpi.h"
+    #define PROCESS_ROOT 0
+    #define TAG_SIZE_OF_DOUBLE 0
+    #define TAG_DOUBLE 1
+    #define TAG_PASSO 2
+    #define RANK_ROOT 0
+    #define USE_SERIAL false
+#endif //#if USE_OPENMPI
 
 #include <iostream>
 #include <fstream>

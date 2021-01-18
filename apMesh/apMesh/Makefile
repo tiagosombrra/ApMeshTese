@@ -41,6 +41,7 @@ FONTES = Sources/Adapter/Adaptador.cpp \
     Sources/IO/Arquivo.cpp \
     Sources/IO/Modelos3d.cpp \
     Sources/IO/ReaderPatches.cpp \
+    Sources/Timer/Timer.cpp \
     Sources/main.cpp
 
 OBJETOS = $(FONTES:.cpp=.o)
@@ -48,9 +49,9 @@ OBJETOS = $(FONTES:.cpp=.o)
 CC            = gcc
 CXX           = g++
 
-CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC
-CXXFLAGS      = -pipe -pg -O3 -fopenmp -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC
-LFLAGS        = -pg -O3 -fopenmp
+CFLAGS        = -O3 -fopenmp -g -std=gnu++11 -Wall -W #-D_REENTRANT -fPIC
+CXXFLAGS      = -O3 -fopenmp -g -std=gnu++11 -Wall -W #-D_REENTRANT -fPIC #-pg
+LFLAGS        = -O3 -fopenmp #-pg
 
 #CFLAGS = -c -g3 -Wall -lm -pipe -std=c++0x -pg -fopenmp
 #CFLAGS = -c -O3 -Wall -lm -pipe -std=c++0x -pg

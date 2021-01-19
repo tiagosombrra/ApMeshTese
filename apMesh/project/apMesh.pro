@@ -42,6 +42,9 @@ HEADERS += \
     ../apMesh/Headers/Crabmesh/Numerical/EquationRootFunction.h \
     ../apMesh/Headers/Crabmesh/Numerical/Function.h \
     ../apMesh/Headers/Crabmesh/Numerical/MultiVariableFunction.h \
+    ../apMesh/Headers/Crabmesh/Performer/Definitions.h \
+    ../apMesh/Headers/Crabmesh/Performer/IdManager.h \
+    ../apMesh/Headers/Crabmesh/Performer/RangedIdManager.h \
     ../apMesh/Headers/Curvature/Adjacente.h \
     ../apMesh/Headers/Curvature/Curvatura.h \
     ../apMesh/Headers/Curvature/CurvaturaAnalitica.h \
@@ -50,6 +53,7 @@ HEADERS += \
     ../apMesh/Headers/Data/Curve/CurvParamHermite.h \
     ../apMesh/Headers/Data/Curve/Curva.h \
     ../apMesh/Headers/Data/Curve/CurvaParametrica.h \
+    ../apMesh/Headers/Data/Definitions.h \
     ../apMesh/Headers/Data/Edge.h \
     ../apMesh/Headers/Data/Elemento.h \
     ../apMesh/Headers/Data/Face.h \
@@ -86,6 +90,8 @@ SOURCES += \
     ../apMesh/Sources/Crabmesh/Aft/Shape.cpp \
     ../apMesh/Sources/Crabmesh/Numerical/BisectionEquationRoot.cpp \
     ../apMesh/Sources/Crabmesh/Numerical/Function.cpp \
+    ../apMesh/Sources/Crabmesh/Performer/IdManager.cpp \
+    ../apMesh/Sources/Crabmesh/Performer/RangedIdManager.cpp \
     ../apMesh/Sources/Curvature/Adjacente.cpp \
     ../apMesh/Sources/Curvature/Curvatura.cpp \
     ../apMesh/Sources/Curvature/CurvaturaAnalitica.cpp \

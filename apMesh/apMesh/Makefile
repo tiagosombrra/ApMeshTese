@@ -9,6 +9,8 @@ FONTES = Sources/Adapter/Adaptador.cpp \
     Sources/Crabmesh/Aft/Shape.cpp \
     Sources/Crabmesh/Numerical/BisectionEquationRoot.cpp \
     Sources/Crabmesh/Numerical/Function.cpp \
+    Sources/Crabmesh/Performer/IdManager.cpp \
+    Sources/Crabmesh/Performer/RangedIdManager.cpp \
     Sources/Curvature/Adjacente.cpp \
     Sources/Curvature/Curvatura.cpp \
     Sources/Curvature/CurvaturaAnalitica.cpp \
@@ -49,30 +51,26 @@ OBJETOS = $(FONTES:.cpp=.o)
 CC            = gcc
 CXX           = g++
 
-CFLAGS        = -O3 -std=gnu++11 -Wall -W -fopenmp
-CXXFLAGS      = -O3 -fopenmp -g -std=gnu++11 -Wall -W 
-LFLAGS        = -O3 -fopenmp
-
-#CFLAGS = -c -g3 -Wall -lm -pipe -std=c++0x -pg -fopenmp
-#CFLAGS = -c -O3 -Wall -lm -pipe -std=c++0x -pg
-#LDFLAGS = -pg -O3 -fopenmp
-
-COMPILADOR = g++
-
+CXXFLAGS_EXTRA = -O3 -s
+CXXFLAGS      = -std=gnu++11 -W -Wall $(CXXFLAGS_EXTRA)
+CXXFLAGS_OMP  = -fopenmp $(CXXFLAGS)
 
 all: $(FONTES) $(PROGRAMA)
 
 $(PROGRAMA): $(OBJETOS)
-	$(COMPILADOR) $(LFLAGS) $(OBJETOS) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJETOS) -o $@
 
 .cpp.o:
 	#$(COMPILADOR) $(CFLAGS) $< -o $@
 	$(CXX) -c $(CXXFLAGS) $< -o $@
+	
 clean:
-	rm -rfv *.o Sources/Adapter/*.o Sources/Crabmesh/Aft/*.o  Sources/Crabmesh/Numerical/*.o Sources/Curvature/*.o Sources/Data/*.o Sources/Data/Curve/*.o Sources/Data/Mesh/*.o Sources/Data/Patch/*.o Sources/Data/Tree/*.o Sources/Generator/*.o Sources/IO/*.o $(PROGRAMA)
+	rm -rfv *.o Sources/Adapter/*.o Sources/Crabmesh/Aft/*.o  Sources/Crabmesh/Numerical/*.o Sources/Crabmesh/Performer/*.o Sources/Curvature/*.o Sources/Data/*.o Sources/Data/Curve/*.o Sources/Data/Mesh/*.o Sources/Data/Patch/*.o Sources/Data/Tree/*.o Sources/Generator/*.o Sources/IO/*.o $(PROGRAMA)
 
 exec:
 	./$(PROGRAMA)
 	
+ce: clean all 
 	
+# -Wextra -Wconversion -Woverloaded-virtual -Wold-style-cast 
 	

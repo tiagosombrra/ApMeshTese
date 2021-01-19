@@ -807,8 +807,5 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
 #if USE_PRINT_ERRO
         cout << "ERRO  " << this->passo << " = " << this->erro << endl;
 #endif //#if USE_PRINT_COMENT
-
-      timer->endTime(10); // Full
-      timer->writeTimeFile();
     }
 }

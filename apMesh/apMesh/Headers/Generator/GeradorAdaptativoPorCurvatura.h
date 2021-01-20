@@ -29,6 +29,9 @@ This source code is under GNU General Public License v3 */
 #include "../Basic/Definitions.h"
 #include "../Timer/Timer.h"
 
+#include "../Crabmesh/Performer/RangedIdManager.h"
+#include "../Parallel/TMCommunicator.h"
+
 using namespace std;
 
 static unsigned long int idv = 1;

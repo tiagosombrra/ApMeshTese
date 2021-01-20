@@ -1,6 +1,14 @@
 PROGRAMA = apMesh
 
-FONTES = Sources/Adapter/Adaptador.cpp \
+FONTES = Sources/Parallel/Communicator.cpp \
+    Sources/Parallel/MPICommunicator.cpp \
+    Sources/Parallel/MPIMessage.cpp \
+    Sources/Parallel/Message.cpp \
+    Sources/Parallel/NoCommunicator.cpp \
+    Sources/Parallel/NoThreadManager.cpp \
+    Sources/Parallel/OMPThreadManager.cpp \
+    Sources/Parallel/ParallelMeshGenerator.cpp \
+    Sources/Adapter/Adaptador.cpp \
     Sources/Adapter/AdaptadorPorCurvatura.cpp \
     Sources/Crabmesh/Aft/AdvancingFront.cpp \
     Sources/Crabmesh/Aft/Boundary.cpp \
@@ -43,26 +51,29 @@ FONTES = Sources/Adapter/Adaptador.cpp \
     Sources/IO/Arquivo.cpp \
     Sources/IO/Modelos3d.cpp \
     Sources/IO/ReaderPatches.cpp \
+    Sources/Parallel/TMCommunicator.cpp \
+    Sources/Parallel/ThreadManager.cpp \
+    Sources/Parallel/Transferable.cpp \
     Sources/Timer/Timer.cpp \
-    Sources/main.cpp
+    Sources/main.cpp \
 
 OBJETOS = $(FONTES:.cpp=.o)
 
 CC            = gcc
 CXX           = g++
 
-CXXFLAGS_EXTRA = -O3 -s
+CXXFLAGS_EXTRA = -O3
 CXXFLAGS      = -std=gnu++11 -W -Wall $(CXXFLAGS_EXTRA)
 CXXFLAGS_OMP  = -fopenmp $(CXXFLAGS)
 
 all: $(FONTES) $(PROGRAMA)
 
 $(PROGRAMA): $(OBJETOS)
-	$(CXX) $(CXXFLAGS) $(OBJETOS) -o $@
+	$(CXX) $(CXXFLAGS_OMP) $(OBJETOS) -o $@
 
 .cpp.o:
 	#$(COMPILADOR) $(CFLAGS) $< -o $@
-	$(CXX) -c $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS_OMP) $< -o $@
 	
 clean:
 	rm -rfv *.o Sources/Adapter/*.o Sources/Crabmesh/Aft/*.o  Sources/Crabmesh/Numerical/*.o Sources/Crabmesh/Performer/*.o Sources/Curvature/*.o Sources/Data/*.o Sources/Data/Curve/*.o Sources/Data/Mesh/*.o Sources/Data/Patch/*.o Sources/Data/Tree/*.o Sources/Generator/*.o Sources/IO/*.o $(PROGRAMA)
@@ -71,6 +82,4 @@ exec:
 	./$(PROGRAMA)
 	
 ce: clean all 
-	
-# -Wextra -Wconversion -Woverloaded-virtual -Wold-style-cast 
 	

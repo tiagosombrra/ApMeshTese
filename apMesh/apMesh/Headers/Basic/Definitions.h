@@ -7,10 +7,10 @@
 #define USE_PRINT_ERRO         true
 #define USE_PRINT_TIME         true
 #define USE_OPENMP             false
-#define USE_OPENMPI            false
+#define USE_MPI                false
 #define USE_SAVE_MESH          true
 
-#if USE_OPENMPI
+#if USE_MPI
     #include "mpi.h"
     #define PROCESS_ROOT 0
     #define TAG_SIZE_OF_DOUBLE 0

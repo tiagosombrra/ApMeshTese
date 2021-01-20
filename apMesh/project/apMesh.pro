@@ -7,6 +7,18 @@ QMAKE_CXXFLAGS += -pg -O3 -fopenmp #   -std=gnu++0x#-march=native #-m64 #-mavx #
 QMAKE_LFLAGS += -pg -O3 -fopenmp #  -std=gnu++0x#-march=native #-m64 #-mavx
 #QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
 
+# MPI Settings
+QMAKE_CXX = mpicxx
+QMAKE_CXX_RELEASE = $$QMAKE_CXX
+QMAKE_CXX_DEBUG = $$QMAKE_CXX
+QMAKE_LINK = $$QMAKE_CXX
+QMAKE_CC = mpicc
+
+QMAKE_CFLAGS += $$system(mpicc --showme:compile)
+QMAKE_LFLAGS += $$system(mpicxx --showme:link)
+QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+
 #INCLUDEPATH += ../apMesh/Libs/Eigen ../apMesh/Headers/Adapter ../apMesh/Headers/Basic/ ../apMesh/Headers/Crabmesh/Aft/  ../apMesh/Headers/Crabmesh/Numerical/ ../apMesh/Headers/Curvature/ ../apMesh/Headers/Data/Curve/ ../apMesh/Headers/Data/Matrix/ ../apMesh/Headers/Data/Mesh/  ../apMesh/Headers/Data/Patch/  ../apMesh/Headers/Data/Tree/ ../apMesh/Headers/Data/ ../apMesh/Headers/Estimate/  ../apMesh/Headers/Generator/ ../apMesh/Headers/IO/ ../apMesh/Headers/TypeMethod/  ../apMesh/Headers/Timer/
 
 # The following define makes your compiler emit warnings if you use
@@ -78,9 +90,29 @@ HEADERS += \
     ../apMesh/Headers/IO/Arquivo.h \
     ../apMesh/Headers/IO/Modelos3d.h \
     ../apMesh/Headers/IO/ReaderPatches.h \ \
+    ../apMesh/Headers/Parallel/Communicator.h \
+    ../apMesh/Headers/Parallel/Definitions.h \
+    ../apMesh/Headers/Parallel/MPICommunicator.h \
+    ../apMesh/Headers/Parallel/MPIMessage.h \
+    ../apMesh/Headers/Parallel/Message.h \
+    ../apMesh/Headers/Parallel/NoCommunicator.h \
+    ../apMesh/Headers/Parallel/NoThreadManager.h \
+    ../apMesh/Headers/Parallel/OMPThreadManager.h \
+    ../apMesh/Headers/Parallel/ParallelMeshGenerator.h \
+    ../apMesh/Headers/Parallel/TMCommunicator.h \
+    ../apMesh/Headers/Parallel/ThreadManager.h \
+    ../apMesh/Headers/Parallel/Transferable.h \
     ../apMesh/Headers/Timer/Timer.h
 
 SOURCES += \
+    ../apMesh/Sources/Parallel/Communicator.cpp \
+    ../apMesh/Sources/Parallel/MPICommunicator.cpp \
+    ../apMesh/Sources/Parallel/MPIMessage.cpp \
+    ../apMesh/Sources/Parallel/Message.cpp \
+    ../apMesh/Sources/Parallel/NoCommunicator.cpp \
+    ../apMesh/Sources/Parallel/NoThreadManager.cpp \
+    ../apMesh/Sources/Parallel/OMPThreadManager.cpp \
+    ../apMesh/Sources/Parallel/ParallelMeshGenerator.cpp \
     ../apMesh/Sources/Adapter/Adaptador.cpp \
     ../apMesh/Sources/Adapter/AdaptadorPorCurvatura.cpp \
     ../apMesh/Sources/Crabmesh/Aft/AdvancingFront.cpp \
@@ -124,5 +156,8 @@ SOURCES += \
     ../apMesh/Sources/IO/Arquivo.cpp \
     ../apMesh/Sources/IO/Modelos3d.cpp \
     ../apMesh/Sources/IO/ReaderPatches.cpp \
+    ../apMesh/Sources/Parallel/TMCommunicator.cpp \
+    ../apMesh/Sources/Parallel/ThreadManager.cpp \
+    ../apMesh/Sources/Parallel/Transferable.cpp \
     ../apMesh/Sources/Timer/Timer.cpp \
     ../apMesh/Sources/main.cpp \

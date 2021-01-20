@@ -31,11 +31,11 @@
 #endif //#ifndef USE_C__11
 
 #ifndef USE_MPI
-#define USE_MPI TRUE
+#define USE_MPI FALSE
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP TRUE
+#define USE_OPENMP FALSE
 #endif //#ifndef USE_OPENMP
 
 #ifndef USE_OLD_MPI

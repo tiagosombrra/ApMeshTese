@@ -6,7 +6,7 @@
 #define USE_PRINT_COMENT       false
 #define USE_PRINT_ERRO         true
 #define USE_PRINT_TIME         true
-#define USE_OPENMP             false
+#define USE_OPENMP             true
 #define USE_MPI                false
 #define USE_SAVE_MESH          true
 

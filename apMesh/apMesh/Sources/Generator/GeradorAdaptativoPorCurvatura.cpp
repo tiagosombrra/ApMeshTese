@@ -154,7 +154,259 @@ void escreveElementos( int passo, SubMalha *sub, int i )
 
 // gera a malha inicial e insere na lista de malhas do modelo
 // a lista de pontos da curva é preenchida durante a geração da malha inicial
-SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial ( CoonsPatch* patch )
+
+#if USE_OPENMP
+double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
+{
+#if USE_PRINT_COMENT
+    cout << "Calculando o erro global..." << endl;
+#endif //#if USE_PRINT_COMENT
+
+    unsigned int Ns = 0; // número de submalhas
+    double Nj = 0.0; // erro global da malha
+
+    Ns = malha->getNumDeSubMalhas ( );
+
+    // Calcula o erro global de cada submalha (OMP)
+    Int nThreads = 1;
+    nThreads = static_cast<Parallel::TMCommunicator *>(this->comm)->getMaxThreads();
+
+#pragma omp parallel for num_threads(nThreads) firstprivate(Ns) reduction(+ :Nj)
+    for ( unsigned int i = 0; i < Ns; ++i )
+    {
+        SubMalha* sub = malha->getSubMalha ( i );
+        unsigned int Nv = sub->getNumDeNos ( );
+        double curvPower = 0.0;
+        double Njs = 0.0;
+
+        // Calcula o erro relativo para cada nó e soma a Nj
+        for ( unsigned int j = 0; j < Nv; ++j )
+        {
+            Ponto *n = sub->getNoh ( j );
+            Patch *p = sub->getPatch (  );
+            CurvaturaAnalitica ka (	*( static_cast < Noh* > ( n ) ), *( static_cast < CoonsPatch* > ( p ) ) );
+            CurvaturaDiscreta kd ( *( static_cast < Noh* > ( n ) ) );
+            double Ga = ka.gauss();
+            double Gd = kd.gauss();
+            double Ha = ka.media();
+            double Hd = kd.media();
+            // atualiza as curvaturas do nó ( para que não sejam recalculadas na
+            // adaptação das curvas e do domínio )
+            ((Noh*)n)->Ga = Ga;
+            ((Noh*)n)->Gd = Gd;
+            ((Noh*)n)->Ha = Ha;
+            ((Noh*)n)->Hd = Hd;
+
+            double power = 0.0;
+            double diff = 0.0;
+
+            if ( fabs ( Ga ) >= TOLERANCIA )
+            {
+                diff = Gd - Ga;
+                power = pow( diff, 2);
+                Njs += power;
+                curvPower += pow(Ga, 2);
+            }
+            else if ( fabs ( Ha ) >= TOLERANCIA )
+            {
+                diff = Hd - Ha;
+                power = pow( diff, 2);
+                Njs += power;
+                curvPower += pow(Ha, 2);
+            }
+        }
+
+        if (Njs > 0.0 && curvPower > 0.0) {
+            Njs =(double) sqrt( Njs / curvPower) / Nv;
+        }
+
+        Nj += Njs;
+
+    } //Parallel for
+
+
+    Nj /= Ns; // o erro global é a média do erro das submalhas
+
+    return Nj;
+}
+#else
+// calcula o erro global da malha
+double GeradorAdaptativoPorCurvatura::erroGlobal (Malha* malha)
+{
+
+#if USE_PRINT_COMENT
+    cout << "Calculando o erro global..." << endl;
+#endif //#if USE_PRINT_COMENT
+
+    unsigned int Ns = 0; // número de submalhas
+    unsigned int Nv = 0; // número de vértices
+    double Njs = 0; // erro global da submalha
+    double curvPower = 0.0;
+    double Nj = 0; // erro global da malha
+    SubMalha* sub = 0;
+
+    Ns = malha->getNumDeSubMalhas ( );
+
+    // Calcula o erro global de cada submalha
+    for ( unsigned int i = 0; i < Ns; ++i )
+    {
+        sub = malha->getSubMalha ( i );
+        Nv = sub->getNumDeNos ( );
+        Njs = 0.0;
+        curvPower = 0.0;
+
+        // Calcula o erro relativo para cada nó e soma a Nj
+        for ( unsigned int j = 0; j < Nv; ++j )
+        {
+            Ponto *n = sub->getNoh ( j );
+            Patch *p = sub->getPatch (  );
+            CurvaturaAnalitica ka (	*( static_cast < Noh* > ( n ) ), *( static_cast < CoonsPatch* > ( p ) ) );
+            CurvaturaDiscreta kd ( *( static_cast < Noh* > ( n ) ) );
+            double Ga = ka.gauss();
+            double Gd = kd.gauss();
+            double Ha = ka.media();
+            double Hd = kd.media();
+            // atualiza as curvaturas do nó ( para que não sejam recalculadas na
+            // adaptação das curvas e do domínio )
+            ((Noh*)n)->Ga = Ga;
+            ((Noh*)n)->Gd = Gd;
+            ((Noh*)n)->Ha = Ha;
+            ((Noh*)n)->Hd = Hd;
+
+            double power = 0.0;
+            double diff = 0.0;
+
+            if ( fabs ( Ga ) >= TOLERANCIA )
+            {
+                diff = Gd - Ga;
+                power = pow( diff, 2);
+                Njs += power;
+                curvPower += pow(Ga, 2);
+            }
+            else if ( fabs ( Ha ) >= TOLERANCIA )
+            {
+                diff = Hd - Ha;
+                power = pow( diff, 2);
+                Njs += power;
+                curvPower += pow(Ha, 2);
+            }
+        }
+
+        if (Njs > 0.0 && curvPower > 0.0) {
+            Njs =(double) sqrt( Njs / curvPower) / Nv;
+        }
+
+        Nj += Njs;
+    }
+
+
+    Nj /= Ns; // o erro global é a média do erro das submalhas
+
+    return Nj;
+}
+#endif //#if USE_OPENMP
+
+#if USE_OPENMP
+SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, const Parallel::TMCommunicator *comm)
+{
+#if USE_PRINT_COMENT
+    cout << "Pegando as curvas" << endl;
+#endif //#if USE_PRINT_COMENT
+
+
+    Curva* c1 = patch->getCurva ( 0 );
+    Curva* c2 = patch->getCurva ( 1 );
+    Curva* c3 = patch->getCurva ( 2 );
+    Curva* c4 = patch->getCurva ( 3 );
+
+
+    // 1. verifica quais curvas ainda não foram discretizadas
+    if ( c1->getNumDePontos ( ) ) c1 = NULL; // c1 já foi trabalhada no patch vizinho
+    if ( c2->getNumDePontos ( ) ) c2 = NULL; // c2 já foi trabalhada no patch vizinho
+    if ( c3->getNumDePontos ( ) ) c3 = NULL; // c3 já foi trabalhada no patch vizinho
+    if ( c4->getNumDePontos ( ) ) c4 = NULL; // c4 já foi trabalhada no patch vizinho
+
+    SubMalha* sub = new SubMalha;
+
+    //========================= Malha Grosseira ====================================
+    // 2. divide cada patch em 9 regiões e gera os nós dos extremos de cada região
+
+
+    for ( double v = 0.0; v <= 1.0; v += 1 )
+    {
+        for ( double u = 0.0; u <= 1.0; u += 1 )
+        {
+            //			cout << "u = " << u << " v = " << v << endl;
+            Ponto* p = new Noh ( patch->parametrizar ( u, v ) );
+            p->id = idv++;
+
+            //			cout << "ponto " << p->id << " " <<  p->x << " " << p->y << " " << p->z << endl;
+            //			cout << "====" << endl;
+
+            if ( v == 0 and c1 ) // p está na curva 1 (c1 = NULL)
+                c1-> inserePonto ( p );
+            else if ( v == 1 and c3 ) // p está na curva 3
+                c3-> inserePonto ( p );
+
+            if ( u == 0 and c4 ) // p está na curva 4
+                c4-> inserePonto ( p );
+            else if ( u == 1 and c2 ) // p está na curva 2
+                c2-> inserePonto ( p );
+
+            sub->insereNoh ( static_cast < Noh* > ( p ) );
+        }
+    }
+
+    Ponto* p = new Noh ( patch->parametrizar ( 0.5, 0.5 ) );
+    sub->insereNoh ( static_cast < Noh* > ( p ) );
+    p->id = idv++;
+    //cout << p->id << " " <<  p->x << " " << p->y << " " << p->z <<endl;
+
+    Elemento* e1 = new Triangulo (	sub->getNoh ( 0 ),
+                                    sub->getNoh ( 1 ),
+                                    sub->getNoh ( 4 ) );
+    ((Triangulo*)e1)->p1 = make_tuple ( 0, 0 );
+    ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
+    ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
+    e1->setId ( ide++ );
+    sub->insereElemento ( e1 );
+
+    Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
+                                    sub->getNoh ( 3 ),
+                                    sub->getNoh ( 4 ) );
+    ((Triangulo*)e2)->p1 = make_tuple ( 1, 0 );
+    ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
+    ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
+    e2->setId ( ide++ );
+    sub->insereElemento ( e2 );
+
+    Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
+                                    sub->getNoh ( 2 ),
+                                    sub->getNoh ( 4 ) );
+    ((Triangulo*)e3)->p1 = make_tuple ( 1, 1 );
+    ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
+    ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
+    e3->setId ( ide++ );
+    sub->insereElemento ( e3 );
+
+    Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
+                                    sub->getNoh ( 0 ),
+                                    sub->getNoh ( 4 ) );
+    ((Triangulo*)e4)->p1 = make_tuple ( 0, 1 );
+    ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
+    ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
+    e4->setId ( ide++ );
+    sub->insereElemento ( e4 );
+    //==============================================================================*/
+
+    // 5. define a submalha do patch
+    patch->setMalha ( sub );
+    sub->setPatch ( patch );
+
+    return sub;
+}
+#else
+SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch)
 {
 
 #if USE_PRINT_COMENT
@@ -401,158 +653,7 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial ( CoonsPatch* patch )
 
     return sub;
 }
-
-
-
-
-#if USE_OPENMP
-double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
-{
-#if USE_PRINT_COMENT
-    cout << "Calculando o erro global..." << endl;
-#endif //#if USE_PRINT_COMENT
-
-    unsigned int Ns = 0; // número de submalhas
-    double Nj = 0.0; // erro global da malha
-
-    Ns = malha->getNumDeSubMalhas ( );
-
-    // Calcula o erro global de cada submalha (OMP)
-#pragma omp parallel for num_threads(NUM_THREADS) firstprivate(Ns) reduction(+ :Nj)
-    for ( unsigned int i = 0; i < Ns; ++i )
-    {
-        SubMalha* sub = malha->getSubMalha ( i );
-        unsigned int Nv = sub->getNumDeNos ( );
-        double curvPower = 0.0;
-        double Njs = 0.0;
-
-        // Calcula o erro relativo para cada nó e soma a Nj
-        for ( unsigned int j = 0; j < Nv; ++j )
-        {
-            Ponto *n = sub->getNoh ( j );
-            Patch *p = sub->getPatch (  );
-            CurvaturaAnalitica ka (	*( static_cast < Noh* > ( n ) ), *( static_cast < CoonsPatch* > ( p ) ) );
-            CurvaturaDiscreta kd ( *( static_cast < Noh* > ( n ) ) );
-            double Ga = ka.gauss();
-            double Gd = kd.gauss();
-            double Ha = ka.media();
-            double Hd = kd.media();
-            // atualiza as curvaturas do nó ( para que não sejam recalculadas na
-            // adaptação das curvas e do domínio )
-            ((Noh*)n)->Ga = Ga;
-            ((Noh*)n)->Gd = Gd;
-            ((Noh*)n)->Ha = Ha;
-            ((Noh*)n)->Hd = Hd;
-
-            double power = 0.0;
-            double diff = 0.0;
-
-            if ( fabs ( Ga ) >= TOLERANCIA )
-            {
-                diff = Gd - Ga;
-                power = pow( diff, 2);
-                Njs += power;
-                curvPower += pow(Ga, 2);
-            }
-            else if ( fabs ( Ha ) >= TOLERANCIA )
-            {
-                diff = Hd - Ha;
-                power = pow( diff, 2);
-                Njs += power;
-                curvPower += pow(Ha, 2);
-            }
-        }
-
-        if (Njs > 0.0 && curvPower > 0.0) {
-            Njs =(double) sqrt( Njs / curvPower) / Nv;
-        }
-
-        Nj += Njs;
-
-    } //Parallel for
-
-
-    Nj /= Ns; // o erro global é a média do erro das submalhas
-
-    return Nj;
-}
-#else
-// calcula o erro global da malha
-double GeradorAdaptativoPorCurvatura::erroGlobal (Malha* malha)
-{
-
-#if USE_PRINT_COMENT
-    cout << "Calculando o erro global..." << endl;
-#endif //#if USE_PRINT_COMENT
-
-    unsigned int Ns = 0; // número de submalhas
-    unsigned int Nv = 0; // número de vértices
-    double Njs = 0; // erro global da submalha
-    double curvPower = 0.0;
-    double Nj = 0; // erro global da malha
-    SubMalha* sub = 0;
-
-    Ns = malha->getNumDeSubMalhas ( );
-
-    // Calcula o erro global de cada submalha
-    for ( unsigned int i = 0; i < Ns; ++i )
-    {
-        sub = malha->getSubMalha ( i );
-        Nv = sub->getNumDeNos ( );
-        Njs = 0.0;
-        curvPower = 0.0;
-
-        // Calcula o erro relativo para cada nó e soma a Nj
-        for ( unsigned int j = 0; j < Nv; ++j )
-        {
-            Ponto *n = sub->getNoh ( j );
-            Patch *p = sub->getPatch (  );
-            CurvaturaAnalitica ka (	*( static_cast < Noh* > ( n ) ), *( static_cast < CoonsPatch* > ( p ) ) );
-            CurvaturaDiscreta kd ( *( static_cast < Noh* > ( n ) ) );
-            double Ga = ka.gauss();
-            double Gd = kd.gauss();
-            double Ha = ka.media();
-            double Hd = kd.media();
-            // atualiza as curvaturas do nó ( para que não sejam recalculadas na
-            // adaptação das curvas e do domínio )
-            ((Noh*)n)->Ga = Ga;
-            ((Noh*)n)->Gd = Gd;
-            ((Noh*)n)->Ha = Ha;
-            ((Noh*)n)->Hd = Hd;
-
-            double power = 0.0;
-            double diff = 0.0;
-
-            if ( fabs ( Ga ) >= TOLERANCIA )
-            {
-                diff = Gd - Ga;
-                power = pow( diff, 2);
-                Njs += power;
-                curvPower += pow(Ga, 2);
-            }
-            else if ( fabs ( Ha ) >= TOLERANCIA )
-            {
-                diff = Hd - Ha;
-                power = pow( diff, 2);
-                Njs += power;
-                curvPower += pow(Ha, 2);
-            }
-        }
-
-        if (Njs > 0.0 && curvPower > 0.0) {
-            Njs =(double) sqrt( Njs / curvPower) / Nv;
-        }
-
-        Nj += Njs;
-    }
-
-
-    Nj /= Ns; // o erro global é a média do erro das submalhas
-
-    return Nj;
-}
 #endif //#if USE_OPENMP
-
 void GeradorAdaptativoPorCurvatura::saveErroMesh(Malha *malha)
 {
     cout << "Salvando a Malha com "<< malha->getNumDeSubMalhas ( )<<" subMalhas"<< endl;
@@ -657,7 +758,190 @@ void GeradorAdaptativoPorCurvatura::saveErroMesh(Malha *malha)
     cout << "Malha salva com sucesso!!!" << endl;
 }
 
+#if USE_OPENMP
+GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Timer *timer, int idrange)
+{
 
+    this->idManager = NULL;
+    this->idoffset = 0;
+    this->idrange = idrange;
+
+
+    Int nProcesses = 1;
+    Int nThreads = 1;
+    Int rank = 0;
+
+#if USE_MPI
+    nProcesses = this->comm->numProcesses();
+    rank = this->comm->rank();
+#endif //#if USE_MPI
+
+    this->comm = new Parallel::TMCommunicator(true);
+    nThreads = static_cast<Parallel::TMCommunicator *>(this->comm)->getMaxThreads();
+
+    if (this->idManagers.empty())
+    {
+        this->idManagers.resize(comm->getMaxThreads(), NULL);
+    }
+
+    CoonsPatch* patch = NULL;
+    Geometria* geo = modelo.getGeometria ( );
+    Malha* malha = new Malha;
+
+    this->passo = 0;
+
+#pragma omp parallel
+    {
+        Int id = comm->threadId();
+        if (!this->idManagers[id])
+        {
+            this->idManagers[id] = this->makeIdManager(comm, id);
+        }
+    }
+
+    // 1. Gera a malha inicial
+#pragma omp parallel for num_threads(nThreads) firstprivate(patch, geo)
+    for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
+    {
+
+#if USE_PRINT_COMENT
+        cout << "gera a malha inicial para patch " << i << endl;
+#endif //#if USE_PRINT_COMENT
+
+        patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
+        SubMalha *sub = this->malhaInicialOmp ( static_cast < CoonsPatch* > ( patch ), this->comm);
+        //#pragma omp critical
+        malha->insereSubMalha ( sub );
+    }
+
+
+    // 2. Insere a malha inicial no modelo ( que guarda todas as malhas geradas )
+    modelo.insereMalha ( malha );
+
+    // 3. Calcula o erro global para a malha inicial
+
+#if USE_OPENMP
+    timer->initTime(7); // Calculo do erro
+    this->erro = this->erroGlobalOmp( malha );
+    timer->endTime(7); // Calculo do erro
+#else
+    timer->initTime(7); // Calculo do erro
+    this->erro = this->erroGlobal ( malha );
+    timer->endTime(7); // Calculo do erro
+#endif //#USE_OPENMP
+
+
+#if USE_PRINT_ERRO
+    cout << "ERRO  " << this->passo << " = " << this->erro << endl;
+#endif //#if USE_PRINT_ERRO
+
+#if USE_SAVE_MESH
+    escreveMalha(malha, passo);
+#endif //#USE_SAVE_MESH
+
+    this->erro = 1.0;
+
+    // 4. enquanto o erro global de uma malha gerada não for menor que o desejado
+    while ( this->erro > EPSYLON )
+    {
+        if (passo >= 4)
+        {
+            break;
+        }
+
+        this->passo++;
+
+        // 4.1. Aloca uma nova malha
+        malha = new Malha;
+
+        list<Ponto *> novosPontos[geo->getNumDeCurvas ( )];
+        map<Ponto *, Ponto *> mapaPontos;
+
+
+        AdaptadorPorCurvatura::id_noh = 1;
+        AdaptadorPorCurvatura::id_ele = 1;
+
+        // 4.2. Adapta as curvas
+        //for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
+        for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
+        {
+
+#if USE_PRINT_COMENT
+            cout << "adaptando a curva pela curvatura da curva " << i + 1 << endl;
+#endif //#if USE_PRINT_COMENT
+
+            novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), mapaPontos );
+            geo->getCurva( i )->setPontos(novosPontos[i]);
+            novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), mapaPontos );
+        }
+
+#if USE_PRINT_COMENT
+        cout << "atualizando as curvas" << endl;
+#endif //#if USE_PRINT_COMENT
+
+        // 4.3. Atualiza a discretização das curvas
+        for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
+        {
+            geo->getCurva( i )->setPontos(novosPontos[i]);
+        }
+
+#if USE_PRINT_COMENT
+        cout << "adaptando os patches" << endl;
+#endif //#if USE_PRINT_COMENT
+
+        // 4.4. Adapta as patches
+        //#pragma omp parallel for
+        for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
+        {
+            CoonsPatch *p = static_cast < CoonsPatch* > ( geo->getPatch( i ) );
+
+            SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio ( p, this->passo );
+
+#if USE_PRINT_COMENT
+            cout << "submalha tem " << sub->getNumDeElementos () << " elementos" << endl;
+#endif //#if USE_PRINT_COMENT
+
+            sub->setPatch(p);
+
+            malha->insereSubMalha(sub);
+        }
+
+#if USE_PRINT_COMENT
+        cout << "atualizando os patches" << endl;
+#endif //#if USE_PRINT_COMENT
+
+        // 4.5. Atualiza os patches
+        for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
+        {
+            geo->getPatch( i )->setMalha(malha->getSubMalha( i ));
+        }
+
+        // 4.6. Insere a malha gerada no modelo ( que guarda todas as malhas geradas )
+        modelo.insereMalha ( malha );
+
+        // 4.7. Escreve um artigo "neutral file" da malha gerada
+
+#if USE_SAVE_MESH
+        escreveMalha(malha, passo);
+#endif //#USE_SAVE_MESH
+
+        // 4.7. Calcula o erro global para a malha
+#if USE_OPENMP
+        timer->initTime(7); // Calculo do erro
+        this->erro = this->erroGlobalOmp( malha );
+        timer->endTime(7); // Calculo do erro
+#else
+        timer->initTime(7); // Calculo do erro
+        this->erro = this->erroGlobal ( malha );
+        timer->endTime(7); // Calculo do erro
+#endif //#USE_OPENMP
+
+#if USE_PRINT_ERRO
+        cout << "ERRO  " << this->passo << " = " << this->erro << endl;
+#endif //#if USE_PRINT_COMENT
+    }
+}
+#else
 GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , Timer *timer)
 {
     CoonsPatch* patch = NULL;
@@ -808,4 +1092,29 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
         cout << "ERRO  " << this->passo << " = " << this->erro << endl;
 #endif //#if USE_PRINT_COMENT
     }
+}
+#endif //#if USE_OPENMP
+
+
+Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManager(const Parallel::TMCommunicator *comm, Int id) const
+{
+    UInt numProcs = comm->numProcesses();
+    UInt rank = comm->rank();
+
+    ULInt procOffset = rank*this->idrange;
+
+    this->idoffset = numProcs*this->idrange;
+    ULInt tidrange = this->idrange/comm->getMaxThreads();
+
+    Performer::RangedIdManager *manager = new Performer::RangedIdManager(1, 1, 1, 1, 2);
+
+    ULInt threadOffset = id*tidrange;
+
+    manager->setRange(tidrange);
+    manager->setOffset(this->idoffset);
+    manager->setMin(0, /*this->idManager->getId(0)*/ 1 + procOffset + threadOffset);
+    manager->setMin(1, /*this->idManager->getId(1)*/ 1 + procOffset + threadOffset);
+    //manager->setMin(2, this->idManager->getId(2) + procOffset + threadOffset);
+
+    return manager;
 }

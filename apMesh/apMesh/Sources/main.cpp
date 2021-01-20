@@ -21,11 +21,11 @@ double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
 double EPSYLON = 0.03;
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
-int NUM_THREADS = 8;
+//int NUM_THREADS = 8;
 
 std::set<Ponto*> listAllPointsModel;
 std::set<SubMalha*> listAllSubMalhaModel;
-#if USE_OPENMPI
+#if USE_MPI
 int RANK_MPI, SIZE_MPI;
 #endif //#if USE_OPENMPI
 
@@ -40,13 +40,11 @@ std::string WRITE_MESH;
 
 int main(int argc, char **argv)
 {
-#if USE_OPENMP
-    cout<<"NUM_THREADS: "<<NUM_THREADS<<endl;
-#endif //#USE_OPENMP
     // Criação e inicialização do contador de tempo com todos os valores 0(zero)
     Timer* timer = new Timer();
 
-
+    // contador do tempo para carregar a malha na memória
+    timer->initTime(0); // inicialização
 
     bool geraMalha = true;
     Modelo M;
@@ -167,27 +165,23 @@ int main(int argc, char **argv)
 
     if ( geraMalha )
     {
-        //pra o calculo do tempo real
-        struct timeval t;
-        gettimeofday(&t, NULL);
-        double methodTimeStart = static_cast<double>(t.tv_sec) + static_cast<double>(t.tv_usec)*0.000001;
+        // fim do contador do tempo para carregar a malha na memória
+        timer->endTime(0); // inicialização
 
         // contador do tempo de inicialização em segundos em todos os processos
         timer->initTime(10); // Full
 
-        GeradorAdaptativoPorCurvatura adaptiveMesh ( M, timer );
+#if USE_OPENMP
+    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 64);
+#else
+    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer);
+#endif //#USE_OPENMP
+
 
         timer->endTime(10); // Full
-        timer->writeTimeFile();
-
-        //pra o calculo do tempo real
-        gettimeofday(&t, NULL);
-        double methodTimeEnd = static_cast<double>(t.tv_sec) + static_cast<double>(t.tv_usec)*0.000001;
-        double totalMethodTime = 0;
-        totalMethodTime += methodTimeEnd - methodTimeStart;
 
 #if USE_PRINT_TIME
-        cout <<"time full: "<< totalMethodTime << endl;
+        timer->writeTimeFile();
 #endif //#if USE_PRINT_TIME
 
 #if USE_PRINT_ERRO

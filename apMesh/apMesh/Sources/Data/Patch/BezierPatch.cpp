@@ -713,10 +713,10 @@ BezierPatch :: BezierPatch (	Ponto Pt_00, Ponto Pt_01, Ponto Pt_02, Ponto Pt_03,
                                 Ponto Pt_20, Ponto Pt_21, Ponto Pt_22, Ponto Pt_23,
                                 Ponto Pt_30, Ponto Pt_31, Ponto Pt_32, Ponto Pt_33,
                                 bool sinal_c1, bool sinal_c2, bool sinal_c3, bool sinal_c4 )
-    : CoonsPatch ( ),	Pt00 (Pt_00), Pt01 (Pt_01), Pt02 (Pt_02), Pt03 (Pt_03),
-      Pt10 (Pt_10), Pt11 (Pt_11), Pt12 (Pt_12), Pt13 (Pt_13),
-      Pt20 (Pt_20), Pt21 (Pt_21), Pt22 (Pt_22), Pt23 (Pt_23),
-      Pt30 (Pt_30), Pt31 (Pt_31), Pt32 (Pt_32), Pt33 (Pt_33)
+    : CoonsPatch ( ),	Pt03 (Pt_03), Pt13 (Pt_13), Pt23 (Pt_23), Pt33 (Pt_33),
+      Pt02 (Pt_02), Pt12 (Pt_12), Pt22 (Pt_22), Pt32 (Pt_32),
+      Pt01 (Pt_01), Pt11 (Pt_11), Pt21 (Pt_21), Pt31 (Pt_31),
+      Pt00 (Pt_00), Pt10 (Pt_10), Pt20 (Pt_20), Pt30 (Pt_30)
 {
 
     this->sinal_c1 = sinal_c1;

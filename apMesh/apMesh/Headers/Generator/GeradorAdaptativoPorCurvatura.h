@@ -33,6 +33,7 @@ This source code is under GNU General Public License v3 */
 #include "../Parallel/TMCommunicator.h"
 
 using namespace std;
+using namespace Data;
 
 static unsigned long int idv = 1;
 static unsigned long int ide = 1;
@@ -42,20 +43,31 @@ extern int NUM_THREADS;
 
 class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo
 {
-
+public :
     // gera a malha inicial e insere na lista de malhas do modelo
     // a lista de pontos da curva é preenchida durante a geração
-    virtual SubMalha* malhaInicial ( CoonsPatch* );
+
     void saveErroMesh(Malha *malha);
 
 #if USE_OPENMP
+    virtual SubMalha* malhaInicialOmp (CoonsPatch*, const Parallel::TMCommunicator *comm);
     virtual double erroGlobalOmp ( Malha* malha);
+    GeradorAdaptativoPorCurvatura (Modelo &modelo, Timer *timer, int idrange = 0);
 #else
+    virtual SubMalha* malhaInicial (CoonsPatch*);
     virtual double erroGlobal ( Malha* malha);
+    GeradorAdaptativoPorCurvatura ( Modelo &modelo, Timer *timer);
 #endif //#USE_OPENMP
 
-public :
-    GeradorAdaptativoPorCurvatura ( Modelo&, Timer *timer);
+    Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
+
+
+protected:
+    Parallel::TMCommunicator *comm;
+    Performer::IdManager *idManager;
+    Performer::IdManagerVector idManagers;
+    mutable ULInt idoffset;
+    ULInt idrange;
 };
 
 #endif

@@ -35,7 +35,7 @@
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP FALSE
+#define USE_OPENMP TRUE
 #endif //#ifndef USE_OPENMP
 
 #ifndef USE_OLD_MPI
@@ -505,7 +505,7 @@ namespace Data
 	std::string trace(int maxLines = -1);
 
 	//streams and strings
-    OStream &cout();
+    //OStream &cout();
     OStream &cerr();
     OStream &clog();
 	OStream &endl(OStream &s);

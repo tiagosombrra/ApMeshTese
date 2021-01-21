@@ -168,8 +168,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
     Ns = malha->getNumDeSubMalhas ( );
 
     // Calcula o erro global de cada submalha (OMP)
-    Int nThreads = 1;
-    nThreads = static_cast<Parallel::TMCommunicator *>(this->comm)->getMaxThreads();
+    Int nThreads = static_cast<Parallel::TMCommunicator *>(this->comm)->getMaxThreads();;
 
 #pragma omp parallel for num_threads(nThreads) firstprivate(Ns) reduction(+ :Nj)
     for ( unsigned int i = 0; i < Ns; ++i )
@@ -307,12 +306,14 @@ double GeradorAdaptativoPorCurvatura::erroGlobal (Malha* malha)
 #endif //#if USE_OPENMP
 
 #if USE_OPENMP
-SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, const Parallel::TMCommunicator *comm)
+SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Performer::IdManagerVector idManagers)
 {
 #if USE_PRINT_COMENT
     cout << "Pegando as curvas" << endl;
 #endif //#if USE_PRINT_COMENT
 
+    this->idManager = idManagers[comm->threadId()];
+    cout<<comm->threadId()<<endl;
 
     Curva* c1 = patch->getCurva ( 0 );
     Curva* c2 = patch->getCurva ( 1 );
@@ -338,7 +339,9 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, cons
         {
             //			cout << "u = " << u << " v = " << v << endl;
             Ponto* p = new Noh ( patch->parametrizar ( u, v ) );
-            p->id = idv++;
+            //p->id = idv++;
+            p->id = this->idManager->next(0);
+            cout<<"id:"<<p->id<<" thread:"<<comm->threadId()<<endl;
 
             //			cout << "ponto " << p->id << " " <<  p->x << " " << p->y << " " << p->z << endl;
             //			cout << "====" << endl;
@@ -359,7 +362,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, cons
 
     Ponto* p = new Noh ( patch->parametrizar ( 0.5, 0.5 ) );
     sub->insereNoh ( static_cast < Noh* > ( p ) );
-    p->id = idv++;
+    //p->id = idv++;
+    p->id = this->idManager->next(0);
     //cout << p->id << " " <<  p->x << " " << p->y << " " << p->z <<endl;
 
     Elemento* e1 = new Triangulo (	sub->getNoh ( 0 ),
@@ -368,7 +372,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, cons
     ((Triangulo*)e1)->p1 = make_tuple ( 0, 0 );
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
-    e1->setId ( ide++ );
+    e1->setId (/*ide++*/ this->idManager->next(1));
     sub->insereElemento ( e1 );
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
@@ -377,7 +381,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, cons
     ((Triangulo*)e2)->p1 = make_tuple ( 1, 0 );
     ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
     ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
-    e2->setId ( ide++ );
+    e2->setId ( /*ide++*/ this->idManager->next(1));
     sub->insereElemento ( e2 );
 
     Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
@@ -386,7 +390,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, cons
     ((Triangulo*)e3)->p1 = make_tuple ( 1, 1 );
     ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
     ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
-    e3->setId ( ide++ );
+    e3->setId ( /*ide++*/ this->idManager->next(1));
     sub->insereElemento ( e3 );
 
     Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
@@ -395,7 +399,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, cons
     ((Triangulo*)e4)->p1 = make_tuple ( 0, 1 );
     ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
     ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
-    e4->setId ( ide++ );
+    e4->setId ( /*ide++*/ this->idManager->next(1));
     sub->insereElemento ( e4 );
     //==============================================================================*/
 
@@ -778,6 +782,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 
     this->comm = new Parallel::TMCommunicator(true);
     nThreads = static_cast<Parallel::TMCommunicator *>(this->comm)->getMaxThreads();
+    //nThreads = 1;
 
     if (this->idManagers.empty())
     {
@@ -809,8 +814,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 #endif //#if USE_PRINT_COMENT
 
         patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
-        SubMalha *sub = this->malhaInicialOmp ( static_cast < CoonsPatch* > ( patch ), this->comm);
-        //#pragma omp critical
+        SubMalha *sub = this->malhaInicialOmp ( static_cast < CoonsPatch* > ( patch ), this->idManagers);
         malha->insereSubMalha ( sub );
     }
 
@@ -841,10 +845,21 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 
     this->erro = 1.0;
 
+   // this->idrange = 1024;
+
+#pragma omp parallel
+    {
+        Int id = comm->threadId();
+        if (!this->idManagers[id])
+        {
+            this->idManagers[id] = this->makeIdManager(comm, id);
+        }
+    }
+
     // 4. enquanto o erro global de uma malha gerada não for menor que o desejado
     while ( this->erro > EPSYLON )
     {
-        if (passo >= 4)
+        if (passo >= 3)
         {
             break;
         }
@@ -862,7 +877,6 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
         AdaptadorPorCurvatura::id_ele = 1;
 
         // 4.2. Adapta as curvas
-        //for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
         for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
         {
 

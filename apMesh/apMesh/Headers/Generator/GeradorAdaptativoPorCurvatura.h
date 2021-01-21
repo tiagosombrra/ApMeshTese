@@ -50,7 +50,7 @@ public :
     void saveErroMesh(Malha *malha);
 
 #if USE_OPENMP
-    virtual SubMalha* malhaInicialOmp (CoonsPatch*, const Parallel::TMCommunicator *comm);
+    virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManagerVector idManagers);
     virtual double erroGlobalOmp ( Malha* malha);
     GeradorAdaptativoPorCurvatura (Modelo &modelo, Timer *timer, int idrange = 0);
 #else

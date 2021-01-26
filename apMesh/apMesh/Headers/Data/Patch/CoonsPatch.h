@@ -20,7 +20,7 @@ using namespace std;
 #include "Patch.h"
 #include "../Curve/Curva.h"
 #include "../Vetor.h"
-#include "../../Basic/Definitions.h"
+#include "../../Data/Definitions.h"
 
 struct Ponto;
 //class Matriz;

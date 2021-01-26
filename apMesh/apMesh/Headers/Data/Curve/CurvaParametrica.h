@@ -14,7 +14,7 @@ This source code is under GNU General Public License v3 */
 
 #include <iostream>
 #include <list>
-#include "../../Basic/Definitions.h"
+#include "../../Data/Definitions.h"
 #include "../Vertice.h"
 #include "../Vetor.h"
 #include "Curva.h"

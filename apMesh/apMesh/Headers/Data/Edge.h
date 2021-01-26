@@ -1,7 +1,7 @@
 #ifndef _EDGE_H_
 #define _EDGE_H_
 
-#include "../Basic/Definitions.h"
+#include "../Data/Definitions.h"
 #include "../Crabmesh/Aft/Shape.h"
 #include "../Data/Curve/CurvaParametrica.h"
 #include "Vertex.h"

@@ -3,21 +3,21 @@ QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
 #LIBS += -fopenmp
-QMAKE_CXXFLAGS += -pg -O3 -fopenmp #   -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
-QMAKE_LFLAGS += -pg -O3 -fopenmp #  -std=gnu++0x#-march=native #-m64 #-mavx
+QMAKE_CXXFLAGS += -O3 -fopenmp #-pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
+QMAKE_LFLAGS += -O3 -fopenmp #-pg   -std=gnu++0x#-march=native #-m64 #-mavx
 #QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
 
-# MPI Settings
-QMAKE_CXX = mpicxx
-QMAKE_CXX_RELEASE = $$QMAKE_CXX
-QMAKE_CXX_DEBUG = $$QMAKE_CXX
-QMAKE_LINK = $$QMAKE_CXX
-QMAKE_CC = mpicc
+## MPI Settings
+#QMAKE_CXX = mpicxx
+#QMAKE_CXX_RELEASE = $$QMAKE_CXX
+#QMAKE_CXX_DEBUG = $$QMAKE_CXX
+#QMAKE_LINK = $$QMAKE_CXX
+#QMAKE_CC = mpicc
 
-QMAKE_CFLAGS += $$system(mpicc --showme:compile)
-QMAKE_LFLAGS += $$system(mpicxx --showme:link)
-QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
-QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+#QMAKE_CFLAGS += $$system(mpicc --showme:compile)
+#QMAKE_LFLAGS += $$system(mpicxx --showme:link)
+#QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+#QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
 
 #INCLUDEPATH += ../apMesh/Libs/Eigen ../apMesh/Headers/Adapter ../apMesh/Headers/Basic/ ../apMesh/Headers/Crabmesh/Aft/  ../apMesh/Headers/Crabmesh/Numerical/ ../apMesh/Headers/Curvature/ ../apMesh/Headers/Data/Curve/ ../apMesh/Headers/Data/Matrix/ ../apMesh/Headers/Data/Mesh/  ../apMesh/Headers/Data/Patch/  ../apMesh/Headers/Data/Tree/ ../apMesh/Headers/Data/ ../apMesh/Headers/Estimate/  ../apMesh/Headers/Generator/ ../apMesh/Headers/IO/ ../apMesh/Headers/TypeMethod/  ../apMesh/Headers/Timer/
 
@@ -43,7 +43,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     ../apMesh/Headers/Adapter/Adaptador.h \
     ../apMesh/Headers/Adapter/AdaptadorPorCurvatura.h \
-    ../apMesh/Headers/Basic/Definitions.h \
     ../apMesh/Headers/Crabmesh/Aft/AdvancingFront.h \
     ../apMesh/Headers/Crabmesh/Aft/Boundary.h \
     ../apMesh/Headers/Crabmesh/Aft/Quadtree.h \

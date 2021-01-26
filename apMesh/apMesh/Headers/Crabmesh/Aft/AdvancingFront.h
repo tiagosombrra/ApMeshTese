@@ -1,7 +1,7 @@
 #ifndef _ADVANCING_FRONT_H_
 #define _ADVANCING_FRONT_H_
 
-#include "../../Basic/Definitions.h"
+#include "../../Data/Definitions.h"
 #include "Shape.h"
 #include "../../Data/Vertex.h"
 #include "../../Data/Edge.h"

@@ -1,7 +1,7 @@
 #ifndef _QUADTREE_CELL_H_
 #define _QUADTREE_CELL_H_
 
-#include "../../Basic/Definitions.h"
+#include "../../Data/Definitions.h"
 #include "Shape.h"
 #include "Boundary.h"
 #include "Quadtree.h"

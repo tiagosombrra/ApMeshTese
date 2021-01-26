@@ -1,7 +1,7 @@
 #ifndef _DATA_NUMERICAL_EQUATION_ROOT_FUNCTION_H_
 #define _DATA_NUMERICAL_EQUATION_ROOT_FUNCTION_H_
 
-#include "../../Basic/Definitions.h"
+#include "../../Data/Definitions.h"
 #include "Function.h"
 #include "../../Data/Curve/CurvaParametrica.h"
 

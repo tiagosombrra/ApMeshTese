@@ -26,7 +26,7 @@ This source code is under GNU General Public License v3 */
 #include "../Curvature/CurvaturaAnalitica.h"
 #include "../Curvature/CurvaturaDiscreta.h"
 #include "../Adapter/AdaptadorPorCurvatura.h"
-#include "../Basic/Definitions.h"
+#include "../Data/Definitions.h"
 #include "../Timer/Timer.h"
 
 #include "../Crabmesh/Performer/RangedIdManager.h"
@@ -53,11 +53,11 @@ public :
     virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManagerVector idManagers);
     virtual double erroGlobalOmp ( Malha* malha);
     GeradorAdaptativoPorCurvatura (Modelo &modelo, Timer *timer, int idrange = 0);
-#else
+#endif //#USE_OPENMP
+
     virtual SubMalha* malhaInicial (CoonsPatch*);
     virtual double erroGlobal ( Malha* malha);
     GeradorAdaptativoPorCurvatura ( Modelo &modelo, Timer *timer);
-#endif //#USE_OPENMP
 
     Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
 

@@ -1,7 +1,7 @@
 #ifndef _SHAPE_H_
 #define _SHAPE_H_
 
-#include "../../Basic/Definitions.h"
+#include "../../Data/Definitions.h"
 
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::Basics;

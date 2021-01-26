@@ -1,7 +1,7 @@
 #ifndef _FACE_H_
 #define _FACE_H_
 
-#include "../Basic/Definitions.h"
+#include "../Data/Definitions.h"
 #include "../Crabmesh/Aft/Shape.h"
 #include "Vertex.h"
 #include "Edge.h"

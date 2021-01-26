@@ -7,7 +7,7 @@
 #include "../Headers/Data/Modelo.h"
 #include "../Headers/Generator/GeradorAdaptativoPorCurvatura.h"
 #include "../Headers/IO/Modelos3d.h"
-#include "../Headers/Basic/Definitions.h"
+#include "../Headers/Data/Definitions.h"
 #include "../Headers/IO/ReaderPatches.h"
 #include "../Headers/Timer/Timer.h"
 
@@ -172,7 +172,7 @@ int main(int argc, char **argv)
         timer->initTime(10); // Full
 
 #if USE_OPENMP
-    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 64);
+    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 1024);
 #else
     GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer);
 #endif //#USE_OPENMP

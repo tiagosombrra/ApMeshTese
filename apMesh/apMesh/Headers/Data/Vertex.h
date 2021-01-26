@@ -1,7 +1,7 @@
 #ifndef _VERTEX_H_
 #define _VERTEX_H_
 
-#include "../Basic/Definitions.h"
+#include "../Data/Definitions.h"
 #include "../Crabmesh/Aft/Shape.h"
 #include "Edge.h"
 

@@ -1,7 +1,7 @@
 #ifndef _DATA_NUMERICAL_EQUATION_ROOT_H_
 #define _DATA_NUMERICAL_EQUATION_ROOT_H_
 
-#include "../../Basic/Definitions.h"
+#include "../../Data/Definitions.h"
 #include "EquationRootFunction.h"
 
 namespace Data

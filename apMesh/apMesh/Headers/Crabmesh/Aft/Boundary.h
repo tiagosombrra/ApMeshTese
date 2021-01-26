@@ -1,7 +1,7 @@
 #ifndef _BOUNDARY_H_
 #define _BOUNDARY_H_
 
-#include "../../Basic/Definitions.h"
+#include "../../Data/Definitions.h"
 #include "Shape.h"
 #include "../../Data/Curve/CurvaParametrica.h"
 #include "../../Data/Edge.h"

@@ -27,7 +27,7 @@ This source code is under GNU General Public License v3 */
 #include "../Crabmesh/Aft/Boundary.h"
 #include "../Data/Face.h"
 #include "../Data/Vertex.h"
-#include "../Basic/Definitions.h"
+#include "../Data/Definitions.h"
 #include "../Data/Edge.h"
 #include "../Data/Face.h"
 

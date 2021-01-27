@@ -16,6 +16,7 @@ This source code is under GNU General Public License v3 */
 #include <vector>
 #include "../Noh.h"
 #include "../Elemento.h"
+#include "../Definitions.h"
 using namespace std;
 
 class Noh;
@@ -36,7 +37,7 @@ public :
     unsigned int getNumDeNos (  ) const { return ( unsigned int ) nos.size(); }
     Noh* getNoh ( const unsigned int i ); // retorna o i-ésimo nó
 
-    void insereElemento ( Elemento* elem );
+    void insereElemento (Elemento* elem);
     unsigned int getNumDeElementos (  ) const { return ( unsigned int ) elementos.size(); }
     Elemento* getElemento ( const unsigned int i ); // retorna o i-ésimo elemento
 

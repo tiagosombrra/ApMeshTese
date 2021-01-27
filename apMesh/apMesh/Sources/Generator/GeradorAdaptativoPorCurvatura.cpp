@@ -158,10 +158,6 @@ void escreveElementos( int passo, SubMalha *sub, int i )
 #if USE_OPENMP
 double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
 {
-#if USE_PRINT_COMENT
-    cout << "Calculando o erro global..." << endl;
-#endif //#if USE_PRINT_COMENT
-
     unsigned int Ns = 0; // número de submalhas
     double Nj = 0.0; // erro global da malha
 
@@ -307,16 +303,12 @@ double GeradorAdaptativoPorCurvatura::erroGlobal (Malha* malha)
 }
 
 #if USE_OPENMP
-SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Performer::IdManagerVector idManagers)
+SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Performer::IdManager *idManager)
 {
-    this->idManager = idManagers[comm->threadId()];
-    //cout<<comm->threadId()<<endl;
-
     Curva* c1 = patch->getCurva ( 0 );
     Curva* c2 = patch->getCurva ( 1 );
     Curva* c3 = patch->getCurva ( 2 );
     Curva* c4 = patch->getCurva ( 3 );
-
 
     // 1. verifica quais curvas ainda não foram discretizadas
     if ( c1->getNumDePontos ( ) ) c1 = NULL; // c1 já foi trabalhada no patch vizinho
@@ -333,14 +325,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     {
         for ( double u = 0.0; u <= 1.0; u += 1 )
         {
-            //			cout << "u = " << u << " v = " << v << endl;
             Ponto* p = new Noh ( patch->parametrizar ( u, v ) );
-            //p->id = idv++;
-            p->id = this->idManager->next(0);
-            //cout<<"id:"<<p->id<<" thread:"<<comm->threadId()<<endl;
-
-            //			cout << "ponto " << p->id << " " <<  p->x << " " << p->y << " " << p->z << endl;
-            //			cout << "====" << endl;
+            p->id = idManager->next(0);
 
             if ( v == 0 and c1 ) // p está na curva 1 (c1 = NULL)
                 c1-> inserePonto ( p );
@@ -358,9 +344,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
 
     Ponto* p = new Noh ( patch->parametrizar ( 0.5, 0.5 ) );
     sub->insereNoh ( static_cast < Noh* > ( p ) );
-    //p->id = idv++;
-    p->id = this->idManager->next(0);
-    //cout << p->id << " " <<  p->x << " " << p->y << " " << p->z <<endl;
+    p->id = idManager->next(0);
+
 
     Elemento* e1 = new Triangulo (	sub->getNoh ( 0 ),
                                     sub->getNoh ( 1 ),
@@ -368,8 +353,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e1)->p1 = make_tuple ( 0, 0 );
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
-    e1->setId (/*ide++*/ this->idManager->next(1));
-    sub->insereElemento ( e1 );
+    e1->setId (/*ide++*/ idManager->next(1));
+    sub->insereElemento ( e1);
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
                                     sub->getNoh ( 3 ),
@@ -377,8 +362,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e2)->p1 = make_tuple ( 1, 0 );
     ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
     ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
-    e2->setId ( /*ide++*/ this->idManager->next(1));
-    sub->insereElemento ( e2 );
+    e2->setId ( /*ide++*/ idManager->next(1));
+    sub->insereElemento ( e2);
 
     Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
                                     sub->getNoh ( 2 ),
@@ -386,8 +371,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e3)->p1 = make_tuple ( 1, 1 );
     ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
     ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
-    e3->setId ( /*ide++*/ this->idManager->next(1));
-    sub->insereElemento ( e3 );
+    e3->setId ( /*ide++*/ idManager->next(1));
+    sub->insereElemento ( e3);
 
     Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
                                     sub->getNoh ( 0 ),
@@ -395,8 +380,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e4)->p1 = make_tuple ( 0, 1 );
     ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
     ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
-    e4->setId ( /*ide++*/ this->idManager->next(1));
-    sub->insereElemento ( e4 );
+    e4->setId ( /*ide++*/ idManager->next(1));
+    sub->insereElemento ( e4);
     //==============================================================================*/
 
     // 5. define a submalha do patch
@@ -618,7 +603,7 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch)
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
     e1->setId ( ide++ );
-    sub->insereElemento ( e1 );
+    sub->insereElemento ( e1);
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
                                     sub->getNoh ( 3 ),
@@ -778,20 +763,22 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 
     this->comm = new Parallel::TMCommunicator(true);
     nThreads = static_cast<Parallel::TMCommunicator *>(this->comm)->getMaxThreads();
-    //nThreads = 1;
 
     if (this->idManagers.empty())
     {
         this->idManagers.resize(comm->getMaxThreads(), NULL);
     }
 
-    CoonsPatch* patch = NULL;
     Geometria* geo = modelo.getGeometria ( );
+    int sizePatch = geo->getNumDePatches();
+
     Malha* malha = new Malha;
+    malha->resizeSubmalha(sizePatch);
 
     this->passo = 0;
 
-#pragma omp parallel num_threads(nThreads)
+    //nThreads = 1;
+#pragma omp parallel num_threads(nThreads) shared(malha, geo, sizePatch)
     {
         Int id = comm->threadId();
         if (!this->idManagers[id])
@@ -799,14 +786,13 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
             this->idManagers[id] = this->makeIdManager(comm, id);
         }
 
-    // 1. Gera a malha inicial
-#pragma omp for nowait firstprivate(patch, geo)
-        for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
+        // 1. Gera a malha inicial
+#pragma omp for
+        for ( unsigned int i = 0; i < sizePatch; ++i )
         {
-            patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
-            SubMalha *sub = this->malhaInicialOmp ( static_cast < CoonsPatch* > ( patch ), this->idManagers);
-#pragma omp critical
-            malha->insereSubMalha ( sub );
+            CoonsPatch *patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
+            SubMalha *sub = this->malhaInicialOmp ( static_cast < CoonsPatch* > ( patch ), this->idManagers[id]);
+            malha->insereSubMalha ( sub, i);
         }
     }
 
@@ -836,21 +822,10 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 
     this->erro = 1.0;
 
-    // this->idrange = 1024;
-
-#pragma omp parallel
-    {
-        Int id = comm->threadId();
-        if (this->idManagers[id])
-        {
-            this->idManagers[id] = this->makeIdManager(comm, id);
-        }
-    }
-
     // 4. enquanto o erro global de uma malha gerada não for menor que o desejado
     while ( this->erro > EPSYLON )
     {
-        if (passo >= 3)
+        if (passo >= 2)
         {
             break;
         }
@@ -859,57 +834,66 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 
         // 4.1. Aloca uma nova malha
         malha = new Malha;
+        malha->resizeSubmalha(sizePatch);
 
         list<Ponto *> novosPontos[geo->getNumDeCurvas ( )];
         map<Ponto *, Ponto *> mapaPontos;
+
+        int sizeCurvas = geo->getNumDeCurvas ( );
 
 
         AdaptadorPorCurvatura::id_noh = 1;
         AdaptadorPorCurvatura::id_ele = 1;
 
-        // 4.2. Adapta as curvas
-        for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
+         //4.2. Adapta as curvas pela curvatura da curva
+                for ( unsigned int i = 0; i < sizeCurvas; ++i )
+                {
+                    novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva( geo->getCurva( i ), mapaPontos);
+                    geo->getCurva( i )->setPontos(novosPontos[i]);
+                    novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie( geo->getCurva( i ), mapaPontos);
+                    geo->getCurva( i )->setPontos(novosPontos[i]);
+                }
+
+#pragma omp parallel num_threads(nThreads) shared(geo, sizeCurvas, sizePatch, malha, novosPontos)
         {
+            Int id = comm->threadId();
+            if (this->idManagers[id])
+            {
+                this->idManagers[id] = this->makeIdManager(comm, id);
+            }
 
-#if USE_PRINT_COMENT
-            cout << "adaptando a curva pela curvatura da curva " << i + 1 << endl;
-#endif //#if USE_PRINT_COMENT
+            // 4.2. Adapta as curvas pela curvatura da curva
+            //#pragma omp for
+            //            for ( unsigned int i = 0; i < sizeCurvas; ++i )
+            //            {
+            //                novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurvaOmp ( geo->getCurva( i ), mapaPontos,  this->idManagers[id], 1);
+            //                geo->getCurva( i )->setPontos(novosPontos[i]);
+            //                novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp ( geo->getCurva( i ), mapaPontos, this->idManagers[id], 1);
+            //                geo->getCurva( i )->setPontos(novosPontos[i]);
+            //            }
 
-            novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), mapaPontos );
-            geo->getCurva( i )->setPontos(novosPontos[i]);
-            novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), mapaPontos );
+            // 4.4. Adapta as patches
+#pragma omp for
+            for ( unsigned int i = 0; i < sizePatch; ++i )
+            {
+                CoonsPatch *p = static_cast < CoonsPatch* > ( geo->getPatch( i ) );
+                SubMalha* sub = AdaptadorPorCurvatura::adaptaDominioOmp ( p, this->idManagers[id]);
+                sub->setPatch(p);
+                malha->insereSubMalha(sub, i);
+            }
+
         }
 
-#if USE_PRINT_COMENT
-        cout << "atualizando as curvas" << endl;
-#endif //#if USE_PRINT_COMENT
+//        // 4.4. Adapta as patches
+//        //#pragma omp for
+//        for ( unsigned int i = 0; i < sizePatch; ++i )
+//        {
+//            CoonsPatch *p = static_cast < CoonsPatch* > ( geo->getPatch( i ) );
+//            SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio ( p, 1);
+//            sub->setPatch(p);
+//            malha->insereSubMalha(sub, i);
+//        }
 
-        // 4.3. Atualiza a discretização das curvas
-        for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
-        {
-            geo->getCurva( i )->setPontos(novosPontos[i]);
-        }
-
-#if USE_PRINT_COMENT
-        cout << "adaptando os patches" << endl;
-#endif //#if USE_PRINT_COMENT
-
-        // 4.4. Adapta as patches
-        //#pragma omp parallel for
-        for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
-        {
-            CoonsPatch *p = static_cast < CoonsPatch* > ( geo->getPatch( i ) );
-
-            SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio ( p, this->passo );
-
-#if USE_PRINT_COMENT
-            cout << "submalha tem " << sub->getNumDeElementos () << " elementos" << endl;
-#endif //#if USE_PRINT_COMENT
-
-            sub->setPatch(p);
-
-            malha->insereSubMalha(sub);
-        }
 
 #if USE_PRINT_COMENT
         cout << "atualizando os patches" << endl;
@@ -953,22 +937,16 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
     CoonsPatch* patch = NULL;
     Geometria* geo = modelo.getGeometria ( );
     Malha* malha = new Malha;
+    malha->resizeSubmalha(geo->getNumDePatches());
 
     this->passo = 0;
 
     // 1. Gera a malha inicial
-    //#pragma omp parallel for num_threads(NUM_THREADS) firstprivate(patch, geo)
     for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
     {
-
-#if USE_PRINT_COMENT
-        cout << "gera a malha inicial para patch " << i << endl;
-#endif //#if USE_PRINT_COMENT
-
         patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
         SubMalha *sub = this->malhaInicial ( static_cast < CoonsPatch* > ( patch ) );
-        //#pragma omp critical
-        malha->insereSubMalha ( sub );
+        malha->insereSubMalha ( sub, i);
     }
 
 
@@ -1031,17 +1009,14 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
             novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva ( geo->getCurva( i ), mapaPontos );
             geo->getCurva( i )->setPontos(novosPontos[i]);
             novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie ( geo->getCurva( i ), mapaPontos );
-        }
-
-#if USE_PRINT_COMENT
-        cout << "atualizando as curvas" << endl;
-#endif //#if USE_PRINT_COMENT
-
-        // 4.3. Atualiza a discretização das curvas
-        for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
-        {
             geo->getCurva( i )->setPontos(novosPontos[i]);
         }
+
+        //        // 4.3. Atualiza a discretização das curvas
+        //        for ( unsigned int i = 0; i < geo->getNumDeCurvas ( ); ++i )
+        //        {
+        //            geo->getCurva( i )->setPontos(novosPontos[i]);
+        //        }
 
 #if USE_PRINT_COMENT
         cout << "adaptando os patches" << endl;
@@ -1061,7 +1036,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
 
             sub->setPatch(p);
 
-            malha->insereSubMalha(sub);
+            malha->insereSubMalha(sub, i);
         }
 
 #if USE_PRINT_COMENT
@@ -1117,8 +1092,8 @@ Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManager(const Paralle
 
     manager->setRange(tidrange);
     manager->setOffset(this->idoffset);
-    manager->setMin(0, /*this->idManager->getId(0)*/ 1 + procOffset + threadOffset);
-    manager->setMin(1, /*this->idManager->getId(1)*/ 1 + procOffset + threadOffset);
+    manager->setMin(0, /*this->idManager->getId(0)*/ 0 + procOffset + threadOffset);
+    manager->setMin(1, /*this->idManager->getId(1)*/ 0 + procOffset + threadOffset);
     //manager->setMin(2, this->idManager->getId(2) + procOffset + threadOffset);
 
     return manager;

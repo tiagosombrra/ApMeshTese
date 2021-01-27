@@ -30,11 +30,21 @@ This source code is under GNU General Public License v3 */
 #include "../Data/Definitions.h"
 #include "../Data/Edge.h"
 #include "../Data/Face.h"
+#include "../Parallel/TMCommunicator.h"
+#include "../Crabmesh/Performer/RangedIdManager.h"
 
 class AdaptadorPorCurvatura : public Adaptador
 {
     static unsigned long int id_noh;
     static unsigned long int id_ele;
+
+#if USE_OPENMP
+    static list < Ponto* > adaptaCurvaByCurvaOmp (Curva*, map < Ponto*, Ponto* > &, Performer::IdManager *idManager, double fator_dis = 1.0);
+    static list < Ponto* > adaptaCurvaBySuperficieOmp (Curva*c, map < Ponto*, Ponto* > &mapaPontos, Performer::IdManager *idManager, double fator_dis = 1.0);
+    static SubMalha* adaptaDominioOmp (CoonsPatch* patch, Performer::IdManager *idManager, double fator_dis = 1.0 );
+
+#endif //#USE_OPENMP
+
     static list < Ponto* > adaptaCurvaByCurva (Curva*, map < Ponto*, Ponto* > &, double fator_dis = 1.0 );
     static list < Ponto* > adaptaCurvaBySuperficie ( Curva* c,  map < Ponto*, Ponto* > &, double fator_dis = 1.0 );
 

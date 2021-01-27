@@ -10,6 +10,14 @@
 #define FALSE 0
 #endif //#ifndef FALSE
 
+#ifndef USE_MPI
+#define USE_MPI FALSE
+#endif //#ifndef USE_MPI
+
+#ifndef USE_OPENMP
+#define USE_OPENMP TRUE
+#endif //#ifndef USE_OPENMP
+
 #ifndef USE_PRINT_RESULT
 #define USE_PRINT_RESULT FALSE
 #endif //#ifndef USE_PRINT_RESULT
@@ -27,7 +35,7 @@
 #endif //#ifndef USE_PRINT_TIME
 
 #ifndef USE_SAVE_MESH
-#define USE_SAVE_MESH FALSE
+#define USE_SAVE_MESH TRUE
 #endif //#ifndef USE_SAVE_MESH
 
 #ifndef USE_GUI
@@ -49,14 +57,6 @@
 #ifndef USE_C__11
 #define USE_C__11 TRUE
 #endif //#ifndef USE_C__11
-
-#ifndef USE_MPI
-#define USE_MPI FALSE
-#endif //#ifndef USE_MPI
-
-#ifndef USE_OPENMP
-#define USE_OPENMP TRUE
-#endif //#ifndef USE_OPENMP
 
 #ifndef USE_OLD_MPI
 #define USE_OLD_MPI FALSE

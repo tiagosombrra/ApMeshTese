@@ -39,8 +39,12 @@ Noh* SubMalha::getNoh ( const unsigned int i )
     return (i < this->nos.size()) ? this->nos[i] : NULL;
 }
 
-void SubMalha::insereElemento ( Elemento* elem )
+void SubMalha::insereElemento (Elemento* elem)
 {
+//    if (position > this->elementos.size()) {
+//        this->elementos.resize(position,NULL);
+//    }
+//    this->elementos.insert(this->elementos.begin()+position, elem);
     this->elementos.push_back ( elem );
 }
 

@@ -11,9 +11,9 @@ This source code is under GNU General Public License v3 */
 
 #include "../../../Headers/Data/Mesh/Malha.h"
 
-void Malha::insereSubMalha ( SubMalha* sub )
+void Malha::insereSubMalha (SubMalha* sub, Data::Int pos)
 {
-    this->subMalhas.push_back ( sub );
+    this->subMalhas[pos] = sub;
 }
 
 
@@ -35,6 +35,10 @@ SubMalha* Malha::getSubMalha ( const unsigned int i )
     return (i < this->subMalhas.size()) ? this->subMalhas[i] : NULL;
 }
 
+void Malha::resizeSubmalha(Data::Int pos)
+{
+    this->subMalhas.resize(pos, NULL);
+}
 
 Malha::~Malha (  )
 {

@@ -35,8 +35,6 @@ This source code is under GNU General Public License v3 */
 using namespace std;
 using namespace Data;
 
-static unsigned long int idv = 1;
-static unsigned long int ide = 1;
 extern double TOLERANCIA;
 extern double TOLERANCIA_CURVATURA;
 extern int NUM_THREADS;
@@ -53,15 +51,16 @@ public :
     virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManager *idManager);
     virtual double erroGlobalOmp ( Malha* malha);
     GeradorAdaptativoPorCurvatura (Modelo &modelo, Timer *timer, int idrange = 0);
+#else
+    GeradorAdaptativoPorCurvatura ( Modelo &modelo, Timer *timer, int idrange = 0);
 #endif //#USE_OPENMP
 
-    virtual SubMalha* malhaInicial (CoonsPatch*);
+    virtual SubMalha* malhaInicial (CoonsPatch*, Performer::IdManager *idManager);
     virtual double erroGlobal ( Malha* malha);
-    GeradorAdaptativoPorCurvatura ( Modelo &modelo, Timer *timer);
 
     Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
-
-
+    Performer::IdManager *makeIdManagerElement(const Parallel::TMCommunicator *comm, Int id) const;
+    Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;
 protected:
     Parallel::TMCommunicator *comm;
     Performer::IdManager *idManager;

@@ -35,23 +35,19 @@ This source code is under GNU General Public License v3 */
 
 class AdaptadorPorCurvatura : public Adaptador
 {
-    static unsigned long int id_noh;
-    static unsigned long int id_ele;
-
 #if USE_OPENMP
     static list < Ponto* > adaptaCurvaByCurvaOmp (Curva*, map < Ponto*, Ponto* > &, Performer::IdManager *idManager, double fator_dis = 1.0);
     static list < Ponto* > adaptaCurvaBySuperficieOmp (Curva*c, map < Ponto*, Ponto* > &mapaPontos, Performer::IdManager *idManager, double fator_dis = 1.0);
     static SubMalha* adaptaDominioOmp (CoonsPatch* patch, Performer::IdManager *idManager, double fator_dis = 1.0 );
-
 #endif //#USE_OPENMP
 
-    static list < Ponto* > adaptaCurvaByCurva (Curva*, map < Ponto*, Ponto* > &, double fator_dis = 1.0 );
-    static list < Ponto* > adaptaCurvaBySuperficie ( Curva* c,  map < Ponto*, Ponto* > &, double fator_dis = 1.0 );
+    static list < Ponto* > adaptaCurvaByCurva (Curva*, map < Ponto*, Ponto* > &, Performer::IdManager *idManager, double fator_dis = 1.0 );
+    static list < Ponto* > adaptaCurvaBySuperficie ( Curva* c,  map < Ponto*, Ponto* > &, Performer::IdManager *idManager, double fator_dis = 1.0 );
 
     static tuple <double, double> curvatura ( CurvaturaAnalitica& ka, CurvaturaDiscreta& kd );
     static double novoTamanho ( const double, const double, const double, const double );
     static void adaptaCurvas ( CoonsPatch& patch, const unsigned int );
-    static SubMalha* adaptaDominio (CoonsPatch* patch, double fator_dis = 1.0 );
+    static SubMalha* adaptaDominio (CoonsPatch* patch, Performer::IdManager *idManager, double fator_dis = 1.0 );
     virtual void fazNada ()=0;
 
     friend class GeradorAdaptativoPorCurvatura;

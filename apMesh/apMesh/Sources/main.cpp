@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     if (argc == 1)
     {
         Modelos3d modelos3d;
-        M.setGeometria ( modelos3d.modelBaseCircular(geo) );
+        M.setGeometria ( modelos3d.modelLadoDescendente(geo) );
     }
     else
     {
@@ -172,7 +172,7 @@ int main(int argc, char **argv)
         timer->initTime(10); // Full
 
 #if USE_OPENMP
-    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 1024);
+    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 8);
 #else
     GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 1024);
 #endif //#USE_OPENMP

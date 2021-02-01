@@ -343,6 +343,13 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
             double Gd = kd.gauss();
             double Ha = ka.media();
             double Hd = kd.media();
+
+            //tratamento para erro -nan
+            if (std::isnan(Gd)) {
+                Ga = 0.0;
+                Gd = 0.0;
+            }
+
             // atualiza as curvaturas do nó ( para que não sejam recalculadas na
             // adaptação das curvas e do domínio )
             ((Noh*)n)->Ga = Ga;
@@ -373,7 +380,10 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
             Njs =(double) sqrt( Njs / curvPower) / Nv;
         }
 
-        Nj += Njs;
+        if(!std::isnan(Njs))
+            Nj += Njs;
+        else
+            cout<<"Njs -nan"<<endl;
 
     } //Parallel for
 

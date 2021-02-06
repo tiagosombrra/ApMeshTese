@@ -246,7 +246,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha *malha)
     Ns = malha->getNumDeSubMalhas ( );
 
     // Calcula o erro global de cada submalha (OMP)
-    Int nThreads = static_cast<Parallel::TMCommunicator *>(this->comm)->getMaxThreads();;
+    Data::Int nThreads = static_cast<Parallel::TMCommunicator *>(this->comm)->getMaxThreads();;
 
 #pragma omp parallel for num_threads(nThreads) firstprivate(Ns) reduction(+ :Nj)
     for ( unsigned int i = 0; i < Ns; ++i )
@@ -325,7 +325,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
     this->idoffset = 0;
     this->idrange = idrange;
 
-    Int nThreads = 1;
+    Data::Int nThreads = 1;
 
 #if USE_MPI
     Int nProcesses = 1;
@@ -355,7 +355,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
    // nThreads = 1;
 #pragma omp parallel num_threads(nThreads) shared(malha, geo, sizePatch)
     {
-        Int id = comm->threadId();
+        Data::Int id = comm->threadId();
         if (!this->idManagers[id])
         {
             this->idManagers[id] = this->makeIdManagerOmp(comm, id);
@@ -414,7 +414,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
        // nThreads = 4;
 #pragma omp parallel num_threads(nThreads) shared(geo, sizeCurvas, sizePatch, malha, novosPontos)
         {
-            Int id = comm->threadId();
+            Data::Int id = comm->threadId();
             //           this->idManagers[id] = this->makeIdManagerOmp(comm, id);
 
             // 4.2. Adapta as curvas pela curvatura da curva
@@ -432,7 +432,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
        nThreads = 1;
 #pragma omp parallel num_threads(nThreads) shared(geo, sizePatch, malha)
         {
-            Int id = comm->threadId();
+            Data::Int id = comm->threadId();
             //((Performer::RangedIdManager *)this->idManagers[id])->setMin(1,0) ;
 
             // 4.3. Adapta as patches
@@ -902,19 +902,19 @@ double GeradorAdaptativoPorCurvatura::erroGlobal (Malha* malha)
 }
 #endif //USE_OPENMP
 
-Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManager(const Parallel::TMCommunicator *comm, Int id) const
+Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManager(const Parallel::TMCommunicator *comm, Data::Int id) const
 {
-    UInt numProcs = comm->numProcesses();
-    UInt rank = comm->rank();
+    Data::UInt numProcs = comm->numProcesses();
+    Data::UInt rank = comm->rank();
 
-    ULInt procOffset = rank*this->idrange;
+    Data::ULInt procOffset = rank*this->idrange;
 
     this->idoffset = numProcs*this->idrange;
-    ULInt tidrange = this->idrange/comm->getMaxThreads();
+    Data::ULInt tidrange = this->idrange/comm->getMaxThreads();
 
     Performer::RangedIdManager *manager = new Performer::RangedIdManager(1, 1, 1, 1, 2);
 
-    ULInt threadOffset = id*tidrange;
+    Data::ULInt threadOffset = id*tidrange;
 
     manager->setRange(tidrange);
     manager->setOffset(this->idoffset);
@@ -924,9 +924,9 @@ Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManager(const Paralle
     return manager;
 }
 
-Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManagerOmp(const Parallel::TMCommunicator *comm, Int id) const
+Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManagerOmp(const Parallel::TMCommunicator *comm, Data::Int id) const
 {
-    Int iNoh, iElemet;
+    Data::Int iNoh, iElemet;
     if (this->idManagers[id]) {
         iNoh = this->idManagers[id]->getId(0);
         iElemet = this->idManagers[id]->getId(1);
@@ -935,17 +935,17 @@ Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManagerOmp(const Para
         iElemet = 0;
     }
 
-    UInt numProcs = comm->numProcesses();
-    UInt rank = comm->rank();
+    Data::UInt numProcs = comm->numProcesses();
+    Data::UInt rank = comm->rank();
 
-    ULInt procOffset = rank*this->idrange;
+    Data::ULInt procOffset = rank*this->idrange;
 
     this->idoffset = numProcs*this->idrange;
-    ULInt tidrange = this->idrange/comm->getMaxThreads();
+    Data::ULInt tidrange = this->idrange/comm->getMaxThreads();
 
     Performer::RangedIdManager *manager = new Performer::RangedIdManager(1, 1, 1, 1, 2);
 
-    ULInt threadOffset = id*tidrange;
+    Data::ULInt threadOffset = id*tidrange;
 
     manager->setRange(tidrange);
     manager->setOffset(this->idoffset);
@@ -955,26 +955,26 @@ Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManagerOmp(const Para
     return manager;
 }
 
-Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const
+Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Data::Int id) const
 {
-    Int iNoh;
+    Data::Int iNoh;
     if (this->idManagers[id]) {
         iNoh = this->idManagers[id]->getId(0);
     } else {
         iNoh = 0;
     }
 
-    UInt numProcs = comm->numProcesses();
-    UInt rank = comm->rank();
+    Data::UInt numProcs = comm->numProcesses();
+    Data::UInt rank = comm->rank();
 
-    ULInt procOffset = rank*this->idrange;
+    Data::ULInt procOffset = rank*this->idrange;
 
     this->idoffset = numProcs*this->idrange;
-    ULInt tidrange = this->idrange/comm->getMaxThreads();
+    Data::ULInt tidrange = this->idrange/comm->getMaxThreads();
 
     Performer::RangedIdManager *manager = new Performer::RangedIdManager(1, 1, 1, 1, 2);
 
-    ULInt threadOffset = id*tidrange;
+    Data::ULInt threadOffset = id*tidrange;
 
     manager->setRange(tidrange);
     manager->setOffset(this->idoffset);

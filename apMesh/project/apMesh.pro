@@ -49,10 +49,17 @@ HEADERS += \
     ../apMesh/Headers/Crabmesh/Aft/QuadtreeCell.h \
     ../apMesh/Headers/Crabmesh/Aft/Shape.h \
     ../apMesh/Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+    ../apMesh/Headers/Crabmesh/Numerical/ColumnMatrix.h \
+    ../apMesh/Headers/Crabmesh/Numerical/Definitions.h \
+    ../apMesh/Headers/Crabmesh/Numerical/DenseMatrix.h \
     ../apMesh/Headers/Crabmesh/Numerical/EquationRoot.h \
     ../apMesh/Headers/Crabmesh/Numerical/EquationRootFunction.h \
     ../apMesh/Headers/Crabmesh/Numerical/Function.h \
+    ../apMesh/Headers/Crabmesh/Numerical/IMatrix.h \
     ../apMesh/Headers/Crabmesh/Numerical/MultiVariableFunction.h \
+    ../apMesh/Headers/Crabmesh/Numerical/PermutationMatrix.h \
+    ../apMesh/Headers/Crabmesh/Numerical/RowMatrix.h \
+    ../apMesh/Headers/Crabmesh/Numerical/TMatrix.h \
     ../apMesh/Headers/Crabmesh/Performer/Definitions.h \
     ../apMesh/Headers/Crabmesh/Performer/IdManager.h \
     ../apMesh/Headers/Crabmesh/Performer/RangedIdManager.h \
@@ -73,6 +80,7 @@ HEADERS += \
     ../apMesh/Headers/Data/Mesh/SubMalha.h \
     ../apMesh/Headers/Data/Modelo.h \
     ../apMesh/Headers/Data/Noh.h \
+    ../apMesh/Headers/Data/OStream.h \
     ../apMesh/Headers/Data/Patch/BezierPatch.h \
     ../apMesh/Headers/Data/Patch/CoonsPatch.h \
     ../apMesh/Headers/Data/Patch/HermitePatch.h \
@@ -104,7 +112,13 @@ HEADERS += \
     ../apMesh/Headers/Timer/Timer.h
 
 SOURCES += \
+    ../apMesh/Sources/Crabmesh/Numerical/ColumnMatrix.cpp \
+    ../apMesh/Sources/Crabmesh/Numerical/DenseMatrix.cpp \
+    ../apMesh/Sources/Crabmesh/Numerical/IMatrix.cpp \
+    ../apMesh/Sources/Crabmesh/Numerical/PermutationMatrix.cpp \
+    ../apMesh/Sources/Crabmesh/Numerical/RowMatrix.cpp \
     ../apMesh/Sources/Data/Definitions.cpp \
+    ../apMesh/Sources/Data/OStream.cpp \
     ../apMesh/Sources/Parallel/Communicator.cpp \
     ../apMesh/Sources/Parallel/MPICommunicator.cpp \
     ../apMesh/Sources/Parallel/MPIMessage.cpp \

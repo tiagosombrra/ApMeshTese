@@ -2,7 +2,7 @@
 
 AdvancingFront::AdvancingFront(
         double factor,
-        double tolerance,
+//        double tolerance,
         unsigned int numImproves,
         double phi) : Shape()
 {
@@ -21,7 +21,7 @@ AdvancingFront::AdvancingFront(
 AdvancingFront::AdvancingFront(
         Boundary *boundary,
         Quadtree *quadtree,
-        double tolerance,
+//        double tolerance,
         unsigned int numImproves) : Shape()
 {
     setBoundary(boundary);

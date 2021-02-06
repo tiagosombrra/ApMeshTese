@@ -14,11 +14,11 @@
 double DELTA = 0.0001;
 double TOLERANCIA = 0.0001;
 double TOLERANCIA_CURVATURA = 0.001;
-double TOLERANCIA_AFT = 0.0001;
+double TOLERANCIA_AFT = 0.001;
 double PROPORCAO = 0.5; // proporção usada no avanço de fronteira
 double SUAVIZACAO = 7; // número de vezes que se dará a suavização laplaciana
 double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
-double EPSYLON = 0.03;
+double EPSYLON = 0.003;
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
 //int NUM_THREADS = 8;
@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 #if USE_OPENMP
     GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 8);
 #else
-    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 1024);
+    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 8);
 #endif //#USE_OPENMP
 
 

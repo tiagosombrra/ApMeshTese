@@ -1,10 +1,16 @@
 #include "../../../Headers/Crabmesh/Aft/Shape.h"
 
-double Shape::tolerance = 1.e-8;
+//double Shape::tolerance = 1.e-8;
+
+//double Shape::getTolerance()
+//{
+//    return this->tolerance;
+//}
 
 Shape::Shape(long int id)
 {
     setId(id);
+//    this->tolerance = 1.e-8;
     //setTolerance(0.001);
 //#if USE_OPENGL
 //    setColor(1.0, 1.0, 1.0);
@@ -26,10 +32,10 @@ long int Shape::getId()
     return id;
 }
 
-void Shape::setTolerance(double tolerance)
-{
-    Shape::tolerance = tolerance;
-}
+//void Shape::setTolerance(double tolerance)
+//{
+//    Shape::tolerance = tolerance;
+//}
 
 //#if USE_OPENGL
 //void Shape::setColor(double r, double g, double b)

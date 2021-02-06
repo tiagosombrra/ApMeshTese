@@ -15,12 +15,12 @@ This source code is under GNU General Public License v3 */
 #include <cmath>
 #include <list>
 #include <cstdlib>
+#include "Curvatura.h"
+#include "Adjacente.h"
 
 using namespace std;
 
 class Elemento;
-#include "Curvatura.h"
-#include "Adjacente.h"
 
 class CurvaturaDiscreta : public Curvatura
 {

@@ -14,7 +14,7 @@ class Shape
 {
 protected:
     long int id;
-    static double tolerance;
+   // static double tolerance;
 
 //#if USE_OPENGL
 //    double r;
@@ -29,7 +29,7 @@ public:
     void setId(long int id);
     long int getId();
 
-    static void setTolerance(double tolerance);
+   // static void setTolerance(double tolerance);
 
     virtual string getText() = 0;
 
@@ -48,6 +48,7 @@ public:
 
 //    virtual void draw() = 0;
 //#endif //#if USE_OPENGL
+   // static double getTolerance();
 };
 }
 }

@@ -15,15 +15,13 @@ This source code is under GNU General Public License v3 */
 #include <cstdlib>
 #include <vector>
 #include <tuple>
-using namespace std;
-
 #include "Patch.h"
 #include "../Curve/Curva.h"
 #include "../Vetor.h"
 #include "../../Data/Definitions.h"
+#include "../Ponto.h"
 
-struct Ponto;
-//class Matriz;
+using namespace std;
 
 class CoonsPatch : public Patch
 {
@@ -31,13 +29,15 @@ protected:
     vector <Curva*> curvas;
 
 public :
-    void insereCurva ( Curva* c );
+    void insereCurva (Curva* c);
     unsigned int getNumDeCurvas ( ) const { return ( int ) curvas.size(); }
-    Curva* getCurva ( const unsigned int i ); // retorna a i-ésima curva
+    Curva* getCurva (const unsigned int i); // retorna a i-ésima curva
 
     // encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
     // ou a projeção desse ponto na superfície
     virtual tuple < double, double > encontrar_u_v ( const Ponto& p ) = 0;
+    virtual tuple < double, double > find_u_v ( const Ponto& p ) = 0;
+
 
     // encontra o ponto p na curva dado um parâmetro p
     virtual Ponto parametrizar ( double u, double v ) = 0;

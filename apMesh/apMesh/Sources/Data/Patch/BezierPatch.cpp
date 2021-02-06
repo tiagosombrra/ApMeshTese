@@ -86,21 +86,35 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
 
     do
     {
+        //#pragma omp critical
+        //        cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread: "<<omp_get_thread_num()<<endl;
+
         Vetor Tu = -(this->Qu(u_i, v_i));
         Vetor Tv = -(this->Qv(u_i, v_i));
 
         p_i = this->parametrizar ( u_i, v_i ); // palpite inicial
+
+        if (std::isnan(p_i.x)) {
+#pragma omp critical
+            {
+                cout<<"-nan pi"<<endl;
+                cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread: "<<omp_get_thread_num()<<endl;
+                cout<< p_i.id << " (" << p.x << ", " << p.y << ", " << p.z << ") thread: "<<omp_get_thread_num()<< endl;
+            }
+        }
 
         Matrix<double, 3,3> A;
         A(0,0) = Tu.x;	A(0,1) = Tv.x;	A(0,2) = p_i.x - p.x;
         A(1,0) = Tu.y;	A(1,1) = Tv.y;	A(1,2) = p_i.y - p.y;
         A(2,0) = Tu.z;	A(2,1) = Tv.z;	A(2,2) = p_i.z - p.z;
 
+        //        Vector3d b= {p.x, p.y, p.z};
+        //        cout<<A.colPivHouseholderQr().solve(b)<<endl;
 
         int k = 0;
         double pivo = A(0,0);
 
-        while ( fabs(pivo) < TOLERANCIA and k < 3 )
+        while ((fabs(pivo) < TOLERANCIA) and (k < 2))
         {
             ++k;
             pivo = A(k,0);
@@ -148,8 +162,22 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
         delta_u =  A(0,2);
         delta_v =  A(1,2);
 
-        u_i += delta_u;
-        v_i += delta_v;
+        if (std::isnan(delta_u) || std::isnan(delta_v)){
+#pragma omp critical
+            {
+                cout<<"-nan delta_u e delta_v"<<endl;
+                cout<<"delta_u: "<<delta_u<<" delta_v: "<<delta_v<<" thread: "<<omp_get_thread_num()<<endl;
+            }
+        }
+
+        if (!std::isnan(delta_u)){
+            u_i += delta_u;
+        }
+
+        if (!std::isnan(delta_v)){
+            v_i += delta_v;
+        }
+
 
 
         if ( ++iMax > 50000 )
@@ -172,7 +200,16 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
     if ( v_i <= TOLERANCIA ) v_i = 0.0;
     else if ( v_i >= 1.0 - TOLERANCIA ) v_i = 1.0;
 
+    if (std::isnan(u_i) || std::isnan(v_i)) {
+        cout<<"-nan u_i e v_i"<<endl;
+    }
+
     return make_tuple ( u_i, v_i );
+}
+
+tuple<double, double> BezierPatch::find_u_v(const Ponto &p)
+{
+    return make_tuple(-1,-1);
 }
 
 

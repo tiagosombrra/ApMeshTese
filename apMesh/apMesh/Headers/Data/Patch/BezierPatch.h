@@ -95,6 +95,8 @@ public :
     // encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
     // ou a projeção desse ponto na superfície
     tuple < double, double > encontrar_u_v ( const Ponto& p );
+    tuple < double, double > find_u_v ( const Ponto& p );
+
 
     // encontra o ponto p na curva dado um parâmetro p
     virtual Ponto parametrizar ( double u, double v );

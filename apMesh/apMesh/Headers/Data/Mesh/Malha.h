@@ -14,9 +14,9 @@ This source code is under GNU General Public License v3 */
 
 #include <iostream>
 #include <vector>
-using namespace std;
-
 #include "SubMalha.h"
+
+using namespace std;
 
 class Malha
 {
@@ -27,7 +27,6 @@ public :
     unsigned int getNumDeSubMalhas (  ) const;
     SubMalha* getSubMalha ( const unsigned int i ); // retorna a i-ésima submalha
     void resizeSubmalha(Data::Int pos);
-
     ~Malha (  );
 };
 

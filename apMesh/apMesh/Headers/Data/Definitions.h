@@ -2,6 +2,7 @@
 #define _DATA_DEFINITIONS_H_
 
 ///Global defines
+
 #ifndef TRUE
 #define TRUE 1
 #endif //#ifndef TRUE
@@ -9,6 +10,10 @@
 #ifndef FALSE
 #define FALSE 0
 #endif //#ifndef FALSE
+
+#ifndef TRACING_ENABLED
+#define TRACING_ENABLED TRUE
+#endif //#ifndef TRUE
 
 #ifndef USE_MPI
 #define USE_MPI FALSE
@@ -137,6 +142,7 @@
 #include <Eigen/Eigen>
 #elif __linux__
 #include "../../Libs/Eigen/Eigen/Eigen"
+#include "../../Libs/Eigen/Eigen/Dense"
 #else
 #   error "Unknown compiler"
 #endif

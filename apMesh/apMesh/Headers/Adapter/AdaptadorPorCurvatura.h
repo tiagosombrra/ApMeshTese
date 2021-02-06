@@ -36,8 +36,8 @@ This source code is under GNU General Public License v3 */
 class AdaptadorPorCurvatura : public Adaptador
 {
 #if USE_OPENMP
-    static list < Ponto* > adaptaCurvaByCurvaOmp (Curva*, map < Ponto*, Ponto* > &, Performer::IdManager *idManager, double fator_dis = 1.0);
-    static list < Ponto* > adaptaCurvaBySuperficieOmp (Curva*c, map < Ponto*, Ponto* > &mapaPontos, Performer::IdManager *idManager, double fator_dis = 1.0);
+    static list<Ponto*> adaptaCurvaByCurvaOmp (Curva*c, Performer::IdManager *idManager, double fator_dis = 1.0);
+    static list<Ponto *> adaptaCurvaBySuperficieOmp(Curva*c, Performer::IdManager *idManager, double fator_dis = 1.0);
     static SubMalha* adaptaDominioOmp (CoonsPatch* patch, Performer::IdManager *idManager, double fator_dis = 1.0 );
 #endif //#USE_OPENMP
 

@@ -26,9 +26,11 @@ class Geometria
 
 public :
     void insereCurva ( Curva* c );
+    void insereCurva(Curva *c, int pos);
     unsigned int getNumDeCurvas (  ) const;
     Curva* getCurva ( const unsigned int i ); // retorna a i-ésima curva
     void inserePatch ( Patch* p );
+    void inserePatch ( Patch* p, int pos );
     unsigned int getNumDePatches (  ) const;
     Patch* getPatch ( const unsigned int i ); // retorna o i-ésimo patch
     CurvParamBezier* verifyCurveGeometria(Ponto*, Ponto*, Ponto*, Ponto*);

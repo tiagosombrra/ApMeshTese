@@ -3,8 +3,8 @@ QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
 #LIBS += -fopenmp
-QMAKE_CXXFLAGS += -O3 -fopenmp #-pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
-QMAKE_LFLAGS += -O3 -fopenmp #-pg   -std=gnu++0x#-march=native #-m64 #-mavx
+QMAKE_CXXFLAGS += -O3 -fopenmp  #-g  -pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
+QMAKE_LFLAGS += -O3 -fopenmp  #-g  -pg   -std=gnu++0x#-march=native #-m64 #-mavx
 #QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
 
 ## MPI Settings
@@ -104,6 +104,7 @@ HEADERS += \
     ../apMesh/Headers/Timer/Timer.h
 
 SOURCES += \
+    ../apMesh/Sources/Data/Definitions.cpp \
     ../apMesh/Sources/Parallel/Communicator.cpp \
     ../apMesh/Sources/Parallel/MPICommunicator.cpp \
     ../apMesh/Sources/Parallel/MPIMessage.cpp \

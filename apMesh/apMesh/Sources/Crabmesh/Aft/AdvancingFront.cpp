@@ -9,7 +9,7 @@ AdvancingFront::AdvancingFront(
     boundary = new Boundary();
     quadtree = new Quadtree(boundary, factor);
 
-    Shape::setTolerance(tolerance);
+    //Shape::setTolerance(tolerance);
 
     boundarySorted = true;
     this->numImproves = numImproves;
@@ -26,7 +26,7 @@ AdvancingFront::AdvancingFront(
 {
     setBoundary(boundary);
     setQuadtree(quadtree);
-    Shape::setTolerance(tolerance);
+    //Shape::setTolerance(tolerance);
 
     setBoundarySorted(true);
     setNumImproves(numImproves);
@@ -242,6 +242,14 @@ bool AdvancingFront::interceptionTest(Edge *e, Vertex *candidate, bool inFaceTes
         for (VertexList::iterator iter = frontVertices.begin();
              iter != frontVertices.end(); iter++)
         {
+//#pragma omp critical
+//            {
+
+//            if (!(*iter)) {
+//               cout<<"iter: "<<(*iter)->getId()<<" thread: "<<omp_get_thread_num()<<endl;
+//            }
+//            }
+
             if (((*iter) == e->getV1()) ||
                     ((*iter) == e->getV2()) ||
                     ((*iter) == candidate))
@@ -498,7 +506,7 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
                 maxAngle = angle;
                 best = candidate;
             }
-            else if (fabs(maxAngle - angle) < tolerance)
+            else if (fabs(maxAngle - angle) < TOLERANCIA_AFT)
             {
                 //caso em que os 2 vertices, candidate e best sao geometricamente
                 //iguais, mas topologicamente diferentes
@@ -1041,7 +1049,7 @@ bool AdvancingFront::laplacianSmoothing(bool &changed)
             den += weight;
         }
 
-        den = (den > tolerance) ? phi/den : 0;
+        den = (den > TOLERANCIA_AFT) ? phi/den : 0;
 
         numx *= den;
         numy *= den;
@@ -1060,7 +1068,7 @@ bool AdvancingFront::laplacianSmoothing(bool &changed)
             for (FaceList::iterator iter2 = faces.begin();
                  iter2 != faces.end(); iter2++)
             {
-                if ((*iter2)->orientedSurface() <= Shape::tolerance)
+                if ((*iter2)->orientedSurface() <= TOLERANCIA_AFT)
                 {
                     negativeSurface = true;
 
@@ -1113,10 +1121,10 @@ bool AdvancingFront::isBoundarySorted()
     return boundarySorted;
 }
 
-double AdvancingFront::getTolerance()
-{
-    return Shape::tolerance;
-}
+//double AdvancingFront::getTolerance()
+//{
+//    return Shape::tolerance;
+//}
 
 void AdvancingFront::setBoundary(Boundary *boundary)
 {

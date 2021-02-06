@@ -21,7 +21,7 @@ extern double DISCRETIZACAO_CURVA;
 extern double DISCRETIZACAO_INTER;
 
 #if USE_OPENMP
-list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaByCurvaOmp(Curva *c, map<Ponto *, Ponto *> &mapaPontos, Performer::IdManager *idManager,  double fator_dis)
+list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaByCurvaOmp(Curva *c, Performer::IdManager *idManager,  double fator_dis)
 {
     double h_velho = 0; // o tamanho velho de cada segmento
     double h_novo = 0; // o tamanho novo de cada segmento
@@ -59,9 +59,14 @@ list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaByCurvaOmp(Curva *c, map<Ponto *
 
         // 1.2.2. Calcule o ponto médio do segmento
         C_seg = static_cast < CurvaParametrica* > ( c )->pontoMedio ( *(*atual), *(*proxi) );
+        C_seg.id = idManager->next(0);
+
+//        cout<<"Id atual:"<<(*atual)->getId()<<" Id proxi:"<<(*proxi)->getId()<<" C_seg:"<<C_seg.getId()<<endl;
 
         // 1.2.2.1 Encontre o parâmetro do ponto médio
         t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
+//        cout<<"t:"<<t<<endl;
+
 
         // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
 
@@ -91,35 +96,40 @@ list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaByCurvaOmp(Curva *c, map<Ponto *
     parametros = bt.rediscretizacao ( );
     ((CurvaParametrica *)c)->atualizarParametros ( parametros );
 
-    //cout << "discretização da curva: ";
-    //for ( list < double >::iterator it = parametros.begin(); it!=parametros.end(); ++it )
-    //cout << *it << " ";
-    //cout << endl;
-
     list<Ponto *> novosPontos;
 
     Noh *p1 = (Noh *)pontos.front();
-    p1->id = idManager->next(0);
+    //p1->id = idManager->next(0);
     Noh *p2 = (Noh *)pontos.back();
-    p2->id = idManager->next(0);
 
+    //p2->id = idManager->next(0);
+
+    novosPontos.push_front(p1);
 
     for (list<double>::iterator it = ++parametros.begin();
          it != --parametros.end(); it++)
     {
         Noh *n = new Noh(((CurvaParametrica *)c)->parametrizar((*it)));
-        n->id = /*id_noh++*/idManager->next(0);
-
+        n->id = idManager->next(0);
         novosPontos.push_back(n);
     }
 
-    novosPontos.push_front(p1);
     novosPontos.push_back(p2);
 
     return novosPontos;
+
+    //    for (list<double>::iterator it = ++parametros.begin();
+    //         it != --parametros.end(); it++)
+    //    {
+    //        Noh *n = new Noh(((CurvaParametrica *)c)->parametrizar((*it)));
+    //        n->id = idManager->next(0);
+    //        c->inserePonto(n);
+    //    }
+
+    //    return c;
 }
 
-list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp(Curva*c, map < Ponto*, Ponto* > &mapaPontos, Performer::IdManager *idManager, double fator_dis)
+list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp(Curva*c, Performer::IdManager *idManager, double fator_dis)
 {
     double h_velho = 0; // o tamanho velho de cada segmento
     double h_novo = 0; // o tamanho novo de cada segmento
@@ -155,10 +165,11 @@ list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp(Curva*c, map < P
         //cout << "calculou novo tamanho" << endl;
 
         // 1.2.2. Calcule o ponto médio do segmento
-        C_seg = static_cast < CurvaParametrica* > ( c )->pontoMedio ( *(*atual), *(*proxi) );
+        C_seg = ((CurvaParametrica*)( c ))->pontoMedio (*(*atual),*(*proxi));
+        C_seg.id = idManager->next(0);
 
         //Teste para curvatura com a curva
-        t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
+        //t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
         //double k = c->calcularCurvatura(t);
         //cout << "curvatura  da curva = "<<k<<" com t = "<<t<< endl;
 
@@ -166,31 +177,44 @@ list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp(Curva*c, map < P
 
         // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
         CurvaturaAnalitica ka_p0 (	C_seg, *((CoonsPatch *)c->getPatch( 0 )) );
+        ka = ka_p0.gauss();
 
-
-        for (unsigned int i = 0; i < c->getNumDePatches(); i++)
-        {
-            CurvaturaAnalitica ka_p1 (	C_seg, *((CoonsPatch *)c->getPatch(i)) );
-            double Ga_p0 = ka_p0.gauss ( );
-            double Ga_p1 = ka_p1.gauss ( );
-
-            ka = ( fabs(Ga_p0) > fabs(Ga_p1) ) ? Ga_p0 : Ga_p1;
+        if (c->getNumDePatches() == 1) {
 
             if ( fabs ( ka ) < TOLERANCIA ) // testamos se ka é ZERO!
             {
-                double Ha_p0 = ka_p0.media ( );
-                double Ha_p1 = ka_p1.media ( );
-
-                ka = ( Ha_p0 > Ha_p1 ) ? Ha_p0 : Ha_p1;
+                ka = ka_p0.media ( );
                 kd = ( ((Noh*)(*atual))->Hd + ((Noh*)(*proxi))->Hd ) / 2.0;
             }
             else
             {
                 kd = ( ((Noh*)(*atual))->Gd + ((Noh*)(*proxi))->Gd ) / 2.0;
             }
+        }else{
 
+            double Ha = ka_p0.media ( );
+
+            for (unsigned int i = 1; i < c->getNumDePatches(); i++)
+            {
+                CurvaturaAnalitica ka_pi (	C_seg, *((CoonsPatch *)c->getPatch(i)) );
+                double Ga_pi = ka_pi.gauss ( );
+
+                ka = ( fabs(ka) > fabs(Ga_pi) ) ? ka : Ga_pi;
+
+                if ( fabs ( ka ) < TOLERANCIA ) // testamos se ka é ZERO!
+                {
+                    double Ha_pi = ka_pi.media ( );
+
+                    ka = ( Ha > Ha_pi ) ? Ha : Ha_pi;
+                    kd = ( ((Noh*)(*atual))->Hd + ((Noh*)(*proxi))->Hd ) / 2.0;
+                }
+                else
+                {
+                    kd = ( ((Noh*)(*atual))->Gd + ((Noh*)(*proxi))->Gd ) / 2.0;
+                }
+
+            }
         }
-
 
         // 1.2.4. O novo tamanho é calculado de acordo com os cenários
         h_novo = novoTamanho ( ka, kd, f, h_velho );
@@ -210,6 +234,7 @@ list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp(Curva*c, map < P
         ++proxi;
         ++atual;
     }
+
     // transforma a bintree numa bintree restrita
     while ( bt.restringir( (CurvaParametrica*)c ) ){}
 
@@ -218,29 +243,23 @@ list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp(Curva*c, map < P
     parametros = bt.rediscretizacao ( );
     ((CurvaParametrica *)c)->atualizarParametros ( parametros );
 
-    //cout << "discretização da curva: ";
-    //for ( list < double >::iterator it = parametros.begin(); it!=parametros.end(); ++it )
-    //cout << *it << " ";
-    //cout << endl;
-
     list<Ponto *> novosPontos;
 
     Noh *p1 = (Noh *)pontos.front();
-    p1->id = idManager->next(0);
-    Noh *p2 = (Noh *)pontos.back();
-    p2->id = idManager->next(0);
+    //p1->id = idManager->next(0);
+    novosPontos.push_front(p1);
 
 
     for (list<double>::iterator it = ++parametros.begin();
          it != --parametros.end(); it++)
     {
         Noh *n = new Noh(((CurvaParametrica *)c)->parametrizar((*it)));
-        n->id = /*id_noh++*/idManager->next(0);
-
+        n->id = idManager->next(0);
         novosPontos.push_back(n);
     }
 
-    novosPontos.push_front(p1);
+    Noh *p2 = (Noh *)pontos.back();
+    //p2->id = idManager->next(0);
     novosPontos.push_back(p2);
 
     return novosPontos;
@@ -260,6 +279,10 @@ SubMalha *AdaptadorPorCurvatura::adaptaDominioOmp(CoonsPatch *patch, Performer::
     {
         Curva *c = patch->getCurva ( i );
         ((CurvaParametrica*)c)->ordenaLista ( );
+//#pragma omp critical
+//        {
+//            ((CurvaParametrica*)c)->ordenaLista ( );
+//        }
 
         if ( i == 0 or i == 1 )
         {
@@ -390,7 +413,7 @@ SubMalha *AdaptadorPorCurvatura::adaptaDominioOmp(CoonsPatch *patch, Performer::
         it++;
     }
 
-    FaceList emptyMesh;
+    //FaceList emptyMesh;
 
     if (!avanco.execute( oldMesh ))
     {
@@ -809,7 +832,6 @@ double AdaptadorPorCurvatura::novoTamanho ( const double ka, const double kd, co
         return h_velho / f;
     }
 }
-
 
 // Usa a QuadTree. Gera uma nova malha e atualiza a malha do patch. A malha
 // gerada deve ser inserida no modelo pelo Gerador Adaptativo

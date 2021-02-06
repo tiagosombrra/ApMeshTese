@@ -13,6 +13,8 @@ using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;
 using namespace Par2DJMesh::Basics;
 
+extern double TOLERANCIA_AFT;
+
 namespace Par2DJMesh
 {
 namespace AFT

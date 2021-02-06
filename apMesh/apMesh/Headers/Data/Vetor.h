@@ -17,7 +17,7 @@ This source code is under GNU General Public License v3 */
 
 struct Vetor
 {		
-    unsigned short id;
+    //unsigned short id;
 
     // coordenadas
     double x;

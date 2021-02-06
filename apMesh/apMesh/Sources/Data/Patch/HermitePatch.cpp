@@ -67,8 +67,159 @@ void HermitePatch::mostraMatrizes ( )
 
 }
 
-// encontra o parâmetro t de um dado ponto p na curva
-tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
+//encontra o parâmetro t de um dado ponto p na curva
+//tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
+//{
+//#pragma omp critical
+//     cout<< p.id << " (" << p.x << ", " << p.y << ", " << p.z << ")" << endl;
+
+//    unsigned int iMax = 0;
+
+//    // chute inicial
+//    double u_i = 0.5;
+//    double v_i = 0.5;
+//    ////////////////
+
+//    double delta_u = 0.0; // o quanto o parâmetro terá de percorrer
+//    double delta_v = 0.0; // o quanto o parâmetro terá de percorrer
+
+//    // Método de Jacobi para resolução de sistema
+//    Ponto p_i;
+//    //cout << "encontrar_u_v (" << p.id << "), usando Jacobi!";
+
+//    do
+//    {
+//        Vetor Tu = -(this->Qu(u_i, v_i));
+//        Vetor Tv = -(this->Qv(u_i, v_i));
+
+//        if (std::isnan(Tu.x) || std::isnan(Tu.y) || std::isnan(Tu.z) ||
+//                std::isnan(Tv.x) || std::isnan(Tv.y) || std::isnan(Tv.z)) {
+//            cout<<"-nan Tu e Tv"<<endl;
+//        }
+
+//        p_i = this->parametrizar ( u_i, v_i ); // palpite inicial
+
+//        if (std::isnan(p_i.x) || std::isnan(p_i.y) || std::isnan(p_i.z)) {
+//            cout<<"-nan p_i"<<endl;
+//        }
+
+//        Matrix<double, 3,3> A;
+//        A(0,0) = Tu.x;	A(0,1) = Tv.x;	A(0,2) = p_i.x - p.x;
+//        A(1,0) = Tu.y;	A(1,1) = Tv.y;	A(1,2) = p_i.y - p.y;
+//        A(2,0) = Tu.z;	A(2,1) = Tv.z;	A(2,2) = p_i.z - p.z;
+
+
+//        int k = 0;
+//        double pivo = A(0,0);
+
+//        if (std::isnan(pivo)) {
+//            cout<<"-nan pivo1"<<endl;
+//        }
+
+//        if (pivo == 0.0) {
+//           cout<<"pivo zero 1: "<<pivo<<endl;
+//        }
+
+//        while ( (fabs(pivo) < TOLERANCIA) and (k < 2) )
+//        {
+//            ++k;
+//            pivo = A(k,0);
+//        }
+
+//        A.row(k).swap(A.row(0));
+
+//        if ( fabs(pivo) < TOLERANCIA )
+//        {
+//            cout << "Erro! Não é possível encontrar as coordenadas paramétricas no ponto p"
+//                 << p.id << " (" << p.x << ", " << p.y << ", " << p.z << ")" << endl;
+
+//            return make_tuple ( -1.0 , -1.0 );
+//        }
+
+//        double A_10 = A(1,0);
+//        double A_20 = A(2,0);
+
+//        for ( short j = 0; j < 3 ; ++j )
+//        {
+//            if (pivo == 0.0) {
+//                cout<<"pivo zero: "<<pivo<<endl;
+//            }
+//            A(0,j) = static_cast<double >(A(0, j))/pivo;
+//            A(1,j) = A(1,j) - A_10*(A(0,j));
+//            A(2,j) = A(2,j) - A_20*(A(0,j));
+//        }
+
+
+//        pivo = A(1,1);
+
+//        if (std::isnan(pivo)) {
+//            cout<<"-nan pivo2"<<endl;
+//        }
+
+
+//        if ( fabs(pivo) < TOLERANCIA )
+//        {
+//            pivo = A(2,1);
+//            A.row(2).swap(A.row(1));
+//        }
+
+//        double A_01 = A(0,1);
+//        double A_21 = A(2,1);
+
+//        for ( short j = 0; j < 3 ; ++j )
+//        {
+//            if (pivo == 0.0) {
+//                cout<<"pivo zero2: "<<pivo<<endl;
+//            }
+//            A(1,j) = static_cast<double>(A(1,j))/pivo;
+//            A(0,j) = A(0,j) - A_01*(A(1,j));
+//            A(2,j) = A(2,j) - A_21*(A(1,j));
+//        }
+
+
+//        delta_u =  A(0,2);
+//        delta_v =  A(1,2);
+
+//        u_i += delta_u;
+//        v_i += delta_v;
+
+
+//        if ( ++iMax > 50000 )
+//        {
+//#if USE_PRINT_COMENT
+//            cout << "iMax alcançado!" << endl;
+//#endif //#if USE_PRINT_COMENT
+//            break;
+//        }
+
+//        if (std::isnan(delta_u)|| std::isnan(delta_v)) {
+
+//            cout<<"-nan delta_u_v 1"<<endl;
+//        }
+
+////        cout << "u = " << u_i << " " << "v = " << v_i << endl;
+////        cout << "delta_u = " << delta_u << " " << "delta_v = " << delta_v << endl;
+//    }
+//    while ( fabs ( delta_u ) >= TOLERANCIA or fabs ( delta_v ) >= TOLERANCIA );
+//    //while ( p.distanciaPara(p_i) >= TOLERANCIA );
+
+//    if (std::isnan(delta_u)|| std::isnan(delta_v)) {
+//        cout<<"-nan delta_u_v 2"<<endl;
+//    }
+
+//    if ( u_i <= TOLERANCIA ) u_i = 0.0;
+//    else if ( u_i >= 1.0 - TOLERANCIA ) u_i = 1.0;
+
+//    if ( v_i <= TOLERANCIA ) v_i = 0.0;
+//    else if ( v_i >= 1.0 - TOLERANCIA ) v_i = 1.0;
+
+//    return make_tuple ( u_i, v_i );
+//}
+
+tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p ){
+    return make_tuple(-1, -1);
+}
+tuple<double, double> HermitePatch::find_u_v(const Ponto &p)
 {
     unsigned int iMax = 0;
 
@@ -89,23 +240,47 @@ tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
         Vetor Tu = -(this->Qu(u_i, v_i));
         Vetor Tv = -(this->Qv(u_i, v_i));
 
-        p_i = this->parametrizar ( u_i, v_i ); // palpite inicial
-
-        Matrix<double, 3,3> A;
-        A(0,0) = Tu.x;	A(0,1) = Tv.x;	A(0,2) = p_i.x - p.x;
-        A(1,0) = Tu.y;	A(1,1) = Tv.y;	A(1,2) = p_i.y - p.y;
-        A(2,0) = Tu.z;	A(2,1) = Tv.z;	A(2,2) = p_i.z - p.z;
-
-        int k = 0;
-        double pivo = A(0,0);
-
-        while ( fabs(pivo) < TOLERANCIA and k < 3 )
-        {
-            ++k;
-            pivo = A(k,0);
+        if (std::isnan(Tu.x) || std::isnan(Tu.y) || std::isnan(Tu.z) ||
+                std::isnan(Tv.x) || std::isnan(Tv.y) || std::isnan(Tv.z)) {
+            cout<<"-nan Tu e Tv"<<endl;
         }
 
-        A.row(k).swap(A.row(0));
+        p_i = this->parametrizar ( u_i, v_i ); // palpite inicial
+
+        if (std::isnan(p_i.x) || std::isnan(p_i.y) || std::isnan(p_i.z)) {
+            cout<<"-nan p_i"<<endl;
+        }
+
+        double A[3][3];
+        //Matrix<double, 3,3> A;
+        A[0][0] = Tu.x;	A[0][1] = Tv.x;	A[0][2] = p_i.x - p.x;
+        A[1][0] = Tu.y;	A[1][1] = Tv.y;	A[1][2] = p_i.y - p.y;
+        A[2][0] = Tu.z;	A[2][1] = Tv.z;	A[2][2] = p_i.z - p.z;
+
+        int k = 0;
+        double pivo = A[0][0];
+
+        if (std::isnan(pivo)) {
+            cout<<"-nan pivo1"<<endl;
+        }
+
+        if (fabs(pivo) < TOLERANCIA) {
+            cout<<"pivo zero 1: "<<pivo<<endl;
+        }
+
+        while ( (fabs(pivo) < TOLERANCIA) and (k < 2) )
+        {
+            ++k;
+            pivo = A[k][0];
+        }
+
+        //  A.row(k).swap(A.row(0));
+
+        for (int i = 0; i < 3; ++i) {
+            double a = A[0][i];
+            A[0][i] = A[k][i];
+            A[k][i] = a;
+        }
 
         if ( fabs(pivo) < TOLERANCIA )
         {
@@ -115,36 +290,62 @@ tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
             return make_tuple ( -1.0 , -1.0 );
         }
 
-        double A_10 = A(1,0);
-        double A_20 = A(2,0);
+        double A_10 = A[1][0];
+        double A_20 = A[2][0];
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A(0,j) = static_cast<double >(A(0, j))/pivo;
-            A(1,j) = A(1,j) - A_10*(A(0,j));
-            A(2,j) = A(2,j) - A_20*(A(0,j));
+            if (!(fabs(pivo) < TOLERANCIA)) {
+                A[0][j] = static_cast<double >(A[0][j])/pivo;
+                A[1][j] = A[1][j] - A_10*(A[0][j]);
+                A[2][j] = A[2][j] - A_20*(A[0][j]);
+            } else {
+                A[0][j] = 0.0;
+                A[1][j] = A[1][j] - A_10*(A[0][j]);
+                A[2][j] = A[2][j] - A_20*(A[0][j]);
+            }
+
         }
 
-        pivo = A(1,1);
+
+        pivo = A[1][1];
+
+        if (std::isnan(pivo)) {
+            cout<<"-nan pivo2"<<endl;
+        }
+
 
         if ( fabs(pivo) < TOLERANCIA )
         {
-            pivo = A(2,1);
-            A.row(2).swap(A.row(1));
+            pivo = A[2][1];
+
+            for (int i = 0; i < 3; ++i) {
+                double a = A[1][i];
+                A[1][i] = A[2][i];
+                A[2][i] = a;
+            }
         }
 
-        double A_01 = A(0,1);
-        double A_21 = A(2,1);
+        double A_01 = A[0][1];
+        double A_21 = A[0][1];
 
         for ( short j = 0; j < 3 ; ++j )
         {
-            A(1,j) = static_cast<double>(A(1,j))/pivo;
-            A(0,j) = A(0,j) - A_01*(A(1,j));
-            A(2,j) = A(2,j) - A_21*(A(1,j));
+            if (!(fabs(pivo) < TOLERANCIA)) {
+                A[1][j] = static_cast<double >(A[1][j])/pivo;
+                A[0][j] = A[0][j] - A_01*(A[1][j]);
+                A[2][j] = A[2][j] - A_21*(A[1][j]);
+            } else {
+                A[1][j] = 0.0;
+                A[0][j] = A[0][j] - A_01*(A[1][j]);
+                A[2][j] = A[2][j] - A_21*(A[1][j]);
+            }
+
+
         }
 
-        delta_u =  A(0,2);
-        delta_v =  A(1,2);
+        delta_u =  A[0][2];
+        delta_v =  A[1][2];
 
         u_i += delta_u;
         v_i += delta_v;
@@ -157,17 +358,29 @@ tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
 #endif //#if USE_PRINT_COMENT
             break;
         }
-        //cout << "u = " << u_i << " " << "v = " << v_i << endl;
-        //cout << "delta_u = " << delta_u << " " << "delta_v = " << delta_v << endl;
+
+        if (std::isnan(delta_u)|| std::isnan(delta_v)) {
+
+            cout<<"-nan delta_u_v 1"<<endl;
+        }
+
+        //        cout << "u = " << u_i << " " << "v = " << v_i << endl;
+        //        cout << "delta_u = " << delta_u << " " << "delta_v = " << delta_v << endl;
     }
     while ( fabs ( delta_u ) >= TOLERANCIA or fabs ( delta_v ) >= TOLERANCIA );
     //while ( p.distanciaPara(p_i) >= TOLERANCIA );
+
+    if (std::isnan(delta_u)|| std::isnan(delta_v)) {
+        cout<<"-nan delta_u_v 2"<<endl;
+    }
 
     if ( u_i <= TOLERANCIA ) u_i = 0.0;
     else if ( u_i >= 1.0 - TOLERANCIA ) u_i = 1.0;
 
     if ( v_i <= TOLERANCIA ) v_i = 0.0;
     else if ( v_i >= 1.0 - TOLERANCIA ) v_i = 1.0;
+
+    cout << "u = " << u_i << " " << "v = " << v_i << endl;
 
     return make_tuple ( u_i, v_i );
 }
@@ -201,6 +414,10 @@ Ponto HermitePatch::calculaPonto_u_v ( )
                      this->getV  ( ) ) ) ) )( 0, 0 );
 
     //cout << "calculaPonto_u_v () = " << C.x << " " << C.y << " " << C.z << endl;
+    if (std::isnan(C.x) || std::isnan(C.y) || std::isnan(C.z)) {
+        cout<<"-nan calculaPonto_u_v"<<endl;
+    }
+
     return C;
 }
 
@@ -345,6 +562,10 @@ Vetor HermitePatch::Qu ( double u, double v )
     P = calculaPonto_u_v ( );
     Vetor V ( P );
 
+    if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+        cout<<"-nan V1"<<endl;
+    }
+
     return V;
 }
 
@@ -374,6 +595,9 @@ Vetor HermitePatch::Qv ( double u, double v )
     P = calculaPonto_u_v ( );
     Vetor V ( P );
 
+    if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+        cout<<"-nan V2"<<endl;
+    }
     return V;
 }
 
@@ -403,6 +627,10 @@ Vetor HermitePatch::Quu ( double u, double v )
 
     P = calculaPonto_u_v ( );
     Vetor V ( P );
+
+    if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+        cout<<"-nan V3"<<endl;
+    }
 
     return V;
 }
@@ -434,6 +662,9 @@ Vetor HermitePatch::Quv ( double u, double v )
     P = calculaPonto_u_v ( );
     Vetor V ( P );
 
+    if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+        cout<<"-nan V4"<<endl;
+    }
     return V;
 }
 
@@ -471,6 +702,9 @@ Vetor HermitePatch::Qvv ( double u, double v )
     P = calculaPonto_u_v ( );
     Vetor V ( P );
 
+    if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+        cout<<"-nan V4"<<endl;
+    }
     return V;
 }
 
@@ -478,7 +712,7 @@ Vetor HermitePatch::Qvv ( double u, double v )
 // calcula o vetor tangente na direção u para o ponto p
 Vetor HermitePatch::Qu ( const Ponto& p )
 {
-    tuple < double, double > t = this->encontrar_u_v ( p );
+    tuple < double, double > t = this->find_u_v ( p );
     return this->Qu ( get < 0 > ( t ), get < 1 > ( t ) );
 }
 
@@ -486,7 +720,7 @@ Vetor HermitePatch::Qu ( const Ponto& p )
 // calcula o vetor tangente na direção v para o ponto p
 Vetor HermitePatch::Qv ( const Ponto& p )
 {
-    tuple < double, double > t = this->encontrar_u_v ( p );
+    tuple < double, double > t = this->find_u_v ( p );
     return this->Qv ( get < 0 > ( t ), get < 1 > ( t ) );
 }
 
@@ -494,7 +728,7 @@ Vetor HermitePatch::Qv ( const Ponto& p )
 // calcula a derivada parcial Quu para o ponto p
 Vetor HermitePatch::Quu ( const Ponto& p )
 {
-    tuple < double, double > t = this->encontrar_u_v ( p );
+    tuple < double, double > t = this->find_u_v ( p );
     return this->Quu ( get < 0 > ( t ), get < 1 > ( t ) );
 }
 
@@ -502,7 +736,7 @@ Vetor HermitePatch::Quu ( const Ponto& p )
 // calcula a derivada parcial Quv para o ponto p
 Vetor HermitePatch::Quv ( const Ponto& p )
 {
-    tuple < double, double > t = this->encontrar_u_v ( p );
+    tuple < double, double > t = this->find_u_v ( p );
     return this->Quv ( get < 0 > ( t ), get < 1 > ( t ) );
 }
 
@@ -510,7 +744,7 @@ Vetor HermitePatch::Quv ( const Ponto& p )
 // calcula a derivada parcial Qvu para o ponto p
 Vetor HermitePatch::Qvu ( const Ponto& p )
 {
-    tuple < double, double > t = this->encontrar_u_v ( p );
+    tuple < double, double > t = this->find_u_v ( p );
     return this->Qvu ( get < 0 > ( t ), get < 1 > ( t ) );
 }
 
@@ -518,7 +752,7 @@ Vetor HermitePatch::Qvu ( const Ponto& p )
 // calcula a derivada parcial Qvv para o ponto p
 Vetor HermitePatch::Qvv ( const Ponto& p )
 {
-    tuple < double, double > t = this->encontrar_u_v ( p );
+    tuple < double, double > t = this->find_u_v ( p );
     return this->Qvv ( get < 0 > ( t ), get < 1 > ( t ) );
 }
 

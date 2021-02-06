@@ -23,7 +23,7 @@ using namespace std;
 class Curva
 {
 protected :
-    unsigned short Id; // identificador da curva
+    unsigned long Id; // identificador da curva
     double L; // comprimento total da curva
     list < Ponto* > pontos; // será usada na discretização
     vector < Patch* > patches; // uma curva só com um patch é de borda
@@ -45,13 +45,10 @@ public :
     unsigned int getNumDePontos (  ) const;
     Ponto* getPonto ( const unsigned int i ); // retorna o i-ésimo ponto
     void setPontos ( list < Ponto* > novaLista ); // troca a lista de pontos
-
     void inserePatch ( Patch* p );
     unsigned int getNumDePatches (  ) const;
     Patch* getPatch ( const unsigned int i ); // retorna o i-ésimo patch
-
     bool estaNaBorda (  ); // verifica se uma curva é de borda
-
     list < Ponto* > & getPontos( ) { return this->pontos; }
 
     Curva ( );

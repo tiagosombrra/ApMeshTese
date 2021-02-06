@@ -400,7 +400,7 @@ Geometria *Modelos3d::modelDoisPatchesPlanosCurva(Geometria *geo){
     //=============================== PATCH 1 ==================================
     Ponto* p100 = new Vertice ( -6.0, 0.0, 0.0 );
     Ponto* p110 = new Vertice ( -2.0, 2.0, 0.0 );
-    Ponto* p120 = new Vertice ( 2.0, -2.0, 0.0 );
+    Ponto* p120 = new Vertice ( 2.0, -2.0, 1.0 );
     Ponto* p130 = new Vertice ( 6.0, 0.0, 0.0 );
 
     Ponto* p101 = new Vertice ( -6.0, 4.0, 0.0 );
@@ -446,7 +446,7 @@ Geometria *Modelos3d::modelDoisPatchesPlanosCurva(Geometria *geo){
 
     Ponto* p202 = new Vertice ( -6.0, -4.0, 0.0 );
     Ponto* p212 = new Vertice ( -2.0, -4.0, 0.0 );
-    Ponto* p222 = new Vertice ( 2.0, -4.0, 0.0 );
+    Ponto* p222 = new Vertice ( 2.0, -4.0, 1.0 );
     Ponto* p232 = new Vertice ( 6.0, -4.0, 0.0 );
 
     Ponto* p203 = p100; //new Vertice (  0.00000, -1.50000, 2.40000 );

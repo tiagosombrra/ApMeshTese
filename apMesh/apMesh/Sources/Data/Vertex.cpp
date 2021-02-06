@@ -222,10 +222,10 @@ bool Vertex::clockWise(Vertex *v1, Vertex *v2)
 
 bool Vertex::equals(double x, double y)
 {
-    return ((this->x > x-tolerance) &&
-            (this->x < x+tolerance) &&
-            (this->y > y-tolerance) &&
-            (this->y < y+tolerance));
+    return ((this->x > x-TOLERANCIA_AFT) &&
+            (this->x < x+TOLERANCIA_AFT) &&
+            (this->y > y-TOLERANCIA_AFT) &&
+            (this->y < y+TOLERANCIA_AFT));
 }
 
 bool Vertex::matches(Vertex *v)

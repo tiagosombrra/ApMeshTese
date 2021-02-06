@@ -38,35 +38,37 @@ using namespace Data;
 extern double TOLERANCIA;
 extern double TOLERANCIA_CURVATURA;
 extern int NUM_THREADS;
+extern double DISCRETIZACAO_CURVA;
+extern vector<CurvaParametrica*> ptr_aux;
 
 class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo
 {
 public :
     // gera a malha inicial e insere na lista de malhas do modelo
     // a lista de pontos da curva é preenchida durante a geração
-
     void saveErroMesh(Malha *malha);
-
 #if USE_OPENMP
     virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManager *idManager);
     virtual double erroGlobalOmp ( Malha* malha);
     GeradorAdaptativoPorCurvatura (Modelo &modelo, Timer *timer, int idrange = 0);
 #else
     GeradorAdaptativoPorCurvatura ( Modelo &modelo, Timer *timer, int idrange = 0);
-#endif //#USE_OPENMP
-
     virtual SubMalha* malhaInicial (CoonsPatch*, Performer::IdManager *idManager);
     virtual double erroGlobal ( Malha* malha);
+#endif //#USE_OPENMP
 
     Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
-    Performer::IdManager *makeIdManagerElement(const Parallel::TMCommunicator *comm, Int id) const;
+    Performer::IdManager *makeIdManagerOmp(const Parallel::TMCommunicator *comm, Int id) const;
     Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;
+
 protected:
+
     Parallel::TMCommunicator *comm;
     Performer::IdManager *idManager;
     Performer::IdManagerVector idManagers;
     mutable ULInt idoffset;
     ULInt idrange;
+
 };
 
 #endif

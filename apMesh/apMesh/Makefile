@@ -62,7 +62,7 @@ OBJETOS = $(FONTES:.cpp=.o)
 CC            = gcc
 CXX           = g++
 
-CXXFLAGS_EXTRA = -O3
+CXXFLAGS_EXTRA = -g3
 CXXFLAGS      = -std=gnu++11 -W -Wall $(CXXFLAGS_EXTRA)
 CXXFLAGS_OMP  = -fopenmp $(CXXFLAGS)
 

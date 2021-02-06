@@ -290,7 +290,7 @@ Edge *QuadtreeCell::makeE(Vertex *v1, Vertex *v2)
 
 void QuadtreeCell::makeMeshType1()
 {
-    //	v[6] -------------e[4]------------- v[4]
+    //	    v[6] -------------e[4]------------- v[4]
     //        | \                                 |
     //        |   \                               |
     //        |     \                             |
@@ -835,7 +835,7 @@ EdgeList QuadtreeCell::getEdges()
 
 bool QuadtreeCell::shouldSubdivide(Edge *e)
 {
-    return (size - e->getLen()*tree->getFactor() >= Shape::tolerance);
+    return (size - e->getLen()*tree->getFactor() >= TOLERANCIA_AFT);
 }
 
 bool QuadtreeCell::shouldSubdivide(Face *f)
@@ -849,7 +849,7 @@ bool QuadtreeCell::shouldSubdivide(Face *f)
         //cout << "size - f->h*tree->getFactor() = " << size - f->h*tree->getFactor() << endl;
         //cout << "deve subdividir = " << (size - f->h*tree->getFactor() >= Shape::tolerance) << endl;
     }
-    return (size - f->h*tree->getFactor() >= Shape::tolerance);
+    return (size - f->h*tree->getFactor() >= TOLERANCIA_AFT);
 }
 
 void QuadtreeCell::addEdge(Edge *e)
@@ -969,10 +969,10 @@ bool QuadtreeCell::out(Vertex *v)
     //cout << "v = (" << v->getX() << ", " << v->getY() << ") " << endl;
     //cout << "box = (" << min->getX() << ", " << min->getY() << "), (" << max->getX() << ", " << max->getY() << ")" << endl;
     
-    return ((v->getX() <= min->getX() - Shape::tolerance) ||
-            (v->getX() >= max->getX() + Shape::tolerance) ||
-            (v->getY() <= min->getY() - Shape::tolerance) ||
-            (v->getY() >= max->getY() + Shape::tolerance));
+    return ((v->getX() <= min->getX() - TOLERANCIA_AFT) ||
+            (v->getX() >= max->getX() + TOLERANCIA_AFT) ||
+            (v->getY() <= min->getY() - TOLERANCIA_AFT) ||
+            (v->getY() >= max->getY() + TOLERANCIA_AFT));
     /*return ((v->getX() < min->getX()) ||
             (v->getX() > max->getX()) ||
             (v->getY() < min->getY()) ||

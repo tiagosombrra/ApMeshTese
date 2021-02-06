@@ -14,6 +14,7 @@
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;
 using namespace Par2DJMesh::Basics;
+extern double TOLERANCIA_AFT;
 
 namespace Par2DJMesh
 {
@@ -85,9 +86,10 @@ public:
             Quadtree *quadtree,
             double tolerance = 1.e-8,
             unsigned int numImproves = 5);
+
     virtual ~AdvancingFront();
 
-    static double getTolerance();
+//    static double getTolerance();
 
     void setBoundarySorted(bool boundarySorted);
     bool isBoundarySorted();

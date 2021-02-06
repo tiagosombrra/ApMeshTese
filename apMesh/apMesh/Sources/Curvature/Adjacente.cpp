@@ -67,7 +67,6 @@ bool Adjacente::confirmaEsq ( const Noh& noh, const Elemento& P, const Elemento&
     return false;
 }
 
-
 // confirma que U é adjacente à direita de P
 bool Adjacente::confirmaDir ( const Noh& noh, const Elemento& P, const Elemento& U)
 {
@@ -120,7 +119,6 @@ bool Adjacente::confirmaDir ( const Noh& noh, const Elemento& P, const Elemento&
     return false;
 }
 
-
 Elemento* Adjacente::esquerdo ( const Noh& noh, Elemento* elem, list < Elemento* > &lista )
 {
     Elemento* e = NULL;
@@ -138,7 +136,6 @@ Elemento* Adjacente::esquerdo ( const Noh& noh, Elemento* elem, list < Elemento*
 
     return e;
 }
-
 
 // busca na lista um elemento adjacente à direita de elem
 Elemento* Adjacente::direito ( const Noh& noh, Elemento* elem, list < Elemento* > &lista )
@@ -158,7 +155,6 @@ Elemento* Adjacente::direito ( const Noh& noh, Elemento* elem, list < Elemento* 
 
     return e;
 }
-
 
 // verifica a concavidade de dois elementos adjacentes
 short Adjacente::concavidade ( const Noh& noh, const Elemento& pri, const Elemento& seg )

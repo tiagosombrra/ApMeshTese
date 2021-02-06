@@ -16,6 +16,11 @@ void Geometria::insereCurva ( Curva* c )
     this->curvas.push_back ( c );
 }
 
+void Geometria::insereCurva(Curva *c, int pos)
+{
+    this->curvas[pos] = c;
+}
+
 unsigned int Geometria::getNumDeCurvas() const {
     return ( int ) curvas.size();
 }
@@ -35,6 +40,11 @@ Curva* Geometria::getCurva ( const unsigned int i )
 void Geometria::inserePatch ( Patch* p )
 {
     this->patches.push_back ( p );
+}
+
+void Geometria::inserePatch(Patch *p, int pos)
+{
+    this->patches[pos] = p;
 }
 
 unsigned int Geometria::getNumDePatches() const {

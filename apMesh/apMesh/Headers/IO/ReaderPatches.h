@@ -25,8 +25,6 @@ public:
     std::list<BezierPatch *> loaderBezierPatchFile();
     Ponto getPointVectorControlPoints(std::vector<Ponto> , unsigned long );
 
-
-
 };
 
 #endif // READERPATCHES_H

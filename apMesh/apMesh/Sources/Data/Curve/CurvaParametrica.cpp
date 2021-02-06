@@ -20,7 +20,8 @@ double CurvaParametrica::calcularTamanho ( const Ponto& p1, const Ponto& p2 )
     double t1 = encontrar_t ( p1 ); // parâmetro do ponto p1
     double t2 = encontrar_t ( p2 ); // parâmetro do ponto p2
 
-    // cout<<t1<<t2<<endl;
+//#pragma omp critical
+//    cout<<"t1 "<<t1<<" t2 "<<t2<<endl;
 
     if ( t1 < t2 )
         return comprimento ( t1, t2 );
@@ -311,10 +312,10 @@ double CurvaParametrica::comprimento ( double t1, double t2 )
 double CurvaParametrica::encontrar_t ( const Ponto& p )
 {
 
-    // markos
+//    // markos
     struct DistanceFunction : public Data::Numerical::EquationRootFunction
     {
-        const Ponto* pt;
+        const Ponto *pt;
         CurvaParametrica* curva;
 
         double min()
@@ -350,27 +351,27 @@ double CurvaParametrica::encontrar_t ( const Ponto& p )
 
     return ok ? t : -1.0;
 
-    // end markos
+//    // end markos
 
-    //	long double d_min = 1.0e50; // distância mínima entre p e a curva
-    //	long double di = 0; // distância do palpite até p
-    //	long double t_min = 0.0; // parâmetro do pondo da curva mais próximo a p
-    //	Ponto *pi = new Ponto; // ponto de palpite
+//        long double d_min = 1.0e50; // distância mínima entre p e a curva
+//        long double di = 0; // distância do palpite até p
+//        long double t_min = 0.0; // parâmetro do pondo da curva mais próximo a p
+//        Ponto *pi = new Ponto; // ponto de palpite
 
-    //	for ( long double t = 0.0; t <= 1.0; t += DELTA )
-    //	{
-    //		*pi = parametrizar ( t );
-    //		di = pi->distanciaPara ( p );
-    //		if ( di < d_min )
-    //		{
-    //				d_min = di;
-    //				t_min = t;
-    //		}
-    //	}
+//        for ( long double t = 0.0; t <= 1.0; t += DELTA )
+//        {
+//            *pi = parametrizar ( t );
+//            di = pi->distanciaPara ( p );
+//            if ( di < d_min )
+//            {
+//                    d_min = di;
+//                    t_min = t;
+//            }
+//        }
 
-    //	delete pi;
+//        delete pi;
 
-    //	return t_min;
+//        return t_min;
 
     //	/* Método utilizando projeção vetorial, de forma
     //		semelhante ao método da bisseção. Quanto mais próximo
@@ -654,14 +655,27 @@ Ponto CurvaParametrica::pontoMedio ( const Ponto& p1, const Ponto& p2 )
 }
 
 
-CurvaParametrica* ptr_aux = NULL;
+vector<CurvaParametrica*> ptr_aux;
+#if USE_OPENMP
+//#pragma omp threadprivate (ptr_aux)
+#endif //USE_OPENMP
 
 bool compara( Ponto* a, Ponto* b)
 {
     double t_a, t_b;
 
-    t_a = ptr_aux->encontrar_t( *a );
-    t_b = ptr_aux->encontrar_t( *b );
+//#pragma omp critical
+//   cout<<&ptr_aux<<" "<<omp_get_thread_num()<<endl;
+
+#if USE_OPENMP
+    t_a = ptr_aux[omp_get_thread_num()]->encontrar_t( *a );
+    t_b = ptr_aux[omp_get_thread_num()]->encontrar_t( *b );
+#else
+    t_a = ptr_aux[0]->encontrar_t( *a );
+    t_b = ptr_aux[0]->encontrar_t( *b );
+#endif //USE_OPENMP
+
+
 
     return t_a < t_b;
 }
@@ -670,12 +684,17 @@ bool compara( Ponto* a, Ponto* b)
 // ordena a lista de pontos de acordo com suas coordenadas paramétricas
 void CurvaParametrica::ordenaLista (  )
 {
-    list < Ponto* > & pts = this->getPontos();
+//    list < Ponto* > & pts = this->getPontos();
+//    ptr_aux = this;
+//    pts.sort( compara );
+//    return;
+#if USE_OPENMP
+    ptr_aux[omp_get_thread_num()] = this;
+#else
+    ptr_aux[0] = this;
+#endif //USE_OPENMP
 
-    ptr_aux = this;
-    pts.sort( compara );
-
-    return;
+    this->pontos.sort(compara);
 }
 
 

@@ -14,10 +14,10 @@ This source code is under GNU General Public License v3 */
 
 #include <iostream>
 #include <list>
-using namespace std;
-
 #include "Ponto.h"
 #include "Elemento.h"
+
+using namespace std;
 
 struct Noh : public Ponto
 {

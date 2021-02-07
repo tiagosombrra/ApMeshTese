@@ -4,13 +4,13 @@ Vertex::Vertex(double x, double y, long int id) : Shape(id)
 {
     setPosition(x, y);
 
-//#if USE_OPENGL
-//    setSize(1.0);
-//#endif //#if USE_OPENGL
+    //#if USE_OPENGL
+    //    setSize(1.0);
+    //#endif //#if USE_OPENGL
 
-//#if DEBUG_MODE
-//    h = 0.0;
-//#endif //#if DEBUG_MODE
+    //#if DEBUG_MODE
+    //    h = 0.0;
+    //#endif //#if DEBUG_MODE
 }
 
 Vertex::~Vertex()
@@ -205,9 +205,25 @@ double Vertex::surface(Vertex *v1, Vertex *v2)
 
 double Vertex::orientedSurface(Vertex *v1, Vertex *v2)
 {
-    return (    x * v1->y - v1->x *     y +
-                v1->x * v2->y - v2->x * v1->y +
-                v2->x *     y -     x * v2->y)/2.0;
+
+    if (!v1 || !v2) {
+#pragma omp critical
+        cout<<"Orientação superfície: "<<(    x * v1->y - v1->x * y +
+                                              v1->x * v2->y - v2->x * v1->y +
+                                              v2->x * y - x * v2->y)/2.0<<omp_get_thread_num()<<endl;
+
+        return 1.0;
+    }else{
+#pragma omp critical
+        cout<<"Orientação superfície1: "<<(    x * v1->y - v1->x * y +
+                                              v1->x * v2->y - v2->x * v1->y +
+                                              v2->x * y - x * v2->y)/2.0<<omp_get_thread_num()<<endl;
+        return (    x * v1->y - v1->x * y +
+                    v1->x * v2->y - v2->x * v1->y +
+                    v2->x * y - x * v2->y)/2.0;
+    }
+
+
 }
 
 bool Vertex::counterClockWise(Vertex *v1, Vertex *v2)

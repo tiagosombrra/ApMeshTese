@@ -264,9 +264,9 @@ tuple<double, double> HermitePatch::find_u_v(const Ponto &p)
             cout<<"-nan pivo1"<<endl;
         }
 
-        if (fabs(pivo) < TOLERANCIA) {
-            cout<<"pivo zero 1: "<<pivo<<endl;
-        }
+//        if (fabs(pivo) < TOLERANCIA) {
+//            cout<<"pivo zero 1: "<<pivo<<endl;
+//        }
 
         while ( (fabs(pivo) < TOLERANCIA) and (k < 2) )
         {
@@ -380,7 +380,7 @@ tuple<double, double> HermitePatch::find_u_v(const Ponto &p)
     if ( v_i <= TOLERANCIA ) v_i = 0.0;
     else if ( v_i >= 1.0 - TOLERANCIA ) v_i = 1.0;
 
-    cout << "u = " << u_i << " " << "v = " << v_i << endl;
+    //cout << "u = " << u_i << " " << "v = " << v_i << endl;
 
     return make_tuple ( u_i, v_i );
 }

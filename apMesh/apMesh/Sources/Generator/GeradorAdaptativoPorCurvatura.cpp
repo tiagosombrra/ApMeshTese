@@ -12,143 +12,6 @@ This source code is under GNU General Public License v3 */
 
 #include "../../Headers/Generator/GeradorAdaptativoPorCurvatura.h"
 
-void escreveMalha(Malha *malha, int passo)
-{
-    stringstream nome;
-    nome << passo;
-    nome << "malha";
-    nome << passo;
-    nome << ".pos";
-
-    ofstream arq(nome.str().c_str());
-
-    arq << "%HEADER" << endl
-        << "Arquivo gerado pelo gerador de malhas de superficie do Daniel Siqueira" << endl << endl;
-
-    arq << "%HEADER.VERSION" << endl
-        << "0-005 - Oct/93" << endl << endl
-        << "%HEADER.ANALYSIS" << endl
-        << "\'shell\'" << endl << endl;
-
-
-    unsigned long int Nv, Nt;
-    Nv = Nt = 0;
-
-    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++)
-    {
-        SubMalha *sub = malha->getSubMalha(i);
-
-        Nv += sub->getNumDeNos();
-        Nt += sub->getNumDeElementos();
-    }
-
-    arq << "%NODE" << endl
-        << Nv << endl << endl;
-
-    arq << "%NODE.COORD" << endl
-        << Nv << endl;
-
-    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++)
-    {
-        SubMalha *sub = malha->getSubMalha(i);
-
-        for (unsigned int j = 0; j < sub->getNumDeNos(); j++)
-        {
-            Noh *n = sub->getNoh(j);
-
-            arq << n->id << " "
-                << n->x << " "
-                << n->y << " "
-                << n->z << endl;
-        }
-    }
-
-    arq << endl;
-
-    arq << "%MATERIAL" << endl
-        << "1" << endl << endl
-        << "%MATERIAL.LABEL" << endl
-        << "1" << endl
-        << "1\t\'m1\'" << endl << endl
-        << "%MATERIAL.ISOTROPIC" << endl
-        << "1" << endl
-        << "1\t1000.0\t0.0" << endl << endl
-        << "%THICKNESS" << endl
-        << "1" << endl
-        << "1\t1.0" << endl << endl
-        << "%INTEGRATION.ORDER" << endl
-        << "1" << endl
-        << "1\t3\t1\t1\t3\t1\t1" << endl << endl;
-
-    arq << "%ELEMENT" << endl
-        << Nt << endl << endl;
-
-    arq << "%ELEMENT.T3" << endl
-        << Nt << endl;
-
-    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++)
-    {
-        SubMalha *sub = malha->getSubMalha(i);
-
-        for (unsigned int j = 0; j < sub->getNumDeElementos(); j++)
-        {
-            Triangulo *t = (Triangulo *)sub->getElemento(j);
-
-            arq << t->getId() << " "
-                << "1 1 1 "
-                << t->getN(1).id << " "
-                << t->getN(2).id << " "
-                << t->getN(3).id << endl;
-        }
-    }
-
-    arq << endl;
-    arq << "%END";
-
-    arq.flush();
-
-    arq.close();
-
-    //  cout << "escreveu o arquivo para o passo " << passo << endl;
-}
-
-void escreveElementos( int passo, SubMalha *sub, int i )
-{
-    stringstream nome;
-    nome << passo;
-    nome << "submalha-";
-    nome << i;
-    nome << ".txt";
-
-    ofstream arq(nome.str().c_str());
-
-    for ( unsigned int k = 0; k < sub->getNumDeElementos(); ++k)
-    {
-        Elemento *elem = sub->getElemento( k );
-
-        Noh n1 ( elem->getN ( 1 ) );
-        Noh n2 ( elem->getN ( 2 ) );
-        Noh n3 ( elem->getN ( 3 ) );
-
-        tuple <double, double> t1 = ((Triangulo*)elem)->p1;
-        tuple <double, double> t2 = ((Triangulo*)elem)->p2;
-        tuple <double, double> t3 = ((Triangulo*)elem)->p3;
-
-        arq	<< "T-" << elem->getId() << ":\n\t"
-            << "área = " << elem->getArea() << ";\n\t"
-            << "normal = " << elem->getNormal().x << ", " << elem->getNormal().y << ", " << elem->getNormal().z << "\n\t"
-            << "n-" << n1.id << "( " << get<0>(t1) << " , " << get<1>(t1) <<  ") ângulo = " << elem->getAngulo( n1 ) << ";\n\t"
-            << "n-" << n2.id << "( " << get<0>(t2) << " , " << get<1>(t2) <<  ") ângulo = " << elem->getAngulo( n2 ) << ";\n\t"
-            << "n-" << n3.id << "( " << get<0>(t3) << " , " << get<1>(t3) <<  ") ângulo = " << elem->getAngulo( n3 ) << endl;
-    }
-
-    arq.flush();
-
-    arq.close();
-
-    cout << "escreveu o arquivo com os elementos da submalha " << i << " para o passo " << passo << endl;
-}
-
 #if USE_OPENMP
 SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Performer::IdManager *idManager)
 {
@@ -429,7 +292,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 
         }
 
-       nThreads = 1;
+       //nThreads = 1;
 #pragma omp parallel num_threads(nThreads) shared(geo, sizePatch, malha)
         {
             Int id = comm->threadId();
@@ -1087,3 +950,141 @@ void GeradorAdaptativoPorCurvatura::saveErroMesh(Malha *malha)
 
     cout << "Malha salva com sucesso!!!" << endl;
 }
+
+void GeradorAdaptativoPorCurvatura::escreveMalha(Malha *malha, int passo)
+{
+    stringstream nome;
+    nome << passo;
+    nome << "malha";
+    nome << passo;
+    nome << ".pos";
+
+    ofstream arq(nome.str().c_str());
+
+    arq << "%HEADER" << endl
+        << "Arquivo gerado pelo gerador de malhas de superficie do Daniel Siqueira" << endl << endl;
+
+    arq << "%HEADER.VERSION" << endl
+        << "0-005 - Oct/93" << endl << endl
+        << "%HEADER.ANALYSIS" << endl
+        << "\'shell\'" << endl << endl;
+
+
+    unsigned long int Nv, Nt;
+    Nv = Nt = 0;
+
+    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++)
+    {
+        SubMalha *sub = malha->getSubMalha(i);
+
+        Nv += sub->getNumDeNos();
+        Nt += sub->getNumDeElementos();
+    }
+
+    arq << "%NODE" << endl
+        << Nv << endl << endl;
+
+    arq << "%NODE.COORD" << endl
+        << Nv << endl;
+
+    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++)
+    {
+        SubMalha *sub = malha->getSubMalha(i);
+
+        for (unsigned int j = 0; j < sub->getNumDeNos(); j++)
+        {
+            Noh *n = sub->getNoh(j);
+
+            arq << n->id << " "
+                << n->x << " "
+                << n->y << " "
+                << n->z << endl;
+        }
+    }
+
+    arq << endl;
+
+    arq << "%MATERIAL" << endl
+        << "1" << endl << endl
+        << "%MATERIAL.LABEL" << endl
+        << "1" << endl
+        << "1\t\'m1\'" << endl << endl
+        << "%MATERIAL.ISOTROPIC" << endl
+        << "1" << endl
+        << "1\t1000.0\t0.0" << endl << endl
+        << "%THICKNESS" << endl
+        << "1" << endl
+        << "1\t1.0" << endl << endl
+        << "%INTEGRATION.ORDER" << endl
+        << "1" << endl
+        << "1\t3\t1\t1\t3\t1\t1" << endl << endl;
+
+    arq << "%ELEMENT" << endl
+        << Nt << endl << endl;
+
+    arq << "%ELEMENT.T3" << endl
+        << Nt << endl;
+
+    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++)
+    {
+        SubMalha *sub = malha->getSubMalha(i);
+
+        for (unsigned int j = 0; j < sub->getNumDeElementos(); j++)
+        {
+            Triangulo *t = (Triangulo *)sub->getElemento(j);
+
+            arq << t->getId() << " "
+                << "1 1 1 "
+                << t->getN(1).id << " "
+                << t->getN(2).id << " "
+                << t->getN(3).id << endl;
+        }
+    }
+
+    arq << endl;
+    arq << "%END";
+
+    arq.flush();
+
+    arq.close();
+
+    //  cout << "escreveu o arquivo para o passo " << passo << endl;
+}
+
+void escreveElementos( int passo, SubMalha *sub, int i )
+{
+    stringstream nome;
+    nome << passo;
+    nome << "submalha-";
+    nome << i;
+    nome << ".txt";
+
+    ofstream arq(nome.str().c_str());
+
+    for ( unsigned int k = 0; k < sub->getNumDeElementos(); ++k)
+    {
+        Elemento *elem = sub->getElemento( k );
+
+        Noh n1 ( elem->getN ( 1 ) );
+        Noh n2 ( elem->getN ( 2 ) );
+        Noh n3 ( elem->getN ( 3 ) );
+
+        tuple <double, double> t1 = ((Triangulo*)elem)->p1;
+        tuple <double, double> t2 = ((Triangulo*)elem)->p2;
+        tuple <double, double> t3 = ((Triangulo*)elem)->p3;
+
+        arq	<< "T-" << elem->getId() << ":\n\t"
+            << "área = " << elem->getArea() << ";\n\t"
+            << "normal = " << elem->getNormal().x << ", " << elem->getNormal().y << ", " << elem->getNormal().z << "\n\t"
+            << "n-" << n1.id << "( " << get<0>(t1) << " , " << get<1>(t1) <<  ") ângulo = " << elem->getAngulo( n1 ) << ";\n\t"
+            << "n-" << n2.id << "( " << get<0>(t2) << " , " << get<1>(t2) <<  ") ângulo = " << elem->getAngulo( n2 ) << ";\n\t"
+            << "n-" << n3.id << "( " << get<0>(t3) << " , " << get<1>(t3) <<  ") ângulo = " << elem->getAngulo( n3 ) << endl;
+    }
+
+    arq.flush();
+
+    arq.close();
+
+    cout << "escreveu o arquivo com os elementos da submalha " << i << " para o passo " << passo << endl;
+}
+

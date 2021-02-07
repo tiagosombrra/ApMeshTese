@@ -210,8 +210,8 @@ bool Face::out(Vertex *v)
 
     l1 = l2 = l3 = 0.0;
 
-//#pragma omp critical
-//      cout<<v->getText()<<omp_get_thread_num()<<endl;
+#pragma omp critical
+      cout<<v->getText()<<omp_get_thread_num()<<endl;
 
     barycentricCoordinates(v, l1, l2, l3);
 

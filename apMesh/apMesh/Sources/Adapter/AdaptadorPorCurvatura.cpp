@@ -278,7 +278,7 @@ SubMalha *AdaptadorPorCurvatura::adaptaDominioOmp(CoonsPatch *patch, Performer::
     for ( unsigned int i = 0; i < patch->getNumDeCurvas ( ); ++i )
     {
         Curva *c = patch->getCurva ( i );
-        ((CurvaParametrica*)c)->ordenaLista ( );
+       ((CurvaParametrica*)c)->ordenaLista ( );
 //#pragma omp critical
 //        {
 //            ((CurvaParametrica*)c)->ordenaLista ( );
@@ -417,6 +417,7 @@ SubMalha *AdaptadorPorCurvatura::adaptaDominioOmp(CoonsPatch *patch, Performer::
 
     if (!avanco.execute( oldMesh ))
     {
+        cout<<"oldMesh pop "<<omp_get_thread_num()<<endl;
         VertexList vertices = avanco.getVertices();
 
         while (!vertices.empty())

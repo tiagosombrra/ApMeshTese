@@ -271,7 +271,7 @@ SubMalha *AdaptadorPorCurvatura::adaptaDominioOmp(CoonsPatch *patch, Performer::
     double fator = DISCRETIZACAO_INTER; //pow ( 2, exp ); // o fator de rediscretização
 
     // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
-    AdvancingFront avanco (PROPORCAO, /*TOLERANCIA_AFT,*/ SUAVIZACAO, FATOR_SUAVIZACAO);
+    AdvancingFront avanco (PROPORCAO, TOLERANCIA_AFT, SUAVIZACAO, FATOR_SUAVIZACAO);
     map <Vertex *, Noh *> mapa;
 
     // 1. Para cada curva do patch
@@ -841,7 +841,7 @@ SubMalha* AdaptadorPorCurvatura::adaptaDominio (CoonsPatch* patch, Performer::Id
     double fator = DISCRETIZACAO_INTER; //pow ( 2, exp ); // o fator de rediscretização
 
     // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
-    AdvancingFront avanco (PROPORCAO, /*TOLERANCIA_AFT,*/ SUAVIZACAO, FATOR_SUAVIZACAO);
+    AdvancingFront avanco (PROPORCAO, TOLERANCIA_AFT, SUAVIZACAO, FATOR_SUAVIZACAO);
     map <Vertex *, Noh *> mapa;
 
     // 1. Para cada curva do patch

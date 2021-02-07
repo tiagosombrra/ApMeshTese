@@ -76,12 +76,8 @@
 #endif //#ifndef USE_SPLINES
 
 #ifndef USE_NUMERICAL
-#define USE_NUMERICAL TRUE
+#define USE_NUMERICAL FALSE
 #endif //#ifndef USE_NUMERICAL
-
-#ifndef USE_EIGEN
-#define USE_EIGEN TRUE
-#endif //#ifndef EIGEN
 
 #ifndef USE_TECGRAF
 #define USE_TECGRAF FALSE
@@ -142,7 +138,6 @@
 #include <sys/time.h>
 
 //Verificação de sistema operacional
-#if USE_EIGEN
 #ifdef __APPLE__
 #include <Eigen/Eigen>
 #elif __linux__
@@ -151,7 +146,7 @@
 #else
 #   error "Unknown compiler"
 #endif
-#endif //USE_EIGEN
+
 #if __cplusplus
 
 #include <list>
@@ -569,7 +564,7 @@ namespace Data
     std::string trace(int maxLines = -1);
 
     //streams and strings
-    OStream &cout();
+    //OStream &cout();
     OStream &cerr();
     OStream &clog();
     OStream &endl(OStream &s);
@@ -695,13 +690,12 @@ std::string Data::convert(Type value)
 #endif //#if __cplusplus
 
 using namespace std;
-#if USE_EIGEN
 using namespace Eigen;
+
 typedef Matrix<double, 4, 4> Matrix4x4;
 typedef Matrix<double, 4, 1> Matrix4x1;
 typedef Matrix<double, 1, 4> Matrix1x4;
 typedef Matrix<double, 1, 1> Matrix1x1;
-#endif //USE_EIGEN
 
 namespace Par2DJMesh
 {

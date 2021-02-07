@@ -33,7 +33,7 @@ This source code is under GNU General Public License v3 */
 #include "../Parallel/TMCommunicator.h"
 
 using namespace std;
-//using namespace Data;
+using namespace Data;
 
 extern double TOLERANCIA;
 extern double TOLERANCIA_CURVATURA;
@@ -57,17 +57,17 @@ public :
     virtual double erroGlobal ( Malha* malha);
 #endif //#USE_OPENMP
 
-    Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Data::Int id) const;
-    Performer::IdManager *makeIdManagerOmp(const Parallel::TMCommunicator *comm, Data::Int id) const;
-    Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Data::Int id) const;
+    Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
+    Performer::IdManager *makeIdManagerOmp(const Parallel::TMCommunicator *comm, Int id) const;
+    Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;
 
 protected:
 
     Parallel::TMCommunicator *comm;
     Performer::IdManager *idManager;
     Performer::IdManagerVector idManagers;
-    mutable Data::ULInt idoffset;
-    Data::ULInt idrange;
+    mutable ULInt idoffset;
+    ULInt idrange;
 
 };
 

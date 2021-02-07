@@ -78,13 +78,13 @@ protected:
 public:
     AdvancingFront(
             double factor = 0.85,
-//            double tolerance = 1.e-8,
+            double tolerance = 1.e-8,
             unsigned int numImproves = 5,
             double phi = 0.5);
     AdvancingFront(
             Boundary *boundary,
             Quadtree *quadtree,
-//            double tolerance = 1.e-8,
+            double tolerance = 1.e-8,
             unsigned int numImproves = 5);
 
     virtual ~AdvancingFront();

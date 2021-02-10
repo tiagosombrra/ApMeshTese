@@ -16,7 +16,7 @@
 #endif //#ifndef TRUE
 
 #ifndef USE_MPI
-#define USE_MPI FALSE
+#define USE_MPI TRUE
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP

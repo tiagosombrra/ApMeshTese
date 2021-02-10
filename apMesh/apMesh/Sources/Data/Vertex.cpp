@@ -173,8 +173,8 @@ double Vertex::squarePseudoAngle()
 
 double Vertex::orientedAngle()
 {
-    static Vertex v;
-    static double ang;
+    /*static*/ Vertex v;
+    /*static*/ double ang;
 
     v.setPosition(1.0, 0.0);
 

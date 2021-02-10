@@ -739,7 +739,7 @@ QuadtreeCell *QuadtreeCell::getChild(int position)
 
 void QuadtreeCell::setBox(Vertex *min, Vertex *max)
 {
-    static double spanX, spanY;
+    /*static*/ double spanX, spanY;
 
     this->min = min;
     this->max = max;

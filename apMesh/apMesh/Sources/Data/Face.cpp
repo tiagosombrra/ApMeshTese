@@ -113,9 +113,9 @@ Vertex *Face::getMid()
 
 Vertex *Face::circumcenter()
 {
-    static double x1, y1, x2, y2, x3, y3, x, y;
-    static double x12PlusY12, x22PlusY22, x32PlusY32;
-    static double detNum1, detNum2, detDen, den;
+    /*static*/ double x1, y1, x2, y2, x3, y3, x, y;
+    /*static*/ double x12PlusY12, x22PlusY22, x32PlusY32;
+    /*static*/ double detNum1, detNum2, detDen, den;
 
     x1 = v[0]->getX();
     y1 = v[0]->getY();
@@ -143,7 +143,7 @@ Vertex *Face::circumcenter()
 
 Vertex *Face::incenter()
 {
-    static double a, b, c, sum, x, y;
+    /*static*/ double a, b, c, sum, x, y;
 
     a = v[0]->distance(v[1]);
     b = v[1]->distance(v[2]);
@@ -171,7 +171,7 @@ double Face::orientedSurface()
 
 bool Face::in(double x, double y)
 {
-    static Vertex v;
+    /*static*/ Vertex v;
 
     v.setPosition(x, y);
 
@@ -180,7 +180,7 @@ bool Face::in(double x, double y)
 
 bool Face::in(Vertex *v)
 {
-    static double l1, l2, l3;
+    /*static*/ double l1, l2, l3;
 
     l1 = l2 = l3 = 0.0;
 
@@ -197,7 +197,7 @@ bool Face::on(Vertex *v)
 
 bool Face::out(double x, double y)
 {
-    static Vertex v;
+    /*static*/ Vertex v;
 
     v.setPosition(x, y);
 
@@ -206,7 +206,7 @@ bool Face::out(double x, double y)
 
 bool Face::out(Vertex *v)
 {
-    static double l1, l2, l3;
+    /*static*/ double l1, l2, l3;
 
     l1 = l2 = l3 = 0.0;
 
@@ -221,7 +221,7 @@ bool Face::out(Vertex *v)
 
 void Face::barycentricCoordinates(Vertex *v, double &l1, double &l2, double &l3)
 {
-    static double s;
+    /*static*/ double s;
 //#pragma omp critical
 //    {
 //        cout<<this->v[0]->getText()<<" thread: "<<omp_get_thread_num()<<endl;
@@ -238,7 +238,7 @@ void Face::barycentricCoordinates(Vertex *v, double &l1, double &l2, double &l3)
 
 double Face::gama()
 {
-    static double d1, d2, d3;
+    /*static*/ double d1, d2, d3;
 
     d1 = v[0]->distance(v[1]);
     d2 = v[1]->distance(v[2]);
@@ -249,8 +249,8 @@ double Face::gama()
 
 double Face::quality()
 {
-    static double rInsc, rCirc, d;
-    static Edge e;
+    /*static*/ double rInsc, rCirc, d;
+    /*static*/ Edge e;
 
     rInsc = DBL_MAX;
     rCirc = DBL_MIN;
@@ -333,7 +333,7 @@ bool Face::isAdjacent(Face *f)
 
 bool Face::hits(Face *f)
 {
-    static bool intercept = false;
+    /*static*/ bool intercept = false;
 
     if ((in(f->v[0])) ||
             (in(f->v[1])) ||

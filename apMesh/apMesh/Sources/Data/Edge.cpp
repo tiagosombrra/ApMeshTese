@@ -187,7 +187,7 @@ bool Edge::intercept(Vertex *va, Vertex *vb)
     }*/
 
     //teste de bounding boxes
-    static double exmin, exmax, eymin, eymax;
+    /*static*/ double exmin, exmax, eymin, eymax;
 
     if (va->getX() >= vb->getX())
     {
@@ -229,8 +229,8 @@ bool Edge::intercept(Vertex *va, Vertex *vb)
     }
 
     //teste de intersecao
-    static Vertex ab, ac, ad, cd, ca, cb;
-    static double tivx, tivy, tfvx, tfvy, eivx, eivy, efvx, efvy;
+    /*static*/ Vertex ab, ac, ad, cd, ca, cb;
+    /*static*/ double tivx, tivy, tfvx, tfvy, eivx, eivy, efvx, efvy;
 
     tivx = v[0]->getX();
     tivy = v[0]->getY();
@@ -278,7 +278,7 @@ bool Edge::intercept(Vertex *v)
 
 bool Edge::intercept(double x, double y)
 {
-    static Vertex v;
+    /*static*/ Vertex v;
 
     v.setPosition(x, y);
 
@@ -311,7 +311,7 @@ double Edge::straightDistance(Vertex *v)
 
 double Edge::distance(Vertex *v)
 {
-    static Vertex ac, vec;
+    /*static*/ Vertex ac, vec;
 
     ac.setPosition(v->getX() - this->v[0]->getX(), v->getY() - this->v[0]->getY());
     vec.setPosition(this->v[1]->getX() - this->v[0]->getX(), this->v[1]->getY() - this->v[0]->getY());
@@ -449,7 +449,7 @@ double Edge::distance(Vertex *v)
 
 double Edge::distance(double x, double y)
 {
-    static Vertex v;
+    /*static*/ Vertex v;
 
     v.setPosition(x, y);
 
@@ -458,7 +458,7 @@ double Edge::distance(double x, double y)
 
 double Edge::dot(Vertex *v)
 {
-    static Vertex vAux;
+    /*static*/ Vertex vAux;
 
     vAux.setPosition(v->getX() - this->v[0]->getX(), v->getY() - this->v[0]->getY());
 
@@ -472,7 +472,7 @@ bool Edge::left(Vertex *v)
 
 bool Edge::left(double x, double y)
 {
-    static Vertex vAux;
+    /*static*/ Vertex vAux;
 
     vAux.setPosition(x - this->v[0]->getX(), y - this->v[0]->getY());
 
@@ -486,7 +486,7 @@ bool Edge::right(Vertex *v)
 
 bool Edge::right(double x, double y)
 {
-    static Vertex vAux;
+    /*static*/ Vertex vAux;
 
     vAux.setPosition(x - this->v[0]->getX(), y - this->v[0]->getY());
 
@@ -505,7 +505,7 @@ bool Edge::accordingToNormal(Vertex *v, bool inEdgeTest)
 
 double Edge::angle(Edge *e)
 {
-    static Vertex va, vb, vc;
+    /*static*/ Vertex va, vb, vc;
 
     if (v[0]->matches(e->v[0]))
     {
@@ -544,8 +544,8 @@ double Edge::angle(Edge *e)
 
 double Edge::angle(Vertex *va, Vertex *vb)
 {
-    static Edge e;
-    static double result;
+    /*static*/ Edge e;
+    /*static*/ double result;
 
     e.setVertices(va, vb);
 

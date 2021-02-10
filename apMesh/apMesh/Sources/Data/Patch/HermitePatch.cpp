@@ -986,6 +986,11 @@ HermitePatch::HermitePatch ( HermitePatch *antigo ) : CoonsPatch ( antigo )
     this->V = antigo->V;
 }
 
+HermitePatch::HermitePatch()
+{
+
+}
+
 
 HermitePatch::~HermitePatch (  )
 {

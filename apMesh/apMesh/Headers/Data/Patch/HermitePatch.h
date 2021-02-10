@@ -123,6 +123,7 @@ public :
                                                         bool sinal_c4 = true );*/
 
     HermitePatch ( HermitePatch * );
+    HermitePatch ();
 
     ~HermitePatch ( );
 };

@@ -335,6 +335,11 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 #endif //#if USE_PRINT_COMENT
     }
 }
+
+GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura()
+{
+
+}
 #else
 GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , Timer *timer, int idrange)
 {

@@ -56,6 +56,7 @@ public :
     virtual double erroGlobal ( Malha* malha);
 #endif //#USE_OPENMP
 
+    GeradorAdaptativoPorCurvatura();
     Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
     Performer::IdManager *makeIdManagerOmp(const Parallel::TMCommunicator *comm, Int id) const;
     Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;
@@ -64,7 +65,6 @@ public :
     void saveErroMesh(Malha *malha);
 
 protected:
-
     Parallel::TMCommunicator *comm;
     Performer::IdManager *idManager;
     Performer::IdManagerVector idManagers;

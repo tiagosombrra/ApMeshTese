@@ -21,6 +21,16 @@ This source code is under GNU General Public License v3 */
 
 class BezierPatch : public CoonsPatch
 {
+private:
+    //variaveis para estimativa de carga
+   int id_bezierPatch;
+   double area;
+   double kaMedio;
+   double segmentMedio;
+   double areaTriangle;
+   double NumberTriangle;
+   int idProcess;
+
 public :
 
     // Pontos de controle
@@ -116,6 +126,26 @@ public :
     virtual Vetor Quv ( const Ponto& p );
     virtual Vetor Qvu ( const Ponto& p );
     virtual Vetor Qvv ( const Ponto& p );
+
+    //gets and sets para estimativa de carga
+    double getArea() const;
+    void setArea(double value);
+
+    double getKaMedio() const;
+    void setKaMedio(double value);
+
+    double getSegmentMedio() const;
+    void setSegmentMedio(double value);
+    double getAreaTriangle() const;
+    void setAreaTriangle(double value);
+    double getNumberTriangle() const;
+    void setNumberTriangle(double value);
+    int getIdProcess() const;
+    void setIdProcess(int value);
+
+    int getId_bezierPatch() const;
+    void setId_bezierPatch(int value);
+
 
     // Ordem das curvas:
     //		C3

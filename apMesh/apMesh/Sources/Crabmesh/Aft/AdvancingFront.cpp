@@ -233,8 +233,8 @@ bool AdvancingFront::interceptionTest(Edge *e, Vertex *candidate, bool inFaceTes
 
     if (inFaceTest && !intercepts)
     {
-        static Face f;
-
+        //static Face f;
+        Face f;
         //cout << "inte teste" << endl;
         
         f.setVertices(e->getV1(), e->getV2(), candidate);
@@ -242,13 +242,13 @@ bool AdvancingFront::interceptionTest(Edge *e, Vertex *candidate, bool inFaceTes
         for (VertexList::iterator iter = frontVertices.begin();
              iter != frontVertices.end(); iter++)
         {
-//#pragma omp critical
-//            {
+            //#pragma omp critical
+            //            {
 
-//            if (!(*iter)) {
-//               cout<<"iter: "<<(*iter)->getId()<<" thread: "<<omp_get_thread_num()<<endl;
-//            }
-//            }
+            //            if (!(*iter)) {
+            //               cout<<"iter: "<<(*iter)->getId()<<" thread: "<<omp_get_thread_num()<<endl;
+            //            }
+            //            }
 
             if (((*iter) == e->getV1()) ||
                     ((*iter) == e->getV2()) ||
@@ -351,7 +351,7 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
         if (geometryPhase)
         {
             if ((candidate->getX() < best->getX() - h) || (candidate->getX() > best->getX() + h) ||
-                (candidate->getY() < best->getY() - h) || (candidate->getY() > best->getY() + h))
+                    (candidate->getY() < best->getY() - h) || (candidate->getY() > best->getY() + h))
             {
                 //outbox++;
                 continue;
@@ -414,7 +414,7 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best, bool geometryPhase)
         }
         //else
         //{
-            //intercepted++;
+        //intercepted++;
         //}
     }
 

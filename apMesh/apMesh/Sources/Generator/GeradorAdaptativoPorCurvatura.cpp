@@ -274,7 +274,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
         int sizeCurvas = geo->getNumDeCurvas ( );
 
        //
-       // nThreads = 4;
+        nThreads = 1;
 #pragma omp parallel num_threads(nThreads) shared(geo, sizeCurvas, sizePatch, malha, novosPontos)
         {
             Int id = comm->threadId();
@@ -288,11 +288,12 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
                 geo->getCurva(i)->setPontos(novosPontos[i]);
                 novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp( geo->getCurva( i ), this->idManagers[id], 1);
                 geo->getCurva(i)->setPontos(novosPontos[i]);
+                ((CurvaParametrica*)geo->getCurva(i))->ordenaLista ( );
             }
 
         }
 
-       //nThreads = 1;
+       nThreads = 4;
 #pragma omp parallel num_threads(nThreads) shared(geo, sizePatch, malha)
         {
             Int id = comm->threadId();

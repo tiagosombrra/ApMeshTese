@@ -18,6 +18,8 @@ This source code is under GNU General Public License v3 */
 
 class Patch
 {
+    unsigned long id;
+
 protected :
     SubMalha* malha;
 
@@ -28,6 +30,8 @@ public :
     Patch  ( );
     Patch ( Patch * );
     ~Patch ( );
+    unsigned long getId() const;
+    void setId(unsigned long value);
 };
 
 #endif

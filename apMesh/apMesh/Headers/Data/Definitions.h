@@ -121,7 +121,7 @@
     #define TAG_PASSO 2
     #define RANK_ROOT 0
     #define USE_SERIAL false
-#endif //#if USE_OPENMPI
+#endif //#if USE_MPI
 
 #include <iostream>
 #include <fstream>

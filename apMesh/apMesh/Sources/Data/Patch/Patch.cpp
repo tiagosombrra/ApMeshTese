@@ -11,6 +11,16 @@ This source code is under GNU General Public License v3 */
 
 #include "../../../Headers/Data/Patch/Patch.h"
 
+unsigned long Patch::getId() const
+{
+    return id;
+}
+
+void Patch::setId(unsigned long value)
+{
+    id = value;
+}
+
 void Patch::setMalha ( SubMalha* m )
 {
     this->malha = m;

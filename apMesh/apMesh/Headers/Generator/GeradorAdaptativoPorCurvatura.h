@@ -28,7 +28,8 @@ This source code is under GNU General Public License v3 */
 #include "../Adapter/AdaptadorPorCurvatura.h"
 #include "../Data/Definitions.h"
 #include "../Timer/Timer.h"
-
+#include "../Data/Patch/BezierPatch.h"
+#include "../IO/WriteOBJFIle.h"
 #include "../Crabmesh/Performer/RangedIdManager.h"
 #include "../Parallel/TMCommunicator.h"
 
@@ -55,6 +56,18 @@ public :
     virtual SubMalha* malhaInicial (CoonsPatch*, Performer::IdManager *idManager);
     virtual double erroGlobal ( Malha* malha);
 #endif //#USE_OPENMP
+
+#if USE_MPI
+    GeradorAdaptativoPorCurvatura(double listOfPatches[], int sizeOfListPatches, Timer* timer);
+    void generatorMeshInitial();
+    void adapterCurves();
+    void adapterPatches();
+
+    Modelo modelo;
+    Geometria* geo;
+    CoonsPatch* patch;
+    Malha* malha;
+#endif //#if USE_MPI
 
     GeradorAdaptativoPorCurvatura();
     Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;

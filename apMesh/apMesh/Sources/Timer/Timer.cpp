@@ -106,7 +106,7 @@ void Timer::writeTimeFile(int process)
 
 void Timer::endTimeInitialization()
 {
-    //#if USE_OPENMPI
+    //#if USE_MPI
     //    timeStepsEnd[0] = MPI_Wtime();
     //#else //#if USE_OPENMPI
     time_clock = clock();

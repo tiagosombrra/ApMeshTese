@@ -1094,3 +1094,295 @@ void escreveElementos( int passo, SubMalha *sub, int i )
     cout << "escreveu o arquivo com os elementos da submalha " << i << " para o passo " << passo << endl;
 }
 
+#if USE_MPI
+GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(double listOfPatches[],
+                                                             int sizeOfListPatches,
+                                                             Timer *timer)
+{
+    timer->initTime(8); // Overhead process 0 e n
+
+    geo = new Geometria;
+    modelo.setGeometria(geo);
+    malha = new Malha;
+    this->passo = 0;
+
+    Ponto* p00;
+    Ponto* p01;
+    Ponto* p02;
+    Ponto* p03;
+    Ponto* p10;
+    Ponto* p11;
+    Ponto* p12;
+    Ponto* p13;
+    Ponto* p20;
+    Ponto* p21;
+    Ponto* p22;
+    Ponto* p23;
+    Ponto* p30;
+    Ponto* p31;
+    Ponto* p32;
+    Ponto* p33;
+
+    Curva* patch_c1;
+    Curva* patch_c2;
+    Curva* patch_c3;
+    Curva* patch_c4;
+
+    BezierPatch* bezierPatch;
+
+    for (int i = 0; i < sizeOfListPatches; i = i + 48) {
+
+        p00 = new Vertice(listOfPatches[i], listOfPatches[i + 1], listOfPatches[i + 2]);
+        p10 = new Vertice(listOfPatches[i + 3], listOfPatches[i + 4], listOfPatches[i + 5]);
+        p20 = new Vertice(listOfPatches[i + 6], listOfPatches[i + 7], listOfPatches[i + 8]);
+        p30 = new Vertice(listOfPatches[i + 9], listOfPatches[i + 10], listOfPatches[i + 11]);
+
+        p01 = new Vertice(listOfPatches[i + 12], listOfPatches[i + 13], listOfPatches[i + 14]);
+        p11 = new Vertice(listOfPatches[i + 15], listOfPatches[i + 16], listOfPatches[i + 17]);
+        p21 = new Vertice(listOfPatches[i + 18], listOfPatches[i + 19], listOfPatches[i + 20]);
+        p31 = new Vertice(listOfPatches[i + 21], listOfPatches[i + 22], listOfPatches[i + 23]);
+
+        p02 = new Vertice(listOfPatches[i + 24], listOfPatches[i + 25], listOfPatches[i + 26]);
+        p12 = new Vertice(listOfPatches[i + 27], listOfPatches[i + 28], listOfPatches[i + 29]);
+        p22 = new Vertice(listOfPatches[i + 30], listOfPatches[i + 31], listOfPatches[i + 32]);
+        p32 = new Vertice(listOfPatches[i + 33], listOfPatches[i + 34], listOfPatches[i + 35]);
+
+        p03 = new Vertice(listOfPatches[i + 36], listOfPatches[i + 37], listOfPatches[i + 38]);
+        p13 = new Vertice(listOfPatches[i + 39], listOfPatches[i + 40], listOfPatches[i + 41]);
+        p23 = new Vertice(listOfPatches[i + 42], listOfPatches[i + 43], listOfPatches[i + 44]);
+        p33 = new Vertice(listOfPatches[i + 45], listOfPatches[i + 46], listOfPatches[i + 47]);
+
+        patch_c1 = new CurvParamBezier(*p00, *p10, *p20, *p30);
+        patch_c2 = new CurvParamBezier(*p30, *p31, *p32, *p33);
+        patch_c3 = new CurvParamBezier(*p03, *p13, *p23, *p33);
+        patch_c4 = new CurvParamBezier(*p00, *p01, *p02, *p03);
+
+        if (geo->verifyCurveGeometria(p00, p10, p20, p30) == NULL) {
+            patch_c1 = new CurvParamBezier(*p00, *p10, *p20, *p30);
+            geo->insereCurva(patch_c1);
+        } else {
+            patch_c1 = geo->verifyCurveGeometria(p00, p10, p20, p30);
+        }
+
+        if (geo->verifyCurveGeometria(p30, p31, p32, p33) == NULL) {
+            patch_c2 = new CurvParamBezier(*p30, *p31, *p32, *p33);
+            geo->insereCurva(patch_c2);
+        } else {
+            patch_c2 = geo->verifyCurveGeometria(p30, p31, p32, p33);
+        }
+
+        if (geo->verifyCurveGeometria(p03, p13, p23, p33) == NULL) {
+            patch_c3 = new CurvParamBezier(*p03, *p13, *p23, *p33);
+            geo->insereCurva(patch_c3);
+        } else {
+            patch_c3 = geo->verifyCurveGeometria(p03, p13, p23, p33);
+        }
+
+        if (geo->verifyCurveGeometria(p00, p01, p02, p03) == NULL) {
+            patch_c4 = new CurvParamBezier(*p00, *p01, *p02, *p03);
+            geo->insereCurva(patch_c4);
+        } else {
+            patch_c4 = geo->verifyCurveGeometria(p00, p01, p02, p03);
+        }
+
+        bezierPatch = new BezierPatch(patch_c1, patch_c2, patch_c3, patch_c4, *p11, *p21, *p12, *p22);
+        bezierPatch->setId(i / 48);
+
+        geo->inserePatch(bezierPatch);
+    }
+
+    timer->endTime(8); // Overhead process 0 e n
+
+    timer->initTime(2); // Geração da Malha Inicial process 0 e n
+
+    // 1. Gera a malha inicial
+    generatorMeshInitial();
+
+    timer->endTime(2); // Geração da Malha Inicial process 0 e n
+
+    // 2. Insere a malha inicial no modelo(que guarda todas as malhas geradas)
+    modelo.insereMalha(malha);
+
+    timer->initTime(7); // Calculo do erro process 0 e n
+
+    // 3. Calcula o erro global para a malha inicial
+    this->erro = this->erroGlobal(malha);
+    salvaErroMalha(malha, passo);
+    this->erroPasso.push_back(this->erro);
+
+    timer->endTime(7); // Calculo do erro process 0 e n
+
+    timer->initTime(8); // Overhead process 0 e n
+
+#if USE_PRINT_RESULTS
+    cout << "*************** ERRO " << this->passo << " rank " << RANK_MPI << " = " << this->erro << endl;
+#endif //#if USE_PRINT_RESULTS
+
+    // escreveMalha(malha, passo);
+    salvaMalha(malha, passo);
+    timer->endTime(8); // Overhead process 0 e n
+
+    // 4. enquanto o erro global de uma malha gerada não for menor que o desejado
+    while (this->erro > EPSYLON) {
+
+        timer->initTime(8); // Overhead process 0 e n
+
+        if (passo >= (unsigned)PASSOS) {
+            break;
+        }
+
+        this->passo++;
+
+        // 4.1. Aloca uma nova malha
+        malha = new Malha;
+
+#ifdef __linux
+        list<Ponto*> novosPontos[geo->getNumDeCurvas()];
+#elif __APPLE__
+        vector<list<Ponto*> > novosPontos;
+#elif WIN64
+        vector<list<Ponto*> > novosPontos;
+#endif
+
+        map<Ponto*, Ponto*> mapaPontos;
+
+        AdaptadorPorCurvatura::id_noh = 1;
+        AdaptadorPorCurvatura::id_ele = 1;
+
+        timer->endTime(8); // Overhead process 0 e n
+
+        timer->initTime(3); // Adaptação das curvas process 0 e n
+
+        // 4.2. Adapta as curvas
+        for (unsigned int i = 0; i < geo->getNumDeCurvas(); ++i) {
+
+#if USE_PRINT_COMENTS
+            cout << "adaptando a curva " << i + 1 << endl;
+#endif //#if USE_PRINT_COMENTS
+
+#ifdef __linux
+            novosPontos[i] = AdaptadorPorCurvatura::adaptaCurva(geo->getCurva(i), /*this->passo,*/ mapaPontos);
+#elif __APPLE__
+            novosPontos.push_back(AdaptadorPorCurvatura::adaptaCurva(geo->getCurva(i), /*this->passo,*/ mapaPontos));
+#elif WIN64
+            novosPontos.push_back(AdaptadorPorCurvatura::adaptaCurva(geo->getCurva(i), /*this->passo,*/ mapaPontos));
+#endif
+        }
+
+#if USE_PRINT_COMENTS
+        cout << "atualizando as curvas" << endl;
+#endif //#if USE_PRINT_COMENTS
+
+        // 4.3. Atualiza a discretização das curvas
+        for (unsigned int i = 0; i < geo->getNumDeCurvas(); ++i) {
+            geo->getCurva(i)->setPontos(novosPontos[i]);
+        }
+
+        timer->endTime(3); // Adaptação das curvas process 0 e n
+
+#if USE_PRINT_COMENTS
+        cout << "adaptando os patches" << endl;
+#endif //#if USE_PRINT_COMENTS
+
+        timer->initTime(4); // Geração da malha process 0 e n
+
+        // 4.4. Adapta as patches
+        for (unsigned int i = 0; i < geo->getNumDePatches(); ++i) {
+            CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
+
+            SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio(p, timer, this->passo);
+
+#if USE_PRINT_COMENTS
+            cout << "submalha tem " << sub->getNumDeElementos() << " elementos" << endl;
+#endif //#if USE_PRINT_COMENTS
+
+            sub->setPatch(p);
+
+            // escreveElementos ( this->passo, sub, i );
+
+            malha->insereSubMalha(sub);
+        }
+
+#if USE_PRINT_COMENTS
+        cout << "atualizando os patches" << endl;
+#endif //#if USE_PRINT_COMENTS
+
+        // 4.5. Atualiza os patches
+        for (unsigned int i = 0; i < geo->getNumDePatches(); ++i) {
+            geo->getPatch(i)->setMalha(malha->getSubMalha(i));
+        }
+
+        timer->endTime(4); // Geração da malha process 0 e n
+
+        timer->initTime(8); // Overhead process 0 e n
+
+        // 4.6. Insere a malha gerada no modelo ( que guarda todas as malhas geradas )
+        modelo.insereMalha(malha);
+
+        // 4.7. Escreve um artigo "neutral file" da malha gerada
+        // escreveMalha(malha, passo);
+        salvaMalha(malha, passo);
+
+        timer->endTime(8); // Overhead process 0 e n
+
+#if USE_PRINT_COMENTS
+        cout << "calculando o erro" << endl;
+#endif //#if USE_PRINT_COMENTS
+
+        timer->initTime(7); // Calculo do erro process 0 e n
+
+        // 4.4. Calcula o erro global para a malha
+        //       double erro_temp = this->erroGlobal(malha);
+        //        if (this->erro < erro_temp) {
+        //            timer->endTime(7); // Calculo do erro
+        //            break;
+        //        }
+
+        this->erro = this->erroGlobal(malha);
+        salvaErroMalha(malha, passo);
+        this->erroPasso.push_back(this->erro);
+
+        timer->endTime(7); // Calculo do erro process 0 e n
+
+#if USE_PRINT_RESULTS
+        cout << "*************** ERRO " << this->passo << " rank " << RANK_MPI << " = " << this->erro << endl;
+#endif //#if USE_PRINT_RESULTS
+
+        // break;
+    }
+
+    timer->endTime(10);             // Full
+    timer->writeTimeFile(RANK_MPI); // escreve o arquivo com resumo de tempo para o process 0 e n
+
+    // 4.8. Escreve o(s) arquivo(s) com suas respectivas malhas em cada passo
+    if (WRITE_MESH == std::string("true")) {
+        for (MeshVector::iterator it = saveMesh.begin(); it != saveMesh.end(); it++) {
+            escreveMalha((*it).second, (*it).first, this->erroPasso, RANK_MPI);
+            // escreveErroMalha((*it).second, (*it).first, RANK_MPI);
+        }
+
+        // 4.9. Escreve o(s) arquivo(s) com suas respectivos erros entre Ga e Gd da malhas em cada passo
+        //        for (MeshVector::iterator it = saveMesh.begin(); it != saveMesh.end(); it++) {
+        //            escreveErroMalha((*it).second, (*it).first, RANK_MPI);
+        //        }
+    }
+}
+
+void GeradorAdaptativoPorCurvatura::generatorMeshInitial()
+{
+    for (unsigned int i = 0; i < this->geo->getNumDePatches(); ++i) {
+        this->patch = static_cast<CoonsPatch*>(geo->getPatch(i));
+        SubMalha* sub = this->malhaInicial(static_cast<CoonsPatch*>(patch));
+        this->malha->insereSubMalha(sub);
+    }
+}
+
+void GeradorAdaptativoPorCurvatura::adapterCurves()
+{
+}
+
+void GeradorAdaptativoPorCurvatura::adapterPatches()
+{
+}
+#endif //USE_MPI
+

@@ -33,7 +33,7 @@ double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
 
 #if USE_MPI
 int RANK_MPI, SIZE_MPI;
-#endif //#if USE_OPENMPI
+#endif //#if USE_MPI
 
 std::string nameModel;
 std::string entrada;
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
         delete ms;
 
     } else if (argv[1] == std::string("par")) {
-#if USE_OPENMPI
+#if USE_MPI
         timer->SetTypeRun("par");
         Method_Parallel* mp = new Method_Parallel();
         if (mp->execute(argc, argv, timer) == 0) {
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
             finish = 1;
         }
         delete mp;
-#endif //#if USE_OPENMPI
+#endif //#if USE_MPI
     } else {
         cout << "erro na passagem de parametro argv[1]!" << endl;
     }

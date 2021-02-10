@@ -108,7 +108,7 @@ std::list<BezierPatch*>::iterator Method_Parallel::getIteratorListPatches(int nu
 
 int Method_Parallel::execute(int argc, char* argv[], Timer *timer)
 {
-#if USE_OPENMPI
+#if USE_MPI
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &SIZE_MPI);
     MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
@@ -352,19 +352,19 @@ int Method_Parallel::execute(int argc, char* argv[], Timer *timer)
 
     }
 
-    delete BezierPatch::B;
-    delete HermitePatch::H;
+    //delete BezierPatch::B;
+    //delete HermitePatch::H;
     delete timer;
 
     return MPI_Finalize();
 #else
     return 0;
-#endif //#if USE_OPENMPI
+#endif //#if USE_MPI
 }
 
 std::list<BezierPatch*> Method_Parallel::orderPatchesDistribProcess(std::list<BezierPatch*> listPatches)
 {
-#if USE_OPENMPI
+#if USE_MPI
     std::vector<std::pair<double, int> > vectorEstimativeProcessPair;
     std::list<BezierPatch*> listPatchesOrder;
 
@@ -406,7 +406,7 @@ std::list<BezierPatch*> Method_Parallel::orderPatchesDistribProcess(std::list<Be
     }
 #else
     return listPatches;
-#endif //#if USE_OPENMPI
+#endif //#if USE_MPI
 }
 
 Method_Parallel::~Method_Parallel()

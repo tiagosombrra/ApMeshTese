@@ -3,9 +3,9 @@
 
 #include "../Data/Definitions.h"
 #include "../Estimate/ChargeEstimateProcess.h"
-#if USE_OPENMPI
-#include "mpi.h"
-#endif //#if USE_OPENMPI
+//#if USE_MPI
+//#include "mpi.h"
+//#endif //#if USE_MPI
 #include "../Data/Modelo.h"
 #include "../Data/Mesh/Malha.h"
 #include "../Timer/Timer.h"

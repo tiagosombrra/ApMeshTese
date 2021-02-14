@@ -101,9 +101,11 @@ HEADERS += \
     ../apMesh/Headers/Parallel/TMCommunicator.h \
     ../apMesh/Headers/Parallel/ThreadManager.h \
     ../apMesh/Headers/Parallel/Transferable.h \
-    ../apMesh/Headers/Timer/Timer.h
+    ../apMesh/Headers/Timer/Timer.h \
+    ../apMesh/Headers/Timer/TimerParallel.h
 
 SOURCES += \
+    ../apMesh/Headers/Timer/TimerParallel.cpp \
     ../apMesh/Sources/Data/Definitions.cpp \
     ../apMesh/Sources/Parallel/Communicator.cpp \
     ../apMesh/Sources/Parallel/MPICommunicator.cpp \

@@ -41,7 +41,7 @@ std::string WRITE_MESH;
 int main(int argc, char **argv)
 {
     // Criação e inicialização do contador de tempo com todos os valores 0(zero)
-    Timer* timer = new Timer();
+    Timer* timer = new Timer( );
 
     // contador do tempo para carregar a malha na memória
     timer->initTime(0); // inicialização

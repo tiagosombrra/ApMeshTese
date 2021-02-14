@@ -697,6 +697,12 @@ typedef Matrix<double, 4, 1> Matrix4x1;
 typedef Matrix<double, 1, 4> Matrix1x4;
 typedef Matrix<double, 1, 1> Matrix1x1;
 
+typedef tuple<int, int, int, double> TimeParallelInit;
+typedef tuple<int, int, int, double> TimeParallelEnd;
+typedef tuple<int, int, int, double> TimeParallel;
+
+
+
 namespace Par2DJMesh
 {
 namespace Basics

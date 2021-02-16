@@ -124,6 +124,8 @@ public :
 
     HermitePatch ( HermitePatch * );
 
+    HermitePatch ();
+
     ~HermitePatch ( );
 };
 #endif

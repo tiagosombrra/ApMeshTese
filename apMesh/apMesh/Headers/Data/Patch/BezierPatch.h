@@ -141,7 +141,34 @@ public :
 
     BezierPatch ();
 
-
     ~BezierPatch ( );
+
+    //gets and sets para estimativa de carga
+    double getArea() const;
+    void setArea(double value);
+
+    double getKaMedio() const;
+    void setKaMedio(double value);
+
+    double getSegmentMedio() const;
+    void setSegmentMedio(double value);
+    double getAreaTriangle() const;
+    void setAreaTriangle(double value);
+    double getNumberTriangle() const;
+    void setNumberTriangle(double value);
+    int getIdProcess() const;
+    void setIdProcess(int value);
+    int getId_bezierPatch() const;
+    void setId_bezierPatch(int value);
+
+    //variaveis para estimativa de carga
+   double area;
+   double kaMedio;
+   double segmentMedio;
+   double areaTriangle;
+   double NumberTriangle;
+   int idProcess;
+   int id_bezierPatch;
+
 };
 #endif

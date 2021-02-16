@@ -166,7 +166,7 @@ list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaBySuperficieOmp(Curva*c, Perform
 
         // 1.2.2. Calcule o ponto médio do segmento
         C_seg = ((CurvaParametrica*)( c ))->pontoMedio (*(*atual),*(*proxi));
-        C_seg.id = idManager->next(0);
+        //C_seg.id = idManager->next(0);
 
         //Teste para curvatura com a curva
         //t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );

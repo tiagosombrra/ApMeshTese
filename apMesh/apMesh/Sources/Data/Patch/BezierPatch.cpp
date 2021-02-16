@@ -855,3 +855,72 @@ BezierPatch::~BezierPatch (  )
     delete &V;
     delete &U;
 }
+
+double BezierPatch::getNumberTriangle() const
+{
+    return NumberTriangle;
+}
+
+void BezierPatch::setNumberTriangle(double value)
+{
+    NumberTriangle = value;
+}
+double BezierPatch::getAreaTriangle() const
+{
+    return areaTriangle;
+}
+
+void BezierPatch::setAreaTriangle(double value)
+{
+    areaTriangle = value;
+}
+
+double BezierPatch::getSegmentMedio() const
+{
+    return segmentMedio;
+}
+
+void BezierPatch::setSegmentMedio(double value)
+{
+    segmentMedio = value;
+}
+
+double BezierPatch::getKaMedio() const
+{
+    return kaMedio;
+}
+
+void BezierPatch::setKaMedio(double value)
+{
+    kaMedio = value;
+}
+
+double BezierPatch::getArea() const
+{
+    return area;
+}
+
+void BezierPatch::setArea(double value)
+{
+    area = value;
+}
+
+int BezierPatch::getIdProcess() const
+{
+    return idProcess;
+}
+
+void BezierPatch::setIdProcess(int value)
+{
+    idProcess = value;
+}
+
+int BezierPatch::getId_bezierPatch() const
+{
+    return id_bezierPatch;
+}
+
+void BezierPatch::setId_bezierPatch(int value)
+{
+    id_bezierPatch = value;
+}

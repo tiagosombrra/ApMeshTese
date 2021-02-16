@@ -11,6 +11,9 @@
 #include "../Headers/IO/ReaderPatches.h"
 #include "../Headers/Timer/Timer.h"
 
+double TRIANGLE_MEDIO = 0.0;
+double TOLERANCIA_ESTIMATIVE = 1.0;
+
 double DELTA = 0.0001;
 double TOLERANCIA = 0.0001;
 double TOLERANCIA_CURVATURA = 0.001;

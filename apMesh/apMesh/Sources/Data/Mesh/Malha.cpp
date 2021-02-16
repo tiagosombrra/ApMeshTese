@@ -16,6 +16,15 @@ void Malha::insereSubMalha (SubMalha* sub, Data::Int pos)
     this->subMalhas[pos] = sub;
 }
 
+void Malha::insereSubMalha ( SubMalha* sub )
+{
+    this->subMalhas.push_back ( sub );
+}
+
+void Malha::removeSubMalha()
+{
+    this->subMalhas.pop_back();
+}
 
 unsigned int Malha::getNumDeSubMalhas (  ) const
 {

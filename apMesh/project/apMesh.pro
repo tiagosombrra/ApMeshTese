@@ -83,12 +83,15 @@ HEADERS += \
     ../apMesh/Headers/Data/Vertex.h \
     ../apMesh/Headers/Data/Vertice.h \
     ../apMesh/Headers/Data/Vetor.h \
+    ../apMesh/Headers/Estimate/ChargeEstimateProcess.h \
     ../apMesh/Headers/Generator/Gerador.h \
     ../apMesh/Headers/Generator/GeradorAdaptativo.h \
     ../apMesh/Headers/Generator/GeradorAdaptativoPorCurvatura.h \
     ../apMesh/Headers/IO/Arquivo.h \
     ../apMesh/Headers/IO/Modelos3d.h \
+    ../apMesh/Headers/IO/PatchBezierReader.h \
     ../apMesh/Headers/IO/ReaderPatches.h \ \
+    ../apMesh/Headers/IO/WriteOBJFIle.h \
     ../apMesh/Headers/Parallel/Communicator.h \
     ../apMesh/Headers/Parallel/Definitions.h \
     ../apMesh/Headers/Parallel/MPICommunicator.h \
@@ -105,8 +108,10 @@ HEADERS += \
     ../apMesh/Headers/Timer/TimerParallel.h
 
 SOURCES += \
-    ../apMesh/Headers/Timer/TimerParallel.cpp \
     ../apMesh/Sources/Data/Definitions.cpp \
+    ../apMesh/Sources/Estimate/ChargeEstimateProcess.cpp \
+    ../apMesh/Sources/IO/PatchBezierReader.cpp \
+    ../apMesh/Sources/IO/WriteOBJFile.cpp \
     ../apMesh/Sources/Parallel/Communicator.cpp \
     ../apMesh/Sources/Parallel/MPICommunicator.cpp \
     ../apMesh/Sources/Parallel/MPIMessage.cpp \
@@ -162,4 +167,5 @@ SOURCES += \
     ../apMesh/Sources/Parallel/ThreadManager.cpp \
     ../apMesh/Sources/Parallel/Transferable.cpp \
     ../apMesh/Sources/Timer/Timer.cpp \
+    ../apMesh/Sources/Timer/TimerParallel.cpp \
     ../apMesh/Sources/main.cpp \

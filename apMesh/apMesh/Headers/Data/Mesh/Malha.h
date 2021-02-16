@@ -24,6 +24,9 @@ class Malha
 
 public :
     void insereSubMalha (SubMalha* sub , Data::Int pos);
+    void insereSubMalha ( SubMalha* sub );
+    void removeSubMalha();
+
     unsigned int getNumDeSubMalhas (  ) const;
     SubMalha* getSubMalha ( const unsigned int i ); // retorna a i-ésima submalha
     void resizeSubmalha(Data::Int pos);

@@ -12,6 +12,11 @@ This source code is under GNU General Public License v3 */
 
 #include "../../Headers/Generator/GeradorAdaptativoPorCurvatura.h"
 
+GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura()
+{
+
+}
+
 #if USE_OPENMP
 SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Performer::IdManager *idManager)
 {
@@ -335,7 +340,9 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 #endif //#if USE_PRINT_COMENT
     }
 }
+
 #else
+
 GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , Timer *timer, int idrange)
 {
     this->comm = new Parallel::TMCommunicator(false);

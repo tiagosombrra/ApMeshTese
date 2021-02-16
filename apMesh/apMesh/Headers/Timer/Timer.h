@@ -30,7 +30,7 @@ class Timer
 
 public:
 
-    Timer(int sizeRank = 1, int sizeThread = 1, int sizeType = 11);
+    Timer();
     bool openFile(string);
     void writeTimeFile(int process=-1);
     void closeFile();

@@ -1,6 +1,6 @@
 #include "../../Headers/Timer/Timer.h"
 
-Timer::Timer(int sizeRank, int sizeThread, int sizeType)
+Timer::Timer()
 {
     for (int i = 0; i < 11; i++) {
         this->timeStepsInit[i] = 0;

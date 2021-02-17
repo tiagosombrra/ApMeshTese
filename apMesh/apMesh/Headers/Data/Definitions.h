@@ -20,7 +20,7 @@
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP TRUE
+#define USE_OPENMP FALSE
 #endif //#ifndef USE_OPENMP
 
 #ifndef USE_PRINT_RESULT
@@ -696,12 +696,6 @@ typedef Matrix<double, 4, 4> Matrix4x4;
 typedef Matrix<double, 4, 1> Matrix4x1;
 typedef Matrix<double, 1, 4> Matrix1x4;
 typedef Matrix<double, 1, 1> Matrix1x1;
-
-typedef tuple<int, int, int, double> TimeParallelInit;
-typedef tuple<int, int, int, double> TimeParallelEnd;
-typedef tuple<int, int, int, double> TimeParallel;
-
-
 
 namespace Par2DJMesh
 {

@@ -22,7 +22,7 @@ public:
 
     ReaderPatches();
 
-    std::list<BezierPatch *> loaderBezierPatchFile();
+    std::list<BezierPatch *> loaderBezierPatchFile(string fileName);
     Ponto getPointVectorControlPoints(std::vector<Ponto> , unsigned long );
 
 };

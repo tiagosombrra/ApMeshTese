@@ -19,12 +19,12 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* 
     std::list<BezierPatch*> listBezierPtOrder;
 
     PatchBezierReader* pt = new PatchBezierReader();
-    timer->endTime(10); //Full
+    timer->endTimerParallel(0, 0, 10); //Full
     cout<<"INIT >> LOADBPFILE"<< endl;
     listBezierPt = pt->loaderBPFile();
     cout<<"END >> LOADBPFILE"<< endl;
-    timer->initTime(10); //Full
-    timer->initTime(8); // Over
+    timer->initTimerParallel(0, 0, 10); //Full
+    timer->initTimerParallel(0, 0, 8); // Over
 
     delete pt;
 
@@ -57,8 +57,8 @@ double kamMaior = 0;
 
 double elementos= 0;
 
-timer->endTime(8); // Over
-timer->initTime(1); // Estimativa de carga process 0
+timer->endTimerParallel(0, 0, 8); // Over
+timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
 
      cout<<"INIT >> ESTIMATIVE"<< endl;
 
@@ -860,7 +860,11 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch, int g
 bool ChargeEstimateProcess::calculateErroEstimative(Malha* malha, int grau)
 {
     GeradorAdaptativoPorCurvatura* ger = new GeradorAdaptativoPorCurvatura();
+#if USE_OPENMP
     double erro = ger->erroGlobalOmp(malha);
+#else
+    double erro = ger->erroGlobal(malha);
+#endif
     // delete ger;
 
     // cout << "erro: " << erro << " tolerancia: " << TOLERANCIA_ESTIMATIVE << endl;

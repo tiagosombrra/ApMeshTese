@@ -1,12 +1,7 @@
-QT -= gui
-
 CONFIG += c++11 console
 CONFIG -= app_bundle
-#LIBS += -fopenmp
 QMAKE_CXXFLAGS += -O3 -fopenmp  #-g  -pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
 QMAKE_LFLAGS += -O3 -fopenmp  #-g  -pg   -std=gnu++0x#-march=native #-m64 #-mavx
-#QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
-
 ## MPI Settings
 #QMAKE_CXX = mpicxx
 #QMAKE_CXX_RELEASE = $$QMAKE_CXX
@@ -19,19 +14,7 @@ QMAKE_LFLAGS += -O3 -fopenmp  #-g  -pg   -std=gnu++0x#-march=native #-m64 #-mavx
 #QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
 #QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
 
-#INCLUDEPATH += ../apMesh/Libs/Eigen ../apMesh/Headers/Adapter ../apMesh/Headers/Basic/ ../apMesh/Headers/Crabmesh/Aft/  ../apMesh/Headers/Crabmesh/Numerical/ ../apMesh/Headers/Curvature/ ../apMesh/Headers/Data/Curve/ ../apMesh/Headers/Data/Matrix/ ../apMesh/Headers/Data/Mesh/  ../apMesh/Headers/Data/Patch/  ../apMesh/Headers/Data/Tree/ ../apMesh/Headers/Data/ ../apMesh/Headers/Estimate/  ../apMesh/Headers/Generator/ ../apMesh/Headers/IO/ ../apMesh/Headers/TypeMethod/  ../apMesh/Headers/Timer/
-
-# The following define makes your compiler emit warnings if you use
-# any Qt feature that has been marked deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
-
-# You can also make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
 TRANSLATIONS += \
     amesh_pt_BR.ts
 
@@ -84,6 +67,8 @@ HEADERS += \
     ../apMesh/Headers/Data/Vertice.h \
     ../apMesh/Headers/Data/Vetor.h \
     ../apMesh/Headers/Estimate/ChargeEstimateProcess.h \
+    ../apMesh/Headers/Execution/ParallelRun.h \
+    ../apMesh/Headers/Execution/SequentialRun.h \
     ../apMesh/Headers/Generator/Gerador.h \
     ../apMesh/Headers/Generator/GeradorAdaptativo.h \
     ../apMesh/Headers/Generator/GeradorAdaptativoPorCurvatura.h \
@@ -104,12 +89,13 @@ HEADERS += \
     ../apMesh/Headers/Parallel/TMCommunicator.h \
     ../apMesh/Headers/Parallel/ThreadManager.h \
     ../apMesh/Headers/Parallel/Transferable.h \
-    ../apMesh/Headers/Timer/Timer.h \
-    ../apMesh/Headers/Timer/TimerParallel.h
+    ../apMesh/Headers/Timer/Timer.h
 
 SOURCES += \
     ../apMesh/Sources/Data/Definitions.cpp \
     ../apMesh/Sources/Estimate/ChargeEstimateProcess.cpp \
+    ../apMesh/Sources/Execution/Parallel.cpp \
+    ../apMesh/Sources/Execution/Sequential.cpp \
     ../apMesh/Sources/IO/PatchBezierReader.cpp \
     ../apMesh/Sources/IO/WriteOBJFile.cpp \
     ../apMesh/Sources/Parallel/Communicator.cpp \
@@ -167,5 +153,4 @@ SOURCES += \
     ../apMesh/Sources/Parallel/ThreadManager.cpp \
     ../apMesh/Sources/Parallel/Transferable.cpp \
     ../apMesh/Sources/Timer/Timer.cpp \
-    ../apMesh/Sources/Timer/TimerParallel.cpp \
     ../apMesh/Sources/main.cpp \

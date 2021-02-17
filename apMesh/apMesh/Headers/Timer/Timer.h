@@ -18,8 +18,8 @@ extern std::string numberProcess;
 //[2]= Geração da Malha Inicial
 //[3]= Adaptação das curvas
 //[4]= Adaptação do domínio
-//[5]= Quadtree
-//[6]= Avanço de front.
+//[5]= ...
+//[6]= ...
 //[7]= Calculo do erro
 //[8]= Overhead
 //[9]= Timer send and recv process
@@ -31,21 +31,33 @@ class Timer
 public:
 
     Timer();
+    Timer(int sizeRank, int sizeThread, int sizeType);
     bool openFile(string);
-    void writeTimeFile(int process=-1);
     void closeFile();
     bool deleteFile(string);
 
-    void initTime(int type);
-    void endTime(int type);
-    void calculateTime(int type);
+    void initTimerParallel(int _rank, int _thread, int _type);
+    void endTimerParallel(int _rank, int _thread, int _type);
+    void calculateTime(int _rank, int _thread, int _type);
+    void printTime(int _rank, int _thread);
 
+    double getRankThreadTime(int _rank, int _thread, int _type);
+
+
+    vector<vector<vector<double> > > getTimerParallelInit() const;
+    void setTimerParallelInit(const vector<vector<vector<double> > > &value);
+
+    vector<vector<vector<double> > > getTimerParallelEnd() const;
+    void setTimerParallelEnd(const vector<vector<vector<double> > > &value);
+
+    vector<vector<vector<double> > > getTimerParallel() const;
+    void setTimerParallel(const vector<vector<vector<double> > > &value);
 
 private:
 
-    double timeStepsInit[11];
-    double timeStepsEnd[11];
-    double timeSteps[11];
+    vector<vector<vector<double>>> timerParallelInit;
+    vector<vector<vector<double>>> timerParallelEnd;
+    vector<vector<vector<double>>> timerParallel;
 
     string locationName;
     fstream file;

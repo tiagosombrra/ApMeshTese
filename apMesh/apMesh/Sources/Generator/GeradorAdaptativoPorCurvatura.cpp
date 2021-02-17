@@ -68,7 +68,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e1)->p1 = make_tuple ( 0, 0 );
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
-    e1->setId (/*ide++*/ idManager->next(1));
+    e1->setId (/*idManager->next(1)
+*/ idManager->next(1));
     sub->insereElemento ( e1);
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
@@ -77,7 +78,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e2)->p1 = make_tuple ( 1, 0 );
     ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
     ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
-    e2->setId ( /*ide++*/ idManager->next(1));
+    e2->setId ( /*idManager->next(1)
+*/ idManager->next(1));
     sub->insereElemento ( e2);
 
     Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
@@ -86,7 +88,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e3)->p1 = make_tuple ( 1, 1 );
     ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
     ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
-    e3->setId ( /*ide++*/ idManager->next(1));
+    e3->setId ( /*idManager->next(1)
+*/ idManager->next(1));
     sub->insereElemento ( e3);
 
     Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
@@ -95,7 +98,8 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e4)->p1 = make_tuple ( 0, 1 );
     ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
     ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
-    e4->setId ( /*ide++*/ idManager->next(1));
+    e4->setId ( /*idManager->next(1)
+*/ idManager->next(1));
     sub->insereElemento ( e4);
     //==============================================================================*/
 
@@ -346,9 +350,10 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
 GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , Timer *timer, int idrange)
 {
     this->comm = new Parallel::TMCommunicator(false);
-    this->idManager = this->makeIdManager(comm, 0);
     this->idoffset = 0;
     this->idrange = idrange;
+    this->idManager = this->makeIdManager(comm, 0);
+
 
     CoonsPatch* patch = NULL;
     Geometria* geo = modelo.getGeometria ( );
@@ -358,6 +363,8 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
 
     this->passo = 0;
 
+    timer->initTimerParallel(0,0, 2); //malha inicial
+
     // 1. Gera a malha inicial
     for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
     {
@@ -366,14 +373,18 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
         malha->insereSubMalha ( sub, i);
     }
 
+    timer->endTimerParallel(0,0, 2); //malha inicial
 
     // 2. Insere a malha inicial no modelo ( que guarda todas as malhas geradas )
     modelo.insereMalha ( malha );
 
-    // 3. Calcula o erro global para a malha inicial
-    timer->initTime(7); // Calculo do erro
+    timer->endTimerParallel(0, 0, 8); //Overhead
+    timer->initTimerParallel(0, 0, 7); // Calculo do erro
+
+    // 3. Calcula o erro global para a malha inicial    
     this->erro = this->erroGlobal ( malha );
-    timer->endTime(7); // Calculo do erro
+
+    timer->endTimerParallel(0, 0, 7); // Calculo do erro
 
 
 #if USE_PRINT_ERRO
@@ -406,6 +417,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
 
         this->idManager = this->makeIdManager(comm, 0);
 
+        timer->initTimerParallel(0, 0, 3); // adaptação das curvas
         //4.2. Adapta as curvas pela curvatura da curva / 4.3. Atualiza a discretização das curvas
         for ( unsigned int i = 0; i < sizeCurvas; ++i )
         {
@@ -417,14 +429,22 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
 
         ((Performer::RangedIdManager *)this->idManager)->setMin(1,0);
 
+
+        timer->endTimerParallel(0, 0, 3); // adaptação das curvas
+
+        //((Performer::RangedIdManager *)this->idManager)->setMin(1,0);
+
+        timer->initTimerParallel(0, 0, 4); // adaptação do domínio
         // 4.4. Adapta as patches
         for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
         {
             CoonsPatch *p = static_cast < CoonsPatch* > ( geo->getPatch( i ) );
-            SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio ( p, this->idManager, 1 );
+            SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio ( p, this->idManager, 1);
             sub->setPatch(p);
             malha->insereSubMalha(sub, i);
         }
+        timer->endTimerParallel(0, 0, 4); // adaptação do domínio
+
 
 #if USE_PRINT_COMENT
         cout << "atualizando os patches" << endl;
@@ -446,9 +466,9 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
 #endif //#USE_SAVE_MESH
 
         // 4.7. Calcula o erro global para a malha
-        timer->initTime(7); // Calculo do erro
+        timer->initTimerParallel(0, 0, 7); // Calculo do erro
         this->erro = this->erroGlobal ( malha );
-        timer->endTime(7); // Calculo do erro
+        timer->endTimerParallel(0, 0, 7); // Calculo do erro
 
 #if USE_PRINT_ERRO
         cout << "ERRO  " << this->passo << " = " << this->erro << endl;
@@ -472,156 +492,6 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch, Perfor
     if ( c4->getNumDePontos ( ) ) c4 = NULL; // c4 já foi trabalhada no patch vizinho
 
     SubMalha* sub = new SubMalha;
-
-    //============== Define um grid regular no espaço paramétrico =================
-
-    //    short div = 2;
-    //    short div = 4;
-    //    short div = 8;
-    //    short div = 16;
-    //    short div = 32;
-    /*float inc = (float) 1.0 / div;
-
-    cout << "insere os pontos nas curvas e na submalha" << endl;
-    // Insere os pontos nas curvas e na submalha
-    for (double v = 0.0; v <= 1.0; v += inc)
-    {
-        for (double u = 0.0; u <= 1.0; u += inc)
-        {
-            Ponto *p = new Noh(patch->parametrizar(u,v));
-            p->id = idv++;
-
-            if ( v == 0 and c1 ) // p está na curva 1
-                              c1-> inserePonto ( p );
-            else if ( v == 1 and c3 ) // p está na curva 3
-                              c3-> inserePonto ( p );
-
-            if ( u == 0 and c4 ) // p está na curva 4
-                              c4-> inserePonto ( p );
-            else if ( u == 1 and c2 ) // p está na curva 2
-                              c2-> inserePonto ( p );
-
-            sub->insereNoh ( static_cast < Noh* > ( p ) );
-        }
-    }
-
-    cout << "Insere os elementos na submalha" << endl;
-
-    // Insere os elementos na submalha
-   short j = 1;
-   int k = sub->getNumDeNos() - (div + 1);
-   for ( short i = 0; i < k; ++i)
-   {
-       if ( i + 1 == j*(div + 1) )
-       {
-           ++j;
-           continue;
-       }
-
-       Elemento* e1 = new Triangulo (  sub->getNoh ( i ),
-                                       sub->getNoh ( i + 1  ),
-                                       sub->getNoh ( i + div + 2 ) );
-       ((Triangulo*)e1)->p1 = patch->encontrar_u_v ( *( sub->getNoh ( i ) ) );
-       ((Triangulo*)e1)->p2 = patch->encontrar_u_v ( *( sub->getNoh ( i + 1 ) ) );
-       ((Triangulo*)e1)->p3 = patch->encontrar_u_v ( *( sub->getNoh ( i + div + 2 ) ) );
-       e1->setId ( ide++ );
-       sub->insereElemento ( e1 );
-
-       Elemento* e2 = new Triangulo (  sub->getNoh ( i ),
-                                       sub->getNoh ( i + div + 2 ),
-                                       sub->getNoh ( i + div + 1 ) );
-       ((Triangulo*)e2)->p1 = patch->encontrar_u_v ( *( sub->getNoh ( i ) ) );
-       ((Triangulo*)e2)->p2 = patch->encontrar_u_v ( *( sub->getNoh ( i + div + 2 ) ) );
-       ((Triangulo*)e2)->p3 = patch->encontrar_u_v ( *( sub->getNoh ( i + div + 1 ) ) );
-       e2->setId ( ide++ );
-       sub->insereElemento ( e2 );
-   }
-//==============================================================================*/
-
-
-    //=========================== Malha Mais Refinada ==============================
-
-    /*   for ( double v = 0.0; v <= 1.0; v += 0.25 )
-        {
-                for ( double u = 0.0; u <= 1.0; u += 0.25 )
-                {
-                        //cout << "u = " << u << " v = " << v << endl;
-                        Ponto* p = new Noh ( patch->parametrizar ( u, v ) );
-                        p->id = idv++;
-
-                        if ( v == 0 and c1 ) // p está na curva 1
-                                          c1-> inserePonto ( p );
-                        else if ( v == 1 and c3 ) // p está na curva 3
-                                          c3-> inserePonto ( p );
-
-                        if ( u == 0 and c4 ) // p está na curva 4
-                                          c4-> inserePonto ( p );
-                        else if ( u == 1 and c2 ) // p está na curva 2
-                                          c2-> inserePonto ( p );
-
-                        sub->insereNoh ( static_cast < Noh* > ( p ) );
-                }
-        }
-
-
-        for ( double v = 1.0/8.0; v <= 7.0/8.0; v += 1.0/4.0 )
-   {
-                for ( double u = 1.0/8.0; u <= 7.0/8.0; u += 1.0/4.0 )
-                {
-                                //cout << "u = " << u << " v = " << v << endl;
-                        Ponto* p = new Noh ( patch->parametrizar ( u, v ) );
-                        sub->insereNoh ( static_cast < Noh* > ( p ) );
-                        p->id = idv++;
-                }
-   }
-
-        short j = 0;
-
-        for ( short i = 0; i < 19 ; ++i )
-        {
-                if ( i == 4 or i == 9 or i == 14 )
-                {
-                        ++j;
-                        ++i;
-                }
-
-                Elemento* e1 = new Triangulo (  sub->getNoh ( i ),
-                                                sub->getNoh ( i + 1  ),
-                                                sub->getNoh ( i + 25 - j ) );
-                ((Triangulo*)e1)->p1 = patch->encontrar_u_v ( *( sub->getNoh ( i ) ) );
-                ((Triangulo*)e1)->p2 = patch->encontrar_u_v ( *( sub->getNoh ( i + 1 ) ) );
-                ((Triangulo*)e1)->p3 = patch->encontrar_u_v ( *( sub->getNoh ( i + 16 - j ) ) );
-                e1->setId ( ide++ );
-                sub->insereElemento ( e1 );
-
-                Elemento* e2 = new Triangulo (  sub->getNoh ( i + 1 ),
-                                                sub->getNoh ( i + 6 ),
-                                                sub->getNoh ( i + 25 - j ) );
-                ((Triangulo*)e2)->p1 = patch->encontrar_u_v ( *( sub->getNoh ( i + 1 ) ) );
-                ((Triangulo*)e2)->p2 = patch->encontrar_u_v ( *( sub->getNoh ( i + 6 ) ) );
-                ((Triangulo*)e2)->p3 = patch->encontrar_u_v ( *( sub->getNoh ( i + 25 - j ) ) );
-                e2->setId ( ide++ );
-                sub->insereElemento ( e2 );
-
-                Elemento* e3 = new Triangulo (  sub->getNoh ( i + 6 ),
-                                                sub->getNoh ( i + 5 ),
-                                                sub->getNoh ( i + 25 - j ) );
-                ((Triangulo*)e3)->p1 = patch->encontrar_u_v ( *( sub->getNoh ( i + 6 ) ) );
-                ((Triangulo*)e3)->p2 = patch->encontrar_u_v ( *( sub->getNoh ( i + 5 ) ) );
-                ((Triangulo*)e3)->p3 = patch->encontrar_u_v ( *( sub->getNoh ( i + 25 - j ) ) );
-                e3->setId ( ide++ );
-                sub->insereElemento ( e3 );
-
-                Elemento* e4 = new Triangulo (  sub->getNoh ( i + 5 ),
-                                                sub->getNoh ( i ),
-                                                sub->getNoh ( i + 25 - j ) );
-                ((Triangulo*)e4)->p1 = patch->encontrar_u_v ( *( sub->getNoh ( i + 5 ) ) );
-                ((Triangulo*)e4)->p2 = patch->encontrar_u_v ( *( sub->getNoh ( i ) ) );
-                ((Triangulo*)e4)->p3 = patch->encontrar_u_v ( *( sub->getNoh ( i + 25 - j ) ) );
-                e4->setId ( ide++ );
-                sub->insereElemento ( e4 );
-        }*/
-    //==============================================================================*/
 
     //========================= Malha Grosseira ====================================
     // 2. divide cada patch em 9 regiões e gera os nós dos extremos de cada região
@@ -651,44 +521,44 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch, Perfor
     }
 
     Ponto* p = new Noh ( patch->parametrizar ( 0.5, 0.5 ) );
-    p->id = idManager->next(0);
     sub->insereNoh ( static_cast < Noh* > ( p ) );
+    p->id = idManager->next(0);
 
-    Elemento* e1 = new Triangulo (	sub->getNoh ( 0 ),
-                                    sub->getNoh ( 1 ),
-                                    sub->getNoh ( 4 ) );
-    ((Triangulo*)e1)->p1 = make_tuple ( 0, 0 );
-    ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
-    ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
-    e1->setId ( idManager->next(1));
-    sub->insereElemento ( e1);
+        Elemento* e1 = new Triangulo (	sub->getNoh ( 0 ),
+                                            sub->getNoh ( 1 ),
+                                            sub->getNoh ( 4 ) );
+        ((Triangulo*)e1)->p1 = make_tuple ( 0, 0 );
+        ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
+        ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
+        e1->setId ( idManager->next(1));
+        sub->insereElemento ( e1 );
 
-    Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
-                                    sub->getNoh ( 3 ),
-                                    sub->getNoh ( 4 ) );
-    ((Triangulo*)e2)->p1 = make_tuple ( 1, 0 );
-    ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
-    ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
-    e2->setId ( idManager->next(1) );
-    sub->insereElemento ( e2 );
+        Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
+                                            sub->getNoh ( 3 ),
+                                            sub->getNoh ( 4 ) );
+        ((Triangulo*)e2)->p1 = make_tuple ( 1, 0 );
+        ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
+        ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
+        e2->setId ( idManager->next(1));
+        sub->insereElemento ( e2 );
 
-    Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
-                                    sub->getNoh ( 2 ),
-                                    sub->getNoh ( 4 ) );
-    ((Triangulo*)e3)->p1 = make_tuple ( 1, 1 );
-    ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
-    ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
-    e3->setId ( idManager->next(1) );
-    sub->insereElemento ( e3 );
+        Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
+                                            sub->getNoh ( 2 ),
+                                            sub->getNoh ( 4 ) );
+        ((Triangulo*)e3)->p1 = make_tuple ( 1, 1 );
+        ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
+        ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
+        e3->setId ( idManager->next(1));
+        sub->insereElemento ( e3 );
 
-    Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
-                                    sub->getNoh ( 0 ),
-                                    sub->getNoh ( 4 ) );
-    ((Triangulo*)e4)->p1 = make_tuple ( 0, 1 );
-    ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
-    ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
-    e4->setId ( idManager->next(1) );
-    sub->insereElemento ( e4 );
+        Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
+                                            sub->getNoh ( 0 ),
+                                            sub->getNoh ( 4 ) );
+        ((Triangulo*)e4)->p1 = make_tuple ( 0, 1 );
+        ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
+        ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
+        e4->setId ( idManager->next(1));
+            sub->insereElemento ( e4 );
     //==============================================================================*/
 
     // 5. define a submalha do patch

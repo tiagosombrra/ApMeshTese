@@ -5,19 +5,13 @@ ReaderPatches::ReaderPatches()
 
 }
 
-std::list<BezierPatch *> ReaderPatches::loaderBezierPatchFile()
+std::list<BezierPatch *> ReaderPatches::loaderBezierPatchFile(string fileName)
 
 {
-#ifdef __APPLE__
-    string filename = entrada;
-#else
-    string filename = entrada;//"../../entrada/mountain.bp"
-#endif //#ifdef __APPLE__
-
     patch = new BezierPatch();
 
-    if (!filename.empty()) {
-        std::ifstream fin(filename);
+    if (!fileName.empty()) {
+        std::ifstream fin(fileName);
 
         if (fin) {
             while (fin) {

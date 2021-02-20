@@ -15,8 +15,8 @@ Timer::Timer()
     this->timerParallel[0][0].resize(11);
 
     for (int i = 0; i < 11; ++i) {
-        this->timerParallelInit[0][0][i] = 0;
-        this->timerParallelEnd[0][0][i] = 0;
+       // this->timerParallelInit[0][0][i] = 0;
+       // this->timerParallelEnd[0][0][i] = 0;
         this->timerParallel[0][0][i] = 0;
     }
 }
@@ -44,8 +44,8 @@ Timer::Timer(int sizeRank, int sizeThread, int sizeType)
 
             for (int l = 0; l < sizeType; ++l) {
 
-                this->timerParallelInit[i][j][l] = 0;
-                this->timerParallelEnd[i][j][l] = 0;
+               // this->timerParallelInit[i][j][l] = 0;
+               // this->timerParallelEnd[i][j][l] = 0;
                 this->timerParallel[i][j][l] = 0;
             }
         }
@@ -82,21 +82,33 @@ bool Timer::deleteFile(string nameFile)
 
 void Timer::initTimerParallel(int _rank, int _thread, int _type)
 {
-    time_clock = clock();
-    this->timerParallelInit[_rank][_thread][_type] = (double)time_clock;
+
+    //time_clock = clock();
+    //this->timerParallelInit[_rank][_thread][_type] = (double)time_clock;
+    timeval begin;
+    gettimeofday(&begin, 0);
+    this->timerParallelInit[_rank][_thread][_type] = begin;
+
 }
 
 void Timer::endTimerParallel(int _rank, int _thread, int _type)
 {
-    time_clock = clock();
-    this->timerParallelEnd[_rank][_thread][_type] = (double)time_clock;
+//    time_clock = clock();
+//    this->timerParallelEnd[_rank][_thread][_type] = (double)time_clock;
+//    calculateTime(_rank, _thread, _type);
+    timeval end;
+    gettimeofday(&end, 0);
+    this->timerParallelEnd[_rank][_thread][_type] = end;
     calculateTime(_rank, _thread, _type);
 }
 
 void Timer::calculateTime(int _rank, int _thread, int _type)
 {
-    this->timerParallel[_rank][_thread][_type] += this->timerParallelEnd[_rank][_thread][_type]
-            / CLOCKS_PER_SEC - this->timerParallelInit[_rank][_thread][_type] / CLOCKS_PER_SEC;
+//    this->timerParallel[_rank][_thread][_type] += this->timerParallelEnd[_rank][_thread][_type]
+//            / CLOCKS_PER_SEC - this->timerParallelInit[_rank][_thread][_type] / CLOCKS_PER_SEC;
+    long seconds = (this->timerParallelEnd[_rank][_thread][_type]).tv_sec - (this->timerParallelInit[_rank][_thread][_type]).tv_sec;
+    long microseconds = (this->timerParallelEnd[_rank][_thread][_type]).tv_usec - (this->timerParallelInit[_rank][_thread][_type]).tv_usec;
+    this->timerParallel[_rank][_thread][_type] += seconds + microseconds*1e-6;
 
 }
 
@@ -122,22 +134,22 @@ double Timer::getRankThreadTime(int _rank, int _thread, int _type)
     return timerParallel[_rank][_thread][_type];
 }
 
-vector<vector<vector<double> > > Timer::getTimerParallelInit() const
+vector<vector<vector<timeval> > > Timer::getTimerParallelInit() const
 {
     return timerParallelInit;
 }
 
-void Timer::setTimerParallelInit(const vector<vector<vector<double> > > &value)
+void Timer::setTimerParallelInit(const vector<vector<vector<timeval> > > &value)
 {
     timerParallelInit = value;
 }
 
-vector<vector<vector<double> > > Timer::getTimerParallelEnd() const
+vector<vector<vector<timeval> > > Timer::getTimerParallelEnd() const
 {
     return timerParallelEnd;
 }
 
-void Timer::setTimerParallelEnd(const vector<vector<vector<double> > > &value)
+void Timer::setTimerParallelEnd(const vector<vector<vector<timeval> > > &value)
 {
     timerParallelEnd = value;
 }

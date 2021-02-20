@@ -29,10 +29,10 @@ public:
      double calculateKaMedioPatch(BezierPatch *patch, int points);
      double calculateAreaPatch(BezierPatch *patch, int pointesGauusLegandre);
      double calculateAreaTriangleMedioRad(BezierPatch *patch);
-     double calculateAreaTriangleMedio(BezierPatch *patch, int grau);
+     double calculateAreaTriangleMedio(BezierPatch *patch, Timer *timer, int grau);
      long int calculateNumbersTriangle(BezierPatch *patch, int grau);
      SubMalha* malhaInicialEstimativa(CoonsPatch* patch, int grau);
-     bool calculateErroEstimative(Malha *malha, int grau);
+     bool calculateErroEstimative(Malha *malha, Timer *timer, int grau);
      //double calculateAreaPatchSegmets(BezierPatch *patch, int segments);
      //double calculateSegmentMedio(BezierPatch *patch);
     ~ChargeEstimateProcess();

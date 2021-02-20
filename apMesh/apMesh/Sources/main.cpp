@@ -11,6 +11,8 @@
 #include "../Headers/IO/ReaderPatches.h"
 #include "../Headers/Timer/Timer.h"
 #include "../Headers/Execution/SequentialRun.h"
+#include "../Headers/Execution/OmpRun.h"
+#include "../Headers/Execution/MpiRun.h"
 #include "../Headers/Execution/ParallelRun.h"
 
 
@@ -19,8 +21,8 @@ double TOLERANCIA_ESTIMATIVE = 1.0;
 
 double DELTA = 0.0001;
 double TOLERANCIA = 0.0001;
-double TOLERANCIA_CURVATURA = 0.001;
-double TOLERANCIA_AFT = 0.01;
+double TOLERANCIA_CURVATURA = 0.0001;
+double TOLERANCIA_AFT = 0.0001;
 double PROPORCAO = 0.5; // proporção usada no avanço de fronteira
 double SUAVIZACAO = 7; // número de vezes que se dará a suavização laplaciana
 double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
@@ -41,7 +43,7 @@ std::string numberProcess;
 std::string WRITE_MESH;
 
 // argv[0] = "executavel: ./apmesh",
-// argv[1] = "seq ou par",
+// argv[1] = "seq ou omp ou mpi ou par",
 // argv[2] = "n° de process"
 // argv[3] = "n° threads",
 // argv[4] = "entrada",       OBS: Projects-> Comands line arguments -> ../../apMesh/Entrada/mountain_289_patches.bp
@@ -50,7 +52,6 @@ std::string WRITE_MESH;
 
 int main(int argc, char **argv)
 {
-
     //retorno do programa
     int finish = -1;
 
@@ -70,6 +71,26 @@ int main(int argc, char **argv)
             finish = 0;
         } else {
             cout << "Erro no Método Sequencial!" << endl;
+        }
+
+    } else if(argv[1] == string("omp")) {
+        //paralelo
+        OmpRun omp;
+        if (omp.execute(argc, argv, timer) == 0) {
+            cout << "Método Omp Finalizado com Sucesso!" << endl;
+            finish = 0;
+        } else {
+            cout << "Erro no Método Omp!" << endl;
+        }
+
+    } else if(argv[1] == string("mpi")) {
+        //paralelo
+        MpiRun mpi;
+        if (mpi.execute(argc, argv, timer) == 0) {
+            cout << "Método Mpi Finalizado com Sucesso!" << endl;
+            finish = 0;
+        } else {
+            cout << "Erro no Método Mpi!" << endl;
         }
 
     } else if(argv[1] == string("par")) {

@@ -8,6 +8,8 @@
 #include "../Data/Patch/BezierPatch.h"
 #include "../Data/Ponto.h"
 #include "../Data/Patch/HermitePatch.h"
+#include "../Data/Modelo.h"
+
 
 extern std::string entrada;
 
@@ -24,6 +26,9 @@ public:
 
     std::list<BezierPatch *> loaderBezierPatchFile(string fileName);
     Ponto getPointVectorControlPoints(std::vector<Ponto> , unsigned long );
+
+    Geometria* readerPatches(Geometria *geo, string fileName);
+
 
 };
 

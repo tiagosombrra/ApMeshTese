@@ -6,7 +6,7 @@
 #include <sstream>
 #include <fstream>
 #include "../Data/Definitions.h"
-#include <time.h>
+#include <sys/time.h>
 
 using namespace std;
 
@@ -44,24 +44,24 @@ public:
     double getRankThreadTime(int _rank, int _thread, int _type);
 
 
-    vector<vector<vector<double> > > getTimerParallelInit() const;
-    void setTimerParallelInit(const vector<vector<vector<double> > > &value);
+    vector<vector<vector<timeval> > > getTimerParallelInit() const;
+    void setTimerParallelInit(const vector<vector<vector<timeval> > > &value);
 
-    vector<vector<vector<double> > > getTimerParallelEnd() const;
-    void setTimerParallelEnd(const vector<vector<vector<double> > > &value);
+    vector<vector<vector<timeval> > > getTimerParallelEnd() const;
+    void setTimerParallelEnd(const vector<vector<vector<timeval> > > &value);
 
     vector<vector<vector<double> > > getTimerParallel() const;
     void setTimerParallel(const vector<vector<vector<double> > > &value);
 
 private:
 
-    vector<vector<vector<double>>> timerParallelInit;
-    vector<vector<vector<double>>> timerParallelEnd;
+    vector<vector<vector<timeval>>> timerParallelInit;
+    vector<vector<vector<timeval>>> timerParallelEnd;
     vector<vector<vector<double>>> timerParallel;
 
     string locationName;
     fstream file;
-    clock_t time_clock;
+    //clock_t time_clock;
 };
 
 #endif // TIMER_H

@@ -67,6 +67,8 @@ HEADERS += \
     ../apMesh/Headers/Data/Vertice.h \
     ../apMesh/Headers/Data/Vetor.h \
     ../apMesh/Headers/Estimate/ChargeEstimateProcess.h \
+    ../apMesh/Headers/Execution/MpiRun.h \
+    ../apMesh/Headers/Execution/OmpRun.h \
     ../apMesh/Headers/Execution/ParallelRun.h \
     ../apMesh/Headers/Execution/SequentialRun.h \
     ../apMesh/Headers/Generator/Gerador.h \
@@ -94,8 +96,10 @@ HEADERS += \
 SOURCES += \
     ../apMesh/Sources/Data/Definitions.cpp \
     ../apMesh/Sources/Estimate/ChargeEstimateProcess.cpp \
-    ../apMesh/Sources/Execution/Parallel.cpp \
-    ../apMesh/Sources/Execution/Sequential.cpp \
+    ../apMesh/Sources/Execution/MpiRun.cpp \
+    ../apMesh/Sources/Execution/OmpRun.cpp \
+    ../apMesh/Sources/Execution/ParallelRun.cpp \
+    ../apMesh/Sources/Execution/SequentialRun.cpp \
     ../apMesh/Sources/IO/PatchBezierReader.cpp \
     ../apMesh/Sources/IO/WriteOBJFile.cpp \
     ../apMesh/Sources/Parallel/Communicator.cpp \

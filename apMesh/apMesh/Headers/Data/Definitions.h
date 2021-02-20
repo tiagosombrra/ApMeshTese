@@ -20,7 +20,7 @@
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP FALSE
+#define USE_OPENMP TRUE
 #endif //#ifndef USE_OPENMP
 
 #ifndef USE_PRINT_RESULT

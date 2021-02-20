@@ -715,14 +715,14 @@ double ChargeEstimateProcess::calculateAreaTriangleMedioRad(BezierPatch* patch)
     return area;
 }
 
-double ChargeEstimateProcess::calculateAreaTriangleMedio(BezierPatch* patch, int grau)
+double ChargeEstimateProcess::calculateAreaTriangleMedio(BezierPatch* patch, Timer *timer, int grau)
 {
     Malha* malha = new Malha;
     SubMalha* sub = malhaInicialEstimativa(patch, grau);
     malha->insereSubMalha(sub);
     // delete sub;
 
-    while (calculateErroEstimative(malha, grau) && grau < 5) {
+    while (calculateErroEstimative(malha, timer, grau) && grau < 5) {
         ++grau;
         //        cout<<"grau: "<<grau<<endl;
         //        cout<<"sub: "<<sub<<endl;
@@ -857,11 +857,11 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch, int g
     return sub;
 }
 
-bool ChargeEstimateProcess::calculateErroEstimative(Malha* malha, int grau)
+bool ChargeEstimateProcess::calculateErroEstimative(Malha* malha, Timer *timer, int grau)
 {
     GeradorAdaptativoPorCurvatura* ger = new GeradorAdaptativoPorCurvatura();
 #if USE_OPENMP
-    double erro = ger->erroGlobalOmp(malha);
+    double erro = ger->erroGlobalOmp(malha, timer);
 #else
     double erro = ger->erroGlobal(malha);
 #endif

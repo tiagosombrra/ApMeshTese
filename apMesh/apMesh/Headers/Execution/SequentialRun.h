@@ -15,9 +15,6 @@ class SequentialRun
 public:
     SequentialRun();
     int execute(char *argv[], Timer *timer);
-    Geometria* readerPatches(Geometria *geo, string fileName);
-
-
 };
 
 #endif // SEQUENTIAL_H

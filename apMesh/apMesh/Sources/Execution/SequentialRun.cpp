@@ -32,7 +32,7 @@ int SequentialRun::execute(char *argv[], Timer *timer)
     timer->endTimerParallel(0, 0, 10); // Full
 
 #if USE_PRINT_TIME
-    timer->printTime(0,0);
+    timer->printTime();
 #endif //#if USE_PRINT_TIME
 
 #if USE_PRINT_ERRO

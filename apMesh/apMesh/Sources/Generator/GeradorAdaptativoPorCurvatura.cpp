@@ -63,43 +63,43 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
 
 
     Elemento* e1 = new Triangulo (	sub->getNoh ( 0 ),
-                                        sub->getNoh ( 1 ),
-                                        sub->getNoh ( 4 ) );
+                                    sub->getNoh ( 1 ),
+                                    sub->getNoh ( 4 ) );
     ((Triangulo*)e1)->p1 = make_tuple ( 0, 0 );
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
     e1->setId (/*idManager->next(1)
-           */ idManager->next(1));
+                      */ idManager->next(1));
     sub->insereElemento ( e1);
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
-                                        sub->getNoh ( 3 ),
-                                        sub->getNoh ( 4 ) );
+                                    sub->getNoh ( 3 ),
+                                    sub->getNoh ( 4 ) );
     ((Triangulo*)e2)->p1 = make_tuple ( 1, 0 );
     ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
     ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
     e2->setId ( /*idManager->next(1)
-            */ idManager->next(1));
+                        */ idManager->next(1));
     sub->insereElemento ( e2);
 
     Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
-                                        sub->getNoh ( 2 ),
-                                        sub->getNoh ( 4 ) );
+                                    sub->getNoh ( 2 ),
+                                    sub->getNoh ( 4 ) );
     ((Triangulo*)e3)->p1 = make_tuple ( 1, 1 );
     ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
     ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
     e3->setId ( /*idManager->next(1)
-            */ idManager->next(1));
+                        */ idManager->next(1));
     sub->insereElemento ( e3);
 
     Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
-                                        sub->getNoh ( 0 ),
-                                        sub->getNoh ( 4 ) );
+                                    sub->getNoh ( 0 ),
+                                    sub->getNoh ( 4 ) );
     ((Triangulo*)e4)->p1 = make_tuple ( 0, 1 );
     ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
     ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
     e4->setId ( /*idManager->next(1)
-            */ idManager->next(1));
+                        */ idManager->next(1));
     sub->insereElemento ( e4);
     //==============================================================================*/
 
@@ -242,7 +242,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura(Modelo &modelo, Tim
         for (int i = 0; i < sizePatch; ++i )
         {
             CoonsPatch *patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
-            SubMalha *sub = this->malhaInicialOmp ( static_cast < CoonsPatch* > ( patch ), this->idManagers[id]);
+            SubMalha *sub = this->malhaInicialOmp( static_cast < CoonsPatch* > ( patch ), this->idManagers[id]);
             malha->insereSubMalha (sub,i);
         }
         timer->endTimerParallel(0, id, 2); // Malha inicial
@@ -497,6 +497,9 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura (Modelo& modelo , T
     }
 }
 
+
+#endif //USE_OPENMP
+
 SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch, Performer::IdManager *idManager)
 {
 
@@ -546,8 +549,8 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch, Perfor
     p->id = idManager->next(0);
 
     Elemento* e1 = new Triangulo (	sub->getNoh ( 0 ),
-                                        sub->getNoh ( 1 ),
-                                        sub->getNoh ( 4 ) );
+                                    sub->getNoh ( 1 ),
+                                    sub->getNoh ( 4 ) );
     ((Triangulo*)e1)->p1 = make_tuple ( 0, 0 );
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
@@ -555,8 +558,8 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch, Perfor
     sub->insereElemento ( e1 );
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
-                                        sub->getNoh ( 3 ),
-                                        sub->getNoh ( 4 ) );
+                                    sub->getNoh ( 3 ),
+                                    sub->getNoh ( 4 ) );
     ((Triangulo*)e2)->p1 = make_tuple ( 1, 0 );
     ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
     ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
@@ -564,8 +567,8 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch, Perfor
     sub->insereElemento ( e2 );
 
     Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
-                                        sub->getNoh ( 2 ),
-                                        sub->getNoh ( 4 ) );
+                                    sub->getNoh ( 2 ),
+                                    sub->getNoh ( 4 ) );
     ((Triangulo*)e3)->p1 = make_tuple ( 1, 1 );
     ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
     ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
@@ -573,8 +576,8 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial (CoonsPatch* patch, Perfor
     sub->insereElemento ( e3 );
 
     Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
-                                        sub->getNoh ( 0 ),
-                                        sub->getNoh ( 4 ) );
+                                    sub->getNoh ( 0 ),
+                                    sub->getNoh ( 4 ) );
     ((Triangulo*)e4)->p1 = make_tuple ( 0, 1 );
     ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
     ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
@@ -662,7 +665,6 @@ double GeradorAdaptativoPorCurvatura::erroGlobal (Malha* malha)
 
     return Nj;
 }
-#endif //USE_OPENMP
 
 Performer::IdManager *GeradorAdaptativoPorCurvatura::makeIdManager(const Parallel::TMCommunicator *comm, Int id) const
 {
@@ -973,11 +975,11 @@ void escreveElementos( int passo, SubMalha *sub, int i )
         tuple <double, double> t3 = ((Triangulo*)elem)->p3;
 
         arq	<< "T-" << elem->getId() << ":\n\t"
-                << "área = " << elem->getArea() << ";\n\t"
-                << "normal = " << elem->getNormal().x << ", " << elem->getNormal().y << ", " << elem->getNormal().z << "\n\t"
-                << "n-" << n1.id << "( " << get<0>(t1) << " , " << get<1>(t1) <<  ") ângulo = " << elem->getAngulo( n1 ) << ";\n\t"
-                << "n-" << n2.id << "( " << get<0>(t2) << " , " << get<1>(t2) <<  ") ângulo = " << elem->getAngulo( n2 ) << ";\n\t"
-                << "n-" << n3.id << "( " << get<0>(t3) << " , " << get<1>(t3) <<  ") ângulo = " << elem->getAngulo( n3 ) << endl;
+            << "área = " << elem->getArea() << ";\n\t"
+            << "normal = " << elem->getNormal().x << ", " << elem->getNormal().y << ", " << elem->getNormal().z << "\n\t"
+            << "n-" << n1.id << "( " << get<0>(t1) << " , " << get<1>(t1) <<  ") ângulo = " << elem->getAngulo( n1 ) << ";\n\t"
+            << "n-" << n2.id << "( " << get<0>(t2) << " , " << get<1>(t2) <<  ") ângulo = " << elem->getAngulo( n2 ) << ";\n\t"
+            << "n-" << n3.id << "( " << get<0>(t3) << " , " << get<1>(t3) <<  ") ângulo = " << elem->getAngulo( n3 ) << endl;
     }
 
     arq.flush();

@@ -39,10 +39,9 @@ public:
     void initTimerParallel(int _rank, int _thread, int _type);
     void endTimerParallel(int _rank, int _thread, int _type);
     void calculateTime(int _rank, int _thread, int _type);
-    void printTime(int _rank, int _thread);
-
+    void printTime();
     double getRankThreadTime(int _rank, int _thread, int _type);
-
+    vector<double> getMaxTime();
 
     vector<vector<vector<timeval> > > getTimerParallelInit() const;
     void setTimerParallelInit(const vector<vector<vector<timeval> > > &value);

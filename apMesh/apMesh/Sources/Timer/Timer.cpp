@@ -112,26 +112,48 @@ void Timer::calculateTime(int _rank, int _thread, int _type)
 
 }
 
-void Timer::printTime(int _rank, int _thread)
+void Timer::printTime()
 {
-    cout << "Rank: " <<_rank<< " Thread: "<<_thread<<endl;
-    cout << "Inicialização: " << this->timerParallel[_rank][_thread][0] << endl;
-    cout << "Estimativa de carga: " << this->timerParallel[_rank][_thread][1] << endl;
-    cout << "Geração da malha inicial: " << this->timerParallel[_rank][_thread][2] << endl;
-    cout << "Adaptação das curvas: " << this->timerParallel[_rank][_thread][3] << endl;
-    cout << "Adaptação do domínio: " << this->timerParallel[_rank][_thread][4] << endl;
-    cout << "Quadtree: " << this->timerParallel[_rank][_thread][5] << endl;
-    cout << "Avanço de front.: " << this->timerParallel[_rank][_thread][6] << endl;
-    cout << "Calculo do erro: " << this->timerParallel[_rank][_thread][7] << endl;
-    cout << "Overhead: " << this->timerParallel[_rank][_thread][8] << endl;
-    cout << "SendRecv: " << this->timerParallel[_rank][_thread][9] << endl;
-    cout << "Full: " << this->timerParallel[_rank][_thread][10] << endl<<endl;
+    vector<double> max = getMaxTime();
+    cout << "Inicialização: " << max[0] << endl;
+    cout << "Estimativa de carga: " << max[1] << endl;
+    cout << "Geração da malha inicial: " << max[2] << endl;
+    cout << "Adaptação das curvas: " << max[3] << endl;
+    cout << "Adaptação do domínio: " << max[4] << endl;
+    cout << "Quadtree: " << max[5] << endl;
+    cout << "Avanço de front.: " << max[6] << endl;
+    cout << "Calculo do erro: " << max[7] << endl;
+    cout << "Overhead: " << max[8] << endl;
+    cout << "SendRecv: " << max[9] << endl;
+    cout << "Full: " << max[10] << endl<<endl;
 
 }
 
 double Timer::getRankThreadTime(int _rank, int _thread, int _type)
 {
     return timerParallel[_rank][_thread][_type];
+}
+
+vector<double> Timer::getMaxTime()
+{
+    vector<double> max;
+    max.resize(this->timerParallel[0][0].size());
+
+    for (int i = 0; i < this->timerParallel[0][0].size(); ++i) {
+        max[i] = 0;
+    }
+
+    for (int i = 0; i < this->timerParallel.size(); ++i) {
+        for (int j = 0; j < timerParallel[i].size(); ++j) {
+            for (int l = 0; l < this->timerParallel[i][j].size(); ++l) {
+                if (this->timerParallel[i][j][l] > max[l]) {
+                    max[l] = this->timerParallel[i][j][l];
+                }
+            }
+        }
+    }
+
+    return max;
 }
 
 vector<vector<vector<timeval> > > Timer::getTimerParallelInit() const

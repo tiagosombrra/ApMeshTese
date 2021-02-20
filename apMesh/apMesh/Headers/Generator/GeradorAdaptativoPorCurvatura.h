@@ -46,17 +46,18 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo
 public :
     // gera a malha inicial e insere na lista de malhas do modelo
     // a lista de pontos da curva é preenchida durante a geração
+    GeradorAdaptativoPorCurvatura();
+
 #if USE_OPENMP
     virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManager *idManager);
     virtual double erroGlobalOmp (Malha* malha, Timer *timer, int rank = 0, int thread = 0);
     GeradorAdaptativoPorCurvatura (Modelo &modelo, Timer *timer, int idrange = 0, int sizeRank = 1, int sizeThread = 1);
 #else
     GeradorAdaptativoPorCurvatura ( Modelo &modelo, Timer *timer, int idrange = 0);
-    virtual SubMalha* malhaInicial (CoonsPatch*, Performer::IdManager *idManager);
-    virtual double erroGlobal ( Malha* malha);
 #endif //#USE_OPENMP
 
-    GeradorAdaptativoPorCurvatura();
+    virtual SubMalha* malhaInicial (CoonsPatch*, Performer::IdManager *idManager);
+    virtual double erroGlobal ( Malha* malha);
     Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
     Performer::IdManager *makeIdManagerOmp(const Parallel::TMCommunicator *comm, Int id) const;
     Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;

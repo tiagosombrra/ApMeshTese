@@ -15,6 +15,10 @@
 #include "../Headers/Execution/MpiRun.h"
 #include "../Headers/Execution/ParallelRun.h"
 
+#if USE_MPI
+int RANK_MPI, SIZE_MPI;
+int PASSOS = 3;
+#endif //#if USE_OPENMPI
 
 double TRIANGLE_MEDIO = 0.0;
 double TOLERANCIA_ESTIMATIVE = 1.0;
@@ -33,10 +37,6 @@ double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
 
 std::set<Ponto*> listAllPointsModel;
 std::set<SubMalha*> listAllSubMalhaModel;
-#if USE_MPI
-int RANK_MPI, SIZE_MPI;
-#endif //#if USE_OPENMPI
-
 std::string nameModel;
 std::string entrada;
 std::string numberProcess;

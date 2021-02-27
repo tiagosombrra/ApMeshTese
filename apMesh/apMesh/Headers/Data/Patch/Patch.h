@@ -22,12 +22,15 @@ protected :
     SubMalha* malha;
 
 public :
+    unsigned long id;
     void setMalha ( SubMalha* m );
     SubMalha* getMalha (  ) const ;
 
     Patch  ( );
     Patch ( Patch * );
     ~Patch ( );
+    unsigned long getId() const;
+    void setId(unsigned long value);
 };
 
 #endif

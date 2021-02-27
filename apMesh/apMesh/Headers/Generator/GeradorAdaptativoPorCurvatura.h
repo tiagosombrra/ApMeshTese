@@ -28,9 +28,10 @@ This source code is under GNU General Public License v3 */
 #include "../Adapter/AdaptadorPorCurvatura.h"
 #include "../Data/Definitions.h"
 #include "../Timer/Timer.h"
-
 #include "../Crabmesh/Performer/RangedIdManager.h"
-#include "../Parallel/TMCommunicator.h"
+#include "../Parallel/ApMeshCommunicator.h"
+#include "../Data/Patch/BezierPatch.h"
+
 
 using namespace std;
 using namespace Data;
@@ -40,6 +41,10 @@ extern double TOLERANCIA_CURVATURA;
 extern int NUM_THREADS;
 extern double DISCRETIZACAO_CURVA;
 extern vector<CurvaParametrica*> ptr_aux;
+extern int PASSOS;
+extern std::string WRITE_MESH;
+extern int RANK_MPI;
+extern int SIZE_MPI;
 
 class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo
 {
@@ -47,6 +52,10 @@ public :
     // gera a malha inicial e insere na lista de malhas do modelo
     // a lista de pontos da curva é preenchida durante a geração
     GeradorAdaptativoPorCurvatura();
+
+    typedef std::vector<std::pair<int, Malha*> > MeshVector;
+    typedef std::vector<std::pair<int, Malha*> > ErroMeshVector;
+
 
 #if USE_OPENMP
     virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManager *idManager);
@@ -63,15 +72,38 @@ public :
     Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;
 
     void escreveMalha(Malha *malha, int passo);
-    void saveErroMesh(Malha *malha);
+    void salvarErroMalha(Malha *malha);
+
+#if USE_MPI
+    int generator(double listOfPatches[], int sizeOfListPatches, Timer* timer);
+    void generatorMeshInitial();
+    void salvaMalha(Malha *malha, int passo);
+    void salvaErroMalha(Malha *malha, int passo);
+    void escreveMalha(Malha *malha, int passo, vector<double> erroPasso, int rank = -1);
+
+    Modelo modelo;
+    Geometria* geo;
+    CoonsPatch* patch;
+    Malha* malha;
+#endif //USE_MPI
 
 protected:
 
+#if USE_MPI
+    ApMeshCommunicator *comm;
+#else
     Parallel::TMCommunicator *comm;
+#endif //USE_MPI
+
     Performer::IdManager *idManager;
     Performer::IdManagerVector idManagers;
     mutable ULInt idoffset;
     ULInt idrange;
+
+private:
+    MeshVector saveMesh;
+    ErroMeshVector saveErroMesh;
+    vector<double> erroPasso;
 
 };
 

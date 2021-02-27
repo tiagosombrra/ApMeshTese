@@ -20,7 +20,7 @@
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP TRUE
+#define USE_OPENMP FALSE
 #endif //#ifndef USE_OPENMP
 
 #ifndef USE_PRINT_RESULT
@@ -121,7 +121,7 @@
     #define TAG_PASSO 2
     #define RANK_ROOT 0
     #define USE_SERIAL false
-#endif //#if USE_OPENMPI
+#endif //#if USE_MPI
 
 #include <iostream>
 #include <fstream>

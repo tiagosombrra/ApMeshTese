@@ -2,6 +2,7 @@ CONFIG += c++11 console
 CONFIG -= app_bundle
 QMAKE_CXXFLAGS += -O3 -fopenmp  #-g  -pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
 QMAKE_LFLAGS += -O3 -fopenmp  #-g  -pg   -std=gnu++0x#-march=native #-m64 #-mavx
+
 ## MPI Settings
 #QMAKE_CXX = mpicxx
 #QMAKE_CXX_RELEASE = $$QMAKE_CXX
@@ -79,6 +80,7 @@ HEADERS += \
     ../apMesh/Headers/IO/PatchBezierReader.h \
     ../apMesh/Headers/IO/ReaderPatches.h \ \
     ../apMesh/Headers/IO/WriteOBJFIle.h \
+    ../apMesh/Headers/Parallel/ApMeshCommunicator.h \
     ../apMesh/Headers/Parallel/Communicator.h \
     ../apMesh/Headers/Parallel/Definitions.h \
     ../apMesh/Headers/Parallel/MPICommunicator.h \
@@ -102,6 +104,7 @@ SOURCES += \
     ../apMesh/Sources/Execution/SequentialRun.cpp \
     ../apMesh/Sources/IO/PatchBezierReader.cpp \
     ../apMesh/Sources/IO/WriteOBJFile.cpp \
+    ../apMesh/Sources/Parallel/ApMeshCommunicator.cpp \
     ../apMesh/Sources/Parallel/Communicator.cpp \
     ../apMesh/Sources/Parallel/MPICommunicator.cpp \
     ../apMesh/Sources/Parallel/MPIMessage.cpp \

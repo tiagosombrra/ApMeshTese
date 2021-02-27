@@ -29,7 +29,9 @@ int OmpRun::execute(int argc, char *argv[], Timer *timer)
     timer->initTimerParallel(0, 0, 10); // Full
 
     //Gerador da malha
+#if USE_OPENMP
     GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 1024, atoi(argv[2]), atoi(argv[3]));
+#endif //USE_OPENMP
 
     //fim do contador do tempo total
     timer->endTimerParallel(0, 0, 10); // Full
@@ -39,7 +41,9 @@ int OmpRun::execute(int argc, char *argv[], Timer *timer)
 #endif //#if USE_PRINT_TIME
 
 #if USE_PRINT_ERRO
+#if USE_OPENMP
     cout << "Erro global final = " << adaptiveMesh.erro << endl;
+#endif //USE_OPENMP
 #endif //#if USE_PRINT_ERRO
 
     return 0;

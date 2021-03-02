@@ -26,7 +26,8 @@ int SequentialRun::execute(char *argv[], Timer *timer)
     timer->endTimerParallel(0, 0, 0); // inicialização
 
     //Gerador da malha
-    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 8);
+    GeradorAdaptativoPorCurvatura adaptiveMesh;
+    adaptiveMesh.generatorSeq(M, timer, 8);
 
     //fim do contador do tempo total
     timer->endTimerParallel(0, 0, 10); // Full

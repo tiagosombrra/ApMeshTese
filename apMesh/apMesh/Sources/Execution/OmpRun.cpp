@@ -30,7 +30,9 @@ int OmpRun::execute(int argc, char *argv[], Timer *timer)
 
     //Gerador da malha
 #if USE_OPENMP
-    GeradorAdaptativoPorCurvatura adaptiveMesh (M, timer, 1024, atoi(argv[2]), atoi(argv[3]));
+    GeradorAdaptativoPorCurvatura adaptiveMesh;
+            adaptiveMesh.generatorOmp(M, timer, 1024, atoi(argv[2]), atoi(argv[3]));
+
 #endif //USE_OPENMP
 
     //fim do contador do tempo total

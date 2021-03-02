@@ -994,7 +994,7 @@ HermitePatch::HermitePatch()
 
 HermitePatch::~HermitePatch (  )
 {
-    delete &V;
-    delete &U;
-    delete &H;
+    //delete &V;
+    //delete &U;
+    //delete &H;
 }

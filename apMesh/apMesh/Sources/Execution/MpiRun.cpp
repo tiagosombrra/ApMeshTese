@@ -18,9 +18,6 @@ int MpiRun::execute(int argc, char *argv[], Timer *timer)
     MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
     MPI_Status status;
 
-    Malha *malha = new Malha;
-    Geometria *geo = new Geometria();
-
     if (RANK_MPI == 0) {
 
         timer->endTimerParallel(0,0,0); // inicialização process 0
@@ -227,6 +224,7 @@ int MpiRun::execute(int argc, char *argv[], Timer *timer)
                 timer->endTimerParallel(0,0,8); // Overhead process 0
 
                 timer->initTimerParallel(0,0,9); // Timer send and recv process 0
+
                 MPI_Send(&i, 1, MPI_INT, j, TAG_SIZE_OF_DOUBLE, MPI_COMM_WORLD);
                 MPI_Send(&vecBezierPatches, i, MPI_DOUBLE, j, TAG_DOUBLE, MPI_COMM_WORLD);
 

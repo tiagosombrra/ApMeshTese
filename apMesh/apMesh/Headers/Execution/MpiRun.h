@@ -14,7 +14,7 @@ public:
     MpiRun();
     ~MpiRun();
     int execute(int argc, char *argv[], Timer *timer);
-    void estimateChargeofPatches(Timer *timer);
+    void estimateChargeofPatches(Timer *timer, std::string entrada);
     void createVectorOfCurves();
     bool verifyCurve(Ponto p0, Ponto p1, Ponto p2, Ponto p3);
     std::list<BezierPatch *> orderPatchesDistribProcess(std::list<BezierPatch*>);

@@ -24,7 +24,7 @@ class ChargeEstimateProcess
 {
 public:
      ChargeEstimateProcess();
-     std::list<BezierPatch *> chargeEstimateProcess(Geometria*, Timer* timer);
+     std::list<BezierPatch *> chargeEstimateProcess(Geometria*, Timer* timer, string entrada);
      std::vector<Ponto> interpolateControlPointsCurve(Ponto p0, Ponto p1, Ponto p2, Ponto p3, double u, double v);
      double calculateKaMedioPatch(BezierPatch *patch, int points);
      double calculateAreaPatch(BezierPatch *patch, int pointesGauusLegandre);

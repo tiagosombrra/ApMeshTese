@@ -12,7 +12,7 @@ static bool sortByNt(const BezierPatch* lhs, const BezierPatch* rhs)
 }
 
 // retonar uma lista de patch de bezier ordenados de acordo com sua estimativa de carga em ordem decrescente.
-std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* geo, Timer* timer)
+std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* geo, Timer* timer, std::string entrada)
 {
 
     std::list<BezierPatch*> listBezierPt;
@@ -21,7 +21,7 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* 
     PatchBezierReader* pt = new PatchBezierReader();
     timer->endTimerParallel(0, 0, 10); //Full
     cout<<"INIT >> LOADBPFILE"<< endl;
-    listBezierPt = pt->loaderBPFile();
+    listBezierPt = pt->loaderBPFile(entrada);
     cout<<"END >> LOADBPFILE"<< endl;
     timer->initTimerParallel(0, 0, 10); //Full
     timer->initTimerParallel(0, 0, 8); // Over

@@ -14,6 +14,7 @@
 #include "../Headers/Execution/OmpRun.h"
 #include "../Headers/Execution/MpiRun.h"
 #include "../Headers/Execution/ParallelRun.h"
+#include "../Headers/IO/PatchBezierReader.h"
 
 #if USE_MPI
 int RANK_MPI, SIZE_MPI;
@@ -58,6 +59,9 @@ int main(int argc, char **argv)
     // contador do tempo para carregar a malha na memória
     // (sizeRank, sizeThread, sizeType)
     Timer *timer = new Timer(atoi(argv[2]), atoi(argv[3]), 11);
+
+//    PatchBezierReader pbr;
+//        pbr.loaderBPFile(argv[4]);
 
     // contador do tempo de inicialização em segundos em todos os processos
     timer->initTimerParallel(0, 0, 10); // Full

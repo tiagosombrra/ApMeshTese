@@ -18,12 +18,15 @@ int MpiRun::execute(int argc, char *argv[], Timer *timer)
     MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
     MPI_Status status;
 
+    malha = new Malha;
+    geo = new Geometria();
+
     if (RANK_MPI == 0) {
 
         timer->endTimerParallel(0,0,0); // inicialização process 0
 
         // estimativa de caga para a distribuiçao nos patches
-        estimateChargeofPatches(timer);
+        estimateChargeofPatches(timer, argv[4]);
 
         timer->endTimerParallel(0,0,1); // Estimativa de carga process 0
 
@@ -266,11 +269,11 @@ int MpiRun::execute(int argc, char *argv[], Timer *timer)
 
 }
 
-void MpiRun::estimateChargeofPatches(Timer *timer)
+void MpiRun::estimateChargeofPatches(Timer *timer, std::string entrada)
 {
     cout<<"INIT >> estimative"<< endl;
     ChargeEstimateProcess* cep = new ChargeEstimateProcess();
-    listBezierPt = cep->chargeEstimateProcess(geo, timer);
+    listBezierPt = cep->chargeEstimateProcess(geo, timer, entrada);
     delete cep;
 }
 

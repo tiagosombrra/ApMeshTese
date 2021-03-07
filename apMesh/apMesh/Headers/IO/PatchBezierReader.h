@@ -22,7 +22,7 @@ public:
     PatchBezierReader();
     std::list<BezierPatch *> parsePatchesBezier();
     std::list<BezierPatch *> LoaderRibFile();
-    std::list<BezierPatch *> loaderBPFile();
+    std::list<BezierPatch *> loaderBPFile(string filename);
     std::list<HermitePatch*> loaderBPFileHermite();
     std::list<BezierPatch *> loaderOBJFile();
 	std::list<BezierPatch *> orderVectorToListBezierPatches(std::vector<double>);

@@ -94,14 +94,14 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
 
         p_i = this->parametrizar ( u_i, v_i ); // palpite inicial
 
-        if (std::isnan(p_i.x)) {
-#pragma omp critical
-            {
-                cout<<"-nan pi"<<endl;
-                cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread: "<<omp_get_thread_num()<<endl;
-                cout<< p_i.id << " (" << p.x << ", " << p.y << ", " << p.z << ") thread: "<<omp_get_thread_num()<< endl;
-            }
-        }
+//        if (std::isnan(p_i.x)) {
+//#pragma omp critical
+//            {
+//                cout<<"-nan pi"<<endl;
+//                cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread: "<<omp_get_thread_num()<<endl;
+//                cout<< p_i.id << " (" << p.x << ", " << p.y << ", " << p.z << ") thread: "<<omp_get_thread_num()<< endl;
+//            }
+//        }
 
         Matrix<double, 3,3> A;
         A(0,0) = Tu.x;	A(0,1) = Tv.x;	A(0,2) = p_i.x - p.x;
@@ -162,13 +162,13 @@ tuple < double, double > BezierPatch::encontrar_u_v ( const Ponto& p )
         delta_u =  A(0,2);
         delta_v =  A(1,2);
 
-        if (std::isnan(delta_u) || std::isnan(delta_v)){
-#pragma omp critical
-            {
-                cout<<"-nan delta_u e delta_v"<<endl;
-                cout<<"delta_u: "<<delta_u<<" delta_v: "<<delta_v<<" thread: "<<omp_get_thread_num()<<endl;
-            }
-        }
+//        if (std::isnan(delta_u) || std::isnan(delta_v)){
+//#pragma omp critical
+//            {
+//                cout<<"-nan delta_u e delta_v"<<endl;
+//                cout<<"delta_u: "<<delta_u<<" delta_v: "<<delta_v<<" thread: "<<omp_get_thread_num()<<endl;
+//            }
+//        }
 
         if (!std::isnan(delta_u)){
             u_i += delta_u;

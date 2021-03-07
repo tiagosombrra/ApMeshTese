@@ -73,7 +73,7 @@ CXX           = mpicxx
 
 CXXFLAGS_EXTRA = -g3
 CXXFLAGS      = -std=gnu++11 -W -Wall $(CXXFLAGS_EXTRA)
-CXXFLAGS_OMP  = $(CXXFLAGS) -fopenmp
+CXXFLAGS_OMP  = -fopenmp $(CXXFLAGS) 
 
 all: $(FONTES) $(PROGRAMA)
 

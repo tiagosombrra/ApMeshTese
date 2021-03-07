@@ -60,9 +60,6 @@ int main(int argc, char **argv)
     // (sizeRank, sizeThread, sizeType)
     Timer *timer = new Timer(atoi(argv[2]), atoi(argv[3]), 11);
 
-//    PatchBezierReader pbr;
-//        pbr.loaderBPFile(argv[4]);
-
     // contador do tempo de inicialização em segundos em todos os processos
     timer->initTimerParallel(0, 0, 10); // Full
     timer->initTimerParallel(0, 0, 0);  // Inicialização

@@ -10,6 +10,7 @@
 #include "../Data/Patch/HermitePatch.h"
 
 extern std::string entrada;
+extern int RANK_MPI;
 
 class PatchBezierReader
 {

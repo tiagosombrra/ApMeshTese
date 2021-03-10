@@ -68,8 +68,8 @@ Sources/main.cpp \
 
 OBJETOS = $(FONTES:.cpp=.o)
 
-CC            = gcc
-CXX           = mpicxx 
+CC            = mpicc
+CXX           = mpicxx
 
 CXXFLAGS_EXTRA = -g3
 CXXFLAGS      = -std=gnu++11 -W -Wall $(CXXFLAGS_EXTRA)

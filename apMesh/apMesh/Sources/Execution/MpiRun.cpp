@@ -26,7 +26,7 @@ int MpiRun::execute(int argc, char *argv[], Timer *timer)
       timer->endTimerParallel(0,0,0); // inicialização process 0
 
       // estimativa de caga para a distribuiçao nos patches
-      estimateChargeofPatches(timer, "mountain_289_patches.bp");
+      estimateChargeofPatches(timer, argv[4]);
 
       timer->endTimerParallel(0,0,1); // Estimativa de carga process 0
 
@@ -40,7 +40,6 @@ int MpiRun::execute(int argc, char *argv[], Timer *timer)
 
 
       //estimativa para cada processo
-
       double est0=0, est1=0, est2=0, est3=0, est4=0, est5=0, est6=0, est7=0;
 
       for (std::list<BezierPatch*>::iterator it = listBezierPt.begin(); it != listBezierPt.end(); it++)
@@ -238,7 +237,7 @@ int MpiRun::execute(int argc, char *argv[], Timer *timer)
       timer->endTimerParallel(0,0,8); // Overhead process 0
 
       GeradorAdaptativoPorCurvatura geradorAdaptativoPorCurvatura;
-      geradorAdaptativoPorCurvatura.generator(vecBezierPatchesOfProcess0, izero, timer);
+      geradorAdaptativoPorCurvatura.generatorMpi(vecBezierPatchesOfProcess0, izero, timer);
 
     } else {
 
@@ -255,7 +254,7 @@ int MpiRun::execute(int argc, char *argv[], Timer *timer)
       timer->endTimerParallel(0,0,9); // Timer send and recv process n
 
       GeradorAdaptativoPorCurvatura geradorAdaptativoPorCurvatura;
-      geradorAdaptativoPorCurvatura.generator(ptBezierPatches, sizePtBezierPatches, timer);
+      geradorAdaptativoPorCurvatura.generatorMpi(ptBezierPatches, sizePtBezierPatches, timer);
 
     }
 

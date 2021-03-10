@@ -44,69 +44,60 @@ std::string numberProcess;
 std::string WRITE_MESH;
 
 // argv[0] = "executavel: ./apmesh",
-// argv[1] = "seq ou omp ou mpi ou par",
-// argv[2] = "n° de process"
-// argv[3] = "n° threads",
-// argv[4] = "entrada",       OBS: Projects-> Comands line arguments -> ../../apMesh/Entrada/mountain_289_patches.bp
-
+// argv[1] = "n° de process"
+// argv[2] = "n° threads",
+// argv[3] = "entrada",       OBS: Projects-> Comands line arguments -> ../../apMesh/Entrada/mountain_289_patches.bp
+// argv[4] = "WRITE_MESH" (writeMeshOn)
 
 
 int main(int argc, char **argv)
 {
-    //retorno do programa
-    int finish = -1;
 
-    // contador do tempo para carregar a malha na memória
-    // (sizeRank, sizeThread, sizeType)
-    Timer *timer = new Timer(atoi(argv[2]), atoi(argv[3]), 11);
+#if USE_MPI
+  MPI_Init(&argc, &argv);
+  MPI_Comm_size(MPI_COMM_WORLD, &SIZE_MPI);
+  MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
+  MPI_Status status;
+#endif
 
-    // contador do tempo de inicialização em segundos em todos os processos
-    timer->initTimerParallel(0, 0, 10); // Full
-    timer->initTimerParallel(0, 0, 0);  // Inicialização
+  // contador do tempo para carregar a malha na memória
+  // (sizeRank, sizeThread, sizeType)
+  Timer *timer = new Timer(atoi(argv[1]), atoi(argv[2]), 11);
 
-    if (argv[1] == string("seq")) {
-        //sequencial
-        SequentialRun seq;
-        if (seq.execute(argv, timer) == 0) {
-            cout << "Método Sequencial Finalizado com Sucesso!" << endl;
-            finish = 0;
-        } else {
-            cout << "Erro no Método Sequencial!" << endl;
-        }
+  //on ou off da escrita da malha
+  WRITE_MESH = argv[4];
 
-    } else if(argv[1] == string("omp")) {
-        //paralelo
-        OmpRun omp;
-        if (omp.execute(argc, argv, timer) == 0) {
-            cout << "Método Omp Finalizado com Sucesso!" << endl;
-            finish = 0;
-        } else {
-            cout << "Erro no Método Omp!" << endl;
-        }
+  // contador do tempo de inicialização em segundos em todos os processos
+#if USE_MPI
+#if USE_OPENMP
+  timer->initTimerParallel(RANK_MPI, THREAD_ROOT, 10); // Full
+#else
+  timer->initTimerParallel(RANK_MPI, 0, 10); // Full
+#endif
+#elif USE_OPENMP
+  timer->initTimerParallel(0, THREAD_ROOT, 10); // Full
+#else
+  timer->initTimerParallel(0, 0, 10); // Full
+#endif
 
-    } else if(argv[1] == string("mpi")) {
-        //paralelo
-        MpiRun mpi;
-        if (mpi.execute(argc, argv, timer) == 0) {
-            cout << "Método Mpi Finalizado com Sucesso!" << endl;
-            finish = 0;
-        } else {
-            cout << "Erro no Método Mpi!" << endl;
-        }
+  GeradorAdaptativoPorCurvatura ger;
 
-    } else if(argv[1] == string("par")) {
-        //paralelo
-        ParallelRun par;
-        if (par.execute(argc, argv, timer) == 0) {
-            cout << "Método Paralelo Finalizado com Sucesso!" << endl;
-            finish = 0;
-        } else {
-            cout << "Erro no Método Paralelo!" << endl;
-        }
-
-    } else {
-        cout<<"Erro na inserção dos parâmetros de entrada"<<endl;
+#if USE_MPI
+  if (ger.execute(argc, argv, timer, status) == 0) {
+      cout << "Método "<<argv[1]<<" Finalizado com Sucesso!" << endl;
+      return MPI_Finalize();
     }
+#else
+  if (ger.execute(argc, argv, timer) == 0) {
+      cout << "Método com "<<argv[1]<<" processo(s) e "<<argv[2]<< " thread(s) finalizado com Sucesso!" << endl;
+      return 0;
+    }else if(argc < 4){
+      cout<<"Erro!!! Apenas"<<argc<<" parâmetros inseridos, quantidade correta é 5 parâmetros"<<endl;
+      return -1;
+    }else{
+      cout << "Erro na execução no método main()"<<endl;
+      return -1;
+    }
+#endif
 
-    return finish;
 }

@@ -17,10 +17,12 @@
 
 #ifndef USE_MPI
 #define USE_MPI TRUE
+#define RANK_0 0
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP TRUE
+#define USE_OPENMP FALSE
+#define THREAD_ROOT 0
 #endif //#ifndef USE_OPENMP
 
 #ifndef USE_PRINT_RESULT
@@ -31,6 +33,10 @@
 #define USE_PRINT_COMENT FALSE
 #endif //#ifndef USE_PRINT_COMENT
 
+#ifndef USE_PRINT_ESTIMATE
+#define USE_PRINT_ESTIMATE FALSE
+#endif //#ifndef USE_PRINT_ESTIMATE
+
 #ifndef USE_PRINT_ERRO
 #define USE_PRINT_ERRO TRUE
 #endif //#ifndef USE_PRINT_ERRO
@@ -39,9 +45,17 @@
 #define USE_PRINT_TIME TRUE
 #endif //#ifndef USE_PRINT_TIME
 
+#ifndef USE_WRITE_MESH
+#define USE_WRITE_MESH TRUE
+#endif //#ifndef USE_WRITE_MESH
+
 #ifndef USE_SAVE_MESH
 #define USE_SAVE_MESH TRUE
 #endif //#ifndef USE_SAVE_MESH
+
+#ifndef USE_SAVE_ERRO_MESH
+#define USE_SAVE_ERRO_MESH FALSE
+#endif //#ifndef USE_SAVE_ERRO_MESH
 
 #ifndef USE_GUI
 #define USE_GUI FALSE

@@ -139,13 +139,13 @@ vector<double> Timer::getMaxTime()
     vector<double> max;
     max.resize(this->timerParallel[0][0].size());
 
-    for (int i = 0; i < this->timerParallel[0][0].size(); ++i) {
+    for (unsigned int i = 0; i < this->timerParallel[0][0].size(); ++i) {
         max[i] = 0;
     }
 
-    for (int i = 0; i < this->timerParallel.size(); ++i) {
-        for (int j = 0; j < timerParallel[i].size(); ++j) {
-            for (int l = 0; l < this->timerParallel[i][j].size(); ++l) {
+    for (unsigned int i = 0; i < this->timerParallel.size(); ++i) {
+        for (unsigned int j = 0; j < timerParallel[i].size(); ++j) {
+            for (unsigned int l = 0; l < this->timerParallel[i][j].size(); ++l) {
                 if (this->timerParallel[i][j][l] > max[l]) {
                     max[l] = this->timerParallel[i][j][l];
                 }

@@ -16,7 +16,7 @@
 #endif //#ifndef TRUE
 
 #ifndef USE_MPI
-#define USE_MPI TRUE
+#define USE_MPI FALSE
 #define RANK_0 0
 #endif //#ifndef USE_MPI
 
@@ -46,11 +46,11 @@
 #endif //#ifndef USE_PRINT_TIME
 
 #ifndef USE_WRITE_MESH
-#define USE_WRITE_MESH TRUE
+#define USE_WRITE_MESH FALSE
 #endif //#ifndef USE_WRITE_MESH
 
 #ifndef USE_SAVE_MESH
-#define USE_SAVE_MESH TRUE
+#define USE_SAVE_MESH FALSE
 #endif //#ifndef USE_SAVE_MESH
 
 #ifndef USE_SAVE_ERRO_MESH

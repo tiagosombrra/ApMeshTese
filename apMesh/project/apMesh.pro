@@ -1,19 +1,19 @@
 CONFIG += c++11 console
 CONFIG -= app_bundle
-QMAKE_CXXFLAGS += -O3 -fopenmp  #-g  -pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
-QMAKE_LFLAGS += -O3 -fopenmp  #-g  -pg   -std=gnu++0x#-march=native #-m64 #-mavx
+QMAKE_CXXFLAGS += -O3 -fopenmp     #-g  -pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
+QMAKE_LFLAGS += -O3 -fopenmp       #-g  -pg   -std=gnu++0x#-march=native #-m64 #-mavx
 
-# MPI Settings
-QMAKE_CXX = mpicxx
-QMAKE_CXX_RELEASE = $$QMAKE_CXX
-QMAKE_CXX_DEBUG = $$QMAKE_CXX
-QMAKE_LINK = $$QMAKE_CXX
-QMAKE_CC = mpicc
+## MPI Settings
+#QMAKE_CXX = mpicxx
+#QMAKE_CXX_RELEASE = $$QMAKE_CXX
+#QMAKE_CXX_DEBUG = $$QMAKE_CXX
+#QMAKE_LINK = $$QMAKE_CXX
+#QMAKE_CC = mpicc
 
-QMAKE_CFLAGS += $$system(mpicc --showme:compile)
-QMAKE_LFLAGS += $$system(mpicxx --showme:link)
-QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
-QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+#QMAKE_CFLAGS += $$system(mpicc --showme:compile)
+#QMAKE_LFLAGS += $$system(mpicxx --showme:link)
+#QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+#QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
 
 DEFINES += QT_DEPRECATED_WARNINGS
 TRANSLATIONS += \

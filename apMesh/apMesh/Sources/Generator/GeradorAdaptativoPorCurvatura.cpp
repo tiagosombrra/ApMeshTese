@@ -587,6 +587,7 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
         }
     }
 
+
   //Escreve o(s) arquivo(s) com suas respectivas malhas em cada passo
 #if USE_MPI
   if (WRITE_MESH == std::string("writeMeshOn")) {
@@ -598,6 +599,10 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
         }
     }
 #else
+
+  timer->endTimerParallel(0,0,10); //Full
+  timer->printTime();
+
   if (WRITE_MESH == std::string("writeMeshOn")) {
       for (MeshVector::iterator it = saveMesh.begin(); it != saveMesh.end(); it++) {
           escreveMalha((*it).second, (*it).first, this->erroPasso);

@@ -36,7 +36,7 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char *argv[], Timer *timer)
       timer->endTimerParallel(0,0,1); // Estimativa de carga process 0
 
       // criação do vetor de curvas para a adapatção
-      std::vector<Curva*> curves = createVectorOfCurves(listBezierPt);
+      //std::vector<Curva*> curves = createVectorOfCurves(listBezierPt);
 
       // distribuição dos patches entre os (n) processos de acordo com suas cargas ordenadas
       listBezierPt = orderPatchesDistribProcess(listBezierPt);
@@ -49,120 +49,117 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char *argv[], Timer *timer)
       double vecBezierPatchesOfProcess0[listBezierPt.size() * 48];
       double vecBezierPatches[listBezierPt.size() * 48];
 
-      int numberPatches = 0, i = 0, izero = 0;
+      int i = 0, izero = 0;
 
       for (int j = 0; j < SIZE_MPI; j++) {
 
           i = 0;
 
-          for (std::list<BezierPatch*>::iterator it = getIteratorListPatches(numberPatches, listBezierPt); it != listBezierPt.end();
-               it++) {
+          for (std::list<BezierPatch*>::iterator it = listBezierPt.begin(); it != listBezierPt.end(); it++) {
 
-              if (j != (*it)->getIdProcess()) {
-                  break;
-                } else {
-                  numberPatches++;
+              if (j == (*it)->getIdProcess()) {
+                  cout<<"RANK_MPI = "<<RANK_MPI<<" id = "<<(*it)->getIdProcess()<<endl;
+
+                  vecBezierPatches[i] = (*it)->getPt00().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt00().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt00().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt10().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt10().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt10().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt20().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt20().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt20().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt30().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt30().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt30().z;
+                  i++;
+
+                  vecBezierPatches[i] = (*it)->getPt01().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt01().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt01().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt11().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt11().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt11().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt21().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt21().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt21().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt31().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt31().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt31().z;
+                  i++;
+
+                  vecBezierPatches[i] = (*it)->getPt02().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt02().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt02().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt12().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt12().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt12().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt22().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt22().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt22().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt32().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt32().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt32().z;
+                  i++;
+
+                  vecBezierPatches[i] = (*it)->getPt03().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt03().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt03().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt13().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt13().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt13().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt23().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt23().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt23().z;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt33().x;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt33().y;
+                  i++;
+                  vecBezierPatches[i] = (*it)->getPt33().z;
+                  i++;
                 }
-
-              vecBezierPatches[i] = (*it)->getPt00().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt00().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt00().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt10().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt10().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt10().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt20().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt20().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt20().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt30().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt30().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt30().z;
-              i++;
-
-              vecBezierPatches[i] = (*it)->getPt01().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt01().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt01().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt11().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt11().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt11().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt21().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt21().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt21().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt31().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt31().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt31().z;
-              i++;
-
-              vecBezierPatches[i] = (*it)->getPt02().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt02().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt02().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt12().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt12().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt12().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt22().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt22().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt22().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt32().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt32().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt32().z;
-              i++;
-
-              vecBezierPatches[i] = (*it)->getPt03().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt03().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt03().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt13().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt13().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt13().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt23().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt23().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt23().z;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt33().x;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt33().y;
-              i++;
-              vecBezierPatches[i] = (*it)->getPt33().z;
-              i++;
             }
 
           if (j == 0) {
@@ -181,11 +178,14 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char *argv[], Timer *timer)
             }
         }
 
+      cout<<"vecBezierPatchesOfProcess0.size() "<<izero<<endl;
+
+
       //gerador de malha para o processo root
 #if USE_OPENMP
-      generator(vecBezierPatchesOfProcess0, izero, timer, 1024, atoi(argv[2]), atoi(argv[3]));
+      generator(vecBezierPatchesOfProcess0, izero, timer, 1024, atoi(argv[1]), atoi(argv[2]));
 #else
-      generator(vecBezierPatchesOfProcess0, izero, timer, 1024, atoi(argv[2]));
+      generator(vecBezierPatchesOfProcess0, izero, timer, 1024, atoi(argv[1]));
 #endif
 
     }else{
@@ -198,9 +198,9 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char *argv[], Timer *timer)
 
       //gerador de malha para o processo (n)
 #if USE_OPENMP
-      generator(ptBezierPatches, sizePtBezierPatches, timer, 1024, atoi(argv[2]), atoi(argv[3]));
+      generator(ptBezierPatches, sizePtBezierPatches, timer, 1024, atoi(argv[1]), atoi(argv[2]));
 #else
-      generator(ptBezierPatches, sizePtBezierPatches, timer, 1024, atoi(argv[2]));
+      generator(ptBezierPatches, sizePtBezierPatches, timer, 1024, atoi(argv[1]));
 #endif
     }
 
@@ -288,28 +288,39 @@ std::list<BezierPatch *> GeradorAdaptativoPorCurvatura::orderPatchesDistribProce
   std::list<BezierPatch*> listPatchesOrder;
 
   if (SIZE_MPI > 1) {
+
       for (int i = 0; i < SIZE_MPI; i++) {
           vectorEstimativeProcessPair.push_back(std::make_pair(0.0, i));
         }
 
       for (std::list<BezierPatch*>::iterator it = listPatches.begin(); it != listPatches.end(); it++) {
+
           std::sort(vectorEstimativeProcessPair.begin(), vectorEstimativeProcessPair.end());
+
           (*it)->setIdProcess(vectorEstimativeProcessPair.front().second);
+
           vectorEstimativeProcessPair.front().first += (*it)->getNumberTriangle();
+
         }
 
       for (int i = 0; i < SIZE_MPI; i++) {
           for (std::list<BezierPatch*>::iterator it = listPatches.begin(); it != listPatches.end(); it++) {
+
               if ((*it)->getIdProcess() == i) {
+
                   listPatchesOrder.push_back((*it));
                 }
             }
         }
+
       return listPatchesOrder;
+
     } else {
+
       for (std::list<BezierPatch*>::iterator it = listPatches.begin(); it != listPatches.end(); it++) {
           (*it)->setIdProcess(0);
         }
+
       return listPatches;
     }
 }
@@ -791,7 +802,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
   ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
   ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
   e1->setId (/*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */ idManager->next(1));
   sub->insereElemento ( e1);
 
   Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
@@ -801,7 +812,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
   ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
   ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
   e2->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
   sub->insereElemento ( e2);
 
   Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
@@ -811,7 +822,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
   ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
   ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
   e3->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
   sub->insereElemento ( e3);
 
   Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
@@ -821,7 +832,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
   ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
   ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
   e4->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
   sub->insereElemento ( e4);
   //==============================================================================*/
 

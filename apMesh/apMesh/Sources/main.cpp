@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 
 #if USE_MPI
   if (ger.execute(argc, argv, timer, status) == 0) {
-      cout << "Método "<<argv[1]<<" Finalizado com Sucesso!" << endl;
+      cout << "Método "<<RANK_MPI<<" Finalizado com Sucesso!" << endl;
       return MPI_Finalize();
     }
 #else

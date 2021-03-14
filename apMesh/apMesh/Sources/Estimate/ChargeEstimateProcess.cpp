@@ -148,7 +148,7 @@ timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
 
         (*it)->setNumberTriangle((*it)->getArea() / (*it)->getAreaTriangle());
        // cout << "Quant. de triângulos do patch: " << (*it)->getNumberTriangle() << endl;
-        elementos = elementos + (*it)->getNumberTriangle();
+        elementos += (*it)->getNumberTriangle();
         //        (*it)->setAreaTriangle(calculateAreaTriangleMedio((*it),4));
         //        cout << "Triângulo Medio 2: " << (*it)->getAreaTriangle() << endl;
         //
@@ -163,7 +163,7 @@ timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
     }
     
     cout<<"INIT >> ANALISE CURVATURE"<< endl;
-     if (WRITE_MESH == std::string("true")){
+     if (WRITE_MESH == std::string("writeMeshOn")){
     write.writeCurvaturePatches(vecCurvature, kamMaior);
      }
     cout<<"area menor: "<<areaMenor<<endl;

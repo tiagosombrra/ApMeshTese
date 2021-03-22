@@ -417,7 +417,6 @@ SubMalha *AdaptadorPorCurvatura::adaptaDominioOmp(CoonsPatch *patch, Performer::
 
     if (!avanco.execute( oldMesh ))
     {
-        cout<<"oldMesh pop "<<omp_get_thread_num()<<endl;
         VertexList vertices = avanco.getVertices();
 
         while (!vertices.empty())

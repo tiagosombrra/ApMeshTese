@@ -68,12 +68,12 @@ Sources/main.cpp \
 
 OBJETOS = $(FONTES:.cpp=.o)
 
-CC            = mpicc
-CXX           = mpicxx
+CC            = gcc
+CXX           = g++
 
 CXXFLAGS_EXTRA = -g3
 CXXFLAGS      = -std=gnu++11 -W -Wall $(CXXFLAGS_EXTRA)
-CXXFLAGS_OMP  = -fopenmp $(CXXFLAGS) 
+CXXFLAGS_OMP  = $(CXXFLAGS) #-fopenmp 
 
 all: $(FONTES) $(PROGRAMA)
 
@@ -85,7 +85,7 @@ $(PROGRAMA): $(OBJETOS)
 	$(CXX) -c $(CXXFLAGS_OMP) $< -o $@
 	
 clean:
-	rm -rfv *.o Sources/Adapter/*.o Sources/Crabmesh/Aft/*.o  Sources/Crabmesh/Numerical/*.o Sources/Crabmesh/Performer/*.o Sources/Curvature/*.o Sources/Data/*.o Sources/Data/Curve/*.o Sources/Data/Mesh/*.o Sources/Data/Patch/*.o Sources/Data/Tree/*.o Sources/Estimate/*.o Sources/Execution/*.o Sources/Generator/*.o Sources/IO/*.o Sources/Parallel/*.o Sources/Timer/*.o $(PROGRAMA)
+	rm -rfv *.o Source/*.o Sources/Adapter/*.o Sources/Crabmesh/Aft/*.o  Sources/Crabmesh/Numerical/*.o Sources/Crabmesh/Performer/*.o Sources/Curvature/*.o Sources/Data/*.o Sources/Data/Curve/*.o Sources/Data/Mesh/*.o Sources/Data/Patch/*.o Sources/Data/Tree/*.o Sources/Estimate/*.o Sources/Execution/*.o Sources/Generator/*.o Sources/IO/*.o Sources/Parallel/*.o Sources/Timer/*.o $(PROGRAMA)
 
 exec:
 	./$(PROGRAMA)

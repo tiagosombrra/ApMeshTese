@@ -26,7 +26,7 @@
 #endif //#ifndef USE_OPENMP
 
 #ifndef USE_PRINT_RESULT
-#define USE_PRINT_RESULT FALSE
+#define USE_PRINT_RESULT TRUE
 #endif //#ifndef USE_PRINT_RESULT
 
 #ifndef USE_PRINT_COMENT

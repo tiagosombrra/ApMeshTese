@@ -42,6 +42,7 @@ public:
     void printTime();
     double getRankThreadTime(int _rank, int _thread, int _type);
     vector<double> getMaxTime();
+    vector<double> getMinTime();
 
     vector<vector<vector<timeval> > > getTimerParallelInit() const;
     void setTimerParallelInit(const vector<vector<vector<timeval> > > &value);
@@ -52,10 +53,14 @@ public:
     vector<vector<vector<double> > > getTimerParallel() const;
     void setTimerParallel(const vector<vector<vector<double> > > &value);
 
-private:
+//private:
+
+    vector<vector<vector<double>>> timerParallelInitMpi;
+    vector<vector<vector<double>>> timerParallelEndMpi;
 
     vector<vector<vector<timeval>>> timerParallelInit;
     vector<vector<vector<timeval>>> timerParallelEnd;
+
     vector<vector<vector<double>>> timerParallel;
 
     string locationName;

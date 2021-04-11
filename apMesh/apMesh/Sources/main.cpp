@@ -10,10 +10,6 @@
 #include "../Headers/Data/Definitions.h"
 #include "../Headers/IO/ReaderPatches.h"
 #include "../Headers/Timer/Timer.h"
-#include "../Headers/Execution/SequentialRun.h"
-#include "../Headers/Execution/OmpRun.h"
-#include "../Headers/Execution/MpiRun.h"
-#include "../Headers/Execution/ParallelRun.h"
 #include "../Headers/IO/PatchBezierReader.h"
 
 #if USE_MPI
@@ -54,49 +50,62 @@ int main(int argc, char **argv)
 {
 
 #if USE_MPI
-  MPI_Init(&argc, &argv);
-  MPI_Comm_size(MPI_COMM_WORLD, &SIZE_MPI);
-  MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
-  MPI_Status status;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &SIZE_MPI);
+    MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
+    MPI_Status status;
 #endif
 
-  // contador do tempo para carregar a malha na memória
-  // (sizeRank, sizeThread, sizeType)
-  Timer *timer = new Timer(atoi(argv[1]), atoi(argv[2]), 11);
+    // contador do tempo para carregar a malha na memória
+    // (sizeRank, sizeThread, sizeType)
+    Timer *timer = new Timer(atoi(argv[1]), atoi(argv[2]), 11);
 
-  //on ou off da escrita da malha
-  WRITE_MESH = argv[4];
+    //cout<<atoi(argv[1])<<atoi(argv[2])<<endl;
+    //cout<<RANK_MPI<<THREAD_ROOT<<endl;
 
-  // contador do tempo de inicialização em segundos em todos os processos
+    //on ou off da escrita da malha
+    WRITE_MESH = argv[4];
+
+    // contador do tempo de inicialização em segundos em todos os processos
 #if USE_MPI
 #if USE_OPENMP
-  timer->initTimerParallel(RANK_MPI, THREAD_ROOT, 10); // Full
+    timer->initTimerParallel(RANK_MPI, THREAD_ROOT, 10); // Full
 #else
-  timer->initTimerParallel(RANK_MPI, 0, 10); // Full
+    timer->initTimerParallel(RANK_MPI, 0, 10); // Full
 #endif
 #elif USE_OPENMP
-  timer->initTimerParallel(0, THREAD_ROOT, 10); // Full
+    timer->initTimerParallel(0, THREAD_ROOT, 10); // Full
 #else
-  timer->initTimerParallel(0, 0, 10); // Full
+    timer->initTimerParallel(0, 0, 10); // Full
 #endif
 
-  GeradorAdaptativoPorCurvatura ger;
+    GeradorAdaptativoPorCurvatura ger;
 
 #if USE_MPI
-  if (ger.execute(argc, argv, timer, status) == 0) {
-      cout << "Método "<<RANK_MPI<<" Finalizado com Sucesso!" << endl;
-      return MPI_Finalize();
+    if (ger.execute(argc, argv, timer, status) == 0) {
+
+        timer->endTimerParallel(RANK_MPI, 0, 10); // Full
+
+        cout<<endl<<"Tempo do processo "<<RANK_MPI<<endl;
+
+        timer->printTime();
+
+        cout << "Método do processo "<<RANK_MPI<<" com "<<argv[2]<< " thread(s) finalizado com Sucesso!" << endl;
+
+        delete timer;
+
+        return MPI_Finalize();
     }
 #else
-  if (ger.execute(argc, argv, timer) == 0) {
-      cout << "Método com "<<argv[1]<<" processo(s) e "<<argv[2]<< " thread(s) finalizado com Sucesso!" << endl;
-      return 0;
+    if (ger.execute(argc, argv, timer) == 0) {
+        cout << "Método com "<<argv[1]<<" processo(s) e "<<argv[2]<< " thread(s) finalizado com Sucesso!" << endl;
+        return 0;
     }else if(argc < 4){
-      cout<<"Erro!!! Apenas"<<argc<<" parâmetros inseridos, quantidade correta é 5 parâmetros"<<endl;
-      return -1;
+        cout<<"Erro!!! Apenas"<<argc<<" parâmetros inseridos, quantidade correta é 5 parâmetros"<<endl;
+        return -1;
     }else{
-      cout << "Erro na execução no método main()"<<endl;
-      return -1;
+        cout << "Erro na execução no método main()"<<endl;
+        return -1;
     }
 #endif
 

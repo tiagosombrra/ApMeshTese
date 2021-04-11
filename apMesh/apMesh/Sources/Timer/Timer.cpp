@@ -4,20 +4,24 @@ Timer::Timer()
 {
     this->timerParallelInit.resize(1);
     this->timerParallelEnd.resize(1);
+    this->timerParallelInitMpi.resize(1);
+    this->timerParallelEndMpi.resize(1);
     this->timerParallel.resize(1);
 
     this->timerParallelInit[0].resize(1);
     this->timerParallelEnd[0].resize(1);
+    this->timerParallelInitMpi[0].resize(1);
+    this->timerParallelEndMpi[0].resize(1);
     this->timerParallel[0].resize(1);
 
     this->timerParallelInit[0][0].resize(11);
     this->timerParallelEnd[0][0].resize(11);
+    this->timerParallelInitMpi[0][0].resize(11);
+    this->timerParallelEndMpi[0][0].resize(11);
     this->timerParallel[0][0].resize(11);
 
-    for (int i = 0; i < 11; ++i) {
-       // this->timerParallelInit[0][0][i] = 0;
-       // this->timerParallelEnd[0][0][i] = 0;
-        this->timerParallel[0][0][i] = 0;
+    for (int i = 0; i < 11; i++) {
+        this->timerParallel[0][0][i] = 0.0;
     }
 }
 
@@ -28,25 +32,29 @@ Timer::Timer(int sizeRank, int sizeThread, int sizeType)
 
     this->timerParallelInit.resize(sizeRank);
     this->timerParallelEnd.resize(sizeRank);
+    this->timerParallelInitMpi.resize(sizeRank);
+    this->timerParallelEndMpi.resize(sizeRank);
     this->timerParallel.resize(sizeRank);
 
-    for (int i = 0; i < sizeRank; ++i) {
+    for (int i = 0; i < sizeRank; i++) {
 
         this->timerParallelInit[i].resize(sizeThread);
         this->timerParallelEnd[i].resize(sizeThread);
+        this->timerParallelInitMpi[i].resize(sizeThread);
+        this->timerParallelEndMpi[i].resize(sizeThread);
         this->timerParallel[i].resize(sizeThread);
 
-        for (int j = 0; j < sizeThread; ++j) {
+        for (int j = 0; j < sizeThread; j++) {
 
             this->timerParallelInit[i][j].resize(sizeType);
             this->timerParallelEnd[i][j].resize(sizeType);
+            this->timerParallelInitMpi[i][j].resize(sizeType);
+            this->timerParallelEndMpi[i][j].resize(sizeType);
             this->timerParallel[i][j].resize(sizeType);
 
-            for (int l = 0; l < sizeType; ++l) {
+            for (int l = 0; l < sizeType; l++) {
 
-               // this->timerParallelInit[i][j][l] = 0;
-               // this->timerParallelEnd[i][j][l] = 0;
-                this->timerParallel[i][j][l] = 0;
+                this->timerParallel[i][j][l] = 0.0;
             }
         }
     }
@@ -81,51 +89,58 @@ bool Timer::deleteFile(string nameFile)
 }
 
 void Timer::initTimerParallel(int _rank, int _thread, int _type)
-{
-
-    //time_clock = clock();
-    //this->timerParallelInit[_rank][_thread][_type] = (double)time_clock;
+{   
+    //#if USE_MPI
+    //    this->timerParallelInitMpi[_rank][_thread][_type] = MPI_Wtime();
+    //#else
     timeval begin;
     gettimeofday(&begin, 0);
     this->timerParallelInit[_rank][_thread][_type] = begin;
+    //#endif //USE_MPI
 
 }
 
 void Timer::endTimerParallel(int _rank, int _thread, int _type)
 {
-//    time_clock = clock();
-//    this->timerParallelEnd[_rank][_thread][_type] = (double)time_clock;
-//    calculateTime(_rank, _thread, _type);
+    //#if USE_MPI
+    //    this->timerParallelEndMpi[_rank][_thread][_type] = MPI_Wtime();
+    //    calculateTime(_rank, _thread, _type);
+    //#else
     timeval end;
     gettimeofday(&end, 0);
     this->timerParallelEnd[_rank][_thread][_type] = end;
     calculateTime(_rank, _thread, _type);
+    //#endif //USE_MPI
+
 }
 
 void Timer::calculateTime(int _rank, int _thread, int _type)
 {
-//    this->timerParallel[_rank][_thread][_type] += this->timerParallelEnd[_rank][_thread][_type]
-//            / CLOCKS_PER_SEC - this->timerParallelInit[_rank][_thread][_type] / CLOCKS_PER_SEC;
+    //#if USE_MPI
+    //    this->timerParallel[_rank][_thread][_type] += (this->timerParallelEndMpi[_rank][_thread][_type])
+    //                                                - (this->timerParallelInitMpi[_rank][_thread][_type]);
+    //#else
     long seconds = (this->timerParallelEnd[_rank][_thread][_type]).tv_sec - (this->timerParallelInit[_rank][_thread][_type]).tv_sec;
     long microseconds = (this->timerParallelEnd[_rank][_thread][_type]).tv_usec - (this->timerParallelInit[_rank][_thread][_type]).tv_usec;
     this->timerParallel[_rank][_thread][_type] += seconds + microseconds*1e-6;
-
+    //#endif //USE_MPI
 }
+
 
 void Timer::printTime()
 {
     vector<double> max = getMaxTime();
-    cout << "Inicialização: " << max[0] << endl;
+    //cout << "Inicialização: " << max[0] << endl;
     cout << "Estimativa de carga: " << max[1] << endl;
     cout << "Geração da malha inicial: " << max[2] << endl;
     cout << "Adaptação das curvas: " << max[3] << endl;
     cout << "Adaptação do domínio: " << max[4] << endl;
-    cout << "Quadtree: " << max[5] << endl;
-    cout << "Avanço de front.: " << max[6] << endl;
+    //  cout << "Quadtree: " << max[5] << endl;
+    //  cout << "Avanço de front.: " << max[6] << endl;
     cout << "Calculo do erro: " << max[7] << endl;
-    cout << "Overhead: " << max[8] << endl;
+    cout << "Overhead: " <<max[10] - max[8] - max[7] - max[4] - max[3] - max[2] - max[1] << endl;
     cout << "SendRecv: " << max[9] << endl;
-    cout << "Full: " << max[10] << endl<<endl;
+    cout << "Full: " << max[10] << endl;
 
 }
 
@@ -154,6 +169,28 @@ vector<double> Timer::getMaxTime()
     }
 
     return max;
+}
+
+vector<double> Timer::getMinTime()
+{
+    vector<double> min;
+    min.resize(this->timerParallel[0][0].size());
+
+    for (unsigned int i = 0; i < this->timerParallel[0][0].size(); ++i) {
+        min[i] = 999999;
+    }
+
+    for (unsigned int i = 0; i < this->timerParallel.size(); ++i) {
+        for (unsigned int j = 0; j < timerParallel[i].size(); ++j) {
+            for (unsigned int l = 0; l < this->timerParallel[i][j].size(); ++l) {
+                if (this->timerParallel[i][j][l] < min[l]) {
+                    min[l] = this->timerParallel[i][j][l];
+                }
+            }
+        }
+    }
+
+    return min;
 }
 
 vector<vector<vector<timeval> > > Timer::getTimerParallelInit() const

@@ -16,8 +16,8 @@
 #endif //#ifndef TRUE
 
 #ifndef USE_MPI
-#define USE_MPI FALSE
-#define RANK_0 0
+#define USE_MPI TRUE
+#define RANK_ROOT 0
 #endif //#ifndef USE_MPI
 
 #ifndef USE_OPENMP
@@ -128,12 +128,11 @@
 ///End global defines
 
 #if USE_MPI
-    #include "mpi.h"
+    #include <mpi.h>
     #define PROCESS_ROOT 0
     #define TAG_SIZE_OF_DOUBLE 0
     #define TAG_DOUBLE 1
     #define TAG_PASSO 2
-    #define RANK_ROOT 0
     #define USE_SERIAL false
 #endif //#if USE_MPI
 

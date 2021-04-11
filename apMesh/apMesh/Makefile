@@ -2,10 +2,6 @@ PROGRAMA = apMesh
 
 FONTES = Sources/Data/Definitions.cpp \
 Sources/Estimate/ChargeEstimateProcess.cpp \
-Sources/Execution/MpiRun.cpp \
-Sources/Execution/OmpRun.cpp \
-Sources/Execution/ParallelRun.cpp \
-Sources/Execution/SequentialRun.cpp \
 Sources/IO/PatchBezierReader.cpp \
 Sources/IO/WriteOBJFile.cpp \
 Sources/Parallel/ApMeshCommunicator.cpp \
@@ -64,31 +60,33 @@ Sources/Parallel/TMCommunicator.cpp \
 Sources/Parallel/ThreadManager.cpp \
 Sources/Parallel/Transferable.cpp \
 Sources/Timer/Timer.cpp \
-Sources/main.cpp \
+Sources/main.cpp
 
 OBJETOS = $(FONTES:.cpp=.o)
 
 CC            = gcc
 CXX           = g++
+MPICC         = mpicc
+MPICXX        = mpic++
 
-CXXFLAGS_EXTRA = -g3
-CXXFLAGS      = -std=gnu++11 -W -Wall $(CXXFLAGS_EXTRA)
-CXXFLAGS_OMP  = $(CXXFLAGS) #-fopenmp 
+INCPATH = -IHeaders/Adapter -IHeaders/Crabmesh/Aft -IHeaders/Crabmesh/Numerical -IHeaders/Curvature -IHeaders/Data -IHeaders/Data/Curve -IHeaders/Data/Mesh -IHeaders/Data/Patch -IHeaders/Data/Tree -IHeaders/Estimate -IHeaders/Generator -IHeaders/IO -IHeaders/Parallel -IHeaders/Timer
 
-all: $(FONTES) $(PROGRAMA)
+LIBPATH = -LSources/Adapter -LSources/Crabmesh/Aft -LSources/Crabmesh/Numerical -LSources/Curvature -LSources/Data -LSources/Data/Curve -LSources/Data/Mesh -LSources/Data/Patch -LSources/Data/Tree -LSources/Estimate -LSources/Generator -LSources/IO -LSources/Parallel -LSources/Timer
+
+CXXFLAGS_EXTRA = -O3 -W -Wall
+CXXFLAGS      = -std=c++17 $(CXXFLAGS_EXTRA)
+CXXFLAGS_OMP  = -fopenmp  $(CXXFLAGS) 
 
 $(PROGRAMA): $(OBJETOS)
-	$(CXX) $(CXXFLAGS_OMP) $(OBJETOS) -o $@
+	@echo "gerando o executavel..."
+	$(MPICXX) $(INCPATH) $(CXXFLAGS_OMP) $(LIBPATH) $(OBJETOS) -o $@
 
 .cpp.o:
-	#$(COMPILADOR) $(CFLAGS) $< -o $@
-	$(CXX) -c $(CXXFLAGS_OMP) $< -o $@
-	
-clean:
-	rm -rfv *.o Source/*.o Sources/Adapter/*.o Sources/Crabmesh/Aft/*.o  Sources/Crabmesh/Numerical/*.o Sources/Crabmesh/Performer/*.o Sources/Curvature/*.o Sources/Data/*.o Sources/Data/Curve/*.o Sources/Data/Mesh/*.o Sources/Data/Patch/*.o Sources/Data/Tree/*.o Sources/Estimate/*.o Sources/Execution/*.o Sources/Generator/*.o Sources/IO/*.o Sources/Parallel/*.o Sources/Timer/*.o $(PROGRAMA)
+	@echo "gerando os .o..."
+	$(MPICXX) $(INCPATH) -c $(CXXFLAGS_OMP) $< -o $@
 
-exec:
+clean:
+	rm -rfv *.o Sources/*.o Sources/Adapter/*.o Sources/Crabmesh/Aft/*.o  Sources/Crabmesh/Numerical/*.o Sources/Crabmesh/Performer/*.o Sources/Curvature/*.o Sources/Data/*.o Sources/Data/Curve/*.o Sources/Data/Mesh/*.o Sources/Data/Patch/*.o Sources/Data/Tree/*.o Sources/Estimate/*.o Sources/Generator/*.o Sources/IO/*.o Sources/Parallel/*.o Sources/Timer/*.o $(PROGRAMA)
+
+exec: 
 	./$(PROGRAMA)
-	
-ce: clean all 
-	

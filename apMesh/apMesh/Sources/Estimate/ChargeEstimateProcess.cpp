@@ -12,19 +12,19 @@ static bool sortByNt(const BezierPatch* lhs, const BezierPatch* rhs)
 }
 
 // retonar uma lista de patch de bezier ordenados de acordo com sua estimativa de carga em ordem decrescente.
-std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* geo, Timer* timer, std::string entrada)
+std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* geo, Timer *timer, std::string entrada)
 {
 
     std::list<BezierPatch*> listBezierPt;
     std::list<BezierPatch*> listBezierPtOrder;
 
     PatchBezierReader* pt = new PatchBezierReader();
-    timer->endTimerParallel(0, 0, 10); //Full
-    cout<<"INIT >> LOADBPFILE"<< endl;
+    //timer->endTimerParallel(0, 0, 10); //Full
+//    cout<<"INIT >> LOADBPFILE"<< endl;
     listBezierPt = pt->loaderBPFile(entrada);
-    cout<<"END >> LOADBPFILE"<< endl;
-    timer->initTimerParallel(0, 0, 10); //Full
-    timer->initTimerParallel(0, 0, 8); // Over
+//    cout<<"END >> LOADBPFILE"<< endl;
+   // timer->initTimerParallel(0, 0, 10); //Full
+  //  timer->initTimerParallel(0, 0, 8); // Over
 
     delete pt;
 
@@ -57,10 +57,10 @@ double kamMaior = 0;
 
 double elementos= 0;
 
-timer->endTimerParallel(0, 0, 8); // Over
-timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
+//timer->endTimerParallel(0, 0, 8); // Over
+//timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
 
-     cout<<"INIT >> ESTIMATIVE"<< endl;
+//     cout<<"INIT >> ESTIMATIVE"<< endl;
 
     for (std::list<BezierPatch*>::iterator it = listBezierPt.begin(); it != listBezierPt.end(); it++) {
 
@@ -162,15 +162,15 @@ timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
         vecCurvature.push_back((*it)->getKaMedio());
     }
     
-    cout<<"INIT >> ANALISE CURVATURE"<< endl;
+//    cout<<"INIT >> ANALISE CURVATURE"<< endl;
      if (WRITE_MESH == std::string("writeMeshOn")){
     write.writeCurvaturePatches(vecCurvature, kamMaior);
      }
-    cout<<"area menor: "<<areaMenor<<endl;
-    cout<<"area maior: "<<areaMaior<<endl;
-    cout<<"kam menor: "<<kamMenor<<endl;
-    cout<<"kam maior: "<<kamMaior<<endl;
-    cout<<"#elementos_estimados: "<<elementos<<endl;
+//    cout<<"area menor: "<<areaMenor<<endl;
+//    cout<<"area maior: "<<areaMaior<<endl;
+//    cout<<"kam menor: "<<kamMenor<<endl;
+//    cout<<"kam maior: "<<kamMaior<<endl;
+//    cout<<"#elementos_estimados: "<<elementos<<endl;
     
     if (listBezierPtOrder.size() > 1) {
         listBezierPtOrder.sort(sortByNt);

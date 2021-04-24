@@ -1,0 +1,44 @@
+
+#!/bin/sh
+#SBATCH -J 289_1
+#SBATCH --partition long
+#SBATCH -t 6:00:00
+#SBATCH --ntasks 1
+#SBATCH --nodes 1
+#SBATCH --exclusive
+#SBATCH --cpus-per-task 1
+#SBATCH -o /dev/null
+
+date >> Saida/289/289_11.out 2>&1
+date >> Saida/289/289_12.out 2>&1
+date >> Saida/289/289_13.out 2>&1
+date >> Saida/289/289_14.out 2>&1
+date >> Saida/289/289_15.out 2>&1
+date >> Saida/289/289_16.out 2>&1
+date >> Saida/289/289_17.out 2>&1
+date >> Saida/289/289_18.out 2>&1
+date >> Saida/289/289_19.out 2>&1
+
+ulimit -s unlimited
+ulimit -a
+
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_11.out 2>&1
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_12.out 2>&1
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_13.out 2>&1
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_14.out 2>&1
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_15.out 2>&1
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_16.out 2>&1
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_17.out 2>&1
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_18.out 2>&1
+srun --mpi=pmi2 ./apMesh 1 1 Entrada/mountain_289_patches.bp writeOff >> Saida/289/289_19.out 2>&1
+
+date >> Saida/289/289_11.out 2>&1
+date >> Saida/289/289_12.out 2>&1
+date >> Saida/289/289_13.out 2>&1
+date >> Saida/289/289_14.out 2>&1
+date >> Saida/289/289_15.out 2>&1
+date >> Saida/289/289_16.out 2>&1
+date >> Saida/289/289_17.out 2>&1
+date >> Saida/289/289_18.out 2>&1
+date >> Saida/289/289_19.out 2>&1
+

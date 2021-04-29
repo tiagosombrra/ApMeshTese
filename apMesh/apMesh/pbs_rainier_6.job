@@ -1,0 +1,106 @@
+#!/bin/bash
+#PBS -l select=6:ncpus=48:mpiprocs=1
+#PBS -l walltime=24:00:00
+#PBS -j oe
+#PBS -V
+#PBS -N RAI_6
+#PBS -m abe
+#PBS -M tiagosombrra@gmail.com
+
+# load modules
+module load gcc/9.3.0 openmpi-gnu/4.0.1
+
+#change directory
+cd ${PBS_O_WORKDIR}
+
+# run
+echo "Init 6 nodes  and 1 cpu"
+mpirun ./apMesh 6 1 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 1 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 1 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 1 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 1 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 2 cpus"
+mpirun ./apMesh 6 2 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 2 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 2 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 2 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 2 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 4 cpus"
+mpirun ./apMesh 6 4 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 4 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 4 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 4 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 4 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 6 cpus"
+mpirun ./apMesh 6 6 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 6 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 6 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 6 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 6 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 8 cpus"
+mpirun ./apMesh 6 8 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 8 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 8 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 8 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 8 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 10 cpus"
+mpirun ./apMesh 6 10 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 10 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 10 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 10 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 10 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 12 cpus"
+mpirun ./apMesh 6 12 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 12 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 12 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 12 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 12 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 14 cpus"
+mpirun ./apMesh 6 14 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 14 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 14 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 14 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 14 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 16 cpus"
+mpirun ./apMesh 6 16 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 16 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 16 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 16 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 16 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 18 cpus"
+mpirun ./apMesh 6 18 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 18 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 18 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 18 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 18 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 20 cpus"
+mpirun ./apMesh 6 20 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 20 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 20 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 20 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 20 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 22 cpus"
+mpirun ./apMesh 6 22 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 22 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 22 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 22 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 22 Entrada/monte_rainier_sub_1.bp writeOff
+
+echo "Init 6 nodes  and 24 cpus"
+mpirun ./apMesh 6 24 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 24 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 24 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 24 Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 6 24 Entrada/monte_rainier_sub_1.bp writeOff

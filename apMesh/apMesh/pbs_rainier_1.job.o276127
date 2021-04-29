@@ -1,0 +1,11 @@
+
+Tempo do processo 0
+Estimativa de carga: 27.7659
+Geração da malha inicial: 0.017326
+Adaptação das curvas: 24.7201
+Adaptação do domínio: 446.445
+Calculo do erro: 289.416
+Overhead: 1.56319
+SendRecv: 0
+Full: 789.928
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!

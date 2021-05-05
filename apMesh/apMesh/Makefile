@@ -67,7 +67,7 @@ OBJETOS = $(FONTES:.cpp=.o)
 CC            = gcc
 CXX           = g++
 MPICC         = mpicc
-MPICXX        = mpic++
+MPICXX        = mpicxx
 
 INCPATH = -IHeaders/Adapter -IHeaders/Crabmesh/Aft -IHeaders/Crabmesh/Numerical -IHeaders/Curvature -IHeaders/Data -IHeaders/Data/Curve -IHeaders/Data/Mesh -IHeaders/Data/Patch -IHeaders/Data/Tree -IHeaders/Estimate -IHeaders/Generator -IHeaders/IO -IHeaders/Parallel -IHeaders/Timer
 

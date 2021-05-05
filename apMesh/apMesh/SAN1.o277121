@@ -1,0 +1,38 @@
+Init 1 nodes  and 12 cpus
+[r1i6n6:26362] *** Process received signal ***
+[r1i6n6:26362] Signal: Segmentation fault (11)
+[r1i6n6:26362] Signal code: Address not mapped (1)
+[r1i6n6:26362] Failing at address: 0x36
+[r1i6n6:26362] [ 0] /lib64/libpthread.so.0(+0xf870)[0x2aaaabd44870]
+[r1i6n6:26362] [ 1] /sw/apps/suse/gnu/gcc/9.3.0/lib64/libstdc++.so.6(_ZNSt8__detail15_List_node_base7_M_hookEPS0_+0x0)[0x2aaaab2c0ac0]
+[r1i6n6:26362] [ 2] ./apMesh[0x469a56]
+[r1i6n6:26362] [ 3] ./apMesh[0x475ff3]
+[r1i6n6:26362] [ 4] ./apMesh[0x44c3e7]
+[r1i6n6:26362] [ 5] ./apMesh[0x47871f]
+[r1i6n6:26362] [ 6] /sw/apps/suse/gnu/gcc/9.3.0/lib64/libgomp.so.1(+0x1b486)[0x2aaaab901486]
+[r1i6n6:26362] [ 7] /lib64/libpthread.so.0(+0x80a4)[0x2aaaabd3d0a4]
+[r1i6n6:26362] [ 8] /lib64/libc.so.6(clone+0x6d)[0x2aaaac03702d]
+[r1i6n6:26362] *** End of error message ***
+/var/spool/PBS/mom_priv/jobs/277121.service1.SC: line 19: 26362 Segmentation fault      ./apMesh 1 48 Entrada/monte_rainier_sub_1.bp writeOff
+
+Tempo do processo 0
+Estimativa de carga: 27.6573
+Geração da malha inicial: 0.008513
+Adaptação das curvas: 24.8005
+Adaptação do domínio: 57.7364
+Calculo do erro: 124.361
+Overhead: 1.55392
+SendRecv: 0
+Full: 236.118
+Método do processo 0 com 12 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.6644
+Geração da malha inicial: 0.008683
+Adaptação das curvas: 24.8073
+Adaptação do domínio: 65.3893
+Calculo do erro: 158.322
+Overhead: 1.553
+SendRecv: 0
+Full: 277.745
+Método do processo 0 com 12 thread(s) finalizado com Sucesso!

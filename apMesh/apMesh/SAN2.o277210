@@ -1,0 +1,74 @@
+Init 1 nodes  and 12 cpus
+
+Tempo do processo 0
+Estimativa de carga: 27.7129
+Geração da malha inicial: 0.007809
+Adaptação das curvas: 24.7421
+Adaptação do domínio: 34.0996
+Calculo do erro: 73.5882
+Overhead: 1.55469
+SendRecv: 0
+Full: 161.705
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+[r2i2n6:35964] *** Process received signal ***
+[r2i2n6:35964] Signal: Segmentation fault (11)
+[r2i2n6:35964] Signal code: Address not mapped (1)
+[r2i2n6:35964] Failing at address: 0x43
+[r2i2n6:35964] [ 0] /lib64/libpthread.so.0(+0xf870)[0x7fffec66f870]
+[r2i2n6:35964] [ 1] /sw/apps/suse/gnu/gcc/9.3.0/lib64/libstdc++.so.6(_ZNSt8__detail15_List_node_base7_M_hookEPS0_+0x0)[0x7fffed08bac0]
+[r2i2n6:35964] [ 2] ./apMesh[0x469a56]
+[r2i2n6:35964] [ 3] ./apMesh[0x475fe7]
+[r2i2n6:35964] [ 4] ./apMesh[0x44c3e7]
+[r2i2n6:35964] [ 5] ./apMesh[0x47871f]
+[r2i2n6:35964] [ 6] /sw/apps/suse/gnu/gcc/9.3.0/lib64/libgomp.so.1(+0x1b486)[0x7fffecab0486]
+[r2i2n6:35964] [ 7] /lib64/libpthread.so.0(+0x80a4)[0x7fffec6680a4]
+[r2i2n6:35964] [ 8] /lib64/libc.so.6(clone+0x6d)[0x7fffec39d02d]
+[r2i2n6:35964] *** End of error message ***
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 35964 RUNNING AT r2i2n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+[r2i2n6:36054] *** Process received signal ***
+[r2i2n6:36054] Signal: Segmentation fault (11)
+[r2i2n6:36054] Signal code: Address not mapped (1)
+[r2i2n6:36054] Failing at address: 0x36
+[r2i2n6:36054] [ 0] /lib64/libpthread.so.0(+0xf870)[0x7fffec66f870]
+[r2i2n6:36054] [ 1] /sw/apps/suse/gnu/gcc/9.3.0/lib64/libstdc++.so.6(_ZNSt8__detail15_List_node_base7_M_hookEPS0_+0x0)[0x7fffed08bac0]
+[r2i2n6:36054] [ 2] ./apMesh[0x469a56]
+[r2i2n6:36054] [ 3] ./apMesh[0x475ff3]
+[r2i2n6:36054] [ 4] ./apMesh[0x44c3e7]
+[r2i2n6:36054] [ 5] ./apMesh[0x47871f]
+[r2i2n6:36054] [ 6] /sw/apps/suse/gnu/gcc/9.3.0/lib64/libgomp.so.1(+0x1b486)[0x7fffecab0486]
+[r2i2n6:36054] [ 7] /lib64/libpthread.so.0(+0x80a4)[0x7fffec6680a4]
+[r2i2n6:36054] [ 8] /lib64/libc.so.6(clone+0x6d)[0x7fffec39d02d]
+[r2i2n6:36054] *** End of error message ***
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 36054 RUNNING AT r2i2n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 27.6863
+Geração da malha inicial: 0.007912
+Adaptação das curvas: 24.6766
+Adaptação do domínio: 30.8792
+Calculo do erro: 70.2855
+Overhead: 1.54956
+SendRecv: 0
+Full: 155.085
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.6785
+Geração da malha inicial: 0.007771
+Adaptação das curvas: 24.7538
+Adaptação do domínio: 34.4728
+Calculo do erro: 67.3922
+Overhead: 1.55132
+SendRecv: 0
+Full: 155.856
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!

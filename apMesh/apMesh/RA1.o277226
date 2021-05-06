@@ -1,0 +1,29 @@
+Init 1 nodes  and 1 cpu
+
+Tempo do processo 0
+Estimativa de carga: 27.9824
+Geração da malha inicial: 0.01762
+Adaptação das curvas: 24.5787
+Adaptação do domínio: 446.319
+Calculo do erro: 288.922
+Overhead: 1.55025
+SendRecv: 0
+Full: 789.37
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9482
+Geração da malha inicial: 0.017783
+Adaptação das curvas: 24.5778
+Adaptação do domínio: 446.076
+Calculo do erro: 288.66
+Overhead: 1.54641
+SendRecv: 0
+Full: 788.826
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 48346 RUNNING AT r2i2n9.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================

@@ -1,0 +1,786 @@
+
+Tempo do processo 0
+Estimativa de carga: 28.042
+Geração da malha inicial: 0.006147
+Adaptação das curvas: 25.3007
+Adaptação do domínio: 23.7194
+Calculo do erro: 41.9014
+Overhead: 1.55555
+SendRecv: 0
+Full: 120.525
+Método do processo 0 com 48 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 1 cpu
+
+Tempo do processo 0
+Estimativa de carga: 27.9972
+Geração da malha inicial: 0.017652
+Adaptação das curvas: 24.3838
+Adaptação do domínio: 445.749
+Calculo do erro: 307.951
+Overhead: 1.55412
+SendRecv: 0
+Full: 807.653
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0729
+Geração da malha inicial: 0.017813
+Adaptação das curvas: 24.3814
+Adaptação do domínio: 445.729
+Calculo do erro: 307.769
+Overhead: 1.55003
+SendRecv: 0
+Full: 807.52
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0581
+Geração da malha inicial: 0.017814
+Adaptação das curvas: 24.3806
+Adaptação do domínio: 445.761
+Calculo do erro: 307.723
+Overhead: 1.55336
+SendRecv: 0
+Full: 807.494
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0861
+Geração da malha inicial: 0.017704
+Adaptação das curvas: 24.3842
+Adaptação do domínio: 445.561
+Calculo do erro: 307.683
+Overhead: 1.55112
+SendRecv: 0
+Full: 807.283
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0457
+Geração da malha inicial: 0.017751
+Adaptação das curvas: 24.3831
+Adaptação do domínio: 445.742
+Calculo do erro: 307.65
+Overhead: 1.55508
+SendRecv: 0
+Full: 807.393
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 2 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.009
+Geração da malha inicial: 0.017485
+Adaptação das curvas: 24.4037
+Adaptação do domínio: 246.633
+Calculo do erro: 355.587
+Overhead: 1.55407
+SendRecv: 0
+Full: 656.204
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0288
+Geração da malha inicial: 0.017043
+Adaptação das curvas: 24.4001
+Adaptação do domínio: 248.815
+Calculo do erro: 519.153
+Overhead: 1.5471
+SendRecv: 0
+Full: 821.961
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.067
+Geração da malha inicial: 0.017401
+Adaptação das curvas: 24.4044
+Adaptação do domínio: 240.867
+Calculo do erro: 368.208
+Overhead: 1.55103
+SendRecv: 0
+Full: 663.115
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9094
+Geração da malha inicial: 0.017497
+Adaptação das curvas: 24.4006
+Adaptação do domínio: 249.82
+Calculo do erro: 547.094
+Overhead: 1.54996
+SendRecv: 0
+Full: 850.792
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0492
+Geração da malha inicial: 0.017372
+Adaptação das curvas: 24.4001
+Adaptação do domínio: 242.354
+Calculo do erro: 362.977
+Overhead: 1.5503
+SendRecv: 0
+Full: 659.347
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 4 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.0752
+Geração da malha inicial: 0.012426
+Adaptação das curvas: 24.4291
+Adaptação do domínio: 141.865
+Calculo do erro: 319.666
+Overhead: 1.54546
+SendRecv: 0
+Full: 515.593
+Método do processo 0 com 4 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0467
+Geração da malha inicial: 0.012539
+Adaptação das curvas: 24.4448
+Adaptação do domínio: 142.401
+Calculo do erro: 305.439
+Overhead: 1.54671
+SendRecv: 0
+Full: 501.89
+Método do processo 0 com 4 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0778
+Geração da malha inicial: 0.012636
+Adaptação das curvas: 24.4518
+Adaptação do domínio: 141.217
+Calculo do erro: 392.288
+Overhead: 1.54674
+SendRecv: 0
+Full: 587.593
+Método do processo 0 com 4 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.047
+Geração da malha inicial: 0.012723
+Adaptação das curvas: 24.4234
+Adaptação do domínio: 142.352
+Calculo do erro: 392.147
+Overhead: 1.54631
+SendRecv: 0
+Full: 588.528
+Método do processo 0 com 4 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0013
+Geração da malha inicial: 0.012221
+Adaptação das curvas: 24.4265
+Adaptação do domínio: 140.886
+Calculo do erro: 376.959
+Overhead: 1.54645
+SendRecv: 0
+Full: 571.832
+Método do processo 0 com 4 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 6 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.0001
+Geração da malha inicial: 0.010523
+Adaptação das curvas: 24.5034
+Adaptação do domínio: 106.746
+Calculo do erro: 253.862
+Overhead: 1.54735
+SendRecv: 0
+Full: 414.67
+Método do processo 0 com 6 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.032
+Geração da malha inicial: 0.010172
+Adaptação das curvas: 24.4277
+Adaptação do domínio: 103.931
+Calculo do erro: 247.669
+Overhead: 1.54655
+SendRecv: 0
+Full: 405.616
+Método do processo 0 com 6 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 17171 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28.0606
+Geração da malha inicial: 0.009835
+Adaptação das curvas: 24.4319
+Adaptação do domínio: 109.791
+Calculo do erro: 319.818
+Overhead: 1.54744
+SendRecv: 0
+Full: 483.659
+Método do processo 0 com 6 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0185
+Geração da malha inicial: 0.010448
+Adaptação das curvas: 24.429
+Adaptação do domínio: 108.887
+Calculo do erro: 279.681
+Overhead: 1.54472
+SendRecv: 0
+Full: 442.571
+Método do processo 0 com 6 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 8 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.0168
+Geração da malha inicial: 0.009508
+Adaptação das curvas: 24.4959
+Adaptação do domínio: 85.6051
+Calculo do erro: 209.704
+Overhead: 1.54583
+SendRecv: 0
+Full: 349.377
+Método do processo 0 com 8 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 17480 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 17549 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 17618 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28.0199
+Geração da malha inicial: 0.009699
+Adaptação das curvas: 24.4789
+Adaptação do domínio: 87.1598
+Calculo do erro: 216.531
+Overhead: 1.55014
+SendRecv: 0
+Full: 357.749
+Método do processo 0 com 8 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 10 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.0657
+Geração da malha inicial: 0.009034
+Adaptação das curvas: 24.5042
+Adaptação do domínio: 72.6025
+Calculo do erro: 163.97
+Overhead: 1.54389
+SendRecv: 0
+Full: 290.695
+Método do processo 0 com 10 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 17849 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28.103
+Geração da malha inicial: 0.009166
+Adaptação das curvas: 24.5076
+Adaptação do domínio: 74.2067
+Calculo do erro: 173.737
+Overhead: 1.5476
+SendRecv: 0
+Full: 302.111
+Método do processo 0 com 10 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0984
+Geração da malha inicial: 0.008587
+Adaptação das curvas: 24.509
+Adaptação do domínio: 69.9427
+Calculo do erro: 153.094
+Overhead: 1.54091
+SendRecv: 0
+Full: 277.194
+Método do processo 0 com 10 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0276
+Geração da malha inicial: 0.008975
+Adaptação das curvas: 24.5465
+Adaptação do domínio: 67.3377
+Calculo do erro: 167.129
+Overhead: 1.54069
+SendRecv: 0
+Full: 288.59
+Método do processo 0 com 10 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 12 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.0856
+Geração da malha inicial: 0.008739
+Adaptação das curvas: 24.5994
+Adaptação do domínio: 63.1334
+Calculo do erro: 143.143
+Overhead: 1.55113
+SendRecv: 0
+Full: 260.522
+Método do processo 0 com 12 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0681
+Geração da malha inicial: 0.008648
+Adaptação das curvas: 24.4771
+Adaptação do domínio: 64.8301
+Calculo do erro: 134.963
+Overhead: 1.5483
+SendRecv: 0
+Full: 253.896
+Método do processo 0 com 12 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9628
+Geração da malha inicial: 0.008753
+Adaptação das curvas: 24.5488
+Adaptação do domínio: 63.5069
+Calculo do erro: 128.607
+Overhead: 1.54912
+SendRecv: 0
+Full: 246.183
+Método do processo 0 com 12 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 18400 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28.0516
+Geração da malha inicial: 0.008429
+Adaptação das curvas: 24.498
+Adaptação do domínio: 59.5967
+Calculo do erro: 136.321
+Overhead: 1.54609
+SendRecv: 0
+Full: 250.022
+Método do processo 0 com 12 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 14 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.0248
+Geração da malha inicial: 0.008506
+Adaptação das curvas: 24.5594
+Adaptação do domínio: 56.8491
+Calculo do erro: 114.727
+Overhead: 1.54831
+SendRecv: 0
+Full: 225.717
+Método do processo 0 com 14 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9622
+Geração da malha inicial: 0.008298
+Adaptação das curvas: 24.6384
+Adaptação do domínio: 54.9866
+Calculo do erro: 110.055
+Overhead: 1.54681
+SendRecv: 0
+Full: 219.197
+Método do processo 0 com 14 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0413
+Geração da malha inicial: 0.008511
+Adaptação das curvas: 24.5544
+Adaptação do domínio: 53.4788
+Calculo do erro: 126.734
+Overhead: 1.55078
+SendRecv: 0
+Full: 234.368
+Método do processo 0 com 14 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0883
+Geração da malha inicial: 0.008406
+Adaptação das curvas: 24.5125
+Adaptação do domínio: 49.6768
+Calculo do erro: 112.881
+Overhead: 1.55041
+SendRecv: 0
+Full: 216.717
+Método do processo 0 com 14 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9437
+Geração da malha inicial: 0.008704
+Adaptação das curvas: 24.6309
+Adaptação do domínio: 50.7083
+Calculo do erro: 125.32
+Overhead: 1.54766
+SendRecv: 0
+Full: 230.159
+Método do processo 0 com 14 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 16 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.1148
+Geração da malha inicial: 0.008676
+Adaptação das curvas: 24.5898
+Adaptação do domínio: 47.6182
+Calculo do erro: 106.632
+Overhead: 1.54241
+SendRecv: 0
+Full: 208.506
+Método do processo 0 com 16 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0103
+Geração da malha inicial: 0.008421
+Adaptação das curvas: 24.6478
+Adaptação do domínio: 48.7492
+Calculo do erro: 100.348
+Overhead: 1.54307
+SendRecv: 0
+Full: 203.307
+Método do processo 0 com 16 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0492
+Geração da malha inicial: 0.008453
+Adaptação das curvas: 24.6856
+Adaptação do domínio: 45.5121
+Calculo do erro: 98.2685
+Overhead: 1.54716
+SendRecv: 0
+Full: 198.071
+Método do processo 0 com 16 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0441
+Geração da malha inicial: 0.008642
+Adaptação das curvas: 24.6458
+Adaptação do domínio: 48.4778
+Calculo do erro: 99.2836
+Overhead: 1.54284
+SendRecv: 0
+Full: 202.003
+Método do processo 0 com 16 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9774
+Geração da malha inicial: 0.00843
+Adaptação das curvas: 24.5745
+Adaptação do domínio: 49.4369
+Calculo do erro: 100.153
+Overhead: 1.54469
+SendRecv: 0
+Full: 203.695
+Método do processo 0 com 16 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 18 cpus
+
+Tempo do processo 0
+Estimativa de carga: 27.868
+Geração da malha inicial: 0.008098
+Adaptação das curvas: 24.6384
+Adaptação do domínio: 45.3591
+Calculo do erro: 91.3705
+Overhead: 1.54511
+SendRecv: 0
+Full: 190.789
+Método do processo 0 com 18 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0408
+Geração da malha inicial: 0.008361
+Adaptação das curvas: 24.728
+Adaptação do domínio: 44.6813
+Calculo do erro: 89.4367
+Overhead: 1.54621
+SendRecv: 0
+Full: 188.441
+Método do processo 0 com 18 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9858
+Geração da malha inicial: 0.008081
+Adaptação das curvas: 24.7763
+Adaptação do domínio: 41.1187
+Calculo do erro: 81.5176
+Overhead: 1.54548
+SendRecv: 0
+Full: 176.952
+Método do processo 0 com 18 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.902
+Geração da malha inicial: 0.00821
+Adaptação das curvas: 24.7096
+Adaptação do domínio: 40.3933
+Calculo do erro: 90.5939
+Overhead: 1.54628
+SendRecv: 0
+Full: 185.153
+Método do processo 0 com 18 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 19716 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+Init 1 nodes  and 20 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.0201
+Geração da malha inicial: 0.00832
+Adaptação das curvas: 24.7298
+Adaptação do domínio: 39.9999
+Calculo do erro: 79.2489
+Overhead: 1.55242
+SendRecv: 0
+Full: 173.559
+Método do processo 0 com 20 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9958
+Geração da malha inicial: 0.008114
+Adaptação das curvas: 24.791
+Adaptação do domínio: 40.5604
+Calculo do erro: 78.2724
+Overhead: 1.54955
+SendRecv: 0
+Full: 173.177
+Método do processo 0 com 20 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0655
+Geração da malha inicial: 0.008008
+Adaptação das curvas: 24.6199
+Adaptação do domínio: 37.7645
+Calculo do erro: 81.726
+Overhead: 1.55689
+SendRecv: 0
+Full: 173.741
+Método do processo 0 com 20 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 20051 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 27.9437
+Geração da malha inicial: 0.008536
+Adaptação das curvas: 24.7572
+Adaptação do domínio: 42.0908
+Calculo do erro: 96.0463
+Overhead: 1.552
+SendRecv: 0
+Full: 192.399
+Método do processo 0 com 20 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 22 cpus
+
+Tempo do processo 0
+Estimativa de carga: 28.0351
+Geração da malha inicial: 0.007659
+Adaptação das curvas: 24.8099
+Adaptação do domínio: 33.0781
+Calculo do erro: 66.5806
+Overhead: 1.5463
+SendRecv: 0
+Full: 154.058
+Método do processo 0 com 22 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0095
+Geração da malha inicial: 0.008234
+Adaptação das curvas: 24.8065
+Adaptação do domínio: 37.5844
+Calculo do erro: 72.8293
+Overhead: 1.54518
+SendRecv: 0
+Full: 164.783
+Método do processo 0 com 22 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9716
+Geração da malha inicial: 0.0078
+Adaptação das curvas: 24.7574
+Adaptação do domínio: 36.3609
+Calculo do erro: 77.3917
+Overhead: 1.54786
+SendRecv: 0
+Full: 168.037
+Método do processo 0 com 22 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0181
+Geração da malha inicial: 0.008077
+Adaptação das curvas: 24.6374
+Adaptação do domínio: 35.8402
+Calculo do erro: 74.537
+Overhead: 1.55074
+SendRecv: 0
+Full: 164.592
+Método do processo 0 com 22 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.08
+Geração da malha inicial: 0.008005
+Adaptação das curvas: 24.6675
+Adaptação do domínio: 33.8584
+Calculo do erro: 77.3169
+Overhead: 1.54778
+SendRecv: 0
+Full: 165.479
+Método do processo 0 com 22 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 24 cpus
+
+Tempo do processo 0
+Estimativa de carga: 27.8588
+Geração da malha inicial: 0.007699
+Adaptação das curvas: 24.7771
+Adaptação do domínio: 32.6549
+Calculo do erro: 76.6878
+Overhead: 1.54374
+SendRecv: 0
+Full: 163.53
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0417
+Geração da malha inicial: 0.007775
+Adaptação das curvas: 24.6753
+Adaptação do domínio: 34.8446
+Calculo do erro: 70.3736
+Overhead: 1.54015
+SendRecv: 0
+Full: 159.483
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9357
+Geração da malha inicial: 0.008108
+Adaptação das curvas: 24.9245
+Adaptação do domínio: 35.4985
+Calculo do erro: 68.6309
+Overhead: 1.5456
+SendRecv: 0
+Full: 158.543
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9835
+Geração da malha inicial: 0.007918
+Adaptação das curvas: 24.5951
+Adaptação do domínio: 34.778
+Calculo do erro: 75.4477
+Overhead: 1.54047
+SendRecv: 0
+Full: 164.353
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0098
+Geração da malha inicial: 0.008057
+Adaptação das curvas: 24.7523
+Adaptação do domínio: 33.7382
+Calculo do erro: 70.3185
+Overhead: 1.54566
+SendRecv: 0
+Full: 158.372
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 36 cpus
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 21101 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 21197 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 27.9684
+Geração da malha inicial: 0.007183
+Adaptação das curvas: 24.9858
+Adaptação do domínio: 22.9941
+Calculo do erro: 49.8347
+Overhead: 1.55521
+SendRecv: 0
+Full: 127.345
+Método do processo 0 com 36 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 21410 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28.0073
+Geração da malha inicial: 0.008323
+Adaptação das curvas: 24.7809
+Adaptação do domínio: 26.2662
+Calculo do erro: 51.1376
+Overhead: 1.5561
+SendRecv: 0
+Full: 131.756
+Método do processo 0 com 36 thread(s) finalizado com Sucesso!
+Init 1 nodes  and 48 cpus
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 21609 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28.1068
+Geração da malha inicial: 0.009938
+Adaptação das curvas: 25.2569
+Adaptação do domínio: 20.2974
+Calculo do erro: 42.9818
+Overhead: 1.56284
+SendRecv: 0
+Full: 118.216
+Método do processo 0 com 48 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.171
+Geração da malha inicial: 0.006429
+Adaptação das curvas: 25.0606
+Adaptação do domínio: 21.6319
+Calculo do erro: 41.9327
+Overhead: 1.55526
+SendRecv: 0
+Full: 118.358
+Método do processo 0 com 48 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0937
+Geração da malha inicial: 0.009432
+Adaptação das curvas: 25.0219
+Adaptação do domínio: 20.1714
+Calculo do erro: 40.015
+Overhead: 1.5581
+SendRecv: 0
+Full: 114.869
+Método do processo 0 com 48 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 22053 RUNNING AT r2i2n15.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================

@@ -1,0 +1,51 @@
+1n1p24t
+
+Tempo do processo 0
+Estimativa de carga: 28.0501
+Geração da malha inicial: 0.007749
+Adaptação das curvas: 24.6504
+Adaptação do domínio: 29.7232
+Calculo do erro: 65.7696
+Overhead: 1.55098
+SendRecv: 0
+Full: 149.752
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0687
+Geração da malha inicial: 0.008216
+Adaptação das curvas: 24.6709
+Adaptação do domínio: 32.0901
+Calculo do erro: 68.3594
+Overhead: 1.55477
+SendRecv: 0
+Full: 154.752
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9939
+Geração da malha inicial: 0.007932
+Adaptação das curvas: 24.8593
+Adaptação do domínio: 31.1301
+Calculo do erro: 68.0035
+Overhead: 1.55571
+SendRecv: 0
+Full: 153.55
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 4371 RUNNING AT r1i6n7.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28.2633
+Geração da malha inicial: 0.008111
+Adaptação das curvas: 24.8907
+Adaptação do domínio: 30.6106
+Calculo do erro: 68.1034
+Overhead: 1.56309
+SendRecv: 0
+Full: 153.439
+Método do processo 0 com 24 thread(s) finalizado com Sucesso!

@@ -20,11 +20,11 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* 
 
     PatchBezierReader* pt = new PatchBezierReader();
     //timer->endTimerParallel(0, 0, 10); //Full
-//    cout<<"INIT >> LOADBPFILE"<< endl;
+    //    cout<<"INIT >> LOADBPFILE"<< endl;
     listBezierPt = pt->loaderBPFile(entrada);
-//    cout<<"END >> LOADBPFILE"<< endl;
-   // timer->initTimerParallel(0, 0, 10); //Full
-  //  timer->initTimerParallel(0, 0, 8); // Over
+    //    cout<<"END >> LOADBPFILE"<< endl;
+    // timer->initTimerParallel(0, 0, 10); //Full
+    //  timer->initTimerParallel(0, 0, 8); // Over
 
     delete pt;
 
@@ -50,17 +50,17 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* 
     Curva* patch_c3;
     Curva* patch_c4;
     
-double areaMenor = 1000; 
-double areaMaior = 0;
-double kamMenor = 1000; 
-double kamMaior = 0;
+    double areaMenor = 1000;
+    double areaMaior = 0;
+    double kamMenor = 1000;
+    double kamMaior = 0;
 
-double elementos= 0;
+    double elementos= 0;
 
-//timer->endTimerParallel(0, 0, 8); // Over
-//timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
+    //timer->endTimerParallel(0, 0, 8); // Over
+    //timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
 
-//     cout<<"INIT >> ESTIMATIVE"<< endl;
+    //     cout<<"INIT >> ESTIMATIVE"<< endl;
 
     for (std::list<BezierPatch*>::iterator it = listBezierPt.begin(); it != listBezierPt.end(); it++) {
 
@@ -118,11 +118,11 @@ double elementos= 0;
         (*it)->setArea(calculateAreaPatch((*it), 4));
         //cout << "Área do patch: " << (*it)->getArea() << endl;
         
-           if((*it)->getArea()< areaMenor){
+        if((*it)->getArea()< areaMenor){
             areaMenor = (*it)->getArea();
         }else if((*it)->getArea()> areaMaior){
             areaMaior = (*it)->getArea();
-            }
+        }
 
         //(*it)->setKaMedio(calculateKaMedioPatch((*it), 4));
         // cout << "KAM: " << (*it)->getKaMedio() << endl;
@@ -136,18 +136,18 @@ double elementos= 0;
         (*it)->setKaMedio(calculateKaMedioPatch((*it), 25));
         //    cout << "KAM: " << (*it)->getKaMedio() << endl;
         
-          if((*it)->getKaMedio()< kamMenor){
+        if((*it)->getKaMedio()< kamMenor){
             kamMenor = (*it)->getKaMedio();
         }else if((*it)->getKaMedio()> kamMaior){
             kamMaior = (*it)->getKaMedio();
-            }
-            
+        }
+
         (*it)->setAreaTriangle(calculateAreaTriangleMedioRad((*it)));
         TRIANGLE_MEDIO = (*it)->getAreaTriangle();
         //cout << "Triângulo Medio 1: " << (*it)->getAreaTriangle() << endl;
 
         (*it)->setNumberTriangle((*it)->getArea() / (*it)->getAreaTriangle());
-       // cout << "Quant. de triângulos do patch: " << (*it)->getNumberTriangle() << endl;
+        // cout << "Quant. de triângulos do patch: " << (*it)->getNumberTriangle() << endl;
         elementos += (*it)->getNumberTriangle();
         //        (*it)->setAreaTriangle(calculateAreaTriangleMedio((*it),4));
         //        cout << "Triângulo Medio 2: " << (*it)->getAreaTriangle() << endl;
@@ -162,15 +162,15 @@ double elementos= 0;
         vecCurvature.push_back((*it)->getKaMedio());
     }
     
-//    cout<<"INIT >> ANALISE CURVATURE"<< endl;
-     if (WRITE_MESH == std::string("writeMeshOn")){
-    write.writeCurvaturePatches(vecCurvature, kamMaior);
-     }
-//    cout<<"area menor: "<<areaMenor<<endl;
-//    cout<<"area maior: "<<areaMaior<<endl;
-//    cout<<"kam menor: "<<kamMenor<<endl;
-//    cout<<"kam maior: "<<kamMaior<<endl;
-//    cout<<"#elementos_estimados: "<<elementos<<endl;
+    //    cout<<"INIT >> ANALISE CURVATURE"<< endl;
+    if (WRITE_MESH == std::string("writeMeshOn")){
+        write.writeCurvaturePatches(vecCurvature, kamMaior);
+    }
+    //    cout<<"area menor: "<<areaMenor<<endl;
+    //    cout<<"area maior: "<<areaMaior<<endl;
+    //    cout<<"kam menor: "<<kamMenor<<endl;
+    //    cout<<"kam maior: "<<kamMaior<<endl;
+    //    cout<<"#elementos_estimados: "<<elementos<<endl;
     
     if (listBezierPtOrder.size() > 1) {
         listBezierPtOrder.sort(sortByNt);
@@ -831,7 +831,7 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch, int g
         sub->insereElemento(e2);
 
         Elemento* e3 =
-            new Triangulo(sub->getNoh(i + comprimento + 1), sub->getNoh(i + comprimento), sub->getNoh(i + total_1));
+                new Triangulo(sub->getNoh(i + comprimento + 1), sub->getNoh(i + comprimento), sub->getNoh(i + total_1));
         ((Triangulo*)e3)->p1 = patch->encontrar_u_v(*(sub->getNoh(i + comprimento + 1)));
         ((Triangulo*)e3)->p2 = patch->encontrar_u_v(*(sub->getNoh(i + comprimento)));
         ((Triangulo*)e3)->p3 = patch->encontrar_u_v(*(sub->getNoh(i + total_1)));

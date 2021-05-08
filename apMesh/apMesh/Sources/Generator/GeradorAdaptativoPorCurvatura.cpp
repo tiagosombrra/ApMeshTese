@@ -624,6 +624,19 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
         }
     }
 
+    //Imprindo o número de elementos em cada passo
+    unsigned long int Nv, Nt;
+    Nv = Nt = 0;
+
+    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
+        SubMalha* sub = malha->getSubMalha(i);
+
+        Nv += sub->getNumDeNos();
+        Nt += sub->getNumDeElementos();
+    }
+
+    cout << "#elements_" << nameModel << "_n.process_" << numberProcess << "_passo_" << passo << "_rank_" << RANK_MPI << endl << Nt << endl;
+    cout << "#nodes_" << nameModel << "_n.process_" << numberProcess << "_passo_" << passo << "_rank_" << RANK_MPI << endl << Nv << endl;
 
     //Escreve o(s) arquivo(s) com suas respectivas malhas em cada passo
 #if USE_MPI

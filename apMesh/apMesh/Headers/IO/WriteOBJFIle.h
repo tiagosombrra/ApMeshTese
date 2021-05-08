@@ -15,6 +15,8 @@
 #include <fstream>
 #include <ctime>
 
+extern std::string nameModel;
+
 class WriteOBJFIle
 {
 

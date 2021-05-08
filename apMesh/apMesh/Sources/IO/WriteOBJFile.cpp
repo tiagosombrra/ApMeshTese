@@ -15,7 +15,7 @@ WriteOBJFIle::WriteOBJFIle()
 void WriteOBJFIle::writeCurvaturePatches(std::vector<double> vecCurvaturePatches, double maxValue)
 {
     stringstream nameFile;
-    nameFile << "analise_curvature.txt";
+    nameFile << nameModel + "_analise_curvature_patches.txt";
 
     ofstream file(nameFile.str().c_str());
 

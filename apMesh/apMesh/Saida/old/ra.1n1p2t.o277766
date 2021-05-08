@@ -1,0 +1,56 @@
+1n1p2t
+
+Tempo do processo 0
+Estimativa de carga: 43.2617
+Geração da malha inicial: 0.027686
+Adaptação das curvas: 32.5199
+Adaptação do domínio: 426.909
+Calculo do erro: 617.644
+Overhead: 2.8125
+SendRecv: 0
+Full: 1123.17
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 47.0852
+Geração da malha inicial: 0.020654
+Adaptação das curvas: 32.5509
+Adaptação do domínio: 455.379
+Calculo do erro: 417.214
+Overhead: 2.82947
+SendRecv: 0
+Full: 955.08
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 46.2942
+Geração da malha inicial: 0.019682
+Adaptação das curvas: 31.6995
+Adaptação do domínio: 412.48
+Calculo do erro: 373.591
+Overhead: 2.61648
+SendRecv: 0
+Full: 866.701
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 37.4699
+Geração da malha inicial: 0.018667
+Adaptação das curvas: 28.026
+Adaptação do domínio: 355.808
+Calculo do erro: 351.317
+Overhead: 2.31118
+SendRecv: 0
+Full: 774.951
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 43.9963
+Geração da malha inicial: 0.020996
+Adaptação das curvas: 32.7311
+Adaptação do domínio: 407.623
+Calculo do erro: 390.369
+Overhead: 2.7686
+SendRecv: 0
+Full: 877.508
+Método do processo 0 com 2 thread(s) finalizado com Sucesso!

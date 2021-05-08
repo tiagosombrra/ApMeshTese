@@ -1,14 +1,5 @@
 /* Classe encarregada de fazer a geração adaptativa das malhas de acordo com as
-curvaturas.
-MDCC-UFC: Mestrado e Doutorado em Ciências da Computação
-Universidade Federal do Ceará
-Implementação da tese de Mestrado
-Título: Geração Adaptativa de Malhas de Superfície com Controle de Curvatura
-Autor: Daniel Márcio Batista de Siqueira
-contato: siqueira@lia.ufc.br
-Orientador: Creto Augusto Vidal
-Co-Orientador: Joaquim Bento Cavalcante
-This source code is under GNU General Public License v3 */
+curvaturas.*/
 
 #include "../../Headers/Generator/GeradorAdaptativoPorCurvatura.h"
 
@@ -853,7 +844,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
     e1->setId (/*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             */ idManager->next(1));
     sub->insereElemento ( e1);
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
@@ -863,7 +854,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
     ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
     e2->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
     sub->insereElemento ( e2);
 
     Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
@@ -873,7 +864,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
     ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
     e3->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
     sub->insereElemento ( e3);
 
     Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
@@ -883,7 +874,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
     ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
     e4->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
     sub->insereElemento ( e4);
     //==============================================================================*/
 
@@ -1721,7 +1712,8 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo, vector
 
     int n_pas = 0;
     for (vector<double>::iterator it = erroPasso.begin(); it != erroPasso.end(); it++) {
-        arq << "passo: " << n_pas << " erro:" << (*it);
+        arq << "passo: " << n_pas << " erro:" << (*it)<< endl;
+        n_pas ++;
     }
 
     unsigned long int Nv, Nt;
@@ -1739,8 +1731,6 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo, vector
     cout << Nt << endl;
 
     arq << "%NODE" << endl << Nv << endl << endl;
-
-    arq << "%NODE.COORD" << endl << Nv << endl;
 
     for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
         SubMalha* sub = malha->getSubMalha(i);

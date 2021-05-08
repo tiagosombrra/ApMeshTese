@@ -44,6 +44,7 @@ std::string WRITE_MESH;
 // argv[2] = "n° threads",
 // argv[3] = "entrada",       OBS: Projects-> Comands line arguments -> ../../apMesh/Entrada/mountain_289_patches.bp
 // argv[4] = "WRITE_MESH" (writeMeshOn)
+// argv[5] = "nameModel"
 
 
 int main(int argc, char **argv)
@@ -63,8 +64,11 @@ int main(int argc, char **argv)
     //cout<<atoi(argv[1])<<atoi(argv[2])<<endl;
     //cout<<RANK_MPI<<THREAD_ROOT<<endl;
 
-    //on ou off da escrita da malha
+    //writeMeshOn ou writeMeshOff da escrita da malha
     WRITE_MESH = argv[4];
+
+    //nome do modelo para escrita da malha de saída
+    nameModel = argv[5];
 
     // contador do tempo de inicialização em segundos em todos os processos
 #if USE_MPI

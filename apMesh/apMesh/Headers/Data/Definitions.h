@@ -25,9 +25,9 @@
 #define THREAD_ROOT 0
 #endif //#ifndef USE_OPENMP
 
-#ifndef USE_PRINT_RESULT
-#define USE_PRINT_RESULT TRUE
-#endif //#ifndef USE_PRINT_RESULT
+#ifndef USE_PRINT_RESULTS
+#define USE_PRINT_RESULTS FALSE
+#endif //#ifndef USE_PRINT_RESULTS
 
 #ifndef USE_PRINT_COMENT
 #define USE_PRINT_COMENT FALSE

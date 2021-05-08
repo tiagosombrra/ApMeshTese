@@ -130,17 +130,17 @@ void Timer::calculateTime(int _rank, int _thread, int _type)
 void Timer::printTime()
 {
     vector<double> max = getMaxTime();
-    //cout << "Inicialização: " << max[0] << endl;
-    cout << "Estimativa de carga: " << max[1] << endl;
-    cout << "Geração da malha inicial: " << max[2] << endl;
-    cout << "Adaptação das curvas: " << max[3] << endl;
-    cout << "Adaptação do domínio: " << max[4] << endl;
-    //  cout << "Quadtree: " << max[5] << endl;
-    //  cout << "Avanço de front.: " << max[6] << endl;
-    cout << "Calculo do erro: " << max[7] << endl;
-    cout << "Overhead: " <<max[10] - max[8] - max[7] - max[4] - max[3] - max[2] - max[1] << endl;
-    cout << "SendRecv: " << max[9] << endl;
-    cout << "Full: " << max[10] << endl;
+    //cout << max[0] << endl; //Inicialização
+    cout << max[1] << endl; //Estimativa de carga
+    cout << max[2] << endl; //Geração da malha inicial
+    cout << max[3] << endl; //Adaptação das curvas
+    cout << max[4] << endl; //Adaptação do domínio
+    //cout << max[5] << endl; //Quadtree
+    //cout << max[6] << endl; //Avanço de front
+    cout << max[7] << endl; //Calculo do erro
+    cout <<max[10] - max[8] - max[7] /*- max[6] - max[5]*/ - max[4] - max[3] - max[2] - max[1] << endl; //Overhead
+    cout << max[9] << endl; //SendRecv
+    cout << max[10] << endl; //Full
 
 }
 

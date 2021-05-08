@@ -1,0 +1,51 @@
+1n1p18t
+
+Tempo do processo 0
+Estimativa de carga: 27.9237
+Geração da malha inicial: 0.008069
+Adaptação das curvas: 24.8313
+Adaptação do domínio: 41.1999
+Calculo do erro: 84.048
+Overhead: 1.55426
+SendRecv: 0
+Full: 179.565
+Método do processo 0 com 18 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0448
+Geração da malha inicial: 0.008281
+Adaptação das curvas: 24.8817
+Adaptação do domínio: 40.5604
+Calculo do erro: 96.8199
+Overhead: 1.55557
+SendRecv: 0
+Full: 191.871
+Método do processo 0 com 18 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.8315
+Geração da malha inicial: 0.008031
+Adaptação das curvas: 24.9823
+Adaptação do domínio: 44.154
+Calculo do erro: 95.2924
+Overhead: 1.55267
+SendRecv: 0
+Full: 193.821
+Método do processo 0 com 18 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0339
+Geração da malha inicial: 0.008227
+Adaptação das curvas: 24.8278
+Adaptação do domínio: 45.0266
+Calculo do erro: 91.3708
+Overhead: 1.55394
+SendRecv: 0
+Full: 190.821
+Método do processo 0 com 18 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 13106 RUNNING AT r2i0n16.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================

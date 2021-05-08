@@ -1,0 +1,56 @@
+1n1p1t
+
+Tempo do processo 0
+Estimativa de carga: 28.2111
+Geração da malha inicial: 0.018347
+Adaptação das curvas: 24.3832
+Adaptação do domínio: 446.44
+Calculo do erro: 290.347
+Overhead: 1.56218
+SendRecv: 0
+Full: 790.962
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0132
+Geração da malha inicial: 0.017804
+Adaptação das curvas: 24.3814
+Adaptação do domínio: 446.274
+Calculo do erro: 288.88
+Overhead: 1.56013
+SendRecv: 0
+Full: 789.126
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0354
+Geração da malha inicial: 0.017666
+Adaptação das curvas: 24.3822
+Adaptação do domínio: 446.687
+Calculo do erro: 290.802
+Overhead: 1.5597
+SendRecv: 0
+Full: 791.484
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0249
+Geração da malha inicial: 0.017569
+Adaptação das curvas: 24.3845
+Adaptação do domínio: 446.059
+Calculo do erro: 288.603
+Overhead: 1.55875
+SendRecv: 0
+Full: 788.649
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0838
+Geração da malha inicial: 0.017936
+Adaptação das curvas: 24.3888
+Adaptação do domínio: 447.273
+Calculo do erro: 288.473
+Overhead: 1.56882
+SendRecv: 0
+Full: 789.805
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!

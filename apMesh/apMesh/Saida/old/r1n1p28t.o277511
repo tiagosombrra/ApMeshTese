@@ -1,0 +1,62 @@
+1n1p28t
+
+Tempo do processo 0
+Estimativa de carga: 27.8996
+Geração da malha inicial: 0.007417
+Adaptação das curvas: 24.947
+Adaptação do domínio: 27.4017
+Calculo do erro: 59.2497
+Overhead: 1.54628
+SendRecv: 0
+Full: 141.052
+Método do processo 0 com 28 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 27.9832
+Geração da malha inicial: 0.007733
+Adaptação das curvas: 25.0023
+Adaptação do domínio: 28.022
+Calculo do erro: 59.6512
+Overhead: 1.5478
+SendRecv: 0
+Full: 142.214
+Método do processo 0 com 28 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0205
+Geração da malha inicial: 0.007626
+Adaptação das curvas: 24.86
+Adaptação do domínio: 27.5543
+Calculo do erro: 60.0088
+Overhead: 1.5502
+SendRecv: 0
+Full: 142.001
+Método do processo 0 com 28 thread(s) finalizado com Sucesso!
+-nan Gd
+-nan Gd
+-nan Gd
+-nan Gd
+-nan Gd
+-nan Gd
+
+Tempo do processo 0
+Estimativa de carga: 28.055
+Geração da malha inicial: 0.007572
+Adaptação das curvas: 25.1027
+Adaptação do domínio: 27.925
+Calculo do erro: 61.4324
+Overhead: 1.54678
+SendRecv: 0
+Full: 144.069
+Método do processo 0 com 28 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0586
+Geração da malha inicial: 0.007409
+Adaptação das curvas: 24.9915
+Adaptação do domínio: 32.1169
+Calculo do erro: 60.2546
+Overhead: 1.55455
+SendRecv: 0
+Full: 146.984
+Método do processo 0 com 28 thread(s) finalizado com Sucesso!

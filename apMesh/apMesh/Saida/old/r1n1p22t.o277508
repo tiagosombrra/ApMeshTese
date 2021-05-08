@@ -1,0 +1,46 @@
+1n1p22t
+
+Tempo do processo 0
+Estimativa de carga: 28.0624
+Geração da malha inicial: 0.007734
+Adaptação das curvas: 24.949
+Adaptação do domínio: 34.6744
+Calculo do erro: 74.9341
+Overhead: 1.55028
+SendRecv: 0
+Full: 164.178
+Método do processo 0 com 22 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 13450 RUNNING AT r2i2n12.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28
+Geração da malha inicial: 0.008388
+Adaptação das curvas: 24.7628
+Adaptação do domínio: 33.1221
+Calculo do erro: 76.9864
+Overhead: 1.54932
+SendRecv: 0
+Full: 164.429
+Método do processo 0 com 22 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0286
+Geração da malha inicial: 0.007998
+Adaptação das curvas: 25.0181
+Adaptação do domínio: 38.0553
+Calculo do erro: 77.6108
+Overhead: 1.55225
+SendRecv: 0
+Full: 170.273
+Método do processo 0 com 22 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 13707 RUNNING AT r2i2n12.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================

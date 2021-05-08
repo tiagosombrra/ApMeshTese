@@ -1,0 +1,41 @@
+1n1p48t
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 19842 RUNNING AT r1i6n17.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+Tempo do processo 0
+Estimativa de carga: 28.049
+Geração da malha inicial: 0.013962
+Adaptação das curvas: 25.2326
+Adaptação do domínio: 25.4907
+Calculo do erro: 39.6372
+Overhead: 1.56463
+SendRecv: 0
+Full: 119.988
+Método do processo 0 com 48 thread(s) finalizado com Sucesso!
+
+Tempo do processo 0
+Estimativa de carga: 28.0998
+Geração da malha inicial: 0.00926
+Adaptação das curvas: 25.4271
+Adaptação do domínio: 22.1728
+Calculo do erro: 43.2243
+Overhead: 1.57189
+SendRecv: 0
+Full: 120.505
+Método do processo 0 com 48 thread(s) finalizado com Sucesso!
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 20208 RUNNING AT r1i6n17.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 20309 RUNNING AT r1i6n17.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 11 (Segmentation fault)
+===================================================================================

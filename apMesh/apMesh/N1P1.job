@@ -15,26 +15,26 @@ cd ${PBS_O_WORKDIR}
 
 # run
 echo "rainier_1p"
-mpirun ../../apMesh 1 1 ../../Entrada/monte_rainier_sub_1.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_rainier_sub_1.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_rainier_sub_1.bp writeOff
+mpirun ./apMesh 1 1 Entrada/monte_rainier_sub_1.bp writeMeshOn monte_rainier_sub_1
+mpirun ./apMesh 1 1 Entrada/monte_rainier_sub_1.bp writeMeshOn monte_rainier_sub_1
+mpirun ./apMesh 1 1 Entrada/monte_rainier_sub_1.bp writeMeshOn monte_rainier_sub_1
 echo "*****************************************************************"
 echo "ruapehu_1p"
-mpirun ../../apMesh 1 1 ../../Entrada/monte_ruapehu.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_ruapehu.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_ruapehu.bp writeOff
+mpirun ./apMesh 1 1 Entrada/monte_ruapehu.bp writeMeshOn monte_ruapehu
+mpirun ./apMesh 1 1 Entrada/monte_ruapehu.bp writeMeshOn monte_ruapehu
+mpirun ./apMesh 1 1 Entrada/monte_ruapehu.bp writeMeshOn monte_ruapehu
 echo "*****************************************************************"
 echo "sant_helens_1p"
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens.bp writeOff
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens.bp writeMeshOn monte_sant_helens
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens.bp writeMeshOn monte_sant_helens
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens.bp writeMeshOn monte_sant_helens
 echo "*****************************************************************"
 echo "sant_helens_nivel_1_1p"
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens_nivel_1.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens_nivel_1.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens_nivel_1.bp writeOff
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOn monte_sant_helens_nivel_1
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOn monte_sant_helens_nivel_1
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOn monte_sant_helens_nivel_1
 echo "*****************************************************************"
 echo "sant_helens_nivel_2_1p"
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens_nivel_2.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens_nivel_2.bp writeOff
-mpirun ../../apMesh 1 1 ../../Entrada/monte_sant_helens_nivel_2.bp writeOff
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOn monte_sant_helens_nivel_2
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOn monte_sant_helens_nivel_2
+mpirun ./apMesh 1 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOn monte_sant_helens_nivel_2

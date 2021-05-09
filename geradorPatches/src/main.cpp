@@ -42,7 +42,7 @@ saida = argv[2];
     cout<<"FIM >>> CALCULO"<<endl;
 
     cout<<"INICIO >>> REDUCEGEN"<<endl;
-    vectorPoints = gen.reduceAllPatches(vectorPoints,1);
+    vectorPoints = gen.reduceAllPatches(vectorPoints,2);
     cout<<"FIM >>> REDUCEGEN"<<endl;
 
 

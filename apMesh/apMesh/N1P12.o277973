@@ -1,0 +1,3393 @@
+rainier_12p
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_4
+1772
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_4
+49734
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_4
+881075
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_8
+1764
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_8
+49765
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_8
+880708
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_7
+1780
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_7
+50300
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_7
+887986
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_6
+1776
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_0
+1764
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_6
+49877
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_0
+49642
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_6
+883852
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_0
+878657
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_10
+1776
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_10
+50085
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_1
+1772
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_1
+49922
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_9
+1776
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_9
+50183
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_10
+885846
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_1
+882481
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_5
+1788
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_5
+50624
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_9
+887093
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_2
+1780
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_2
+50220
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_3
+1780
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_3
+50302
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_5
+893123
+#elementos_121monte_rainier_sub_1_n.process__passo_0_rank_11
+1788
+escreveu o arquivo para o passo 0
+#elementos_121monte_rainier_sub_1_n.process__passo_1_rank_11
+50623
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_2
+888184
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_3
+887838
+escreveu o arquivo para o passo 1
+#elementos_121monte_rainier_sub_1_n.process__passo_2_rank_11
+894690
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 64.7459
+Erro do processo 4 no passo 1 = 0.81012
+Erro do processo 4 no passo 2 = 0.100187
+
+Tempo do processo 4
+0
+0.002491
+4.52361
+58.1928
+30.4088
+48.0321
+40.6888
+141.16
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 66.9321
+Erro do processo 8 no passo 1 = 0.771411
+Erro do processo 8 no passo 2 = 0.098977
+
+Tempo do processo 8
+0
+0.002456
+4.53944
+58.8654
+30.2556
+47.8831
+40.7842
+141.546
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 66.4487
+Erro do processo 7 no passo 1 = 0.80551
+Erro do processo 7 no passo 2 = 0.105068
+
+Tempo do processo 7
+0
+0.002479
+4.52119
+59.2121
+30.4737
+47.943
+40.6745
+142.152
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 67.1035
+Erro do processo 6 no passo 1 = 0.731435
+Erro do processo 6 no passo 2 = 0.0862334
+
+Tempo do processo 6
+0
+0.002463
+4.50854
+60.4623
+30.5099
+48.4586
+40.6576
+143.942
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 65.6684
+Erro do processo 10 no passo 1 = 0.763228
+Erro do processo 10 no passo 2 = 0.0983471
+
+Tempo do processo 10
+0
+0.002413
+4.52161
+60.9307
+30.4178
+48.2114
+40.7715
+144.084
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 64.264
+Erro do processo 9 no passo 1 = 0.816764
+Erro do processo 9 no passo 2 = 0.0963387
+
+Tempo do processo 9
+0
+0.002484
+4.55147
+60.9927
+30.5437
+48.2041
+40.7856
+144.294
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 65.1166
+Erro do processo 0 no passo 1 = 0.785329
+Erro do processo 0 no passo 2 = 0.0955145
+
+Tempo do processo 0
+40.7341
+0.002807
+4.50713
+60.7099
+30.2784
+8.67582
+0.000919
+144.908
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 66.6497
+Erro do processo 1 no passo 1 = 0.731688
+Erro do processo 1 no passo 2 = 0.090456
+
+Tempo do processo 1
+0
+0.002489
+4.51601
+61.0234
+30.4729
+49.1099
+40.7313
+145.125
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 67.609
+Erro do processo 5 no passo 1 = 0.707809
+Erro do processo 5 no passo 2 = 0.0857789
+
+Tempo do processo 5
+0
+0.002476
+4.56525
+61.0264
+30.8063
+48.7802
+40.7057
+145.181
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 65.0394
+Erro do processo 11 no passo 1 = 0.761768
+Erro do processo 11 no passo 2 = 0.104155
+
+Tempo do processo 11
+0
+0.002486
+4.55915
+61.5842
+30.8486
+48.2797
+40.7982
+145.274
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 65.1901
+Erro do processo 2 no passo 1 = 0.757434
+Erro do processo 2 no passo 2 = 0.0962271
+
+Tempo do processo 2
+0
+0.002487
+4.51256
+61.4743
+30.6398
+48.8547
+40.7163
+145.484
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 65.9168
+Erro do processo 3 no passo 1 = 0.722379
+Erro do processo 3 no passo 2 = 0.0903767
+
+Tempo do processo 3
+0
+0.002441
+4.66327
+61.5437
+30.5737
+48.978
+40.7523
+145.761
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_8
+1764
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_8
+49765
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_8
+880708
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_4
+1772
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_4
+49734
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_4
+881075
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_7
+1780
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_7
+50300
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_7
+887986
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_6
+1776
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_6
+49877
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_6
+883852
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_2
+1780
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_2
+50220
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_9
+1776
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_9
+50183
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_2
+888184
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_9
+887093
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_0
+1764
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_10
+1776
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_0
+49642
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_10
+50085
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_1
+1772
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_1
+49922
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_10
+885846
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_0
+878657
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_1
+882481
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_5
+1788
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_5
+50624
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_11
+1788
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_11
+50623
+#elementos_122monte_rainier_sub_1_n.process__passo_0_rank_3
+1780
+escreveu o arquivo para o passo 0
+#elementos_122monte_rainier_sub_1_n.process__passo_1_rank_3
+50302
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_5
+893123
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_11
+894690
+escreveu o arquivo para o passo 1
+#elementos_122monte_rainier_sub_1_n.process__passo_2_rank_3
+887838
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 66.9321
+Erro do processo 8 no passo 1 = 0.771411
+Erro do processo 8 no passo 2 = 0.098977
+
+Tempo do processo 8
+0
+0.002449
+4.26056
+59.9042
+29.6632
+48.3048
+41.2047
+142.135
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 64.7459
+Erro do processo 4 no passo 1 = 0.81012
+Erro do processo 4 no passo 2 = 0.100187
+
+Tempo do processo 4
+0
+0.002436
+4.26258
+60.1637
+30.2255
+49.1347
+41.1629
+143.789
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 66.4487
+Erro do processo 7 no passo 1 = 0.80551
+Erro do processo 7 no passo 2 = 0.105068
+
+Tempo do processo 7
+0
+0.002466
+4.24754
+60.8426
+30.3646
+48.8735
+41.2467
+144.331
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 67.1035
+Erro do processo 6 no passo 1 = 0.731435
+Erro do processo 6 no passo 2 = 0.0862334
+
+Tempo do processo 6
+0
+0.002456
+4.22968
+61.5288
+30.121
+49.0094
+41.1917
+144.891
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 64.264
+Erro do processo 9 no passo 1 = 0.816764
+Erro do processo 9 no passo 2 = 0.0963387
+
+Tempo do processo 9
+0
+0.002461
+4.25805
+62.0793
+30.4416
+49.0285
+41.2322
+145.81
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 65.6684
+Erro do processo 10 no passo 1 = 0.763228
+Erro do processo 10 no passo 2 = 0.0983471
+
+Tempo do processo 10
+0
+0.002444
+4.25399
+62.81
+30.3052
+48.5862
+41.2216
+145.958
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 65.1901
+Erro do processo 2 no passo 1 = 0.757434
+Erro do processo 2 no passo 2 = 0.0962271
+
+Tempo do processo 2
+0
+0.002452
+4.25524
+61.9703
+30.3584
+49.5633
+41.126
+146.15
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 65.0394
+Erro do processo 11 no passo 1 = 0.761768
+Erro do processo 11 no passo 2 = 0.104155
+
+Tempo do processo 11
+0
+0.002485
+4.29261
+63.0817
+30.8426
+48.5518
+41.2457
+146.771
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 66.6497
+Erro do processo 1 no passo 1 = 0.731688
+Erro do processo 1 no passo 2 = 0.090456
+
+Tempo do processo 1
+0
+0.002453
+4.26135
+62.794
+30.4577
+49.1836
+41.1135
+146.699
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 65.1166
+Erro do processo 0 no passo 1 = 0.785329
+Erro do processo 0 no passo 2 = 0.0955145
+
+Tempo do processo 0
+41.1437
+0.002703
+4.23787
+62.8465
+30.2747
+8.40166
+0.000906
+146.907
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 67.609
+Erro do processo 5 no passo 1 = 0.707809
+Erro do processo 5 no passo 2 = 0.0857789
+
+Tempo do processo 5
+0
+0.002442
+4.28236
+63.1614
+30.7221
+49.0234
+41.1749
+147.192
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 65.9168
+Erro do processo 3 no passo 1 = 0.722379
+Erro do processo 3 no passo 2 = 0.0903767
+
+Tempo do processo 3
+0
+0.002446
+4.39346
+63.4148
+30.4801
+48.9914
+41.1419
+147.282
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_8
+1764
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_8
+49765
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_4
+1772
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_4
+49734
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_8
+880708
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_4
+881075
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_6
+1776
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_6
+49877
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_7
+1780
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_7
+50300
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_6
+883852
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_7
+887986
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_9
+1776
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_9
+50183
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_10
+1776
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_10
+50085
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_9
+887093
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_10
+885846
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_2
+1780
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_2
+50220
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_0
+1764
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_0
+49642
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_2
+888184
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_11
+1788
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_11
+50623
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_1
+1772
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_1
+49922
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_5
+1788
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_5
+50624
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_0
+878657
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_11
+894690
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_1
+882481
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_5
+893123
+#elementos_123monte_rainier_sub_1_n.process__passo_0_rank_3
+1780
+escreveu o arquivo para o passo 0
+#elementos_123monte_rainier_sub_1_n.process__passo_1_rank_3
+50302
+escreveu o arquivo para o passo 1
+#elementos_123monte_rainier_sub_1_n.process__passo_2_rank_3
+887838
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 66.9321
+Erro do processo 8 no passo 1 = 0.771411
+Erro do processo 8 no passo 2 = 0.098977
+
+Tempo do processo 8
+0
+0.002438
+4.5286
+60.0956
+30.6075
+50.5882
+43.3079
+145.822
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 64.7459
+Erro do processo 4 no passo 1 = 0.81012
+Erro do processo 4 no passo 2 = 0.100187
+
+Tempo do processo 4
+0
+0.002447
+4.50297
+60.296
+30.7241
+50.8732
+43.3063
+146.399
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 66.4487
+Erro do processo 7 no passo 1 = 0.80551
+Erro do processo 7 no passo 2 = 0.105068
+
+Tempo do processo 7
+0
+0.002444
+4.51636
+61.4195
+31.0514
+50.8971
+43.3079
+147.887
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 67.1035
+Erro do processo 6 no passo 1 = 0.731435
+Erro do processo 6 no passo 2 = 0.0862334
+
+Tempo do processo 6
+0
+0.002449
+4.49499
+61.4812
+30.9818
+50.9987
+43.3077
+147.959
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 65.6684
+Erro do processo 10 no passo 1 = 0.763228
+Erro do processo 10 no passo 2 = 0.0983471
+
+Tempo do processo 10
+0
+0.002454
+4.48277
+62.5668
+30.5456
+50.8209
+43.3078
+148.418
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 64.264
+Erro do processo 9 no passo 1 = 0.816764
+Erro do processo 9 no passo 2 = 0.0963387
+
+Tempo do processo 9
+0
+0.002419
+4.506
+61.9626
+31.042
+50.9175
+43.3086
+148.431
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 65.0394
+Erro do processo 11 no passo 1 = 0.761768
+Erro do processo 11 no passo 2 = 0.104155
+
+Tempo do processo 11
+0
+0.002441
+4.54734
+63.0181
+31.4517
+50.7232
+43.3096
+149.743
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 65.1901
+Erro do processo 2 no passo 1 = 0.757434
+Erro do processo 2 no passo 2 = 0.0962271
+
+Tempo do processo 2
+0
+0.002446
+4.48938
+62.9367
+31.1504
+51.3158
+43.3056
+149.895
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 67.609
+Erro do processo 5 no passo 1 = 0.707809
+Erro do processo 5 no passo 2 = 0.0857789
+
+Tempo do processo 5
+0
+0.002465
+4.49991
+63.3196
+31.2823
+51.018
+43.3069
+150.122
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 66.6497
+Erro do processo 1 no passo 1 = 0.731688
+Erro do processo 1 no passo 2 = 0.090456
+
+Tempo do processo 1
+0
+0.00246
+4.49536
+63.5845
+30.9848
+51.1367
+43.3055
+150.204
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 65.1166
+Erro do processo 0 no passo 1 = 0.785329
+Erro do processo 0 no passo 2 = 0.0955145
+
+Tempo do processo 0
+43.3034
+0.002752
+4.47325
+63.6375
+30.8037
+8.19995
+0.000891
+150.421
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 65.9168
+Erro do processo 3 no passo 1 = 0.722379
+Erro do processo 3 no passo 2 = 0.0903767
+
+Tempo do processo 3
+0
+0.002453
+4.65102
+64.1196
+31.1584
+51.0611
+43.306
+150.993
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+ruapehu_12p
+#elementos_121monte_ruapehu_n.process__passo_0_rank_8
+1572
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_8
+45848
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_8
+861353
+#elementos_121monte_ruapehu_n.process__passo_0_rank_7
+1624
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_7
+46984
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_7
+882760
+#elementos_121monte_ruapehu_n.process__passo_0_rank_11
+1660
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_11
+47968
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_11
+898253
+#elementos_121monte_ruapehu_n.process__passo_0_rank_3
+1632
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_3
+47276
+#elementos_121monte_ruapehu_n.process__passo_0_rank_2
+1640
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_2
+47613
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_3
+891356
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_2
+896574
+#elementos_121monte_ruapehu_n.process__passo_0_rank_9
+1644
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_9
+48098
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_9
+911160
+#elementos_121monte_ruapehu_n.process__passo_0_rank_0
+1604
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_0
+46835
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_0
+887947
+#elementos_121monte_ruapehu_n.process__passo_0_rank_6
+1644
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_6
+46995
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_6
+895594
+#elementos_121monte_ruapehu_n.process__passo_0_rank_1
+1608
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_1
+47032
+#elementos_121monte_ruapehu_n.process__passo_0_rank_10
+1696
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_10
+49453
+#elementos_121monte_ruapehu_n.process__passo_0_rank_5
+1624
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 724
+Erro do processo 8 no passo 1 = 12.6916
+Erro do processo 8 no passo 2 = 2.58063
+
+Tempo do processo 8
+0
+0.002187
+3.87041
+55.1189
+30.3985
+41.6773
+35.381
+131.067
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_5
+47226
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_1
+892888
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_10
+923260
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_5
+894233
+#elementos_121monte_ruapehu_n.process__passo_0_rank_4
+1652
+escreveu o arquivo para o passo 0
+#elementos_121monte_ruapehu_n.process__passo_1_rank_4
+48046
+escreveu o arquivo para o passo 1
+#elementos_121monte_ruapehu_n.process__passo_2_rank_4
+903542
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 682.778
+Erro do processo 7 no passo 1 = 12.5238
+Erro do processo 7 no passo 2 = 2.69908
+
+Tempo do processo 7
+0
+0.002281
+3.97413
+55.5945
+31.1243
+42.152
+35.3805
+132.847
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 748.352
+Erro do processo 11 no passo 1 = 12.0966
+Erro do processo 11 no passo 2 = 2.34093
+
+Tempo do processo 11
+0
+0.002288
+4.06344
+55.9889
+31.749
+42.4525
+35.3553
+134.256
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 697.113
+Erro do processo 3 no passo 1 = 12.1877
+Erro do processo 3 no passo 2 = 2.29383
+
+Tempo do processo 3
+0
+0.002303
+4.04011
+57.1202
+31.5995
+42.9669
+35.3789
+135.729
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 729.517
+Erro do processo 2 no passo 1 = 12.6408
+Erro do processo 2 no passo 2 = 2.19817
+
+Tempo do processo 2
+0
+0.002287
+4.04502
+57.1227
+31.781
+42.9744
+35.3789
+135.925
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 683.271
+Erro do processo 9 no passo 1 = 12.597
+Erro do processo 9 no passo 2 = 2.28304
+
+Tempo do processo 9
+0
+0.002252
+4.10814
+57.2452
+32.2507
+42.629
+35.3814
+136.235
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 715.17
+Erro do processo 0 no passo 1 = 13.3787
+Erro do processo 0 no passo 2 = 3.14618
+
+Tempo do processo 0
+35.3653
+0.002574
+4.09447
+58.293
+31.6751
+7.94472
+0.000863
+137.375
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 669.96
+Erro do processo 6 no passo 1 = 11.958
+Erro do processo 6 no passo 2 = 2.39464
+
+Tempo do processo 6
+0
+0.002271
+3.9936
+59.258
+31.4593
+42.669
+35.3802
+137.382
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 726.239
+Erro do processo 10 no passo 1 = 11.2178
+Erro do processo 10 no passo 2 = 1.97068
+
+Tempo do processo 10
+0
+0.002356
+4.14594
+58.6936
+32.6334
+42.4959
+35.3653
+137.971
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 698.16
+Erro do processo 1 no passo 1 = 13.0505
+Erro do processo 1 no passo 2 = 3.03391
+
+Tempo do processo 1
+0
+0.002228
+4.16055
+59.4874
+31.6758
+42.7379
+35.335
+138.064
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 689.074
+Erro do processo 5 no passo 1 = 11.8389
+Erro do processo 5 no passo 2 = 2.66253
+
+Tempo do processo 5
+0
+0.002246
+3.97065
+59.9636
+31.703
+42.4884
+35.3793
+138.128
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 694.471
+Erro do processo 4 no passo 1 = 11.7274
+Erro do processo 4 no passo 2 = 2.06987
+
+Tempo do processo 4
+0
+0.002301
+4.09357
+60.1178
+32.1211
+42.2693
+35.3627
+138.604
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+#elementos_122monte_ruapehu_n.process__passo_0_rank_8
+1572
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_8
+45848
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_8
+861353
+#elementos_122monte_ruapehu_n.process__passo_0_rank_7
+1624
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_7
+46984
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_7
+882760
+#elementos_122monte_ruapehu_n.process__passo_0_rank_11
+1660
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_11
+47968
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_11
+898253
+#elementos_122monte_ruapehu_n.process__passo_0_rank_3
+1632
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_3
+47276
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_3
+891356
+#elementos_122monte_ruapehu_n.process__passo_0_rank_2
+1640
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_2
+47613
+#elementos_122monte_ruapehu_n.process__passo_0_rank_9
+1644
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_9
+48098
+#elementos_122monte_ruapehu_n.process__passo_0_rank_0
+1604
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_0
+46835
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_2
+896574
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_9
+911160
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_0
+887947
+#elementos_122monte_ruapehu_n.process__passo_0_rank_6
+1644
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_6
+46995
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_6
+895594
+#elementos_122monte_ruapehu_n.process__passo_0_rank_1
+1608
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_1
+47032
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_1
+892888
+#elementos_122monte_ruapehu_n.process__passo_0_rank_5
+1624
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_5
+47226
+#elementos_122monte_ruapehu_n.process__passo_0_rank_4
+1652
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_4
+48046
+#elementos_122monte_ruapehu_n.process__passo_0_rank_10
+1696
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_5
+894233
+escreveu o arquivo para o passo 0
+#elementos_122monte_ruapehu_n.process__passo_1_rank_10
+49453
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_4
+903542
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 724
+Erro do processo 8 no passo 1 = 12.6916
+Erro do processo 8 no passo 2 = 2.58063
+
+Tempo do processo 8
+0
+0.002228
+3.86323
+54.8603
+30.5372
+42.149
+35.8867
+131.412
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 1
+#elementos_122monte_ruapehu_n.process__passo_2_rank_10
+923260
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 682.778
+Erro do processo 7 no passo 1 = 12.5238
+Erro do processo 7 no passo 2 = 2.69908
+
+Tempo do processo 7
+0
+0.002254
+3.91578
+55.209
+31.3094
+42.5045
+35.8863
+132.941
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 748.352
+Erro do processo 11 no passo 1 = 12.0966
+Erro do processo 11 no passo 2 = 2.34093
+
+Tempo do processo 11
+0
+0.002282
+4.01871
+55.798
+31.9466
+42.8743
+35.888
+134.64
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 683.271
+Erro do processo 9 no passo 1 = 12.597
+Erro do processo 9 no passo 2 = 2.28304
+
+Tempo do processo 9
+0
+0.002253
+4.06321
+56.5975
+32.4341
+42.9766
+35.8872
+136.074
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 697.113
+Erro do processo 3 no passo 1 = 12.1877
+Erro do processo 3 no passo 2 = 2.29383
+
+Tempo do processo 3
+0
+0.002236
+4.02893
+56.7469
+31.7105
+43.8997
+35.8842
+136.388
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 669.96
+Erro do processo 6 no passo 1 = 11.958
+Erro do processo 6 no passo 2 = 2.39464
+
+Tempo do processo 6
+0
+0.002229
+3.91217
+58.0848
+31.7805
+43.0575
+35.8855
+136.837
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 715.17
+Erro do processo 0 no passo 1 = 13.3787
+Erro do processo 0 no passo 2 = 3.14618
+
+Tempo do processo 0
+35.8824
+0.002567
+4.07315
+57.4803
+31.6071
+8.02265
+0.000865
+137.068
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 729.517
+Erro do processo 2 no passo 1 = 12.6408
+Erro do processo 2 no passo 2 = 2.19817
+
+Tempo do processo 2
+0
+0.002274
+4.03182
+56.9802
+31.9326
+44.1307
+35.8841
+137.078
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 698.16
+Erro do processo 1 no passo 1 = 13.0505
+Erro do processo 1 no passo 2 = 3.03391
+
+Tempo do processo 1
+0
+0.002256
+4.13316
+58.3062
+31.8743
+43.9333
+35.8833
+138.249
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 726.239
+Erro do processo 10 no passo 1 = 11.2178
+Erro do processo 10 no passo 2 = 1.97068
+
+Tempo do processo 10
+0
+0.002313
+4.12819
+58.3345
+32.863
+42.9136
+35.8876
+138.242
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 689.074
+Erro do processo 5 no passo 1 = 11.8389
+Erro do processo 5 no passo 2 = 2.66253
+
+Tempo do processo 5
+0
+0.002268
+3.95138
+59.0398
+31.9121
+43.4785
+35.885
+138.384
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 694.471
+Erro do processo 4 no passo 1 = 11.7274
+Erro do processo 4 no passo 2 = 2.06987
+
+Tempo do processo 4
+0
+0.002284
+4.04293
+58.7737
+32.2504
+43.8722
+35.885
+138.942
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+#elementos_123monte_ruapehu_n.process__passo_0_rank_8
+1572
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_8
+45848
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_8
+861353
+#elementos_123monte_ruapehu_n.process__passo_0_rank_7
+1624
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_7
+46984
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_7
+882760
+#elementos_123monte_ruapehu_n.process__passo_0_rank_11
+1660
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_11
+47968
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_11
+898253
+#elementos_123monte_ruapehu_n.process__passo_0_rank_3
+1632
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_3
+47276
+#elementos_123monte_ruapehu_n.process__passo_0_rank_2
+1640
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_2
+47613
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_3
+891356
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_2
+896574
+#elementos_123monte_ruapehu_n.process__passo_0_rank_0
+1604
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_0
+46835
+#elementos_123monte_ruapehu_n.process__passo_0_rank_9
+1644
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_9
+48098
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_0
+887947
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_9
+911160
+#elementos_123monte_ruapehu_n.process__passo_0_rank_1
+1608
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_1
+47032
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_1
+892888
+#elementos_123monte_ruapehu_n.process__passo_0_rank_6
+1644
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_6
+46995
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 724
+Erro do processo 8 no passo 1 = 12.6916
+Erro do processo 8 no passo 2 = 2.58063
+
+Tempo do processo 8
+0
+0.002171
+3.84417
+51.7611
+30.838
+42.7634
+37.7428
+129.209
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_6
+895594
+#elementos_123monte_ruapehu_n.process__passo_0_rank_5
+1624
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_5
+47226
+#elementos_123monte_ruapehu_n.process__passo_0_rank_4
+1652
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_4
+48046
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_5
+894233
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_4
+903542
+#elementos_123monte_ruapehu_n.process__passo_0_rank_10
+1696
+escreveu o arquivo para o passo 0
+#elementos_123monte_ruapehu_n.process__passo_1_rank_10
+49453
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 682.778
+Erro do processo 7 no passo 1 = 12.5238
+Erro do processo 7 no passo 2 = 2.69908
+
+Tempo do processo 7
+0
+0.002211
+3.9589
+52.0783
+31.1898
+43.6792
+37.7421
+130.908
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 1
+#elementos_123monte_ruapehu_n.process__passo_2_rank_10
+923260
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 748.352
+Erro do processo 11 no passo 1 = 12.0966
+Erro do processo 11 no passo 2 = 2.34093
+
+Tempo do processo 11
+0
+0.002263
+4.01847
+52.205
+31.5271
+44.223
+37.7431
+131.976
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 697.113
+Erro do processo 3 no passo 1 = 12.1877
+Erro do processo 3 no passo 2 = 2.29383
+
+Tempo do processo 3
+0
+0.00224
+4.00765
+53.3141
+31.1723
+45.063
+37.7391
+133.559
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 729.517
+Erro do processo 2 no passo 1 = 12.6408
+Erro do processo 2 no passo 2 = 2.19817
+
+Tempo do processo 2
+0
+0.002284
+4.01799
+53.4405
+31.2573
+45.0608
+37.7383
+133.779
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 683.271
+Erro do processo 9 no passo 1 = 12.597
+Erro do processo 9 no passo 2 = 2.28304
+
+Tempo do processo 9
+0
+0.002242
+4.05115
+53.8204
+31.8662
+44.7287
+37.7429
+134.469
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 715.17
+Erro do processo 0 no passo 1 = 13.3787
+Erro do processo 0 no passo 2 = 3.14618
+
+Tempo do processo 0
+37.7366
+0.002503
+4.02952
+54.4389
+31.021
+7.27238
+0.000858
+134.501
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 698.16
+Erro do processo 1 no passo 1 = 13.0505
+Erro do processo 1 no passo 2 = 3.03391
+
+Tempo do processo 1
+0
+0.002214
+4.10055
+55.3272
+31.0179
+45.0551
+37.7379
+135.503
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 669.96
+Erro do processo 6 no passo 1 = 11.958
+Erro do processo 6 no passo 2 = 2.39464
+
+Tempo do processo 6
+0
+0.002233
+3.90119
+56.2337
+31.1581
+44.9417
+37.742
+136.237
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 689.074
+Erro do processo 5 no passo 1 = 11.8389
+Erro do processo 5 no passo 2 = 2.66253
+
+Tempo do processo 5
+0
+0.002265
+3.9191
+56.7282
+31.0458
+44.8152
+37.7392
+136.511
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 694.471
+Erro do processo 4 no passo 1 = 11.7274
+Erro do processo 4 no passo 2 = 2.06987
+
+Tempo do processo 4
+0
+0.002309
+4.07088
+56.2178
+31.4723
+44.9119
+37.7395
+136.675
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 726.239
+Erro do processo 10 no passo 1 = 11.2178
+Erro do processo 10 no passo 2 = 1.97068
+
+Tempo do processo 10
+0
+0.002289
+4.12671
+56.7102
+32.2106
+44.5962
+37.7438
+137.646
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+sant_helens_12p
+#elementos_121monte_sant_helens_n.process__passo_0_rank_11
+1676
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_11
+48400
+#elementos_121monte_sant_helens_n.process__passo_0_rank_3
+1696
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_3
+48771
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_11
+909518
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_3
+901260
+#elementos_121monte_sant_helens_n.process__passo_0_rank_5
+1660
+#elementos_121monte_sant_helens_n.process__passo_0_rank_7
+1708
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_5
+47932
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_7
+49058
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_5
+902158
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_7
+914908
+#elementos_121monte_sant_helens_n.process__passo_0_rank_9
+1720
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_9
+49651
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_9
+925826
+#elementos_121monte_sant_helens_n.process__passo_0_rank_2
+1732
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_2
+49834
+#elementos_121monte_sant_helens_n.process__passo_0_rank_8
+1752
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_8
+50318
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_2
+924779
+#elementos_121monte_sant_helens_n.process__passo_0_rank_0
+1972
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_0
+50861
+#elementos_121monte_sant_helens_n.process__passo_0_rank_1
+1700
+#elementos_121monte_sant_helens_n.process__passo_0_rank_4
+1680
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_1
+48943
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_4
+49020
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_8
+930872
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_0
+933249
+#elementos_121monte_sant_helens_n.process__passo_0_rank_10
+1724
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_10
+49638
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_4
+920654
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_1
+909249
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_10
+921461
+#elementos_121monte_sant_helens_n.process__passo_0_rank_6
+1716
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_n.process__passo_1_rank_6
+49444
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_n.process__passo_2_rank_6
+920936
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 29.1741
+Erro do processo 11 no passo 1 = 0.804481
+Erro do processo 11 no passo 2 = 0.137323
+
+Tempo do processo 11
+0
+0.002287
+4.20843
+51.4526
+31.9982
+50.3915
+43.2925
+138.053
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 34.8622
+Erro do processo 3 no passo 1 = 0.883281
+Erro do processo 3 no passo 2 = 0.140147
+
+Tempo do processo 3
+0
+0.002384
+4.24313
+51.7977
+31.6947
+50.7614
+43.2833
+138.499
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 29.5444
+Erro do processo 7 no passo 1 = 0.892231
+Erro do processo 7 no passo 2 = 0.173774
+
+Tempo do processo 7
+0
+0.002389
+4.25709
+52.2166
+32.2661
+50.6633
+43.2907
+139.406
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 32.1392
+Erro do processo 5 no passo 1 = 0.812925
+Erro do processo 5 no passo 2 = 0.195256
+
+Tempo do processo 5
+0
+0.002277
+4.21928
+52.7929
+31.7173
+50.7325
+43.2889
+139.464
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 33.0242
+Erro do processo 9 no passo 1 = 0.900905
+Erro do processo 9 no passo 2 = 0.150235
+
+Tempo do processo 9
+0
+0.002324
+4.30253
+53.424
+32.5229
+50.6728
+43.2914
+140.925
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 29.4401
+Erro do processo 8 no passo 1 = 0.809239
+Erro do processo 8 no passo 2 = 0.154583
+
+Tempo do processo 8
+0
+0.002345
+4.42397
+54.5384
+32.7182
+50.8438
+43.281
+142.527
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 32.5659
+Erro do processo 2 no passo 1 = 0.833692
+Erro do processo 2 no passo 2 = 0.1434
+
+Tempo do processo 2
+0
+0.002404
+4.35069
+54.6867
+32.336
+51.4813
+43.2876
+142.857
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 34.1628
+Erro do processo 10 no passo 1 = 0.776585
+Erro do processo 10 no passo 2 = 0.119878
+
+Tempo do processo 10
+0
+0.002371
+4.31915
+55.5503
+32.3943
+50.6733
+43.2922
+142.939
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 27.2612
+Erro do processo 1 no passo 1 = 0.804999
+Erro do processo 1 no passo 2 = 0.144554
+
+Tempo do processo 1
+0
+0.002402
+4.25175
+55.7903
+31.9028
+51.2289
+43.2872
+143.176
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 35.5961
+Erro do processo 4 no passo 1 = 0.826007
+Erro do processo 4 no passo 2 = 0.139863
+
+Tempo do processo 4
+0
+0.00234
+4.26927
+55.6092
+32.0768
+51.2344
+43.2885
+143.192
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 26.8163
+Erro do processo 0 no passo 1 = 0.756886
+Erro do processo 0 no passo 2 = 0.151492
+
+Tempo do processo 0
+43.2854
+0.003041
+4.31864
+54.4433
+32.9958
+8.40085
+0.000902
+143.447
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 31.3216
+Erro do processo 6 no passo 1 = 0.966762
+Erro do processo 6 no passo 2 = 0.16823
+
+Tempo do processo 6
+0
+0.002353
+4.24621
+53.6783
+35.9117
+50.726
+43.29
+144.565
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+#elementos_122monte_sant_helens_n.process__passo_0_rank_3
+1696
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_3
+48771
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_3
+901260
+#elementos_122monte_sant_helens_n.process__passo_0_rank_5
+1660
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_5
+47932
+#elementos_122monte_sant_helens_n.process__passo_0_rank_11
+1676
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_11
+48400
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_5
+902158
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_11
+909518
+#elementos_122monte_sant_helens_n.process__passo_0_rank_9
+1720
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_9
+49651
+#elementos_122monte_sant_helens_n.process__passo_0_rank_0
+1972
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_0
+50861
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_9
+925826
+#elementos_122monte_sant_helens_n.process__passo_0_rank_7
+1708
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_7
+49058
+#elementos_122monte_sant_helens_n.process__passo_0_rank_2
+1732
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_2
+49834
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_0
+933249
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_7
+914908
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_2
+924779
+#elementos_122monte_sant_helens_n.process__passo_0_rank_1
+1700
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_1
+48943
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_1
+909249
+#elementos_122monte_sant_helens_n.process__passo_0_rank_4
+1680
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_4
+49020
+#elementos_122monte_sant_helens_n.process__passo_0_rank_8
+1752
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_8
+50318
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_4
+920654
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_8
+930872
+#elementos_122monte_sant_helens_n.process__passo_0_rank_10
+1724
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_10
+49638
+#elementos_122monte_sant_helens_n.process__passo_0_rank_6
+1716
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_n.process__passo_1_rank_6
+49444
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_10
+921461
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_n.process__passo_2_rank_6
+920936
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 34.8622
+Erro do processo 3 no passo 1 = 0.883281
+Erro do processo 3 no passo 2 = 0.140147
+
+Tempo do processo 3
+0
+0.002293
+4.26745
+51.0543
+32.2168
+51.2666
+44.2019
+138.807
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 32.1392
+Erro do processo 5 no passo 1 = 0.812925
+Erro do processo 5 no passo 2 = 0.195256
+
+Tempo do processo 5
+0
+0.002246
+4.24783
+52.1153
+31.9178
+51.3438
+44.2031
+139.627
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 29.1741
+Erro do processo 11 no passo 1 = 0.804481
+Erro do processo 11 no passo 2 = 0.137323
+
+Tempo do processo 11
+0
+0.002254
+4.26311
+51.682
+32.4638
+51.37
+44.207
+139.781
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 33.0242
+Erro do processo 9 no passo 1 = 0.900905
+Erro do processo 9 no passo 2 = 0.150235
+
+Tempo do processo 9
+0
+0.002299
+4.38157
+53.6084
+32.6304
+51.6627
+44.2063
+142.285
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 29.5444
+Erro do processo 7 no passo 1 = 0.892231
+Erro do processo 7 no passo 2 = 0.173774
+
+Tempo do processo 7
+0
+0.002308
+4.24058
+54.0827
+32.7407
+51.9038
+44.2059
+142.97
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 26.8163
+Erro do processo 0 no passo 1 = 0.756886
+Erro do processo 0 no passo 2 = 0.151492
+
+Tempo do processo 0
+44.1995
+0.002933
+4.35488
+53.3653
+33.1943
+8.11457
+0.000857
+143.231
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 32.5659
+Erro do processo 2 no passo 1 = 0.833692
+Erro do processo 2 no passo 2 = 0.1434
+
+Tempo do processo 2
+0
+0.002379
+4.38392
+53.9694
+32.7862
+52.1148
+44.2016
+143.257
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 27.2612
+Erro do processo 1 no passo 1 = 0.804999
+Erro do processo 1 no passo 2 = 0.144554
+
+Tempo do processo 1
+0
+0.002306
+4.25904
+55.0882
+32.4066
+51.9968
+44.2014
+143.753
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 29.4401
+Erro do processo 8 no passo 1 = 0.809239
+Erro do processo 8 no passo 2 = 0.154583
+
+Tempo do processo 8
+0
+0.002325
+4.46692
+54.8437
+32.9517
+51.6932
+44.2064
+143.958
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 35.5961
+Erro do processo 4 no passo 1 = 0.826007
+Erro do processo 4 no passo 2 = 0.139863
+
+Tempo do processo 4
+0
+0.002274
+4.32719
+55.2032
+32.7081
+51.9262
+44.1898
+144.167
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 34.1628
+Erro do processo 10 no passo 1 = 0.776585
+Erro do processo 10 no passo 2 = 0.119878
+
+Tempo do processo 10
+0
+0.002288
+4.35696
+55.682
+32.726
+51.5521
+44.1959
+144.319
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 31.3216
+Erro do processo 6 no passo 1 = 0.966762
+Erro do processo 6 no passo 2 = 0.16823
+
+Tempo do processo 6
+0
+0.002327
+4.31173
+52.4871
+36.2562
+51.7359
+44.2049
+144.793
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+#elementos_123monte_sant_helens_n.process__passo_0_rank_3
+1696
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_3
+48771
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_3
+901260
+#elementos_123monte_sant_helens_n.process__passo_0_rank_5
+1660
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_5
+47932
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_5
+902158
+#elementos_123monte_sant_helens_n.process__passo_0_rank_11
+1676
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_11
+48400
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_11
+909518
+#elementos_123monte_sant_helens_n.process__passo_0_rank_7
+1708
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_7
+49058
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_7
+914908
+#elementos_123monte_sant_helens_n.process__passo_0_rank_9
+1720
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_9
+49651
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_9
+925826
+#elementos_123monte_sant_helens_n.process__passo_0_rank_2
+1732
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_2
+49834
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_2
+924779
+#elementos_123monte_sant_helens_n.process__passo_0_rank_1
+1700
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_1
+48943
+#elementos_123monte_sant_helens_n.process__passo_0_rank_0
+1972
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_0
+50861
+#elementos_123monte_sant_helens_n.process__passo_0_rank_8
+1752
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_8
+50318
+#elementos_123monte_sant_helens_n.process__passo_0_rank_10
+1724
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_1
+909249
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_10
+49638
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_0
+933249
+#elementos_123monte_sant_helens_n.process__passo_0_rank_6
+1716
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_8
+930872
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_6
+49444
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_10
+921461
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_6
+920936
+#elementos_123monte_sant_helens_n.process__passo_0_rank_4
+1680
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_n.process__passo_1_rank_4
+49020
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_n.process__passo_2_rank_4
+920654
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 34.8622
+Erro do processo 3 no passo 1 = 0.883281
+Erro do processo 3 no passo 2 = 0.140147
+
+Tempo do processo 3
+0
+0.002416
+4.3454
+54.0889
+31.6464
+46.233
+38.8274
+136.316
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 32.1392
+Erro do processo 5 no passo 1 = 0.812925
+Erro do processo 5 no passo 2 = 0.195256
+
+Tempo do processo 5
+0
+0.002356
+4.32471
+54.6313
+31.5258
+46.0001
+38.8124
+136.484
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 29.1741
+Erro do processo 11 no passo 1 = 0.804481
+Erro do processo 11 no passo 2 = 0.137323
+
+Tempo do processo 11
+0
+0.002358
+4.337
+54.6126
+31.8525
+46.0158
+38.8509
+136.82
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 29.5444
+Erro do processo 7 no passo 1 = 0.892231
+Erro do processo 7 no passo 2 = 0.173774
+
+Tempo do processo 7
+0
+0.002693
+4.39255
+55.0741
+31.6974
+46.0492
+38.8009
+137.216
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 33.0242
+Erro do processo 9 no passo 1 = 0.900905
+Erro do processo 9 no passo 2 = 0.150235
+
+Tempo do processo 9
+0
+0.002443
+4.44064
+56.2392
+31.9603
+46.283
+38.8622
+138.926
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 32.5659
+Erro do processo 2 no passo 1 = 0.833692
+Erro do processo 2 no passo 2 = 0.1434
+
+Tempo do processo 2
+0
+0.00245
+4.47276
+56.5177
+32.0286
+46.5494
+38.7548
+139.571
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 27.2612
+Erro do processo 1 no passo 1 = 0.804999
+Erro do processo 1 no passo 2 = 0.144554
+
+Tempo do processo 1
+0
+0.002407
+4.33375
+57.8193
+31.7769
+46.7453
+38.7703
+140.678
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 29.4401
+Erro do processo 8 no passo 1 = 0.809239
+Erro do processo 8 no passo 2 = 0.154583
+
+Tempo do processo 8
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 34.1628
+Erro do processo 10 no passo 1 = 0.776585
+Erro do processo 10 no passo 2 = 0.119878
+
+Tempo do processo 10
+0
+0.002316
+4.43555
+58.031
+0
+0.00249
+4.54668
+57.204
+32.4227
+46.6008
+38.8621
+140.777
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+31.835
+46.4004
+38.7907
+140.704
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 31.3216
+Erro do processo 6 no passo 1 = 0.966762
+Erro do processo 6 no passo 2 = 0.16823
+
+Tempo do processo 6
+0
+0.002469
+4.4301
+54.8253
+35.3198
+46.3917
+38.8607
+140.969
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 26.8163
+Erro do processo 0 no passo 1 = 0.756886
+Erro do processo 0 no passo 2 = 0.151492
+
+Tempo do processo 0
+38.8292
+0.003088
+4.45876
+56.6781
+32.9397
+8.10722
+0.000898
+141.016
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 35.5961
+Erro do processo 4 no passo 1 = 0.826007
+Erro do processo 4 no passo 2 = 0.139863
+
+Tempo do processo 4
+0
+0.002422
+4.39724
+58.212
+32.6042
+46.2652
+38.8648
+141.481
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+sant_helens_nivel_1_12p
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_0
+4
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_0
+125
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+2455
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 0.258817
+Erro do processo 0 no passo 1 = 0.01444
+Erro do processo 0 no passo 2 = 0.000879686
+
+Tempo do processo 0
+739.974
+2.7e-05
+0.011569
+0.13786
+0.084731
+0.059519
+0.003746
+740.268
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_1
+7300
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_1
+212127
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+3945467
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_2
+7432
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_2
+215590
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_9
+7428
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_9
+215542
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_2
+3992263
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_3
+7464
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_9
+3997105
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_3
+215984
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_8
+7468
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_8
+216533
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_7
+7496
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_7
+217095
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_3
+4001090
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_8
+4026198
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_7
+4026007
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_11
+7460
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_11
+216261
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_10
+7464
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_10
+217385
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_11
+4023168
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_10
+4055554
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_5
+7524
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_5
+218519
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_4
+7448
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_4
+216080
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_0_rank_6
+8456
+escreveu o arquivo para o passo 0
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_1_rank_6
+223160
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_5
+4059121
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_4
+4007005
+escreveu o arquivo para o passo 1
+#elementos_121monte_sant_helens_nivel_1_n.process__passo_2_rank_6
+4103329
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 147.638
+Erro do processo 1 no passo 1 = 2.23731
+Erro do processo 1 no passo 2 = 0.529057
+
+Tempo do processo 1
+0
+0.010284
+17.9749
+242.019
+137.599
+776.113
+739.958
+1173.72
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 147.968
+Erro do processo 9 no passo 1 = 2.10626
+Erro do processo 9 no passo 2 = 0.518964
+
+Tempo do processo 9
+0
+0.010494
+18.5889
+241.158
+139.821
+774.977
+740.08
+1174.56
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 146.182
+Erro do processo 8 no passo 1 = 2.17486
+Erro do processo 8 no passo 2 = 0.57735
+
+Tempo do processo 8
+0
+0.010336
+18.5199
+241.446
+141.592
+774.203
+740.093
+1175.77
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 146.719
+Erro do processo 2 no passo 1 = 2.17164
+Erro do processo 2 no passo 2 = 0.561553
+
+Tempo do processo 2
+0
+0.010518
+18.4047
+241.489
+139.392
+777.085
+740.008
+1176.38
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 147.263
+Erro do processo 7 no passo 1 = 2.31475
+Erro do processo 7 no passo 2 = 0.560231
+
+Tempo do processo 7
+0
+0.010612
+18.5708
+242.74
+141.32
+774.909
+740.048
+1177.55
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 151.465
+Erro do processo 3 no passo 1 = 2.12801
+Erro do processo 3 no passo 2 = 0.468114
+
+Tempo do processo 3
+0
+0.010431
+18.4893
+242.909
+139.761
+776.729
+740.027
+1177.9
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 152.276
+Erro do processo 11 no passo 1 = 2.14837
+Erro do processo 11 no passo 2 = 0.510164
+
+Tempo do processo 11
+0
+0.010465
+18.4114
+245.973
+141.035
+774.598
+740.083
+1180.03
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 147.968
+Erro do processo 10 no passo 1 = 2.33923
+Erro do processo 10 no passo 2 = 0.592902
+
+Tempo do processo 10
+0
+0.010435
+18.3756
+246.902
+141.215
+775.028
+740.082
+1181.53
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 149.047
+Erro do processo 4 no passo 1 = 2.20691
+Erro do processo 4 no passo 2 = 0.487855
+
+Tempo do processo 4
+0
+0.010499
+18.5667
+251.845
+141.393
+775.3
+739.98
+1187.12
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 129.988
+Erro do processo 6 no passo 1 = 1.91447
+Erro do processo 6 no passo 2 = 0.413689
+
+Tempo do processo 6
+0
+0.011641
+18.5042
+249.098
+144.342
+775.309
+740.058
+1187.26
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 151.218
+Erro do processo 5 no passo 1 = 2.22927
+Erro do processo 5 no passo 2 = 0.518368
+
+Tempo do processo 5
+0
+0.010384
+18.5278
+251.303
+141.634
+775.846
+739.999
+1187.32
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_0
+4
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_0
+125
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+2455
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 0.258817
+Erro do processo 0 no passo 1 = 0.01444
+Erro do processo 0 no passo 2 = 0.000879686
+
+Tempo do processo 0
+744.718
+3.1e-05
+0.011632
+0.141309
+0.083578
+0.061296
+0.003985
+745.016
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_9
+7428
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_9
+215542
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_2
+7432
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_9
+3997105
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_2
+215590
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_2
+3992263
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_1
+7300
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_1
+212127
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+3945467
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_3
+7464
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_3
+215984
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_3
+4001090
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_8
+7468
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_8
+216533
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_11
+7460
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_11
+216261
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_7
+7496
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_7
+217095
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_8
+4026198
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_11
+4023168
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_7
+4026007
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_4
+7448
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_4
+216080
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_5
+7524
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_5
+218519
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_10
+7464
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_10
+217385
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_4
+4007005
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_5
+4059121
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_10
+4055554
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_0_rank_6
+8456
+escreveu o arquivo para o passo 0
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_1_rank_6
+223160
+escreveu o arquivo para o passo 1
+#elementos_122monte_sant_helens_nivel_1_n.process__passo_2_rank_6
+4103329
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 147.968
+Erro do processo 9 no passo 1 = 2.10626
+Erro do processo 9 no passo 2 = 0.518964
+
+Tempo do processo 9
+0
+0.010409
+18.4144
+239.107
+137.71
+777.201
+744.754
+1172.44
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 146.719
+Erro do processo 2 no passo 1 = 2.17164
+Erro do processo 2 no passo 2 = 0.561553
+
+Tempo do processo 2
+0
+0.010475
+18.3384
+238.867
+139.442
+778.201
+744.832
+1174.86
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 147.638
+Erro do processo 1 no passo 1 = 2.23731
+Erro do processo 1 no passo 2 = 0.529057
+
+Tempo do processo 1
+0
+0.010377
+17.8689
+243.221
+137.149
+779.435
+744.818
+1177.68
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 151.465
+Erro do processo 3 no passo 1 = 2.12801
+Erro do processo 3 no passo 2 = 0.468114
+
+Tempo do processo 3
+0
+0.010574
+18.1563
+242.187
+139.694
+780.025
+744.791
+1180.07
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 152.276
+Erro do processo 11 no passo 1 = 2.14837
+Erro do processo 11 no passo 2 = 0.510164
+
+Tempo do processo 11
+0
+0.010382
+18.2396
+245.218
+139.404
+778.976
+744.858
+1181.85
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 147.263
+Erro do processo 7 no passo 1 = 2.31475
+Erro do processo 7 no passo 2 = 0.560231
+
+Tempo do processo 7
+0
+0.010429
+18.3661
+244.727
+140.368
+778.44
+744.788
+1181.91
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 146.182
+Erro do processo 8 no passo 1 = 2.17486
+Erro do processo 8 no passo 2 = 0.57735
+
+Tempo do processo 8
+0
+0.010353
+18.3372
+242.607
+140.638
+783.556
+744.767
+1185.15
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 149.047
+Erro do processo 4 no passo 1 = 2.20691
+Erro do processo 4 no passo 2 = 0.487855
+
+Tempo do processo 4
+0
+0.010431
+18.3442
+251.575
+140.541
+778.938
+744.841
+1189.41
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 147.968
+Erro do processo 10 no passo 1 = 2.33923
+Erro do processo 10 no passo 2 = 0.592902
+
+Tempo do processo 10
+0
+0.010196
+18.1189
+250.773
+142.33
+778.508
+744.784
+1189.74
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 151.218
+Erro do processo 5 no passo 1 = 2.22927
+Erro do processo 5 no passo 2 = 0.518368
+
+Tempo do processo 5
+0
+0.010577
+18.4757
+250.452
+142.033
+779.58
+744.811
+1190.55
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 129.988
+Erro do processo 6 no passo 1 = 1.91447
+Erro do processo 6 no passo 2 = 0.413689
+
+Tempo do processo 6
+0
+0.01172
+18.4631
+252.612
+145.006
+778.889
+744.844
+1194.98
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_0
+4
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_0
+125
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+2455
+escreveu o arquivo para o passo 2
+Erro do processo 0 no passo 0 = 0.258817
+Erro do processo 0 no passo 1 = 0.01444
+Erro do processo 0 no passo 2 = 0.000879686
+
+Tempo do processo 0
+743.836
+1.9e-05
+0.009794
+0.089142
+0.059489
+0.037046
+0.002905
+744.031
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_9
+7428
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_9
+215542
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_2
+7432
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_2
+215590
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_1
+7300
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_9
+3997105
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_1
+212127
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_3
+7464
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_3
+215984
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_2
+3992263
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+3945467
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_8
+7468
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_8
+216533
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_3
+4001090
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_11
+7460
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_11
+216261
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_8
+4026198
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_11
+4023168
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_7
+7496
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_7
+217095
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_7
+4026007
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_4
+7448
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_4
+216080
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_4
+4007005
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_10
+7464
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_10
+217385
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_5
+7524
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_5
+218519
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_10
+4055554
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_5
+4059121
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_0_rank_6
+8456
+escreveu o arquivo para o passo 0
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_1_rank_6
+223160
+escreveu o arquivo para o passo 1
+#elementos_123monte_sant_helens_nivel_1_n.process__passo_2_rank_6
+4103329
+escreveu o arquivo para o passo 2
+Erro do processo 9 no passo 0 = 147.968
+Erro do processo 9 no passo 1 = 2.10626
+Erro do processo 9 no passo 2 = 0.518964
+
+Tempo do processo 9
+0
+0.006859
+18.5958
+246.258
+139.69
+777.978
+743.851
+1182.53
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 8 no passo 0 = 146.182
+Erro do processo 8 no passo 1 = 2.17486
+Erro do processo 8 no passo 2 = 0.57735
+
+Tempo do processo 8
+0
+0.006856
+18.4197
+248.865
+140.606
+778.304
+743.849
+1186.2
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 2 no passo 0 = 146.719
+Erro do processo 2 no passo 1 = 2.17164
+Erro do processo 2 no passo 2 = 0.561553
+
+Tempo do processo 2
+0
+0.006903
+18.3753
+248.006
+139.482
+780.34
+743.84
+1186.21
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 1 no passo 0 = 147.638
+Erro do processo 1 no passo 1 = 2.23731
+Erro do processo 1 no passo 2 = 0.529057
+
+Tempo do processo 1
+0
+0.006759
+17.8707
+249.864
+138.258
+780.447
+743.839
+1186.45
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 11 no passo 0 = 152.276
+Erro do processo 11 no passo 1 = 2.14837
+Erro do processo 11 no passo 2 = 0.510164
+
+Tempo do processo 11
+0
+0.006931
+18.148
+251.077
+139.638
+778.81
+743.853
+1187.68
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 3 no passo 0 = 151.465
+Erro do processo 3 no passo 1 = 2.12801
+Erro do processo 3 no passo 2 = 0.468114
+
+Tempo do processo 3
+0
+0.006897
+18.2344
+249.128
+139.641
+780.997
+743.841
+1188.01
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 7 no passo 0 = 147.263
+Erro do processo 7 no passo 1 = 2.31475
+Erro do processo 7 no passo 2 = 0.560231
+
+Tempo do processo 7
+0
+0.00695
+18.3632
+251.867
+140.971
+778.693
+743.847
+1189.9
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 4 no passo 0 = 149.047
+Erro do processo 4 no passo 1 = 2.20691
+Erro do processo 4 no passo 2 = 0.487855
+
+Tempo do processo 4
+0
+0.006921
+18.4888
+255.806
+140.495
+779.711
+743.843
+1194.51
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 10 no passo 0 = 147.968
+Erro do processo 10 no passo 1 = 2.33923
+Erro do processo 10 no passo 2 = 0.592902
+
+Tempo do processo 10
+0
+0.006931
+18.3557
+257.115
+142.535
+778.199
+743.852
+1196.21
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 5 no passo 0 = 151.218
+Erro do processo 5 no passo 1 = 2.22927
+Erro do processo 5 no passo 2 = 0.518368
+
+Tempo do processo 5
+0
+0.007002
+18.5952
+257.905
+141.702
+779.489
+743.844
+1197.7
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+escreveu o arquivo para o passo 2
+Erro do processo 6 no passo 0 = 129.988
+Erro do processo 6 no passo 1 = 1.91447
+Erro do processo 6 no passo 2 = 0.413689
+
+Tempo do processo 6
+0
+0.007736
+18.5132
+258.545
+145.28
+778.54
+743.846
+1200.89
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+sant_helens_nivel_2_12p
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 40923 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 1 PID 40924 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 2 PID 40925 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 3 PID 40926 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 4 PID 40927 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 5 PID 40928 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 6 PID 40929 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 7 PID 40930 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 8 PID 40931 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 9 PID 40932 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 10 PID 40933 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 11 PID 40934 RUNNING AT r1i6n6.ib0.smc-default.americas.sgi.com
+=   KILLED BY SIGNAL: 15 (Terminated)
+===================================================================================

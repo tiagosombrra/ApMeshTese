@@ -1,0 +1,46 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=12:mpiprocs=6
+#PBS -l walltime=1000:00:00
+#PBS -j oe
+#PBS -V
+#PBS -N N1P6T6
+#PBS -m abe
+#PBS -M tiagosombra@dc.ufc.br
+
+# load modules
+module load gcc/9.3.0 intel/2019.4
+
+#change directory
+cd ${PBS_O_WORKDIR}
+
+# run
+echo "rainier_6pt6"
+mpirun ./apMesh 6 6 Entrada/monte_rainier_sub_1.bp writeMeshOff 611monte_rainier
+mpirun ./apMesh 6 6 Entrada/monte_rainier_sub_1.bp writeMeshOff 612monte_rainier
+mpirun ./apMesh 6 6 Entrada/monte_rainier_sub_1.bp writeMeshOff 613monte_rainier
+echo "*****************************************************************"
+echo "ruapehu_6pt6"
+mpirun ./apMesh 6 6 Entrada/monte_ruapehu.bp writeMeshOff 611monte_ruapehu
+mpirun ./apMesh 6 6 Entrada/monte_ruapehu.bp writeMeshOff 612monte_ruapehu
+mpirun ./apMesh 6 6 Entrada/monte_ruapehu.bp writeMeshOff 613monte_ruapehu
+echo "*****************************************************************"
+echo "sant_helens_6pt6"
+mpirun ./apMesh 6 6 Entrada/monte_sant_helens.bp writeMeshOff 611monte_sant_helens
+mpirun ./apMesh 6 6 Entrada/monte_sant_helens.bp writeMeshOff 612monte_sant_helens
+mpirun ./apMesh 6 6 Entrada/monte_sant_helens.bp writeMeshOff 613monte_sant_helens
+echo "*****************************************************************"
+echo "sant_helens_nivel_1_6pt6"
+mpirun ./apMesh 6 6 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 611monte_sant_helens_nivel_1
+mpirun ./apMesh 6 6 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 612monte_sant_helens_nivel_1
+mpirun ./apMesh 6 6 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 613monte_sant_helens_nivel_1
+echo "*****************************************************************"
+echo "ruapehu_nivel_1_6pt6"
+mpirun ./apMesh 6 6 Entrada/monte_ruapehu_nivel_1.bp writeMeshOff 611monte_ruapehu_nivel_1
+mpirun ./apMesh 6 6 Entrada/monte_ruapehu_nivel_1.bp writeMeshOff 612monte_ruapehu_nivel_1
+mpirun ./apMesh 6 6 Entrada/monte_ruapehu_nivel_1.bp writeMeshOff 613monte_ruapehu_nivel_1
+echo "*****************************************************************"
+echo "rainier_nivel_1_6pt6"
+mpirun ./apMesh 6 6 Entrada/monte_rainier_nivel_1.bp writeMeshOff 611monte_rainier_nivel_1
+mpirun ./apMesh 6 6 Entrada/monte_rainier_nivel_1.bp writeMeshOff 612monte_rainier_nivel_1
+mpirun ./apMesh 6 6 Entrada/monte_rainier_nivel_1.bp writeMeshOff 613monte_rainier_nivel_1
+echo "*****************************************************************"

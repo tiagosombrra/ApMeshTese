@@ -1,0 +1,552 @@
+rainier_2p
+#elements_211monte_rainier_n.process__passo_2_rank_1
+5327978
+#nodes_211monte_rainier_n.process__passo_2_rank_1
+2751334
+
+Tempo do processo 1
+0
+0.014641
+20.5219
+352.922
+191.345
+45.4764
+44.7719
+610.28
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_211monte_rainier_n.process__passo_2_rank_0
+5304620
+#nodes_211monte_rainier_n.process__passo_2_rank_0
+2739276
+
+Tempo do processo 0
+44.7647
+0.01653
+23.6231
+409.397
+215.648
+0.808591
+0.000492
+694.259
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_rainier_n.process__passo_2_rank_1
+5327978
+#nodes_212monte_rainier_n.process__passo_2_rank_1
+2751334
+
+Tempo do processo 1
+0
+0.010381
+20.7671
+370.238
+190.615
+50.2394
+49.6701
+631.87
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_rainier_n.process__passo_2_rank_0
+5304620
+#nodes_212monte_rainier_n.process__passo_2_rank_0
+2739276
+
+Tempo do processo 0
+49.663
+0.017533
+23.4501
+402.579
+216.49
+0.826906
+0.000538
+693.027
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_rainier_n.process__passo_2_rank_1
+5327978
+#nodes_213monte_rainier_n.process__passo_2_rank_1
+2751334
+
+Tempo do processo 1
+0
+0.015051
+20.8981
+376.424
+191.77
+44.2262
+43.5092
+633.333
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_rainier_n.process__passo_2_rank_0
+5304620
+#nodes_213monte_rainier_n.process__passo_2_rank_0
+2739276
+
+Tempo do processo 0
+43.5031
+0.016644
+24.2448
+417.059
+215.852
+0.741509
+0.000482
+701.417
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+ruapehu_2p
+#elements_211monte_ruapehu_n.process__passo_2_rank_1
+5390905
+#nodes_211monte_ruapehu_n.process__passo_2_rank_1
+2781542
+
+Tempo do processo 1
+0
+0.01361
+19.3299
+341.307
+194.02
+37.1359
+36.5333
+591.806
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_211monte_ruapehu_n.process__passo_2_rank_0
+5348761
+#nodes_211monte_ruapehu_n.process__passo_2_rank_0
+2759678
+
+Tempo do processo 0
+36.5264
+0.01558
+21.0379
+383.736
+217.953
+0.670797
+0.000457
+659.94
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_ruapehu_n.process__passo_2_rank_1
+5390905
+#nodes_212monte_ruapehu_n.process__passo_2_rank_1
+2781542
+
+Tempo do processo 1
+0
+0.013813
+19.5157
+348.598
+189.44
+38.4802
+37.8653
+596.048
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_ruapehu_n.process__passo_2_rank_0
+5348761
+#nodes_212monte_ruapehu_n.process__passo_2_rank_0
+2759678
+
+Tempo do processo 0
+37.8601
+0.010754
+21.7484
+399.754
+219.784
+0.477535
+0.00039
+679.636
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_ruapehu_n.process__passo_2_rank_1
+5390905
+#nodes_213monte_ruapehu_n.process__passo_2_rank_1
+2781542
+
+Tempo do processo 1
+0
+0.012659
+18.9973
+329.785
+194.677
+38.9528
+38.3757
+582.425
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_ruapehu_n.process__passo_2_rank_0
+5348761
+#nodes_213monte_ruapehu_n.process__passo_2_rank_0
+2759678
+
+Tempo do processo 0
+38.3692
+0.015243
+21.7756
+424.987
+227.466
+0.644286
+0.000437
+713.257
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+sant_helens_2p
+#elements_211monte_sant_helens_n.process__passo_2_rank_1
+5535696
+#nodes_211monte_sant_helens_n.process__passo_2_rank_1
+2856069
+
+Tempo do processo 1
+0
+0.014292
+20.3113
+330.046
+195.156
+49.8865
+49.206
+595.414
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_211monte_sant_helens_n.process__passo_2_rank_0
+5481250
+#nodes_211monte_sant_helens_n.process__passo_2_rank_0
+2827919
+
+Tempo do processo 0
+49.1988
+0.015025
+23.9163
+399.327
+228.833
+0.728385
+0.000513
+702.019
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_sant_helens_n.process__passo_2_rank_1
+5535696
+#nodes_212monte_sant_helens_n.process__passo_2_rank_1
+2856069
+
+Tempo do processo 1
+0
+0.014362
+20.169
+323.449
+200.626
+44.3335
+43.6241
+588.591
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_sant_helens_n.process__passo_2_rank_0
+5481250
+#nodes_212monte_sant_helens_n.process__passo_2_rank_0
+2827919
+
+Tempo do processo 0
+43.6172
+0.016268
+23.2814
+386.347
+231.829
+0.758935
+0.000509
+685.85
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_sant_helens_n.process__passo_2_rank_1
+5535696
+#nodes_213monte_sant_helens_n.process__passo_2_rank_1
+2856069
+
+Tempo do processo 1
+0
+0.014595
+20.4094
+337.7
+199.805
+44.4611
+43.7619
+602.39
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_sant_helens_n.process__passo_2_rank_0
+5481250
+#nodes_213monte_sant_helens_n.process__passo_2_rank_0
+2827919
+
+Tempo do processo 0
+43.7578
+0.016651
+22.7397
+383.167
+231.648
+0.698235
+0.000524
+682.028
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+sant_helens_nivel_1_2p
+#elements_211monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+22184140
+#nodes_211monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+11445632
+
+Tempo do processo 1
+0
+0.041014
+78.4096
+1306.48
+824.544
+1011.35
+1003.13
+3220.82
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_211monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+22056166
+#nodes_211monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+11380215
+
+Tempo do processo 0
+1003.11
+0.061713
+89.3862
+1518.11
+930.235
+10.6242
+0.0016
+3551.53
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+22184140
+#nodes_212monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+11445632
+
+Tempo do processo 1
+0
+0.057258
+78.9107
+1331.18
+819.917
+808.78
+798.602
+3038.85
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+22056166
+#nodes_212monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+11380215
+
+Tempo do processo 0
+798.579
+0.054539
+91.5628
+1576.76
+898.146
+11.0483
+0.001732
+3376.15
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+22184140
+#nodes_213monte_sant_helens_nivel_1_n.process__passo_2_rank_1
+11445632
+
+Tempo do processo 1
+0
+0.060137
+80.7428
+1366.29
+810.197
+940.933
+930.59
+3198.23
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+22056166
+#nodes_213monte_sant_helens_nivel_1_n.process__passo_2_rank_0
+11380215
+
+Tempo do processo 0
+930.565
+0.067399
+90.8723
+1571.11
+935.278
+13.7243
+0.001741
+3541.62
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+ruapehu_nivel_1_2p
+#elements_211monte_ruapehu_nivel_1_n.process__passo_2_rank_1
+21283006
+#nodes_211monte_ruapehu_nivel_1_n.process__passo_2_rank_1
+10979470
+
+Tempo do processo 1
+0
+0.054657
+71.5396
+1299.6
+763.511
+726.259
+716.501
+2860.97
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_211monte_ruapehu_nivel_1_n.process__passo_2_rank_0
+21294372
+#nodes_211monte_ruapehu_nivel_1_n.process__passo_2_rank_0
+10985283
+
+Tempo do processo 0
+716.479
+0.06373
+81.7392
+1505.87
+902.481
+10.2942
+0.001539
+3216.93
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_ruapehu_nivel_1_n.process__passo_2_rank_1
+21283006
+#nodes_212monte_ruapehu_nivel_1_n.process__passo_2_rank_1
+10979470
+
+Tempo do processo 1
+0
+0.051356
+71.2001
+1300.14
+787.775
+842.002
+833.565
+3001.17
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_ruapehu_nivel_1_n.process__passo_2_rank_0
+21294372
+#nodes_212monte_ruapehu_nivel_1_n.process__passo_2_rank_0
+10985283
+
+Tempo do processo 0
+833.541
+0.060044
+79.8389
+1481.62
+890.15
+10.1655
+0.001572
+3295.37
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_ruapehu_nivel_1_n.process__passo_2_rank_1
+21283006
+#nodes_213monte_ruapehu_nivel_1_n.process__passo_2_rank_1
+10979470
+
+Tempo do processo 1
+0
+0.038516
+70.4798
+1217.31
+756.061
+724.316
+715.402
+2768.2
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_ruapehu_nivel_1_n.process__passo_2_rank_0
+21294372
+#nodes_213monte_ruapehu_nivel_1_n.process__passo_2_rank_0
+10985283
+
+Tempo do processo 0
+715.378
+0.066624
+80.9023
+1400.42
+854.268
+11.5742
+0.001624
+3062.61
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************
+rainier_nivel_1_2p
+#elements_211monte_rainier_nivel_1_n.process__passo_2_rank_1
+21845071
+#nodes_211monte_rainier_nivel_1_n.process__passo_2_rank_1
+11273863
+
+Tempo do processo 1
+0
+0.061178
+78.9538
+1220.62
+764.268
+823.63
+813.529
+2887.53
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_211monte_rainier_nivel_1_n.process__passo_2_rank_0
+21808060
+#nodes_211monte_rainier_nivel_1_n.process__passo_2_rank_0
+11254768
+
+Tempo do processo 0
+813.507
+0.053972
+93.4298
+1411
+865.642
+11.4792
+0.001763
+3195.11
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_rainier_nivel_1_n.process__passo_2_rank_1
+21845071
+#nodes_212monte_rainier_nivel_1_n.process__passo_2_rank_1
+11273863
+
+Tempo do processo 1
+0
+0.063885
+80.9956
+1213.14
+772.578
+824.704
+814.805
+2891.48
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_212monte_rainier_nivel_1_n.process__passo_2_rank_0
+21808060
+#nodes_212monte_rainier_nivel_1_n.process__passo_2_rank_0
+11254768
+
+Tempo do processo 0
+814.778
+0.063442
+91.8393
+1406.78
+876.757
+11.1399
+0.00166
+3201.35
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_rainier_nivel_1_n.process__passo_2_rank_1
+21845071
+#nodes_213monte_rainier_nivel_1_n.process__passo_2_rank_1
+11273863
+
+Tempo do processo 1
+0
+0.055686
+80.8713
+1280.44
+797.605
+815.39
+804.658
+2974.36
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_213monte_rainier_nivel_1_n.process__passo_2_rank_0
+21808060
+#nodes_213monte_rainier_nivel_1_n.process__passo_2_rank_0
+11254768
+
+Tempo do processo 0
+804.631
+0.066036
+88.4512
+1482.56
+914.328
+10.8856
+0.001668
+3300.92
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+*****************************************************************

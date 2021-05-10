@@ -15,26 +15,32 @@ cd ${PBS_O_WORKDIR}
 
 # run
 echo "rainier_24p"
-mpirun ./apMesh 24 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 241monte_rainier_sub_1
-mpirun ./apMesh 24 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 242monte_rainier_sub_1
-mpirun ./apMesh 24 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 243monte_rainier_sub_1
+mpirun ./apMesh 24 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 2411monte_rainier
+mpirun ./apMesh 24 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 2412monte_rainier
+mpirun ./apMesh 24 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 2413monte_rainier
 echo "*****************************************************************"
 echo "ruapehu_24p"
-mpirun ./apMesh 24 1 Entrada/monte_ruapehu.bp writeMeshOff 241monte_ruapehu
-mpirun ./apMesh 24 1 Entrada/monte_ruapehu.bp writeMeshOff 242monte_ruapehu
-mpirun ./apMesh 24 1 Entrada/monte_ruapehu.bp writeMeshOff 243monte_ruapehu
+mpirun ./apMesh 24 1 Entrada/monte_ruapehu.bp writeMeshOff 2411monte_ruapehu
+mpirun ./apMesh 24 1 Entrada/monte_ruapehu.bp writeMeshOff 2412monte_ruapehu
+mpirun ./apMesh 24 1 Entrada/monte_ruapehu.bp writeMeshOff 2413monte_ruapehu
 echo "*****************************************************************"
 echo "sant_helens_24p"
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens.bp writeMeshOff 241monte_sant_helens
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens.bp writeMeshOff 242monte_sant_helens
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens.bp writeMeshOff 243monte_sant_helens
+mpirun ./apMesh 24 1 Entrada/monte_sant_helens.bp writeMeshOff 2411monte_sant_helens
+mpirun ./apMesh 24 1 Entrada/monte_sant_helens.bp writeMeshOff 2412monte_sant_helens
+mpirun ./apMesh 24 1 Entrada/monte_sant_helens.bp writeMeshOff 2413monte_sant_helens
 echo "*****************************************************************"
 echo "sant_helens_nivel_1_24p"
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 241monte_sant_helens_nivel_1
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 242monte_sant_helens_nivel_1
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 243monte_sant_helens_nivel_1
+mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 2411monte_sant_helens_nivel_1
+mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 2412monte_sant_helens_nivel_1
+mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 2413monte_sant_helens_nivel_1
 echo "*****************************************************************"
-echo "sant_helens_nivel_2_24p"
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOff 241monte_sant_helens_nivel_2
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOff 242monte_sant_helens_nivel_2
-mpirun ./apMesh 24 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOff 243monte_sant_helens_nivel_2
+echo "ruapehu_nivel_1_24p"
+mpirun ./apMesh 24 1 Entrada/monte_ruapehu_nivel_1.bp writeMeshOff 2411monte_ruapehu_nivel_1
+mpirun ./apMesh 24 1 Entrada/monte_ruapehu_nivel_1.bp writeMeshOff 2412monte_ruapehu_nivel_1
+mpirun ./apMesh 24 1 Entrada/monte_ruapehu_nivel_1.bp writeMeshOff 2413monte_ruapehu_nivel_1
+echo "*****************************************************************"
+echo "rainier_nivel_1_24p"
+mpirun ./apMesh 24 1 Entrada/monte_rainier_nivel_1.bp writeMeshOff 2411monte_rainier_nivel_1
+mpirun ./apMesh 24 1 Entrada/monte_rainier_nivel_1.bp writeMeshOff 2412monte_rainier_nivel_1
+mpirun ./apMesh 24 1 Entrada/monte_rainier_nivel_1.bp writeMeshOff 2413monte_rainier_nivel_1
+echo "*****************************************************************"

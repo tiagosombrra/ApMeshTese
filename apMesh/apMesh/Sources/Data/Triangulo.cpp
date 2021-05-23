@@ -114,3 +114,20 @@ void Triangulo::substituir(Noh *velho, Noh *novo)
     else if (this->n2 == velho) this->n2 = novo;
     else if (this->n3 == velho) this->n3 = novo;
 }
+
+double Triangulo::quality()
+{
+    double a = n1->distanciaPara(static_cast<Ponto>(*n2));
+    double b = n2->distanciaPara(static_cast<Ponto>(*n3));
+    double c = n3->distanciaPara(static_cast<Ponto>(*n1));
+
+    //cout<<"a "<<a<<"b "<<b<<"c "<<c<<endl;
+
+    double s = 0.5*(a + b + c);
+    double d = (s - a)*(s - b)*(s - c);
+
+    double rInsc = std::sqrt(d/s);
+    double rCirc = 0.25*a*b*c/sqrt(s*d);
+
+    return 2.0*rInsc/rCirc;
+}

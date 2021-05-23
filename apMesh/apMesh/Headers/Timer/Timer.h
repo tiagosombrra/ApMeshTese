@@ -19,7 +19,7 @@ extern std::string numberProcess;
 //[3]= Adaptação das curvas
 //[4]= Adaptação do domínio
 //[5]= ...
-//[6]= ...
+//[6]= MediaGauss
 //[7]= Calculo do erro
 //[8]= Overhead
 //[9]= Timer send and recv process

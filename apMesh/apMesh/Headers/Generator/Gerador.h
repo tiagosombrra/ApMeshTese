@@ -29,7 +29,7 @@ protected :
     virtual double erroGlobal ( );
 
 public :
-    double erro; // erro global da malha
+    double erro; // erro local em cada processo
 
     Gerador (  );
     //Gerador ( Modelo& modelo );

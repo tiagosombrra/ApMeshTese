@@ -50,7 +50,7 @@ void WriteOBJFIle::writeCurvaturePatches(std::vector<double> vecCurvaturePatches
             vec_50_60.push_back(value);
         } else if (0.6 < value and value <= 0.7) {
             vec_60_70.push_back(value);
-        } else if (0.8 < value and value <= 0.9) {
+        } else if (0.7 < value and value <= 0.8) {
             vec_70_80.push_back(value);
         } else if (0.8 < value and value <= 0.9) {
             vec_80_90.push_back(value);

@@ -136,9 +136,9 @@ void Timer::printTime()
     cout << max[3] << endl; //Adaptação das curvas
     cout << max[4] << endl; //Adaptação do domínio
     //cout << max[5] << endl; //Quadtree
-    //cout << max[6] << endl; //Avanço de front
+    cout << max[6] << endl; //MediaGauss
     cout << max[7] << endl; //Calculo do erro
-    cout <<max[10] - max[8] - max[7] /*- max[6] - max[5]*/ - max[4] - max[3] - max[2] - max[1] << endl; //Overhead
+    cout <<max[10] - max[9] - max[8] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] << endl; //Overhead
     cout << max[9] << endl; //SendRecv
     cout << max[10] << endl; //Full
 

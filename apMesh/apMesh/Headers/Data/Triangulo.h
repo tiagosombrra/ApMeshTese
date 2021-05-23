@@ -48,6 +48,7 @@ public :
 
     Triangulo ( Noh* v1, Noh* v2, Noh* v3 ); // será construído no sentido v1->v2->v3
     virtual ~Triangulo (  );
+    double quality();
 };
 
 #endif

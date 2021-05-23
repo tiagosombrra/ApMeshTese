@@ -74,7 +74,7 @@ public :
 #endif
 
   virtual SubMalha* malhaInicial (CoonsPatch*, Performer::IdManager *idManager);
-  virtual double erroGlobal ( Malha* malha);
+  virtual double erroGlobal ( Malha* malha, Timer *timer, int rank = 0, int sizeThread = 0);
   Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
   Performer::IdManager *makeIdManagerOmp(const Parallel::TMCommunicator *comm, Int id) const;
   Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;
@@ -85,8 +85,6 @@ public :
   void salvaErroMalha(Malha *malha, int passo);
 
   //métodos sequenciais
-  int generatorSeq(Modelo &modelo, Timer *timer, int idrange = 0);
-  void generatorInitialMesh(Geometria *geo, Malha *malha);
   void adaptCurve (Geometria *geo);
   void adaptDomain (Geometria *geo, Malha *malha);
 

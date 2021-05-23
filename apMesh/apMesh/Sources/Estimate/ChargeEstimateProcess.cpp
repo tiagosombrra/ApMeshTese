@@ -863,7 +863,7 @@ bool ChargeEstimateProcess::calculateErroEstimative(Malha* malha, Timer *timer, 
 #if USE_OPENMP
     double erro = ger->erroGlobalOmp(malha, timer);
 #else
-    double erro = ger->erroGlobal(malha);
+    double erro = ger->erroGlobal(malha, timer);
 #endif
     // delete ger;
 

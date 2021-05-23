@@ -55,13 +55,18 @@ CurvaturaAnalitica::CurvaturaAnalitica ( const Ponto& v, CoonsPatch& p )
 double CurvaturaAnalitica::media (  )
 {
     // Vetor ^ Vetor -> produto escalar
-    if ( prod.modulo () <= TOLERANCIA ) return 0.0; // regra de L'Hôpital
+    double prodModule = prod.modulo();
+
+    if ( prodModule <= TOLERANCIA ) return 0.0; // regra de L'Hôpital
+
+    double qvModule = Qv.modulo();
+    double quModule = Qu.modulo();
 
     // H = ( A.|Qv|² - 2.B.Qu.Qv + C.|Qu|² ) / ( 2.| Qu x Qv |³ )
-    double resultado = ( static_cast <double> (	A * Qv.modulo ()*Qv.modulo ()
+    double resultado = ( static_cast <double> (	A * qvModule*qvModule
                                                 - 2 * B * (Qu ^ Qv)
-                                                + C * Qu.modulo ()*Qu.modulo ()	) /
-                         ( 2 * pow ( prod.modulo (), 3 ) ) );
+                                                + C * quModule*quModule ) /
+                         ( 2 * pow ( prodModule, 3 ) ) );
 
     //cout << "Ha = " << resultado << endl;
     //cout << "==========================================================" << endl;
@@ -72,11 +77,13 @@ double CurvaturaAnalitica::media (  )
 double CurvaturaAnalitica::gauss (  )
 {
 
-    if ( prod.modulo () <= TOLERANCIA ) return 0.0; // regra de L'Hôpital
+    double prodModule = prod.modulo();
+
+    if ( prodModule <= TOLERANCIA ) return 0.0; // regra de L'Hôpital
 
     // K = ( A.C - B² ) / | Qu x Qv |⁴
     double resultado = static_cast <double> (	this->A * this->C -  ( this->B * this->B ) ) /
-            pow ( this->prod.modulo(), 4 );
+            pow ( prodModule, 4 );
 
     //cout << "Ga = " << resultado << endl;
 

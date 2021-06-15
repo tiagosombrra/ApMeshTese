@@ -95,7 +95,6 @@ public :
 
   //métodos omp
   int generatorOmp(Modelo &modelo, Timer *timer, int idrange = 0, int sizeRank = 1, int sizeThread = 1);
-  Malha *generatorInitialMeshOmp(Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
   void adaptCurveOmp (Geometria *geo);
   void adaptDomainOmp (Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
 #endif //#USE_OPENMP
@@ -111,6 +110,7 @@ public :
   Malha* malha;
 #endif //USE_MPI
 
+  void generatorInitialMesh(Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
 protected:
 
 #if (USE_MPI || USE_OPENMP)

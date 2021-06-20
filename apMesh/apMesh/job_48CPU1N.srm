@@ -1,0 +1,52 @@
+#!/bin/sh
+
+#Job Submission
+#SBATCH -J 48CPU1N        # Define o nome do Job
+#SBATCH -p medium        # Define a partição em que o job será executado (medium/long/gpu)
+
+#Task invocation control
+#SBATCH -N 4             # Define o número de nós de computação solicitados
+#SBATCH -n 48             # Define o número total de tarefas da CPU
+#SBATCH -ntasks-per-n 1  # Define o número de tarefas por nó
+
+### the number of OpenMP threads 
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+#SBATCH -t 10:00:00
+#SBATCH --exclusive
+#SBATCH -o /dev/null
+#SBATCH --mail-user=tiagosombra@dc.ufc.br
+#SBATCH --mail-type=all
+
+ulimit -s unlimited
+ulimit -a
+
+# Nó de execução
+echo "****************************************************************************************"
+echo "Job alocado em ${SLRUN_JOB_NUM_NODES}(${SLURM_JOB_NODELIST}) usando ${SLRUN_STEP_NUM_TASKS} MPI ranks com ${SLRUN_CPUS_PER_TASK} OMP Threads"
+
+date >> Saida/rainier_481.out 2>&1
+srun --mpi=pmi2 ./apMesh 48 1 Entrada/monte_rainier.bp writeQualityOn rainier >> Saida/rainier_481.out 2>&1
+date >> Saida/rainier_481.out 2>&1
+
+date >> Saida/ruapehu_481.out 2>&1
+srun --mpi=pmi2 ./apMesh 48 1 Entrada/monte_ruapehu.bp writeQualityOn ruapehu >> Saida/ruapehu_481.out 2>&1
+date >> Saida/ruapehu_481.out 2>&1
+
+date >> Saida/sant_helens_481.out 2>&1
+srun --mpi=pmi2 ./apMesh 48 1 Entrada/monte_sant_helens.bp writeQualityOn sant_helens >> Saida/sant_helens_481.out 2>&1
+date >> Saida/sant_helens_481.out 2>&1
+
+date >> Saida/rainier_nivel_1_481.out 2>&1
+srun --mpi=pmi2 ./apMesh 48 1 Entrada/monte_rainier_nivel_1.bp writeQualityOn rainier_nivel_1 >> Saida/rainier_nivel_1_481.out 2>&1
+date >> Saida/rainier_nivel_1_481.out 2>&1
+
+date >> Saida/ruapehu_nivel_1_481.out 2>&1
+srun --mpi=pmi2 ./apMesh 48 1 Entrada/monte_ruapehu_nivel_1.bp writeQualityOn ruapehu_nivel_1 >> Saida/ruapehu_nivel_1_481.out 2>&1
+date >> Saida/ruapehu_nivel_1_481.out 2>&1
+
+date >> Saida/sant_helens_nivel_1_481.out 2>&1
+srun --mpi=pmi2 ./apMesh 48 1 Entrada/monte_sant_helens_nivel_1.bp writeQualityOn sant_helens_nivel_1 >> Saida/sant_helens_nivel_1_481.out 2>&1
+date >> Saida/sant_helens_nivel_1_481.out 2>&1
+
+echo "****************************************************************************************"

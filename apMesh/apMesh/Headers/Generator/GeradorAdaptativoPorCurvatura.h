@@ -51,83 +51,80 @@ extern int SIZE_MPI;
 class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo
 {
 public :
-  // gera a malha inicial e insere na lista de malhas do modelo
-  // a lista de pontos da curva é preenchida durante a geração
-  typedef std::vector<std::pair<int, Malha*> > MeshVector;
-  typedef std::vector<std::pair<int, Malha*> > ErroMeshVector;
+    // gera a malha inicial e insere na lista de malhas do modelo
+    // a lista de pontos da curva é preenchida durante a geração
+    typedef std::vector<std::pair<int, Malha*> > MeshVector;
+    typedef std::vector<std::pair<int, Malha*> > ErroMeshVector;
 
-  GeradorAdaptativoPorCurvatura();
+    GeradorAdaptativoPorCurvatura();
 
 #if USE_MPI
-  int execute(int argc, char *argv[], Timer *timer, MPI_Status status);
-  std::list<BezierPatch*> estimateChargeofPatches(Geometria *geometria, Timer *timer, std::string entrada);
-  std::vector<Curva*> createVectorOfCurves(std::list<BezierPatch*> listBezierPt);
-  std::list<BezierPatch *> orderPatchesDistribProcess(std::list<BezierPatch*> listPatches);
-  bool verifyCurve(Ponto p0, Ponto p1, Ponto p2, Ponto p3, std::vector<Curva*> curves);
-  void calculateEstimateProcessElements(int sizeProcess, std::list<BezierPatch*> listBezierPt);
-  std::list<BezierPatch *>::iterator getIteratorListPatches(int numberPatches, std::list<BezierPatch*> listBezierPt);
-  void generator(double listOfPatches[], int sizeOfListPatches, Timer* timer, int idrange = 1024, int sizeRank = 1, int sizeThread = 1);
-  Geometria* unpakGeometry(double listOfPatches[], int sizeOfListPatches);
+    int execute(int argc, char *argv[], Timer *timer, MPI_Status status);
+    std::list<BezierPatch*> estimateChargeofPatches(Geometria *geometria, Timer *timer, std::string entrada);
+    std::vector<Curva*> createVectorOfCurves(std::list<BezierPatch*> listBezierPt);
+    std::list<BezierPatch *> orderPatchesDistribProcess(std::list<BezierPatch*> listPatches);
+    bool verifyCurve(Ponto p0, Ponto p1, Ponto p2, Ponto p3, std::vector<Curva*> curves);
+    void calculateEstimateProcessElements(int sizeProcess, std::list<BezierPatch*> listBezierPt);
+    std::list<BezierPatch *>::iterator getIteratorListPatches(int numberPatches, std::list<BezierPatch*> listBezierPt);
+    void generator(double listOfPatches[], int sizeOfListPatches, Timer* timer, int idrange = 1024, int sizeRank = 1, int sizeThread = 1);
+    Geometria* unpakGeometry(double listOfPatches[], int sizeOfListPatches);
 #else
-  int execute(int argc, char *argv[], Timer *timer);
-  void generator(Modelo &modelo, Timer *timer, int idrange = 1024, int sizeRank = 1, int sizeThread = 1);
+    int execute(int argc, char *argv[], Timer *timer);
+    void generator(Modelo &modelo, Timer *timer, int idrange = 1024, int sizeRank = 1, int sizeThread = 1);
 #endif
 
-  virtual SubMalha* malhaInicial (CoonsPatch*, Performer::IdManager *idManager);
-  virtual double erroGlobal ( Malha* malha, Timer *timer, int rank = 0, int sizeThread = 0);
-  Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
-  Performer::IdManager *makeIdManagerOmp(const Parallel::TMCommunicator *comm, Int id) const;
-  Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;
-  void escreveMalha(Malha *malha, int passo);
-  void escreveMalha(Malha *malha, int passo, vector<double> erroPasso, int rank = -1);
-  void salvarErroMalha(Malha *malha);
-  void salvaMalha(Malha *malha, int passo);
-  void salvaErroMalha(Malha *malha, int passo);
+    virtual SubMalha* malhaInicial (CoonsPatch*, Performer::IdManager *idManager);
+    virtual double erroGlobal ( Malha* malha, Timer *timer, int rank = 0, int sizeThread = 0);
+    Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm, Int id) const;
+    Performer::IdManager *makeIdManagerOmp(const Parallel::TMCommunicator *comm, Int id) const;
+    Performer::IdManager *makeIdManagerElementOmp(const Parallel::TMCommunicator *comm, Int id) const;
+    void escreveMalha(Malha *malha, int passo);
+    void escreveMalha(Malha *malha, int passo, vector<double> erroPasso, int rank = -1);
+    void writeQualityMesh(Malha *malha, int passo, vector<double> erroPasso, int rank = -1);
+    void salvarErroMalha(Malha *malha);
+    void salvaMalha(Malha *malha, int passo);
+    void salvaErroMalha(Malha *malha, int passo);
 
-  //métodos sequenciais
-  void adaptCurve (Geometria *geo);
-  void adaptDomain (Geometria *geo, Malha *malha);
+    //métodos sequenciais
+    void adaptCurve (Geometria *geo);
+    void adaptDomain (Geometria *geo, Malha *malha);
 
 
 #if USE_OPENMP
-  virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManager *idManager);
-  virtual double erroGlobalOmp (Malha* malha, Timer *timer, int rank = 0, int sizeThread = 0);
-
-  //métodos omp
-  int generatorOmp(Modelo &modelo, Timer *timer, int idrange = 0, int sizeRank = 1, int sizeThread = 1);
-  void adaptCurveOmp (Geometria *geo);
-  void adaptDomainOmp (Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
+    virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManager *idManager);
+    virtual double erroGlobalOmp (Malha* malha, Timer *timer, int rank = 0, int sizeThread = 0);
+    int generatorOmp(Modelo &modelo, Timer *timer, int idrange = 0, int sizeRank = 1, int sizeThread = 1);
+    void adaptCurveOmp (Geometria *geo);
+    void adaptDomainOmp (Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
 #endif //#USE_OPENMP
 
 #if USE_MPI
-  int generatorMpi(double listOfPatches[], int sizeOfListPatches, Timer* timer);
-  void generatorMeshInitial();
+    int generatorMpi(double listOfPatches[], int sizeOfListPatches, Timer* timer);
 
-
-  Modelo modelo;
-  Geometria* geo;
-  CoonsPatch* patch;
-  Malha* malha;
+    Modelo modelo;
+    Geometria* geo;
+    CoonsPatch* patch;
+    Malha* malha;
 #endif //USE_MPI
 
-  void generatorInitialMesh(Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
+    void generatorInitialMesh(Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
 protected:
 
 #if (USE_MPI || USE_OPENMP)
-  ApMeshCommunicator *comm;
+    ApMeshCommunicator *comm;
 #else
-  Parallel::TMCommunicator *comm;
+    Parallel::TMCommunicator *comm;
 #endif //USE_MPI
 
-  Performer::IdManager *idManager;
-  Performer::IdManagerVector idManagers;
-  mutable ULInt idoffset;
-  ULInt idrange;
+    Performer::IdManager *idManager;
+    Performer::IdManagerVector idManagers;
+    mutable ULInt idoffset;
+    ULInt idrange;
 
 private:
-  MeshVector saveMesh;
-  ErroMeshVector saveErroMesh;
-  vector<double> erroPasso;
+    MeshVector saveMesh;
+    ErroMeshVector saveErroMesh;
+    vector<double> erroPasso;
 
 };
 #endif

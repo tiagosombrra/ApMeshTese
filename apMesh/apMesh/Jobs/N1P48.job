@@ -1,0 +1,40 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=48:mpiprocs=48
+#PBS -l walltime=1000:00:00
+#PBS -j oe
+#PBS -V
+#PBS -N N1P48
+#PBS -m abe
+#PBS -M tiagosombra@dc.ufc.br
+
+# load modules
+module load gcc/9.3.0 intel/2019.4
+
+#change directory
+cd ${PBS_O_WORKDIR}
+
+# run
+echo "rainier_48p"
+mpirun ./apMesh 48 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 481monte_rainier_sub_1
+mpirun ./apMesh 48 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 482monte_rainier_sub_1
+mpirun ./apMesh 48 1 Entrada/monte_rainier_sub_1.bp writeMeshOff 483monte_rainier_sub_1
+echo "*****************************************************************"
+echo "ruapehu_48p"
+mpirun ./apMesh 48 1 Entrada/monte_ruapehu.bp writeMeshOff 481monte_ruapehu
+mpirun ./apMesh 48 1 Entrada/monte_ruapehu.bp writeMeshOff 482monte_ruapehu
+mpirun ./apMesh 48 1 Entrada/monte_ruapehu.bp writeMeshOff 483monte_ruapehu
+echo "*****************************************************************"
+echo "sant_helens_48p"
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens.bp writeMeshOff 481monte_sant_helens
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens.bp writeMeshOff 482monte_sant_helens
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens.bp writeMeshOff 483monte_sant_helens
+echo "*****************************************************************"
+echo "sant_helens_nivel_1_48p"
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 481monte_sant_helens_nivel_1
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 482monte_sant_helens_nivel_1
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens_nivel_1.bp writeMeshOff 483monte_sant_helens_nivel_1
+echo "*****************************************************************"
+echo "sant_helens_nivel_2_48p"
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOff 481monte_sant_helens_nivel_2
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOff 482monte_sant_helens_nivel_2
+mpirun ./apMesh 48 1 Entrada/monte_sant_helens_nivel_2.bp writeMeshOff 483monte_sant_helens_nivel_2

@@ -549,7 +549,9 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
     while ( this->erro > EPSYLON )
     {
 #if USE_MPI
+        timer->initTimerParallel(RANK_MPI,0,9); // SendRecv
         MPI_Allreduce(&this->erro, &this->erro, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+        timer->endTimerParallel(RANK_MPI,0,9); // SendRecv
         this->erro = this->erro / sizeRank;
 #endif //USE_MPI
 
@@ -592,7 +594,9 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
 
         //Calcula o erro global para da malha
 #if USE_OPENMP
-        this->erro = this->erroGlobalOmp( malha, timer, 0, sizeThread);
+        //        this->erro = this->erroGlobalOmp( malha, timer, 0, sizeThread);
+        this->erro = this->erroGlobal( malha, timer, 0, sizeThread);
+
 #else
 #if USE_MPI
         timer->initTimerParallel(RANK_MPI, 0, 7); // Calculo do erro Global
@@ -628,6 +632,10 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
         }
     }
 
+#if USE_MPI
+    timer->endTimerParallel(RANK_MPI, 0, 10); // Full
+#endif #endif //USE_MPI
+
     //Imprindo o número de elementos em cada passo
     unsigned long int Nv, Nt;
     Nv = Nt = 0;
@@ -653,7 +661,7 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
         for (MeshVector::iterator it = saveMesh.begin(); it != saveMesh.end(); it++) {
             if (WRITE_MESH == std::string("writeQualityOn")) {
                 writeQualityMesh((*it).second, (*it).first, this->erroPasso, RANK_MPI);
-            } else{
+            } else if (WRITE_MESH == std::string("writeMeshOn")){
                 escreveMalha((*it).second, (*it).first, this->erroPasso, RANK_MPI);
             }
         }
@@ -758,7 +766,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
     e1->setId (/*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           */ idManager->next(1));
     sub->insereElemento ( e1);
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
@@ -768,7 +776,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
     ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
     e2->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */ idManager->next(1));
     sub->insereElemento ( e2);
 
     Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
@@ -778,7 +786,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
     ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
     e3->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */ idManager->next(1));
     sub->insereElemento ( e3);
 
     Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
@@ -788,7 +796,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
     ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
     e4->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */ idManager->next(1));
     sub->insereElemento ( e4);
     //==============================================================================*/
 

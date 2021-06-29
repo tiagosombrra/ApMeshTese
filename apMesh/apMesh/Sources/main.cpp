@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 #if USE_MPI
     if (ger.execute(argc, argv, timer, status) == 0) {
 
-        timer->endTimerParallel(RANK_MPI, 0, 10); // Full
+      //  timer->endTimerParallel(RANK_MPI, 0, 10); // Full
 
         cout<<endl<<"Tempo do processo "<<RANK_MPI<<endl;
 

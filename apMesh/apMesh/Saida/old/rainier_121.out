@@ -1,0 +1,413 @@
+Seg Jun 21 13:36:57 -03 2021
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+srun: error: padufc34: tasks 0-11: Exited with exit code 2
+Seg Jun 21 13:36:57 -03 2021
+Ter Jun 22 15:00:40 -03 2021
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+#elements_rainier_n.process__passo_1_rank_10
+50085
+#nodes_rainier_n.process__passo_1_rank_10
+29031
+Erro do processo 10 no passo 0 = 65.6684
+Erro do processo 10 no passo 1 = 0.763228
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+#elements_rainier_n.process__passo_1_rank_3
+#elements_rainier_n.process__passo_1_rank_1
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+50302
+#nodes_rainier_n.process__passo_1_rank_3
+29154
+Erro do processo 3 no passo 0 = 65.9168
+Erro do processo 3 no passo 1 = 0.722379
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+49922
+#nodes_rainier_n.process__passo_1_rank_1
+28944
+Erro do processo 1 no passo 0 = 66.6497
+Erro do processo 1 no passo 1 = 0.731688
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 10
+0
+0.001959
+1.04965
+1.69976
+1.8302
+0.004263
+0.103104
+236.492
+241.181
+Método do processo 10 com 1 thread(s) finalizado com Sucesso!
+#elements_rainier_n.process__passo_1_rank_7
+50300
+#nodes_rainier_n.process__passo_1_rank_7
+29149
+Erro do processo 7 no passo 0 = 66.4487
+Erro do processo 7 no passo 1 = 0.80551
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 1
+0
+0.002136
+1.05186
+1.7138
+1.82733
+0.004414
+0.122422
+236.464
+241.186
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 3
+0
+0.00201
+1.06067
+1.70775
+1.8326
+0.004394
+0.111416
+236.468
+241.187
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+#elements_rainier_n.process__passo_1_rank_5
+50624
+#nodes_rainier_n.process__passo_1_rank_5
+29328
+Erro do processo 5 no passo 0 = 67.609
+Erro do processo 5 no passo 1 = 0.707809
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 7
+0
+0.001973
+1.05243
+1.73541
+1.84067
+0.004429
+0.087988
+236.488
+241.211
+Método do processo 7 com 1 thread(s) finalizado com Sucesso!
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 5
+0
+0.002062
+1.05327
+1.73944
+1.83554
+0.00448
+0.107842
+236.48
+241.223
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+#elements_rainier_n.process__passo_1_rank_2
+50220
+#nodes_rainier_n.process__passo_1_rank_2
+29114
+Erro do processo 2 no passo 0 = 65.1901
+Erro do processo 2 no passo 1 = 0.757434
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+#elements_rainier_n.process__passo_1_rank_6
+49877
+#nodes_rainier_n.process__passo_1_rank_6
+28929
+Erro do processo 6 no passo 0 = 67.1035
+Erro do processo 6 no passo 1 = 0.731435
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 2
+0
+0.002021
+1.04655
+1.71872
+1.91314
+0.004411
+0.111392
+236.465
+241.261
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+#elements_rainier_n.process__passo_1_rank_8
+49765
+#nodes_rainier_n.process__passo_1_rank_8
+28851
+Erro do processo 8 no passo 0 = 66.9321
+Erro do processo 8 no passo 1 = 0.771411
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 6
+0
+0.002221
+1.03906
+1.72948
+1.91724
+0.004423
+0.094407
+236.481
+241.268
+Método do processo 6 com 1 thread(s) finalizado com Sucesso!
+#elements_rainier_n.process__passo_1_rank_0
+49642
+#nodes_rainier_n.process__passo_1_rank_0
+28784
+Erro do processo 0 no passo 0 = 65.1166
+Erro do processo 0 no passo 1 = 0.785329
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 8
+0
+0.001997
+1.04656
+1.69128
+1.96459
+0.004735
+0.101654
+236.491
+241.302
+Método do processo 8 com 1 thread(s) finalizado com Sucesso!
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 0
+236.452
+0.002117
+1.03365
+1.71257
+1.9594
+0.014556
+0.084009
+0.045422
+241.304
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_rainier_n.process__passo_1_rank_9
+50183
+#nodes_rainier_n.process__passo_1_rank_9
+29081
+Erro do processo 9 no passo 0 = 64.264
+Erro do processo 9 no passo 1 = 0.816764
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+#elements_rainier_n.process__passo_1_rank_4
+49734
+#nodes_rainier_n.process__passo_1_rank_4
+28851
+Erro do processo 4 no passo 0 = 64.7459
+Erro do processo 4 no passo 1 = 0.81012
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 9
+0
+0.002013
+1.05028
+1.73715
+1.95629
+0.004765
+0.105936
+236.492
+241.348
+Método do processo 9 com 1 thread(s) finalizado com Sucesso!
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 4
+0
+0.002031
+1.05143
+1.71281
+2.01092
+0.015385
+0.087427
+236.48
+241.36
+Método do processo 4 com 1 thread(s) finalizado com Sucesso!
+#elements_rainier_n.process__passo_1_rank_11
+50623
+#nodes_rainier_n.process__passo_1_rank_11
+29332
+Erro do processo 11 no passo 0 = 65.0394
+Erro do processo 11 no passo 1 = 0.761768
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 11
+0
+0.002005
+1.06912
+1.74819
+1.9959
+0.00459
+0.08431
+236.501
+241.405
+Método do processo 11 com 1 thread(s) finalizado com Sucesso!
+Ter Jun 22 15:04:42 -03 2021

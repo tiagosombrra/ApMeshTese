@@ -1,0 +1,15 @@
+Seg Jun 21 13:36:59 -03 2021
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+srun: error: padufc34: tasks 0-11: Exited with exit code 2
+Seg Jun 21 13:36:59 -03 2021

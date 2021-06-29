@@ -7,7 +7,6 @@
 #Task invocation control
 #SBATCH -N 5             # Define o número de nós de computação solicitados
 #SBATCH -n 60             # Define o número total de tarefas da CPU
-#SBATCH -ntasks-per-n 1  # Define o número de tarefas por nó
 
 ### the number of OpenMP threads 
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK

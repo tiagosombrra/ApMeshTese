@@ -1,0 +1,155 @@
+Seg Jun 21 13:35:27 -03 2021
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+srun: error: padufc34: tasks 0-5: Exited with exit code 2
+Seg Jun 21 13:35:27 -03 2021
+Ter Jun 22 05:02:33 -03 2021
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+#elements_ruapehu_n.process__passo_2_rank_0
+1773348
+#nodes_ruapehu_n.process__passo_2_rank_0
+914950
+Erro do processo 0 no passo 0 = 707.126
+Erro do processo 0 no passo 1 = 12.279
+Erro do processo 0 no passo 2 = 2.21515
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 0
+98.8602
+0.004022
+6.21031
+73.5524
+34.9128
+0.147201
+0.516772
+0.001663
+214.205
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_ruapehu_n.process__passo_2_rank_3
+1812604
+#nodes_ruapehu_n.process__passo_2_rank_3
+935289
+Erro do processo 3 no passo 0 = 724.962
+Erro do processo 3 no passo 1 = 11.8836
+Erro do processo 3 no passo 2 = 1.91888
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 3
+0
+0.003775
+6.37618
+73.3543
+35.9324
+0.150172
+0.451473
+98.8631
+215.131
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+#elements_ruapehu_n.process__passo_2_rank_5
+1806371
+#nodes_ruapehu_n.process__passo_2_rank_5
+931939
+Erro do processo 5 no passo 0 = 713.302
+Erro do processo 5 no passo 1 = 12.8886
+Erro do processo 5 no passo 2 = 2.31119
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 5
+0
+0.003802
+6.2604
+74.9243
+35.8539
+0.14489
+0.506532
+98.8646
+216.558
+Método do processo 5 com 1 thread(s) finalizado com Sucesso!
+slurmd[padufc34]: *** STEP 118135.1 CANCELLED AT 2021-06-22T15:00:38 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 2 seconds for job step to finish.
+srun: got SIGCONT
+srun: forcing job termination

@@ -1,0 +1,145 @@
+Seg Jun 21 13:34:57 -03 2021
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+srun: error: padufc34: tasks 0-3: Exited with exit code 2
+Seg Jun 21 13:34:57 -03 2021
+Ter Jun 22 03:08:16 -03 2021
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+libibverbs: Warning: couldn't load driver 'mlx5': /usr/lib64/libmlx5-rdmav2.so: symbol ibv_cmd_create_qp_ex, version IBVERBS_1.1 not defined in file libibverbs.so.1 with link time reference
+libibverbs: Warning: couldn't load driver 'mlx5': /usr/lib64/libmlx5-rdmav2.so: symbol ibv_cmd_create_qp_ex, version IBVERBS_1.1 not defined in file libibverbs.so.1 with link time reference
+libibverbs: Warning: couldn't load driver 'mlx5': /usr/lib64/libmlx5-rdmav2.so: symbol ibv_cmd_create_qp_ex, version IBVERBS_1.1 not defined in file libibverbs.so.1 with link time reference
+libibverbs: Warning: couldn't load driver 'mlx5': /usr/lib64/libmlx5-rdmav2.so: symbol ibv_cmd_create_qp_ex, version IBVERBS_1.1 not defined in file libibverbs.so.1 with link time reference
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc40
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc40
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc40
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc40
+--------------------------------------------------------------------------
+#elements_sant_helens_n.process__passo_1_rank_2
+146772
+#nodes_sant_helens_n.process__passo_1_rank_2
+84887
+Erro do processo 2 no passo 0 = 32.5275
+Erro do processo 2 no passo 1 = 0.918678
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+#elements_sant_helens_n.process__passo_1_rank_3
+146790
+#nodes_sant_helens_n.process__passo_1_rank_3
+84888
+Erro do processo 3 no passo 0 = 31.3946
+Erro do processo 3 no passo 1 = 0.876209
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 2
+0
+0.005455
+1.38229
+2.54135
+2.85587
+0.012759
+0.203684
+109.107
+116.109
+Método do processo 2 com 1 thread(s) finalizado com Sucesso!
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 3
+0
+0.005714
+1.38737
+2.5308
+2.87153
+0.012752
+0.202027
+109.109
+116.119
+Método do processo 3 com 1 thread(s) finalizado com Sucesso!
+#elements_sant_helens_n.process__passo_1_rank_1
+148740
+#nodes_sant_helens_n.process__passo_1_rank_1
+86086
+Erro do processo 1 no passo 0 = 29.7082
+Erro do processo 1 no passo 1 = 0.870111
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 1
+0
+0.006025
+1.38998
+2.57397
+2.89561
+0.013091
+0.202198
+109.106
+116.187
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_sant_helens_n.process__passo_1_rank_0
+149608
+#nodes_sant_helens_n.process__passo_1_rank_0
+86534
+Erro do processo 0 no passo 0 = 31.4995
+Erro do processo 0 no passo 1 = 0.882763
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 0
+109.104
+0.006055
+1.40543
+2.58911
+3.02004
+0.014019
+0.203179
+0.001389
+116.343
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+Ter Jun 22 03:10:13 -03 2021

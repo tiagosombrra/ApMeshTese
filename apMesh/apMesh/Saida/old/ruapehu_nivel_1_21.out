@@ -1,0 +1,79 @@
+Seg Jun 21 13:34:27 -03 2021
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+srun: error: padufc34: tasks 0-1: Exited with exit code 2
+Seg Jun 21 13:34:28 -03 2021
+Ter Jun 22 03:39:06 -03 2021
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+#elements_ruapehu_nivel_1_n.process__passo_2_rank_1
+21283006
+#nodes_ruapehu_nivel_1_n.process__passo_2_rank_1
+10979470
+Erro do processo 1 no passo 0 = 263.239
+Erro do processo 1 no passo 1 = 4.24522
+Erro do processo 1 no passo 2 = 0.732382
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 1
+0
+0.045062
+58.3729
+1332.93
+442.467
+1.77797
+13.7979
+1381.41
+3230.8
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+#elements_ruapehu_nivel_1_n.process__passo_2_rank_0
+21294328
+#nodes_ruapehu_nivel_1_n.process__passo_2_rank_0
+10985259
+Erro do processo 0 no passo 0 = 245.047
+Erro do processo 0 no passo 1 = 4.1278
+Erro do processo 0 no passo 2 = 0.707783
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 0
+1381.4
+0.04512
+57.8772
+1328.96
+479.269
+1.87088
+11.7229
+0.00241
+3261.14
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+Ter Jun 22 04:33:28 -03 2021

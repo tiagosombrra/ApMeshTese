@@ -1,0 +1,25 @@
+File Analise qualidade
+
+Quantidade elementos em cada caso de 0 a 1
+8
+99
+29
+144
+63
+115
+692
+1206
+3666
+6512
+
+Porcetagem elementos em cada caso de 0 a 1
+0.0638264
+0.789852
+0.231371
+1.14888
+0.502633
+0.917504
+5.52098
+9.62183
+29.2484
+51.9547

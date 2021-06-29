@@ -1,0 +1,40 @@
+Seg Jun 21 13:33:57 -03 2021
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+srun: error: padufc34: task 0: Exited with exit code 2
+Seg Jun 21 13:33:57 -03 2021
+Ter Jun 22 02:32:20 -03 2021
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+libibverbs: Warning: couldn't load driver 'mlx5': /usr/lib64/libmlx5-rdmav2.so: symbol ibv_cmd_create_qp_ex, version IBVERBS_1.1 not defined in file libibverbs.so.1 with link time reference
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc40
+--------------------------------------------------------------------------
+#elements_sant_helens_nivel_1_n.process__passo_1_rank_0
+2384611
+#nodes_sant_helens_nivel_1_n.process__passo_1_rank_0
+1378147
+Erro do processo 0 no passo 0 = 146.856
+Erro do processo 0 no passo 1 = 2.04137
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 0
+1592.82
+0.13061
+12.8811
+43.136
+62.9888
+0.222567
+29.0198
+0
+1741.19
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+Ter Jun 22 03:01:23 -03 2021

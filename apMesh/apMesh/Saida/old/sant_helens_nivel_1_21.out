@@ -1,0 +1,73 @@
+Seg Jun 21 13:34:28 -03 2021
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+slurmd[padufc34]: execve(): ./apMesh: No such file or directory
+srun: error: padufc34: tasks 0-1: Exited with exit code 2
+Seg Jun 21 13:34:28 -03 2021
+Ter Jun 22 04:33:28 -03 2021
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+WARNING: There is at least non-excluded one OpenFabrics device found,
+but there are no active ports detected (or Open MPI was unable to use
+them).  This is most certainly not what you wanted.  Check your
+cables, subnet manager configuration, etc.  The openib BTL will be
+ignored for this job.
+
+  Local host: padufc34
+--------------------------------------------------------------------------
+#elements_sant_helens_nivel_1_n.process__passo_1_rank_0
+1187424
+#nodes_sant_helens_nivel_1_n.process__passo_1_rank_0
+686133
+Erro do processo 0 no passo 0 = 148.893
+Erro do processo 0 no passo 1 = 2.42805
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 0
+1552.74
+0.051323
+9.39808
+21.0714
+27.3736
+0.110279
+8.58411
+0.002934
+1619.33
+Método do processo 0 com 1 thread(s) finalizado com Sucesso!
+#elements_sant_helens_nivel_1_n.process__passo_1_rank_1
+1197084
+#nodes_sant_helens_nivel_1_n.process__passo_1_rank_1
+691945
+Erro do processo 1 no passo 0 = 144.871
+Erro do processo 1 no passo 1 = 2.37323
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA
+
+Tempo do processo 1
+0
+0.051942
+9.41617
+21.5633
+28.6396
+0.112846
+8.55542
+1552.76
+1621.1
+Método do processo 1 com 1 thread(s) finalizado com Sucesso!
+Ter Jun 22 05:00:29 -03 2021

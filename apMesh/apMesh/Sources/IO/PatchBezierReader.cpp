@@ -118,6 +118,7 @@ std::list<BezierPatch*> PatchBezierReader::loaderBPFile(std::string filename)
 
   if (!filename.empty()) {
       std::ifstream fin(filename);
+      //boost::filesystem::ifstream fin(filename);
 
       if (fin) {
           while (fin) {
@@ -133,6 +134,7 @@ std::list<BezierPatch*> PatchBezierReader::loaderBPFile(std::string filename)
 
                       line = line.erase(0, 1);
                       std::istringstream iss(line);
+                      //boost::archive::text_iarchive iss(&line);
                       double n;
                       while (iss >> n) {
                           v.push_back(n);

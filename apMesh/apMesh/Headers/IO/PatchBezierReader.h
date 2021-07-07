@@ -8,6 +8,10 @@
 #include "../Data/Patch/BezierPatch.h"
 #include "../Data/Ponto.h"
 #include "../Data/Patch/HermitePatch.h"
+//#include "../../Libs/Boost/boost/filesystem.hpp"
+//#include "../../Libs/Boost/boost/filesystem/fstream.hpp"
+//#include "../../Libs/Boost/boost/archive/text_iarchive.hpp"
+
 
 extern std::string entrada;
 extern int RANK_MPI;

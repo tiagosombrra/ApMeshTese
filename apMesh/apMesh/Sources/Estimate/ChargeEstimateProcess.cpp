@@ -19,12 +19,17 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* 
     std::list<BezierPatch*> listBezierPtOrder;
 
     PatchBezierReader* pt = new PatchBezierReader();
-    //timer->endTimerParallel(0, 0, 10); //Full
-    //    cout<<"INIT >> LOADBPFILE"<< endl;
+    timer->endTimerParallel(0, 0, 10); //Full
+    timer->initTimerParallel(0, 0, 5); //Leitura arquivo
+
     listBezierPt = pt->loaderBPFile(entrada);
-    //    cout<<"END >> LOADBPFILE"<< endl;
-    // timer->initTimerParallel(0, 0, 10); //Full
-    //  timer->initTimerParallel(0, 0, 8); // Over
+
+    timer->endTimerParallel(0, 0, 5); //Leitura arquivo
+    TIME_READ_FILE = timer->timerParallel[0][0][5];
+
+    timer->initTimerParallel(0, 0, 5); //Full
+
+    timer->initTimerParallel(0,0,1); // Estimativa de carga process 0
 
     delete pt;
 
@@ -163,7 +168,7 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* 
     }
     
     //    cout<<"INIT >> ANALISE CURVATURE"<< endl;
-    if (WRITE_MESH == std::string("writeMeshOn")){
+    if (WRITE_MESH == std::string("m")){
         write.writeCurvaturePatches(vecCurvature, kamMaior);
     }
     //    cout<<"area menor: "<<areaMenor<<endl;
@@ -180,6 +185,9 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(Geometria* 
     //	//     << " kam: " << (*it)->getKaMedio() << endl;
     //	// cout<<(*it)->getNumberTriangle()<<endl;
     //    }
+
+    timer->endTimerParallel(0,0,1); // Estimativa de carga process 0
+
     return listBezierPtOrder;
 }
 

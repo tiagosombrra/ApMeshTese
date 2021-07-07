@@ -14,12 +14,10 @@
 
 #if USE_MPI
 int RANK_MPI, SIZE_MPI;
-int PASSOS = 3;
 #endif //#if USE_OPENMPI
-
+int PASSOS = 2;
 double TRIANGLE_MEDIO = 0.0;
 double TOLERANCIA_ESTIMATIVE = 1.0;
-
 double DELTA = 0.0001;
 double TOLERANCIA = 0.0001;
 double TOLERANCIA_CURVATURA = 0.0001;
@@ -27,10 +25,10 @@ double TOLERANCIA_AFT = 0.0001;
 double PROPORCAO = 0.5; // proporção usada no avanço de fronteira
 double SUAVIZACAO = 7; // número de vezes que se dará a suavização laplaciana
 double FATOR_SUAVIZACAO = 0.5; // fator usado na suavização laplaciana
-double EPSYLON = 2.5; //trashrold
+double EPSYLON = 5.0; //trashrold
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
-//int NUM_THREADS = 8;
+double TIME_READ_FILE = 0.0;
 
 std::set<Ponto*> listAllPointsModel;
 std::set<SubMalha*> listAllSubMalhaModel;
@@ -43,7 +41,7 @@ std::string WRITE_MESH;
 // argv[1] = "n° de process"
 // argv[2] = "n° threads",
 // argv[3] = "entrada",       OBS: Projects-> Comands line arguments -> ../../apMesh/Entrada/mountain_289_patches.bp
-// argv[4] = "WRITE_MESH" (writeMeshOn)
+// argv[4] = "WRITE_MESH" (m)
 // argv[5] = "nameModel"
 
 
@@ -55,6 +53,7 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD, &SIZE_MPI);
     MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
     MPI_Status status;
+
 #endif
 
     // contador do tempo para carregar a malha na memória
@@ -88,14 +87,10 @@ int main(int argc, char **argv)
 #if USE_MPI
     if (ger.execute(argc, argv, timer, status) == 0) {
 
-      //  timer->endTimerParallel(RANK_MPI, 0, 10); // Full
-
         cout<<endl<<"Tempo do processo "<<RANK_MPI<<endl;
 
-        timer->printTime();
-
+        timer->printTime(RANK_MPI);
         cout << "Método do processo "<<RANK_MPI<<" com "<<argv[2]<< " thread(s) finalizado com Sucesso!" << endl;
-
         delete timer;
 
         return MPI_Finalize();

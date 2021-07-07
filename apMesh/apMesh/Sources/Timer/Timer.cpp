@@ -130,18 +130,50 @@ void Timer::calculateTime(int _rank, int _thread, int _type)
 void Timer::printTime()
 {
     vector<double> max = getMaxTime();
-    //cout << max[0] << endl; //Inicialização
-    cout << max[1] << endl; //Estimativa de carga
-    cout << max[2] << endl; //Geração da malha inicial
-    cout << max[3] << endl; //Adaptação das curvas
-    cout << max[4] << endl; //Adaptação do domínio
-    //cout << max[5] << endl; //Quadtree
-    cout << max[6] << endl; //MediaGauss
-    cout << max[7] << endl; //Calculo do erro
-    cout <<max[10] - max[9] - max[8] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] << endl; //Overhead
-    cout << max[9] << endl; //SendRecv
-    cout << max[10] << endl; //Full
+    cout << max[0] << " Send"<<endl; //Send
+    cout << max[1] << " Estimativa"<<endl; //Estimativa de carga
+    cout << max[2] << " MalhaInicial"<<endl; //Geração da malha inicial
+    cout << max[3] << " AdpCurvas"<<endl; //Adaptação das curvas
+    cout << max[4] << " AdpDominio"<<endl; //Adaptação do domínio
+    cout << max[5] << " Leitura arquivo"<<endl; //Leitura arquivo
+    cout << max[6] << " MediaGauss"<<endl; //MediaGauss
+    cout << max[7] << " CalcErro"<<endl; //Calculo do erro
+    cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<" Overhead"<<endl; //Overhead
+    cout << max[9] << " Recv"<<endl; //Recv
+    cout << max[10] - max[5] << " Full"<<endl; //Full
 
+}
+
+void Timer::printTime(int rank_process)
+{
+    if (rank_process == 0) {
+        vector<double> max = getMaxTime();
+        cout << max[0] << " Send"<<endl; //Send
+        cout << max[1] << " Estimativa"<<endl; //Estimativa de carga
+        cout << max[2] << " MalhaInicial"<<endl; //Geração da malha inicial
+        cout << max[3] << " AdpCurvas"<<endl; //Adaptação das curvas
+        cout << max[4] << " AdpDominio"<<endl; //Adaptação do domínio
+        cout << max[5] << " Leitura arquivo"<<endl; //Leitura arquivo
+        cout << max[6] << " MediaGauss"<<endl; //MediaGauss
+        cout << max[7] << " CalcErro"<<endl; //Calculo do erro
+        cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<" Overhead"<<endl; //Overhead
+        cout << max[9] << " Recv"<<endl; //Recv
+        cout << max[10] - max[5] << " Full"<<endl; //Full
+
+    } else{
+        vector<double> max = getMaxTime();
+        cout << max[0] << " Send"<<endl; //Send
+        cout << max[1] << " Estimativa"<<endl; //Estimativa de carga
+        cout << max[2] << " MalhaInicial"<<endl; //Geração da malha inicial
+        cout << max[3] << " AdpCurvas"<<endl; //Adaptação das curvas
+        cout << max[4] << " AdpDominio"<<endl; //Adaptação do domínio
+        cout << max[5] << " Leitura arquivo copy Process 0"<<endl; //Leitura arquivo
+        cout << max[6] << " MediaGauss"<<endl; //MediaGauss
+        cout << max[7] << " CalcErro"<<endl; //Calculo do erro
+        cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<" Overhead"<<endl; //Overhead
+        cout << max[9] - TIME_READ_FILE<< " Recv"<<endl; //Recv
+        cout << max[10] - TIME_READ_FILE << " Full"<<endl; //Full
+    }
 }
 
 double Timer::getRankThreadTime(int _rank, int _thread, int _type)

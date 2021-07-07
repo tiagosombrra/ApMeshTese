@@ -134,6 +134,7 @@
     #define TAG_DOUBLE 1
     #define TAG_PASSO 2
     #define USE_SERIAL false
+    #define TAG_TIME 3
 #endif //#if USE_MPI
 
 #include <iostream>

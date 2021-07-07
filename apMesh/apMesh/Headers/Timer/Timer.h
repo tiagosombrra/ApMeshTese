@@ -9,7 +9,7 @@
 #include <sys/time.h>
 
 using namespace std;
-
+extern double TIME_READ_FILE;
 extern std::string nameModel;
 extern std::string numberProcess;
 
@@ -40,6 +40,7 @@ public:
     void endTimerParallel(int _rank, int _thread, int _type);
     void calculateTime(int _rank, int _thread, int _type);
     void printTime();
+    void printTime(int rank_process);
     double getRankThreadTime(int _rank, int _thread, int _type);
     vector<double> getMaxTime();
     vector<double> getMinTime();
@@ -65,7 +66,6 @@ public:
 
     string locationName;
     fstream file;
-    //clock_t time_clock;
 };
 
 #endif // TIMER_H

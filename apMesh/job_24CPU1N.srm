@@ -24,28 +24,28 @@ ulimit -a
 # Nó de execução
 echo "****************************************************************************************"
 
-date >> Saida/241rainier.out 2>&1
-srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_rainier.bp q Saida/241rainier >> Saida/241rainier.out 2>&1
-date >> Saida/241rainier.out 2>&1
+date  >> 241rainier.out 2>&1
+srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_rainier.bp q Saida/241rainier  >> 241rainier.out 2>&1
+date  >> 241rainier.out 2>&1
 
-date >> Saida/241ruapehu.out 2>&1
-srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_ruapehu.bp q Saida/241ruapehu >> Saida/241ruapehu.out 2>&1
-date >> Saida/241ruapehu.out 2>&1
+date  >> 241ruapehu.out 2>&1
+srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_ruapehu.bp q Saida/241ruapehu  >> 241ruapehu.out 2>&1
+date  >> 241ruapehu.out 2>&1
 
-date >> Saida/241sant_helens.out 2>&1
-srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_sant_helens.bp q Saida/241sant_helens >> Saida/241sant_helens.out 2>&1
-date >> Saida/241sant_helens.out 2>&1
+date  >> 241sant_helens.out 2>&1
+srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_sant_helens.bp q Saida/241sant_helens  >> 241sant_helens.out 2>&1
+date  >> 241sant_helens.out 2>&1
 
-date >> Saida/241rainier_nivel_1.out 2>&1
-srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_rainier_nivel_1.bp q Saida/241rainier_nivel_1 >> Saida/241rainier_nivel_1.out 2>&1
-date >> Saida/241rainier_nivel_1.out 2>&1
+date  >> 241rainier_nivel_1.out 2>&1
+srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_rainier_nivel_1.bp q Saida/241rainier_nivel_1  >> 241rainier_nivel_1.out 2>&1
+date  >> 241rainier_nivel_1.out 2>&1
 
-date >> Saida/241ruapehu_nivel_1.out 2>&1
-srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_ruapehu_nivel_1.bp q Saida/241ruapehu_nivel_1 >> Saida/241ruapehu_nivel_1.out 2>&1
-date >> Saida/241ruapehu_nivel_1.out 2>&1
+date  >> 241ruapehu_nivel_1.out 2>&1
+srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_ruapehu_nivel_1.bp q Saida/241ruapehu_nivel_1  >> 241ruapehu_nivel_1.out 2>&1
+date  >> 241ruapehu_nivel_1.out 2>&1
 
-date >> Saida/241sant_helens_nivel_1.out 2>&1
-srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_sant_helens_nivel_1.bp q Saida/241sant_helens_nivel_1 >> Saida/241sant_helens_nivel_1.out 2>&1
-date >> Saida/241sant_helens_nivel_1.out 2>&1
+date  >> 241sant_helens_nivel_1.out 2>&1
+srun --mpi=pmi2 ./apMesh 24 1 Entrada/monte_sant_helens_nivel_1.bp q Saida/241sant_helens_nivel_1  >> 241sant_helens_nivel_1.out 2>&1
+date  >> 241sant_helens_nivel_1.out 2>&1
 
 echo "****************************************************************************************"

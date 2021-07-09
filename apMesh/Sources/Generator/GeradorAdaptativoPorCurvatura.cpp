@@ -488,9 +488,7 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
 
     //Gerar a malha inicial
 #if USE_OPENMP
-
     generatorInitialMesh(geo, malha, timer, sizeThread, sizePatch);
-
 #else
     this->idManagers[0] = this->makeIdManager(comm, 0);
 #if USE_MPI
@@ -510,9 +508,12 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
 
     //Calcula o erro global para a malha inicial
 #if USE_OPENMP
-    this->erro = this->erroGlobalOmp( malha, timer, this->comm->rank(), sizeThread);
-    //this->erro = this->erroGlobal( malha, timer, 0, sizeThread);
+    if (sizePatch > 1) {
+        this->erro = this->erroGlobalOmp( malha, timer, 0, sizeThread);
 
+    } else{
+        this->erro = this->erroGlobal( malha, timer, 0, sizeThread);
+    }
 #else
 #if USE_MPI
     timer->initTimerParallel(RANK_MPI, 0, 7); // Calculo do erro Global
@@ -547,7 +548,7 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
         salvaMalha(malha, passo);
     }
 
-   // this->erro = 1000;
+    // this->erro = 1000;
 
     //Gerar malha enquanto o erro global for acima do erro desejado
     while (this->passo < PASSOS)
@@ -556,12 +557,12 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
         if (this->erro < EPSYLON) {
             break;
         }
-//#if USE_MPI
-//        timer->initTimerParallel(RANK_MPI,0,9); // SendRecv
-//        MPI_Allreduce(&this->erro, &this->erro, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-//        timer->endTimerParallel(RANK_MPI,0,9); // SendRecv
-//        this->erro = this->erro / sizeRank;
-//#endif //USE_MPI
+        //#if USE_MPI
+        //        timer->initTimerParallel(RANK_MPI,0,9); // SendRecv
+        //        MPI_Allreduce(&this->erro, &this->erro, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+        //        timer->endTimerParallel(RANK_MPI,0,9); // SendRecv
+        //        this->erro = this->erro / sizeRank;
+        //#endif //USE_MPI
 
         this->passo++;
 
@@ -602,9 +603,12 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
 
         //Calcula o erro global para da malha
 #if USE_OPENMP
-        this->erro = this->erroGlobalOmp( malha, timer, 0, sizeThread);
-        //        this->erro = this->erroGlobal( malha, timer, 0, sizeThread);
+        if (sizePatch > 1) {
+            this->erro = this->erroGlobalOmp( malha, timer, 0, sizeThread);
 
+        } else{
+            this->erro = this->erroGlobal( malha, timer, 0, sizeThread);
+        }
 #else
 #if USE_MPI
         timer->initTimerParallel(RANK_MPI, 0, 7); // Calculo do erro Global
@@ -644,23 +648,8 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
     timer->endTimerParallel(RANK_MPI, 0, 10); // Full
 #endif #endif //USE_MPI
 
-    //Imprindo o número de elementos em cada passo
-    unsigned long int Nv, Nt;
-    Nv = Nt = 0;
-
-    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-        SubMalha* sub = malha->getSubMalha(i);
-
-        Nv += sub->getNumDeNos();
-        Nt += sub->getNumDeElementos();
-    }
-
     //Escreve o(s) arquivo(s) com suas respectivas malhas em cada passo
 #if USE_MPI
-
-    cout << "#elements_" << nameModel << "_n.process_" << numberProcess << "_passo_" << passo << "_rank_" << RANK_MPI << endl << Nt << endl;
-    cout << "#nodes_" << nameModel << "_n.process_" << numberProcess << "_passo_" << passo << "_rank_" << RANK_MPI << endl << Nv << endl;
-
     for (unsigned int i = 0; i < erroPasso.size(); ++i) {
         cout<<"Erro do processo "<<RANK_MPI<< " no passo "<<i<<" = "<< erroPasso[i]<<endl;
     }
@@ -668,8 +657,10 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
     if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
         for (MeshVector::iterator it = saveMesh.begin(); it != saveMesh.end(); it++) {
             if (WRITE_MESH == std::string("q")) {
+                printElments((*it).second, (*it).first, this->erroPasso, RANK_MPI);
                 writeQualityMesh((*it).second, (*it).first, this->erroPasso, RANK_MPI);
             } else if (WRITE_MESH == std::string("m")){
+                printElments((*it).second, (*it).first, this->erroPasso, RANK_MPI);
                 escreveMalha((*it).second, (*it).first, this->erroPasso, RANK_MPI);
             }
         }
@@ -683,8 +674,10 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer, int 
     if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
         for (MeshVector::iterator it = saveMesh.begin(); it != saveMesh.end(); it++) {
             if (WRITE_MESH == std::string("q")) {
+                printElments((*it).second, (*it).first, this->erroPasso);
                 writeQualityMesh((*it).second, (*it).first, this->erroPasso);
             } else{
+                printElments((*it).second, (*it).first, this->erroPasso);
                 escreveMalha((*it).second, (*it).first, this->erroPasso);
             }
         }
@@ -714,7 +707,7 @@ void GeradorAdaptativoPorCurvatura::adaptDomain(Geometria *geo, Malha *malha)
     for ( unsigned int i = 0; i < geo->getNumDePatches ( ); ++i )
     {
         CoonsPatch *p = static_cast < CoonsPatch* > (geo->getPatch(i));
-        SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio ( p, this->idManagers[0], 1);
+        SubMalha* sub = AdaptadorPorCurvatura::adaptaDominio( p, this->idManagers[0], 1);
         sub->setPatch(p);
         malha->insereSubMalha(sub, i);
         geo->getPatch(i)->setMalha(malha->getSubMalha(i));
@@ -774,7 +767,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e1)->p2 = make_tuple ( 1, 0 );
     ((Triangulo*)e1)->p3 = make_tuple ( 0.5, 0.5 );
     e1->setId (/*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  */ idManager->next(1));
     sub->insereElemento ( e1);
 
     Elemento* e2 = new Triangulo (	sub->getNoh ( 1 ),
@@ -784,7 +777,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e2)->p2 = make_tuple ( 1, 1 );
     ((Triangulo*)e2)->p3 = make_tuple ( 0.5, 0.5 );
     e2->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */ idManager->next(1));
     sub->insereElemento ( e2);
 
     Elemento* e3 = new Triangulo (	sub->getNoh ( 3 ),
@@ -794,7 +787,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e3)->p2 = make_tuple ( 0, 1 );
     ((Triangulo*)e3)->p3 = make_tuple ( 0.5, 0.5 );
     e3->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */ idManager->next(1));
     sub->insereElemento ( e3);
 
     Elemento* e4 = new Triangulo (	sub->getNoh ( 2 ),
@@ -804,7 +797,7 @@ SubMalha *GeradorAdaptativoPorCurvatura::malhaInicialOmp(CoonsPatch *patch, Perf
     ((Triangulo*)e4)->p2 = make_tuple ( 0, 0 );
     ((Triangulo*)e4)->p3 = make_tuple ( 0.5, 0.5 );
     e4->setId ( /*idManager->next(1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    */ idManager->next(1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */ idManager->next(1));
     sub->insereElemento ( e4);
     //==============================================================================*/
 
@@ -1229,7 +1222,7 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(CoonsPatch* patch, Perform
 // a lista de pontos da curva é preenchida durante a geração da malha inicial
 
 // calcula o erro global da malha
-double GeradorAdaptativoPorCurvatura::erroGlobal (Malha* malha, Timer *timer, int rank, int sizeThread)
+double GeradorAdaptativoPorCurvatura::erroGlobal(Malha* malha, Timer *timer, int rank, int sizeThread)
 {
 
     unsigned int Ns = 0; // número de submalhas
@@ -1648,8 +1641,6 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo, vector
         Nt += sub->getNumDeElementos();
     }
 
-    cout << "#elementos_" << nameModel << "_n.process_" << numberProcess << "_passo_" << passo << "_rank_" << rank << " = " << Nt << endl;
-
     arq << "%HEADER.VERSION" << endl << "0-005 - Oct/93" << endl << endl << "%HEADER.ANALYSIS" << endl << "\'shell\'"
         << endl << endl;
 
@@ -1711,7 +1702,7 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo, vector
 
     //Análise dos Elementos da Malha Gerada
 
-    cout<< "INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
+    // cout<< "INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
     stringstream nameFile;
 
     nameFile << nameModel;
@@ -1805,14 +1796,14 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo, vector
 
     file.close();
 
-    cout<< "END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
+    //cout<< "END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
 }
 
 void GeradorAdaptativoPorCurvatura::writeQualityMesh(Malha *malha, int passo, vector<double> erroPasso, int rank)
 {
     //Análise dos Elementos da Malha Gerada
 
-    cout<< "INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
+    // cout<< "INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
     stringstream nameFile;
 
     nameFile << nameModel;
@@ -1906,7 +1897,7 @@ void GeradorAdaptativoPorCurvatura::writeQualityMesh(Malha *malha, int passo, ve
 
     file.close();
 
-    cout<< "END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
+    // cout<< "END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
 }
 
 void GeradorAdaptativoPorCurvatura::salvaMalha(Malha* malha, int passo)
@@ -1979,9 +1970,7 @@ void GeradorAdaptativoPorCurvatura::generatorInitialMesh(Geometria *geo, Malha *
         for (int i = 0; i < sizePatch; ++i )
         {
             CoonsPatch *patch = static_cast < CoonsPatch* > ( geo->getPatch ( i ) );
-  //          SubMalha *sub = this->malhaInicialOmp( static_cast < CoonsPatch* > ( patch ), this->idManagers[id]);
-            SubMalha *sub = this->malhaInicial( static_cast < CoonsPatch* > ( patch ), this->idManagers[id]);
-
+            SubMalha *sub = this->malhaInicialOmp( static_cast < CoonsPatch* > ( patch ), this->idManagers[id]);
             malha->insereSubMalha (sub,i);
         }
 
@@ -2000,4 +1989,19 @@ void GeradorAdaptativoPorCurvatura::generatorInitialMesh(Geometria *geo, Malha *
         malha->insereSubMalha (sub,i);
     }
 #endif //USE_OPENMP
+}
+
+void GeradorAdaptativoPorCurvatura::printElments(Malha *malha, int passo, vector<double> erroPasso, int rank)
+{
+    unsigned long int Nv, Nt;
+    Nv = Nt = 0;
+
+    for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
+        SubMalha* sub = malha->getSubMalha(i);
+
+        Nv += sub->getNumDeNos();
+        Nt += sub->getNumDeElementos();
+    }
+
+    cout << "#elementos_" << nameModel << "_n.process_" << numberProcess << "_passo_" << passo << "_rank_" << rank << " = " << Nt << endl;
 }

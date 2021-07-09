@@ -84,11 +84,10 @@ public :
     void salvarErroMalha(Malha *malha);
     void salvaMalha(Malha *malha, int passo);
     void salvaErroMalha(Malha *malha, int passo);
-
-    //métodos sequenciais
     void adaptCurve (Geometria *geo);
     void adaptDomain (Geometria *geo, Malha *malha);
-
+    void generatorInitialMesh(Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
+    void printElments(Malha *malha, int passo, vector<double> erroPasso, int rank = -1);
 
 #if USE_OPENMP
     virtual SubMalha* malhaInicialOmp (CoonsPatch*, Performer::IdManager *idManager);
@@ -99,15 +98,12 @@ public :
 #endif //#USE_OPENMP
 
 #if USE_MPI
-    int generatorMpi(double listOfPatches[], int sizeOfListPatches, Timer* timer);
-
     Modelo modelo;
     Geometria* geo;
     CoonsPatch* patch;
     Malha* malha;
 #endif //USE_MPI
 
-    void generatorInitialMesh(Geometria *geo, Malha *malha, Timer *timer, int sizeThread, int sizePatch);
 protected:
 
 #if (USE_MPI || USE_OPENMP)

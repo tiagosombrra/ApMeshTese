@@ -80,99 +80,83 @@ void Timer::closeFile()
 bool Timer::deleteFile(string nameFile)
 {
     if (std::remove(nameFile.c_str()) != 0) {
-        // perror("Error deleting file");
         return false;
     } else {
-        // puts("File successfully deleted");
         return true;
     }
 }
 
 void Timer::initTimerParallel(int _rank, int _thread, int _type)
 {   
-    //#if USE_MPI
-    //    this->timerParallelInitMpi[_rank][_thread][_type] = MPI_Wtime();
-    //#else
     timeval begin;
     gettimeofday(&begin, 0);
     this->timerParallelInit[_rank][_thread][_type] = begin;
-    //#endif //USE_MPI
-
 }
 
 void Timer::endTimerParallel(int _rank, int _thread, int _type)
 {
-    //#if USE_MPI
-    //    this->timerParallelEndMpi[_rank][_thread][_type] = MPI_Wtime();
-    //    calculateTime(_rank, _thread, _type);
-    //#else
     timeval end;
     gettimeofday(&end, 0);
     this->timerParallelEnd[_rank][_thread][_type] = end;
     calculateTime(_rank, _thread, _type);
-    //#endif //USE_MPI
-
 }
 
 void Timer::calculateTime(int _rank, int _thread, int _type)
 {
-    //#if USE_MPI
-    //    this->timerParallel[_rank][_thread][_type] += (this->timerParallelEndMpi[_rank][_thread][_type])
-    //                                                - (this->timerParallelInitMpi[_rank][_thread][_type]);
-    //#else
     long seconds = (this->timerParallelEnd[_rank][_thread][_type]).tv_sec - (this->timerParallelInit[_rank][_thread][_type]).tv_sec;
     long microseconds = (this->timerParallelEnd[_rank][_thread][_type]).tv_usec - (this->timerParallelInit[_rank][_thread][_type]).tv_usec;
     this->timerParallel[_rank][_thread][_type] += seconds + microseconds*1e-6;
-    //#endif //USE_MPI
 }
 
 
 void Timer::printTime()
 {
     vector<double> max = getMaxTime();
-    cout << max[0] << " Send"<<endl; //Send
-    cout << max[1] << " Estimativa"<<endl; //Estimativa de carga
-    cout << max[2] << " MalhaInicial"<<endl; //Geração da malha inicial
-    cout << max[3] << " AdpCurvas"<<endl; //Adaptação das curvas
-    cout << max[4] << " AdpDominio"<<endl; //Adaptação do domínio
-    cout << max[5] << " Leitura arquivo"<<endl; //Leitura arquivo
-    cout << max[6] << " MediaGauss"<<endl; //MediaGauss
-    cout << max[7] << " CalcErro"<<endl; //Calculo do erro
-    cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<" Overhead"<<endl; //Overhead
-    cout << max[9] << " Recv"<<endl; //Recv
-    cout << max[10] - max[5] << " Full"<<endl; //Full
+    cout << max[0] <<endl; //Send
+    cout << max[1] <<endl; //Estimativa de carga
+    cout << max[2] <<endl; //Geração da malha inicial
+    cout << max[3] <<endl; //Adaptação das curvas
+    cout << max[4] <<endl; //Adaptação do domínio
+    cout << max[5] <<endl; //Leitura arquivo
+    cout << max[6] <<endl; //MediaGauss
+    cout << max[7] <<endl; //Calculo do erro
+    cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<endl; //Overhead
+    cout << max[9] <<endl; //Recv
+    cout << max[10] - max[5] <<endl; //Full
 
 }
 
 void Timer::printTime(int rank_process)
 {
     if (rank_process == 0) {
+
         vector<double> max = getMaxTime();
-        cout << max[0] << " Send"<<endl; //Send
-        cout << max[1] << " Estimativa"<<endl; //Estimativa de carga
-        cout << max[2] << " MalhaInicial"<<endl; //Geração da malha inicial
-        cout << max[3] << " AdpCurvas"<<endl; //Adaptação das curvas
-        cout << max[4] << " AdpDominio"<<endl; //Adaptação do domínio
-        cout << max[5] << " Leitura arquivo"<<endl; //Leitura arquivo
-        cout << max[6] << " MediaGauss"<<endl; //MediaGauss
-        cout << max[7] << " CalcErro"<<endl; //Calculo do erro
-        cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<" Overhead"<<endl; //Overhead
-        cout << max[9] << " Recv"<<endl; //Recv
-        cout << max[10] - max[5] << " Full"<<endl; //Full
+        cout << max[0] <<endl; //Send
+        cout << max[1] <<endl; //Estimativa de carga
+        cout << max[2] <<endl; //Geração da malha inicial
+        cout << max[3] <<endl; //Adaptação das curvas
+        cout << max[4] <<endl; //Adaptação do domínio
+        cout << max[5] <<endl; //Leitura arquivo
+        cout << max[6] <<endl; //MediaGauss
+        cout << max[7] <<endl; //Calculo do erro
+        cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<endl; //Overhead
+        cout << max[9] <<endl; //Recv
+        cout << max[10] - max[5] <<endl; //Full
 
     } else{
+
         vector<double> max = getMaxTime();
-        cout << max[0] << " Send"<<endl; //Send
-        cout << max[1] << " Estimativa"<<endl; //Estimativa de carga
-        cout << max[2] << " MalhaInicial"<<endl; //Geração da malha inicial
-        cout << max[3] << " AdpCurvas"<<endl; //Adaptação das curvas
-        cout << max[4] << " AdpDominio"<<endl; //Adaptação do domínio
-        cout << max[5] << " Leitura arquivo copy Process 0"<<endl; //Leitura arquivo
-        cout << max[6] << " MediaGauss"<<endl; //MediaGauss
-        cout << max[7] << " CalcErro"<<endl; //Calculo do erro
-        cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<" Overhead"<<endl; //Overhead
-        cout << max[9] - TIME_READ_FILE<< " Recv"<<endl; //Recv
-        cout << max[10] - TIME_READ_FILE << " Full"<<endl; //Full
+        cout << max[0] <<endl; //Send
+        cout << max[1] <<endl; //Estimativa de carga
+        cout << max[2] <<endl; //Geração da malha inicial
+        cout << max[3] <<endl; //Adaptação das curvas
+        cout << max[4] <<endl; //Adaptação do domínio
+        cout << max[5] <<endl; //Leitura arquivo
+        cout << max[6] <<endl; //MediaGauss
+        cout << max[7] <<endl; //Calculo do erro
+        cout << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] - max[2] - max[1] - max[0] <<endl; //Overhead
+        cout << max[9] - TIME_READ_FILE <<endl; //Recv
+        cout << max[10] - TIME_READ_FILE <<endl; //Full
     }
 }
 

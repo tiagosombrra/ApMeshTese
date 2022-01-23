@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = ApMeshTese1.0.0
-DISTDIR = /home/tiago/Github/ApMeshTese/apMesh/projeto/build-ApMeshTese-Desktop-Debug/.tmp/ApMeshTese1.0.0
+DISTDIR = /home/tiago/ApMeshTese/apMesh/projeto/build-ApMeshTese-Desktop-Debug/.tmp/ApMeshTese1.0.0
 LINK          = mpicxx
 LFLAGS        = -O3 -fopenmp -pthread -L/usr/lib/x86_64-linux-gnu/openmpi/lib -lmpi_cxx -lmpi
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -606,16 +606,8 @@ Adaptador.o: ../../Sources/Adapter/Adaptador.cpp ../../Headers/Adapter/Adaptador
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Adaptador.o ../../Sources/Adapter/Adaptador.cpp
 
 AdaptadorPorCurvatura.o: ../../Sources/Adapter/AdaptadorPorCurvatura.cpp ../../Headers/Adapter/AdaptadorPorCurvatura.h \
-		../../Headers/Adapter/Adaptador.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
+		../../Headers/Crabmesh/Aft/AdvancingFront.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -823,6 +815,7 @@ AdaptadorPorCurvatura.o: ../../Sources/Adapter/AdaptadorPorCurvatura.cpp ../../H
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -892,44 +885,50 @@ AdaptadorPorCurvatura.o: ../../Sources/Adapter/AdaptadorPorCurvatura.cpp ../../H
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
+		../../Headers/Data/Face.h \
+		../../Headers/Crabmesh/Aft/Shape.h \
+		../../Headers/Data/Vertex.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h \
+		../../Headers/Crabmesh/Performer/RangedIdManager.h \
+		../../Headers/Crabmesh/Performer/Definitions.h \
+		../../Headers/Crabmesh/Performer/IdManager.h \
 		../../Headers/Curvature/CurvaturaAnalitica.h \
+		../../Headers/Data/Patch/CoonsPatch.h \
 		../../Headers/Curvature/Curvatura.h \
 		../../Headers/Curvature/CurvaturaDiscreta.h \
 		../../Headers/Curvature/Adjacente.h \
 		../../Headers/Data/Tree/BinTree.h \
-		../../Headers/Crabmesh/Aft/AdvancingFront.h \
-		../../Headers/Crabmesh/Aft/Shape.h \
-		../../Headers/Data/Vertex.h \
-		../../Headers/Data/Edge.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h \
 		../../Headers/Parallel/TMCommunicator.h \
 		../../Headers/Parallel/Definitions.h \
-		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Parallel/MPICommunicator.h \
 		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/NoCommunicator.h \
-		../../Headers/Parallel/OMPThreadManager.h \
-		../../Headers/Parallel/ThreadManager.h \
 		../../Headers/Parallel/NoThreadManager.h \
-		../../Headers/Crabmesh/Performer/RangedIdManager.h \
-		../../Headers/Crabmesh/Performer/IdManager.h
+		../../Headers/Parallel/ThreadManager.h \
+		../../Headers/Parallel/OMPThreadManager.h \
+		../../Headers/Adapter/Adaptador.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o AdaptadorPorCurvatura.o ../../Sources/Adapter/AdaptadorPorCurvatura.cpp
 
 AdvancingFront.o: ../../Sources/Crabmesh/Aft/AdvancingFront.cpp ../../Headers/Crabmesh/Aft/AdvancingFront.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -1137,6 +1136,7 @@ AdvancingFront.o: ../../Sources/Crabmesh/Aft/AdvancingFront.cpp ../../Headers/Cr
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -1206,33 +1206,34 @@ AdvancingFront.o: ../../Sources/Crabmesh/Aft/AdvancingFront.cpp ../../Headers/Cr
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
+		../../Headers/Data/Face.h \
 		../../Headers/Crabmesh/Aft/Shape.h \
 		../../Headers/Data/Vertex.h \
-		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o AdvancingFront.o ../../Sources/Crabmesh/Aft/AdvancingFront.cpp
 
 Boundary.o: ../../Sources/Crabmesh/Aft/Boundary.cpp ../../Headers/Crabmesh/Aft/Boundary.h \
+		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -1440,6 +1441,7 @@ Boundary.o: ../../Sources/Crabmesh/Aft/Boundary.cpp ../../Headers/Crabmesh/Aft/B
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -1509,32 +1511,29 @@ Boundary.o: ../../Sources/Crabmesh/Aft/Boundary.cpp ../../Headers/Crabmesh/Aft/B
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Crabmesh/Aft/Shape.h \
-		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Edge.h \
-		../../Headers/Data/Vertex.h \
 		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h
+		../../Headers/Data/Face.h \
+		../../Headers/Crabmesh/Aft/Shape.h \
+		../../Headers/Data/Vertex.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Boundary.o ../../Sources/Crabmesh/Aft/Boundary.cpp
 
 Quadtree.o: ../../Sources/Crabmesh/Aft/Quadtree.cpp ../../Headers/Crabmesh/Aft/Quadtree.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -1742,6 +1741,7 @@ Quadtree.o: ../../Sources/Crabmesh/Aft/Quadtree.cpp ../../Headers/Crabmesh/Aft/Q
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -1811,32 +1811,31 @@ Quadtree.o: ../../Sources/Crabmesh/Aft/Quadtree.cpp ../../Headers/Crabmesh/Aft/Q
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
+		../../Headers/Data/Face.h \
 		../../Headers/Crabmesh/Aft/Shape.h \
 		../../Headers/Data/Vertex.h \
-		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
-		../../Headers/Data/Face.h
+		../../Headers/Data/Triangulo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Quadtree.o ../../Sources/Crabmesh/Aft/Quadtree.cpp
 
 QuadtreeCell.o: ../../Sources/Crabmesh/Aft/QuadtreeCell.cpp ../../Headers/Crabmesh/Aft/QuadtreeCell.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -2044,6 +2043,7 @@ QuadtreeCell.o: ../../Sources/Crabmesh/Aft/QuadtreeCell.cpp ../../Headers/Crabme
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -2113,32 +2113,31 @@ QuadtreeCell.o: ../../Sources/Crabmesh/Aft/QuadtreeCell.cpp ../../Headers/Crabme
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Data/Edge.h \
 		../../Headers/Crabmesh/Aft/Shape.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Edge.h \
+		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Vertex.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h
+		../../Headers/Data/Face.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o QuadtreeCell.o ../../Sources/Crabmesh/Aft/QuadtreeCell.cpp
 
 Shape.o: ../../Sources/Crabmesh/Aft/Shape.cpp ../../Headers/Crabmesh/Aft/Shape.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -2346,6 +2345,7 @@ Shape.o: ../../Sources/Crabmesh/Aft/Shape.cpp ../../Headers/Crabmesh/Aft/Shape.h
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -2419,7 +2419,6 @@ Shape.o: ../../Sources/Crabmesh/Aft/Shape.cpp ../../Headers/Crabmesh/Aft/Shape.h
 
 BisectionEquationRoot.o: ../../Sources/Crabmesh/Numerical/BisectionEquationRoot.cpp ../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -2627,6 +2626,7 @@ BisectionEquationRoot.o: ../../Sources/Crabmesh/Numerical/BisectionEquationRoot.
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -2698,8 +2698,6 @@ BisectionEquationRoot.o: ../../Sources/Crabmesh/Numerical/BisectionEquationRoot.
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
 		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
@@ -2707,14 +2705,15 @@ BisectionEquationRoot.o: ../../Sources/Crabmesh/Numerical/BisectionEquationRoot.
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BisectionEquationRoot.o ../../Sources/Crabmesh/Numerical/BisectionEquationRoot.cpp
 
 Function.o: ../../Sources/Crabmesh/Numerical/Function.cpp ../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -2922,6 +2921,7 @@ Function.o: ../../Sources/Crabmesh/Numerical/Function.cpp ../../Headers/Crabmesh
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -2997,7 +2997,6 @@ Function.o: ../../Sources/Crabmesh/Numerical/Function.cpp ../../Headers/Crabmesh
 IdManager.o: ../../Sources/Crabmesh/Performer/IdManager.cpp ../../Headers/Crabmesh/Performer/IdManager.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -3205,6 +3204,7 @@ IdManager.o: ../../Sources/Crabmesh/Performer/IdManager.cpp ../../Headers/Crabme
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -3279,7 +3279,6 @@ IdManager.o: ../../Sources/Crabmesh/Performer/IdManager.cpp ../../Headers/Crabme
 RangedIdManager.o: ../../Sources/Crabmesh/Performer/RangedIdManager.cpp ../../Headers/Crabmesh/Performer/RangedIdManager.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -3487,6 +3486,7 @@ RangedIdManager.o: ../../Sources/Crabmesh/Performer/RangedIdManager.cpp ../../He
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -3560,31 +3560,23 @@ RangedIdManager.o: ../../Sources/Crabmesh/Performer/RangedIdManager.cpp ../../He
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o RangedIdManager.o ../../Sources/Crabmesh/Performer/RangedIdManager.cpp
 
 Adjacente.o: ../../Sources/Curvature/Adjacente.cpp ../../Headers/Curvature/Adjacente.h \
-		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Noh.h
+		../../Headers/Data/Triangulo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Adjacente.o ../../Sources/Curvature/Adjacente.cpp
 
 Curvatura.o: ../../Sources/Curvature/Curvatura.cpp ../../Headers/Curvature/Curvatura.h \
 		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Curvatura.o ../../Sources/Curvature/Curvatura.cpp
 
 CurvaturaAnalitica.o: ../../Sources/Curvature/CurvaturaAnalitica.cpp ../../Headers/Curvature/CurvaturaAnalitica.h \
-		../../Headers/Data/Vertice.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Elemento.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -3792,6 +3784,7 @@ CurvaturaAnalitica.o: ../../Sources/Curvature/CurvaturaAnalitica.cpp ../../Heade
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -3862,24 +3855,31 @@ CurvaturaAnalitica.o: ../../Sources/Curvature/CurvaturaAnalitica.cpp ../../Heade
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
 		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
 		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Vertice.h \
 		../../Headers/Curvature/Curvatura.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvaturaAnalitica.o ../../Sources/Curvature/CurvaturaAnalitica.cpp
 
 CurvaturaDiscreta.o: ../../Sources/Curvature/CurvaturaDiscreta.cpp ../../Headers/Curvature/CurvaturaDiscreta.h \
-		../../Headers/Curvature/Curvatura.h \
+		../../Headers/Curvature/Adjacente.h \
 		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Elemento.h \
 		../../Headers/Data/Vetor.h \
-		../../Headers/Curvature/Adjacente.h \
-		../../Headers/Data/Triangulo.h
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Curvature/Curvatura.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvaturaDiscreta.o ../../Sources/Curvature/CurvaturaDiscreta.cpp
 
 CurvParamBezier.o: ../../Sources/Data/Curve/CurvParamBezier.cpp ../../Headers/Data/Curve/CurvParamBezier.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -4087,6 +4087,7 @@ CurvParamBezier.o: ../../Sources/Data/Curve/CurvParamBezier.cpp ../../Headers/Da
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -4156,26 +4157,25 @@ CurvParamBezier.o: ../../Sources/Data/Curve/CurvParamBezier.cpp ../../Headers/Da
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h
+		../../Headers/Data/Triangulo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvParamBezier.o ../../Sources/Data/Curve/CurvParamBezier.cpp
 
 CurvParamHermite.o: ../../Sources/Data/Curve/CurvParamHermite.cpp ../../Headers/Data/Curve/CurvParamHermite.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -4383,6 +4383,7 @@ CurvParamHermite.o: ../../Sources/Data/Curve/CurvParamHermite.cpp ../../Headers/
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -4452,32 +4453,29 @@ CurvParamHermite.o: ../../Sources/Data/Curve/CurvParamHermite.cpp ../../Headers/
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h
+		../../Headers/Data/Triangulo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvParamHermite.o ../../Sources/Data/Curve/CurvParamHermite.cpp
 
 Curva.o: ../../Sources/Data/Curve/Curva.cpp ../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Elemento.h \
 		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -4685,287 +4683,7 @@ Curva.o: ../../Sources/Data/Curve/Curva.cpp ../../Headers/Data/Curve/Curva.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
-		../../Libs/Eigen/Eigen/Sparse \
-		../../Libs/Eigen/Eigen/SparseCore \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseMatrixBase.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseAssign.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/CompressedStorage.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/AmbiVector.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseCompressedBase.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseMatrix.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseMap.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/MappedSparseMatrix.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseVector.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseRef.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseCwiseUnaryOp.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseCwiseBinaryOp.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseTranspose.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseBlock.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseDot.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseRedux.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseView.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseDiagonalProduct.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/ConservativeSparseSparseProduct.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseSparseProductWithPruning.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseProduct.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseDenseProduct.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseSelfAdjointView.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseTriangularView.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/TriangularSolver.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparsePermutation.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseFuzzy.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseSolverBase.h \
-		../../Libs/Eigen/Eigen/OrderingMethods \
-		../../Libs/Eigen/Eigen/src/OrderingMethods/Amd.h \
-		../../Libs/Eigen/Eigen/src/Core/util/NonMPL2.h \
-		../../Libs/Eigen/Eigen/src/OrderingMethods/Ordering.h \
-		../../Libs/Eigen/Eigen/src/OrderingMethods/Eigen_Colamd.h \
-		../../Libs/Eigen/Eigen/SparseCholesky \
-		../../Libs/Eigen/Eigen/src/SparseCholesky/SimplicialCholesky.h \
-		../../Libs/Eigen/Eigen/src/SparseCholesky/SimplicialCholesky_impl.h \
-		../../Libs/Eigen/Eigen/SparseLU \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_gemm_kernel.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_Structs.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_SupernodalMatrix.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLUImpl.h \
-		../../Libs/Eigen/Eigen/src/SparseCore/SparseColEtree.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_Memory.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_heap_relax_snode.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_relax_snode.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_pivotL.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_panel_dfs.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_kernel_bmod.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_panel_bmod.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_column_dfs.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_column_bmod.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_copy_to_ucol.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_pruneL.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_Utils.h \
-		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU.h \
-		../../Libs/Eigen/Eigen/SparseQR \
-		../../Libs/Eigen/Eigen/src/SparseQR/SparseQR.h \
-		../../Libs/Eigen/Eigen/IterativeLinearSolvers \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/SolveWithGuess.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IterativeSolverBase.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BasicPreconditioners.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/ConjugateGradient.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/LeastSquareConjugateGradient.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Curva.o ../../Sources/Data/Curve/Curva.cpp
-
-CurvaParametrica.o: ../../Sources/Data/Curve/CurvaParametrica.cpp ../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Definitions.h \
 		../../Libs/Eigen/Eigen/Eigen \
-		../../Libs/Eigen/Eigen/Dense \
-		../../Libs/Eigen/Eigen/Core \
-		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
-		../../Libs/Eigen/Eigen/src/Core/util/Macros.h \
-		../../Libs/Eigen/Eigen/src/Core/util/MKL_support.h \
-		../../Libs/Eigen/Eigen/src/misc/blas.h \
-		../../Libs/Eigen/Eigen/src/Core/util/Constants.h \
-		../../Libs/Eigen/Eigen/src/Core/util/Meta.h \
-		../../Libs/Eigen/Eigen/src/Core/util/ForwardDeclarations.h \
-		../../Libs/Eigen/Eigen/src/Core/util/StaticAssert.h \
-		../../Libs/Eigen/Eigen/src/Core/util/XprHelper.h \
-		../../Libs/Eigen/Eigen/src/Core/util/Memory.h \
-		../../Libs/Eigen/Eigen/src/Core/NumTraits.h \
-		../../Libs/Eigen/Eigen/src/Core/MathFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/GenericPacketMath.h \
-		../../Libs/Eigen/Eigen/src/Core/MathFunctionsImpl.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/Default/ConjHelper.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/SSE/PacketMath.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/SSE/MathFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AVX/PacketMath.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AVX/MathFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AVX512/PacketMath.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AVX512/MathFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/SSE/Complex.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AVX/Complex.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AVX/TypeCasting.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/SSE/TypeCasting.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AltiVec/PacketMath.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AltiVec/MathFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/AltiVec/Complex.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/NEON/PacketMath.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/NEON/MathFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/NEON/Complex.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/ZVector/PacketMath.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/ZVector/MathFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/ZVector/Complex.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/Half.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/PacketMathHalf.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/TypeCasting.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/PacketMath.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/MathFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/Default/Settings.h \
-		../../Libs/Eigen/Eigen/src/Core/functors/TernaryFunctors.h \
-		../../Libs/Eigen/Eigen/src/Core/functors/BinaryFunctors.h \
-		../../Libs/Eigen/Eigen/src/Core/functors/UnaryFunctors.h \
-		../../Libs/Eigen/Eigen/src/Core/functors/NullaryFunctors.h \
-		../../Libs/Eigen/Eigen/src/Core/functors/StlFunctors.h \
-		../../Libs/Eigen/Eigen/src/Core/functors/AssignmentFunctors.h \
-		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/Complex.h \
-		../../Libs/Eigen/Eigen/src/Core/IO.h \
-		../../Libs/Eigen/Eigen/src/Core/DenseCoeffsBase.h \
-		../../Libs/Eigen/Eigen/src/Core/DenseBase.h \
-		../../Libs/Eigen/Eigen/src/plugins/BlockMethods.h \
-		../../Libs/Eigen/Eigen/src/Core/MatrixBase.h \
-		../../Libs/Eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h \
-		../../Libs/Eigen/Eigen/src/plugins/CommonCwiseBinaryOps.h \
-		../../Libs/Eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h \
-		../../Libs/Eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h \
-		../../Libs/Eigen/Eigen/src/Core/EigenBase.h \
-		../../Libs/Eigen/Eigen/src/Core/Product.h \
-		../../Libs/Eigen/Eigen/src/Core/CoreEvaluators.h \
-		../../Libs/Eigen/Eigen/src/Core/AssignEvaluator.h \
-		../../Libs/Eigen/Eigen/src/Core/Assign.h \
-		../../Libs/Eigen/Eigen/src/Core/ArrayBase.h \
-		../../Libs/Eigen/Eigen/src/plugins/ArrayCwiseUnaryOps.h \
-		../../Libs/Eigen/Eigen/src/plugins/ArrayCwiseBinaryOps.h \
-		../../Libs/Eigen/Eigen/src/Core/util/BlasUtil.h \
-		../../Libs/Eigen/Eigen/src/Core/DenseStorage.h \
-		../../Libs/Eigen/Eigen/src/Core/NestByValue.h \
-		../../Libs/Eigen/Eigen/src/Core/ReturnByValue.h \
-		../../Libs/Eigen/Eigen/src/Core/NoAlias.h \
-		../../Libs/Eigen/Eigen/src/Core/PlainObjectBase.h \
-		../../Libs/Eigen/Eigen/src/Core/Matrix.h \
-		../../Libs/Eigen/Eigen/src/Core/Array.h \
-		../../Libs/Eigen/Eigen/src/Core/CwiseTernaryOp.h \
-		../../Libs/Eigen/Eigen/src/Core/CwiseBinaryOp.h \
-		../../Libs/Eigen/Eigen/src/Core/CwiseUnaryOp.h \
-		../../Libs/Eigen/Eigen/src/Core/CwiseNullaryOp.h \
-		../../Libs/Eigen/Eigen/src/Core/CwiseUnaryView.h \
-		../../Libs/Eigen/Eigen/src/Core/SelfCwiseBinaryOp.h \
-		../../Libs/Eigen/Eigen/src/Core/Dot.h \
-		../../Libs/Eigen/Eigen/src/Core/StableNorm.h \
-		../../Libs/Eigen/Eigen/src/Core/Stride.h \
-		../../Libs/Eigen/Eigen/src/Core/MapBase.h \
-		../../Libs/Eigen/Eigen/src/Core/Map.h \
-		../../Libs/Eigen/Eigen/src/Core/Ref.h \
-		../../Libs/Eigen/Eigen/src/Core/Block.h \
-		../../Libs/Eigen/Eigen/src/Core/VectorBlock.h \
-		../../Libs/Eigen/Eigen/src/Core/Transpose.h \
-		../../Libs/Eigen/Eigen/src/Core/DiagonalMatrix.h \
-		../../Libs/Eigen/Eigen/src/Core/Diagonal.h \
-		../../Libs/Eigen/Eigen/src/Core/DiagonalProduct.h \
-		../../Libs/Eigen/Eigen/src/Core/Redux.h \
-		../../Libs/Eigen/Eigen/src/Core/Visitor.h \
-		../../Libs/Eigen/Eigen/src/Core/Fuzzy.h \
-		../../Libs/Eigen/Eigen/src/Core/Swap.h \
-		../../Libs/Eigen/Eigen/src/Core/CommaInitializer.h \
-		../../Libs/Eigen/Eigen/src/Core/GeneralProduct.h \
-		../../Libs/Eigen/Eigen/src/Core/Solve.h \
-		../../Libs/Eigen/Eigen/src/Core/Inverse.h \
-		../../Libs/Eigen/Eigen/src/Core/SolverBase.h \
-		../../Libs/Eigen/Eigen/src/Core/PermutationMatrix.h \
-		../../Libs/Eigen/Eigen/src/Core/Transpositions.h \
-		../../Libs/Eigen/Eigen/src/Core/TriangularMatrix.h \
-		../../Libs/Eigen/Eigen/src/Core/SelfAdjointView.h \
-		../../Libs/Eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
-		../../Libs/Eigen/Eigen/src/Core/products/Parallelizer.h \
-		../../Libs/Eigen/Eigen/src/Core/ProductEvaluators.h \
-		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixVector.h \
-		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix.h \
-		../../Libs/Eigen/Eigen/src/Core/SolveTriangular.h \
-		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
-		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector.h \
-		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
-		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointProduct.h \
-		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointRank2Update.h \
-		../../Libs/Eigen/Eigen/src/Core/products/TriangularMatrixVector.h \
-		../../Libs/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix.h \
-		../../Libs/Eigen/Eigen/src/Core/products/TriangularSolverMatrix.h \
-		../../Libs/Eigen/Eigen/src/Core/products/TriangularSolverVector.h \
-		../../Libs/Eigen/Eigen/src/Core/BandMatrix.h \
-		../../Libs/Eigen/Eigen/src/Core/CoreIterators.h \
-		../../Libs/Eigen/Eigen/src/Core/ConditionEstimator.h \
-		../../Libs/Eigen/Eigen/src/Core/BooleanRedux.h \
-		../../Libs/Eigen/Eigen/src/Core/Select.h \
-		../../Libs/Eigen/Eigen/src/Core/VectorwiseOp.h \
-		../../Libs/Eigen/Eigen/src/Core/Random.h \
-		../../Libs/Eigen/Eigen/src/Core/Replicate.h \
-		../../Libs/Eigen/Eigen/src/Core/Reverse.h \
-		../../Libs/Eigen/Eigen/src/Core/ArrayWrapper.h \
-		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
-		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
-		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
-		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
-		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
-		../../Libs/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
-		../../Libs/Eigen/Eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
-		../../Libs/Eigen/Eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
-		../../Libs/Eigen/Eigen/src/Core/Assign_MKL.h \
-		../../Libs/Eigen/Eigen/src/Core/GlobalFunctions.h \
-		../../Libs/Eigen/Eigen/src/Core/util/ReenableStupidWarnings.h \
-		../../Libs/Eigen/Eigen/LU \
-		../../Libs/Eigen/Eigen/src/misc/Kernel.h \
-		../../Libs/Eigen/Eigen/src/misc/Image.h \
-		../../Libs/Eigen/Eigen/src/LU/FullPivLU.h \
-		../../Libs/Eigen/Eigen/src/LU/PartialPivLU.h \
-		../../Libs/Eigen/Eigen/src/misc/lapacke.h \
-		../../Libs/Eigen/Eigen/src/misc/lapacke_mangling.h \
-		../../Libs/Eigen/Eigen/src/LU/PartialPivLU_LAPACKE.h \
-		../../Libs/Eigen/Eigen/src/LU/Determinant.h \
-		../../Libs/Eigen/Eigen/src/LU/InverseImpl.h \
-		../../Libs/Eigen/Eigen/src/LU/arch/Inverse_SSE.h \
-		../../Libs/Eigen/Eigen/Cholesky \
-		../../Libs/Eigen/Eigen/Jacobi \
-		../../Libs/Eigen/Eigen/src/Jacobi/Jacobi.h \
-		../../Libs/Eigen/Eigen/src/Cholesky/LLT.h \
-		../../Libs/Eigen/Eigen/src/Cholesky/LDLT.h \
-		../../Libs/Eigen/Eigen/src/Cholesky/LLT_LAPACKE.h \
-		../../Libs/Eigen/Eigen/QR \
-		../../Libs/Eigen/Eigen/Householder \
-		../../Libs/Eigen/Eigen/src/Householder/Householder.h \
-		../../Libs/Eigen/Eigen/src/Householder/HouseholderSequence.h \
-		../../Libs/Eigen/Eigen/src/Householder/BlockHouseholder.h \
-		../../Libs/Eigen/Eigen/src/QR/HouseholderQR.h \
-		../../Libs/Eigen/Eigen/src/QR/FullPivHouseholderQR.h \
-		../../Libs/Eigen/Eigen/src/QR/ColPivHouseholderQR.h \
-		../../Libs/Eigen/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
-		../../Libs/Eigen/Eigen/src/QR/HouseholderQR_LAPACKE.h \
-		../../Libs/Eigen/Eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
-		../../Libs/Eigen/Eigen/SVD \
-		../../Libs/Eigen/Eigen/src/misc/RealSvd2x2.h \
-		../../Libs/Eigen/Eigen/src/SVD/UpperBidiagonalization.h \
-		../../Libs/Eigen/Eigen/src/SVD/SVDBase.h \
-		../../Libs/Eigen/Eigen/src/SVD/JacobiSVD.h \
-		../../Libs/Eigen/Eigen/src/SVD/BDCSVD.h \
-		../../Libs/Eigen/Eigen/src/SVD/JacobiSVD_LAPACKE.h \
-		../../Libs/Eigen/Eigen/Geometry \
-		../../Libs/Eigen/Eigen/src/Geometry/OrthoMethods.h \
-		../../Libs/Eigen/Eigen/src/Geometry/EulerAngles.h \
-		../../Libs/Eigen/Eigen/src/Geometry/Homogeneous.h \
-		../../Libs/Eigen/Eigen/src/Geometry/RotationBase.h \
-		../../Libs/Eigen/Eigen/src/Geometry/Rotation2D.h \
-		../../Libs/Eigen/Eigen/src/Geometry/Quaternion.h \
-		../../Libs/Eigen/Eigen/src/Geometry/AngleAxis.h \
-		../../Libs/Eigen/Eigen/src/Geometry/Transform.h \
-		../../Libs/Eigen/Eigen/src/Geometry/Translation.h \
-		../../Libs/Eigen/Eigen/src/Geometry/Scaling.h \
-		../../Libs/Eigen/Eigen/src/Geometry/Hyperplane.h \
-		../../Libs/Eigen/Eigen/src/Geometry/ParametrizedLine.h \
-		../../Libs/Eigen/Eigen/src/Geometry/AlignedBox.h \
-		../../Libs/Eigen/Eigen/src/Geometry/Umeyama.h \
-		../../Libs/Eigen/Eigen/src/Geometry/arch/Geometry_SSE.h \
-		../../Libs/Eigen/Eigen/Eigenvalues \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/Tridiagonalization.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/EigenSolver.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/RealQZ.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
-		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -5035,24 +4753,12 @@ CurvaParametrica.o: ../../Sources/Data/Curve/CurvaParametrica.cpp ../../Headers/
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Vertice.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvaParametrica.o ../../Sources/Data/Curve/CurvaParametrica.cpp
+		../../Headers/Data/Triangulo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Curva.o ../../Sources/Data/Curve/Curva.cpp
 
-Definitions.o: ../../Sources/Data/Definitions.cpp ../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
+CurvaParametrica.o: ../../Sources/Data/Curve/CurvaParametrica.cpp ../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Data/Definitions.h \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -5260,6 +4966,300 @@ Definitions.o: ../../Sources/Data/Definitions.cpp ../../Headers/Data/Definitions
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
+		../../Libs/Eigen/Eigen/Sparse \
+		../../Libs/Eigen/Eigen/SparseCore \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseMatrixBase.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseAssign.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/CompressedStorage.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/AmbiVector.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseCompressedBase.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseMatrix.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseMap.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/MappedSparseMatrix.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseVector.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseRef.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseCwiseUnaryOp.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseCwiseBinaryOp.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseTranspose.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseBlock.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseDot.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseRedux.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseView.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseDiagonalProduct.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/ConservativeSparseSparseProduct.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseSparseProductWithPruning.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseProduct.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseDenseProduct.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseSelfAdjointView.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseTriangularView.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/TriangularSolver.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparsePermutation.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseFuzzy.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseSolverBase.h \
+		../../Libs/Eigen/Eigen/OrderingMethods \
+		../../Libs/Eigen/Eigen/src/OrderingMethods/Amd.h \
+		../../Libs/Eigen/Eigen/src/Core/util/NonMPL2.h \
+		../../Libs/Eigen/Eigen/src/OrderingMethods/Ordering.h \
+		../../Libs/Eigen/Eigen/src/OrderingMethods/Eigen_Colamd.h \
+		../../Libs/Eigen/Eigen/SparseCholesky \
+		../../Libs/Eigen/Eigen/src/SparseCholesky/SimplicialCholesky.h \
+		../../Libs/Eigen/Eigen/src/SparseCholesky/SimplicialCholesky_impl.h \
+		../../Libs/Eigen/Eigen/SparseLU \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_gemm_kernel.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_Structs.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_SupernodalMatrix.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLUImpl.h \
+		../../Libs/Eigen/Eigen/src/SparseCore/SparseColEtree.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_Memory.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_heap_relax_snode.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_relax_snode.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_pivotL.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_panel_dfs.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_kernel_bmod.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_panel_bmod.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_column_dfs.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_column_bmod.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_copy_to_ucol.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_pruneL.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU_Utils.h \
+		../../Libs/Eigen/Eigen/src/SparseLU/SparseLU.h \
+		../../Libs/Eigen/Eigen/SparseQR \
+		../../Libs/Eigen/Eigen/src/SparseQR/SparseQR.h \
+		../../Libs/Eigen/Eigen/IterativeLinearSolvers \
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/SolveWithGuess.h \
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IterativeSolverBase.h \
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BasicPreconditioners.h \
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/ConjugateGradient.h \
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/LeastSquareConjugateGradient.h \
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CurvaParametrica.o ../../Sources/Data/Curve/CurvaParametrica.cpp
+
+Definitions.o: ../../Sources/Data/Definitions.cpp ../../Headers/Data/Definitions.h \
+		../../Libs/Eigen/Eigen/Dense \
+		../../Libs/Eigen/Eigen/Core \
+		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
+		../../Libs/Eigen/Eigen/src/Core/util/Macros.h \
+		../../Libs/Eigen/Eigen/src/Core/util/MKL_support.h \
+		../../Libs/Eigen/Eigen/src/misc/blas.h \
+		../../Libs/Eigen/Eigen/src/Core/util/Constants.h \
+		../../Libs/Eigen/Eigen/src/Core/util/Meta.h \
+		../../Libs/Eigen/Eigen/src/Core/util/ForwardDeclarations.h \
+		../../Libs/Eigen/Eigen/src/Core/util/StaticAssert.h \
+		../../Libs/Eigen/Eigen/src/Core/util/XprHelper.h \
+		../../Libs/Eigen/Eigen/src/Core/util/Memory.h \
+		../../Libs/Eigen/Eigen/src/Core/NumTraits.h \
+		../../Libs/Eigen/Eigen/src/Core/MathFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/GenericPacketMath.h \
+		../../Libs/Eigen/Eigen/src/Core/MathFunctionsImpl.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/Default/ConjHelper.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/SSE/PacketMath.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/SSE/MathFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AVX/PacketMath.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AVX/MathFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AVX512/PacketMath.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AVX512/MathFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/SSE/Complex.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AVX/Complex.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AVX/TypeCasting.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/SSE/TypeCasting.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AltiVec/PacketMath.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AltiVec/MathFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/AltiVec/Complex.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/NEON/PacketMath.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/NEON/MathFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/NEON/Complex.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/ZVector/PacketMath.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/ZVector/MathFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/ZVector/Complex.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/Half.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/PacketMathHalf.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/TypeCasting.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/PacketMath.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/MathFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/Default/Settings.h \
+		../../Libs/Eigen/Eigen/src/Core/functors/TernaryFunctors.h \
+		../../Libs/Eigen/Eigen/src/Core/functors/BinaryFunctors.h \
+		../../Libs/Eigen/Eigen/src/Core/functors/UnaryFunctors.h \
+		../../Libs/Eigen/Eigen/src/Core/functors/NullaryFunctors.h \
+		../../Libs/Eigen/Eigen/src/Core/functors/StlFunctors.h \
+		../../Libs/Eigen/Eigen/src/Core/functors/AssignmentFunctors.h \
+		../../Libs/Eigen/Eigen/src/Core/arch/CUDA/Complex.h \
+		../../Libs/Eigen/Eigen/src/Core/IO.h \
+		../../Libs/Eigen/Eigen/src/Core/DenseCoeffsBase.h \
+		../../Libs/Eigen/Eigen/src/Core/DenseBase.h \
+		../../Libs/Eigen/Eigen/src/plugins/BlockMethods.h \
+		../../Libs/Eigen/Eigen/src/Core/MatrixBase.h \
+		../../Libs/Eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h \
+		../../Libs/Eigen/Eigen/src/plugins/CommonCwiseBinaryOps.h \
+		../../Libs/Eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h \
+		../../Libs/Eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h \
+		../../Libs/Eigen/Eigen/src/Core/EigenBase.h \
+		../../Libs/Eigen/Eigen/src/Core/Product.h \
+		../../Libs/Eigen/Eigen/src/Core/CoreEvaluators.h \
+		../../Libs/Eigen/Eigen/src/Core/AssignEvaluator.h \
+		../../Libs/Eigen/Eigen/src/Core/Assign.h \
+		../../Libs/Eigen/Eigen/src/Core/ArrayBase.h \
+		../../Libs/Eigen/Eigen/src/plugins/ArrayCwiseUnaryOps.h \
+		../../Libs/Eigen/Eigen/src/plugins/ArrayCwiseBinaryOps.h \
+		../../Libs/Eigen/Eigen/src/Core/util/BlasUtil.h \
+		../../Libs/Eigen/Eigen/src/Core/DenseStorage.h \
+		../../Libs/Eigen/Eigen/src/Core/NestByValue.h \
+		../../Libs/Eigen/Eigen/src/Core/ReturnByValue.h \
+		../../Libs/Eigen/Eigen/src/Core/NoAlias.h \
+		../../Libs/Eigen/Eigen/src/Core/PlainObjectBase.h \
+		../../Libs/Eigen/Eigen/src/Core/Matrix.h \
+		../../Libs/Eigen/Eigen/src/Core/Array.h \
+		../../Libs/Eigen/Eigen/src/Core/CwiseTernaryOp.h \
+		../../Libs/Eigen/Eigen/src/Core/CwiseBinaryOp.h \
+		../../Libs/Eigen/Eigen/src/Core/CwiseUnaryOp.h \
+		../../Libs/Eigen/Eigen/src/Core/CwiseNullaryOp.h \
+		../../Libs/Eigen/Eigen/src/Core/CwiseUnaryView.h \
+		../../Libs/Eigen/Eigen/src/Core/SelfCwiseBinaryOp.h \
+		../../Libs/Eigen/Eigen/src/Core/Dot.h \
+		../../Libs/Eigen/Eigen/src/Core/StableNorm.h \
+		../../Libs/Eigen/Eigen/src/Core/Stride.h \
+		../../Libs/Eigen/Eigen/src/Core/MapBase.h \
+		../../Libs/Eigen/Eigen/src/Core/Map.h \
+		../../Libs/Eigen/Eigen/src/Core/Ref.h \
+		../../Libs/Eigen/Eigen/src/Core/Block.h \
+		../../Libs/Eigen/Eigen/src/Core/VectorBlock.h \
+		../../Libs/Eigen/Eigen/src/Core/Transpose.h \
+		../../Libs/Eigen/Eigen/src/Core/DiagonalMatrix.h \
+		../../Libs/Eigen/Eigen/src/Core/Diagonal.h \
+		../../Libs/Eigen/Eigen/src/Core/DiagonalProduct.h \
+		../../Libs/Eigen/Eigen/src/Core/Redux.h \
+		../../Libs/Eigen/Eigen/src/Core/Visitor.h \
+		../../Libs/Eigen/Eigen/src/Core/Fuzzy.h \
+		../../Libs/Eigen/Eigen/src/Core/Swap.h \
+		../../Libs/Eigen/Eigen/src/Core/CommaInitializer.h \
+		../../Libs/Eigen/Eigen/src/Core/GeneralProduct.h \
+		../../Libs/Eigen/Eigen/src/Core/Solve.h \
+		../../Libs/Eigen/Eigen/src/Core/Inverse.h \
+		../../Libs/Eigen/Eigen/src/Core/SolverBase.h \
+		../../Libs/Eigen/Eigen/src/Core/PermutationMatrix.h \
+		../../Libs/Eigen/Eigen/src/Core/Transpositions.h \
+		../../Libs/Eigen/Eigen/src/Core/TriangularMatrix.h \
+		../../Libs/Eigen/Eigen/src/Core/SelfAdjointView.h \
+		../../Libs/Eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
+		../../Libs/Eigen/Eigen/src/Core/products/Parallelizer.h \
+		../../Libs/Eigen/Eigen/src/Core/ProductEvaluators.h \
+		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixVector.h \
+		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix.h \
+		../../Libs/Eigen/Eigen/src/Core/SolveTriangular.h \
+		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
+		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector.h \
+		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
+		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointProduct.h \
+		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointRank2Update.h \
+		../../Libs/Eigen/Eigen/src/Core/products/TriangularMatrixVector.h \
+		../../Libs/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix.h \
+		../../Libs/Eigen/Eigen/src/Core/products/TriangularSolverMatrix.h \
+		../../Libs/Eigen/Eigen/src/Core/products/TriangularSolverVector.h \
+		../../Libs/Eigen/Eigen/src/Core/BandMatrix.h \
+		../../Libs/Eigen/Eigen/src/Core/CoreIterators.h \
+		../../Libs/Eigen/Eigen/src/Core/ConditionEstimator.h \
+		../../Libs/Eigen/Eigen/src/Core/BooleanRedux.h \
+		../../Libs/Eigen/Eigen/src/Core/Select.h \
+		../../Libs/Eigen/Eigen/src/Core/VectorwiseOp.h \
+		../../Libs/Eigen/Eigen/src/Core/Random.h \
+		../../Libs/Eigen/Eigen/src/Core/Replicate.h \
+		../../Libs/Eigen/Eigen/src/Core/Reverse.h \
+		../../Libs/Eigen/Eigen/src/Core/ArrayWrapper.h \
+		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
+		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
+		../../Libs/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
+		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
+		../../Libs/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
+		../../Libs/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
+		../../Libs/Eigen/Eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
+		../../Libs/Eigen/Eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
+		../../Libs/Eigen/Eigen/src/Core/Assign_MKL.h \
+		../../Libs/Eigen/Eigen/src/Core/GlobalFunctions.h \
+		../../Libs/Eigen/Eigen/src/Core/util/ReenableStupidWarnings.h \
+		../../Libs/Eigen/Eigen/LU \
+		../../Libs/Eigen/Eigen/src/misc/Kernel.h \
+		../../Libs/Eigen/Eigen/src/misc/Image.h \
+		../../Libs/Eigen/Eigen/src/LU/FullPivLU.h \
+		../../Libs/Eigen/Eigen/src/LU/PartialPivLU.h \
+		../../Libs/Eigen/Eigen/src/misc/lapacke.h \
+		../../Libs/Eigen/Eigen/src/misc/lapacke_mangling.h \
+		../../Libs/Eigen/Eigen/src/LU/PartialPivLU_LAPACKE.h \
+		../../Libs/Eigen/Eigen/src/LU/Determinant.h \
+		../../Libs/Eigen/Eigen/src/LU/InverseImpl.h \
+		../../Libs/Eigen/Eigen/src/LU/arch/Inverse_SSE.h \
+		../../Libs/Eigen/Eigen/Cholesky \
+		../../Libs/Eigen/Eigen/Jacobi \
+		../../Libs/Eigen/Eigen/src/Jacobi/Jacobi.h \
+		../../Libs/Eigen/Eigen/src/Cholesky/LLT.h \
+		../../Libs/Eigen/Eigen/src/Cholesky/LDLT.h \
+		../../Libs/Eigen/Eigen/src/Cholesky/LLT_LAPACKE.h \
+		../../Libs/Eigen/Eigen/QR \
+		../../Libs/Eigen/Eigen/Householder \
+		../../Libs/Eigen/Eigen/src/Householder/Householder.h \
+		../../Libs/Eigen/Eigen/src/Householder/HouseholderSequence.h \
+		../../Libs/Eigen/Eigen/src/Householder/BlockHouseholder.h \
+		../../Libs/Eigen/Eigen/src/QR/HouseholderQR.h \
+		../../Libs/Eigen/Eigen/src/QR/FullPivHouseholderQR.h \
+		../../Libs/Eigen/Eigen/src/QR/ColPivHouseholderQR.h \
+		../../Libs/Eigen/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
+		../../Libs/Eigen/Eigen/src/QR/HouseholderQR_LAPACKE.h \
+		../../Libs/Eigen/Eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
+		../../Libs/Eigen/Eigen/SVD \
+		../../Libs/Eigen/Eigen/src/misc/RealSvd2x2.h \
+		../../Libs/Eigen/Eigen/src/SVD/UpperBidiagonalization.h \
+		../../Libs/Eigen/Eigen/src/SVD/SVDBase.h \
+		../../Libs/Eigen/Eigen/src/SVD/JacobiSVD.h \
+		../../Libs/Eigen/Eigen/src/SVD/BDCSVD.h \
+		../../Libs/Eigen/Eigen/src/SVD/JacobiSVD_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Geometry \
+		../../Libs/Eigen/Eigen/src/Geometry/OrthoMethods.h \
+		../../Libs/Eigen/Eigen/src/Geometry/EulerAngles.h \
+		../../Libs/Eigen/Eigen/src/Geometry/Homogeneous.h \
+		../../Libs/Eigen/Eigen/src/Geometry/RotationBase.h \
+		../../Libs/Eigen/Eigen/src/Geometry/Rotation2D.h \
+		../../Libs/Eigen/Eigen/src/Geometry/Quaternion.h \
+		../../Libs/Eigen/Eigen/src/Geometry/AngleAxis.h \
+		../../Libs/Eigen/Eigen/src/Geometry/Transform.h \
+		../../Libs/Eigen/Eigen/src/Geometry/Translation.h \
+		../../Libs/Eigen/Eigen/src/Geometry/Scaling.h \
+		../../Libs/Eigen/Eigen/src/Geometry/Hyperplane.h \
+		../../Libs/Eigen/Eigen/src/Geometry/ParametrizedLine.h \
+		../../Libs/Eigen/Eigen/src/Geometry/AlignedBox.h \
+		../../Libs/Eigen/Eigen/src/Geometry/Umeyama.h \
+		../../Libs/Eigen/Eigen/src/Geometry/arch/Geometry_SSE.h \
+		../../Libs/Eigen/Eigen/Eigenvalues \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/Tridiagonalization.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/EigenSolver.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/RealQZ.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
+		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -5332,8 +5332,8 @@ Definitions.o: ../../Sources/Data/Definitions.cpp ../../Headers/Data/Definitions
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Definitions.o ../../Sources/Data/Definitions.cpp
 
 Edge.o: ../../Sources/Data/Edge.cpp ../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -5541,6 +5541,7 @@ Edge.o: ../../Sources/Data/Edge.cpp ../../Headers/Data/Edge.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -5610,27 +5611,26 @@ Edge.o: ../../Sources/Data/Edge.cpp ../../Headers/Data/Edge.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Data/Face.h \
 		../../Headers/Crabmesh/Aft/Shape.h \
+		../../Headers/Data/Vertex.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Vertex.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Edge.o ../../Sources/Data/Edge.cpp
 
 Elemento.o: ../../Sources/Data/Elemento.cpp ../../Headers/Data/Elemento.h \
@@ -5639,8 +5639,8 @@ Elemento.o: ../../Sources/Data/Elemento.cpp ../../Headers/Data/Elemento.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Elemento.o ../../Sources/Data/Elemento.cpp
 
 Face.o: ../../Sources/Data/Face.cpp ../../Headers/Data/Face.h \
+		../../Headers/Crabmesh/Aft/Shape.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -5848,6 +5848,7 @@ Face.o: ../../Sources/Data/Face.cpp ../../Headers/Data/Face.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -5917,40 +5918,33 @@ Face.o: ../../Sources/Data/Face.cpp ../../Headers/Data/Face.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Crabmesh/Aft/Shape.h \
-		../../Headers/Data/Vertex.h \
 		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
+		../../Headers/Data/Vertex.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
+		../../Headers/Data/Triangulo.h \
 		../../Headers/Crabmesh/Aft/Quadtree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Face.o ../../Sources/Data/Face.cpp
 
 Geometria.o: ../../Sources/Data/Geometria.cpp ../../Headers/Data/Geometria.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -6158,6 +6152,7 @@ Geometria.o: ../../Sources/Data/Geometria.cpp ../../Headers/Data/Geometria.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -6227,27 +6222,27 @@ Geometria.o: ../../Sources/Data/Geometria.cpp ../../Headers/Data/Geometria.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
-		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Curve/CurvParamBezier.h
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Patch/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Geometria.o ../../Sources/Data/Geometria.cpp
 
 Malha.o: ../../Sources/Data/Mesh/Malha.cpp ../../Headers/Data/Mesh/Malha.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -6455,6 +6450,7 @@ Malha.o: ../../Sources/Data/Mesh/Malha.cpp ../../Headers/Data/Mesh/Malha.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -6523,16 +6519,15 @@ Malha.o: ../../Sources/Data/Mesh/Malha.cpp ../../Headers/Data/Mesh/Malha.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/LeastSquareConjugateGradient.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Malha.o ../../Sources/Data/Mesh/Malha.cpp
 
 SubMalha.o: ../../Sources/Data/Mesh/SubMalha.cpp ../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -6740,6 +6735,7 @@ SubMalha.o: ../../Sources/Data/Mesh/SubMalha.cpp ../../Headers/Data/Mesh/SubMalh
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -6808,21 +6804,17 @@ SubMalha.o: ../../Sources/Data/Mesh/SubMalha.cpp ../../Headers/Data/Mesh/SubMalh
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/LeastSquareConjugateGradient.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SubMalha.o ../../Sources/Data/Mesh/SubMalha.cpp
 
 Modelo.o: ../../Sources/Data/Modelo.cpp ../../Headers/Data/Modelo.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Geometria.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/Malha.h \
 		../../Headers/Data/Mesh/SubMalha.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -7030,6 +7022,7 @@ Modelo.o: ../../Sources/Data/Modelo.cpp ../../Headers/Data/Modelo.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -7099,36 +7092,38 @@ Modelo.o: ../../Sources/Data/Modelo.cpp ../../Headers/Data/Modelo.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Geometria.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
-		../../Headers/Data/Mesh/Malha.h
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Patch/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Modelo.o ../../Sources/Data/Modelo.cpp
 
 Noh.o: ../../Sources/Data/Noh.cpp ../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Noh.o ../../Sources/Data/Noh.cpp
 
 BezierPatch.o: ../../Sources/Data/Patch/BezierPatch.cpp ../../Headers/Data/Patch/BezierPatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -7336,6 +7331,7 @@ BezierPatch.o: ../../Sources/Data/Patch/BezierPatch.cpp ../../Headers/Data/Patch
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -7405,27 +7401,24 @@ BezierPatch.o: ../../Sources/Data/Patch/BezierPatch.cpp ../../Headers/Data/Patch
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
-		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Patch/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BezierPatch.o ../../Sources/Data/Patch/BezierPatch.cpp
 
 CoonsPatch.o: ../../Sources/Data/Patch/CoonsPatch.cpp ../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -7633,6 +7626,7 @@ CoonsPatch.o: ../../Sources/Data/Patch/CoonsPatch.cpp ../../Headers/Data/Patch/C
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -7703,19 +7697,20 @@ CoonsPatch.o: ../../Sources/Data/Patch/CoonsPatch.cpp ../../Headers/Data/Patch/C
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
 		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
 		../../Headers/Data/Triangulo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CoonsPatch.o ../../Sources/Data/Patch/CoonsPatch.cpp
 
 HermitePatch.o: ../../Sources/Data/Patch/HermitePatch.cpp ../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -7923,6 +7918,7 @@ HermitePatch.o: ../../Sources/Data/Patch/HermitePatch.cpp ../../Headers/Data/Pat
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -7992,26 +7988,25 @@ HermitePatch.o: ../../Sources/Data/Patch/HermitePatch.cpp ../../Headers/Data/Pat
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
-		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Patch/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o HermitePatch.o ../../Sources/Data/Patch/HermitePatch.cpp
 
 Patch.o: ../../Sources/Data/Patch/Patch.cpp ../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -8219,6 +8214,7 @@ Patch.o: ../../Sources/Data/Patch/Patch.cpp ../../Headers/Data/Patch/Patch.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -8287,7 +8283,11 @@ Patch.o: ../../Sources/Data/Patch/Patch.cpp ../../Headers/Data/Patch/Patch.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/LeastSquareConjugateGradient.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Patch.o ../../Sources/Data/Patch/Patch.cpp
 
 Ponto.o: ../../Sources/Data/Ponto.cpp ../../Headers/Data/Ponto.h
@@ -8295,8 +8295,8 @@ Ponto.o: ../../Sources/Data/Ponto.cpp ../../Headers/Data/Ponto.h
 
 BinTree.o: ../../Sources/Data/Tree/BinTree.cpp ../../Headers/Data/Tree/BinTree.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -8504,6 +8504,7 @@ BinTree.o: ../../Sources/Data/Tree/BinTree.cpp ../../Headers/Data/Tree/BinTree.h
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -8573,20 +8574,19 @@ BinTree.o: ../../Sources/Data/Tree/BinTree.cpp ../../Headers/Data/Tree/BinTree.h
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h
+		../../Headers/Data/Triangulo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BinTree.o ../../Sources/Data/Tree/BinTree.cpp
 
 Triangulo.o: ../../Sources/Data/Triangulo.cpp ../../Headers/Data/Triangulo.h \
@@ -8597,8 +8597,8 @@ Triangulo.o: ../../Sources/Data/Triangulo.cpp ../../Headers/Data/Triangulo.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Triangulo.o ../../Sources/Data/Triangulo.cpp
 
 Vertex.o: ../../Sources/Data/Vertex.cpp ../../Headers/Data/Vertex.h \
+		../../Headers/Crabmesh/Aft/Shape.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -8806,6 +8806,7 @@ Vertex.o: ../../Sources/Data/Vertex.cpp ../../Headers/Data/Vertex.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -8875,27 +8876,26 @@ Vertex.o: ../../Sources/Data/Vertex.cpp ../../Headers/Data/Vertex.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Crabmesh/Aft/Shape.h \
 		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
+		../../Headers/Data/Face.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
+		../../Headers/Crabmesh/Numerical/Function.h \
+		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
 		../../Headers/Data/Vertice.h \
 		../../Headers/Data/Ponto.h \
 		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Curve/Curva.h \
 		../../Headers/Data/Noh.h \
 		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
-		../../Headers/Crabmesh/Numerical/Function.h \
-		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Vertex.o ../../Sources/Data/Vertex.cpp
 
 Vertice.o: ../../Sources/Data/Vertice.cpp ../../Headers/Data/Vertice.h \
@@ -8907,17 +8907,9 @@ Vetor.o: ../../Sources/Data/Vetor.cpp ../../Headers/Data/Vetor.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Vetor.o ../../Sources/Data/Vetor.cpp
 
 ChargeEstimateProcess.o: ../../Sources/Estimate/ChargeEstimateProcess.cpp ../../Headers/Estimate/ChargeEstimateProcess.h \
-		../../Headers/IO/PatchBezierReader.h \
-		../../Headers/Data/Patch/BezierPatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
+		../../Headers/Adapter/AdaptadorPorCurvatura.h \
+		../../Headers/Crabmesh/Aft/AdvancingFront.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -9125,6 +9117,7 @@ ChargeEstimateProcess.o: ../../Sources/Estimate/ChargeEstimateProcess.cpp ../../
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -9194,70 +9187,67 @@ ChargeEstimateProcess.o: ../../Sources/Estimate/ChargeEstimateProcess.cpp ../../
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
+		../../Headers/Data/Face.h \
+		../../Headers/Crabmesh/Aft/Shape.h \
+		../../Headers/Data/Vertex.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
-		../../Headers/Adapter/AdaptadorPorCurvatura.h \
-		../../Headers/Adapter/Adaptador.h \
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h \
+		../../Headers/Crabmesh/Performer/RangedIdManager.h \
+		../../Headers/Crabmesh/Performer/Definitions.h \
+		../../Headers/Crabmesh/Performer/IdManager.h \
 		../../Headers/Curvature/CurvaturaAnalitica.h \
+		../../Headers/Data/Patch/CoonsPatch.h \
 		../../Headers/Curvature/Curvatura.h \
 		../../Headers/Curvature/CurvaturaDiscreta.h \
 		../../Headers/Curvature/Adjacente.h \
 		../../Headers/Data/Tree/BinTree.h \
-		../../Headers/Crabmesh/Aft/AdvancingFront.h \
-		../../Headers/Crabmesh/Aft/Shape.h \
-		../../Headers/Data/Vertex.h \
-		../../Headers/Data/Edge.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h \
 		../../Headers/Parallel/TMCommunicator.h \
 		../../Headers/Parallel/Definitions.h \
-		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Parallel/MPICommunicator.h \
 		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/NoCommunicator.h \
-		../../Headers/Parallel/OMPThreadManager.h \
-		../../Headers/Parallel/ThreadManager.h \
 		../../Headers/Parallel/NoThreadManager.h \
-		../../Headers/Crabmesh/Performer/RangedIdManager.h \
-		../../Headers/Crabmesh/Performer/IdManager.h \
+		../../Headers/Parallel/ThreadManager.h \
+		../../Headers/Parallel/OMPThreadManager.h \
+		../../Headers/Adapter/Adaptador.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Geometria.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
 		../../Headers/Data/Mesh/Malha.h \
+		../../Headers/Data/Patch/BezierPatch.h \
 		../../Headers/Generator/GeradorAdaptativoPorCurvatura.h \
+		../../Headers/IO/Modelos3d.h \
+		../../Headers/IO/ReaderPatches.h \
+		../../Headers/Data/Modelo.h \
+		../../Headers/Parallel/ApMeshCommunicator.h \
+		../../Headers/Timer/Timer.h \
 		../../Headers/Generator/GeradorAdaptativo.h \
 		../../Headers/Generator/Gerador.h \
-		../../Headers/Data/Modelo.h \
-		../../Headers/Data/Geometria.h \
-		../../Headers/Timer/Timer.h \
-		../../Headers/Parallel/ApMeshCommunicator.h \
-		../../Headers/IO/ReaderPatches.h \
-		../../Headers/IO/Modelos3d.h \
+		../../Headers/IO/PatchBezierReader.h \
 		../../Headers/IO/WriteOBJFIle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ChargeEstimateProcess.o ../../Sources/Estimate/ChargeEstimateProcess.cpp
 
 Gerador.o: ../../Sources/Generator/Gerador.cpp ../../Headers/Generator/Gerador.h \
-		../../Headers/Data/Modelo.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Geometria.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -9465,6 +9455,7 @@ Gerador.o: ../../Sources/Generator/Gerador.cpp ../../Headers/Generator/Gerador.h
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -9534,34 +9525,33 @@ Gerador.o: ../../Sources/Generator/Gerador.cpp ../../Headers/Generator/Gerador.h
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Modelo.h \
+		../../Headers/Data/Mesh/Malha.h \
+		../../Headers/Data/Geometria.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
-		../../Headers/Data/Mesh/Malha.h
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Patch/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Gerador.o ../../Sources/Generator/Gerador.cpp
 
 GeradorAdaptativo.o: ../../Sources/Generator/GeradorAdaptativo.cpp ../../Headers/Generator/GeradorAdaptativo.h \
 		../../Headers/Generator/Gerador.h \
-		../../Headers/Data/Modelo.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Geometria.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Patch/Patch.h \
 		../../Headers/Data/Mesh/SubMalha.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -9769,6 +9759,7 @@ GeradorAdaptativo.o: ../../Sources/Generator/GeradorAdaptativo.cpp ../../Headers
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -9838,31 +9829,33 @@ GeradorAdaptativo.o: ../../Sources/Generator/GeradorAdaptativo.cpp ../../Headers
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Modelo.h \
+		../../Headers/Data/Mesh/Malha.h \
+		../../Headers/Data/Geometria.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
-		../../Headers/Data/Mesh/Malha.h
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Patch/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GeradorAdaptativo.o ../../Sources/Generator/GeradorAdaptativo.cpp
 
 GeradorAdaptativoPorCurvatura.o: ../../Sources/Generator/GeradorAdaptativoPorCurvatura.cpp ../../Headers/Generator/GeradorAdaptativoPorCurvatura.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Adapter/AdaptadorPorCurvatura.h \
+		../../Headers/Crabmesh/Aft/AdvancingFront.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -10070,6 +10063,7 @@ GeradorAdaptativoPorCurvatura.o: ../../Sources/Generator/GeradorAdaptativoPorCur
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -10139,71 +10133,69 @@ GeradorAdaptativoPorCurvatura.o: ../../Sources/Generator/GeradorAdaptativoPorCur
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Generator/GeradorAdaptativo.h \
-		../../Headers/Generator/Gerador.h \
-		../../Headers/Data/Modelo.h \
-		../../Headers/Data/Geometria.h \
-		../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
+		../../Headers/Data/Face.h \
+		../../Headers/Crabmesh/Aft/Shape.h \
+		../../Headers/Data/Vertex.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
-		../../Headers/Data/Mesh/Malha.h \
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h \
+		../../Headers/Crabmesh/Performer/RangedIdManager.h \
+		../../Headers/Crabmesh/Performer/Definitions.h \
+		../../Headers/Crabmesh/Performer/IdManager.h \
 		../../Headers/Curvature/CurvaturaAnalitica.h \
+		../../Headers/Data/Patch/CoonsPatch.h \
 		../../Headers/Curvature/Curvatura.h \
 		../../Headers/Curvature/CurvaturaDiscreta.h \
 		../../Headers/Curvature/Adjacente.h \
-		../../Headers/Adapter/AdaptadorPorCurvatura.h \
-		../../Headers/Adapter/Adaptador.h \
 		../../Headers/Data/Tree/BinTree.h \
-		../../Headers/Crabmesh/Aft/AdvancingFront.h \
-		../../Headers/Crabmesh/Aft/Shape.h \
-		../../Headers/Data/Vertex.h \
-		../../Headers/Data/Edge.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h \
 		../../Headers/Parallel/TMCommunicator.h \
 		../../Headers/Parallel/Definitions.h \
-		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Parallel/MPICommunicator.h \
 		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/NoCommunicator.h \
-		../../Headers/Parallel/OMPThreadManager.h \
-		../../Headers/Parallel/ThreadManager.h \
 		../../Headers/Parallel/NoThreadManager.h \
-		../../Headers/Crabmesh/Performer/RangedIdManager.h \
-		../../Headers/Crabmesh/Performer/IdManager.h \
-		../../Headers/Timer/Timer.h \
-		../../Headers/Parallel/ApMeshCommunicator.h \
+		../../Headers/Parallel/ThreadManager.h \
+		../../Headers/Parallel/OMPThreadManager.h \
+		../../Headers/Adapter/Adaptador.h \
 		../../Headers/Data/Patch/BezierPatch.h \
-		../../Headers/IO/ReaderPatches.h \
-		../../Headers/IO/Modelos3d.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
 		../../Headers/Estimate/ChargeEstimateProcess.h \
+		../../Headers/Data/Geometria.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Mesh/Malha.h \
 		../../Headers/IO/PatchBezierReader.h \
-		../../Headers/IO/WriteOBJFIle.h
+		../../Headers/IO/WriteOBJFIle.h \
+		../../Headers/Timer/Timer.h \
+		../../Headers/IO/Modelos3d.h \
+		../../Headers/IO/ReaderPatches.h \
+		../../Headers/Data/Modelo.h \
+		../../Headers/Parallel/ApMeshCommunicator.h \
+		../../Headers/Generator/GeradorAdaptativo.h \
+		../../Headers/Generator/Gerador.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GeradorAdaptativoPorCurvatura.o ../../Sources/Generator/GeradorAdaptativoPorCurvatura.cpp
 
 Arquivo.o: ../../Sources/IO/Arquivo.cpp ../../Headers/IO/Arquivo.h \
 		../../Headers/Data/Modelo.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Geometria.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/Malha.h \
 		../../Headers/Data/Mesh/SubMalha.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -10411,6 +10403,7 @@ Arquivo.o: ../../Sources/IO/Arquivo.cpp ../../Headers/IO/Arquivo.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -10480,32 +10473,32 @@ Arquivo.o: ../../Sources/IO/Arquivo.cpp ../../Headers/IO/Arquivo.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Geometria.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
-		../../Headers/Data/Mesh/Malha.h
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Patch/CoonsPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Arquivo.o ../../Sources/IO/Arquivo.cpp
 
 Modelos3d.o: ../../Sources/IO/Modelos3d.cpp ../../Headers/IO/Modelos3d.h \
-		../../Headers/Data/Geometria.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -10713,6 +10706,7 @@ Modelos3d.o: ../../Sources/IO/Modelos3d.cpp ../../Headers/IO/Modelos3d.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -10782,31 +10776,32 @@ Modelos3d.o: ../../Sources/IO/Modelos3d.cpp ../../Headers/IO/Modelos3d.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
-		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
+		../../Headers/Data/Geometria.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Patch/CoonsPatch.h \
 		../../Headers/Data/Patch/BezierPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Modelos3d.o ../../Sources/IO/Modelos3d.cpp
 
 PatchBezierReader.o: ../../Sources/IO/PatchBezierReader.cpp ../../Headers/IO/PatchBezierReader.h \
 		../../Headers/Data/Patch/BezierPatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -11014,6 +11009,7 @@ PatchBezierReader.o: ../../Sources/IO/PatchBezierReader.cpp ../../Headers/IO/Pat
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -11083,31 +11079,29 @@ PatchBezierReader.o: ../../Sources/IO/PatchBezierReader.cpp ../../Headers/IO/Pat
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
-		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Patch/CoonsPatch.h \
 		../../Headers/Data/Patch/HermitePatch.h \
 		../../Headers/Data/Curve/CurvParamHermite.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PatchBezierReader.o ../../Sources/IO/PatchBezierReader.cpp
 
 ReaderPatches.o: ../../Sources/IO/ReaderPatches.cpp ../../Headers/IO/ReaderPatches.h \
-		../../Headers/Data/Patch/BezierPatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Modelo.h \
+		../../Headers/Data/Mesh/Malha.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -11315,6 +11309,7 @@ ReaderPatches.o: ../../Sources/IO/ReaderPatches.cpp ../../Headers/IO/ReaderPatch
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -11384,32 +11379,32 @@ ReaderPatches.o: ../../Sources/IO/ReaderPatches.cpp ../../Headers/IO/ReaderPatch
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Geometria.h \
 		../../Headers/Data/Curve/CurvParamBezier.h \
 		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Triangulo.h \
 		../../Headers/Data/Patch/HermitePatch.h \
 		../../Headers/Data/Curve/CurvParamHermite.h \
-		../../Headers/Data/Modelo.h \
-		../../Headers/Data/Geometria.h \
-		../../Headers/Data/Mesh/Malha.h
+		../../Headers/Data/Patch/CoonsPatch.h \
+		../../Headers/Data/Patch/BezierPatch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ReaderPatches.o ../../Sources/IO/ReaderPatches.cpp
 
 WriteOBJFile.o: ../../Sources/IO/WriteOBJFile.cpp ../../Headers/IO/WriteOBJFIle.h \
 		../../Headers/Data/Mesh/Malha.h \
 		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -11617,6 +11612,7 @@ WriteOBJFile.o: ../../Sources/IO/WriteOBJFile.cpp ../../Headers/IO/WriteOBJFIle.
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -11686,6 +11682,10 @@ WriteOBJFile.o: ../../Sources/IO/WriteOBJFile.cpp ../../Headers/IO/WriteOBJFIle.
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Noh.h \
 		../../Headers/Data/Triangulo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o WriteOBJFile.o ../../Sources/IO/WriteOBJFile.cpp
 
@@ -11694,7 +11694,6 @@ ApMeshCommunicator.o: ../../Sources/Parallel/ApMeshCommunicator.cpp ../../Header
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -11902,6 +11901,7 @@ ApMeshCommunicator.o: ../../Sources/Parallel/ApMeshCommunicator.cpp ../../Header
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -11974,16 +11974,15 @@ ApMeshCommunicator.o: ../../Sources/Parallel/ApMeshCommunicator.cpp ../../Header
 		../../Headers/Parallel/MPICommunicator.h \
 		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/NoCommunicator.h \
-		../../Headers/Parallel/OMPThreadManager.h \
+		../../Headers/Parallel/NoThreadManager.h \
 		../../Headers/Parallel/ThreadManager.h \
-		../../Headers/Parallel/NoThreadManager.h
+		../../Headers/Parallel/OMPThreadManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ApMeshCommunicator.o ../../Sources/Parallel/ApMeshCommunicator.cpp
 
 Communicator.o: ../../Sources/Parallel/Communicator.cpp ../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -12191,6 +12190,7 @@ Communicator.o: ../../Sources/Parallel/Communicator.cpp ../../Headers/Parallel/C
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -12264,10 +12264,10 @@ Communicator.o: ../../Sources/Parallel/Communicator.cpp ../../Headers/Parallel/C
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Communicator.o ../../Sources/Parallel/Communicator.cpp
 
 MPICommunicator.o: ../../Sources/Parallel/MPICommunicator.cpp ../../Headers/Parallel/MPICommunicator.h \
+		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -12475,6 +12475,7 @@ MPICommunicator.o: ../../Sources/Parallel/MPICommunicator.cpp ../../Headers/Para
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -12544,7 +12545,6 @@ MPICommunicator.o: ../../Sources/Parallel/MPICommunicator.cpp ../../Headers/Para
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/MPIMessage.h \
 		../../Headers/Parallel/Message.h \
 		../../Headers/Parallel/Transferable.h
@@ -12554,7 +12554,6 @@ MPIMessage.o: ../../Sources/Parallel/MPIMessage.cpp ../../Headers/Parallel/MPIMe
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -12762,6 +12761,7 @@ MPIMessage.o: ../../Sources/Parallel/MPIMessage.cpp ../../Headers/Parallel/MPIMe
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -12841,7 +12841,6 @@ Message.o: ../../Sources/Parallel/Message.cpp ../../Headers/Parallel/Message.h \
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -13049,6 +13048,7 @@ Message.o: ../../Sources/Parallel/Message.cpp ../../Headers/Parallel/Message.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -13122,10 +13122,10 @@ Message.o: ../../Sources/Parallel/Message.cpp ../../Headers/Parallel/Message.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Message.o ../../Sources/Parallel/Message.cpp
 
 NoCommunicator.o: ../../Sources/Parallel/NoCommunicator.cpp ../../Headers/Parallel/NoCommunicator.h \
+		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -13333,6 +13333,7 @@ NoCommunicator.o: ../../Sources/Parallel/NoCommunicator.cpp ../../Headers/Parall
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -13401,15 +13402,13 @@ NoCommunicator.o: ../../Sources/Parallel/NoCommunicator.cpp ../../Headers/Parall
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/LeastSquareConjugateGradient.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
-		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Parallel/Communicator.h
+		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NoCommunicator.o ../../Sources/Parallel/NoCommunicator.cpp
 
 NoThreadManager.o: ../../Sources/Parallel/NoThreadManager.cpp ../../Headers/Parallel/NoThreadManager.h \
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -13617,6 +13616,7 @@ NoThreadManager.o: ../../Sources/Parallel/NoThreadManager.cpp ../../Headers/Para
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -13693,7 +13693,6 @@ OMPThreadManager.o: ../../Sources/Parallel/OMPThreadManager.cpp ../../Headers/Pa
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -13901,6 +13900,7 @@ OMPThreadManager.o: ../../Sources/Parallel/OMPThreadManager.cpp ../../Headers/Pa
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -13977,7 +13977,6 @@ ParallelMeshGenerator.o: ../../Sources/Parallel/ParallelMeshGenerator.cpp ../../
 		../../Headers/Crabmesh/Performer/RangedIdManager.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -14185,6 +14184,7 @@ ParallelMeshGenerator.o: ../../Sources/Parallel/ParallelMeshGenerator.cpp ../../
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -14260,16 +14260,15 @@ ParallelMeshGenerator.o: ../../Sources/Parallel/ParallelMeshGenerator.cpp ../../
 		../../Headers/Parallel/MPICommunicator.h \
 		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/NoCommunicator.h \
-		../../Headers/Parallel/OMPThreadManager.h \
+		../../Headers/Parallel/NoThreadManager.h \
 		../../Headers/Parallel/ThreadManager.h \
-		../../Headers/Parallel/NoThreadManager.h
+		../../Headers/Parallel/OMPThreadManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ParallelMeshGenerator.o ../../Sources/Parallel/ParallelMeshGenerator.cpp
 
 TMCommunicator.o: ../../Sources/Parallel/TMCommunicator.cpp ../../Headers/Parallel/TMCommunicator.h \
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -14477,6 +14476,7 @@ TMCommunicator.o: ../../Sources/Parallel/TMCommunicator.cpp ../../Headers/Parall
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -14549,16 +14549,15 @@ TMCommunicator.o: ../../Sources/Parallel/TMCommunicator.cpp ../../Headers/Parall
 		../../Headers/Parallel/MPICommunicator.h \
 		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/NoCommunicator.h \
-		../../Headers/Parallel/OMPThreadManager.h \
+		../../Headers/Parallel/NoThreadManager.h \
 		../../Headers/Parallel/ThreadManager.h \
-		../../Headers/Parallel/NoThreadManager.h
+		../../Headers/Parallel/OMPThreadManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TMCommunicator.o ../../Sources/Parallel/TMCommunicator.cpp
 
 ThreadManager.o: ../../Sources/Parallel/ThreadManager.cpp ../../Headers/Parallel/ThreadManager.h \
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -14766,6 +14765,7 @@ ThreadManager.o: ../../Sources/Parallel/ThreadManager.cpp ../../Headers/Parallel
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -14841,7 +14841,6 @@ Transferable.o: ../../Sources/Parallel/Transferable.cpp ../../Headers/Parallel/T
 		../../Headers/Parallel/Definitions.h \
 		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -15049,6 +15048,7 @@ Transferable.o: ../../Sources/Parallel/Transferable.cpp ../../Headers/Parallel/T
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -15122,7 +15122,6 @@ Transferable.o: ../../Sources/Parallel/Transferable.cpp ../../Headers/Parallel/T
 
 Timer.o: ../../Sources/Timer/Timer.cpp ../../Headers/Timer/Timer.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -15330,6 +15329,7 @@ Timer.o: ../../Sources/Timer/Timer.cpp ../../Headers/Timer/Timer.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -15401,16 +15401,10 @@ Timer.o: ../../Sources/Timer/Timer.cpp ../../Headers/Timer/Timer.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Timer.o ../../Sources/Timer/Timer.cpp
 
-main.o: ../../Sources/main.cpp ../../Headers/Data/Patch/HermitePatch.h \
-		../../Headers/Data/Patch/CoonsPatch.h \
-		../../Headers/Data/Patch/Patch.h \
-		../../Headers/Data/Mesh/SubMalha.h \
-		../../Headers/Data/Noh.h \
-		../../Headers/Data/Ponto.h \
-		../../Headers/Data/Elemento.h \
-		../../Headers/Data/Vetor.h \
+main.o: ../../Sources/main.cpp ../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Curve/CurvaParametrica.h \
+		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
 		../../Headers/Data/Definitions.h \
-		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Dense \
 		../../Libs/Eigen/Eigen/Core \
 		../../Libs/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -15618,6 +15612,7 @@ main.o: ../../Sources/main.cpp ../../Headers/Data/Patch/HermitePatch.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		../../Libs/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../../Libs/Eigen/Eigen/Eigen \
 		../../Libs/Eigen/Eigen/Sparse \
 		../../Libs/Eigen/Eigen/SparseCore \
 		../../Libs/Eigen/Eigen/src/SparseCore/SparseUtil.h \
@@ -15687,57 +15682,62 @@ main.o: ../../Sources/main.cpp ../../Headers/Data/Patch/HermitePatch.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
 		../../Libs/Eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
-		../../Headers/Data/Curve/Curva.h \
-		../../Headers/Data/Triangulo.h \
-		../../Headers/Data/Curve/CurvParamHermite.h \
-		../../Headers/Data/Curve/CurvaParametrica.h \
-		../../Headers/Data/Vertice.h \
+		../../Headers/Crabmesh/Numerical/EquationRoot.h \
 		../../Headers/Crabmesh/Numerical/EquationRootFunction.h \
 		../../Headers/Crabmesh/Numerical/Function.h \
 		../../Headers/Crabmesh/Numerical/MultiVariableFunction.h \
-		../../Headers/Crabmesh/Numerical/BisectionEquationRoot.h \
-		../../Headers/Crabmesh/Numerical/EquationRoot.h \
-		../../Headers/Data/Patch/BezierPatch.h \
-		../../Headers/Data/Curve/CurvParamBezier.h \
+		../../Headers/Data/Vertice.h \
+		../../Headers/Data/Ponto.h \
+		../../Headers/Data/Vetor.h \
+		../../Headers/Data/Curve/Curva.h \
+		../../Headers/Data/Noh.h \
+		../../Headers/Data/Elemento.h \
+		../../Headers/Data/Patch/Patch.h \
+		../../Headers/Data/Mesh/SubMalha.h \
+		../../Headers/Data/Triangulo.h \
+		../../Headers/Data/Curve/CurvParamHermite.h \
 		../../Headers/Data/Modelo.h \
-		../../Headers/Data/Geometria.h \
 		../../Headers/Data/Mesh/Malha.h \
+		../../Headers/Data/Geometria.h \
+		../../Headers/Data/Patch/HermitePatch.h \
+		../../Headers/Data/Patch/CoonsPatch.h \
+		../../Headers/Data/Patch/BezierPatch.h \
 		../../Headers/Generator/GeradorAdaptativoPorCurvatura.h \
-		../../Headers/Generator/GeradorAdaptativo.h \
-		../../Headers/Generator/Gerador.h \
+		../../Headers/Adapter/AdaptadorPorCurvatura.h \
+		../../Headers/Crabmesh/Aft/AdvancingFront.h \
+		../../Headers/Data/Edge.h \
+		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
+		../../Headers/Data/Face.h \
+		../../Headers/Crabmesh/Aft/Shape.h \
+		../../Headers/Data/Vertex.h \
+		../../Headers/Crabmesh/Aft/Boundary.h \
+		../../Headers/Crabmesh/Aft/Quadtree.h \
+		../../Headers/Crabmesh/Performer/RangedIdManager.h \
+		../../Headers/Crabmesh/Performer/Definitions.h \
+		../../Headers/Crabmesh/Performer/IdManager.h \
 		../../Headers/Curvature/CurvaturaAnalitica.h \
 		../../Headers/Curvature/Curvatura.h \
 		../../Headers/Curvature/CurvaturaDiscreta.h \
 		../../Headers/Curvature/Adjacente.h \
-		../../Headers/Adapter/AdaptadorPorCurvatura.h \
-		../../Headers/Adapter/Adaptador.h \
 		../../Headers/Data/Tree/BinTree.h \
-		../../Headers/Crabmesh/Aft/AdvancingFront.h \
-		../../Headers/Crabmesh/Aft/Shape.h \
-		../../Headers/Data/Vertex.h \
-		../../Headers/Data/Edge.h \
-		../../Headers/Crabmesh/Aft/QuadtreeCell.h \
-		../../Headers/Crabmesh/Aft/Boundary.h \
-		../../Headers/Crabmesh/Aft/Quadtree.h \
-		../../Headers/Data/Face.h \
 		../../Headers/Parallel/TMCommunicator.h \
 		../../Headers/Parallel/Definitions.h \
-		../../Headers/Crabmesh/Performer/Definitions.h \
 		../../Headers/Parallel/MPICommunicator.h \
 		../../Headers/Parallel/Communicator.h \
 		../../Headers/Parallel/NoCommunicator.h \
-		../../Headers/Parallel/OMPThreadManager.h \
-		../../Headers/Parallel/ThreadManager.h \
 		../../Headers/Parallel/NoThreadManager.h \
-		../../Headers/Crabmesh/Performer/RangedIdManager.h \
-		../../Headers/Crabmesh/Performer/IdManager.h \
-		../../Headers/Timer/Timer.h \
-		../../Headers/Parallel/ApMeshCommunicator.h \
-		../../Headers/IO/ReaderPatches.h \
-		../../Headers/IO/Modelos3d.h \
+		../../Headers/Parallel/ThreadManager.h \
+		../../Headers/Parallel/OMPThreadManager.h \
+		../../Headers/Adapter/Adaptador.h \
 		../../Headers/Estimate/ChargeEstimateProcess.h \
 		../../Headers/IO/PatchBezierReader.h \
-		../../Headers/IO/WriteOBJFIle.h
+		../../Headers/IO/WriteOBJFIle.h \
+		../../Headers/Timer/Timer.h \
+		../../Headers/IO/Modelos3d.h \
+		../../Headers/IO/ReaderPatches.h \
+		../../Headers/Parallel/ApMeshCommunicator.h \
+		../../Headers/Generator/GeradorAdaptativo.h \
+		../../Headers/Generator/Gerador.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../Sources/main.cpp
 
 ####### Install

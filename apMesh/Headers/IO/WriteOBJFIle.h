@@ -9,22 +9,22 @@
 #ifndef WriteOBJFIle_h
 #define WriteOBJFIle_h
 
+#include <ctime>
+#include <fstream>
+#include <sstream>
+
 #include "../Data/Mesh/Malha.h"
 #include "../Data/Triangulo.h"
-#include <sstream>
-#include <fstream>
-#include <ctime>
 
 extern std::string nameModel;
 
-class WriteOBJFIle
-{
-
-public:
-    WriteOBJFIle();
-    bool writeMeshOBJFile(Malha* malha, unsigned int passo, int process);
-    void writeCurvaturePatches(std::vector<double> vecCurvaturePatches, double maxValue);
-    ~WriteOBJFIle();
+class WriteOBJFIle {
+ public:
+  WriteOBJFIle();
+  bool writeMeshOBJFile(Malha* malha, unsigned int passo, int process);
+  void writeCurvaturePatches(std::vector<double> vecCurvaturePatches,
+                             double maxValue);
+  ~WriteOBJFIle();
 };
 
 #endif /* WriteOBJFIle_h */

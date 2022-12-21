@@ -8,17 +8,21 @@
  * copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#include <boost/numeric/interval.hpp>
-#include <vector>
 #include <algorithm>
-#include <utility>
-#include <iostream>
+#include <boost/numeric/interval.hpp>
 #include <iomanip>
+#include <iostream>
+#include <utility>
+#include <vector>
 
-template <class I> I f(const I& x)
-{ return x * (x - 1.) * (x - 2.) * (x - 3.) * (x - 4.); }
-template <class I> I f_diff(const I& x)
-{ return (((5. * x - 40.) * x + 105.) * x - 100.) * x + 24.; }
+template <class I>
+I f(const I& x) {
+  return x * (x - 1.) * (x - 2.) * (x - 3.) * (x - 4.);
+}
+template <class I>
+I f_diff(const I& x) {
+  return (((5. * x - 40.) * x + 105.) * x - 100.) * x + 24.;
+}
 
 static const double max_width = 1e-10;
 static const double alpha = 0.75;
@@ -50,28 +54,41 @@ std::vector<I1> newton_raphson(const I1& xs) {
       x1 = xx - division_part1(vf, vd, x2_used);
       if (x2_used) x2 = xx - division_part2(vf, vd);
     }
-    if (overlap(x1, x)) x1 = intersect(x, x1);
-    else if (x2_used) { x1 = x2; x2_used = false; }
-    else continue;
+    if (overlap(x1, x))
+      x1 = intersect(x, x1);
+    else if (x2_used) {
+      x1 = x2;
+      x2_used = false;
+    } else
+      continue;
     if (x2_used) {
-      if (overlap(x2, x)) x2 = intersect(x, x2);
-      else x2_used = false;
+      if (overlap(x2, x))
+        x2 = intersect(x, x2);
+      else
+        x2_used = false;
     }
     if (x2_used && width(x2) > width(x1)) std::swap(x1, x2);
     if (!zero_in(f(x1))) {
-      if (x2_used) { x1 = x2; x2_used = false; }
-      else continue;
+      if (x2_used) {
+        x1 = x2;
+        x2_used = false;
+      } else
+        continue;
     }
-    if (width(x1) < max_width) res.push_back(x1);
+    if (width(x1) < max_width)
+      res.push_back(x1);
     else if (width(x1) > alpha * width(x)) {
       std::pair<I1, I1> p = bisect(x);
       if (zero_in(f(p.first))) l.push_back(p.first);
       x2 = p.second;
       x2_used = true;
-    } else l.push_back(x1);
+    } else
+      l.push_back(x1);
     if (x2_used && zero_in(f(x2))) {
-      if (width(x2) < max_width) res.push_back(x2);
-      else l.push_back(x2);
+      if (width(x2) < max_width)
+        res.push_back(x2);
+      else
+        l.push_back(x2);
     }
   }
   return res;
@@ -102,26 +119,33 @@ std::vector<I2> newton_raphson(const I2& xs) {
     }
     if (width(x2) > width(x1)) std::swap(x1, x2);
     if (empty(x1) || !zero_in(f(x1))) {
-      if (!empty(x2)) { x1 = x2; x2 = I2::empty(); }
-      else continue;
+      if (!empty(x2)) {
+        x1 = x2;
+        x2 = I2::empty();
+      } else
+        continue;
     }
-    if (width(x1) < max_width) res.push_back(x1);
+    if (width(x1) < max_width)
+      res.push_back(x1);
     else if (width(x1) > alpha * width(x)) {
       std::pair<I2, I2> p = bisect(x);
       if (zero_in(f(p.first))) l.push_back(p.first);
       x2 = p.second;
-    } else l.push_back(x1);
+    } else
+      l.push_back(x1);
     if (!empty(x2) && zero_in(f(x2))) {
-      if (width(x2) < max_width) res.push_back(x2);
-      else l.push_back(x2);
+      if (width(x2) < max_width)
+        res.push_back(x2);
+      else
+        l.push_back(x2);
     }
   }
   return res;
 }
 
-template<class T, class Policies>
-std::ostream &operator<<(std::ostream &os,
-                         const boost::numeric::interval<T, Policies> &x) {
+template <class T, class Policies>
+std::ostream& operator<<(std::ostream& os,
+                         const boost::numeric::interval<T, Policies>& x) {
   os << "[" << x.lower() << ", " << x.upper() << "]";
   return os;
 }
@@ -131,7 +155,7 @@ int main() {
     I1_aux::traits_type::rounding rnd;
     std::vector<I1> res = newton_raphson(I1(-1, 5.1));
     std::cout << "Results: " << std::endl << std::setprecision(12);
-    for(std::vector<I1>::const_iterator i = res.begin(); i != res.end(); ++i)
+    for (std::vector<I1>::const_iterator i = res.begin(); i != res.end(); ++i)
       std::cout << "  " << *i << std::endl;
     std::cout << std::endl;
   }
@@ -139,7 +163,7 @@ int main() {
     I2_aux::traits_type::rounding rnd;
     std::vector<I2> res = newton_raphson(I2(-1, 5.1));
     std::cout << "Results: " << std::endl << std::setprecision(12);
-    for(std::vector<I2>::const_iterator i = res.begin(); i != res.end(); ++i)
+    for (std::vector<I2>::const_iterator i = res.begin(); i != res.end(); ++i)
       std::cout << "  " << *i << std::endl;
     std::cout << std::endl;
   }

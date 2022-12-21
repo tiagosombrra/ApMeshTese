@@ -41,7 +41,6 @@ struct allocator_with_state {
 };
 
 int main() {
-
   using V = std::vector<int, allocator_with_state<int>>;
   V a(3, 0, allocator_with_state<int>{42});
   V b = make_default(a);

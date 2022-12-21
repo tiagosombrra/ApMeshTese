@@ -7,31 +7,31 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_VARIADIC_MACROS
-#   error "variadic macros required"
+#error "variadic macros required"
 #else
 
-#include <boost/local_function.hpp>
-#include <boost/detail/lightweight_test.hpp>
-#include <vector>
 #include <algorithm>
+#include <boost/detail/lightweight_test.hpp>
+#include <boost/local_function.hpp>
+#include <vector>
 
 int main(void) {
-    //[add_inline
-    int sum = 0, factor = 10;
+  //[add_inline
+  int sum = 0, factor = 10;
 
-    void BOOST_LOCAL_FUNCTION(const bind factor, bind& sum, int num) {
-        sum += factor * num;
-    } BOOST_LOCAL_FUNCTION_NAME(inline add) // Inlining.
+  void BOOST_LOCAL_FUNCTION(const bind factor, bind& sum, int num) {
+    sum += factor * num;
+  }
+  BOOST_LOCAL_FUNCTION_NAME(inline add)  // Inlining.
 
-    std::vector<int> v(100);
-    std::fill(v.begin(), v.end(), 1);
+  std::vector<int> v(100);
+  std::fill(v.begin(), v.end(), 1);
 
-    for(size_t i = 0; i < v.size(); ++i) add(v[i]); // Cannot use for_each.
-    //]
+  for (size_t i = 0; i < v.size(); ++i) add(v[i]);  // Cannot use for_each.
+  //]
 
-    BOOST_TEST(sum == 1000);
-    return boost::report_errors();
+  BOOST_TEST(sum == 1000);
+  return boost::report_errors();
 }
 
-#endif // VARIADIC_MACROS
-
+#endif  // VARIADIC_MACROS

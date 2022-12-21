@@ -9,14 +9,13 @@
 
 // lock_guard(Mutex& m_)
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_guard.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::mutex m;
 
-void fail()
-{
+void fail() {
   boost::lock_guard<boost::mutex> lk0(m);
   boost::lock_guard<boost::mutex> lk1(m);
 }

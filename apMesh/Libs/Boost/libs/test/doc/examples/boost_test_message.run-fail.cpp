@@ -9,8 +9,7 @@
 #define BOOST_TEST_MODULE boost_test_message
 #include <boost/test/included/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( test_message )
-{
+BOOST_AUTO_TEST_CASE(test_message) {
   const int a(1), b(2);
   BOOST_TEST(a == b, "a should be equal to b: " << a << "!=" << b);
   BOOST_TEST(a != 10, "value of a=" << a);

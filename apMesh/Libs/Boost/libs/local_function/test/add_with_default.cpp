@@ -7,26 +7,26 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_VARIADIC_MACROS
-#   error "variadic macros required"
+#error "variadic macros required"
 #else
 
-#include <boost/local_function.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/local_function.hpp>
 
 //[add_with_default_macro
 #define WITH_DEFAULT , default
 //]
 
 int main(void) {
-    //[add_with_default
-    int BOOST_LOCAL_FUNCTION(int x, int y WITH_DEFAULT 2) { // Default.
-        return x + y;
-    } BOOST_LOCAL_FUNCTION_NAME(add)
+  //[add_with_default
+  int BOOST_LOCAL_FUNCTION(int x, int y WITH_DEFAULT 2) {  // Default.
+    return x + y;
+  }
+  BOOST_LOCAL_FUNCTION_NAME(add)
 
-    BOOST_TEST(add(1) == 3);
-    //]
-    return boost::report_errors();
+  BOOST_TEST(add(1) == 3);
+  //]
+  return boost::report_errors();
 }
 
-#endif // VARIADIC_MACROS
-
+#endif  // VARIADIC_MACROS

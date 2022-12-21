@@ -18,6 +18,7 @@
 #include <tuple>
 #include <utility>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
@@ -63,9 +64,9 @@ int main() {
     // test edge case
     auto av = std::vector<I>(BOOST_HISTOGRAM_DETAIL_AXES_LIMIT, I(0, 1));
     auto h = make_histogram(av);
-    auto inputs = std::vector<std::vector<int>>(BOOST_HISTOGRAM_DETAIL_AXES_LIMIT,
-                                                std::vector<int>(1, 0));
-    h.fill(inputs); // should not crash
+    auto inputs = std::vector<std::vector<int>>(
+        BOOST_HISTOGRAM_DETAIL_AXES_LIMIT, std::vector<int>(1, 0));
+    h.fill(inputs);  // should not crash
 
     auto bad = std::vector<I>(BOOST_HISTOGRAM_DETAIL_AXES_LIMIT + 1, I(0, 1));
     (void)bad;
@@ -109,7 +110,8 @@ int main() {
   }
 
   {
-    auto h = make_histogram(std::vector<axis::integer<>>(1, axis::integer<>(0, 3)));
+    auto h =
+        make_histogram(std::vector<axis::integer<>>(1, axis::integer<>(0, 3)));
     h(0);
     h(1);
     h(2);

@@ -16,10 +16,9 @@
 #define BOOST_TEST_MODULE static library test
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( test )
-{
-    int i = 1;
-    BOOST_CHECK( i*i == 1 );
+BOOST_AUTO_TEST_CASE(test) {
+  int i = 1;
+  BOOST_CHECK(i * i == 1);
 }
 
 //____________________________________________________________________________//

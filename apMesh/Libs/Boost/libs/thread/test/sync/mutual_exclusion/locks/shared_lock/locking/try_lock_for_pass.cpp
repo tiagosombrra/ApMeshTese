@@ -27,52 +27,43 @@ bool try_lock_for_called = false;
 
 typedef boost::chrono::milliseconds ms;
 
-struct shared_mutex
-{
+struct shared_mutex {
   template <class Rep, class Period>
-  bool try_lock_shared_for(const boost::chrono::duration<Rep, Period>& rel_time)
-  {
+  bool try_lock_shared_for(
+      const boost::chrono::duration<Rep, Period>& rel_time) {
     BOOST_TEST(rel_time == ms(5));
     try_lock_for_called = !try_lock_for_called;
     return try_lock_for_called;
   }
-  void unlock_shared()
-  {
-  }
+  void unlock_shared() {}
 };
 
 shared_mutex m;
 
-int main()
-{
+int main() {
   boost::shared_lock<shared_mutex> lk(m, boost::defer_lock);
   BOOST_TEST(lk.try_lock_for(ms(5)) == true);
   BOOST_TEST(try_lock_for_called == true);
   BOOST_TEST(lk.owns_lock() == true);
-  try
-  {
+  try {
     lk.try_lock_for(ms(5));
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::resource_deadlock_would_occur);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::resource_deadlock_would_occur);
   }
   lk.unlock();
   BOOST_TEST(lk.try_lock_for(ms(5)) == false);
   BOOST_TEST(try_lock_for_called == false);
   BOOST_TEST(lk.owns_lock() == false);
   lk.release();
-  try
-  {
+  try {
     lk.try_lock_for(ms(5));
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::operation_not_permitted);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::operation_not_permitted);
   }
 
   return boost::report_errors();
 }
-

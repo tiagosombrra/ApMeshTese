@@ -11,7 +11,6 @@
 #include "intermod_holder_dll.hpp"
 
 intermodule_flyweight_string create_intermodule_flyweight_string(
-  const std::string& str)
-{
+    const std::string& str) {
   return intermodule_flyweight_string(str);
 }

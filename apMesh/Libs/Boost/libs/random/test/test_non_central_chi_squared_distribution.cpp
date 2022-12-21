@@ -13,8 +13,8 @@
 #include <boost/random/non_central_chi_squared_distribution.hpp>
 #include <limits>
 
-
-#define BOOST_RANDOM_DISTRIBUTION boost::random::non_central_chi_squared_distribution<>
+#define BOOST_RANDOM_DISTRIBUTION \
+  boost::random::non_central_chi_squared_distribution<>
 #define BOOST_RANDOM_ARG1 k
 #define BOOST_RANDOM_ARG2 lambda
 #define BOOST_RANDOM_ARG1_DEFAULT 1.0

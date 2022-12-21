@@ -9,8 +9,7 @@
 #define BOOST_TEST_MODULE boost_test_macro2
 #include <boost/test/included/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( test_op_precedence )
-{
+BOOST_AUTO_TEST_CASE(test_op_precedence) {
   int a = 13, b = 2, c = 12;
   // left term of == is expanded in the logs
   BOOST_TEST(a % b == c);
@@ -18,8 +17,7 @@ BOOST_AUTO_TEST_CASE( test_op_precedence )
   BOOST_TEST(a == c % b);
 }
 
-BOOST_AUTO_TEST_CASE( test_op_right_associative )
-{
+BOOST_AUTO_TEST_CASE(test_op_right_associative) {
   int a = 1;
   BOOST_TEST(a);
   BOOST_TEST(!a);

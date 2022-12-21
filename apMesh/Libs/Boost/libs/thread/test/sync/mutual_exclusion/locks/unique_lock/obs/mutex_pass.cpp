@@ -18,14 +18,13 @@
 
 // Mutex *mutex() const;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::mutex m;
 
-int main()
-{
+int main() {
   boost::unique_lock<boost::mutex> lk0;
   BOOST_TEST(lk0.mutex() == 0);
   boost::unique_lock<boost::mutex> lk1(m);
@@ -35,4 +34,3 @@ int main()
 
   return boost::report_errors();
 }
-

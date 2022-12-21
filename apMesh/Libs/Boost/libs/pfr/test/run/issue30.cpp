@@ -5,9 +5,9 @@
 
 // Test case for https://github.com/apolukhin/magic_get/issues/30
 
-#include <memory>
-#include <boost/pfr.hpp>
 #include <boost/core/lightweight_test.hpp>
+#include <boost/pfr.hpp>
+#include <memory>
 
 struct Message {
   std::unique_ptr<int> data;
@@ -20,9 +20,9 @@ struct Message2 {
 
 // Example from duplicate issue #45
 struct UniquePtr {
-    std::unique_ptr<int> a;
+  std::unique_ptr<int> a;
 };
-static_assert (boost::pfr::tuple_size_v<UniquePtr> == 1, "");
+static_assert(boost::pfr::tuple_size_v<UniquePtr> == 1, "");
 
 int main() {
   Message message;

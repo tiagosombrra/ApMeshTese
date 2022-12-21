@@ -35,6 +35,6 @@ ostream& operator<<(ostream& os, const std::pair<T, U>& t) {
   os << "[ " << t.first << " " << t.second << " ]";
   return os;
 }
-} // namespace std
+}  // namespace std
 
 #endif

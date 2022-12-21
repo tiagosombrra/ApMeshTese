@@ -7,16 +7,15 @@
 
 // See http://www.boost.org for updates, documentation, and revision history.
 
+#include <boost/polygon/voronoi.hpp>
 #include <cstdio>
 #include <vector>
-
-#include <boost/polygon/voronoi.hpp>
+using boost::polygon::high;
+using boost::polygon::low;
 using boost::polygon::voronoi_builder;
 using boost::polygon::voronoi_diagram;
 using boost::polygon::x;
 using boost::polygon::y;
-using boost::polygon::low;
-using boost::polygon::high;
 
 #include "voronoi_visual_utils.hpp"
 
@@ -44,8 +43,7 @@ template <>
 struct point_traits<Point> {
   typedef int coordinate_type;
 
-  static inline coordinate_type get(
-      const Point& point, orientation_2d orient) {
+  static inline coordinate_type get(const Point& point, orientation_2d orient) {
     return (orient == HORIZONTAL) ? point.a : point.b;
   }
 };
@@ -64,22 +62,21 @@ struct segment_traits<Segment> {
     return dir.to_int() ? segment.p1 : segment.p0;
   }
 };
-}  // polygon
-}  // boost
+}  // namespace polygon
+}  // namespace boost
 
 // Traversing Voronoi edges using edge iterator.
 int iterate_primary_edges1(const voronoi_diagram<double>& vd) {
   int result = 0;
   for (voronoi_diagram<double>::const_edge_iterator it = vd.edges().begin();
        it != vd.edges().end(); ++it) {
-    if (it->is_primary())
-      ++result;
+    if (it->is_primary()) ++result;
   }
   return result;
 }
 
 // Traversing Voronoi edges using cell iterator.
-int iterate_primary_edges2(const voronoi_diagram<double> &vd) {
+int iterate_primary_edges2(const voronoi_diagram<double>& vd) {
   int result = 0;
   for (voronoi_diagram<double>::const_cell_iterator it = vd.cells().begin();
        it != vd.cells().end(); ++it) {
@@ -87,8 +84,7 @@ int iterate_primary_edges2(const voronoi_diagram<double> &vd) {
     const voronoi_diagram<double>::edge_type* edge = cell.incident_edge();
     // This is convenient way to iterate edges around Voronoi cell.
     do {
-      if (edge->is_primary())
-        ++result;
+      if (edge->is_primary()) ++result;
       edge = edge->next();
     } while (edge != cell.incident_edge());
   }
@@ -99,16 +95,16 @@ int iterate_primary_edges2(const voronoi_diagram<double> &vd) {
 // As opposite to the above two functions this one will not iterate through
 // edges without finite endpoints and will iterate only once through edges
 // with single finite endpoint.
-int iterate_primary_edges3(const voronoi_diagram<double> &vd) {
+int iterate_primary_edges3(const voronoi_diagram<double>& vd) {
   int result = 0;
   for (voronoi_diagram<double>::const_vertex_iterator it =
-       vd.vertices().begin(); it != vd.vertices().end(); ++it) {
+           vd.vertices().begin();
+       it != vd.vertices().end(); ++it) {
     const voronoi_diagram<double>::vertex_type& vertex = *it;
     const voronoi_diagram<double>::edge_type* edge = vertex.incident_edge();
     // This is convenient way to iterate edges around Voronoi vertex.
     do {
-      if (edge->is_primary())
-        ++result;
+      if (edge->is_primary()) ++result;
       edge = edge->rot_next();
     } while (edge != vertex.incident_edge());
   }
@@ -126,19 +122,18 @@ int main() {
 
   // Construction of the Voronoi Diagram.
   voronoi_diagram<double> vd;
-  construct_voronoi(points.begin(), points.end(),
-                    segments.begin(), segments.end(),
-                    &vd);
+  construct_voronoi(points.begin(), points.end(), segments.begin(),
+                    segments.end(), &vd);
 
   // Traversing Voronoi Graph.
   {
     printf("Traversing Voronoi graph.\n");
     printf("Number of visited primary edges using edge iterator: %d\n",
-        iterate_primary_edges1(vd));
+           iterate_primary_edges1(vd));
     printf("Number of visited primary edges using cell iterator: %d\n",
-        iterate_primary_edges2(vd));
+           iterate_primary_edges2(vd));
     printf("Number of visited primary edges using vertex iterator: %d\n",
-        iterate_primary_edges3(vd));
+           iterate_primary_edges3(vd));
     printf("\n");
   }
 
@@ -169,8 +164,8 @@ int main() {
             boost::polygon::SOURCE_CATEGORY_SINGLE_POINT) {
           std::size_t index = it->source_index();
           Point p = points[index];
-          printf("Cell #%u contains a point: (%d, %d).\n",
-                 cell_index, x(p), y(p));
+          printf("Cell #%u contains a point: (%d, %d).\n", cell_index, x(p),
+                 y(p));
         } else if (it->source_category() ==
                    boost::polygon::SOURCE_CATEGORY_SEGMENT_START_POINT) {
           std::size_t index = it->source_index() - points.size();
@@ -181,8 +176,8 @@ int main() {
                    boost::polygon::SOURCE_CATEGORY_SEGMENT_END_POINT) {
           std::size_t index = it->source_index() - points.size();
           Point p1 = high(segments[index]);
-          printf("Cell #%u contains segment end point: (%d, %d).\n",
-                 cell_index, x(p1), y(p1));
+          printf("Cell #%u contains segment end point: (%d, %d).\n", cell_index,
+                 x(p1), y(p1));
         }
       } else {
         std::size_t index = it->source_index() - points.size();

@@ -12,21 +12,20 @@
 
 using namespace boost::polygon;
 
-void rectangle_formation_test1()
-{
+void rectangle_formation_test1() {
   typedef polygon_90_with_holes_data<int> polygon_type;
   typedef polygon_traits<polygon_type>::point_type point_type;
 
   polygon_type poly;
   point_type points[] = {
-    boost::polygon::construct<point_type>(0, 0),
-    boost::polygon::construct<point_type>(0, 10),
-    boost::polygon::construct<point_type>(10, 10),
-    boost::polygon::construct<point_type>(10, 0),
+      boost::polygon::construct<point_type>(0, 0),
+      boost::polygon::construct<point_type>(0, 10),
+      boost::polygon::construct<point_type>(10, 10),
+      boost::polygon::construct<point_type>(10, 0),
   };
   boost::polygon::set_points(poly, points, points + 4);
 
-  std::vector< rectangle_data<int> > rects;
+  std::vector<rectangle_data<int> > rects;
   boost::polygon::get_rectangles(rects, poly);
 
   BOOST_TEST_EQ(1, rects.size());
@@ -37,8 +36,7 @@ void rectangle_formation_test1()
   BOOST_TEST_EQ(0, rect.get(SOUTH));
 }
 
-int main()
-{
-    rectangle_formation_test1();
-    return boost::report_errors();
+int main() {
+  rectangle_formation_test1();
+  return boost::report_errors();
 }

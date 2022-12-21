@@ -21,6 +21,7 @@
 #include <boost/histogram/unlimited_storage.hpp>
 #include <iostream>
 #include <ostream>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 
@@ -45,8 +46,8 @@ template <std::size_t N, std::size_t M>
 bool operator==(const multi_index<N>& a, const multi_index<M>& b) {
   return std::equal(a.begin(), a.end(), b.begin(), b.end());
 }
-} // namespace histogram
-} // namespace boost
+}  // namespace histogram
+}  // namespace boost
 
 using namespace boost::histogram;
 using namespace boost::histogram::literals;
@@ -63,21 +64,27 @@ int main() {
 
   // common_storage
   {
-    BOOST_TEST_TRAIT_SAME(dtl::common_storage<unlimited_storage<>, unlimited_storage<>>,
-                          unlimited_storage<>);
+    BOOST_TEST_TRAIT_SAME(
+        dtl::common_storage<unlimited_storage<>, unlimited_storage<>>,
+        unlimited_storage<>);
     BOOST_TEST_TRAIT_SAME(
         dtl::common_storage<dense_storage<double>, dense_storage<double>>,
         dense_storage<double>);
-    BOOST_TEST_TRAIT_SAME(dtl::common_storage<dense_storage<int>, dense_storage<double>>,
-                          dense_storage<double>);
-    BOOST_TEST_TRAIT_SAME(dtl::common_storage<dense_storage<double>, dense_storage<int>>,
-                          dense_storage<double>);
-    BOOST_TEST_TRAIT_SAME(dtl::common_storage<dense_storage<double>, unlimited_storage<>>,
-                          dense_storage<double>);
-    BOOST_TEST_TRAIT_SAME(dtl::common_storage<dense_storage<int>, unlimited_storage<>>,
-                          unlimited_storage<>);
-    BOOST_TEST_TRAIT_SAME(dtl::common_storage<dense_storage<double>, weight_storage>,
-                          weight_storage);
+    BOOST_TEST_TRAIT_SAME(
+        dtl::common_storage<dense_storage<int>, dense_storage<double>>,
+        dense_storage<double>);
+    BOOST_TEST_TRAIT_SAME(
+        dtl::common_storage<dense_storage<double>, dense_storage<int>>,
+        dense_storage<double>);
+    BOOST_TEST_TRAIT_SAME(
+        dtl::common_storage<dense_storage<double>, unlimited_storage<>>,
+        dense_storage<double>);
+    BOOST_TEST_TRAIT_SAME(
+        dtl::common_storage<dense_storage<int>, unlimited_storage<>>,
+        unlimited_storage<>);
+    BOOST_TEST_TRAIT_SAME(
+        dtl::common_storage<dense_storage<double>, weight_storage>,
+        weight_storage);
   }
 
   // size & data

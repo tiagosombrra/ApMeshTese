@@ -7,6 +7,7 @@
  */
 
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_algorithm.hpp"
 #include "test_capacity.hpp"
 #include "test_comparison.hpp"
@@ -17,8 +18,7 @@
 #include "test_iterators.hpp"
 #include "test_registration.hpp"
 
-int main()
-{
+int main() {
   test_algorithm();
   test_capacity();
   test_comparison();

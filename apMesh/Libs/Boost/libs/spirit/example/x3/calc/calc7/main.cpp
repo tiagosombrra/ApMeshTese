@@ -19,63 +19,56 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ast.hpp"
-#include "vm.hpp"
 #include "compiler.hpp"
-#include "expression.hpp"
 #include "error_handler.hpp"
+#include "expression.hpp"
+#include "vm.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Expression parser...\n\n";
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Type an expression...or [q or Q] to quit\n\n";
+int main() {
+  std::cout << "/////////////////////////////////////////////////////////\n\n";
+  std::cout << "Expression parser...\n\n";
+  std::cout << "/////////////////////////////////////////////////////////\n\n";
+  std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    typedef std::string::const_iterator iterator_type;
-    typedef client::ast::expression ast_expression;
-    typedef client::compiler compiler;
+  typedef std::string::const_iterator iterator_type;
+  typedef client::ast::expression ast_expression;
+  typedef client::compiler compiler;
 
-    std::string str;
-    while (std::getline(std::cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
+  std::string str;
+  while (std::getline(std::cin, str)) {
+    if (str.empty() || str[0] == 'q' || str[0] == 'Q') break;
 
-        using boost::spirit::x3::ascii::space;
+    using boost::spirit::x3::ascii::space;
 
-        client::vmachine mach;                          // Our virtual machine
-        std::vector<int> code;                          // Our VM code
-        auto calc = client::expression();               // grammar
+    client::vmachine mach;             // Our virtual machine
+    std::vector<int> code;             // Our VM code
+    auto calc = client::expression();  // grammar
 
-        ast_expression ast;                             // Our program (AST)
-        compiler compile(code);                         // Compiles the program
+    ast_expression ast;      // Our program (AST)
+    compiler compile(code);  // Compiles the program
 
-        iterator_type iter = str.begin();
-        iterator_type const end = str.end();
-        bool r = phrase_parse(iter, end, calc, space, ast);
+    iterator_type iter = str.begin();
+    iterator_type const end = str.end();
+    bool r = phrase_parse(iter, end, calc, space, ast);
 
-        if (r && iter == end)
-        {
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing succeeded\n";
-            compile(ast);
-            mach.execute(code);
-            std::cout << "\nResult: " << mach.top() << std::endl;
-            std::cout << "-------------------------\n";
-        }
-        else
-        {
-            std::string rest(iter, end);
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing failed\n";
-            std::cout << "-------------------------\n";
-        }
+    if (r && iter == end) {
+      std::cout << "-------------------------\n";
+      std::cout << "Parsing succeeded\n";
+      compile(ast);
+      mach.execute(code);
+      std::cout << "\nResult: " << mach.top() << std::endl;
+      std::cout << "-------------------------\n";
+    } else {
+      std::string rest(iter, end);
+      std::cout << "-------------------------\n";
+      std::cout << "Parsing failed\n";
+      std::cout << "-------------------------\n";
     }
+  }
 
-    std::cout << "Bye... :-) \n\n";
-    return 0;
+  std::cout << "Bye... :-) \n\n";
+  return 0;
 }

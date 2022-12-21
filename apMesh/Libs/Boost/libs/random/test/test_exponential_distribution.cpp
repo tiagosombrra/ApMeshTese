@@ -10,7 +10,6 @@
  */
 
 #include <boost/random/exponential_distribution.hpp>
-
 #include <limits>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::exponential_distribution<>

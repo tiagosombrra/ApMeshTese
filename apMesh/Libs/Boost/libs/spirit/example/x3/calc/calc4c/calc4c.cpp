@@ -17,61 +17,54 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "grammar.hpp"
-
 #include <iostream>
 #include <string>
+
+#include "grammar.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Expression parser...\n\n";
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Type an expression...or [q or Q] to quit\n\n";
+int main() {
+  std::cout << "/////////////////////////////////////////////////////////\n\n";
+  std::cout << "Expression parser...\n\n";
+  std::cout << "/////////////////////////////////////////////////////////\n\n";
+  std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    typedef std::string::const_iterator iterator_type;
-    typedef client::ast::program ast_program;
-    typedef client::ast::printer ast_print;
-    typedef client::ast::eval ast_eval;
+  typedef std::string::const_iterator iterator_type;
+  typedef client::ast::program ast_program;
+  typedef client::ast::printer ast_print;
+  typedef client::ast::eval ast_eval;
 
-    std::string str;
-    while (std::getline(std::cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
+  std::string str;
+  while (std::getline(std::cin, str)) {
+    if (str.empty() || str[0] == 'q' || str[0] == 'Q') break;
 
-        auto& calc = client::calculator;    // Our grammar
-        ast_program program;                // Our program (AST)
-        ast_print print;                    // Prints the program
-        ast_eval eval;                      // Evaluates the program
+    auto& calc = client::calculator;  // Our grammar
+    ast_program program;              // Our program (AST)
+    ast_print print;                  // Prints the program
+    ast_eval eval;                    // Evaluates the program
 
-        iterator_type iter = str.begin();
-        iterator_type end = str.end();
-        boost::spirit::x3::ascii::space_type space;
-        bool r = phrase_parse(iter, end, calc, space, program);
+    iterator_type iter = str.begin();
+    iterator_type end = str.end();
+    boost::spirit::x3::ascii::space_type space;
+    bool r = phrase_parse(iter, end, calc, space, program);
 
-        if (r && iter == end)
-        {
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing succeeded\n";
-            print(program);
-            std::cout << "\nResult: " << eval(program) << std::endl;
-            std::cout << "-------------------------\n";
-        }
-        else
-        {
-            std::string rest(iter, end);
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing failed\n";
-            std::cout << "stopped at: \"" << rest << "\"\n";
-            std::cout << "-------------------------\n";
-        }
+    if (r && iter == end) {
+      std::cout << "-------------------------\n";
+      std::cout << "Parsing succeeded\n";
+      print(program);
+      std::cout << "\nResult: " << eval(program) << std::endl;
+      std::cout << "-------------------------\n";
+    } else {
+      std::string rest(iter, end);
+      std::cout << "-------------------------\n";
+      std::cout << "Parsing failed\n";
+      std::cout << "stopped at: \"" << rest << "\"\n";
+      std::cout << "-------------------------\n";
     }
+  }
 
-    std::cout << "Bye... :-) \n\n";
-    return 0;
+  std::cout << "Bye... :-) \n\n";
+  return 0;
 }

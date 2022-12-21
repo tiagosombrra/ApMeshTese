@@ -6,29 +6,25 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
-
 #include <iostream>
+
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test;
-    using boost::spirit::x3::eol;
+int main() {
+  using boost::spirit::x3::eol;
+  using spirit_test::test;
 
-    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eol);
+  BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eol);
 
-    {
-        BOOST_TEST((test("\r\n", eol)));
-        BOOST_TEST((test("\r", eol)));
-        BOOST_TEST((test("\n", eol)));
-        BOOST_TEST((!test("\n\r", eol)));
-        BOOST_TEST((!test("", eol)));
-    }
+  {
+    BOOST_TEST((test("\r\n", eol)));
+    BOOST_TEST((test("\r", eol)));
+    BOOST_TEST((test("\n", eol)));
+    BOOST_TEST((!test("\n\r", eol)));
+    BOOST_TEST((!test("", eol)));
+  }
 
-    {
-        BOOST_TEST(what(eol) == "eol");
-    }
+  { BOOST_TEST(what(eol) == "eol"); }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

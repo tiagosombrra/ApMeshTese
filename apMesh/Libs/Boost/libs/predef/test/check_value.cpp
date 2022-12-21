@@ -12,6 +12,7 @@ http://www.boost.org/LICENSE_1_0.txt)
  */
 
 #include <boost/predef.h>
+
 #include <iostream>
 #include <string>
 
@@ -19,8 +20,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 #define CHECK_VALUE "undefined"
 #endif
 
-int main()
-{
-	std::cout << "CHECK_VALUE == " << CHECK_VALUE << "\n" ;
-	return 0;
+int main() {
+  std::cout << "CHECK_VALUE == " << CHECK_VALUE << "\n";
+  return 0;
 }

@@ -10,11 +10,10 @@
 #define BOOST_TEST_MODULE system call test example
 #include <boost/test/included/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( broken_test )
-{
+BOOST_AUTO_TEST_CASE(broken_test) {
 #if defined(WIN32)
-  BOOST_CHECK_EQUAL( ::system("cmd.exe /c dir"), 0 );
+  BOOST_CHECK_EQUAL(::system("cmd.exe /c dir"), 0);
 #else
-  BOOST_CHECK_EQUAL( ::system("ls"), 0 );
+  BOOST_CHECK_EQUAL(::system("ls"), 0);
 #endif
 }

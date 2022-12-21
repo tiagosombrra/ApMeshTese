@@ -16,22 +16,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/config/warning_disable.hpp>
-
 #include <boost/spirit/include/qi.hpp>
 //[mini_xml_karma_sr_includes
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/repository/include/karma_subrule.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/repository/include/karma_subrule.hpp>
 //]
+#include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant/recursive_variant.hpp>
-
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -52,80 +50,58 @@ using phoenix::push_back;
 ///////////////////////////////////////////////////////////////////////////////
 struct mini_xml;
 
-typedef
-    boost::variant<
-        boost::recursive_wrapper<mini_xml>
-      , std::string
-    >
-mini_xml_node;
+typedef boost::variant<boost::recursive_wrapper<mini_xml>, std::string>
+    mini_xml_node;
 
-struct mini_xml
-{
-    std::string name;                           // tag name
-    std::vector<mini_xml_node> children;        // children
+struct mini_xml {
+  std::string name;                     // tag name
+  std::vector<mini_xml_node> children;  // children
 };
 
 // We need to tell fusion about our mini_xml struct
 // to make it a first-class fusion citizen
-BOOST_FUSION_ADAPT_STRUCT(
-    mini_xml,
-    (std::string, name)
-    (std::vector<mini_xml_node>, children)
-)
+BOOST_FUSION_ADAPT_STRUCT(mini_xml,
+                          (std::string, name)(std::vector<mini_xml_node>,
+                                              children))
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Our mini XML grammar definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct mini_xml_parser :
-    qi::grammar<Iterator, mini_xml(), space_type>
-{
-    mini_xml_parser() : mini_xml_parser::base_type(xml)
-    {
-        text = lexeme[+(char_ - '<')        [_val += _1]];
-        node = (xml | text)                 [_val = _1];
+struct mini_xml_parser : qi::grammar<Iterator, mini_xml(), space_type> {
+  mini_xml_parser() : mini_xml_parser::base_type(xml) {
+    text = lexeme[+(char_ - '<')[_val += _1]];
+    node = (xml | text)[_val = _1];
 
-        start_tag =
-                '<'
-            >>  !lit('/')
-            >>  lexeme[+(char_ - '>')       [_val += _1]]
-            >>  '>'
-        ;
+    start_tag = '<' >> !lit('/') >> lexeme[+(char_ - '>')[_val += _1]] >> '>';
 
-        end_tag =
-                "</"
-            >>  lit(_r1)
-            >>  '>'
-        ;
+    end_tag = "</" >> lit(_r1) >> '>';
 
-        xml =
-                start_tag                   [at_c<0>(_val) = _1]
-            >>  *node                       [push_back(at_c<1>(_val), _1)]
-            >>  end_tag(at_c<0>(_val))
-        ;
-    }
+    xml = start_tag[at_c<0>(_val) = _1] >>
+          *node[push_back(at_c<1>(_val), _1)] >> end_tag(at_c<0>(_val));
+  }
 
-    qi::rule<Iterator, mini_xml(), space_type> xml;
-    qi::rule<Iterator, mini_xml_node(), space_type> node;
-    qi::rule<Iterator, std::string(), space_type> text;
-    qi::rule<Iterator, std::string(), space_type> start_tag;
-    qi::rule<Iterator, void(std::string), space_type> end_tag;
+  qi::rule<Iterator, mini_xml(), space_type> xml;
+  qi::rule<Iterator, mini_xml_node(), space_type> node;
+  qi::rule<Iterator, std::string(), space_type> text;
+  qi::rule<Iterator, std::string(), space_type> start_tag;
+  qi::rule<Iterator, void(std::string), space_type> end_tag;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-//  A couple of phoenix functions helping to access the elements of the 
+//  A couple of phoenix functions helping to access the elements of the
 //  generated AST
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct get_element
-{
-    template <typename T1>
-    struct result { typedef T const& type; };
+struct get_element {
+  template <typename T1>
+  struct result {
+    typedef T const& type;
+  };
 
-    T const& operator()(mini_xml_node const& node) const
-    {
-        return boost::get<T>(node);
-    }
+  T const& operator()(mini_xml_node const& node) const {
+    return boost::get<T>(node);
+  }
 };
 
 phoenix::function<get_element<std::string> > _string;
@@ -136,100 +112,81 @@ phoenix::function<get_element<mini_xml> > _xml;
 ///////////////////////////////////////////////////////////////////////////////
 //[mini_xml_karma_sr_grammar
 template <typename OutputIterator>
-struct mini_xml_generator
-  : karma::grammar<OutputIterator, mini_xml()>
-{
-    mini_xml_generator() : mini_xml_generator::base_type(entry)
-    {
-        entry %= (
-            xml = 
-                    '<'  << string[_1 = at_c<0>(_val)] << '>'
-                <<         (*node)[_1 = at_c<1>(_val)]
-                <<  "</" << string[_1 = at_c<0>(_val)] << '>'
+struct mini_xml_generator : karma::grammar<OutputIterator, mini_xml()> {
+  mini_xml_generator() : mini_xml_generator::base_type(entry) {
+    entry %= (xml = '<' << string[_1 = at_c<0>(_val)] << '>'
+                        << (*node)[_1 = at_c<1>(_val)] << "</"
+                        << string[_1 = at_c<0>(_val)] << '>'
 
-          , node %= string | xml
-        );
-    }
+              ,
+              node %= string | xml);
+  }
 
-    karma::rule<OutputIterator, mini_xml()> entry;
+  karma::rule<OutputIterator, mini_xml()> entry;
 
-    repo::karma::subrule<0, mini_xml()> xml;
-    repo::karma::subrule<1, mini_xml_node()> node;
+  repo::karma::subrule<0, mini_xml()> xml;
+  repo::karma::subrule<1, mini_xml_node()> node;
 };
 //]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int main(int argc, char **argv)
-{
-    char const* filename;
-    if (argc > 1)
-    {
-        filename = argv[1];
-    }
-    else
-    {
-        std::cerr << "Error: No input file provided." << std::endl;
-        return 1;
-    }
+int main(int argc, char** argv) {
+  char const* filename;
+  if (argc > 1) {
+    filename = argv[1];
+  } else {
+    std::cerr << "Error: No input file provided." << std::endl;
+    return 1;
+  }
 
-    std::ifstream in(filename, std::ios_base::in);
+  std::ifstream in(filename, std::ios_base::in);
 
-    if (!in)
-    {
-        std::cerr << "Error: Could not open input file: "
-            << filename << std::endl;
-        return 1;
-    }
+  if (!in) {
+    std::cerr << "Error: Could not open input file: " << filename << std::endl;
+    return 1;
+  }
 
-    std::string storage; // We will read the contents here.
-    in.unsetf(std::ios::skipws); // No white space skipping!
-    std::copy(
-        std::istream_iterator<char>(in),
-        std::istream_iterator<char>(),
-        std::back_inserter(storage));
+  std::string storage;          // We will read the contents here.
+  in.unsetf(std::ios::skipws);  // No white space skipping!
+  std::copy(std::istream_iterator<char>(in), std::istream_iterator<char>(),
+            std::back_inserter(storage));
 
-    typedef mini_xml_parser<std::string::const_iterator> mini_xml_parser;
-    mini_xml_parser xmlin;  //  Our grammar definition
-    mini_xml ast; // our tree
+  typedef mini_xml_parser<std::string::const_iterator> mini_xml_parser;
+  mini_xml_parser xmlin;  //  Our grammar definition
+  mini_xml ast;           // our tree
 
-    std::string::const_iterator iter = storage.begin();
-    std::string::const_iterator end = storage.end();
-    bool r = qi::phrase_parse(iter, end, xmlin, space, ast);
+  std::string::const_iterator iter = storage.begin();
+  std::string::const_iterator end = storage.end();
+  bool r = qi::phrase_parse(iter, end, xmlin, space, ast);
 
-    if (r && iter == end)
-    {
-        std::cout << "-------------------------\n";
-        std::cout << "Parsing succeeded\n";
-        std::cout << "-------------------------\n";
+  if (r && iter == end) {
+    std::cout << "-------------------------\n";
+    std::cout << "Parsing succeeded\n";
+    std::cout << "-------------------------\n";
 
-        typedef std::back_insert_iterator<std::string> outiter_type;
-        typedef mini_xml_generator<outiter_type> mini_xml_generator;
+    typedef std::back_insert_iterator<std::string> outiter_type;
+    typedef mini_xml_generator<outiter_type> mini_xml_generator;
 
-        mini_xml_generator xmlout;                 //  Our grammar definition
+    mini_xml_generator xmlout;  //  Our grammar definition
 
-        std::string generated;
-        outiter_type outit(generated);
-        bool r = karma::generate(outit, xmlout, ast);
+    std::string generated;
+    outiter_type outit(generated);
+    bool r = karma::generate(outit, xmlout, ast);
 
-        if (r)
-            std::cout << generated << std::endl;
-        return 0;
-    }
-    else
-    {
-        std::string::const_iterator begin = storage.begin();
-        std::size_t dist = std::distance(begin, iter);
-        std::string::const_iterator some = 
-            iter + (std::min)(storage.size()-dist, std::size_t(30));
-        std::string context(iter, some);
-        std::cout << "-------------------------\n";
-        std::cout << "Parsing failed\n";
-        std::cout << "stopped at: \": " << context << "...\"\n";
-        std::cout << "-------------------------\n";
-        return 1;
-    }
+    if (r) std::cout << generated << std::endl;
+    return 0;
+  } else {
+    std::string::const_iterator begin = storage.begin();
+    std::size_t dist = std::distance(begin, iter);
+    std::string::const_iterator some =
+        iter + (std::min)(storage.size() - dist, std::size_t(30));
+    std::string context(iter, some);
+    std::cout << "-------------------------\n";
+    std::cout << "Parsing failed\n";
+    std::cout << "stopped at: \": " << context << "...\"\n";
+    std::cout << "-------------------------\n";
+    return 1;
+  }
 }
-
-

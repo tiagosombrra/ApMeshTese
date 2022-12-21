@@ -5,47 +5,41 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <iostream>
 #include <functional>
+#include <iostream>
 //#include <future>
 
-#include <boost/thread.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/thread.hpp>
 
-int f()
-{
-  return 42;
-}
+int f() { return 42; }
 
-boost::packaged_task<int()>* schedule(boost::function<int ()> const& fn)
-{
+boost::packaged_task<int()>* schedule(boost::function<int()> const& fn) {
   // Normally, the pointer to the packaged task is stored in a queue
   // for execution on a separate thread, and the schedule function
   // would return just a future<T>
 
-  boost::function<int ()> copy(fn);
+  boost::function<int()> copy(fn);
   boost::packaged_task<int()>* result = new boost::packaged_task<int()>(copy);
   return result;
 }
 
-struct MyFunc
-{
+struct MyFunc {
   MyFunc(MyFunc const&) = delete;
   MyFunc& operator=(MyFunc const&) = delete;
-  MyFunc() {};
-  MyFunc(MyFunc &&) {};
-  MyFunc& operator=(MyFunc &&) { return *this;};
-  void operator()()const {}
+  MyFunc(){};
+  MyFunc(MyFunc&&){};
+  MyFunc& operator=(MyFunc&&) { return *this; };
+  void operator()() const {}
 };
 
-
-int main()
-{
+int main() {
   boost::packaged_task<int()>* p(schedule(f));
   (*p)();
 
   boost::future<int> fut = p->get_future();
-  std::cout << "The answer to the ultimate question: " << fut.get() << std::endl;
+  std::cout << "The answer to the ultimate question: " << fut.get()
+            << std::endl;
 
   {
     boost::function<void()> f;
@@ -57,5 +51,3 @@ int main()
 
   return 0;
 }
-
-

@@ -7,14 +7,12 @@
 
 using boost::implicit_cast;
 
-struct foo
-{
-    explicit foo(char const*) {}
+struct foo {
+  explicit foo(char const*) {}
 };
 
-int main()
-{
-    foo x = implicit_cast<foo>("foobar");
-    (void)x;            // warning suppression.
-    return 0;
+int main() {
+  foo x = implicit_cast<foo>("foobar");
+  (void)x;  // warning suppression.
+  return 0;
 }

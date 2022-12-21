@@ -7,15 +7,16 @@
 
 // See http://www.boost.org for updates, documentation, and revision history.
 
-#include "voronoi_test_helper.hpp"
 #include <boost/core/lightweight_test.hpp>
 #include <boost/polygon/polygon.hpp>
 #include <boost/polygon/voronoi.hpp>
 #include <boost/random/mersenne_twister.hpp>
+#include <ctime>
 #include <limits>
 #include <list>
 #include <vector>
-#include <ctime>
+
+#include "voronoi_test_helper.hpp"
 
 using boost::polygon::voronoi_builder;
 using boost::polygon::voronoi_diagram;
@@ -26,27 +27,26 @@ typedef vd_type::edge_type voronoi_edge_type;
 typedef vd_type::const_cell_iterator const_cell_iterator;
 typedef vd_type::const_vertex_iterator const_vertex_iterator;
 
-#define CHECK_OUTPUT_SIZE(output, cells, vertices, edges) \
-    BOOST_TEST_EQ(output.num_cells(), (std::size_t)cells); \
-    BOOST_TEST_EQ(output.num_vertices(), (std::size_t)vertices); \
-    BOOST_TEST_EQ(output.num_edges(), (std::size_t)edges)
+#define CHECK_OUTPUT_SIZE(output, cells, vertices, edges)      \
+  BOOST_TEST_EQ(output.num_cells(), (std::size_t)cells);       \
+  BOOST_TEST_EQ(output.num_vertices(), (std::size_t)vertices); \
+  BOOST_TEST_EQ(output.num_edges(), (std::size_t)edges)
 
-#define VERIFY_OUTPUT(output) \
-    BOOST_TEST(voronoi_test_helper::verify_output(output, \
-        voronoi_test_helper::CELL_CONVEXITY)); \
-    BOOST_TEST(voronoi_test_helper::verify_output(output, \
-        voronoi_test_helper::INCIDENT_EDGES_CCW_ORDER)); \
-    BOOST_TEST(voronoi_test_helper::verify_output(output, \
-        voronoi_test_helper::NO_HALF_EDGE_INTERSECTIONS))
+#define VERIFY_OUTPUT(output)                                  \
+  BOOST_TEST(voronoi_test_helper::verify_output(               \
+      output, voronoi_test_helper::CELL_CONVEXITY));           \
+  BOOST_TEST(voronoi_test_helper::verify_output(               \
+      output, voronoi_test_helper::INCIDENT_EDGES_CCW_ORDER)); \
+  BOOST_TEST(voronoi_test_helper::verify_output(               \
+      output, voronoi_test_helper::NO_HALF_EDGE_INTERSECTIONS))
 
 #define VERIFY_NO_HALF_EDGE_INTERSECTIONS(output) \
-    BOOST_TEST(voronoi_test_helper::verify_output(output, \
-        voronoi_test_helper::NO_HALF_EDGE_INTERSECTIONS))
+  BOOST_TEST(voronoi_test_helper::verify_output(  \
+      output, voronoi_test_helper::NO_HALF_EDGE_INTERSECTIONS))
 
 // Sites: (0, 0).
-void single_site_test()
-{
-  std::vector< point_data<int> > points;
+void single_site_test() {
+  std::vector<point_data<int> > points;
   points.push_back(point_data<int>(0, 0));
   vd_type test_output;
   construct_voronoi(points.begin(), points.end(), &test_output);
@@ -60,9 +60,8 @@ void single_site_test()
 }
 
 // Sites: (0, 0), (0, 1).
-void collinear_sites_test1()
-{
-  std::vector< point_data<int> > points;
+void collinear_sites_test1() {
+  std::vector<point_data<int> > points;
   points.push_back(point_data<int>(0, 0));
   points.push_back(point_data<int>(0, 1));
   vd_type test_output;
@@ -91,9 +90,8 @@ void collinear_sites_test1()
 }
 
 // Sites: (0, 0), (1, 1), (2, 2).
-void collinear_sites_test2()
-{
-  std::vector< point_data<int> > points;
+void collinear_sites_test2() {
+  std::vector<point_data<int> > points;
   points.push_back(point_data<int>(0, 0));
   points.push_back(point_data<int>(1, 1));
   points.push_back(point_data<int>(2, 2));
@@ -128,12 +126,11 @@ void collinear_sites_test2()
 }
 
 // Sites: (0, 0), (0, 4), (2, 1).
-void triangle_test1()
-{
+void triangle_test1() {
   point_data<int> point1(0, 0);
   point_data<int> point2(0, 4);
   point_data<int> point3(2, 1);
-  std::vector< point_data<int> > points;
+  std::vector<point_data<int> > points;
   points.push_back(point1);
   points.push_back(point2);
   points.push_back(point3);
@@ -183,12 +180,11 @@ void triangle_test1()
 }
 
 // Sites: (0, 1), (2, 0), (2, 4).
-void triangle_test2()
-{
+void triangle_test2() {
   point_data<int> point1(0, 1);
   point_data<int> point2(2, 0);
   point_data<int> point3(2, 4);
-  std::vector< point_data<int> > points;
+  std::vector<point_data<int> > points;
   points.push_back(point1);
   points.push_back(point2);
   points.push_back(point3);
@@ -238,13 +234,12 @@ void triangle_test2()
 }
 
 // Sites: (0, 0), (0, 1), (1, 0), (1, 1).
-void square_test1()
-{
+void square_test1() {
   point_data<int> point1(0, 0);
   point_data<int> point2(0, 1);
   point_data<int> point3(1, 0);
   point_data<int> point4(1, 1);
-  std::vector< point_data<int> > points;
+  std::vector<point_data<int> > points;
   points.push_back(point1);
   points.push_back(point2);
   points.push_back(point3);
@@ -307,10 +302,9 @@ void square_test1()
 }
 
 #ifdef NDEBUG
-void grid_test()
-{
+void grid_test() {
   vd_type test_output_small, test_output_large;
-  std::vector< point_data<int> > point_vec_small, point_vec_large;
+  std::vector<point_data<int> > point_vec_small, point_vec_large;
   int grid_size[] = {10, 33, 101};
   int max_value[] = {10, 33, 101};
   int array_length = sizeof(grid_size) / sizeof(int);
@@ -326,8 +320,10 @@ void grid_test()
         point_vec_large.push_back(point_data<int>(koef * i, koef * j));
       }
     }
-    construct_voronoi(point_vec_small.begin(), point_vec_small.end(), &test_output_small);
-    construct_voronoi(point_vec_large.begin(), point_vec_large.end(), &test_output_large);
+    construct_voronoi(point_vec_small.begin(), point_vec_small.end(),
+                      &test_output_small);
+    construct_voronoi(point_vec_large.begin(), point_vec_large.end(),
+                      &test_output_large);
     VERIFY_OUTPUT(test_output_small);
     VERIFY_OUTPUT(test_output_large);
     unsigned int num_cells = grid_size[k] * grid_size[k];
@@ -340,11 +336,10 @@ void grid_test()
 #endif
 
 #ifdef NDEBUG
-void random_test()
-{
+void random_test() {
   boost::mt19937 gen(static_cast<unsigned int>(time(NULL)));
   vd_type test_output_small, test_output_large;
-  std::vector< point_data<int> > point_vec_small, point_vec_large;
+  std::vector<point_data<int> > point_vec_small, point_vec_large;
   int num_points[] = {10, 100, 1000, 10000};
   int num_runs[] = {1000, 100, 10, 1};
   int mod_koef[] = {10, 100, 100, 1000};
@@ -363,22 +358,26 @@ void random_test()
         point_vec_small.push_back(point_data<int>(x, y));
         point_vec_large.push_back(point_data<int>(koef * x, koef * y));
       }
-      construct_voronoi(point_vec_small.begin(), point_vec_small.end(), &test_output_small);
-      construct_voronoi(point_vec_large.begin(), point_vec_large.end(), &test_output_large);
+      construct_voronoi(point_vec_small.begin(), point_vec_small.end(),
+                        &test_output_small);
+      construct_voronoi(point_vec_large.begin(), point_vec_large.end(),
+                        &test_output_large);
       VERIFY_OUTPUT(test_output_small);
       VERIFY_OUTPUT(test_output_large);
-      BOOST_TEST_EQ(test_output_small.num_cells(), test_output_large.num_cells());
-      BOOST_TEST_EQ(test_output_small.num_vertices(), test_output_large.num_vertices());
-      BOOST_TEST_EQ(test_output_small.num_edges(), test_output_large.num_edges());
+      BOOST_TEST_EQ(test_output_small.num_cells(),
+                    test_output_large.num_cells());
+      BOOST_TEST_EQ(test_output_small.num_vertices(),
+                    test_output_large.num_vertices());
+      BOOST_TEST_EQ(test_output_small.num_edges(),
+                    test_output_large.num_edges());
     }
   }
 }
 #endif
 
-void segment_sites_test1()
-{
+void segment_sites_test1() {
   vd_type test_output;
-  std::vector< segment_data<int> > segments;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(0, 0);
   point_data<int> point2(1, 1);
   segments.push_back(segment_data<int>(point1, point2));
@@ -387,11 +386,10 @@ void segment_sites_test1()
   VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
 }
 
-void segment_sites_test2()
-{
+void segment_sites_test2() {
   vd_type test_output;
-  std::vector< point_data<int> > points;
-  std::vector< segment_data<int> > segments;
+  std::vector<point_data<int> > points;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(0, 0);
   point_data<int> point2(4, 4);
   point_data<int> point3(3, 1);
@@ -399,16 +397,16 @@ void segment_sites_test2()
   segments.push_back(segment_data<int>(point1, point2));
   points.push_back(point3);
   points.push_back(point4);
-  construct_voronoi(points.begin(), points.end(), segments.begin(), segments.end(), &test_output);
+  construct_voronoi(points.begin(), points.end(), segments.begin(),
+                    segments.end(), &test_output);
   CHECK_OUTPUT_SIZE(test_output, 5, 4, 16);
   VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
 }
 
-void segment_sites_test3()
-{
+void segment_sites_test3() {
   vd_type test_output;
-  std::vector< point_data<int> > points;
-  std::vector< segment_data<int> > segments;
+  std::vector<point_data<int> > points;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(4, 0);
   point_data<int> point2(0, 4);
   point_data<int> point3(3, 3);
@@ -416,16 +414,16 @@ void segment_sites_test3()
   segments.push_back(segment_data<int>(point1, point2));
   points.push_back(point3);
   points.push_back(point4);
-  construct_voronoi(points.begin(), points.end(), segments.begin(), segments.end(), &test_output);
+  construct_voronoi(points.begin(), points.end(), segments.begin(),
+                    segments.end(), &test_output);
   CHECK_OUTPUT_SIZE(test_output, 5, 4, 16);
   VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
 }
 
-void segment_sites_test4()
-{
+void segment_sites_test4() {
   vd_type test_output;
-  std::vector< point_data<int> > points;
-  std::vector< segment_data<int> > segments;
+  std::vector<point_data<int> > points;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(4, 0);
   point_data<int> point2(0, 4);
   point_data<int> point3(3, 2);
@@ -433,16 +431,16 @@ void segment_sites_test4()
   segments.push_back(segment_data<int>(point1, point2));
   points.push_back(point3);
   points.push_back(point4);
-  construct_voronoi(points.begin(), points.end(), segments.begin(), segments.end(), &test_output);
+  construct_voronoi(points.begin(), points.end(), segments.begin(),
+                    segments.end(), &test_output);
   CHECK_OUTPUT_SIZE(test_output, 5, 3, 14);
   VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
 }
 
-void segment_site_test5()
-{
+void segment_site_test5() {
   vd_type test_output;
-  std::vector< point_data<int> > points;
-  std::vector< segment_data<int> > segments;
+  std::vector<point_data<int> > points;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(0, 0);
   point_data<int> point2(0, 8);
   point_data<int> point3(-2, -2);
@@ -452,30 +450,30 @@ void segment_site_test5()
   points.push_back(point3);
   points.push_back(point4);
   points.push_back(point5);
-  construct_voronoi(points.begin(), points.end(), segments.begin(), segments.end(), &test_output);
+  construct_voronoi(points.begin(), points.end(), segments.begin(),
+                    segments.end(), &test_output);
   CHECK_OUTPUT_SIZE(test_output, 6, 4, 18);
   VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
 }
 
-void segment_site_test6()
-{
+void segment_site_test6() {
   vd_type test_output;
-  std::vector< point_data<int> > points;
-  std::vector< segment_data<int> > segments;
+  std::vector<point_data<int> > points;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(-1, 1);
   point_data<int> point2(1, 0);
   point_data<int> point3(1, 2);
   segments.push_back(segment_data<int>(point2, point3));
   points.push_back(point1);
-  construct_voronoi(points.begin(), points.end(), segments.begin(), segments.end(), &test_output);
+  construct_voronoi(points.begin(), points.end(), segments.begin(),
+                    segments.end(), &test_output);
   CHECK_OUTPUT_SIZE(test_output, 4, 2, 10);
   VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
 }
 
-void segment_site_test7()
-{
+void segment_site_test7() {
   vd_type test_output;
-  std::vector< segment_data<int> > segments;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(0, 0);
   point_data<int> point2(4, 0);
   point_data<int> point3(0, 4);
@@ -488,10 +486,9 @@ void segment_site_test7()
   VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
 }
 
-void segment_site_test8()
-{
+void segment_site_test8() {
   vd_type test_output;
-  std::vector< segment_data<int> > segments;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(0, 0);
   point_data<int> point2(4, 0);
   point_data<int> point3(4, 4);
@@ -505,10 +502,9 @@ void segment_site_test8()
   VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
 }
 
-void segment_site_test9()
-{
+void segment_site_test9() {
   vd_type test_output;
-  std::vector< segment_data<int> > segments;
+  std::vector<segment_data<int> > segments;
   point_data<int> point1(0, 0);
   point_data<int> point2(2, 0);
   point_data<int> point3(4, 0);
@@ -520,10 +516,9 @@ void segment_site_test9()
 }
 
 #ifdef NDEBUG
-void segment_grid_test()
-{
+void segment_grid_test() {
   vd_type test_output_small, test_output_large;
-  std::vector< segment_data<int> > segments_small, segments_large;
+  std::vector<segment_data<int> > segments_small, segments_large;
   int grid_size[] = {10, 27, 53};
   int max_value[] = {100, 330, 1000};
   int array_length = sizeof(grid_size) / sizeof(int);
@@ -549,24 +544,26 @@ void segment_grid_test()
         segments_small.push_back(segment_data<int>(point3_1, point4_1));
         segments_large.push_back(segment_data<int>(point3_2, point4_2));
       }
-    construct_voronoi(segments_small.begin(), segments_small.end(), &test_output_small);
-    construct_voronoi(segments_large.begin(), segments_large.end(), &test_output_large);
+    construct_voronoi(segments_small.begin(), segments_small.end(),
+                      &test_output_small);
+    construct_voronoi(segments_large.begin(), segments_large.end(),
+                      &test_output_large);
     VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output_small);
     VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output_large);
     BOOST_TEST_EQ(test_output_small.num_cells(), test_output_large.num_cells());
-    BOOST_TEST_EQ(test_output_small.num_vertices(), test_output_large.num_vertices());
+    BOOST_TEST_EQ(test_output_small.num_vertices(),
+                  test_output_large.num_vertices());
     BOOST_TEST_EQ(test_output_small.num_edges(), test_output_large.num_edges());
   }
 }
 #endif
 
 #ifdef NDEBUG
-void segment_random_test1()
-{
+void segment_random_test1() {
   boost::mt19937 gen(static_cast<unsigned int>(time(NULL)));
   vd_type test_output;
-  std::vector< point_data<int> > points;
-  std::vector< segment_data<int> > segments;
+  std::vector<point_data<int> > points;
+  std::vector<segment_data<int> > segments;
   int num_runs = 1000;
   int num_segments = 10;
   points.push_back(point_data<int>(-100, -100));
@@ -589,18 +586,18 @@ void segment_random_test1()
       segments.push_back(segment_data<int>(point1, point2));
     }
     voronoi_test_helper::clean_segment_set(segments);
-    construct_voronoi(points.begin(), points.end(), segments.begin(), segments.end(), &test_output);
+    construct_voronoi(points.begin(), points.end(), segments.begin(),
+                      segments.end(), &test_output);
     VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output);
   }
 }
 #endif
 
 #ifdef NDEBUG
-void segment_random_test2()
-{
+void segment_random_test2() {
   boost::mt19937 gen(static_cast<unsigned int>(time(NULL)));
   vd_type test_output_small, test_output_large;
-  std::vector< segment_data<int> > segments_small, segments_large;
+  std::vector<segment_data<int> > segments_small, segments_large;
   int num_segments[] = {5, 25, 125, 625};
   int num_runs[] = {1000, 100, 10, 1};
   int mod_koef1[] = {10, 100, 200, 300};
@@ -629,7 +626,8 @@ void segment_random_test2()
         segments_small.push_back(segment_data<int>(point1_small, point2_small));
       }
       voronoi_test_helper::clean_segment_set(segments_small);
-      for (std::vector< segment_data<int> >::iterator it = segments_small.begin();
+      for (std::vector<segment_data<int> >::iterator it =
+               segments_small.begin();
            it != segments_small.end(); ++it) {
         int x1 = it->low().x() * koef;
         int y1 = it->low().y() * koef;
@@ -639,43 +637,47 @@ void segment_random_test2()
         point_data<int> point2_large(x2, y2);
         segments_large.push_back(segment_data<int>(point1_large, point2_large));
       }
-      construct_voronoi(segments_small.begin(), segments_small.end(), &test_output_small);
-      construct_voronoi(segments_large.begin(), segments_large.end(), &test_output_large);
+      construct_voronoi(segments_small.begin(), segments_small.end(),
+                        &test_output_small);
+      construct_voronoi(segments_large.begin(), segments_large.end(),
+                        &test_output_large);
       VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output_small);
       VERIFY_NO_HALF_EDGE_INTERSECTIONS(test_output_large);
-      BOOST_TEST_EQ(test_output_small.num_cells(), test_output_large.num_cells());
-      BOOST_TEST_EQ(test_output_small.num_vertices(), test_output_large.num_vertices());
-      BOOST_TEST_EQ(test_output_small.num_edges(), test_output_large.num_edges());
+      BOOST_TEST_EQ(test_output_small.num_cells(),
+                    test_output_large.num_cells());
+      BOOST_TEST_EQ(test_output_small.num_vertices(),
+                    test_output_large.num_vertices());
+      BOOST_TEST_EQ(test_output_small.num_edges(),
+                    test_output_large.num_edges());
     }
   }
 }
 #endif
 
-int main()
-{
-    single_site_test();
-    collinear_sites_test1();
-    collinear_sites_test2();
-    triangle_test1();
-    triangle_test2();
-    square_test1();
+int main() {
+  single_site_test();
+  collinear_sites_test1();
+  collinear_sites_test2();
+  triangle_test1();
+  triangle_test2();
+  square_test1();
 #ifdef NDEBUG
-    grid_test();
-    random_test();
+  grid_test();
+  random_test();
 #endif
-    segment_sites_test1();
-    segment_sites_test2();
-    segment_sites_test3();
-    segment_sites_test4();
-    segment_site_test5();
-    segment_site_test6();
-    segment_site_test7();
-    segment_site_test8();
-    segment_site_test9();
+  segment_sites_test1();
+  segment_sites_test2();
+  segment_sites_test3();
+  segment_sites_test4();
+  segment_site_test5();
+  segment_site_test6();
+  segment_site_test7();
+  segment_site_test8();
+  segment_site_test9();
 #ifdef NDEBUG
-    segment_grid_test();
-    segment_random_test1();
-    segment_random_test2();
+  segment_grid_test();
+  segment_random_test1();
+  segment_random_test2();
 #endif
-    return boost::report_errors();
+  return boost::report_errors();
 }

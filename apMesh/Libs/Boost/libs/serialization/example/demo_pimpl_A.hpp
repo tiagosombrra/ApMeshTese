@@ -13,12 +13,12 @@
 struct B;
 
 struct A {
-    // class a contains a pointer to a "hidden" declaration
-    B *pimpl;
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int file_version);
-    A();
-    ~A();
+  // class a contains a pointer to a "hidden" declaration
+  B *pimpl;
+  template <class Archive>
+  void serialize(Archive &ar, const unsigned int file_version);
+  A();
+  ~A();
 };
 
-#endif // BOOST_SERIALIZATION_EXAMPLE_DEMO_PIMPL_A_HPP
+#endif  // BOOST_SERIALIZATION_EXAMPLE_DEMO_PIMPL_A_HPP

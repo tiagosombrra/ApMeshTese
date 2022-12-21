@@ -11,6 +11,7 @@
 #include <boost/histogram/axis/integer.hpp>
 #include <unordered_map>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 

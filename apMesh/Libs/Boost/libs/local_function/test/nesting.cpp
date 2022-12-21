@@ -7,31 +7,32 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_VARIADIC_MACROS
-#   error "variadic macros required"
+#error "variadic macros required"
 #else
 
-#include <boost/local_function.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/local_function.hpp>
 
 int main(void) {
-    //[nesting
-    int x = 0;
+  //[nesting
+  int x = 0;
 
-    void BOOST_LOCAL_FUNCTION(bind& x) {
-        void BOOST_LOCAL_FUNCTION(bind& x) { // Nested.
-            x++;
-        } BOOST_LOCAL_FUNCTION_NAME(g)
+  void BOOST_LOCAL_FUNCTION(bind & x) {
+    void BOOST_LOCAL_FUNCTION(bind & x) {  // Nested.
+      x++;
+    }
+    BOOST_LOCAL_FUNCTION_NAME(g)
 
-        x--;
-        g(); // Nested local function call.
-    } BOOST_LOCAL_FUNCTION_NAME(f)
-    
-    f();
-    //]
+    x--;
+    g();  // Nested local function call.
+  }
+  BOOST_LOCAL_FUNCTION_NAME(f)
 
-    BOOST_TEST(x == 0);
-    return boost::report_errors();
+  f();
+  //]
+
+  BOOST_TEST(x == 0);
+  return boost::report_errors();
 }
 
-#endif // VARIADIC_MACROS
-
+#endif  // VARIADIC_MACROS

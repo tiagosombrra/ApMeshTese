@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/beta.hpp>
 #include <boost/random/beta_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/beta.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::beta_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME beta

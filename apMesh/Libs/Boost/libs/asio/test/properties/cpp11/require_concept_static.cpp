@@ -12,39 +12,33 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static constexpr bool is_requirable_concept = true;
 };
 
 template <int>
-struct object
-{
-};
+struct object {};
 
 namespace boost {
 namespace asio {
 
-template<int N, int M>
-struct is_applicable_property<object<N>, prop<M> >
-{
+template <int N, int M>
+struct is_applicable_property<object<N>, prop<M> > {
   static constexpr bool value = true;
 };
 
 namespace traits {
 
-template<int N>
-struct static_require_concept<object<N>, prop<N> >
-{
+template <int N>
+struct static_require_concept<object<N>, prop<N> > {
   static constexpr bool is_valid = true;
 };
 
-} // namespace traits
-} // namespace asio
-} // namespace boost
+}  // namespace traits
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   object<1> o1 = {};
   const object<1>& o2 = boost::asio::require_concept(o1, prop<1>());
   assert(&o1 == &o2);

@@ -6,9 +6,9 @@
 
 #define BOOST_CONTRACT_TEST_LIB_A_SOURCE
 #include "lib_a.hpp"
-#include <boost/contract.hpp> // All headers so test ODR for entire lib.
+
+#include <boost/contract.hpp>  // All headers so test ODR for entire lib.
 #ifndef BOOST_CONTRACT_HEADER_ONLY
-    #include "lib_a_inlined.hpp"
+#include "lib_a_inlined.hpp"
 #endif
 #include "../detail/out_inlined.hpp"
-

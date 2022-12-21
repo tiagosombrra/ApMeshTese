@@ -13,11 +13,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/detail/lightweight_test.hpp>
-#include <iostream>
-#include <boost/static_assert.hpp>
+#include <boost/spirit/include/classic_assign_actor.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_meta.hpp>
-#include <boost/spirit/include/classic_assign_actor.hpp>
+#include <boost/static_assert.hpp>
+#include <iostream>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
@@ -28,26 +28,24 @@ typedef ref_value_actor<char, assign_action> assign_actor;
 //  node_count_tests
 //
 ///////////////////////////////////////////////////////////////////////////////
-void
-node_count_tests()
-{
-// simple types
-    typedef chlit<char> plain_t;
-    typedef optional<chlit<char> > optional_t;
-    typedef action<chlit<char>, assign_actor> action_t;
-    typedef sequence<chlit<char>, anychar_parser> sequence_t;
+void node_count_tests() {
+  // simple types
+  typedef chlit<char> plain_t;
+  typedef optional<chlit<char> > optional_t;
+  typedef action<chlit<char>, assign_actor> action_t;
+  typedef sequence<chlit<char>, anychar_parser> sequence_t;
 
-    BOOST_STATIC_ASSERT(1 == node_count<plain_t>::value);
-    BOOST_STATIC_ASSERT(2 == node_count<optional_t>::value);
-    BOOST_STATIC_ASSERT(2 == node_count<action_t>::value);
-    BOOST_STATIC_ASSERT(3 == node_count<sequence_t>::value);
+  BOOST_STATIC_ASSERT(1 == node_count<plain_t>::value);
+  BOOST_STATIC_ASSERT(2 == node_count<optional_t>::value);
+  BOOST_STATIC_ASSERT(2 == node_count<action_t>::value);
+  BOOST_STATIC_ASSERT(3 == node_count<sequence_t>::value);
 
-// more elaborate types
-    typedef sequence<sequence<plain_t, action_t>, plain_t> sequence2_t;
-    typedef sequence<plain_t, sequence<action_t, plain_t> > sequence3_t;
+  // more elaborate types
+  typedef sequence<sequence<plain_t, action_t>, plain_t> sequence2_t;
+  typedef sequence<plain_t, sequence<action_t, plain_t> > sequence3_t;
 
-    BOOST_STATIC_ASSERT(6 == node_count<sequence2_t>::value);
-    BOOST_STATIC_ASSERT(6 == node_count<sequence3_t>::value);
+  BOOST_STATIC_ASSERT(6 == node_count<sequence2_t>::value);
+  BOOST_STATIC_ASSERT(6 == node_count<sequence3_t>::value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -55,40 +53,34 @@ node_count_tests()
 //  leaf_count_tests
 //
 ///////////////////////////////////////////////////////////////////////////////
-void
-leaf_count_tests()
-{
-// simple types
-    typedef chlit<char> plain_t;
-    typedef optional<chlit<char> > optional_t;
-    typedef action<chlit<char>, assign_actor> action_t;
-    typedef sequence<chlit<char>, anychar_parser> sequence_t;
+void leaf_count_tests() {
+  // simple types
+  typedef chlit<char> plain_t;
+  typedef optional<chlit<char> > optional_t;
+  typedef action<chlit<char>, assign_actor> action_t;
+  typedef sequence<chlit<char>, anychar_parser> sequence_t;
 
-    BOOST_STATIC_ASSERT(1 == leaf_count<plain_t>::value);
-    BOOST_STATIC_ASSERT(1 == leaf_count<optional_t>::value);
-    BOOST_STATIC_ASSERT(1 == leaf_count<action_t>::value);
-    BOOST_STATIC_ASSERT(2 == leaf_count<sequence_t>::value);
+  BOOST_STATIC_ASSERT(1 == leaf_count<plain_t>::value);
+  BOOST_STATIC_ASSERT(1 == leaf_count<optional_t>::value);
+  BOOST_STATIC_ASSERT(1 == leaf_count<action_t>::value);
+  BOOST_STATIC_ASSERT(2 == leaf_count<sequence_t>::value);
 
-// more elaborate types
-    typedef sequence<sequence<plain_t, action_t>, plain_t> sequence2_t;
-    typedef sequence<plain_t, sequence<action_t, plain_t> > sequence3_t;
+  // more elaborate types
+  typedef sequence<sequence<plain_t, action_t>, plain_t> sequence2_t;
+  typedef sequence<plain_t, sequence<action_t, plain_t> > sequence3_t;
 
-    BOOST_STATIC_ASSERT(3 == leaf_count<sequence2_t>::value);
-    BOOST_STATIC_ASSERT(3 == leaf_count<sequence3_t>::value);
+  BOOST_STATIC_ASSERT(3 == leaf_count<sequence2_t>::value);
+  BOOST_STATIC_ASSERT(3 == leaf_count<sequence3_t>::value);
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Main
 //
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    node_count_tests();
-    leaf_count_tests();
+int main() {
+  node_count_tests();
+  leaf_count_tests();
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-

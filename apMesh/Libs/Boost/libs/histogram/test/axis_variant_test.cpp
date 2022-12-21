@@ -12,6 +12,7 @@
 #include <string>
 #include <type_traits>
 #include <vector>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 #include "utility_allocator.hpp"
@@ -28,8 +29,8 @@ int main() {
 
   {
     using meta_type = std::vector<int>;
-    using variant_type =
-        axis::variant<axis::integer<double>, axis::category<std::string, meta_type>>;
+    using variant_type = axis::variant<axis::integer<double>,
+                                       axis::category<std::string, meta_type>>;
     auto a = variant_type{axis::integer<double>(0, 2, "foo")};
     BOOST_TEST_EQ(a.index(-10), -1);
     BOOST_TEST_EQ(a.index(-1), -1);
@@ -39,19 +40,23 @@ int main() {
     BOOST_TEST_EQ(a.index(2), 2);
     BOOST_TEST_EQ(a.index(10), 2);
     BOOST_TEST_EQ(a.bin(-1).lower(), -std::numeric_limits<double>::infinity());
-    BOOST_TEST_EQ(a.bin(a.size()).upper(), std::numeric_limits<double>::infinity());
+    BOOST_TEST_EQ(a.bin(a.size()).upper(),
+                  std::numeric_limits<double>::infinity());
     BOOST_TEST_EQ(a.bin(-10).lower(), -std::numeric_limits<double>::infinity());
-    BOOST_TEST_EQ(a.bin(a.size() + 10).upper(), std::numeric_limits<double>::infinity());
+    BOOST_TEST_EQ(a.bin(a.size() + 10).upper(),
+                  std::numeric_limits<double>::infinity());
     BOOST_TEST_EQ(a.metadata(), "foo");
     a.metadata() = "bar";
     BOOST_TEST_EQ(static_cast<const variant_type&>(a).metadata(), "bar");
-    BOOST_TEST_EQ(a.options(), axis::option::underflow | axis::option::overflow);
+    BOOST_TEST_EQ(a.options(),
+                  axis::option::underflow | axis::option::overflow);
 
     a = axis::category<std::string, meta_type>({"A", "B"}, {1, 2, 3});
     BOOST_TEST_EQ(a.index("A"), 0);
     BOOST_TEST_EQ(a.index("B"), 1);
     BOOST_TEST_THROWS(a.metadata(), std::runtime_error);
-    BOOST_TEST_THROWS(static_cast<const variant_type&>(a).metadata(), std::runtime_error);
+    BOOST_TEST_THROWS(static_cast<const variant_type&>(a).metadata(),
+                      std::runtime_error);
     BOOST_TEST_EQ(a.options(), axis::option::overflow_t::value);
   }
 
@@ -82,7 +87,7 @@ int main() {
     BOOST_TEST_EQ(r2.size(), 3);
     BOOST_TEST_EQ(r2.value(0), 1);
     BOOST_TEST_EQ(r2.metadata(), "bar");
-    r2.metadata() = "baz"; // change original through r2
+    r2.metadata() = "baz";  // change original through r2
     BOOST_TEST_EQ(b.metadata(), "baz");
   }
 
@@ -102,7 +107,8 @@ int main() {
     a6 = a1;
     BOOST_TEST_EQ(a6, a1);
     axis::variant<axis::regular<>, axis::integer<>> a7(axis::integer<>(0, 2));
-    BOOST_TEST_THROWS(axis::variant<axis::regular<>> a8(a7), std::runtime_error);
+    BOOST_TEST_THROWS(axis::variant<axis::regular<>> a8(a7),
+                      std::runtime_error);
     BOOST_TEST_THROWS(a4 = a7, std::runtime_error);
   }
 
@@ -132,9 +138,11 @@ int main() {
     test(axis::boolean<>{"bar"}, "boolean(metadata=\"bar\")");
 
     struct user_defined {};
-    const auto ref = "integer(-1, 1, metadata=" + detail::type_name<user_defined>() +
-                     ", options=none)";
-    test(axis::integer<int, user_defined, axis::option::none_t>(-1, 1), ref.c_str());
+    const auto ref =
+        "integer(-1, 1, metadata=" + detail::type_name<user_defined>() +
+        ", options=none)";
+    test(axis::integer<int, user_defined, axis::option::none_t>(-1, 1),
+         ref.c_str());
   }
 
   // bin_type operator<<
@@ -153,7 +161,8 @@ int main() {
   {
     enum { A, B, C };
     using variant =
-        axis::variant<axis::regular<>, axis::regular<double, axis::transform::pow>,
+        axis::variant<axis::regular<>,
+                      axis::regular<double, axis::transform::pow>,
                       axis::category<>, axis::integer<>, axis::boolean<>>;
     std::vector<variant> axes;
     axes.push_back(axis::regular<>{2, -1, 1});
@@ -177,7 +186,7 @@ int main() {
     auto b = axis::variant<axis::category<int>>{axis::category<int>{2, 1, 3}};
     BOOST_TEST_EQ(b.bin(0), 2);
     BOOST_TEST_EQ(b.bin(0).lower(),
-                  b.bin(0).upper()); // lower == upper for bin without interval
+                  b.bin(0).upper());  // lower == upper for bin without interval
   }
 
   // axis::variant support for user-defined axis types
@@ -207,7 +216,7 @@ int main() {
     using T2 = axis::integer<int, axis::null_type>;
     using T3 = axis::category<long, axis::null_type, axis::option::overflow_t,
                               tracing_allocator<long>>;
-    using axis_type = axis::variant<T1, T2, T3>; // no heap allocation
+    using axis_type = axis::variant<T1, T2, T3>;  // no heap allocation
     using axes_type = std::vector<axis_type, tracing_allocator<axis_type>>;
 
     tracing_allocator_db db;
@@ -245,7 +254,8 @@ int main() {
   }
 
   // iterators
-  test_axis_iterator(axis::variant<axis::regular<>>(axis::regular<>(5, 0, 1)), 0, 5);
+  test_axis_iterator(axis::variant<axis::regular<>>(axis::regular<>(5, 0, 1)),
+                     0, 5);
 
   return boost::report_errors();
 }

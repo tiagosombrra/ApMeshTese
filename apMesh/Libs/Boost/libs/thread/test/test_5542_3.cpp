@@ -5,33 +5,31 @@
 
 #define BOOST_THREAD_VERSION 2
 
-#include <iostream>
-#include <boost/thread/thread_only.hpp>
 #include <boost/date_time.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <iostream>
 
-void workerFunc()
-{
-   boost::posix_time::seconds workTime(3);
+void workerFunc() {
+  boost::posix_time::seconds workTime(3);
 
-   std::cout << "Worker: running" << std::endl;
+  std::cout << "Worker: running" << std::endl;
 
-   // Pretend to do something useful...
-   boost::this_thread::sleep(workTime);
+  // Pretend to do something useful...
+  boost::this_thread::sleep(workTime);
 
-   std::cout << "Worker: finished" << std::endl;
+  std::cout << "Worker: finished" << std::endl;
 }
 
-int main()
-{
-    std::cout << "main: startup" << std::endl;
+int main() {
+  std::cout << "main: startup" << std::endl;
 
-    boost::thread workerThread(workerFunc);
+  boost::thread workerThread(workerFunc);
 
-    std::cout << "main: waiting for thread" << std::endl;
+  std::cout << "main: waiting for thread" << std::endl;
 
-    workerThread.join();
+  workerThread.join();
 
-    std::cout << "main: done" << std::endl;
+  std::cout << "main: done" << std::endl;
 
-    return 0;
+  return 0;
 }

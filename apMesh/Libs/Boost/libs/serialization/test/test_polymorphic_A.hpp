@@ -9,22 +9,23 @@
 // class whose declaration is hidden by a pointer
 // #include <boost/serialization/scoped_ptr.hpp>
 
-#include <boost/archive/polymorphic_oarchive.hpp>
 #include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
 
 class A;
 
 struct data {
-    // class a contains a pointer to a "hidden" declaration
-    // borland scoped_ptr doesn't work !!!
-    // boost::scoped_ptr<A> a;
-    A * a;
-//    template<class Archive>
-//    void serialize(Archive & ar, const unsigned int file_version);
-    void serialize(boost::archive::polymorphic_oarchive & ar, const unsigned int file_version);
-    void serialize(boost::archive::polymorphic_iarchive & ar, const unsigned int file_version);
-    data();
-    ~data();
-    bool operator==(const data & rhs) const;
+  // class a contains a pointer to a "hidden" declaration
+  // borland scoped_ptr doesn't work !!!
+  // boost::scoped_ptr<A> a;
+  A* a;
+  //    template<class Archive>
+  //    void serialize(Archive & ar, const unsigned int file_version);
+  void serialize(boost::archive::polymorphic_oarchive& ar,
+                 const unsigned int file_version);
+  void serialize(boost::archive::polymorphic_iarchive& ar,
+                 const unsigned int file_version);
+  data();
+  ~data();
+  bool operator==(const data& rhs) const;
 };
-

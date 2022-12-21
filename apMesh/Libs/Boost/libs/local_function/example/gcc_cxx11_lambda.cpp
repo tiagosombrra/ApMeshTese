@@ -7,29 +7,25 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_LAMBDAS
-#   error "lambda functions required"
+#error "lambda functions required"
 #else
 
-#include <boost/detail/lightweight_test.hpp>
 #include <algorithm>
+#include <boost/detail/lightweight_test.hpp>
 
 int main(void) {
-    //[gcc_cxx11_lambda
-    int val = 2;
-    int nums[] = {1, 2, 3};
-    int* end = nums + 3;
+  //[gcc_cxx11_lambda
+  int val = 2;
+  int nums[] = {1, 2, 3};
+  int* end = nums + 3;
 
-    int* iter = std::find_if(nums, end, 
-        [val](int num) -> bool {
-            return num == val;
-        }
-    );
-    //]
+  int* iter =
+      std::find_if(nums, end, [val](int num) -> bool { return num == val; });
+  //]
 
-    BOOST_TEST(iter != end);
-    BOOST_TEST(*iter == val);
-    return boost::report_errors();
+  BOOST_TEST(iter != end);
+  BOOST_TEST(*iter == val);
+  return boost::report_errors();
 }
 
-#endif // LAMBDAS
-
+#endif  // LAMBDAS

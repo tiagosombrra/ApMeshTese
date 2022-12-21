@@ -17,6 +17,7 @@
 #include <map>
 #include <sstream>
 #include <vector>
+
 #include "is_close.hpp"
 #include "throw_exception.hpp"
 #include "utility_allocator.hpp"
@@ -53,10 +54,10 @@ void tests() {
     BOOST_TEST_EQ(e.size(), 2);
 
     const auto t = T();
-    storage_adaptor<T> g(t); // tests converting ctor
+    storage_adaptor<T> g(t);  // tests converting ctor
     BOOST_TEST_EQ(g.size(), 0);
     const auto u = std::vector<typename Storage::value_type>(3, 1);
-    Storage h(u); // tests converting ctor
+    Storage h(u);  // tests converting ctor
     BOOST_TEST_EQ(h.size(), 3);
     BOOST_TEST_EQ(h[0], 1);
     BOOST_TEST_EQ(h[1], 1);
@@ -228,7 +229,8 @@ int main() {
 
   // with accumulators::weighted_mean
   {
-    auto a = storage_adaptor<std::vector<accumulators::weighted_mean<double>>>();
+    auto a =
+        storage_adaptor<std::vector<accumulators::weighted_mean<double>>>();
     a.reset(1);
     a[0](/* sample */ 1);
     a[0](weight(2), /* sample */ 2);
@@ -250,7 +252,7 @@ int main() {
   // exceeding array capacity
   {
     auto a = storage_adaptor<std::array<int, 10>>();
-    a.reset(10); // should not throw
+    a.reset(10);  // should not throw
     BOOST_TEST_THROWS(a.reset(11), std::length_error);
     auto b = storage_adaptor<std::vector<int>>();
     b.reset(11);
@@ -261,32 +263,33 @@ int main() {
   {
     tracing_allocator_db db;
     tracing_allocator<char> alloc(db);
-    using map_t = std::map<std::size_t, double, std::less<std::size_t>,
-                           tracing_allocator<std::pair<const std::size_t, double>>>;
+    using map_t =
+        std::map<std::size_t, double, std::less<std::size_t>,
+                 tracing_allocator<std::pair<const std::size_t, double>>>;
     using A = storage_adaptor<map_t>;
     auto a = A(alloc);
     // MSVC implementation allocates some structures for debugging
     const auto baseline = db.second;
     a.reset(10);
-    BOOST_TEST_EQ(db.first, baseline); // nothing allocated yet
+    BOOST_TEST_EQ(db.first, baseline);  // nothing allocated yet
     // queries do not allocate
     BOOST_TEST_EQ(a[0], 0);
     BOOST_TEST_EQ(a[9], 0);
     BOOST_TEST_EQ(db.first, baseline);
-    ++a[5]; // causes one allocation
+    ++a[5];  // causes one allocation
     const auto node = db.first - baseline;
     BOOST_TEST_EQ(a[5], 1);
-    a[4] += 2; // causes one allocation
+    a[4] += 2;  // causes one allocation
     BOOST_TEST_EQ(a[4], 2);
     BOOST_TEST_EQ(db.first, baseline + 2 * node);
-    a[3] -= 2; // causes one allocation
+    a[3] -= 2;  // causes one allocation
     BOOST_TEST_EQ(a[3], -2);
     BOOST_TEST_EQ(db.first, baseline + 3 * node);
-    a[2] *= 2; // no allocation
+    a[2] *= 2;  // no allocation
     BOOST_TEST_EQ(db.first, baseline + 3 * node);
-    a[2] /= 2; // no allocation
+    a[2] /= 2;  // no allocation
     BOOST_TEST_EQ(db.first, baseline + 3 * node);
-    a[4] = 0; // causes one deallocation
+    a[4] = 0;  // causes one deallocation
     BOOST_TEST_EQ(db.first, baseline + 2 * node);
 
     auto b = storage_adaptor<std::vector<int>>();

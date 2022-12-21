@@ -7,38 +7,37 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_LAMBDAS
-#   error "lambda functions required"
+#error "lambda functions required"
 #else
 
-#include <boost/chrono.hpp>
-#include <vector>
 #include <algorithm>
+#include <boost/chrono.hpp>
 #include <iostream>
+#include <vector>
+
 #include "profile_helpers.hpp"
 
 int main(int argc, char* argv[]) {
-    unsigned long size = 0, trials = 0;
-    profile::args(argc, argv, size, trials);
+  unsigned long size = 0, trials = 0;
+  profile::args(argc, argv, size, trials);
 
-    double sum = 0.0;
-    int factor = 1;
+  double sum = 0.0;
+  int factor = 1;
 
-    std::vector<double> v(size);
-    std::fill(v.begin(), v.end(), 1.0);
+  std::vector<double> v(size);
+  std::fill(v.begin(), v.end(), 1.0);
 
-    boost::chrono::duration<double> trials_sec;
-    for(unsigned long i = 0; i < trials; ++i) {
-        boost::chrono::system_clock::time_point start =
-                boost::chrono::system_clock::now();
-        std::for_each(v.begin(), v.end(), [&sum, factor](const double& num) {
-            sum += factor * num;
-        });
-        trials_sec += boost::chrono::system_clock::now() - start;
-    }
+  boost::chrono::duration<double> trials_sec;
+  for (unsigned long i = 0; i < trials; ++i) {
+    boost::chrono::system_clock::time_point start =
+        boost::chrono::system_clock::now();
+    std::for_each(v.begin(), v.end(),
+                  [&sum, factor](const double& num) { sum += factor * num; });
+    trials_sec += boost::chrono::system_clock::now() - start;
+  }
 
-    profile::display(size, trials, sum, trials_sec.count());
-    return 0;
+  profile::display(size, trials, sum, trials_sec.count());
+  return 0;
 }
 
-#endif // LAMBDAS
-
+#endif  // LAMBDAS

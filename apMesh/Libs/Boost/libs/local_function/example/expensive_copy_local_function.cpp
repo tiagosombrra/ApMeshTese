@@ -8,28 +8,28 @@
 #include <boost/local_function.hpp>
 #include <boost/typeof/typeof.hpp>
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 //[expensive_copy_local_function
 struct n {
-    int i;
-    n(int _i): i(_i) {}
-    n(n const& x): i(x.i) { // Some time consuming copy operation.
-        for (unsigned i = 0; i < 10000; ++i) std::cout << '.';
-    }
+  int i;
+  n(int _i) : i(_i) {}
+  n(n const& x) : i(x.i) {  // Some time consuming copy operation.
+    for (unsigned i = 0; i < 10000; ++i) std::cout << '.';
+  }
 };
-BOOST_TYPEOF_REGISTER_TYPE(n) // Register for `bind& x` below.
+BOOST_TYPEOF_REGISTER_TYPE(n)  // Register for `bind& x` below.
 
 int main(void) {
-    n x(-1);
+  n x(-1);
 
-    void BOOST_LOCAL_FUNCTION(const bind& x) {  // OK: No copy expensive
-        assert(x.i == -1);                      // copy but constant.
-    } BOOST_LOCAL_FUNCTION_NAME(f)
-    f();
+  void BOOST_LOCAL_FUNCTION(const bind& x) {  // OK: No copy expensive
+    assert(x.i == -1);                        // copy but constant.
+  }
+  BOOST_LOCAL_FUNCTION_NAME(f)
+  f();
 
-    return 0;
+  return 0;
 }
 //]
-

@@ -11,19 +11,21 @@
 #include <boost/detail/lightweight_test.hpp>
 
 struct point {
-    int x;
-    int y;
+  int x;
+  int y;
 };
-BOOST_TYPEOF_REGISTER_TYPE(point) // Register for `NAME` below.
+BOOST_TYPEOF_REGISTER_TYPE(point)  // Register for `NAME` below.
 
 int main(void) {
-    bool BOOST_LOCAL_FUNCTION( (const point& p) (const point& q) ) {
-        return p.x == q.x && p.y == q.y;
-    } BOOST_LOCAL_FUNCTION_NAME(equal)
+  bool BOOST_LOCAL_FUNCTION((const point& p)(const point& q)) {
+    return p.x == q.x && p.y == q.y;
+  }
+  BOOST_LOCAL_FUNCTION_NAME(equal)
 
-    point a; a.x = 1; a.y = 2;
-    point b = a;
-    BOOST_TEST(equal(a, b));
-    return boost::report_errors();
+  point a;
+  a.x = 1;
+  a.y = 2;
+  point b = a;
+  BOOST_TEST(equal(a, b));
+  return boost::report_errors();
 }
-

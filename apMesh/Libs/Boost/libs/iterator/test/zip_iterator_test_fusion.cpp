@@ -6,10 +6,10 @@
 //
 //  See http://www.boost.org for most recent version including documentation.
 
-#include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/make_vector.hpp>
+#include <boost/fusion/include/vector.hpp>
 
-#define TUPLE      boost::fusion::vector
+#define TUPLE boost::fusion::vector
 #define MAKE_TUPLE boost::fusion::make_vector
 
 #include "detail/zip_iterator_test.ipp"

@@ -5,90 +5,66 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include "expression.hpp"
-#include "error_handler.hpp"
-#include "annotation.hpp"
-#include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/lex_plain_token.hpp>
+#include <boost/spirit/include/phoenix_function.hpp>
 
-namespace client { namespace parser
-{
-    template <typename Iterator, typename Lexer>
-    expression<Iterator, Lexer>::expression(
-            error_handler<typename Lexer::base_iterator_type, Iterator>& error_handler
-          , Lexer const& l)
-      : expression::base_type(expr), lexer(l)
-    {
-        qi::_1_type _1;
-        qi::_2_type _2;
-        qi::_3_type _3;
-        qi::_4_type _4;
+#include "annotation.hpp"
+#include "error_handler.hpp"
+#include "expression.hpp"
 
-        qi::_val_type _val;
-        qi::tokenid_mask_type tokenid_mask;
+namespace client {
+namespace parser {
+template <typename Iterator, typename Lexer>
+expression<Iterator, Lexer>::expression(
+    error_handler<typename Lexer::base_iterator_type, Iterator>& error_handler,
+    Lexer const& l)
+    : expression::base_type(expr), lexer(l) {
+  qi::_1_type _1;
+  qi::_2_type _2;
+  qi::_3_type _3;
+  qi::_4_type _4;
 
-        using qi::on_error;
-        using qi::on_success;
-        using qi::fail;
-        using boost::phoenix::function;
+  qi::_val_type _val;
+  qi::tokenid_mask_type tokenid_mask;
 
-        typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
-            error_handler_type;
-        typedef function<error_handler_type> error_handler_function;
-        typedef function<client::annotation<Iterator> > annotation_function;
+  using boost::phoenix::function;
+  using qi::fail;
+  using qi::on_error;
+  using qi::on_success;
 
-        ///////////////////////////////////////////////////////////////////////
-        // Main expression grammar
-        expr =
-                unary_expr
-            >>  *(tokenid_mask(token_ids::op_binary) > unary_expr)
-            ;
+  typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
+      error_handler_type;
+  typedef function<error_handler_type> error_handler_function;
+  typedef function<client::annotation<Iterator> > annotation_function;
 
-        unary_expr =
-                primary_expr
-            |   (tokenid_mask(token_ids::op_unary) > unary_expr)
-            ;
+  ///////////////////////////////////////////////////////////////////////
+  // Main expression grammar
+  expr = unary_expr >> *(tokenid_mask(token_ids::op_binary) > unary_expr);
 
-        primary_expr =
-                lexer.lit_uint
-            |   function_call
-            |   identifier
-            |   lexer.true_or_false
-            |   '(' > expr > ')'
-            ;
+  unary_expr = primary_expr | (tokenid_mask(token_ids::op_unary) > unary_expr);
 
-        function_call =
-                (identifier >> '(')
-            >   argument_list
-            >   ')'
-            ;
+  primary_expr = lexer.lit_uint | function_call | identifier |
+                 lexer.true_or_false | '(' > expr > ')';
 
-        argument_list = -(expr % ',');
+  function_call = (identifier >> '(') > argument_list > ')';
 
-        identifier = lexer.identifier;
+  argument_list = -(expr % ',');
 
-        ///////////////////////////////////////////////////////////////////////
-        // Debugging and error handling and reporting support.
-        BOOST_SPIRIT_DEBUG_NODES(
-            (expr)
-            (unary_expr)
-            (primary_expr)
-            (function_call)
-            (argument_list)
-            (identifier)
-        );
+  identifier = lexer.identifier;
 
-        ///////////////////////////////////////////////////////////////////////
-        // Error handling: on error in expr, call error_handler.
-        on_error<fail>(expr,
-            error_handler_function(error_handler)(
-                "Error! Expecting ", _4, _3));
+  ///////////////////////////////////////////////////////////////////////
+  // Debugging and error handling and reporting support.
+  BOOST_SPIRIT_DEBUG_NODES((
+      expr)(unary_expr)(primary_expr)(function_call)(argument_list)(identifier));
 
-        ///////////////////////////////////////////////////////////////////////
-        // Annotation: on success in primary_expr, call annotation.
-        on_success(primary_expr,
-            annotation_function(error_handler.iters)(_val, _1));
-    }
-}}
+  ///////////////////////////////////////////////////////////////////////
+  // Error handling: on error in expr, call error_handler.
+  on_error<fail>(
+      expr, error_handler_function(error_handler)("Error! Expecting ", _4, _3));
 
-
+  ///////////////////////////////////////////////////////////////////////
+  // Annotation: on success in primary_expr, call annotation.
+  on_success(primary_expr, annotation_function(error_handler.iters)(_val, _1));
+}
+}  // namespace parser
+}  // namespace client

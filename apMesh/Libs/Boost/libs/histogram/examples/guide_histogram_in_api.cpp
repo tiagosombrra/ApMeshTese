@@ -25,11 +25,11 @@ boost::histogram::histogram<std::tuple<Axes...>, Storage> only_static_histogram(
 
 // function only accepts histograms with dynamic axis types and returns a copy
 template <class Storage, class... Axes>
-boost::histogram::histogram<std::vector<boost::histogram::axis::variant<Axes...>>,
-                            Storage>
+boost::histogram::histogram<
+    std::vector<boost::histogram::axis::variant<Axes...>>, Storage>
 only_dynamic_histogram(
-    boost::histogram::histogram<std::vector<boost::histogram::axis::variant<Axes...>>,
-                                Storage>& h) {
+    boost::histogram::histogram<
+        std::vector<boost::histogram::axis::variant<Axes...>>, Storage>& h) {
   return h;
 }
 
@@ -44,9 +44,12 @@ int main() {
   axes.emplace_back(axis::integer<>(0, 1));
   auto histogram_with_dynamic_axes = make_histogram(axes);
 
-  assert(any_histogram(histogram_with_static_axes) == histogram_with_static_axes);
-  assert(any_histogram(histogram_with_dynamic_axes) == histogram_with_dynamic_axes);
-  assert(only_static_histogram(histogram_with_static_axes) == histogram_with_static_axes);
+  assert(any_histogram(histogram_with_static_axes) ==
+         histogram_with_static_axes);
+  assert(any_histogram(histogram_with_dynamic_axes) ==
+         histogram_with_dynamic_axes);
+  assert(only_static_histogram(histogram_with_static_axes) ==
+         histogram_with_static_axes);
   assert(only_dynamic_histogram(histogram_with_dynamic_axes) ==
          histogram_with_dynamic_axes);
 

@@ -13,12 +13,11 @@
 // but it's a bit overkill to include processor intrinsics
 // and transcendental functions, so we do it by ourselves
 
-#include <boost/numeric/interval/interval.hpp>      // base class
-#include <boost/numeric/interval/rounded_arith.hpp> // default arithmetic rounding policy
-#include <boost/numeric/interval/checking.hpp>      // default checking policy
-#include <boost/numeric/interval/arith.hpp>         // += *= -= etc
-#include <boost/numeric/interval/policies.hpp>      // default policy
-
+#include <boost/numeric/interval/arith.hpp>     // += *= -= etc
+#include <boost/numeric/interval/checking.hpp>  // default checking policy
+#include <boost/numeric/interval/interval.hpp>  // base class
+#include <boost/numeric/interval/policies.hpp>  // default policy
+#include <boost/numeric/interval/rounded_arith.hpp>  // default arithmetic rounding policy
 #include <boost/rational.hpp>
 #include <iostream>
 

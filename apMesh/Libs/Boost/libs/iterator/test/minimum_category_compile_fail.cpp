@@ -11,9 +11,8 @@ using boost::iterators::minimum_category;
 struct A {};
 struct B {};
 
-int main(int, char*[])
-{
-    minimum_category<A, B>::type cat;
+int main(int, char*[]) {
+  minimum_category<A, B>::type cat;
 
-    return 0;
+  return 0;
 }

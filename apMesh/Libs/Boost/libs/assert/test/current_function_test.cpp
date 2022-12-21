@@ -1,10 +1,11 @@
 #include <boost/config.hpp>
 
 #if defined(BOOST_MSVC)
-#pragma warning(disable: 4786)  // identifier truncated in debug info
-#pragma warning(disable: 4710)  // function not inlined
-#pragma warning(disable: 4711)  // function selected for automatic inline expansion
-#pragma warning(disable: 4514)  // unreferenced inline removed
+#pragma warning(disable : 4786)  // identifier truncated in debug info
+#pragma warning(disable : 4710)  // function not inlined
+#pragma warning( \
+    disable : 4711)  // function selected for automatic inline expansion
+#pragma warning(disable : 4514)  // unreferenced inline removed
 #endif
 
 //
@@ -17,23 +18,21 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <boost/current_function.hpp>
 #include <boost/config.hpp>
+#include <boost/current_function.hpp>
 #include <cstdio>
 
-void message(char const * file, long line, char const * func, char const * msg)
-{
+void message(char const* file, long line, char const* func, char const* msg) {
 #if !defined(BOOST_NO_STDC_NAMESPACE)
-    using std::printf;
+  using std::printf;
 #endif
 
-    printf("%s(%ld): in function '%s': %s\n", file, line, func, msg);
+  printf("%s(%ld): in function '%s': %s\n", file, line, func, msg);
 }
 
 #define MESSAGE(msg) message(__FILE__, __LINE__, BOOST_CURRENT_FUNCTION, msg)
 
-int main()
-{
-    MESSAGE("testing BOOST_CURRENT_FUNCTION");
-    return 0;
+int main() {
+  MESSAGE("testing BOOST_CURRENT_FUNCTION");
+  return 0;
 }

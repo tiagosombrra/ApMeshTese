@@ -1,5 +1,5 @@
 #ifndef _MSC_VER
-  #warning deprecated
+#warning deprecated
 #endif
 /* deprecated
 Matrix3i m = Matrix3i::Random();

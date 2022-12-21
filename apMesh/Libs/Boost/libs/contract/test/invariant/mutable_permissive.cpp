@@ -7,7 +7,6 @@
 // Test no error if permissive even if invariant() not declared const.
 
 #ifndef BOOST_CONTRACT_PERMISSIVE
-    #error "build must define PERMISSIVE"
+#error "build must define PERMISSIVE"
 #endif
 #include "mutable.hpp"
-

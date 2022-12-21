@@ -6,18 +6,17 @@
 
 // Test old after post error (same if not free func).
 
-#include <boost/contract/function.hpp>
 #include <boost/contract/check.hpp>
+#include <boost/contract/function.hpp>
 
 void f() {
-    boost::contract::check c = boost::contract::function()
-        .postcondition([] {})
-        .old([] {}) // Error (old after post).
-    ;
+  boost::contract::check c =
+      boost::contract::function().postcondition([] {}).old(
+          [] {})  // Error (old after post).
+      ;
 }
 
 int main() {
-    f();
-    return 0;
+  f();
+  return 0;
 }
-

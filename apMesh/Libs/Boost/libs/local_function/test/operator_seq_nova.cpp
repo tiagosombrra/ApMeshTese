@@ -7,4 +7,3 @@
 
 #include "nova.hpp"
 #include "operator_seq.cpp"
-

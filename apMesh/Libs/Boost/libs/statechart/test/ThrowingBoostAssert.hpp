@@ -6,34 +6,20 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
-
-#include <string>
 #include <stdexcept>
-
-
+#include <string>
 
 #define BOOST_ENABLE_ASSERT_HANDLER
 
+namespace boost {
 
-
-namespace boost
-{
-
-
-void assertion_failed(
-  char const * expr, char const * func, char const * file, long )
-{
-  throw std::logic_error(
-    std::string( "\nAssertion failed: \"" ) + expr + "\"\n" +
-    "File: \"" + file + "\"\n" +
-    "Function: \"" + func + "\"\n" );
+void assertion_failed(char const* expr, char const* func, char const* file,
+                      long) {
+  throw std::logic_error(std::string("\nAssertion failed: \"") + expr + "\"\n" +
+                         "File: \"" + file + "\"\n" + "Function: \"" + func +
+                         "\"\n");
 }
 
-
-
-} // namespace boost
-
-
+}  // namespace boost
 
 #endif

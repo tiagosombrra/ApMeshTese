@@ -13,39 +13,37 @@
 #ifndef TEST2_H
 #define TEST2_H
 
-#include <iostream>
-
-#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/blas.hpp>
+#include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/triangular.hpp>
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/blas.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <iostream>
 
 namespace ublas = boost::numeric::ublas;
 
 #include "common/init.hpp"
 
-template<class V, std::size_t N>
+template <class V, std::size_t N>
 struct test_blas_1 {
-    typedef typename V::value_type value_type;
-    typedef typename ublas::type_traits<value_type>::real_type real_type;
+  typedef typename V::value_type value_type;
+  typedef typename ublas::type_traits<value_type>::real_type real_type;
 
-    void test ();
+  void test();
 };
 
-template<class V, class M, std::size_t N>
+template <class V, class M, std::size_t N>
 struct test_blas_2 {
-    typedef typename V::value_type value_type;
+  typedef typename V::value_type value_type;
 
-    void test ();
+  void test();
 };
 
-template<class M, std::size_t N>
+template <class M, std::size_t N>
 struct test_blas_3 {
-    typedef typename M::value_type value_type;
+  typedef typename M::value_type value_type;
 
-    void test ();
+  void test();
 };
-
 
 #endif

@@ -14,9 +14,8 @@
 using namespace boost::archive;
 
 struct A {
-    template<class Archive>
-    void serialize(Archive & ar, unsigned int version) {
-    }
+  template <class Archive>
+  void serialize(Archive& ar, unsigned int version) {}
 };
 
 // comment out this test case as a reminder not to keep inserting it !!!
@@ -31,7 +30,4 @@ struct A {
 // its not obvious to me how this can be cast to:
 // std::list<pair<trip_info, const bus_route_info * const> > schedule
 
-void f4(text_oarchive & oa, A * const & a){
-    oa << a;
-}
-
+void f4(text_oarchive& oa, A* const& a) { oa << a; }

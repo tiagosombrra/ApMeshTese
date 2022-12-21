@@ -16,9 +16,9 @@
 #endif
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
-#include <boost/flyweight/flyweight.hpp> 
+#include <boost/flyweight/flyweight.hpp>
 #include <boost/flyweight/hashed_factory.hpp>
-#include <boost/flyweight/intermodule_holder.hpp> 
+#include <boost/flyweight/intermodule_holder.hpp>
 #include <boost/flyweight/refcounted.hpp>
 #include <boost/flyweight/simple_locking.hpp>
 #include <string>
@@ -29,9 +29,9 @@
 #define BOOST_FLYWEIGHT_DLL_DECL BOOST_SYMBOL_IMPORT
 #endif
 
-typedef boost::flyweights::flyweight<
-  std::string,
-  boost::flyweights::intermodule_holder> intermodule_flyweight_string;
+typedef boost::flyweights::flyweight<std::string,
+                                     boost::flyweights::intermodule_holder>
+    intermodule_flyweight_string;
 
 BOOST_FLYWEIGHT_DLL_DECL intermodule_flyweight_string
 create_intermodule_flyweight_string(const std::string&);

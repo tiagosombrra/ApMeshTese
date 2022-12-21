@@ -8,38 +8,32 @@
 #define CLOCK_H
 
 #include <algorithm>
+#include <boost/assert.hpp>
+#include <boost/chrono.hpp>
+#include <boost/cstdint.hpp>
 #include <cstddef>
 #include <numeric>
 #include <vector>
 
-#include <boost/assert.hpp>
-#include <boost/chrono.hpp>
-#include <boost/cstdint.hpp>
+typedef boost::chrono::high_resolution_clock clock_type;
+typedef clock_type::duration duration_type;
+typedef clock_type::time_point time_point_type;
 
-typedef boost::chrono::high_resolution_clock    clock_type;
-typedef clock_type::duration                    duration_type;
-typedef clock_type::time_point                  time_point_type;
-
-struct clock_overhead
-{
-    boost::uint64_t operator()()
-    {
-        time_point_type start( clock_type::now() );
-        return ( clock_type::now() - start).count();
-    }
+struct clock_overhead {
+  boost::uint64_t operator()() {
+    time_point_type start(clock_type::now());
+    return (clock_type::now() - start).count();
+  }
 };
 
-inline
-duration_type overhead_clock()
-{
-    std::size_t iterations( 10);
-    std::vector< boost::uint64_t >  overhead( iterations, 0);
-    for ( std::size_t i = 0; i < iterations; ++i)
-        std::generate(
-            overhead.begin(), overhead.end(),
-            clock_overhead() );
-    BOOST_ASSERT( overhead.begin() != overhead.end() );
-    return duration_type( std::accumulate( overhead.begin(), overhead.end(), 0) / iterations);
+inline duration_type overhead_clock() {
+  std::size_t iterations(10);
+  std::vector<boost::uint64_t> overhead(iterations, 0);
+  for (std::size_t i = 0; i < iterations; ++i)
+    std::generate(overhead.begin(), overhead.end(), clock_overhead());
+  BOOST_ASSERT(overhead.begin() != overhead.end());
+  return duration_type(std::accumulate(overhead.begin(), overhead.end(), 0) /
+                       iterations);
 }
 
-#endif // CLOCK_H
+#endif  // CLOCK_H

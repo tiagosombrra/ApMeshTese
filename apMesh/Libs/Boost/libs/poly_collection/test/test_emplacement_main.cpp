@@ -7,10 +7,10 @@
  */
 
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_emplacement.hpp"
 
-int main()
-{
+int main() {
   test_emplacement();
   return boost::report_errors();
 }

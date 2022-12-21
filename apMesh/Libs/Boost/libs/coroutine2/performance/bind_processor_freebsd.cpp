@@ -6,24 +6,22 @@
 
 #include "bind_processor.hpp"
 
-extern "C"
-{
-#include <sys/param.h>
+extern "C" {
 #include <sys/cpuset.h>
+#include <sys/param.h>
 }
 
+#include <boost/config/abi_prefix.hpp>
 #include <stdexcept>
 
-#include <boost/config/abi_prefix.hpp>
+void bind_to_processor(unsigned int n) {
+  cpuset_t cpuset;
+  CPU_ZERO(&cpuset);
+  CPU_SET(n, &cpuset);
 
-void bind_to_processor( unsigned int n)
-{
-    cpuset_t cpuset;
-    CPU_ZERO( & cpuset);
-    CPU_SET( n, & cpuset);
-
-    if ( ::cpuset_setaffinity(  CPU_LEVEL_WHICH, CPU_WHICH_TID, -1, sizeof( cpuset), & cpuset) == -1)
-        throw std::runtime_error("::cpuset_setaffinity() failed");
+  if (::cpuset_setaffinity(CPU_LEVEL_WHICH, CPU_WHICH_TID, -1, sizeof(cpuset),
+                           &cpuset) == -1)
+    throw std::runtime_error("::cpuset_setaffinity() failed");
 }
 
 #include <boost/config/abi_suffix.hpp>

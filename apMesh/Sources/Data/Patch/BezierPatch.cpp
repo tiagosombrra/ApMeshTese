@@ -315,7 +315,7 @@ Ponto BezierPatch::calculaPonto_u_v() {
                   this->getV()))))(0, 0);
 
   //	cout << "calculaPonto_u_v () = " << C.x << " " << C.y << " " << C.z <<
-  //endl;
+  // endl;
   return C;
 }
 

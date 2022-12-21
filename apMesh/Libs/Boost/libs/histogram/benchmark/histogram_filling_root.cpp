@@ -9,12 +9,13 @@
 #include <TH3I.h>
 #include <THn.h>
 #include <benchmark/benchmark.h>
-#include "generator.hpp"
 
 #include <cassert>
+
+#include "generator.hpp"
 struct assert_check {
   assert_check() {
-    assert(false); // don't run with asserts enabled
+    assert(false);  // don't run with asserts enabled
   }
 } _;
 

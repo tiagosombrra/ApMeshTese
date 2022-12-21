@@ -25,48 +25,39 @@
 
 bool try_lock_called = false;
 
-struct mutex
-{
-  bool try_lock()
-  {
+struct mutex {
+  bool try_lock() {
     try_lock_called = !try_lock_called;
     return try_lock_called;
   }
-  void unlock()
-  {
-  }
+  void unlock() {}
 };
 
 mutex m;
 
-int main()
-{
+int main() {
   boost::unique_lock<mutex> lk(m, boost::defer_lock);
   BOOST_TEST(lk.try_lock() == true);
   BOOST_TEST(try_lock_called == true);
   BOOST_TEST(lk.owns_lock() == true);
-  try
-  {
+  try {
     lk.try_lock();
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::resource_deadlock_would_occur);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::resource_deadlock_would_occur);
   }
   lk.unlock();
   BOOST_TEST(lk.try_lock() == false);
   BOOST_TEST(try_lock_called == false);
   BOOST_TEST(lk.owns_lock() == false);
   lk.release();
-  try
-  {
+  try {
     lk.try_lock();
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::operation_not_permitted);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::operation_not_permitted);
   }
 
   return boost::report_errors();

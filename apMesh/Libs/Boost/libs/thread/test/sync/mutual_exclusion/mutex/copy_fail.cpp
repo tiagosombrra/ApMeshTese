@@ -18,14 +18,12 @@
 
 // mutex(const mutex&) = delete;
 
-#include <boost/thread/mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/mutex.hpp>
 
-int main()
-{
+int main() {
   boost::mutex m0;
   boost::mutex m1(m0);
 }
 
 #include "../../../remove_error_code_unused_warning.hpp"
-

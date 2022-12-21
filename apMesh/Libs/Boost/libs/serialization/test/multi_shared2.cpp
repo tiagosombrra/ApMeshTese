@@ -9,14 +9,14 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <iostream>
 
-struct X2{
-  template<class Archive>
-  void serialize(Archive &, const unsigned int){}
+struct X2 {
+  template <class Archive>
+  void serialize(Archive &, const unsigned int) {}
 };
 
 BOOST_CLASS_IMPLEMENTATION(X2, boost::serialization::object_class_info)
 
-BOOST_SYMBOL_EXPORT bool g(){
+BOOST_SYMBOL_EXPORT bool g() {
   boost::archive::text_oarchive(std::cout) & X2();
   return true;
 }

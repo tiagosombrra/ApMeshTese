@@ -16,31 +16,24 @@
 //
 
 #ifdef BOOST_NO_STRINGSTREAM
-#   include <strstream>
-    typedef strstream sstream_t;
-    std::string
-    getstring(std::strstream& ss)
-    {
-        ss << ends;
-        std::string rval = ss.str();
-        ss.freeze(false);
-        return rval;
-    }
+#include <strstream>
+typedef strstream sstream_t;
+std::string getstring(std::strstream& ss) {
+  ss << ends;
+  std::string rval = ss.str();
+  ss.freeze(false);
+  return rval;
+}
 #else
-#   include <sstream>
-    typedef std::stringstream sstream_t;
-    std::string
-    getstring(std::stringstream &ss)
-    {
-        return ss.str();
-    }
+#include <sstream>
+typedef std::stringstream sstream_t;
+std::string getstring(std::stringstream &ss) { return ss.str(); }
 #endif
 
-void use_getstring_to_avoid_compiler_warnings_about_unused_functions()
-{
-    sstream_t ss;
-    getstring(ss);
-    if(!ss) { // to be not recursive on all control paths
-        use_getstring_to_avoid_compiler_warnings_about_unused_functions();
-    }
+void use_getstring_to_avoid_compiler_warnings_about_unused_functions() {
+  sstream_t ss;
+  getstring(ss);
+  if (!ss) {  // to be not recursive on all control paths
+    use_getstring_to_avoid_compiler_warnings_about_unused_functions();
+  }
 }

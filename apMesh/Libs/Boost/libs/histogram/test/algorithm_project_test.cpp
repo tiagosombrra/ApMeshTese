@@ -12,11 +12,12 @@
 #include <boost/histogram/literals.hpp>
 #include <boost/histogram/ostream.hpp>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
 using namespace boost::histogram;
-using namespace boost::histogram::literals; // to get _c suffix
+using namespace boost::histogram::literals;  // to get _c suffix
 using namespace boost::histogram::algorithm;
 
 template <typename Tag>
@@ -68,8 +69,8 @@ void run_tests() {
   }
 
   {
-    auto h =
-        make(Tag(), axis::integer<>(0, 2), axis::integer<>(0, 3), axis::integer<>(0, 4));
+    auto h = make(Tag(), axis::integer<>(0, 2), axis::integer<>(0, 3),
+                  axis::integer<>(0, 4));
     h(0, 0, 0);
     h(0, 1, 0);
     h(0, 1, 1);

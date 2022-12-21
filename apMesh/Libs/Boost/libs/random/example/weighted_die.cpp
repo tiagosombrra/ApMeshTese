@@ -12,8 +12,8 @@
     For the source of this example see
     [@boost://libs/random/example/weighted_die.cpp weighted_die.cpp].
 */
-#include <boost/random/mersenne_twister.hpp>
 #include <boost/random/discrete_distribution.hpp>
+#include <boost/random/mersenne_twister.hpp>
 
 boost::mt19937 gen;
 
@@ -29,19 +29,17 @@ boost::mt19937 gen;
    you can initialize __discrete_distribution directly with
    the weights.]
 */
-double probabilities[] = {
-    0.5, 0.1, 0.1, 0.1, 0.1, 0.1
-};
+double probabilities[] = {0.5, 0.1, 0.1, 0.1, 0.1, 0.1};
 boost::random::discrete_distribution<> dist(probabilities);
 
 /*`
   Now define a function that simulates rolling this die.
 */
 int roll_weighted_die() {
-    /*<< Add 1 to make sure that the result is in the range [1,6]
-         instead of [0,5].
-    >>*/
-    return dist(gen) + 1;
+  /*<< Add 1 to make sure that the result is in the range [1,6]
+       instead of [0,5].
+  >>*/
+  return dist(gen) + 1;
 }
 
 //]
@@ -49,7 +47,7 @@ int roll_weighted_die() {
 #include <iostream>
 
 int main() {
-    for(int i = 0; i < 10; ++i) {
-        std::cout << roll_weighted_die() << std::endl;
-    }
+  for (int i = 0; i < 10; ++i) {
+    std::cout << roll_weighted_die() << std::endl;
+  }
 }

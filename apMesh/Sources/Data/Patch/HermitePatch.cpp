@@ -234,7 +234,7 @@ void HermitePatch::mostraMatrizes() {
 
 ////        cout << "u = " << u_i << " " << "v = " << v_i << endl;
 ////        cout << "delta_u = " << delta_u << " " << "delta_v = " << delta_v <<
-///endl;
+/// endl;
 //    }
 //    while ( fabs ( delta_u ) >= TOLERANCIA or fabs ( delta_v ) >= TOLERANCIA
 //    );

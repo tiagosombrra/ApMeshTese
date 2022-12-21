@@ -11,14 +11,14 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
-#include <boost/asio/socket_base.hpp>
-
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/udp.hpp>
+#include <boost/asio/socket_base.hpp>
+
 #include "unit_test.hpp"
 
 //------------------------------------------------------------------------------
@@ -30,13 +30,11 @@
 
 namespace socket_base_compile {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  try
-  {
+  try {
     io_context ioc;
     ip::tcp::socket sock(ioc);
     char buf[1024];
@@ -183,13 +181,11 @@ void test()
     sock.io_control(bytes_readable);
     std::size_t bytes = bytes_readable.get();
     (void)bytes;
-  }
-  catch (std::exception&)
-  {
+  } catch (std::exception&) {
   }
 }
 
-} // namespace socket_base_compile
+}  // namespace socket_base_compile
 
 //------------------------------------------------------------------------------
 
@@ -200,8 +196,7 @@ void test()
 
 namespace socket_base_runtime {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
@@ -253,34 +248,34 @@ void test()
   bool not_root = (ec == boost::asio::error::access_denied);
   BOOST_ASIO_CHECK(!ec || not_root);
   BOOST_ASIO_WARN_MESSAGE(!ec, "Must be root to set debug socket option");
-#else // defined(__linux__)
-# if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#else  // defined(__linux__)
+#if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-# else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-# endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
-#endif // defined(__linux__)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(__linux__)
 
   socket_base::debug debug2;
   udp_sock.get_option(debug2, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-# if defined(__linux__)
+#if defined(__linux__)
   BOOST_ASIO_CHECK(debug2.value() || not_root);
   BOOST_ASIO_CHECK(static_cast<bool>(debug2) || not_root);
   BOOST_ASIO_CHECK(!!debug2 || not_root);
-# else // defined(__linux__)
+#else   // defined(__linux__)
   BOOST_ASIO_CHECK(debug2.value());
   BOOST_ASIO_CHECK(static_cast<bool>(debug2));
   BOOST_ASIO_CHECK(!!debug2);
-# endif // defined(__linux__)
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(__linux__)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   socket_base::debug debug3(false);
   BOOST_ASIO_CHECK(!debug3.value());
@@ -289,34 +284,34 @@ void test()
   udp_sock.set_option(debug3, ec);
 #if defined(__linux__)
   BOOST_ASIO_CHECK(!ec || not_root);
-#else // defined(__linux__)
-# if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#else  // defined(__linux__)
+#if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-# else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-# endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
-#endif // defined(__linux__)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(__linux__)
 
   socket_base::debug debug4;
   udp_sock.get_option(debug4, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-# if defined(__linux__)
+#if defined(__linux__)
   BOOST_ASIO_CHECK(!debug4.value() || not_root);
   BOOST_ASIO_CHECK(!static_cast<bool>(debug4) || not_root);
   BOOST_ASIO_CHECK(!debug4 || not_root);
-# else // defined(__linux__)
+#else   // defined(__linux__)
   BOOST_ASIO_CHECK(!debug4.value());
   BOOST_ASIO_CHECK(!static_cast<bool>(debug4));
   BOOST_ASIO_CHECK(!debug4);
-# endif // defined(__linux__)
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(__linux__)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   // do_not_route class.
 
@@ -328,23 +323,23 @@ void test()
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   socket_base::do_not_route do_not_route2;
   udp_sock.get_option(do_not_route2, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
   BOOST_ASIO_CHECK(do_not_route2.value());
   BOOST_ASIO_CHECK(static_cast<bool>(do_not_route2));
   BOOST_ASIO_CHECK(!!do_not_route2);
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   socket_base::do_not_route do_not_route3(false);
   BOOST_ASIO_CHECK(!do_not_route3.value());
@@ -354,23 +349,23 @@ void test()
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   socket_base::do_not_route do_not_route4;
   udp_sock.get_option(do_not_route4, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
   BOOST_ASIO_CHECK(!do_not_route4.value());
   BOOST_ASIO_CHECK(!static_cast<bool>(do_not_route4));
   BOOST_ASIO_CHECK(!do_not_route4);
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   // keep_alive class.
 
@@ -430,7 +425,7 @@ void test()
   BOOST_ASIO_CHECK(send_low_watermark1.value() == 4096);
   tcp_sock.set_option(send_low_watermark1, ec);
 #if defined(WIN32) || defined(__linux__) || defined(__sun)
-  BOOST_ASIO_CHECK(!!ec); // Not supported on Windows, Linux or Solaris.
+  BOOST_ASIO_CHECK(!!ec);  // Not supported on Windows, Linux or Solaris.
 #else
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
 #endif
@@ -438,9 +433,9 @@ void test()
   socket_base::send_low_watermark send_low_watermark2;
   tcp_sock.get_option(send_low_watermark2, ec);
 #if defined(WIN32) || defined(__sun)
-  BOOST_ASIO_CHECK(!!ec); // Not supported on Windows or Solaris.
+  BOOST_ASIO_CHECK(!!ec);  // Not supported on Windows or Solaris.
 #elif defined(__linux__)
-  BOOST_ASIO_CHECK(!ec); // Not supported on Linux but can get value.
+  BOOST_ASIO_CHECK(!ec);  // Not supported on Linux but can get value.
 #else
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
   BOOST_ASIO_CHECK(send_low_watermark2.value() == 4096);
@@ -450,7 +445,7 @@ void test()
   BOOST_ASIO_CHECK(send_low_watermark3.value() == 8192);
   tcp_sock.set_option(send_low_watermark3, ec);
 #if defined(WIN32) || defined(__linux__) || defined(__sun)
-  BOOST_ASIO_CHECK(!!ec); // Not supported on Windows, Linux or Solaris.
+  BOOST_ASIO_CHECK(!!ec);  // Not supported on Windows, Linux or Solaris.
 #else
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
 #endif
@@ -458,9 +453,9 @@ void test()
   socket_base::send_low_watermark send_low_watermark4;
   tcp_sock.get_option(send_low_watermark4, ec);
 #if defined(WIN32) || defined(__sun)
-  BOOST_ASIO_CHECK(!!ec); // Not supported on Windows or Solaris.
+  BOOST_ASIO_CHECK(!!ec);  // Not supported on Windows or Solaris.
 #elif defined(__linux__)
-  BOOST_ASIO_CHECK(!ec); // Not supported on Linux but can get value.
+  BOOST_ASIO_CHECK(!ec);  // Not supported on Linux but can get value.
 #else
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
   BOOST_ASIO_CHECK(send_low_watermark4.value() == 8192);
@@ -474,19 +469,19 @@ void test()
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   socket_base::receive_buffer_size receive_buffer_size2;
   tcp_sock.get_option(receive_buffer_size2, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
-  BOOST_ASIO_CHECK(!ec); // Not supported under Windows CE but can get value.
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+  BOOST_ASIO_CHECK(!ec);  // Not supported under Windows CE but can get value.
+#else                     // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
   BOOST_ASIO_CHECK(receive_buffer_size2.value() == 4096);
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif                    // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   socket_base::receive_buffer_size receive_buffer_size3(16384);
   BOOST_ASIO_CHECK(receive_buffer_size3.value() == 16384);
@@ -494,19 +489,19 @@ void test()
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   // Option is not supported under Windows CE.
   BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-      ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                           ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   socket_base::receive_buffer_size receive_buffer_size4;
   tcp_sock.get_option(receive_buffer_size4, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
-  BOOST_ASIO_CHECK(!ec); // Not supported under Windows CE but can get value.
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+  BOOST_ASIO_CHECK(!ec);  // Not supported under Windows CE but can get value.
+#else                     // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
   BOOST_ASIO_CHECK(receive_buffer_size4.value() == 16384);
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif                    // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
   // receive_low_watermark class.
 
@@ -514,7 +509,7 @@ void test()
   BOOST_ASIO_CHECK(receive_low_watermark1.value() == 4096);
   tcp_sock.set_option(receive_low_watermark1, ec);
 #if defined(WIN32) || defined(__sun)
-  BOOST_ASIO_CHECK(!!ec); // Not supported on Windows or Solaris.
+  BOOST_ASIO_CHECK(!!ec);  // Not supported on Windows or Solaris.
 #else
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
 #endif
@@ -522,7 +517,7 @@ void test()
   socket_base::receive_low_watermark receive_low_watermark2;
   tcp_sock.get_option(receive_low_watermark2, ec);
 #if defined(WIN32) || defined(__sun)
-  BOOST_ASIO_CHECK(!!ec); // Not supported on Windows or Solaris.
+  BOOST_ASIO_CHECK(!!ec);  // Not supported on Windows or Solaris.
 #else
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
   BOOST_ASIO_CHECK(receive_low_watermark2.value() == 4096);
@@ -532,7 +527,7 @@ void test()
   BOOST_ASIO_CHECK(receive_low_watermark3.value() == 8192);
   tcp_sock.set_option(receive_low_watermark3, ec);
 #if defined(WIN32) || defined(__sun)
-  BOOST_ASIO_CHECK(!!ec); // Not supported on Windows or Solaris.
+  BOOST_ASIO_CHECK(!!ec);  // Not supported on Windows or Solaris.
 #else
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
 #endif
@@ -540,7 +535,7 @@ void test()
   socket_base::receive_low_watermark receive_low_watermark4;
   tcp_sock.get_option(receive_low_watermark4, ec);
 #if defined(WIN32) || defined(__sun)
-  BOOST_ASIO_CHECK(!!ec); // Not supported on Windows or Solaris.
+  BOOST_ASIO_CHECK(!!ec);  // Not supported on Windows or Solaris.
 #else
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
   BOOST_ASIO_CHECK(receive_low_watermark4.value() == 8192);
@@ -638,13 +633,10 @@ void test()
   BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
 }
 
-} // namespace socket_base_runtime
+}  // namespace socket_base_runtime
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "socket_base",
-  BOOST_ASIO_TEST_CASE(socket_base_compile::test)
-  BOOST_ASIO_TEST_CASE(socket_base_runtime::test)
-)
+BOOST_ASIO_TEST_SUITE("socket_base",
+                      BOOST_ASIO_TEST_CASE(socket_base_compile::test)
+                          BOOST_ASIO_TEST_CASE(socket_base_runtime::test))

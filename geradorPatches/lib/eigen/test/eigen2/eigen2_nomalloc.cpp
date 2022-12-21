@@ -19,10 +19,11 @@
 
 #include "main.h"
 
-template<typename MatrixType> void nomalloc(const MatrixType& m)
-{
-  /* this test check no dynamic memory allocation are issued with fixed-size matrices
-  */
+template <typename MatrixType>
+void nomalloc(const MatrixType& m) {
+  /* this test check no dynamic memory allocation are issued with fixed-size
+   * matrices
+   */
 
   typedef typename MatrixType::Scalar Scalar;
 
@@ -34,20 +35,18 @@ template<typename MatrixType> void nomalloc(const MatrixType& m)
 
   Scalar s1 = ei_random<Scalar>();
 
-  int r = ei_random<int>(0, rows-1),
-      c = ei_random<int>(0, cols-1);
+  int r = ei_random<int>(0, rows - 1), c = ei_random<int>(0, cols - 1);
 
-  VERIFY_IS_APPROX((m1+m2)*s1,              s1*m1+s1*m2);
-  VERIFY_IS_APPROX((m1+m2)(r,c), (m1(r,c))+(m2(r,c)));
-  VERIFY_IS_APPROX(m1.cwise() * m1.block(0,0,rows,cols), m1.cwise() * m1);
-  VERIFY_IS_APPROX((m1*m1.transpose())*m2,  m1*(m1.transpose()*m2));
+  VERIFY_IS_APPROX((m1 + m2) * s1, s1 * m1 + s1 * m2);
+  VERIFY_IS_APPROX((m1 + m2)(r, c), (m1(r, c)) + (m2(r, c)));
+  VERIFY_IS_APPROX(m1.cwise() * m1.block(0, 0, rows, cols), m1.cwise() * m1);
+  VERIFY_IS_APPROX((m1 * m1.transpose()) * m2, m1 * (m1.transpose() * m2));
 }
 
-void test_eigen2_nomalloc()
-{
+void test_eigen2_nomalloc() {
   // check that our operator new is indeed called:
-  VERIFY_RAISES_ASSERT(MatrixXd dummy = MatrixXd::Random(3,3));
-  CALL_SUBTEST_1( nomalloc(Matrix<float, 1, 1>()) );
-  CALL_SUBTEST_2( nomalloc(Matrix4d()) );
-  CALL_SUBTEST_3( nomalloc(Matrix<float,32,32>()) );
+  VERIFY_RAISES_ASSERT(MatrixXd dummy = MatrixXd::Random(3, 3));
+  CALL_SUBTEST_1(nomalloc(Matrix<float, 1, 1>()));
+  CALL_SUBTEST_2(nomalloc(Matrix4d()));
+  CALL_SUBTEST_3(nomalloc(Matrix<float, 32, 32>()));
 }

@@ -14,8 +14,7 @@
 
 using namespace boost::polygon;
 
-void point_data_test()
-{
+void point_data_test() {
   typedef point_data<int> point_type;
 
   point_type point1(1, 2);
@@ -48,8 +47,7 @@ void point_data_test()
   BOOST_TEST(point1 == point2);
 }
 
-void point_traits_test()
-{
+void point_traits_test() {
   typedef point_data<int> point_type;
 
   point_type point = point_mutable_traits<point_type>::construct(1, 2);
@@ -70,40 +68,39 @@ struct Point {
 
 namespace boost {
 namespace polygon {
-  template <typename T>
-  struct geometry_concept< Point<T> > {
-    typedef point_concept type;
-  };
+template <typename T>
+struct geometry_concept<Point<T> > {
+  typedef point_concept type;
+};
 
-  template <typename T>
-  struct point_traits< Point<T> > {
-    typedef T coordinate_type;
+template <typename T>
+struct point_traits<Point<T> > {
+  typedef T coordinate_type;
 
-    static coordinate_type get(const Point<T>& point, orientation_2d orient) {
-      return (orient == HORIZONTAL) ? point.x : point.y;
-    }
-  };
+  static coordinate_type get(const Point<T>& point, orientation_2d orient) {
+    return (orient == HORIZONTAL) ? point.x : point.y;
+  }
+};
 
-  template <typename T>
-  struct point_mutable_traits< Point<T> > {
-    typedef T coordinate_type;
+template <typename T>
+struct point_mutable_traits<Point<T> > {
+  typedef T coordinate_type;
 
-    static void set(Point<T>& point, orientation_2d orient, T value) {
-      (orient == HORIZONTAL) ? point.x = value : point.y = value;
-    }
+  static void set(Point<T>& point, orientation_2d orient, T value) {
+    (orient == HORIZONTAL) ? point.x = value : point.y = value;
+  }
 
-    static Point<T> construct(coordinate_type x, coordinate_type y) {
-      Point<T> point;
-      point.x = x;
-      point.y = y;
-      return point;
-    }
-  };
-}  // polygon
-}  // boost
+  static Point<T> construct(coordinate_type x, coordinate_type y) {
+    Point<T> point;
+    point.x = x;
+    point.y = y;
+    return point;
+  }
+};
+}  // namespace polygon
+}  // namespace boost
 
-void point_concept_test1()
-{
+void point_concept_test1() {
   typedef Point<int> point_type;
 
   point_type point1 = construct<point_type>(1, 2);
@@ -125,8 +122,7 @@ void point_concept_test1()
   BOOST_TEST_EQ(y(point2), 2);
 }
 
-void point_concept_test2()
-{
+void point_concept_test2() {
   typedef Point<int> point_type;
 
   point_type point1 = construct<point_type>(1, 2);
@@ -137,8 +133,7 @@ void point_concept_test2()
   BOOST_TEST_EQ(euclidean_distance(point1, point2), 5.0);
 }
 
-void point_concept_test3()
-{
+void point_concept_test3() {
   typedef Point<int> point_type;
 
   point_type point = construct<point_type>(1, 2);
@@ -165,7 +160,7 @@ void point_concept_test3()
   BOOST_TEST_EQ(y(point), 5);
 }
 
-template<typename T>
+template <typename T>
 struct Transformer {
   void scale(T& x, T& y) const {
     x *= 2;
@@ -179,8 +174,7 @@ struct Transformer {
   }
 };
 
-void point_concept_test4()
-{
+void point_concept_test4() {
   typedef Point<int> point_type;
 
   point_type point = construct<point_type>(1, 2);
@@ -193,13 +187,12 @@ void point_concept_test4()
   BOOST_TEST_EQ(y(point), 2);
 }
 
-int main()
-{
-    point_data_test();
-    point_traits_test();
-    point_concept_test1();
-    point_concept_test2();
-    point_concept_test3();
-    point_concept_test4();
-    return boost::report_errors();
+int main() {
+  point_data_test();
+  point_traits_test();
+  point_concept_test1();
+  point_concept_test2();
+  point_concept_test3();
+  point_concept_test4();
+  return boost::report_errors();
 }

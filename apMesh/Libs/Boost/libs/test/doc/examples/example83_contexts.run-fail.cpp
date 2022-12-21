@@ -10,12 +10,11 @@
 #include <boost/test/included/unit_test.hpp>
 #include <cmath>
 
-BOOST_AUTO_TEST_CASE(test_multi_context)
-{
+BOOST_AUTO_TEST_CASE(test_multi_context) {
   for (int level = 0; level < 10; ++level) {
     int rand_value = std::abs(rand()) % 50;
-    BOOST_TEST_CONTEXT("With level " << level, "Random value=" << rand_value){
-      for( int j = 1; j < rand_value; j++) {
+    BOOST_TEST_CONTEXT("With level " << level, "Random value=" << rand_value) {
+      for (int j = 1; j < rand_value; j++) {
         BOOST_TEST(level < rand_value);
         rand_value /= 2;
       }

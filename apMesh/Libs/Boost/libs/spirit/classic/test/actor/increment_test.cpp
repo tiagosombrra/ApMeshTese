@@ -11,32 +11,29 @@
 // Test suite for increment_actor
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "action_tests.hpp"
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_increment_actor.hpp>
 
-void increment_action_test()
-{
-    using namespace BOOST_SPIRIT_CLASSIC_NS;
+#include "action_tests.hpp"
 
-    BOOST_MESSAGE("increment_test");
+void increment_action_test() {
+  using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-    const char* cp = "63";
-    const char* cp_first = cp;
-    const char* cp_last = cp + test_impl::string_length(cp);
-    int h=127;
-    int hm=h;
+  BOOST_MESSAGE("increment_test");
 
-    scanner<char const*> scan( cp_first, cp_last );
-    match<> hit;
+  const char* cp = "63";
+  const char* cp_first = cp;
+  const char* cp_last = cp + test_impl::string_length(cp);
+  int h = 127;
+  int hm = h;
 
-    hit = int_p[ increment_a(hm)].parse(scan);
-    BOOST_CHECK(hit);
-    BOOST_CHECK_EQUAL(scan.first, scan.last);
+  scanner<char const*> scan(cp_first, cp_last);
+  match<> hit;
 
-    ++h;
-    BOOST_CHECK_EQUAL( hm,h);
+  hit = int_p[increment_a(hm)].parse(scan);
+  BOOST_CHECK(hit);
+  BOOST_CHECK_EQUAL(scan.first, scan.last);
+
+  ++h;
+  BOOST_CHECK_EQUAL(hm, h);
 }
-
-
-

@@ -23,19 +23,19 @@
 //  line options, so just because the problem doesn't show up on one
 //  system doesn't mean it has been fixed. Remove this workaround only
 //  when told by Metrowerks that it is safe to do so.
-#include <cstddef> //Metrowerks linker needs at least one standard library
+#include <cstddef>  //Metrowerks linker needs at least one standard library
 #endif
 
 #include <cstdio>
 
-int cpp_main( int, char *[] )  // note the name
+int cpp_main(int, char *[])  // note the name
 {
 #if (defined(APPLE) && defined(ppc)) || defined(_ARCH_PPC)
-    std::printf("The ppc doesn't throw on divide-by-zero. No check.\n");
-    return 1;
+  std::printf("The ppc doesn't throw on divide-by-zero. No check.\n");
+  return 1;
 #else
-    int div = 0;
-    return 10 / div;
+  int div = 0;
+  return 10 / div;
 #endif
 }
 

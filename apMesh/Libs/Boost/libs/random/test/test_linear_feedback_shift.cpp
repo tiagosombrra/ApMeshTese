@@ -11,7 +11,9 @@
 
 #include <boost/random/linear_feedback_shift.hpp>
 
-typedef boost::random::linear_feedback_shift_engine<boost::uint32_t, 32, 31, 13, 12> linear_feedback_shift;
+typedef boost::random::linear_feedback_shift_engine<boost::uint32_t, 32, 31, 13,
+                                                    12>
+    linear_feedback_shift;
 #define BOOST_RANDOM_URNG linear_feedback_shift
 
 #define BOOST_RANDOM_SEED_WORDS 1
@@ -20,6 +22,7 @@ typedef boost::random::linear_feedback_shift_engine<boost::uint32_t, 32, 31, 13,
 #define BOOST_RANDOM_SEED_SEQ_VALIDATION_VALUE 3709603036U
 #define BOOST_RANDOM_ITERATOR_VALIDATION_VALUE 3112279337U
 
-#define BOOST_RANDOM_GENERATE_VALUES { 0x154005U, 0x54005502U, 0x5502BD4U, 0x2BD4005U }
+#define BOOST_RANDOM_GENERATE_VALUES \
+  { 0x154005U, 0x54005502U, 0x5502BD4U, 0x2BD4005U }
 
 #include "test_generator.ipp"

@@ -13,43 +13,32 @@
 #define BASE_EXPORT
 #include "base.hpp"
 
-template<class Archive>
-void base::serialize(
-    Archive &ar,
-    const unsigned int /* file_version */){
-}
+template <class Archive>
+void base::serialize(Archive &ar, const unsigned int /* file_version */) {}
 
 // for some reason this is required at least by MSVC
 // given that its declared virtual .. = 0;  This
 // seems wrong to me but here it is.
-//polymorphic_base::~polymorphic_base(){}
+// polymorphic_base::~polymorphic_base(){}
 
 // instantiate code for text archives
-#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 
 // instantiate code for polymorphic archives
-#include <boost/archive/polymorphic_oarchive.hpp>
 #include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
 
 // note: BOOST_CLASS_EXPORT cannot be used to instantiate
 // serialization code for an abstract base class.  So use
 // explicit instantiation in this case.
-//BOOST_CLASS_EXPORT(polymorphic_base)
+// BOOST_CLASS_EXPORT(polymorphic_base)
 
 template BOOST_SYMBOL_EXPORT void base::serialize(
-    boost::archive::text_oarchive & ar,
-    const unsigned int version
-);
+    boost::archive::text_oarchive &ar, const unsigned int version);
 template BOOST_SYMBOL_EXPORT void base::serialize(
-    boost::archive::text_iarchive & ar,
-    const unsigned int version
-);
+    boost::archive::text_iarchive &ar, const unsigned int version);
 template BOOST_SYMBOL_EXPORT void base::serialize(
-    boost::archive::polymorphic_oarchive & ar,
-    const unsigned int version
-);
+    boost::archive::polymorphic_oarchive &ar, const unsigned int version);
 template BOOST_SYMBOL_EXPORT void base::serialize(
-    boost::archive::polymorphic_iarchive & ar,
-    const unsigned int version
-);
+    boost::archive::polymorphic_iarchive &ar, const unsigned int version);

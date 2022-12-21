@@ -4,28 +4,20 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
-
-#include <boost/statechart/state_machine.hpp>
 #include <boost/statechart/simple_state.hpp>
-
-
+#include <boost/statechart/state_machine.hpp>
 
 namespace sc = boost::statechart;
 
-
-
 struct A;
-struct InvalidChartTest : sc::state_machine< InvalidChartTest, A > {};
+struct InvalidChartTest : sc::state_machine<InvalidChartTest, A> {};
 
-struct A : sc::simple_state< A, InvalidChartTest > {};
+struct A : sc::simple_state<A, InvalidChartTest> {};
 
-  // A does not have inner states
-  struct B : sc::simple_state< B, A > {};
+// A does not have inner states
+struct B : sc::simple_state<B, A> {};
 
-
-int main()
-{
+int main() {
   InvalidChartTest machine;
   machine.initiate();
   return 0;

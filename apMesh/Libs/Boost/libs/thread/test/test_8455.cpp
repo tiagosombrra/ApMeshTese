@@ -5,19 +5,16 @@
 
 #include <boost/thread/mutex.hpp>
 boost::mutex mut;
-void boostMutexImp1()
-{
-    boost::mutex::scoped_lock lock(mut);
-    mut.unlock();  // A: with this X blocks
-    //lock.unlock(); // No influence if used also if before A
+void boostMutexImp1() {
+  boost::mutex::scoped_lock lock(mut);
+  mut.unlock();  // A: with this X blocks
+                 // lock.unlock(); // No influence if used also if before A
 }
-void boostMutexImp2()
-{
-    boost::mutex::scoped_lock lock(mut); // X: blocks with A
+void boostMutexImp2() {
+  boost::mutex::scoped_lock lock(mut);  // X: blocks with A
 }
-int main()
-{
-    boostMutexImp1();
-    boostMutexImp2();
-    return 0;
+int main() {
+  boostMutexImp1();
+  boostMutexImp2();
+  return 0;
 }

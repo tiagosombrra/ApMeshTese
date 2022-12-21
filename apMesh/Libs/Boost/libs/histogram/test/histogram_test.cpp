@@ -20,6 +20,7 @@
 #include <tuple>
 #include <utility>
 #include <vector>
+
 #include "is_close.hpp"
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
@@ -28,7 +29,7 @@
 #include "utility_histogram.hpp"
 
 using namespace boost::histogram;
-using namespace boost::histogram::literals; // to get _c suffix
+using namespace boost::histogram::literals;  // to get _c suffix
 
 template <class A, class S>
 void pass_histogram(boost::histogram::histogram<A, S>& h) {
@@ -70,8 +71,8 @@ void run_tests() {
     h(0, 0);
     auto h2 = decltype(h)(h);
     BOOST_TEST_EQ(h2, h);
-    auto h3 =
-        histogram<std::tuple<axis::integer<>, axis::integer<>>, dense_storage<double>>(h);
+    auto h3 = histogram<std::tuple<axis::integer<>, axis::integer<>>,
+                        dense_storage<double>>(h);
     BOOST_TEST_EQ(h3, h);
   }
 
@@ -83,8 +84,8 @@ void run_tests() {
     BOOST_TEST_NE(h, h2);
     h2 = h;
     BOOST_TEST_EQ(h, h2);
-    auto h3 =
-        histogram<std::tuple<axis::integer<>, axis::integer<>>, dense_storage<double>>();
+    auto h3 = histogram<std::tuple<axis::integer<>, axis::integer<>>,
+                        dense_storage<double>>();
     h3 = h;
     BOOST_TEST_EQ(h, h3);
   }
@@ -115,7 +116,8 @@ void run_tests() {
     unsafe_access::axis(a, 0).metadata() = "bar";
     BOOST_TEST_EQ(a.axis().metadata(), "bar");
 
-    auto b = make(Tag(), axis::integer<double>(1, 2, "foo"), axis::integer<>(1, 3));
+    auto b =
+        make(Tag(), axis::integer<double>(1, 2, "foo"), axis::integer<>(1, 3));
 
     // check static access
     BOOST_TEST_EQ(b.axis(0_c).size(), 1);
@@ -181,11 +183,11 @@ void run_tests() {
     auto h = make(Tag(), axis::integer<int, axis::null_type>{0, 2});
     h(0);
     auto i = h(0);
-    BOOST_TEST(i == h.begin() + 1); // +1 because of underflow
+    BOOST_TEST(i == h.begin() + 1);  // +1 because of underflow
     i = h(-1);
-    BOOST_TEST(i == h.begin()); // underflow
+    BOOST_TEST(i == h.begin());  // underflow
     i = h(10);
-    BOOST_TEST(i == h.end() - 1); // overflow
+    BOOST_TEST(i == h.end() - 1);  // overflow
 
     BOOST_TEST_EQ(h.rank(), 1);
     BOOST_TEST_EQ(h.axis().size(), 2);
@@ -199,7 +201,8 @@ void run_tests() {
 
   // 1D no *flow
   {
-    auto h = make(Tag(), axis::integer<int, axis::null_type, axis::option::none_t>(0, 2));
+    auto h = make(
+        Tag(), axis::integer<int, axis::null_type, axis::option::none_t>(0, 2));
     h(0);
     auto i = h(-0);
     BOOST_TEST(i == h.begin());
@@ -230,7 +233,7 @@ void run_tests() {
 
     BOOST_TEST_EQ(h.at(0), 1);
     BOOST_TEST_EQ(h.at(1), 1);
-    BOOST_TEST_EQ(h.at(2), 2); // overflow bin
+    BOOST_TEST_EQ(h.at(2), 2);  // overflow bin
   }
 
   // 1D weight
@@ -298,8 +301,9 @@ void run_tests() {
 
   // 2D
   {
-    auto h = make(Tag(), axis::integer<>(-1, 1),
-                  axis::integer<int, axis::null_type, axis::option::none_t>(-1, 2));
+    auto h =
+        make(Tag(), axis::integer<>(-1, 1),
+             axis::integer<int, axis::null_type, axis::option::none_t>(-1, 2));
     h(-1, -1);
     h(-1, 0);
     h(-1, -10);
@@ -329,12 +333,13 @@ void run_tests() {
 
   // 2D weight
   {
-    auto h = make_s(Tag(), weight_storage(), axis::integer<>(-1, 1),
-                    axis::integer<int, axis::null_type, axis::option::none_t>(-1, 2));
-    h(-1, 0);              // -> 0, 1
-    h(weight(10), -1, -1); // -> 0, 0
-    h(weight(5), -1, -10); // is ignored
-    h(weight(7), -10, 0);  // -> -1, 1
+    auto h = make_s(
+        Tag(), weight_storage(), axis::integer<>(-1, 1),
+        axis::integer<int, axis::null_type, axis::option::none_t>(-1, 2));
+    h(-1, 0);               // -> 0, 1
+    h(weight(10), -1, -1);  // -> 0, 0
+    h(weight(5), -1, -10);  // is ignored
+    h(weight(7), -10, 0);   // -> -1, 1
 
     BOOST_TEST_EQ(algorithm::sum(h).value(), 18);
     BOOST_TEST_EQ(algorithm::sum(h).variance(), 150);
@@ -374,11 +379,12 @@ void run_tests() {
 
   // 3D weight
   {
-    auto h = make_s(Tag(), weight_storage(), axis::integer<>(0, 3), axis::integer<>(0, 4),
-                    axis::integer<>(0, 5));
+    auto h = make_s(Tag(), weight_storage(), axis::integer<>(0, 3),
+                    axis::integer<>(0, 4), axis::integer<>(0, 5));
     for (auto i = 0; i < h.axis(0_c).size(); ++i)
       for (auto j = 0; j < h.axis(1_c).size(); ++j)
-        for (auto k = 0; k < h.axis(2_c).size(); ++k) h(i, j, k, weight(i + j + k));
+        for (auto k = 0; k < h.axis(2_c).size(); ++k)
+          h(i, j, k, weight(i + j + k));
 
     for (auto i = 0; i < h.axis(0_c).size(); ++i) {
       for (auto j = 0; j < h.axis(1_c).size(); ++j) {
@@ -393,7 +399,8 @@ void run_tests() {
   // STL support
   {
     auto v = std::vector<int>{0, 1, 2};
-    auto h = std::for_each(v.begin(), v.end(), make(Tag(), axis::integer<>(0, 3)));
+    auto h =
+        std::for_each(v.begin(), v.end(), make(Tag(), axis::integer<>(0, 3)));
     BOOST_TEST_EQ(h.at(0), 1);
     BOOST_TEST_EQ(h.at(1), 1);
     BOOST_TEST_EQ(h.at(2), 1);
@@ -412,7 +419,8 @@ void run_tests() {
 
   // histogram reset
   {
-    auto h = make(Tag(), axis::integer<int, axis::null_type, axis::option::none_t>(0, 2));
+    auto h = make(
+        Tag(), axis::integer<int, axis::null_type, axis::option::none_t>(0, 2));
     h(0);
     h(1);
     BOOST_TEST_EQ(h.at(0), 1);
@@ -460,8 +468,9 @@ void run_tests() {
     // test special case of 1-dimensional histogram, which should unpack
     // 1-dimensional tuple normally, but forward larger tuples to the axis
     auto h1 = make(Tag(), axis::integer<>(0, 2));
-    h1(std::make_tuple(0));                      // as if one had passed 0 directly
-    BOOST_TEST_EQ(h1.at(std::make_tuple(0)), 1); // as if one had passed 0 directly
+    h1(std::make_tuple(0));  // as if one had passed 0 directly
+    BOOST_TEST_EQ(h1.at(std::make_tuple(0)),
+                  1);  // as if one had passed 0 directly
   }
 
   // bad bin access
@@ -492,7 +501,7 @@ void run_tests() {
     BOOST_TEST_EQ(db.at<int>().first, 0);
     BOOST_TEST_EQ(db.at<int>().second, 1002);
 
-    if (Tag()) { // axis::variant allocation, only for dynamic histogram
+    if (Tag()) {  // axis::variant allocation, only for dynamic histogram
       using T = axis::variant<axis::integer<>>;
       BOOST_TEST_EQ(db.at<T>().first, 0);
       // may be zero if vector uses small-vector-optimisation

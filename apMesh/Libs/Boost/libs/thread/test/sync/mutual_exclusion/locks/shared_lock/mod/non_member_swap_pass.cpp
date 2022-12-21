@@ -17,23 +17,17 @@
 // template <class Mutex>
 //   void swap(shared_lock<Mutex>& x, shared_lock<Mutex>& y);
 
-#include <boost/thread/lock_types.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/lock_types.hpp>
 
-struct shared_mutex
-{
-  void lock_shared()
-  {
-  }
-  void unlock_shared()
-  {
-  }
+struct shared_mutex {
+  void lock_shared() {}
+  void unlock_shared() {}
 };
 
 shared_mutex m;
 
-int main()
-{
+int main() {
   boost::shared_lock<shared_mutex> lk1(m);
   boost::shared_lock<shared_mutex> lk2;
   swap(lk1, lk2);
@@ -44,4 +38,3 @@ int main()
 
   return boost::report_errors();
 }
-

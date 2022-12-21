@@ -4,18 +4,18 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include <array>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/histogram/accumulators/ostream.hpp>
 #include <boost/histogram/accumulators/thread_safe.hpp>
-#include "throw_exception.hpp"
 #include <boost/histogram/storage_adaptor.hpp>
-
-#include <array>
 #include <deque>
 #include <map>
 #include <thread>
 #include <unordered_map>
 #include <vector>
+
+#include "throw_exception.hpp"
 
 using namespace boost::histogram;
 

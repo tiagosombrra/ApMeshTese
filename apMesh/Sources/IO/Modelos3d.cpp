@@ -1490,7 +1490,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //======================== FIM DO PATCH 1 ==================================
 
   //=============================== PATCH 2 ==================================
-  //		Ponto* p200 = p130; // new Vertice (  0.00000, -1.40000,  2.40000
+  //		Ponto* p200 = p130; // new Vertice (  0.00000,
+  //-1.40000,  2.40000
   //);
   Ponto* p210 = new Vertice(-0.78400, -1.40000, 2.40000);
   Ponto* p220 = new Vertice(-1.40000, -0.78400, 2.40000);
@@ -1559,7 +1560,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Curva* patch3_c1 = new CurvParamBezier(*p230, *p310, *p320, *p330);
   Curva* patch3_c2 = new CurvParamBezier(*p330, *p331, *p332, *p333);
   Curva* patch3_c3 = new CurvParamBezier(*p233, *p313, *p323, *p333);
-  //		Curva* patch3_c4 = new CurvParamBezier ( *p230, *p231, *p232, *p233
+  //		Curva* patch3_c4 = new CurvParamBezier ( *p230, *p231, *p232,
+  //*p233
   //);
 
   Patch* patch3 = new BezierPatch(patch3_c1, patch3_c2, patch3_c3, patch2_c2,
@@ -1613,10 +1615,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //======================== FIM DO PATCH 4 ==================================
 
   //=============================== PATCH 5 ==================================
-  //		Ponto* p500 = p103; //new Vertice (	1.50000, 0.00000, 2.40000
-  //); 		Ponto* p510 = p113; //new Vertice ( 1.50000, -0.84000, 2.40000 ); 		Ponto*
-  //p520 = p123; //new Vertice ( 0.84000, -1.50000, 2.40000 ); 		Ponto* p530 =
-  //p133; //new Vertice ( 0.00000, -1.50000, 2.40000 );
+  //		Ponto* p500 = p103; //new Vertice (	1.50000,
+  // 0.00000, 2.40000
+  //); 		Ponto* p510 = p113; //new Vertice ( 1.50000, -0.84000, 2.40000
+  //); Ponto* p520 = p123; //new Vertice ( 0.84000, -1.50000, 2.40000 );
+  // Ponto* p530 = p133; //new Vertice ( 0.00000, -1.50000, 2.40000 );
 
   Ponto* p501 = new Vertice(1.75000, 0.00000, 1.87500);
   Ponto* p511 = new Vertice(1.75000, -0.98000, 1.87500);
@@ -1655,34 +1658,40 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //=============================== PATCH 6 ==================================
   // Ponto* p600 = p133; //new Vertice (	0.00000, -1.50000, 2.40000 );
   //		Ponto* p610 = p213; //new Vertice ( -0.84000, -1.50000, 2.40000
-  //); 		Ponto* p620 = p223; //new Vertice ( -1.50000, -0.84000, 2.40000 ); 		Ponto*
-  //p630 = p303; //new Vertice ( -1.50000, 0.00000, 2.40000 );
+  //); 		Ponto* p620 = p223; //new Vertice ( -1.50000, -0.84000, 2.40000
+  //); 		Ponto* p630 = p303; //new Vertice ( -1.50000, 0.00000, 2.40000
+  // );
 
-  //		Ponto* p601 = p531; //new Vertice (	0.00000, -1.75000, 1.87500
+  //		Ponto* p601 = p531; //new Vertice (	0.00000,
+  //-1.75000, 1.87500
   //);
   Ponto* p611 = new Vertice(-0.98000, -1.75000, 1.87500);
   Ponto* p621 = new Vertice(-1.75000, -0.98000, 1.87500);
   Ponto* p631 = new Vertice(-1.75000, 0.00000, 1.87500);
 
-  //		Ponto* p602 = p532; //new Vertice (	0.00000, -2.00000, 1.35000
+  //		Ponto* p602 = p532; //new Vertice (	0.00000,
+  //-2.00000, 1.35000
   //);
   Ponto* p612 = new Vertice(-1.12000, -2.00000, 1.35000);
   Ponto* p622 = new Vertice(-2.00000, -1.12000, 1.35000);
   Ponto* p632 = new Vertice(-2.00000, 0.00000, 1.35000);
 
-  //		Ponto* p603 = p533; //new Vertice (	0.00000, -2.00000, 0.90000
+  //		Ponto* p603 = p533; //new Vertice (	0.00000, -2.00000,
+  // 0.90000
   //);
   Ponto* p613 = new Vertice(-1.12000, -2.00000, 0.90000);
   Ponto* p623 = new Vertice(-2.00000, -1.12000, 0.90000);
   Ponto* p633 = new Vertice(-2.00000, 0.00000, 0.90000);
 
-  //		Curva* patch6_c1 = new CurvParamBezier ( *p133, *p213, *p223, *p233
+  //		Curva* patch6_c1 = new CurvParamBezier ( *p133, *p213, *p223,
+  //*p233
   //); // ( *p600, *p610, *p620, *p630 );
   Curva* patch6_c2 = new CurvParamBezier(
       *p233, *p631, *p632, *p633);  // ( *p630, *p631, *p632, *p633 );
   Curva* patch6_c3 = new CurvParamBezier(
       *p533, *p613, *p623, *p633);  // ( *p603, *p613, *p623, *p633 );
-  //		Curva* patch6_c4 = new CurvParamBezier ( *p133, *p531, *p532, *p533
+  //		Curva* patch6_c4 = new CurvParamBezier ( *p133, *p531, *p532,
+  //*p533
   //); // ( *p600, *p601, *p602, *p603 );
 
   Patch* patch6 = new BezierPatch(patch2_c3, patch6_c2, patch6_c3, patch5_c2,
@@ -1696,10 +1705,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //======================== FIM DO PATCH 6 ==================================
 
   //=============================== PATCH 7 ==================================
-  //		Ponto* p700 = p233; //new Vertice (	-1.50000, 0.00000, 2.40000
-  //); 		Ponto* p710 = p313; //new Vertice ( -1.50000, 0.84000, 2.40000 ); 		Ponto*
-  //p720 = p323; //new Vertice ( -0.84000, 1.50000, 2.40000 ); 		Ponto* p730 =
-  //p333; //new Vertice ( 0.00000, 1.50000, 2.40000 );
+  //		Ponto* p700 = p233; //new Vertice (	-1.50000,
+  // 0.00000, 2.40000
+  //); 		Ponto* p710 = p313; //new Vertice ( -1.50000, 0.84000, 2.40000
+  //); Ponto* p720 = p323; //new Vertice ( -0.84000, 1.50000, 2.40000 );
+  // Ponto* p730 = p333; //new Vertice ( 0.00000, 1.50000, 2.40000 );
 
   //		Ponto* p701 = p631; //new Vertice (-1.75000, 0.00000, 1.87500 );
   Ponto* p711 = new Vertice(-1.75000, 0.98000, 1.87500);
@@ -1716,11 +1726,13 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p723 = new Vertice(-1.12000, 2.00000, 0.90000);
   Ponto* p733 = new Vertice(0.00000, 2.00000, 0.90000);
 
-  //		Curva* patch7_c1 = new CurvParamBezier ( *p233, *p313, *p323, *p333
+  //		Curva* patch7_c1 = new CurvParamBezier ( *p233, *p313, *p323,
+  //*p333
   //);
   Curva* patch7_c2 = new CurvParamBezier(*p333, *p731, *p732, *p733);
   Curva* patch7_c3 = new CurvParamBezier(*p633, *p713, *p723, *p733);
-  //		Curva* patch7_c4 = new CurvParamBezier ( *p233, *p631, *p632, *p633
+  //		Curva* patch7_c4 = new CurvParamBezier ( *p233, *p631, *p632,
+  //*p633
   //);
 
   Patch* patch7 = new BezierPatch(patch3_c3, patch7_c2, patch7_c3, patch6_c2,
@@ -1734,33 +1746,40 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //======================== FIM DO PATCH 7 ==================================
 
   //=============================== PATCH 8 ==================================
-  //		Ponto* p800 = p333; //new Vertice (	0.00000, 1.50000, 2.40000
-  //); 		Ponto* p810 = p413; //new Vertice ( 0.84000, 1.50000, 2.40000 ); 		Ponto*
-  //p820 = p423; //new Vertice ( 1.50000, 0.84000, 2.40000 ); 		Ponto* p830 =
-  //p103; //new Vertice ( 1.50000, 0.00000, 2.40000 );
+  //		Ponto* p800 = p333; //new Vertice (
+  // 0.00000, 1.50000, 2.40000
+  //); 		Ponto* p810 = p413; //new Vertice ( 0.84000, 1.50000, 2.40000 );
+  // Ponto* p820 = p423; //new Vertice ( 1.50000, 0.84000, 2.40000 );
+  // Ponto* p830 = p103; //new Vertice ( 1.50000, 0.00000, 2.40000 );
 
-  //		Ponto* p801 = p731; //new Vertice (	0.00000, 1.75000, 1.87500
+  //		Ponto* p801 = p731; //new Vertice (
+  // 0.00000, 1.75000, 1.87500
   //);
   Ponto* p811 = new Vertice(0.98000, 1.75000, 1.87500);
   Ponto* p821 = new Vertice(1.75000, 0.98000, 1.87500);
   //		Ponto* p831 = p501; //new Vertice ( 1.75000, 0.00000, 1.87500 );
 
-  //		Ponto* p802 = p732; //new Vertice (	0.00000, 2.00000, 1.35000
+  //		Ponto* p802 = p732; //new Vertice (
+  // 0.00000, 2.00000, 1.35000
   //);
   Ponto* p812 = new Vertice(1.12000, 2.00000, 1.35000);
   Ponto* p822 = new Vertice(2.00000, 1.12000, 1.35000);
   //		Ponto* p832 = p502; //new Vertice ( 2.00000, 0.00000, 1.35000 );
 
-  //		Ponto* p803 = p733; //new Vertice (	0.00000, 2.00000, 0.90000
+  //		Ponto* p803 = p733; //new Vertice (	0.00000, 2.00000,
+  // 0.90000
   //);
   Ponto* p813 = new Vertice(1.12000, 2.00000, 0.90000);
   Ponto* p823 = new Vertice(2.00000, 1.12000, 0.90000);
   //		Ponto* p833 = p503; //new Vertice ( 2.00000, 0.00000, 0.90000 );
 
-  //		Curva* patch8_c1 = new CurvParamBezier ( *p333, *p413, *p423, *p103
-  //); 		Curva* patch8_c2 = new CurvParamBezier ( *p103, *p501, *p502, *p503 );
+  //		Curva* patch8_c1 = new CurvParamBezier ( *p333, *p413, *p423,
+  //*p103
+  //); 		Curva* patch8_c2 = new CurvParamBezier ( *p103, *p501, *p502,
+  //*p503 );
   Curva* patch8_c3 = new CurvParamBezier(*p733, *p813, *p823, *p503);
-  //		Curva* patch8_c4 = new CurvParamBezier ( *p333, *p731, *p732, *p733
+  //		Curva* patch8_c4 = new CurvParamBezier ( *p333, *p731, *p732,
+  //*p733
   //);
 
   Patch* patch8 = new BezierPatch(patch4_c3, patch5_c4, patch8_c3, patch7_c2,
@@ -1774,10 +1793,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //======================== FIM DO PATCH 8 ==================================
 
   //=============================== PATCH 9 ==================================
-  //		Ponto* p900 = p503; //new Vertice (	2.00000, 0.00000, 0.90000
-  //); 		Ponto* p910 = p513; //new Vertice ( 2.00000, -1.12000, 0.90000 ); 		Ponto*
-  //p920 = p523; //new Vertice ( 1.12000, -2.00000, 0.90000 ); 		Ponto* p930 =
-  //p533; //new Vertice ( 0.00000, -2.00000, 0.90000 );
+  //		Ponto* p900 = p503; //new Vertice (	2.00000, 0.00000,
+  // 0.90000
+  //); 		Ponto* p910 = p513; //new Vertice ( 2.00000, -1.12000, 0.90000
+  //); Ponto* p920 = p523; //new Vertice ( 1.12000, -2.00000, 0.90000 );
+  // Ponto* p930 = p533; //new Vertice ( 0.00000, -2.00000, 0.90000 );
 
   Ponto* p901 = new Vertice(2.00000, 0.00000, 0.45000);
   Ponto* p911 = new Vertice(2.00000, -1.12000, 0.45000);
@@ -1794,7 +1814,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p923 = new Vertice(0.84000, -1.50000, 0.15000);
   Ponto* p933 = new Vertice(0.00000, -1.50000, 0.15000);
 
-  //		Curva* patch9_c1 = new CurvParamBezier ( *p503, *p513, *p523, *p533
+  //		Curva* patch9_c1 = new CurvParamBezier ( *p503, *p513, *p523,
+  //*p533
   //);
   Curva* patch9_c2 = new CurvParamBezier(*p533, *p931, *p932, *p933);
   Curva* patch9_c3 = new CurvParamBezier(*p903, *p913, *p923, *p933);
@@ -1812,9 +1833,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
 
   //============================== PATCH 10 ==================================
   //		Ponto* p1000 = p533; //new Vertice ( 0.00000,-2.00000, 0.90000
-  //); 		Ponto* p1010 = p613; //new Vertice (-1.12000,-2.00000, 0.90000 ); 		Ponto*
-  //p1020 = p623; //new Vertice (-2.00000,-1.12000, 0.90000 ); 		Ponto* p1030 =
-  //p633; //new Vertice ( -2.00000, 0.00000, 0.90000 );
+  //); 		Ponto* p1010 = p613; //new Vertice (-1.12000,-2.00000, 0.90000
+  //); Ponto* p1020 = p623; //new Vertice (-2.00000,-1.12000, 0.90000 );
+  // Ponto* p1030 = p633; //new Vertice ( -2.00000, 0.00000, 0.90000 );
 
   //		Ponto* p1001 = p931; //new Vertice ( 0.00000,-2.00000, 0.45000
   //);
@@ -1834,11 +1855,13 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p1023 = new Vertice(-1.50000, -0.84000, 0.15000);
   Ponto* p1033 = new Vertice(-1.50000, 0.00000, 0.15000);
 
-  //		Curva* patch10_c1 = new CurvParamBezier ( *p533, *p613, *p623, *p633
+  //		Curva* patch10_c1 = new CurvParamBezier ( *p533, *p613, *p623,
+  //*p633
   //);
   Curva* patch10_c2 = new CurvParamBezier(*p633, *p1031, *p1032, *p1033);
   Curva* patch10_c3 = new CurvParamBezier(*p933, *p1013, *p1023, *p1033);
-  //		Curva* patch10_c4 = new CurvParamBezier ( *p533, *p931, *p932, *p933
+  //		Curva* patch10_c4 = new CurvParamBezier ( *p533, *p931, *p932,
+  //*p933
   //);
 
   Patch* patch10 = new BezierPatch(patch6_c3, patch10_c2, patch10_c3, patch9_c2,
@@ -1853,9 +1876,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
 
   //============================== PATCH 11 ==================================
   //		Ponto* p633 = p633; //new Vertice ( -2.00000, 0.00000, 0.90000
-  //); 		Ponto* p713 = p713; //new Vertice ( -2.00000, 1.12000, 0.90000 ); 		Ponto*
-  //p723 = p723; //new Vertice ( -1.12000, 2.00000, 0.90000 ); 		Ponto* p733 =
-  //p733; //new Vertice ( 0.00000, 2.00000, 0.90000 );
+  //); 		Ponto* p713 = p713; //new Vertice ( -2.00000, 1.12000, 0.90000
+  //); Ponto* p723 = p723; //new Vertice ( -1.12000, 2.00000, 0.90000 );
+  // Ponto* p733 = p733; //new Vertice ( 0.00000, 2.00000, 0.90000 );
 
   //		Ponto* p1031 = p1031; //new Vertice (-2.00000, 0.00000, 0.45000
   //);
@@ -1875,7 +1898,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p1123 = new Vertice(-0.84000, 1.50000, 0.15000);
   Ponto* p1133 = new Vertice(0.00000, 1.50000, 0.15000);
 
-  //		Curva* patch11_c1 = new CurvParamBezier ( *p633, *p713, *p723, *p733
+  //		Curva* patch11_c1 = new CurvParamBezier ( *p633, *p713, *p723,
+  //*p733
   //);
   Curva* patch11_c2 = new CurvParamBezier(*p733, *p1131, *p1132, *p1133);
   Curva* patch11_c3 = new CurvParamBezier(*p1033, *p1113, *p1123, *p1133);
@@ -1917,8 +1941,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p1223 = new Vertice(1.50000, 0.84000, 0.15000);
   //		Ponto* p903 = p903; //new Vertice ( 1.50000, 0.00000, 0.15000 );
 
-  //		Curva* patch12_c1 = new CurvParamBezier ( *p733, *p813, *p823, *p503
-  //); 		Curva* patch12_c2 = new CurvParamBezier ( *p503, *p901, *p902, *p903 );
+  //		Curva* patch12_c1 = new CurvParamBezier ( *p733, *p813, *p823,
+  //*p503
+  //); 		Curva* patch12_c2 = new CurvParamBezier ( *p503, *p901, *p902,
+  //*p903 );
   Curva* patch12_c3 = new CurvParamBezier(*p1133, *p1213, *p1223, *p903);
   //		Curva* patch12_c4 = new CurvParamBezier ( *p733, *p1131, *p1132,
   //*p1133 );
@@ -1999,11 +2025,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   Curva* patch14_c1 = new CurvParamBezier(*p1330, *p1410, *p1420, *p1300);
-  //		Curva* patch14_c2 = new CurvParamBezier ( *p1300, *p1301, *p1302,
-  //*p1303 );
+  //		Curva* patch14_c2 = new CurvParamBezier ( *p1300, *p1301,
+  //*p1302, *p1303 );
   Curva* patch14_c3 = new CurvParamBezier(*p1333, *p1413, *p1423, *p1303);
-  //		Curva* patch14_c4 = new CurvParamBezier ( *p1330, *p1331, *p1332,
-  //*p1333 );
+  //		Curva* patch14_c4 = new CurvParamBezier ( *p1330, *p1331,
+  //*p1332, *p1333 );
 
   Patch* patch14 = new BezierPatch(patch14_c1, patch13_c4, patch14_c3,
                                    patch13_c2, *p1411, *p1421, *p1412, *p1422);
@@ -2017,9 +2043,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
 
   //============================== PATCH 15 ==================================
   //		Ponto* p1303 = p1303; //new Vertice ( -2.70000, 0.00000, 1.80000
-  //); 		Ponto* p1313 = p1313; //new Vertice ( -2.70000,-0.30000, 1.80000 );
-  //		Ponto* p1323 = p1323; //new Vertice ( -3.00000,-0.30000, 1.80000
-  //); 		Ponto* p1333 = p1333; //new Vertice ( -3.00000, 0.00000, 1.80000 );
+  //); 		Ponto* p1313 = p1313; //new Vertice ( -2.70000,-0.30000, 1.80000
+  //); 		Ponto* p1323 = p1323; //new Vertice ( -3.00000,-0.30000, 1.80000
+  //); 		Ponto* p1333 = p1333; //new Vertice ( -3.00000, 0.00000, 1.80000
+  //);
 
   Ponto* p1501 = new Vertice(-2.70000, 0.00000, 1.57500);
   Ponto* p1511 = new Vertice(-2.70000, -0.30000, 1.57500);
@@ -2037,8 +2064,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p1523 = new Vertice(-1.90000, -0.30000, 0.60000);
   Ponto* p1533 = new Vertice(-1.90000, 0.00000, 0.60000);
 
-  //		Curva* patch15_c1 = new CurvParamBezier ( *p1303, *p1313, *p1323,
-  //*p1333 );
+  //		Curva* patch15_c1 = new CurvParamBezier ( *p1303, *p1313,
+  //*p1323, *p1333 );
   Curva* patch15_c2 = new CurvParamBezier(*p1333, *p1531, *p1532, *p1533);
   Curva* patch15_c3 = new CurvParamBezier(*p633, *p1513, *p1523, *p1533);
   Curva* patch15_c4 = new CurvParamBezier(*p1303, *p1501, *p1502, *p633);
@@ -2055,9 +2082,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
 
   //============================== PATCH 16 ==================================
   //		Ponto* p1333 = p1333; //new Vertice ( -3.00000, 0.00000, 1.80000
-  //); 		Ponto* p1413 = p1413; //new Vertice ( -3.00000, 0.30000, 1.80000 );
-  //		Ponto* p1423 = p1423; //new Vertice ( -2.70000, 0.30000, 1.80000
-  //); 		Ponto* p1303 = p1303; //new Vertice ( -2.70000, 0.00000, 1.80000 );
+  //); 		Ponto* p1413 = p1413; //new Vertice ( -3.00000, 0.30000, 1.80000
+  //); 		Ponto* p1423 = p1423; //new Vertice ( -2.70000, 0.30000, 1.80000
+  //); 		Ponto* p1303 = p1303; //new Vertice ( -2.70000, 0.00000, 1.80000
+  //);
 
   //		Ponto* p1531 = p1531; //new Vertice ( -3.00000, 0.00000, 1.35000
   //);
@@ -2080,12 +2108,13 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Ponto* p633 = p633; //new Vertice ( -2.00000, 0.00000, 0.90000
   //);
 
-  //		Curva* patch16_c1 = new CurvParamBezier ( *p1333, *p1413, *p1423,
-  //*p1303 ); 		Curva* patch16_c2 = new CurvParamBezier ( *p1303, *p1501, *p1502,
-  //*p633 );
+  //		Curva* patch16_c1 = new CurvParamBezier ( *p1333, *p1413,
+  //*p1423,
+  //*p1303 ); 		Curva* patch16_c2 = new CurvParamBezier ( *p1303,
+  //*p1501, *p1502, *p633 );
   Curva* patch16_c3 = new CurvParamBezier(*p1533, *p1613, *p1623, *p633);
-  //		Curva* patch16_c4 = new CurvParamBezier ( *p1333, *p1531, *p1532,
-  //*p1533 );
+  //		Curva* patch16_c4 = new CurvParamBezier ( *p1333, *p1531,
+  //*p1532, *p1533 );
 
   Patch* patch16 = new BezierPatch(patch14_c3, patch15_c4, patch16_c3,
                                    patch15_c2, *p1611, *p1621, *p1612, *p1622);
@@ -2163,11 +2192,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   Curva* patch18_c1 = new CurvParamBezier(*p1730, *p1810, *p1820, *p1700);
-  //		Curva* patch18_c2 = new CurvParamBezier ( *p1700, *p1701, *p1702,
-  //*p1703 );
+  //		Curva* patch18_c2 = new CurvParamBezier ( *p1700, *p1701,
+  //*p1702, *p1703 );
   Curva* patch18_c3 = new CurvParamBezier(*p1733, *p1813, *p1823, *p1703);
-  //		Curva* patch18_c4 = new CurvParamBezier ( *p1730, *p1731, *p1732,
-  //*p1733 );
+  //		Curva* patch18_c4 = new CurvParamBezier ( *p1730, *p1731,
+  //*p1732, *p1733 );
 
   Patch* patch18 = new BezierPatch(patch18_c1, patch17_c4, patch18_c3,
                                    patch17_c2, *p1811, *p1821, *p1812, *p1822);
@@ -2182,9 +2211,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //============================== PATCH 19 ==================================
   //		Ponto* p1703 = p1703; //new Vertice ( 2.70000, 0.00000, 2.40000
   //); 		Ponto* p1713 = p1713; //new Vertice ( 2.70000,-0.25000, 2.40000
-  //);3.30000, 0.25000, 2.40000 		Ponto* p1723 = p1723; //new Vertice
-  //( 3.30000,-0.25000, 2.40000 ); 		Ponto* p1733 = p1733; //new Vertice
-  //( 3.30000, 0.00000, 2.40000 );
+  //);3.30000, 0.25000, 2.40000 		Ponto* p1723 = p1723; //new
+  // Vertice
+  //( 3.30000,-0.25000, 2.40000 ); 		Ponto* p1733 = p1733; //new
+  // Vertice ( 3.30000, 0.00000, 2.40000 );
 
   Ponto* p1901 = new Vertice(2.80000, 0.00000, 2.47500);
   Ponto* p1911 = new Vertice(2.80000, -0.25000, 2.47500);
@@ -2201,8 +2231,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Ponto* p1933 = new Vertice ( 3.20000, 0.00000, 2.40000 );
   Ponto* p1933 = new Vertice(3.20000, 0.00000, 2.40000);
 
-  //		Curva* patch19_c1 = new CurvParamBezier ( *p1703, *p1713, *p1723,
-  //*p1733 );
+  //		Curva* patch19_c1 = new CurvParamBezier ( *p1703, *p1713,
+  //*p1723, *p1733 );
   Curva* patch19_c2 = new CurvParamBezier(*p1733, *p1931, *p1932, *p1933);
   Curva* patch19_c3 = new CurvParamBezier(*p1903, *p1913, *p1933, *p1933);
   Curva* patch19_c4 = new CurvParamBezier(*p1703, *p1901, *p1902, *p1903);
@@ -2246,11 +2276,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   Curva* patch20_c1 = new CurvParamBezier(*p1733, *p2010, *p2020, *p1703);
-  //		Curva* patch20_c2 = new CurvParamBezier ( *p1703, *p1901, *p1902,
-  //*p1903 );
+  //		Curva* patch20_c2 = new CurvParamBezier ( *p1703, *p1901,
+  //*p1902, *p1903 );
   Curva* patch20_c3 = new CurvParamBezier(*p1933, *p1933, *p2023, *p1903);
-  //		Curva* patch20_c4 = new CurvParamBezier ( *p1733, *p1931, *p1932,
-  //*p1933 );
+  //		Curva* patch20_c4 = new CurvParamBezier ( *p1733, *p1931,
+  //*p1932, *p1933 );
 
   Patch* patch20 = new BezierPatch(patch20_c1, patch19_c4, patch20_c3,
                                    patch19_c2, *p2011, *p2021, *p2012, *p2022);
@@ -2275,8 +2305,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
 
   Ponto* p2102 = new Vertice(0.00000, 0.00000, 2.85000);
   //		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
-  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 ); 		Ponto*
-  //p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 );
+  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
+  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
+  // );
 
   Ponto* p2103 = new Vertice(0.20000, 0.00000, 2.70000);
   Ponto* p2113 = new Vertice(0.20000, -0.11200, 2.70000);
@@ -2312,9 +2343,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2231 = new Vertice(-0.80000, 0.00000, 3.15000);
 
   //		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
-  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 ); 		Ponto*
-  //p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 ); 		Ponto* p2102 =
-  //p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 );
+  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
+  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
+  // ); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000,
+  // 0.00000, 2.85000 );
 
   //		Ponto* p2133 = p2133; //new Vertice (  0.00000,-0.20000, 2.70000
   //);
@@ -2325,8 +2357,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Curva* patch22_c1 = new CurvParamBezier(*p2130, *p2210, *p2220, *p2230);
   Curva* patch22_c2 = new CurvParamBezier(*p2230, *p2231, *p2102, *p2233);
   Curva* patch22_c3 = new CurvParamBezier(*p2133, *p2213, *p2223, *p2233);
-  //		Curva* patch22_c4 = new CurvParamBezier ( *p2130, *p2131, *p2102,
-  //*p2133 );
+  //		Curva* patch22_c4 = new CurvParamBezier ( *p2130, *p2131,
+  //*p2102, *p2133 );
 
   Patch* patch22 = new BezierPatch(patch22_c1, patch22_c2, patch22_c3,
                                    patch21_c2, *p2211, *p2221, *p2102, *p2102);
@@ -2350,9 +2382,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2331 = new Vertice(0.00000, 0.80000, 3.15000);
 
   //		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
-  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 ); 		Ponto*
-  //p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 ); 		Ponto* p2102 =
-  //p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 );
+  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
+  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
+  // ); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000,
+  // 0.00000, 2.85000 );
 
   //		Ponto* p2233 = new Vertice ( -0.20000, 0.00000, 2.70000 );
   Ponto* p2313 = new Vertice(-0.20000, 0.11200, 2.70000);
@@ -2362,8 +2395,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Curva* patch23_c1 = new CurvParamBezier(*p2230, *p2310, *p2320, *p2330);
   Curva* patch23_c2 = new CurvParamBezier(*p2330, *p2331, *p2102, *p2333);
   Curva* patch23_c3 = new CurvParamBezier(*p2233, *p2313, *p2323, *p2333);
-  //		Curva* patch23_c4 = new CurvParamBezier ( *p2230, *p2231, *p2102,
-  //*p2233 );
+  //		Curva* patch23_c4 = new CurvParamBezier ( *p2230, *p2231,
+  //*p2102, *p2233 );
 
   Patch* patch23 = new BezierPatch(patch23_c1, patch23_c2, patch23_c3,
                                    patch22_c2, *p2311, *p2321, *p2102, *p2102);
@@ -2387,9 +2420,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2431 = p2101;  // new Vertice ( 0.80000, 0.00000, 3.15000 );
 
   //		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
-  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 ); 		Ponto*
-  //p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 ); 		Ponto* p2102 =
-  //p2102; //new Vertice ( 0.00000, 0.00000, 2.85000 );
+  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
+  //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
+  // ); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000,
+  // 0.00000, 2.85000 );
 
   //		Ponto* p2333 = new Vertice ( 0.00000, 0.20000, 2.70000 );
   Ponto* p2413 = new Vertice(0.11200, 0.20000, 2.70000);
@@ -2400,8 +2434,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Curva* patch24_c1 = new CurvParamBezier(*p2330, *p2410, *p2420, *p2100);
   Curva* patch24_c2 = new CurvParamBezier(*p2100, *p2431, *p2102, *p2103);
   Curva* patch24_c3 = new CurvParamBezier(*p2333, *p2413, *p2423, *p2103);
-  //		Curva* patch24_c4 = new CurvParamBezier ( *p2330, *p2331, *p2102,
-  //*p2333 );
+  //		Curva* patch24_c4 = new CurvParamBezier ( *p2330, *p2331,
+  //*p2102, *p2333 );
 
   Patch* patch24 = new BezierPatch(patch24_c1, patch24_c2, patch24_c3,
                                    patch23_c2, *p2411, *p2421, *p2102, *p2102);
@@ -2415,9 +2449,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
 
   //============================== PATCH 25 ==================================
   //		Ponto* p2103 = p2103; //new Vertice ( 0.20000, 0.00000, 2.70000
-  //); 		Ponto* p2113 = p2113; //new Vertice ( 0.20000,-0.11200, 2.70000 ); 		Ponto*
-  //p2123 = p2123; //new Vertice ( 0.11200,-0.20000, 2.70000 ); 		Ponto* p2133 =
-  //p2133; //new Vertice ( 0.00000,-0.20000, 2.70000 );
+  //); 		Ponto* p2113 = p2113; //new Vertice ( 0.20000,-0.11200, 2.70000
+  //); 		Ponto* p2123 = p2123; //new Vertice ( 0.11200,-0.20000, 2.70000
+  // ); 		Ponto* p2133 = p2133; //new Vertice (
+  // 0.00000,-0.20000, 2.70000 );
 
   Ponto* p2501 = new Vertice(0.40000, 0.00000, 2.55000);
   Ponto* p2511 = new Vertice(0.40000, -0.22400, 2.55000);
@@ -2434,8 +2469,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2523 = new Vertice(0.72800, -1.30000, 2.40000);
   Ponto* p2533 = new Vertice(0.00000, -1.30000, 2.40000);
 
-  //		Curva* patch25_c1 = new CurvParamBezier ( *p2103, *p2113, *p2123,
-  //*p2133 );
+  //		Curva* patch25_c1 = new CurvParamBezier ( *p2103, *p2113,
+  //*p2123, *p2133 );
   Curva* patch25_c2 = new CurvParamBezier(*p2133, *p2531, *p2532, *p2533);
   Curva* patch25_c3 = new CurvParamBezier(*p2503, *p2513, *p2523, *p2533);
   Curva* patch25_c4 = new CurvParamBezier(*p2103, *p2501, *p2502, *p2503);
@@ -2452,8 +2487,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
 
   //============================== PATCH 26 ==================================
   //		Ponto* p2133 = p2133; //new Vertice ( 0.00000,-0.20000, 2.70000
-  //); 		Ponto* p2213 = new Vertice (-0.11200,-0.20000, 2.70000 ); 		Ponto* p2223 =
-  //new Vertice (-0.20000,-0.11200, 2.70000 ); 		Ponto* p2233 = new Vertice
+  //); 		Ponto* p2213 = new Vertice (-0.11200,-0.20000, 2.70000 );
+  // Ponto* p2223 = new Vertice (-0.20000,-0.11200, 2.70000 ); 		Ponto*
+  // p2233 = new Vertice
   //(-0.20000, 0.00000, 2.70000 );
 
   //		Ponto* p2531 = new Vertice ( 0.00000,-0.40000, 2.55000 );
@@ -2471,12 +2507,12 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2623 = new Vertice(-1.30000, -0.72800, 2.40000);
   Ponto* p2633 = new Vertice(-1.30000, 0.00000, 2.40000);
 
-  //		Curva* patch26_c1 = new CurvParamBezier ( *p2133, *p2213, *p2223,
-  //*p2233 );
+  //		Curva* patch26_c1 = new CurvParamBezier ( *p2133, *p2213,
+  //*p2223, *p2233 );
   Curva* patch26_c2 = new CurvParamBezier(*p2233, *p2631, *p2632, *p2633);
   Curva* patch26_c3 = new CurvParamBezier(*p2533, *p2613, *p2623, *p2633);
-  //		Curva* patch26_c4 = new CurvParamBezier ( *p2133, *p2531, *p2532,
-  //*p2533 );
+  //		Curva* patch26_c4 = new CurvParamBezier ( *p2133, *p2531,
+  //*p2532, *p2533 );
 
   Patch* patch26 = new BezierPatch(patch22_c3, patch26_c2, patch26_c3,
                                    patch25_c2, *p2611, *p2621, *p2612, *p2622);
@@ -2509,12 +2545,12 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2723 = new Vertice(-0.72800, 1.30000, 2.40000);
   Ponto* p2733 = new Vertice(0.00000, 1.30000, 2.40000);
 
-  //		Curva* patch27_c1 = new CurvParamBezier ( *p2233, *p2313, *p2323,
-  //*p2333 );
+  //		Curva* patch27_c1 = new CurvParamBezier ( *p2233, *p2313,
+  //*p2323, *p2333 );
   Curva* patch27_c2 = new CurvParamBezier(*p2333, *p2731, *p2732, *p2733);
   Curva* patch27_c3 = new CurvParamBezier(*p2633, *p2713, *p2723, *p2733);
-  //		Curva* patch27_c4 = new CurvParamBezier ( *p2233, *p2631, *p2632,
-  //*p2633 );
+  //		Curva* patch27_c4 = new CurvParamBezier ( *p2233, *p2631,
+  //*p2632, *p2633 );
 
   Patch* patch27 = new BezierPatch(patch23_c3, patch27_c2, patch27_c3,
                                    patch26_c2, *p2711, *p2721, *p2712, *p2722);
@@ -2548,12 +2584,13 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2823 = new Vertice(1.30000, 0.72800, 2.40000);
   //		Ponto* p2503 = new Vertice ( 1.30000, 0.00000, 2.40000 );
 
-  //		Curva* patch28_c1 = new CurvParamBezier ( *p2333, *p2413, *p2423,
-  //*p2103 ); 		Curva* patch28_c2 = new CurvParamBezier ( *p2103, *p2501, *p2502,
-  //*p2503 );
+  //		Curva* patch28_c1 = new CurvParamBezier ( *p2333, *p2413,
+  //*p2423,
+  //*p2103 ); 		Curva* patch28_c2 = new CurvParamBezier ( *p2103,
+  //*p2501, *p2502, *p2503 );
   Curva* patch28_c3 = new CurvParamBezier(*p2733, *p2813, *p2823, *p2503);
-  //		Curva* patch28_c4 = new CurvParamBezier ( *p2333, *p2731, *p2732,
-  //*p2733 );
+  //		Curva* patch28_c4 = new CurvParamBezier ( *p2333, *p2731,
+  //*p2732, *p2733 );
 
   Patch* patch28 = new BezierPatch(patch24_c3, patch25_c4, patch28_c3,
                                    patch27_c2, *p2811, *p2821, *p2812, *p2822);
@@ -2619,15 +2656,16 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p3032 = new Vertice(-1.50000, 0.00000, 0.07500);
 
   //		Ponto* p1133 = p1133; //new Vertice ( 0.00000, 1.50000, 0.15000
-  //); 		Ponto* p1123 = p1123; //new Vertice (-0.84000, 1.50000, 0.15000 ); 		Ponto*
-  //p1113 = p1113; //new Vertice (-1.50000, 0.84000, 0.15000 ); 		Ponto* p1033 =
-  //new Vertice (-1.50000, 0.00000, 0.15000 );
+  //); 		Ponto* p1123 = p1123; //new Vertice (-0.84000, 1.50000, 0.15000
+  //); 		Ponto* p1113 = p1113; //new Vertice (-1.50000, 0.84000, 0.15000
+  // ); 		Ponto* p1033 = new Vertice (-1.50000, 0.00000, 0.15000
+  // );
 
   Curva* patch30_c1 = new CurvParamBezier(*p2930, *p3010, *p3020, *p3030);
   Curva* patch30_c2 = new CurvParamBezier(*p3030, *p3031, *p3032, *p1033);
   Curva* patch30_c3 = new CurvParamBezier(*p1133, *p1123, *p1113, *p1033);
-  //		Curva* patch30_c4 = new CurvParamBezier ( *p2930, *p2931, *p2932,
-  //*p1133 );
+  //		Curva* patch30_c4 = new CurvParamBezier ( *p2930, *p2931,
+  //*p2932, *p1133 );
 
   Patch* patch30 = new BezierPatch(patch30_c1, patch30_c2, patch30_c3,
                                    patch29_c2, *p3011, *p3021, *p3012, *p3022);
@@ -2664,8 +2702,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Curva* patch31_c1 = new CurvParamBezier(*p3030, *p3110, *p3120, *p3130);
   Curva* patch31_c2 = new CurvParamBezier(*p3130, *p3131, *p3132, *p933);
   Curva* patch31_c3 = new CurvParamBezier(*p1033, *p1023, *p1013, *p933);
-  //		Curva* patch31_c4 = new CurvParamBezier ( *p3030, *p3031, *p3032,
-  //*p1033 );
+  //		Curva* patch31_c4 = new CurvParamBezier ( *p3030, *p3031,
+  //*p3032, *p1033 );
 
   Patch* patch31 = new BezierPatch(patch31_c1, patch31_c2, patch31_c3,
                                    patch30_c2, *p3111, *p3121, *p3112, *p3122);
@@ -2699,11 +2737,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Ponto* p903 = p903; //new Vertice ( 1.50000, 0.00000, 0.15000 );
 
   Curva* patch32_c1 = new CurvParamBezier(*p3130, *p3210, *p3220, *p2900);
-  //		Curva* patch32_c2 = new CurvParamBezier ( *p2900, *p2901, *p2902,
-  //*p903 );
+  //		Curva* patch32_c2 = new CurvParamBezier ( *p2900, *p2901,
+  //*p2902, *p903 );
   Curva* patch32_c3 = new CurvParamBezier(*p933, *p923, *p913, *p903);
-  //		Curva* patch32_c4 = new CurvParamBezier ( *p3130, *p3131, *p3132,
-  //*p933 );
+  //		Curva* patch32_c4 = new CurvParamBezier ( *p3130, *p3131,
+  //*p3132, *p933 );
 
   Patch* patch32 = new BezierPatch(patch32_c1, patch29_c4, patch32_c3,
                                    patch31_c2, *p3211, *p3221, *p3212, *p3222);

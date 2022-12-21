@@ -19,91 +19,88 @@
 // ~future();
 
 #define BOOST_THREAD_VERSION 3
-#include <boost/exception/exception.hpp>
-
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/exception/exception.hpp>
+#include <boost/thread/future.hpp>
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS
 #include "../test_allocator.hpp"
 #endif
 
-int main()
-{
+int main() {
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS
   BOOST_TEST(test_alloc_base::count == 0);
   {
-      typedef int T;
-      boost::future<T> f;
-      {
-          boost::promise<T> p(boost::allocator_arg, test_allocator<T>());
-          BOOST_TEST(test_alloc_base::count == 1);
-          f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-          BOOST_TEST(test_alloc_base::count == 1);
-          BOOST_TEST(f.valid());
-      }
+    typedef int T;
+    boost::future<T> f;
+    {
+      boost::promise<T> p(boost::allocator_arg, test_allocator<T>());
+      BOOST_TEST(test_alloc_base::count == 1);
+      f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
       BOOST_TEST(test_alloc_base::count == 1);
       BOOST_TEST(f.valid());
+    }
+    BOOST_TEST(test_alloc_base::count == 1);
+    BOOST_TEST(f.valid());
   }
   BOOST_TEST(test_alloc_base::count == 0);
   {
-      typedef int& T;
-      boost::future<T> f;
-      {
-          boost::promise<T> p(boost::allocator_arg, test_allocator<int>());
-          BOOST_TEST(test_alloc_base::count == 1);
-          f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-          BOOST_TEST(test_alloc_base::count == 1);
-          BOOST_TEST(f.valid());
-      }
+    typedef int& T;
+    boost::future<T> f;
+    {
+      boost::promise<T> p(boost::allocator_arg, test_allocator<int>());
+      BOOST_TEST(test_alloc_base::count == 1);
+      f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
       BOOST_TEST(test_alloc_base::count == 1);
       BOOST_TEST(f.valid());
+    }
+    BOOST_TEST(test_alloc_base::count == 1);
+    BOOST_TEST(f.valid());
   }
   BOOST_TEST(test_alloc_base::count == 0);
   {
-      typedef void T;
-      boost::future<T> f;
-      {
-          boost::promise<T> p(boost::allocator_arg, test_allocator<T>());
-          BOOST_TEST(test_alloc_base::count == 1);
-          f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-          BOOST_TEST(test_alloc_base::count == 1);
-          BOOST_TEST(f.valid());
-      }
+    typedef void T;
+    boost::future<T> f;
+    {
+      boost::promise<T> p(boost::allocator_arg, test_allocator<T>());
+      BOOST_TEST(test_alloc_base::count == 1);
+      f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
       BOOST_TEST(test_alloc_base::count == 1);
       BOOST_TEST(f.valid());
+    }
+    BOOST_TEST(test_alloc_base::count == 1);
+    BOOST_TEST(f.valid());
   }
   BOOST_TEST(test_alloc_base::count == 0);
 #endif
   {
-      typedef int T;
-      boost::future<T> f;
-      {
-          boost::promise<T> p;
-          f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-          BOOST_TEST(f.valid());
-      }
+    typedef int T;
+    boost::future<T> f;
+    {
+      boost::promise<T> p;
+      f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
       BOOST_TEST(f.valid());
+    }
+    BOOST_TEST(f.valid());
   }
   {
-      typedef int& T;
-      boost::future<T> f;
-      {
-          boost::promise<T> p;
-          f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-          BOOST_TEST(f.valid());
-      }
+    typedef int& T;
+    boost::future<T> f;
+    {
+      boost::promise<T> p;
+      f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
       BOOST_TEST(f.valid());
+    }
+    BOOST_TEST(f.valid());
   }
   {
-      typedef void T;
-      boost::future<T> f;
-      {
-          boost::promise<T> p;
-          f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-          BOOST_TEST(f.valid());
-      }
+    typedef void T;
+    boost::future<T> f;
+    {
+      boost::promise<T> p;
+      f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
       BOOST_TEST(f.valid());
+    }
+    BOOST_TEST(f.valid());
   }
   return boost::report_errors();
 }
-

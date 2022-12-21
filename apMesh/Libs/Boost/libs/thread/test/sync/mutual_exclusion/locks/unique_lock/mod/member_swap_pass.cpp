@@ -18,23 +18,17 @@
 
 // void swap(unique_lock& u);
 
-#include <boost/thread/lock_types.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/lock_types.hpp>
 
-struct mutex
-{
-  void lock()
-  {
-  }
-  void unlock()
-  {
-  }
+struct mutex {
+  void lock() {}
+  void unlock() {}
 };
 
 mutex m;
 
-int main()
-{
+int main() {
   boost::unique_lock<mutex> lk1(m);
   boost::unique_lock<mutex> lk2;
   lk1.swap(lk2);
@@ -45,4 +39,3 @@ int main()
 
   return boost::report_errors();
 }
-

@@ -7,42 +7,35 @@
 
 //  [ Jamboree Oct 27, 2011 ]       new example.
 
-
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/repository/include/qi_seek.hpp>
 #include <cstdlib>
 #include <iostream>
 
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/repository/include/qi_seek.hpp>
+int main() {
+  //[reference_qi_seek_namespace
+  namespace qi = boost::spirit::qi;
+  namespace repo = boost::spirit::repository;
+  //]
 
+  typedef std::string::const_iterator iterator;
 
-int main()
-{
-    //[reference_qi_seek_namespace
-    namespace qi = boost::spirit::qi;
-    namespace repo = boost::spirit::repository;
-    //]
-    
-    typedef std::string::const_iterator iterator;
+  //[reference_qi_seek_vars
+  std::string str("/*C-style comment*/");
+  iterator it = str.begin();
+  iterator end = str.end();
+  //]
 
-    //[reference_qi_seek_vars
-    std::string str("/*C-style comment*/");
-    iterator it = str.begin();
-    iterator end = str.end();
-    //]
+  //[reference_qi_seek_parse
+  if (qi::parse(it, end, "/*" >> repo::qi::seek["*/"])) {
+    std::cout << "-------------------------------- \n";
+    std::cout << "Parsing succeeded.\n";
+    std::cout << "---------------------------------\n";
+  } else {
+    std::cout << "-------------------------------- \n";
+    std::cout << "Unterminated /* comment.\n";
+    std::cout << "-------------------------------- \n";
+  }  //]
 
-    //[reference_qi_seek_parse
-    if (qi::parse(it, end, "/*" >> repo::qi::seek["*/"]))
-    {
-        std::cout << "-------------------------------- \n";
-        std::cout << "Parsing succeeded.\n";
-        std::cout << "---------------------------------\n";
-    }
-    else
-    {
-        std::cout << "-------------------------------- \n";
-        std::cout << "Unterminated /* comment.\n";
-        std::cout << "-------------------------------- \n";
-    }//]
-
-    return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

@@ -14,32 +14,18 @@
 
 // <boost/thread/detail/invoke.hpp>
 
-#include <boost/thread/detail/invoke.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/detail/invoke.hpp>
 
-int f()
-{
-  return 1;
-}
+int f() { return 1; }
 
-struct A_int_0
-{
-  A_int_0()
-  {
-  }
-  int operator()()
-  {
-    return 4;
-  }
-  int operator()() const
-  {
-    return 5;
-  }
+struct A_int_0 {
+  A_int_0() {}
+  int operator()() { return 4; }
+  int operator()() const { return 5; }
 };
 
-
-int main()
-{
+int main() {
   const A_int_0 ca;
   A_int_0 a;
 
@@ -54,10 +40,11 @@ int main()
   BOOST_TEST_EQ(boost::detail::invoke<int>(f), 1);
   BOOST_TEST_EQ(boost::detail::invoke<int>(&f), 1);
   BOOST_TEST_EQ(A_int_0()(), 4);
-#if defined BOOST_THREAD_PROVIDES_INVOKE || ! defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if defined BOOST_THREAD_PROVIDES_INVOKE || \
+    !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
   BOOST_TEST_EQ(boost::detail::invoke<int>(A_int_0()), 4);
 #else
-  //BOOST_TEST_EQ(boost::detail::invoke<int>(A_int_0()), 5);
+  // BOOST_TEST_EQ(boost::detail::invoke<int>(A_int_0()), 5);
 #endif
   BOOST_TEST_EQ(a(), 4);
   BOOST_TEST_EQ(boost::detail::invoke<int>(a), 4);

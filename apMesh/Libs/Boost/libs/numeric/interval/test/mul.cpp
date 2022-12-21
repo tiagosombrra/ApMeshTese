@@ -10,23 +10,26 @@
 
 #include <boost/numeric/interval.hpp>
 #include <boost/test/minimal.hpp>
+
 #include "bugs.hpp"
 
 typedef boost::numeric::interval<double> I;
 
-static double min BOOST_PREVENT_MACRO_SUBSTITUTION (double a, double b, double c, double d) {
+static double min BOOST_PREVENT_MACRO_SUBSTITUTION(double a, double b, double c,
+                                                   double d) {
   return (std::min)((std::min)(a, b), (std::min)(c, d));
 }
 
-static double max BOOST_PREVENT_MACRO_SUBSTITUTION (double a, double b, double c, double d) {
+static double max BOOST_PREVENT_MACRO_SUBSTITUTION(double a, double b, double c,
+                                                   double d) {
   return (std::max)((std::max)(a, b), (std::max)(c, d));
 }
 
 static bool test_mul(double al, double au, double bl, double bu) {
   I a(al, au), b(bl, bu);
   I c = a * b;
-  return c.lower() == (min)(al*bl, al*bu, au*bl, au*bu)
-      && c.upper() == (max)(al*bl, al*bu, au*bl, au*bu);
+  return c.lower() == (min)(al * bl, al * bu, au * bl, au * bu) &&
+         c.upper() == (max)(al * bl, al * bu, au * bl, au * bu);
 }
 
 static bool test_mul1(double ac, double bl, double bu) {
@@ -40,8 +43,8 @@ static bool test_mul1(double ac, double bl, double bu) {
 static bool test_div(double al, double au, double bl, double bu) {
   I a(al, au), b(bl, bu);
   I c = a / b;
-  return c.lower() == (min)(al/bl, al/bu, au/bl, au/bu)
-      && c.upper() == (max)(al/bl, al/bu, au/bl, au/bu);
+  return c.lower() == (min)(al / bl, al / bu, au / bl, au / bu) &&
+         c.upper() == (max)(al / bl, al / bu, au / bl, au / bu);
 }
 
 static bool test_div1(double al, double au, double bc) {
@@ -117,8 +120,8 @@ int test_main(int, char*[]) {
   BOOST_CHECK(test_sqrt(5, 7));
   BOOST_CHECK(test_sqrt(-1, 2));
 
-# ifdef BOOST_BORLANDC
+#ifdef BOOST_BORLANDC
   ::detail::ignore_warnings();
-# endif
+#endif
   return 0;
 }

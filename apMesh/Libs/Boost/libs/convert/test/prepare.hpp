@@ -7,53 +7,50 @@
 #define BOOST_CONVERT_TEST_PREPARE_HPP
 
 #include <array>
-#include <ctime>
 #include <cstdlib>
+#include <ctime>
 
 // boostinspect:nounnamed
-namespace { namespace local
-{
-    // C1. 18 = 9 positive + 9 negative numbers with the number of digits from 1 to 9.
-    //     Even though INT_MAX(32) = 2147483647, i.e. 10 digits (not to mention long int)
-    //     we only test up to 9 digits as Spirit does not handle more than 9.
+namespace {
+namespace local {
+// C1. 18 = 9 positive + 9 negative numbers with the number of digits from 1
+// to 9.
+//     Even though INT_MAX(32) = 2147483647, i.e. 10 digits (not to mention long
+//     int) we only test up to 9 digits as Spirit does not handle more than 9.
 
-    typedef std::array<my_string, 18> strings; //C1
-    ///////////////////////////////////////////////////////////////////////////
-    // Generate a random number string with N digits
-    std::string
-    gen_int(int digits, bool negative)
-    {
-        std::string result;
+typedef std::array<my_string, 18> strings;  // C1
+///////////////////////////////////////////////////////////////////////////
+// Generate a random number string with N digits
+std::string gen_int(int digits, bool negative) {
+  std::string result;
 
-        if (negative)                       // Prepend a '-'
-            result += '-';
+  if (negative)  // Prepend a '-'
+    result += '-';
 
-        result += '1' + (std::rand() % 9);  // The first digit cannot be '0'
+  result += '1' + (std::rand() % 9);  // The first digit cannot be '0'
 
-        for (int i = 1; i < digits; ++i)    // Generate the remaining digits
-            result += '0' + (std::rand()%10);
-        return result;
-    }
+  for (int i = 1; i < digits; ++i)  // Generate the remaining digits
+    result += '0' + (std::rand() % 10);
+  return result;
+}
 
-    local::strings const&
-    get_strs()
-    {
-        static auto  strings = local::strings();
-        static bool   filled = false;
-        static bool negative = true;
+local::strings const& get_strs() {
+  static auto strings = local::strings();
+  static bool filled = false;
+  static bool negative = true;
 
-        if (!filled)
-        {
-            // Seed the random generator
-            std::srand(std::time(0));
+  if (!filled) {
+    // Seed the random generator
+    std::srand(std::time(0));
 
-            for (size_t k = 0; k < strings.size(); ++k)
-                strings[k] = local::gen_int(k/2 + 1, negative = !negative).c_str();
+    for (size_t k = 0; k < strings.size(); ++k)
+      strings[k] = local::gen_int(k / 2 + 1, negative = !negative).c_str();
 
-            filled = true;
-        }
-        return strings;
-    }
-}}
+    filled = true;
+  }
+  return strings;
+}
+}  // namespace local
+}  // namespace
 
-#endif // BOOST_CONVERT_TEST_PREPARE_HPP
+#endif  // BOOST_CONVERT_TEST_PREPARE_HPP

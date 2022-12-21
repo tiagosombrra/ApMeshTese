@@ -17,14 +17,12 @@
 
 // condition_variable(const condition_variable&) = delete;
 
-#include <boost/thread/condition_variable.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/condition_variable.hpp>
 
-void fail()
-{
+void fail() {
   boost::condition_variable cv0;
   boost::condition_variable cv1(cv0);
 }
 
 #include "../../../remove_error_code_unused_warning.hpp"
-

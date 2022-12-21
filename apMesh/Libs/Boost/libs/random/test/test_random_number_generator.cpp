@@ -9,27 +9,25 @@
  * $Id$
  */
 
-#include <boost/random/random_number_generator.hpp>
-#include <boost/random/mersenne_twister.hpp>
-
 #include <algorithm>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/random_number_generator.hpp>
 #include <vector>
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_random_shuffle)
-{
+BOOST_AUTO_TEST_CASE(test_random_shuffle) {
 #ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
-    boost::mt19937 engine(1234);
-    boost::random::random_number_generator<boost::mt19937> generator(engine);
+  boost::mt19937 engine(1234);
+  boost::random::random_number_generator<boost::mt19937> generator(engine);
 
-    std::vector<int> testVec;
+  std::vector<int> testVec;
 
-    for (int i = 0; i < 200; ++i) {
-        testVec.push_back(i);
-    }
+  for (int i = 0; i < 200; ++i) {
+    testVec.push_back(i);
+  }
 
-    std::random_shuffle(testVec.begin(), testVec.end(), generator);
+  std::random_shuffle(testVec.begin(), testVec.end(), generator);
 #endif
 }

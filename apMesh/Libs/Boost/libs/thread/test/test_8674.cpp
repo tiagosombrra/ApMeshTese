@@ -13,30 +13,26 @@
 
 #if USED_THREAD_API == USE_BOOST
 
-# define BOOST_THREAD_VERSION 4
-# include <boost/thread/future.hpp>
+#define BOOST_THREAD_VERSION 4
+#include <boost/thread/future.hpp>
 
-  using boost::future;
-  using boost::async;
+using boost::async;
+using boost::future;
 
 #endif
 #if USED_THREAD_API == USE_STD
-# include <future>
-  using std::future;
-  using std::async;
+#include <future>
+using std::async;
+using std::future;
 #endif
 
-
-
-future<void> do_something()
-{
-  auto result = async( []{ std::cout<< "A\n"; } );
+future<void> do_something() {
+  auto result = async([] { std::cout << "A\n"; });
   std::cout << "B\n";
-  return result; // error here
+  return result;  // error here
 }
 
-int main()
-{
+int main() {
   do_something().wait();
   std::cout << "Hello, World!" << std::endl;
   return 0;

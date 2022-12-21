@@ -7,22 +7,22 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_VARIADIC_MACROS
-#   error "variadic macros required"
+#error "variadic macros required"
 #else
 
-#include <boost/local_function.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/local_function.hpp>
 
 int main(void) {
-    //[add_params_only
-    int BOOST_LOCAL_FUNCTION(int x, int y) { // Local function.
-        return x + y;
-    } BOOST_LOCAL_FUNCTION_NAME(add)
-    
-    BOOST_TEST(add(1, 2) == 3); // Local function call.
-    //]
-    return boost::report_errors();
+  //[add_params_only
+  int BOOST_LOCAL_FUNCTION(int x, int y) {  // Local function.
+    return x + y;
+  }
+  BOOST_LOCAL_FUNCTION_NAME(add)
+
+  BOOST_TEST(add(1, 2) == 3);  // Local function call.
+  //]
+  return boost::report_errors();
 }
 
-#endif // VARIADIC_MACROS
-
+#endif  // VARIADIC_MACROS

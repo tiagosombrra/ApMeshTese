@@ -17,24 +17,24 @@
 
 // template <class Clousure> thread(Clousure f);
 
-#include <new>
-#include <cstdlib>
-#include <cassert>
-#include <boost/thread/thread_only.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <cassert>
+#include <cstdlib>
+#include <new>
 
-#if ! defined BOOST_NO_CXX11_LAMBDAS
+#if !defined BOOST_NO_CXX11_LAMBDAS
 
 unsigned throw_one = 0xFFFF;
 
 #if defined _GLIBCXX_THROW
-void* operator new(std::size_t s) _GLIBCXX_THROW (std::bad_alloc)
+void* operator new(std::size_t s) _GLIBCXX_THROW(std::bad_alloc)
 #elif defined BOOST_MSVC
 void* operator new(std::size_t s)
 #elif __cplusplus > 201402L
 void* operator new(std::size_t s)
 #else
-void* operator new(std::size_t s) throw (std::bad_alloc)
+void* operator new(std::size_t s) throw(std::bad_alloc)
 #endif
 {
   if (throw_one == 0) throw std::bad_alloc();
@@ -53,25 +53,21 @@ void operator delete(void* p) BOOST_NOEXCEPT_OR_NOTHROW
 
 bool f_run = false;
 
-int main()
-{
+int main() {
   {
     f_run = false;
-    boost::thread t( []() { f_run = true; } );
+    boost::thread t([]() { f_run = true; });
     t.join();
     BOOST_TEST(f_run == true);
   }
 #if !defined(BOOST_MSVC) && !defined(__MINGW32__)
   {
     f_run = false;
-    try
-    {
+    try {
       throw_one = 0;
-      boost::thread t( []() { f_run = true; } );
+      boost::thread t([]() { f_run = true; });
       BOOST_TEST(false);
-    }
-    catch (...)
-    {
+    } catch (...) {
       throw_one = 0xFFFF;
       BOOST_TEST(!f_run);
     }
@@ -82,8 +78,5 @@ int main()
 }
 
 #else
-int main()
-{
-  return 0;
-}
+int main() { return 0; }
 #endif

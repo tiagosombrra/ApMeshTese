@@ -12,21 +12,21 @@
 #include <cassert>
 
 //[noncopyable_local_function
-struct n: boost::noncopyable {
-    int i;
-    n(int _i): i(_i) {}
+struct n : boost::noncopyable {
+  int i;
+  n(int _i) : i(_i) {}
 };
-BOOST_TYPEOF_REGISTER_TYPE(n) // Register for `bind& x` below.
+BOOST_TYPEOF_REGISTER_TYPE(n)  // Register for `bind& x` below.
 
 int main(void) {
-    n x(-1);
+  n x(-1);
 
-    void BOOST_LOCAL_FUNCTION(const bind& x) {  // OK: No copy
-        assert(x.i == -1);                      // and constant.
-    } BOOST_LOCAL_FUNCTION_NAME(f)
-    f();
+  void BOOST_LOCAL_FUNCTION(const bind& x) {  // OK: No copy
+    assert(x.i == -1);                        // and constant.
+  }
+  BOOST_LOCAL_FUNCTION_NAME(f)
+  f();
 
-    return 0;
+  return 0;
 }
 //]
-

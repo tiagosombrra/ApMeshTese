@@ -7,35 +7,37 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_VARIADIC_MACROS
-#   error "variadic macros required"
+#error "variadic macros required"
 #else
 
-#include "addable.hpp"
-#include <boost/local_function.hpp>
-#include <boost/type_traits/remove_reference.hpp>
+#include <algorithm>
 #include <boost/concept_check.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <algorithm>
+#include <boost/local_function.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+
+#include "addable.hpp"
 
 int main(void) {
-    //[typeof
-    int sum = 0, factor = 10;
+  //[typeof
+  int sum = 0, factor = 10;
 
-    void BOOST_LOCAL_FUNCTION(const bind factor, bind& sum, int num) {
-        // Type-of for concept checking.
-        BOOST_CONCEPT_ASSERT((Addable<boost::remove_reference<
-                BOOST_LOCAL_FUNCTION_TYPEOF(sum)>::type>));
-        // Type-of for declarations.
-        boost::remove_reference<BOOST_LOCAL_FUNCTION_TYPEOF(
-                factor)>::type mult = factor * num;
-        sum += mult;
-    } BOOST_LOCAL_FUNCTION_NAME(add)
+  void BOOST_LOCAL_FUNCTION(const bind factor, bind& sum, int num) {
+    // Type-of for concept checking.
+    BOOST_CONCEPT_ASSERT(
+        (Addable<
+            boost::remove_reference<BOOST_LOCAL_FUNCTION_TYPEOF(sum)>::type>));
+    // Type-of for declarations.
+    boost::remove_reference<BOOST_LOCAL_FUNCTION_TYPEOF(factor)>::type mult =
+        factor * num;
+    sum += mult;
+  }
+  BOOST_LOCAL_FUNCTION_NAME(add)
 
-    add(6);
-    //]
-    BOOST_TEST(sum == 60);
-    return boost::report_errors();
+  add(6);
+  //]
+  BOOST_TEST(sum == 60);
+  return boost::report_errors();
 }
 
-#endif // VARIADIC_MACROS
-
+#endif  // VARIADIC_MACROS

@@ -14,7 +14,8 @@ namespace boost {
 namespace histogram {
 
 template <class Axis>
-void test_axis_iterator(const Axis& a, axis::index_type begin, axis::index_type end) {
+void test_axis_iterator(const Axis& a, axis::index_type begin,
+                        axis::index_type end) {
   for (auto bin : a) {
     BOOST_TEST_EQ(bin, a.bin(begin));
     ++begin;
@@ -29,9 +30,9 @@ void test_axis_iterator(const Axis& a, axis::index_type begin, axis::index_type 
 
 namespace axis {
 bool operator==(const null_type&, const null_type&) { return true; }
-} // namespace axis
+}  // namespace axis
 
-} // namespace histogram
-} // namespace boost
+}  // namespace histogram
+}  // namespace boost
 
 #endif

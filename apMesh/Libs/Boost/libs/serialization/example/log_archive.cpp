@@ -9,11 +9,12 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #if (defined _MSC_VER) && (_MSC_VER == 1200)
-#  pragma warning (disable : 4786) // too long name, harmless warning
+#pragma warning(disable : 4786)  // too long name, harmless warning
 #endif
 
 //#define BOOST_ARCHIVE_SOURCE
 #include "log_archive.hpp"
+
 #include <boost/archive/detail/archive_serializer_map.hpp>
 
 // explicitly instantiate for this type of xml stream
@@ -25,8 +26,8 @@ namespace boost {
 namespace archive {
 
 template class detail::archive_serializer_map<log_archive>;
-template class basic_xml_oarchive<log_archive> ;
-template class xml_oarchive_impl<log_archive> ;
+template class basic_xml_oarchive<log_archive>;
+template class xml_oarchive_impl<log_archive>;
 
-} // namespace archive
-} // namespace boost
+}  // namespace archive
+}  // namespace boost

@@ -5,57 +5,51 @@
 
 #define BOOST_THREAD_USES_MOVE
 
-#include <boost/thread/thread.hpp>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/csbl/vector.hpp>
-#include <iostream>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/thread/csbl/vector.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/thread.hpp>
+#include <iostream>
 
 int count = 0;
 boost::mutex mutex;
 
-namespace
-{
+namespace {
 template <typename TC>
-void join_all(TC & tc)
-{
-  for (typename TC::iterator it = tc.begin(); it != tc.end(); ++it)
-  {
+void join_all(TC& tc) {
+  for (typename TC::iterator it = tc.begin(); it != tc.end(); ++it) {
     it->join();
   }
 }
 
 template <typename TC>
-void interrupt_all(TC & tc)
-{
+void interrupt_all(TC& tc) {
 #if defined BOOST_THREAD_PROVIDES_INTERRUPTIONS
-  for (typename TC::iterator it = tc.begin(); it != tc.end(); ++it)
-  {
+  for (typename TC::iterator it = tc.begin(); it != tc.end(); ++it) {
     it->interrupt();
   }
 #endif
 }
-}
+}  // namespace
 
-void increment_count()
-{
+void increment_count() {
   boost::unique_lock<boost::mutex> lock(mutex);
   std::cout << "count = " << ++count << std::endl;
 }
 
-#if defined  BOOST_NO_CXX11_RVALUE_REFERENCES && defined BOOST_THREAD_USES_MOVE
-BOOST_STATIC_ASSERT(::boost::is_function<boost::rv<boost::rv<boost::thread> >&>::value==false);
+#if defined BOOST_NO_CXX11_RVALUE_REFERENCES && defined BOOST_THREAD_USES_MOVE
+BOOST_STATIC_ASSERT(
+    ::boost::is_function<boost::rv<boost::rv<boost::thread> >&>::value ==
+    false);
 #endif
 
-int main()
-{
+int main() {
   typedef boost::csbl::vector<boost::thread> thread_vector;
   {
     thread_vector threads;
     threads.reserve(10);
-    for (int i = 0; i < 10; ++i)
-    {
+    for (int i = 0; i < 10; ++i) {
       boost::thread th(&increment_count);
       threads.push_back(boost::move(th));
     }
@@ -65,9 +59,9 @@ int main()
   {
     thread_vector threads;
     threads.reserve(10);
-    for (int i = 0; i < 10; ++i)
-    {
-      threads.push_back(BOOST_THREAD_MAKE_RV_REF(boost::thread(&increment_count)));
+    for (int i = 0; i < 10; ++i) {
+      threads.push_back(
+          BOOST_THREAD_MAKE_RV_REF(boost::thread(&increment_count)));
     }
     join_all(threads);
   }
@@ -75,8 +69,7 @@ int main()
   {
     thread_vector threads;
     threads.reserve(10);
-    for (int i = 0; i < 10; ++i)
-    {
+    for (int i = 0; i < 10; ++i) {
       threads.emplace_back(&increment_count);
     }
     join_all(threads);
@@ -85,8 +78,7 @@ int main()
   {
     thread_vector threads;
     threads.reserve(10);
-    for (int i = 0; i < 10; ++i)
-    {
+    for (int i = 0; i < 10; ++i) {
       threads.emplace_back(&increment_count);
     }
     interrupt_all(threads);

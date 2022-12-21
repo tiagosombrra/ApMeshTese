@@ -18,14 +18,13 @@
 
 // explicit operator bool() const;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::mutex m;
 
-int main()
-{
+int main() {
   {
     boost::unique_lock<boost::mutex> lk0;
     int i = int(lk0);
@@ -36,4 +35,3 @@ int main()
 }
 
 #include "../../../../../remove_error_code_unused_warning.hpp"
-

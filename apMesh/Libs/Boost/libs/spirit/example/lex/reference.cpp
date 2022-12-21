@@ -16,15 +16,14 @@
 //[reference_lex_test
 //]
 
-int main()
-{
-    {
-        //[reference_lex_using_declarations_char
-        //]
+int main() {
+  {
+    //[reference_lex_using_declarations_char
+    //]
 
-        //[reference_lex_char
-        //]
-    }
+    //[reference_lex_char
+    //]
+  }
 
-    return 0;
+  return 0;
 }

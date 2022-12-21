@@ -9,26 +9,25 @@
 #include "boost/fiber/context.hpp"
 
 #ifdef BOOST_HAS_ABI_HEADERS
-#  include BOOST_ABI_PREFIX
+#include BOOST_ABI_PREFIX
 #endif
 
 namespace boost {
 namespace fibers {
 
-void
-condition_variable_any::notify_one() noexcept {
-    detail::spinlock_lock lk{ wait_queue_splk_ };
-    wait_queue_.notify_one();
+void condition_variable_any::notify_one() noexcept {
+  detail::spinlock_lock lk{wait_queue_splk_};
+  wait_queue_.notify_one();
 }
 
-void
-condition_variable_any::notify_all() noexcept {
-    detail::spinlock_lock lk{ wait_queue_splk_ };
-    wait_queue_.notify_all();
+void condition_variable_any::notify_all() noexcept {
+  detail::spinlock_lock lk{wait_queue_splk_};
+  wait_queue_.notify_all();
 }
 
-}}
+}  // namespace fibers
+}  // namespace boost
 
 #ifdef BOOST_HAS_ABI_HEADERS
-#  include BOOST_ABI_SUFFIX
+#include BOOST_ABI_SUFFIX
 #endif

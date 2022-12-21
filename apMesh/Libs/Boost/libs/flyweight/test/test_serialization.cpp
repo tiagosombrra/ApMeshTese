@@ -11,21 +11,19 @@
 #include "test_serialization.hpp"
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
-#include <boost/flyweight.hpp> 
+#include <boost/flyweight.hpp>
+
 #include "test_serialization_template.hpp"
 
 using namespace boost::flyweights;
 
-struct serialization_flyweight_specifier
-{
-  template<typename T>
-  struct apply
-  {
+struct serialization_flyweight_specifier {
+  template <typename T>
+  struct apply {
     typedef flyweight<T> type;
   };
 };
 
-void test_serialization()
-{
+void test_serialization() {
   test_serialization_template<serialization_flyweight_specifier>();
 }

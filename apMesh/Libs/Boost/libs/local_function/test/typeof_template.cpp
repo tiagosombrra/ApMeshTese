@@ -7,37 +7,38 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_VARIADIC_MACROS
-#   error "variadic macros required"
+#error "variadic macros required"
 #else
 
-#include "addable.hpp"
-#include <boost/local_function.hpp>
-#include <boost/type_traits/remove_reference.hpp>
+#include <algorithm>
 #include <boost/concept_check.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <algorithm>
+#include <boost/local_function.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+
+#include "addable.hpp"
 
 //[typeof_template
-template<typename T>
+template <typename T>
 T calculate(const T& factor) {
-    T sum = 0;
+  T sum = 0;
 
-    void BOOST_LOCAL_FUNCTION_TPL(const bind factor, bind& sum, T num) {
-        // Local function `TYPEOF` does not need `typename`.
-        BOOST_CONCEPT_ASSERT((Addable<typename boost::remove_reference<
-                BOOST_LOCAL_FUNCTION_TYPEOF(sum)>::type>));
-        sum += factor * num;
-    } BOOST_LOCAL_FUNCTION_NAME_TPL(add)
+  void BOOST_LOCAL_FUNCTION_TPL(const bind factor, bind& sum, T num) {
+    // Local function `TYPEOF` does not need `typename`.
+    BOOST_CONCEPT_ASSERT((Addable<typename boost::remove_reference<
+                              BOOST_LOCAL_FUNCTION_TYPEOF(sum)>::type>));
+    sum += factor * num;
+  }
+  BOOST_LOCAL_FUNCTION_NAME_TPL(add)
 
-    add(6);
-    return sum;
+  add(6);
+  return sum;
 }
 //]
 
 int main(void) {
-    BOOST_TEST(calculate(10) == 60);
-    return boost::report_errors();
+  BOOST_TEST(calculate(10) == 60);
+  return boost::report_errors();
 }
 
-#endif // VARIADIC_MACROS
-
+#endif  // VARIADIC_MACROS

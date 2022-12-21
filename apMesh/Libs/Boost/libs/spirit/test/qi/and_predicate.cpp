@@ -5,23 +5,21 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/qi_operator.hpp>
-#include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
-
+#include <boost/spirit/include/qi_numeric.hpp>
+#include <boost/spirit/include/qi_operator.hpp>
 #include <iostream>
+
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test;
-    using boost::spirit::int_;
+int main() {
+  using boost::spirit::int_;
+  using spirit_test::test;
 
-    {
-        BOOST_TEST((test("1234", &int_, false)));
-        BOOST_TEST((!test("abcd", &int_)));
-    }
+  {
+    BOOST_TEST((test("1234", &int_, false)));
+    BOOST_TEST((!test("abcd", &int_)));
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

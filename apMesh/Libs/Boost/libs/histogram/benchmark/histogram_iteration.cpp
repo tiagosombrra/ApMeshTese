@@ -5,6 +5,7 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <benchmark/benchmark.h>
+
 #include <boost/histogram/axis/integer.hpp>
 #include <boost/histogram/axis/regular.hpp>
 #include <boost/histogram/histogram.hpp>
@@ -12,13 +13,13 @@
 #include <boost/histogram/literals.hpp>
 #include <boost/histogram/make_histogram.hpp>
 #include <boost/mp11/integral.hpp>
-#include <vector>
-#include "../test/throw_exception.hpp"
-
 #include <cassert>
+#include <vector>
+
+#include "../test/throw_exception.hpp"
 struct assert_check {
   assert_check() {
-    assert(false); // don't run with asserts enabled
+    assert(false);  // don't run with asserts enabled
   }
 } _;
 

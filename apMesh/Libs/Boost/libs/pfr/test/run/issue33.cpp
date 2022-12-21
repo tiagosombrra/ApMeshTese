@@ -5,22 +5,21 @@
 
 // Test case for https://github.com/apolukhin/magic_get/issues/33
 
+#include <boost/core/lightweight_test.hpp>
+#include <boost/pfr.hpp>
 #include <iostream>
 #include <vector>
-#include <boost/pfr.hpp>
-#include <boost/core/lightweight_test.hpp>
 
 struct TestStruct {
-    std::vector<std::unique_ptr<int>> vec;
+  std::vector<std::unique_ptr<int>> vec;
 };
 
 int main() {
-    TestStruct temp;
-    temp.vec.emplace_back();
+  TestStruct temp;
+  temp.vec.emplace_back();
 
-    boost::pfr::for_each_field(temp, [](const auto& value) {
-        BOOST_TEST_EQ(value.size(), 1);
-    });
+  boost::pfr::for_each_field(
+      temp, [](const auto& value) { BOOST_TEST_EQ(value.size(), 1); });
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

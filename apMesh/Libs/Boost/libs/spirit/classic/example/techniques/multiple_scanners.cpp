@@ -13,41 +13,34 @@
 
 #define BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT 3
 
-#include <iostream>
-#include <boost/spirit/include/classic_core.hpp>
 #include <boost/assert.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <iostream>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-struct my_grammar : grammar<my_grammar>
-{
-    template <typename ScannerT>
-    struct definition
-    {
-        definition(my_grammar const& self)
-        {
-            r = lower_p;
-            rr = +(lexeme_d[r] >> as_lower_d[r] >> r);
-        }
+struct my_grammar : grammar<my_grammar> {
+  template <typename ScannerT>
+  struct definition {
+    definition(my_grammar const& self) {
+      r = lower_p;
+      rr = +(lexeme_d[r] >> as_lower_d[r] >> r);
+    }
 
-        typedef scanner_list<
-            ScannerT
-          , typename lexeme_scanner<ScannerT>::type
-          , typename as_lower_scanner<ScannerT>::type
-        > scanners;
+    typedef scanner_list<ScannerT, typename lexeme_scanner<ScannerT>::type,
+                         typename as_lower_scanner<ScannerT>::type>
+        scanners;
 
-        rule<scanners> r;
-        rule<ScannerT> rr;
-        rule<ScannerT> const& start() const { return rr; }
-    };
+    rule<scanners> r;
+    rule<ScannerT> rr;
+    rule<ScannerT> const& start() const { return rr; }
+  };
 };
 
-int
-main()
-{
-    my_grammar g;
-    bool success = parse("abcdef aBc d e f aBc d E f", g, space_p).full;
-    BOOST_ASSERT(success);
-    std::cout << "SUCCESS!!!\n";
-    return 0;
+int main() {
+  my_grammar g;
+  bool success = parse("abcdef aBc d e f aBc d E f", g, space_p).full;
+  BOOST_ASSERT(success);
+  std::cout << "SUCCESS!!!\n";
+  return 0;
 }

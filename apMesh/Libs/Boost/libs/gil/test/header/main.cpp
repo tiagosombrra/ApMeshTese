@@ -13,7 +13,4 @@
 
 #include BOOST_GIL_TEST_INCLUDE_HEADER()
 
-int main()
-{
-    return 0;
-}
+int main() { return 0; }

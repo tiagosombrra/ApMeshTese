@@ -7,13 +7,14 @@
 #include <benchmark/benchmark.h>
 #include <gsl/gsl_histogram.h>
 #include <gsl/gsl_histogram2d.h>
-#include "../test/throw_exception.hpp"
-#include "generator.hpp"
 
 #include <cassert>
+
+#include "../test/throw_exception.hpp"
+#include "generator.hpp"
 struct assert_check {
   assert_check() {
-    assert(false); // don't run with asserts enabled
+    assert(false);  // don't run with asserts enabled
   }
 } _;
 
@@ -22,7 +23,8 @@ static void fill_1d(benchmark::State& state) {
   gsl_histogram* h = gsl_histogram_alloc(100);
   gsl_histogram_set_ranges_uniform(h, 0, 1);
   generator<Distribution> gen;
-  for (auto _ : state) benchmark::DoNotOptimize(gsl_histogram_increment(h, gen()));
+  for (auto _ : state)
+    benchmark::DoNotOptimize(gsl_histogram_increment(h, gen()));
   gsl_histogram_free(h);
   state.SetItemsProcessed(state.iterations());
 }

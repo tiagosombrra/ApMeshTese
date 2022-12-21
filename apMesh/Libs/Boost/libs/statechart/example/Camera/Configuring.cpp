@@ -4,21 +4,13 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
-
-#include "Precompiled.hpp"
 #include "Configuring.hpp"
+
 #include <iostream>
 #include <stdexcept>
 
+#include "Precompiled.hpp"
 
+Configuring::Configuring() { std::cout << "Entering Configuring\n"; }
 
-Configuring::Configuring()
-{
-  std::cout << "Entering Configuring\n";
-}
-
-Configuring::~Configuring()
-{
-  std::cout << "Exiting Configuring\n";
-}
+Configuring::~Configuring() { std::cout << "Exiting Configuring\n"; }

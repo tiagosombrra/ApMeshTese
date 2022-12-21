@@ -4,8 +4,6 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
-
 //////////////////////////////////////////////////////////////////////////////
 #define NO_OF_BITS 3
 //////////////////////////////////////////////////////////////////////////////
@@ -42,184 +40,152 @@
 //     led to compilation times of hours rather than minutes.
 //////////////////////////////////////////////////////////////////////////////
 
-
-
-#include "UniqueObject.hpp"
-
+#include <boost/config.hpp>
+#include <boost/intrusive_ptr.hpp>
+#include <boost/mpl/aux_/lambda_support.hpp>
+#include <boost/mpl/bitxor.hpp>
+#include <boost/mpl/copy.hpp>
+#include <boost/mpl/for_each.hpp>
+#include <boost/mpl/front_inserter.hpp>
+#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/list.hpp>
+#include <boost/mpl/placeholders.hpp>
+#include <boost/mpl/range_c.hpp>
+#include <boost/mpl/shift_left.hpp>
+#include <boost/mpl/transform_view.hpp>
 #include <boost/statechart/event.hpp>
 #include <boost/statechart/simple_state.hpp>
 #include <boost/statechart/state_machine.hpp>
 #include <boost/statechart/transition.hpp>
-
-#include <boost/mpl/list.hpp>
-#include <boost/mpl/front_inserter.hpp>
-#include <boost/mpl/transform_view.hpp>
-#include <boost/mpl/copy.hpp>
-#include <boost/mpl/range_c.hpp>
-#include <boost/mpl/integral_c.hpp>
-#include <boost/mpl/shift_left.hpp>
-#include <boost/mpl/bitxor.hpp>
-#include <boost/mpl/for_each.hpp>
-#include <boost/mpl/placeholders.hpp>
-#include <boost/mpl/aux_/lambda_support.hpp>
-
-#include <boost/config.hpp>
-#include <boost/intrusive_ptr.hpp>
-
-#include <iostream>
+#include <cstddef>  // size_t
 #include <iomanip>
-#include <cstddef> // size_t
+#include <iostream>
+
+#include "UniqueObject.hpp"
 
 #ifdef BOOST_INTEL
-#  pragma warning( disable: 304 ) // access control not specified
-#  pragma warning( disable: 444 ) // destructor for base is not virtual
-#  pragma warning( disable: 981 ) // operands are evaluated in unspecified order
+#pragma warning(disable : 304)  // access control not specified
+#pragma warning(disable : 444)  // destructor for base is not virtual
+#pragma warning(disable : 981)  // operands are evaluated in unspecified order
 #endif
-
-
 
 namespace sc = boost::statechart;
 namespace mpl = boost::mpl;
 
-
-
 //////////////////////////////////////////////////////////////////////////////
-struct IDisplay
-{
+struct IDisplay {
   virtual void Display() const = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////
-template< class BitNo >
-struct EvFlipBit : sc::event< EvFlipBit< BitNo > > {};
+template <class BitNo>
+struct EvFlipBit : sc::event<EvFlipBit<BitNo> > {};
 
-template< class StateNo >
+template <class StateNo>
 struct BitState;
 
-struct BitMachine : sc::state_machine<
-  BitMachine, BitState< mpl::integral_c< unsigned int, 0 > > > {};
+struct BitMachine
+    : sc::state_machine<BitMachine,
+                        BitState<mpl::integral_c<unsigned int, 0> > > {};
 
-template< class BitNo, class StateNo >
-struct FlipTransition
-{
-  private:
-    typedef typename mpl::bitxor_< 
-      StateNo, 
-      mpl::shift_left< mpl::integral_c< unsigned int, 1 >, BitNo >
-    >::type NextStateNo;
+template <class BitNo, class StateNo>
+struct FlipTransition {
+ private:
+  typedef typename mpl::bitxor_<
+      StateNo, mpl::shift_left<mpl::integral_c<unsigned int, 1>, BitNo> >::type
+      NextStateNo;
 
-  public:
-    typedef typename sc::transition<
-      EvFlipBit< BitNo >, BitState< NextStateNo > > type;
+ public:
+  typedef typename sc::transition<EvFlipBit<BitNo>, BitState<NextStateNo> >
+      type;
 
-    BOOST_MPL_AUX_LAMBDA_SUPPORT( 2, FlipTransition, (BitNo, StateNo) );
+  BOOST_MPL_AUX_LAMBDA_SUPPORT(2, FlipTransition, (BitNo, StateNo));
 };
 
 //////////////////////////////////////////////////////////////////////////////
-void DisplayBits( unsigned int number )
-{
-  char buffer[ NO_OF_BITS + 1 ];
-  buffer[ NO_OF_BITS ] = 0;
+void DisplayBits(unsigned int number) {
+  char buffer[NO_OF_BITS + 1];
+  buffer[NO_OF_BITS] = 0;
 
-  for ( unsigned int bit = 0; bit < NO_OF_BITS; ++bit )
-  {
-    buffer[ bit ] = number & ( 1 << ( NO_OF_BITS - bit - 1 ) ) ? '1' : '0';
+  for (unsigned int bit = 0; bit < NO_OF_BITS; ++bit) {
+    buffer[bit] = number & (1 << (NO_OF_BITS - bit - 1)) ? '1' : '0';
   }
 
-  std::cout << "Current state: " << std::setw( 4 ) <<
-    number << " (" << buffer << ")" << std::endl;
+  std::cout << "Current state: " << std::setw(4) << number << " (" << buffer
+            << ")" << std::endl;
 }
 
-template< class StateNo >
-struct BitState : sc::simple_state< BitState< StateNo >, BitMachine >,
-  UniqueObject< BitState< StateNo > >, IDisplay
-{
-  void * operator new( std::size_t size )
-  {
-    return UniqueObject< BitState< StateNo > >::operator new( size );
+template <class StateNo>
+struct BitState : sc::simple_state<BitState<StateNo>, BitMachine>,
+                  UniqueObject<BitState<StateNo> >,
+                  IDisplay {
+  void* operator new(std::size_t size) {
+    return UniqueObject<BitState<StateNo> >::operator new(size);
   }
 
-  void operator delete( void * p, std::size_t size )
-  {
-    UniqueObject< BitState< StateNo > >::operator delete( p, size );
+  void operator delete(void* p, std::size_t size) {
+    UniqueObject<BitState<StateNo> >::operator delete(p, size);
   }
 
   typedef typename mpl::copy<
-    typename mpl::transform_view<
-      mpl::range_c< unsigned int, 0, NO_OF_BITS >,
-      FlipTransition< mpl::placeholders::_, StateNo > >::type,
-    mpl::front_inserter< mpl::list<> >
-  >::type reactions;
+      typename mpl::transform_view<
+          mpl::range_c<unsigned int, 0, NO_OF_BITS>,
+          FlipTransition<mpl::placeholders::_, StateNo> >::type,
+      mpl::front_inserter<mpl::list<> > >::type reactions;
 
-  virtual void Display() const
-  {
-    DisplayBits( StateNo::value );
+  virtual void Display() const { DisplayBits(StateNo::value); }
+};
+
+void DisplayMachineState(const BitMachine& bitMachine) {
+  bitMachine.state_cast<const IDisplay&>().Display();
+}
+
+//////////////////////////////////////////////////////////////////////////////
+boost::intrusive_ptr<const sc::event_base> pFlipBitEvents[NO_OF_BITS];
+
+struct EventInserter {
+  template <class BitNo>
+  void operator()(const BitNo&) {
+    pFlipBitEvents[BitNo::value] = new EvFlipBit<BitNo>();
   }
 };
 
-
-void DisplayMachineState( const BitMachine & bitMachine )
-{
-  bitMachine.state_cast< const IDisplay & >().Display();
+void FillEventArray() {
+  mpl::for_each<mpl::range_c<unsigned int, 0, NO_OF_BITS> >(EventInserter());
 }
 
 //////////////////////////////////////////////////////////////////////////////
-boost::intrusive_ptr< const sc::event_base > pFlipBitEvents[ NO_OF_BITS ];
-
-struct EventInserter
-{
-  template< class BitNo >
-  void operator()( const BitNo & )
-  {
-    pFlipBitEvents[ BitNo::value ] = new EvFlipBit< BitNo >();
-  }
-};
-
-void FillEventArray()
-{
-  mpl::for_each< mpl::range_c< unsigned int, 0, NO_OF_BITS > >(
-    EventInserter() );
-}
-
-//////////////////////////////////////////////////////////////////////////////
-void VisitAllStates( BitMachine & bitMachine, unsigned int msb )
-{
-  if ( msb > 0 )
-  {
-    VisitAllStates( bitMachine, msb - 1 );
+void VisitAllStates(BitMachine& bitMachine, unsigned int msb) {
+  if (msb > 0) {
+    VisitAllStates(bitMachine, msb - 1);
   }
 
-  bitMachine.process_event( *pFlipBitEvents[ msb ] );
-  DisplayMachineState( bitMachine );
+  bitMachine.process_event(*pFlipBitEvents[msb]);
+  DisplayMachineState(bitMachine);
 
-  if ( msb > 0 )
-  {
-    VisitAllStates( bitMachine, msb - 1 );
+  if (msb > 0) {
+    VisitAllStates(bitMachine, msb - 1);
   }
 }
 
 //////////////////////////////////////////////////////////////////////////////
-char GetKey()
-{
+char GetKey() {
   char key;
   std::cin >> key;
   return key;
 }
 
-
 //////////////////////////////////////////////////////////////////////////////
-int main()
-{
+int main() {
   FillEventArray();
 
   const unsigned int noOfStates = 1 << NO_OF_BITS;
   std::cout << "Boost.Statechart BitMachine example\n";
-  std::cout << "Machine configuration: " << noOfStates <<
-    " states interconnected with " << noOfStates * NO_OF_BITS <<
-    " transitions.\n\n";
+  std::cout << "Machine configuration: " << noOfStates
+            << " states interconnected with " << noOfStates * NO_OF_BITS
+            << " transitions.\n\n";
 
-  for ( unsigned int bit = 0; bit < NO_OF_BITS; ++bit )
-  {
+  for (unsigned int bit = 0; bit < NO_OF_BITS; ++bit) {
     std::cout << bit - 0 << "<CR>: Flips bit " << bit - 0 << "\n";
   }
 
@@ -227,31 +193,22 @@ int main()
   std::cout << "e<CR>: Exits the program\n\n";
   std::cout << "You may chain commands, e.g. 31<CR> flips bits 3 and 1\n\n";
 
-
   BitMachine bitMachine;
   bitMachine.initiate();
 
   char key = GetKey();
 
-  while ( key != 'e' )
-  {
-    if ( ( key >= '0' ) && ( key < static_cast< char >( '0' + NO_OF_BITS ) ) )
-    {
-      bitMachine.process_event( *pFlipBitEvents[ key - '0' ] );
-      DisplayMachineState( bitMachine );
-    }
-    else
-    {
-      switch( key )
-      {
-        case 'a':
-        {
-          VisitAllStates( bitMachine, NO_OF_BITS - 1 );
-        }
-        break;
+  while (key != 'e') {
+    if ((key >= '0') && (key < static_cast<char>('0' + NO_OF_BITS))) {
+      bitMachine.process_event(*pFlipBitEvents[key - '0']);
+      DisplayMachineState(bitMachine);
+    } else {
+      switch (key) {
+        case 'a': {
+          VisitAllStates(bitMachine, NO_OF_BITS - 1);
+        } break;
 
-        default:
-        {
+        default: {
           std::cout << "Invalid key!\n";
         }
       }

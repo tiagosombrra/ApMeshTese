@@ -6,46 +6,40 @@
 //
 
 #include <boost/config.hpp>
-#if ! defined  BOOST_NO_CXX11_DECLTYPE
+#if !defined BOOST_NO_CXX11_DECLTYPE
 #define BOOST_RESULT_OF_USE_DECLTYPE
 #endif
 
 #define BOOST_THREAD_VERSION 4
 #define BOOST_THREAD_PROVIDES_EXECUTORS
 
-#include <boost/function.hpp>
-#include <boost/thread/executors/executor.hpp>
-#include <boost/thread/executors/basic_thread_pool.hpp>
-#include <boost/thread/executors/scheduling_adaptor.hpp>
 #include <boost/chrono/chrono_io.hpp>
-
 #include <boost/core/lightweight_test.hpp>
+#include <boost/function.hpp>
+#include <boost/thread/executors/basic_thread_pool.hpp>
+#include <boost/thread/executors/executor.hpp>
+#include <boost/thread/executors/scheduling_adaptor.hpp>
 
 using namespace boost::chrono;
 
-
 typedef boost::executors::basic_thread_pool thread_pool;
 
-void fn(int x)
-{
-  //std::cout << "[" << __LINE__ << "] " << steady_clock::now() << std::endl;
-    std::cout << x << std::endl;
+void fn(int x) {
+  // std::cout << "[" << __LINE__ << "] " << steady_clock::now() << std::endl;
+  std::cout << x << std::endl;
 }
 
-void test_timing(const int n)
-{
-    thread_pool tp(4);
-    boost::scheduling_adaptor<thread_pool> sa(tp);
-    for(int i = 1; i <= n; i++)
-    {
-        sa.submit_after(boost::bind(fn,i),seconds(i));
-        sa.submit_after(boost::bind(fn,i), milliseconds(i*100));
-    }
-    boost::this_thread::sleep_for(boost::chrono::seconds(10));
+void test_timing(const int n) {
+  thread_pool tp(4);
+  boost::scheduling_adaptor<thread_pool> sa(tp);
+  for (int i = 1; i <= n; i++) {
+    sa.submit_after(boost::bind(fn, i), seconds(i));
+    sa.submit_after(boost::bind(fn, i), milliseconds(i * 100));
+  }
+  boost::this_thread::sleep_for(boost::chrono::seconds(10));
 }
 
-int main()
-{
+int main() {
   steady_clock::time_point start = steady_clock::now();
   test_timing(5);
   steady_clock::duration diff = steady_clock::now() - start;

@@ -16,106 +16,82 @@
 
 #include <boost/assert.hpp>
 
-namespace client
-{
-    class vmachine;
+namespace client {
+class vmachine;
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  A light wrapper to a function pointer returning int and accepting
-    //  from 0 to 3 arguments, where arity is determined at runtime.
-    ///////////////////////////////////////////////////////////////////////////
-    class function
-    {
-    public:
+///////////////////////////////////////////////////////////////////////////
+//  A light wrapper to a function pointer returning int and accepting
+//  from 0 to 3 arguments, where arity is determined at runtime.
+///////////////////////////////////////////////////////////////////////////
+class function {
+ public:
+  typedef int result_type;
 
-        typedef int result_type;
+  int operator()() const {
+    BOOST_ASSERT(fptr != 0);
+    BOOST_ASSERT(arity() == 0);
+    int (*fp)() = (int (*)())(intptr_t)fptr;
+    return fp();
+  }
 
-        int operator()() const
-        {
-            BOOST_ASSERT(fptr != 0);
-            BOOST_ASSERT(arity() == 0);
-            int (*fp)() = (int(*)())(intptr_t)fptr;
-            return fp();
-        }
+  int operator()(int _1) const {
+    BOOST_ASSERT(fptr != 0);
+    BOOST_ASSERT(arity() == 1);
+    int (*fp)(int) = (int (*)(int))(intptr_t)fptr;
+    return fp(_1);
+  }
 
-        int operator()(int _1) const
-        {
-            BOOST_ASSERT(fptr != 0);
-            BOOST_ASSERT(arity() == 1);
-            int (*fp)(int) = (int(*)(int))(intptr_t)fptr;
-            return fp(_1);
-        }
+  int operator()(int _1, int _2) const {
+    BOOST_ASSERT(fptr != 0);
+    BOOST_ASSERT(arity() == 2);
+    int (*fp)(int, int) = (int (*)(int, int))(intptr_t)fptr;
+    return fp(_1, _2);
+  }
 
-        int operator()(int _1, int _2) const
-        {
-            BOOST_ASSERT(fptr != 0);
-            BOOST_ASSERT(arity() == 2);
-            int (*fp)(int, int) = (int(*)(int, int))(intptr_t)fptr;
-            return fp(_1, _2);
-        }
+  int operator()(int _1, int _2, int _3) const {
+    BOOST_ASSERT(fptr != 0);
+    BOOST_ASSERT(arity() == 3);
+    int (*fp)(int, int, int) = (int (*)(int, int, int))(intptr_t)fptr;
+    return fp(_1, _2, _3);
+  }
 
-        int operator()(int _1, int _2, int _3) const
-        {
-            BOOST_ASSERT(fptr != 0);
-            BOOST_ASSERT(arity() == 3);
-            int (*fp)(int, int, int) = (int(*)(int, int, int))(intptr_t)fptr;
-            return fp(_1, _2, _3);
-        }
+  unsigned arity() const { return arity_; }
+  bool operator!() const { return fptr == 0; }
 
-        unsigned arity() const { return arity_; }
-        bool operator!() const { return fptr == 0; }
+ private:
+  friend class vmachine;
+  function(void* fptr, unsigned arity_) : fptr(fptr), arity_(arity_) {}
 
-    private:
+  void* fptr;
+  unsigned arity_;
+};
 
-        friend class vmachine;
-        function(void* fptr, unsigned arity_)
-            : fptr(fptr), arity_(arity_) {}
+///////////////////////////////////////////////////////////////////////////
+//  The Virtual Machine (light wrapper over LLVM JIT)
+///////////////////////////////////////////////////////////////////////////
+class vmachine {
+ public:
+  vmachine();
 
-        void* fptr;
-        unsigned arity_;
-    };
+  llvm::Module* module() const { return module_; }
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  The Virtual Machine (light wrapper over LLVM JIT)
-    ///////////////////////////////////////////////////////////////////////////
-    class vmachine
-    {
-    public:
+  llvm::ExecutionEngine* execution_engine() const { return execution_engine_; }
 
-        vmachine();
+  void print_assembler() const { module_->dump(); }
 
-        llvm::Module* module() const
-        {
-            return module_;
-        }
+  function get_function(char const* name) {
+    llvm::Function* callee = module_->getFunction(name);
+    if (callee == 0) return function(0, 0);
 
-        llvm::ExecutionEngine* execution_engine() const
-        {
-            return execution_engine_;
-        }
+    // JIT the function
+    void* fptr = execution_engine_->getPointerToFunction(callee);
+    return function(fptr, callee->arg_size());
+  }
 
-        void print_assembler() const
-        {
-            module_->dump();
-        }
-
-        function get_function(char const* name)
-        {
-            llvm::Function* callee = module_->getFunction(name);
-            if (callee == 0)
-                return function(0, 0);
-
-            // JIT the function
-            void *fptr = execution_engine_->getPointerToFunction(callee);
-            return function(fptr, callee->arg_size());
-        }
-
-    private:
-
-        llvm::Module* module_;
-        llvm::ExecutionEngine* execution_engine_;
-    };
-}
+ private:
+  llvm::Module* module_;
+  llvm::ExecutionEngine* execution_engine_;
+};
+}  // namespace client
 
 #endif
-

@@ -9,10 +9,10 @@
  */
 
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_serialization.hpp"
 
-int main()
-{
+int main() {
   test_serialization();
   return boost::report_errors();
 }

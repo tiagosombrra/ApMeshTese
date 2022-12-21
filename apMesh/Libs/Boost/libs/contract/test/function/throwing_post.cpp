@@ -6,57 +6,60 @@
 
 // Test throw from free function .post().
 
-#include "../detail/oteststream.hpp"
-#include <boost/contract/function.hpp>
 #include <boost/contract/check.hpp>
+#include <boost/contract/function.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <sstream>
 
+#include "../detail/oteststream.hpp"
+
 boost::contract::test::detail::oteststream out;
 
-struct err {}; // Global decl so visible in MSVC10 lambdas.
+struct err {};  // Global decl so visible in MSVC10 lambdas.
 
 void f() {
-    boost::contract::check c = boost::contract::function()
-        .precondition([] { out << "f::pre" << std::endl; })
-        .old([] { out << "f::old" << std::endl; })
-        .postcondition([] {
+  boost::contract::check c =
+      boost::contract::function()
+          .precondition([] { out << "f::pre" << std::endl; })
+          .old([] { out << "f::old" << std::endl; })
+          .postcondition([] {
             out << "f::post" << std::endl;
-            throw err(); // Test this throws.
-        })
-        .except([] { out << "f::except" << std::endl; })
-    ;
-    out << "f::body" << std::endl;
+            throw err();  // Test this throws.
+          })
+          .except([] { out << "f::except" << std::endl; });
+  out << "f::body" << std::endl;
 }
 
 int main() {
-    std::ostringstream ok;
+  std::ostringstream ok;
 
-    boost::contract::set_postcondition_failure(
-            [] (boost::contract::from) { throw; });
+  boost::contract::set_postcondition_failure(
+      [](boost::contract::from) { throw; });
 
-    try {
-        out.str("");
-        f();
-        #ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
-                BOOST_TEST(false);
-            } catch(err const&) {
-        #endif
-        ok.str(""); ok << "" // Suppress a warning.
-            #ifndef BOOST_CONTRACT_NO_PRECONDITIONS
-                << "f::pre" << std::endl
-            #endif
-            #ifndef BOOST_CONTRACT_NO_OLDS
-                << "f::old" << std::endl
-            #endif
-            << "f::body" << std::endl
-            #ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
-                << "f::post" << std::endl // Test this threw.
-            #endif
+  try {
+    out.str("");
+    f();
+#ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
+    BOOST_TEST(false);
+  } catch (err const&) {
+#endif
+    ok.str("");
+    ok << ""  // Suppress a warning.
+#ifndef BOOST_CONTRACT_NO_PRECONDITIONS
+       << "f::pre" << std::endl
+#endif
+#ifndef BOOST_CONTRACT_NO_OLDS
+       << "f::old" << std::endl
+#endif
+       << "f::body" << std::endl
+#ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
+       << "f::post" << std::endl  // Test this threw.
+#endif
         ;
-        BOOST_TEST(out.eq(ok.str()));
-    } catch(...) { BOOST_TEST(false); }
+    BOOST_TEST(out.eq(ok.str()));
+  } catch (...) {
+    BOOST_TEST(false);
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-

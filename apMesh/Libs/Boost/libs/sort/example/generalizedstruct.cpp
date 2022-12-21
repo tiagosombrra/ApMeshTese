@@ -9,16 +9,17 @@
 
 //  See http://www.boost.org/libs/sort for library home page.
 
-#include <boost/sort/spreadsort/string_sort.hpp>
-#include <boost/sort/spreadsort/float_sort.hpp>
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include <algorithm>
-#include <vector>
-#include <iostream>
+#include <boost/sort/spreadsort/float_sort.hpp>
+#include <boost/sort/spreadsort/string_sort.hpp>
 #include <fstream>
+#include <iostream>
 #include <string>
+#include <vector>
 using std::string;
 using namespace boost::sort::spreadsort;
 
@@ -86,7 +87,7 @@ struct bracket {
     // and the inside of the following if just becomes:
     // return x.first_name[offset - first_name_offset];
     const unsigned first_name_end_offset =
-      first_name_offset + x.first_name.size() * 2;
+        first_name_offset + x.first_name.size() * 2;
     if (offset < first_name_end_offset) {
       int char_offset = offset - first_name_offset;
       // This signals that the string continues.
@@ -109,14 +110,13 @@ struct bracket {
 
 struct getsize {
   inline size_t operator()(const DATA_TYPE &x) const {
-    return first_name_offset + x.first_name.size() * 2 + 1 +
-      x.last_name.size();
+    return first_name_offset + x.first_name.size() * 2 + 1 + x.last_name.size();
   }
 };
 //] [/generalized_functors]
 
-//Pass in an argument to test std::sort
-int main(int argc, const char ** argv) {
+// Pass in an argument to test std::sort
+int main(int argc, const char **argv) {
   std::ifstream indata;
   std::ofstream outfile;
   bool stdSort = false;
@@ -128,7 +128,7 @@ int main(int argc, const char ** argv) {
       loopCount = atoi(argv[u]);
   }
   double total = 0.0;
-  //Run multiple loops, if requested
+  // Run multiple loops, if requested
   std::vector<DATA_TYPE> array;
   for (unsigned u = 0; u < loopCount; ++u) {
     indata.open("input.txt", std::ios_base::in | std::ios_base::binary);
@@ -139,7 +139,7 @@ int main(int argc, const char ** argv) {
 
     // Read in the data.
     DATA_TYPE inval;
-    while (!indata.eof() ) {
+    while (!indata.eof()) {
       indata >> inval.first_name;
       indata >> inval.last_name;
       indata.read(reinterpret_cast<char *>(&(inval.birth)), birth_size);
@@ -148,8 +148,7 @@ int main(int argc, const char ** argv) {
       if (inval.net_worth != inval.net_worth) {
         inval.net_worth = 0;
       }
-      if (indata.eof())
-        break;
+      if (indata.eof()) break;
       array.push_back(inval);
     }
     indata.close();
@@ -161,18 +160,20 @@ int main(int argc, const char ** argv) {
     if (stdSort) {
       std::sort(array.begin(), array.end(), lessthan());
     } else {
-//[generalized_functors_call
+      //[generalized_functors_call
       string_sort(array.begin(), array.end(), bracket(), getsize(), lessthan());
-//] [/generalized_functors_call]
+      //] [/generalized_functors_call]
     }
     end = clock();
     elapsed = static_cast<double>(end - start);
     if (stdSort) {
       outfile.open("standard_sort_out.txt", std::ios_base::out |
-                   std::ios_base::binary | std::ios_base::trunc);
+                                                std::ios_base::binary |
+                                                std::ios_base::trunc);
     } else {
       outfile.open("boost_sort_out.txt", std::ios_base::out |
-                   std::ios_base::binary | std::ios_base::trunc);
+                                             std::ios_base::binary |
+                                             std::ios_base::trunc);
     }
     if (outfile.good()) {
       for (unsigned u = 0; u < array.size(); ++u)

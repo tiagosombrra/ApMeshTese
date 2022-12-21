@@ -28,60 +28,40 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 //  Semantic actions
 //
 ////////////////////////////////////////////////////////////////////////////
-namespace
-{
-    void    do_int(char const* str, char const* end)
-    {
-        string  s(str, end);
-        cout << "PUSH(" << s << ')' << endl;
-    }
-
-    void    do_add(char const*, char const*)    { cout << "ADD\n"; }
-    void    do_subt(char const*, char const*)   { cout << "SUBTRACT\n"; }
-    void    do_mult(char const*, char const*)   { cout << "MULTIPLY\n"; }
-    void    do_div(char const*, char const*)    { cout << "DIVIDE\n"; }
-    void    do_neg(char const*, char const*)    { cout << "NEGATE\n"; }
+namespace {
+void do_int(char const* str, char const* end) {
+  string s(str, end);
+  cout << "PUSH(" << s << ')' << endl;
 }
+
+void do_add(char const*, char const*) { cout << "ADD\n"; }
+void do_subt(char const*, char const*) { cout << "SUBTRACT\n"; }
+void do_mult(char const*, char const*) { cout << "MULTIPLY\n"; }
+void do_div(char const*, char const*) { cout << "DIVIDE\n"; }
+void do_neg(char const*, char const*) { cout << "NEGATE\n"; }
+}  // namespace
 
 ////////////////////////////////////////////////////////////////////////////
 //
 //  Our calculator grammar
 //
 ////////////////////////////////////////////////////////////////////////////
-struct calculator : public grammar<calculator>
-{
-    template <typename ScannerT>
-    struct definition
-    {
-        definition(calculator const& /*self*/)
-        {
-            expression
-                =   term
-                    >> *(   ('+' >> term)[&do_add]
-                        |   ('-' >> term)[&do_subt]
-                        )
-                ;
+struct calculator : public grammar<calculator> {
+  template <typename ScannerT>
+  struct definition {
+    definition(calculator const& /*self*/) {
+      expression = term >> *(('+' >> term)[&do_add] | ('-' >> term)[&do_subt]);
 
-            term
-                =   factor
-                    >> *(   ('*' >> factor)[&do_mult]
-                        |   ('/' >> factor)[&do_div]
-                        )
-                ;
+      term = factor >> *(('*' >> factor)[&do_mult] | ('/' >> factor)[&do_div]);
 
-            factor
-                =   lexeme_d[(+digit_p)[&do_int]]
-                |   '(' >> expression >> ')'
-                |   ('-' >> factor)[&do_neg]
-                |   ('+' >> factor)
-                ;
-        }
+      factor = lexeme_d[(+digit_p)[&do_int]] | '(' >> expression >> ')' |
+               ('-' >> factor)[&do_neg] | ('+' >> factor);
+    }
 
-        rule<ScannerT> expression, term, factor;
+    rule<ScannerT> expression, term, factor;
 
-        rule<ScannerT> const&
-        start() const { return expression; }
-    };
+    rule<ScannerT> const& start() const { return expression; }
+  };
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -89,41 +69,32 @@ struct calculator : public grammar<calculator>
 //  Main program
 //
 ////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "\t\tExpression parser...\n\n";
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "Type an expression...or [q or Q] to quit\n\n";
+int main() {
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "\t\tExpression parser...\n\n";
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    calculator calc;    //  Our parser
+  calculator calc;  //  Our parser
 
-    string str;
-    while (getline(cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
+  string str;
+  while (getline(cin, str)) {
+    if (str.empty() || str[0] == 'q' || str[0] == 'Q') break;
 
-        parse_info<> info = parse(str.c_str(), calc, space_p);
+    parse_info<> info = parse(str.c_str(), calc, space_p);
 
-        if (info.full)
-        {
-            cout << "-------------------------\n";
-            cout << "Parsing succeeded\n";
-            cout << "-------------------------\n";
-        }
-        else
-        {
-            cout << "-------------------------\n";
-            cout << "Parsing failed\n";
-            cout << "stopped at: \": " << info.stop << "\"\n";
-            cout << "-------------------------\n";
-        }
+    if (info.full) {
+      cout << "-------------------------\n";
+      cout << "Parsing succeeded\n";
+      cout << "-------------------------\n";
+    } else {
+      cout << "-------------------------\n";
+      cout << "Parsing failed\n";
+      cout << "stopped at: \": " << info.stop << "\"\n";
+      cout << "-------------------------\n";
     }
+  }
 
-    cout << "Bye... :-) \n\n";
-    return 0;
+  cout << "Bye... :-) \n\n";
+  return 0;
 }
-
-

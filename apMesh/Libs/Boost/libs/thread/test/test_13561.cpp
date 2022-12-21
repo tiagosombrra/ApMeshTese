@@ -5,13 +5,10 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/thread/detail/nullary_function.hpp>
 #include <boost/system/detail/error_code.ipp>
+#include <boost/thread/detail/nullary_function.hpp>
 
-int main(int argc, char* argv[])
-{
-    boost::detail::nullary_function<void ()> f1;
-    auto f2 = f1;
+int main(int argc, char* argv[]) {
+  boost::detail::nullary_function<void()> f1;
+  auto f2 = f1;
 }
-
-

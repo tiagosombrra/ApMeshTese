@@ -13,33 +13,30 @@
 
 using namespace boost::unit_test;
 
-void test_function(int i) {
-  BOOST_TEST(i >= 1);
-}
+void test_function(int i) { BOOST_TEST(i >= 1); }
 
 // helper
-int read_integer(const std::string &str) {
-  std::istringstream buff( str );
+int read_integer(const std::string& str) {
+  std::istringstream buff(str);
   int number = 0;
   buff >> number;
-  if(buff.fail()) {
+  if (buff.fail()) {
     // it is also possible to raise a boost.test specific exception.
     throw framework::setup_error("Argument '" + str + "' not integer");
   }
   return number;
 }
 
-bool init_unit_test()
-{
+bool init_unit_test() {
   int argc = boost::unit_test::framework::master_test_suite().argc;
   char** argv = boost::unit_test::framework::master_test_suite().argv;
 
-  if( argc <= 1) {
-      return false; // returning false to indicate an error
+  if (argc <= 1) {
+    return false;  // returning false to indicate an error
   }
 
-  if( std::string(argv[1]) == "--create-parametrized" ) {
-    if(argc < 3) {
+  if (std::string(argv[1]) == "--create-parametrized") {
+    if (argc < 3) {
       // the logging availability depends on the logger type
       BOOST_TEST_MESSAGE("Not enough parameters");
       return false;
@@ -47,16 +44,16 @@ bool init_unit_test()
 
     int number_tests = read_integer(argv[2]);
     int test_start = 0;
-    if(argc > 3) {
-        test_start = read_integer(argv[3]);
+    if (argc > 3) {
+      test_start = read_integer(argv[3]);
     }
 
-    for(int i = test_start; i < number_tests; i++) {
-        std::ostringstream ostr;
-        ostr << "name " << i;
-        // create test-cases, avoiding duplicate names
-        framework::master_test_suite().
-            add( BOOST_TEST_CASE_NAME( std::bind(&test_function, i), ostr.str().c_str() ) );
+    for (int i = test_start; i < number_tests; i++) {
+      std::ostringstream ostr;
+      ostr << "name " << i;
+      // create test-cases, avoiding duplicate names
+      framework::master_test_suite().add(BOOST_TEST_CASE_NAME(
+          std::bind(&test_function, i), ostr.str().c_str()));
     }
   }
   return true;

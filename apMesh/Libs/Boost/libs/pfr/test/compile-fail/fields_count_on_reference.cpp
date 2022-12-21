@@ -6,10 +6,10 @@
 #include <boost/pfr/detail/fields_count.hpp>
 
 struct some_struct {
-    int i;
-    int j;
+  int i;
+  int j;
 };
 
 int main() {
-    return static_cast<int>(boost::pfr::detail::fields_count<some_struct&>());
+  return static_cast<int>(boost::pfr::detail::fields_count<some_struct&>());
 }

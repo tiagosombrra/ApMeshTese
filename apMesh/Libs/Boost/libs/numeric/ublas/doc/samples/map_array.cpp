@@ -12,13 +12,12 @@
 
 #include <boost/numeric/ublas/storage_sparse.hpp>
 
-int main () {
-    using namespace boost::numeric::ublas;
-    map_array<int, double> a;
-    a.reserve (3);
-    for (unsigned i = 0; i < 3; ++ i) {
-        a [i] = i;
-        std::cout << a [i] << std::endl;
-    }
+int main() {
+  using namespace boost::numeric::ublas;
+  map_array<int, double> a;
+  a.reserve(3);
+  for (unsigned i = 0; i < 3; ++i) {
+    a[i] = i;
+    std::cout << a[i] << std::endl;
+  }
 }
-

@@ -9,10 +9,10 @@
 
 // bool owns_lock(Mutex *) const;
 
-#include <boost/thread/strict_lock.hpp>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/strict_lock.hpp>
+#include <boost/thread/thread.hpp>
 
 #ifdef BOOST_THREAD_USES_CHRONO
 typedef boost::chrono::high_resolution_clock Clock;
@@ -22,8 +22,7 @@ typedef boost::chrono::milliseconds ms;
 typedef boost::chrono::nanoseconds ns;
 #endif
 
-int main()
-{
+int main() {
   boost::mutex m;
   boost::mutex m2;
 

@@ -11,21 +11,17 @@
 
 #define BOOST_THREAD_VERSION 4
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/synchronized_value.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
-
-int main()
-{
-
+int main() {
   {
     boost::synchronized_value<int> v1(1);
     boost::synchronized_value<int> v2(2);
-    swap(v1,v2);
+    swap(v1, v2);
     BOOST_TEST(v1.value() == 2);
     BOOST_TEST(v2.value() == 1);
   }
 
   return boost::report_errors();
 }
-

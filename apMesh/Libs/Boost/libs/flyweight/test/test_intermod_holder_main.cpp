@@ -9,10 +9,10 @@
  */
 
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_intermod_holder.hpp"
 
-int main()
-{
+int main() {
   test_intermodule_holder();
   return boost::report_errors();
 }

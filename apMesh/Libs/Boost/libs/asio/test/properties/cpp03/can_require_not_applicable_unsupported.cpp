@@ -12,21 +12,19 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
-};
+struct prop {};
 
 template <int>
-struct object
-{
-};
+struct object {};
 
-int main()
-{
+int main() {
   assert((!boost::asio::can_require<object<1>, prop<2> >::value));
   assert((!boost::asio::can_require<object<1>, prop<2>, prop<3> >::value));
-  assert((!boost::asio::can_require<object<1>, prop<2>, prop<3>, prop<4> >::value));
+  assert((
+      !boost::asio::can_require<object<1>, prop<2>, prop<3>, prop<4> >::value));
   assert((!boost::asio::can_require<const object<1>, prop<2> >::value));
-  assert((!boost::asio::can_require<const object<1>, prop<2>, prop<3> >::value));
-  assert((!boost::asio::can_require<const object<1>, prop<2>, prop<3>, prop<4> >::value));
+  assert(
+      (!boost::asio::can_require<const object<1>, prop<2>, prop<3> >::value));
+  assert((!boost::asio::can_require<const object<1>, prop<2>, prop<3>,
+                                    prop<4> >::value));
 }

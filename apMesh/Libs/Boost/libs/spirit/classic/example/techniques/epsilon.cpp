@@ -25,10 +25,10 @@
 #define BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT 2
 
 #include <boost/assert.hpp>
-#include <iostream>
 #include <boost/cstdlib.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/phoenix1.hpp>
+#include <iostream>
 
 using namespace std;
 using namespace boost;
@@ -37,32 +37,30 @@ using namespace phoenix;
 
 //-----------------------------------------------------------------------------
 
-int main()
-{
-    rule<
-        // Support both the default phrase_scanner_t and the modified version
-        // with no_actions action_policy
-        no_actions_scanner_list<phrase_scanner_t>::type
-    > r;
+int main() {
+  rule<
+      // Support both the default phrase_scanner_t and the modified version
+      // with no_actions action_policy
+      no_actions_scanner_list<phrase_scanner_t>::type>
+      r;
 
-    int i(0);
+  int i(0);
 
-    r = int_p[var(i) += arg1];
+  r = int_p[var(i) += arg1];
 
-    parse_info<> info = parse(
-        "1",
+  parse_info<> info =
+      parse("1",
 
-        // r rule is used twice but the semantic action is invoked only once
-        epsilon_p(r) >> r,
+            // r rule is used twice but the semantic action is invoked only once
+            epsilon_p(r) >> r,
 
-        space_p
-    );
+            space_p);
 
-    BOOST_ASSERT(info.full);
-    // Check, that the semantic action was invoked only once
-    BOOST_ASSERT(i == 1);
+  BOOST_ASSERT(info.full);
+  // Check, that the semantic action was invoked only once
+  BOOST_ASSERT(i == 1);
 
-    return exit_success;
+  return exit_success;
 }
 
 //-----------------------------------------------------------------------------

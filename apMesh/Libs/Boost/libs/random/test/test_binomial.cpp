@@ -9,10 +9,10 @@
  *
  */
 
-#include <boost/random/binomial_distribution.hpp>
-#include <boost/random/uniform_int.hpp>
-#include <boost/random/uniform_01.hpp>
 #include <boost/math/distributions/binomial.hpp>
+#include <boost/random/binomial_distribution.hpp>
+#include <boost/random/uniform_01.hpp>
+#include <boost/random/uniform_int.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::binomial_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME binomial

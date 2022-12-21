@@ -11,18 +11,16 @@
 #include <boost/asio/query.hpp>
 #include <cassert>
 
-struct prop
-{
-  template <typename> static constexpr bool is_applicable_property_v = true;
+struct prop {
+  template <typename>
+  static constexpr bool is_applicable_property_v = true;
 };
 
-struct object
-{
+struct object {
   friend constexpr int query(const object&, prop) { return 123; }
 };
 
-int main()
-{
+int main() {
   object o1 = {};
   int result1 = boost::asio::query(o1, prop());
   assert(result1 == 123);

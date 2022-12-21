@@ -342,8 +342,8 @@ SubMalha *AdaptadorPorCurvatura::adaptaDominioOmp(
   for (unsigned int i = 0; i < sub->getNumDeElementos(); ++i) {
     Triangulo *tri = (Triangulo *)sub->getElemento(i);
 
-    /*Noh centro (	( tri->getN ( 1 ).x + tri->getN ( 2 ).x + tri->getN ( 3 ).x
-    ) / 3.0 , ( tri->getN ( 1 ).y + tri->getN ( 2 ).y + tri->getN ( 3 ).y  )
+    /*Noh centro (	( tri->getN ( 1 ).x + tri->getN ( 2 ).x + tri->getN ( 3
+    ).x ) / 3.0 , ( tri->getN ( 1 ).y + tri->getN ( 2 ).y + tri->getN ( 3 ).y  )
     / 3.0 , ( tri->getN ( 1 ).z + tri->getN ( 2 ).z + tri->getN ( 3 ).z  ) / 3.0
     ); tuple < double, double > centro_par = patch->encontrar_u_v ( centro );*/
 
@@ -498,7 +498,7 @@ list<Ponto *> AdaptadorPorCurvatura::adaptaCurvaByCurva(
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bt;
   //#pragma omp parallel for num_threads(NUM_THREADS) firstprivate(atual,proxi)
-  //shared(bt)
+  // shared(bt)
   //    // 1.2. Para cada segmento da curva
   //    for (int i = 0; i < pontos.size(); ++i)
   //    {
@@ -872,8 +872,8 @@ SubMalha *AdaptadorPorCurvatura::adaptaDominio(CoonsPatch *patch,
   for (unsigned int i = 0; i < sub->getNumDeElementos(); ++i) {
     Triangulo *tri = (Triangulo *)sub->getElemento(i);
 
-    /*Noh centro (	( tri->getN ( 1 ).x + tri->getN ( 2 ).x + tri->getN ( 3 ).x
-    ) / 3.0 , ( tri->getN ( 1 ).y + tri->getN ( 2 ).y + tri->getN ( 3 ).y  )
+    /*Noh centro (	( tri->getN ( 1 ).x + tri->getN ( 2 ).x + tri->getN ( 3
+    ).x ) / 3.0 , ( tri->getN ( 1 ).y + tri->getN ( 2 ).y + tri->getN ( 3 ).y  )
     / 3.0 , ( tri->getN ( 1 ).z + tri->getN ( 2 ).z + tri->getN ( 3 ).z  ) / 3.0
     ); tuple < double, double > centro_par = patch->encontrar_u_v ( centro );*/
 

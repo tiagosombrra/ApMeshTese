@@ -15,25 +15,18 @@ namespace archive {
 class polymorphic_iarchive;
 class polymorphic_oarchive;
 
-} // namespace archive
-} // namespace boost
+}  // namespace archive
+}  // namespace boost
 
 struct A {
-    // class a contains a pointer to a "hidden" declaration
-    template<class Archive>
-    void serialize(
-        Archive & ar,
-        const unsigned int file_version
-    ){
-        ar & data;
-    }
-    int data;
-    bool operator==(const A & rhs) const {
-        return data == rhs.data;
-    }
-    A() :
-        data(0)
-    {}
+  // class a contains a pointer to a "hidden" declaration
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int file_version) {
+    ar& data;
+  }
+  int data;
+  bool operator==(const A& rhs) const { return data == rhs.data; }
+  A() : data(0) {}
 };
 
-#endif // BOOST_SERIALIZATION_EXAMPLE_DEMO_POLYMORPHIC_A_HPP
+#endif  // BOOST_SERIALIZATION_EXAMPLE_DEMO_POLYMORPHIC_A_HPP

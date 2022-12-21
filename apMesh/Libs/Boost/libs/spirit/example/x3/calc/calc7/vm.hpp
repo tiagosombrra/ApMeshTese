@@ -9,40 +9,32 @@
 
 #include <vector>
 
-namespace client
-{
-    ///////////////////////////////////////////////////////////////////////////
-    //  The Virtual Machine
-    ///////////////////////////////////////////////////////////////////////////
-    enum byte_code
-    {
-        op_neg,     //  negate the top stack entry
-        op_add,     //  add top two stack entries
-        op_sub,     //  subtract top two stack entries
-        op_mul,     //  multiply top two stack entries
-        op_div,     //  divide top two stack entries
-        op_int,     //  push constant integer into the stack
-    };
+namespace client {
+///////////////////////////////////////////////////////////////////////////
+//  The Virtual Machine
+///////////////////////////////////////////////////////////////////////////
+enum byte_code {
+  op_neg,  //  negate the top stack entry
+  op_add,  //  add top two stack entries
+  op_sub,  //  subtract top two stack entries
+  op_mul,  //  multiply top two stack entries
+  op_div,  //  divide top two stack entries
+  op_int,  //  push constant integer into the stack
+};
 
-    class vmachine
-    {
-    public:
+class vmachine {
+ public:
+  vmachine(unsigned stackSize = 4096)
+      : stack(stackSize), stack_ptr(stack.begin()) {}
 
-        vmachine(unsigned stackSize = 4096)
-          : stack(stackSize)
-          , stack_ptr(stack.begin())
-        {
-        }
+  int top() const { return stack_ptr[-1]; };
+  void execute(std::vector<int> const& code);
 
-        int top() const { return stack_ptr[-1]; };
-        void execute(std::vector<int> const& code);
+ private:
+  std::vector<int> stack;
+  std::vector<int>::iterator stack_ptr;
+};
 
-    private:
-
-        std::vector<int> stack;
-        std::vector<int>::iterator stack_ptr;
-    };
-
-}
+}  // namespace client
 
 #endif

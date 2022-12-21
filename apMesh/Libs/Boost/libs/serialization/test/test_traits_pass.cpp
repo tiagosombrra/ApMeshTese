@@ -7,24 +7,18 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 // compile test for traits
-#include "test_tools.hpp"
-
 #include <boost/serialization/level.hpp>
 #include <boost/serialization/tracking.hpp>
 #include <boost/serialization/version.hpp>
 
-class B
-{
-};
+#include "test_tools.hpp"
+
+class B {};
 
 BOOST_CLASS_IMPLEMENTATION(B, boost::serialization::object_class_info)
 BOOST_CLASS_VERSION(B, 2)
 BOOST_CLASS_TRACKING(B, boost::serialization::track_always)
 
-int
-test_main( int argc, char* argv[] )
-{
-    return EXIT_SUCCESS;
-}
+int test_main(int argc, char* argv[]) { return EXIT_SUCCESS; }
 
 // EOF

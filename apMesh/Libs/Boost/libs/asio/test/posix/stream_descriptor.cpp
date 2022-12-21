@@ -11,12 +11,12 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/posix/stream_descriptor.hpp>
 
-#include <boost/asio/io_context.hpp>
 #include "../archetypes/async_result.hpp"
 #include "../unit_test.hpp"
 
@@ -30,26 +30,18 @@
 
 namespace posix_stream_descriptor_compile {
 
-void wait_handler(const boost::system::error_code&)
-{
-}
+void wait_handler(const boost::system::error_code&) {}
 
-void write_some_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void write_some_handler(const boost::system::error_code&, std::size_t) {}
 
-void read_some_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void read_some_handler(const boost::system::error_code&, std::size_t) {}
 
-void test()
-{
+void test() {
 #if defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR)
   using namespace boost::asio;
   namespace posix = boost::asio::posix;
 
-  try
-  {
+  try {
     io_context ioc;
     const io_context::executor_type ioc_ex = ioc.get_executor();
     char mutable_char_buffer[128] = "";
@@ -68,14 +60,14 @@ void test()
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     posix::stream_descriptor descriptor5(std::move(descriptor2));
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_stream_descriptor operators.
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     descriptor1 = posix::stream_descriptor(ioc);
     descriptor1 = std::move(descriptor2);
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
@@ -84,13 +76,13 @@ void test()
 
     // basic_descriptor functions.
 
-    posix::stream_descriptor::lowest_layer_type& lowest_layer
-      = descriptor1.lowest_layer();
+    posix::stream_descriptor::lowest_layer_type& lowest_layer =
+        descriptor1.lowest_layer();
     (void)lowest_layer;
 
     const posix::stream_descriptor& descriptor6 = descriptor1;
-    const posix::stream_descriptor::lowest_layer_type& lowest_layer2
-      = descriptor6.lowest_layer();
+    const posix::stream_descriptor::lowest_layer_type& lowest_layer2 =
+        descriptor6.lowest_layer();
     (void)lowest_layer2;
 
     int native_descriptor2 = -1;
@@ -102,12 +94,12 @@ void test()
     descriptor1.close();
     descriptor1.close(ec);
 
-    posix::stream_descriptor::native_handle_type native_descriptor3
-      = descriptor1.native_handle();
+    posix::stream_descriptor::native_handle_type native_descriptor3 =
+        descriptor1.native_handle();
     (void)native_descriptor3;
 
-    posix::stream_descriptor::native_handle_type native_descriptor4
-      = descriptor1.release();
+    posix::stream_descriptor::native_handle_type native_descriptor4 =
+        descriptor1.release();
     (void)native_descriptor4;
 
     descriptor1.cancel();
@@ -143,11 +135,9 @@ void test()
     descriptor1.write_some(null_buffers(), ec);
 
     descriptor1.async_write_some(buffer(mutable_char_buffer),
-        write_some_handler);
-    descriptor1.async_write_some(buffer(const_char_buffer),
-        write_some_handler);
-    descriptor1.async_write_some(null_buffers(),
-        write_some_handler);
+                                 write_some_handler);
+    descriptor1.async_write_some(buffer(const_char_buffer), write_some_handler);
+    descriptor1.async_write_some(null_buffers(), write_some_handler);
     int i2 = descriptor1.async_write_some(buffer(mutable_char_buffer), lazy);
     (void)i2;
     int i3 = descriptor1.async_write_some(buffer(const_char_buffer), lazy);
@@ -165,19 +155,15 @@ void test()
     (void)i5;
     int i6 = descriptor1.async_read_some(null_buffers(), lazy);
     (void)i6;
+  } catch (std::exception&) {
   }
-  catch (std::exception&)
-  {
-  }
-#endif // defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR)
+#endif  // defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR)
 }
 
-} // namespace posix_stream_descriptor_compile
+}  // namespace posix_stream_descriptor_compile
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "posix/stream_descriptor",
-  BOOST_ASIO_TEST_CASE(posix_stream_descriptor_compile::test)
-)
+BOOST_ASIO_TEST_SUITE(
+    "posix/stream_descriptor",
+    BOOST_ASIO_TEST_CASE(posix_stream_descriptor_compile::test))

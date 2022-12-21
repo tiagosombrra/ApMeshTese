@@ -18,14 +18,12 @@
 
 // recursive_mutex& operator=(const recursive_mutex&) = delete;
 
-#include <boost/thread/recursive_mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/recursive_mutex.hpp>
 
-int main()
-{
+int main() {
   boost::recursive_mutex m0;
   boost::recursive_mutex m1(m0);
 }
 
 #include "../../../remove_error_code_unused_warning.hpp"
-

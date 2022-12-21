@@ -11,31 +11,23 @@
 // *** the Spirit documentation for information regarding
 // *** this snippet.
 
-#include <iostream>
+#include <boost/assert.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/typeof/typeof.hpp>
-#include <boost/assert.hpp>
+#include <iostream>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 #define RULE(name, definition) BOOST_TYPEOF(definition) name = definition
 
-int
-main()
-{
-    RULE(
-        skipper,
-        (       space_p
-            |   "//" >> *(anychar_p - '\n') >> '\n'
-            |   "/*" >> *(anychar_p - "*/") >> "*/"
-        )
-    );
+int main() {
+  RULE(skipper, (space_p | "//" >> *(anychar_p - '\n') >> '\n' |
+                 "/*" >> *(anychar_p - "*/") >> "*/"));
 
-    bool success = parse(
-        "/*this is a comment*/\n//this is a c++ comment\n\n",
-        *skipper).full;
-    BOOST_ASSERT(success);
-    std::cout << "SUCCESS!!!\n";
-    return 0;
+  bool success =
+      parse("/*this is a comment*/\n//this is a c++ comment\n\n", *skipper)
+          .full;
+  BOOST_ASSERT(success);
+  std::cout << "SUCCESS!!!\n";
+  return 0;
 }
-

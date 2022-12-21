@@ -15,18 +15,18 @@
 
 #include <cassert>
 
-int cpp_main( int, char *[] )  // note the name
+int cpp_main(int, char *[])  // note the name
 {
 #if NDEBUG
 #pragma message("assert check turned off under NDEBUG")
 
-    return 1;
+  return 1;
 #else
-    int div = 0;
+  int div = 0;
 
-    assert( div != 0 );
+  assert(div != 0);
 
-    return 0;
+  return 0;
 #endif
 }
 

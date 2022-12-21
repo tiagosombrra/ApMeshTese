@@ -6,21 +6,18 @@
 
 #include "bind_processor.hpp"
 
-extern "C"
-{
-#include <sys/types.h>
+extern "C" {
 #include <sys/processor.h>
 #include <sys/procset.h>
+#include <sys/types.h>
 }
 
+#include <boost/config/abi_prefix.hpp>
 #include <stdexcept>
 
-#include <boost/config/abi_prefix.hpp>
-
-void bind_to_processor( unsigned int n)
-{
-    if ( ::processor_bind( P_LWPID, P_MYID, static_cast< processorid_t >( n), 0) == -1)
-        throw std::runtime_error("::processor_bind() failed");
+void bind_to_processor(unsigned int n) {
+  if (::processor_bind(P_LWPID, P_MYID, static_cast<processorid_t>(n), 0) == -1)
+    throw std::runtime_error("::processor_bind() failed");
 }
 
 #include <boost/config/abi_suffix.hpp>

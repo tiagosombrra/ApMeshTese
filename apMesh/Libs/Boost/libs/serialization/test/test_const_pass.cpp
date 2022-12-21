@@ -8,40 +8,39 @@
 
 // compile only
 
-#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/nvp.hpp>
 
 struct A {
-    template<class Archive>
-    void serialize(Archive & ar, unsigned int version) {
-    }
+  template <class Archive>
+  void serialize(Archive& ar, unsigned int version) {}
 };
 
 // should compile w/o problem
-void f1(boost::archive::text_oarchive & oa, const A & a){
-    oa & a;
-    oa & BOOST_SERIALIZATION_NVP(a);
-    oa << a;
-    oa << BOOST_SERIALIZATION_NVP(a);
+void f1(boost::archive::text_oarchive& oa, const A& a) {
+  oa& a;
+  oa& BOOST_SERIALIZATION_NVP(a);
+  oa << a;
+  oa << BOOST_SERIALIZATION_NVP(a);
 }
-void f2(boost::archive::text_oarchive & oa, const A * const & a){
-    oa & a;
-    oa & BOOST_SERIALIZATION_NVP(a);
-    oa << a;
-    oa << BOOST_SERIALIZATION_NVP(a);
+void f2(boost::archive::text_oarchive& oa, const A* const& a) {
+  oa& a;
+  oa& BOOST_SERIALIZATION_NVP(a);
+  oa << a;
+  oa << BOOST_SERIALIZATION_NVP(a);
 }
-void f3(boost::archive::text_iarchive & ia, A & a){
-    ia & a;
-    ia & BOOST_SERIALIZATION_NVP(a);
-    ia >> a;
-    ia >> BOOST_SERIALIZATION_NVP(a);
+void f3(boost::archive::text_iarchive& ia, A& a) {
+  ia& a;
+  ia& BOOST_SERIALIZATION_NVP(a);
+  ia >> a;
+  ia >> BOOST_SERIALIZATION_NVP(a);
 }
-void f4(boost::archive::text_iarchive & ia, A * & a){
-    ia & a;
-    ia & BOOST_SERIALIZATION_NVP(a);
-    ia >> a;
-    ia >> BOOST_SERIALIZATION_NVP(a);
+void f4(boost::archive::text_iarchive& ia, A*& a) {
+  ia& a;
+  ia& BOOST_SERIALIZATION_NVP(a);
+  ia >> a;
+  ia >> BOOST_SERIALIZATION_NVP(a);
 }
 #if 0
 void f5(boost::archive::text_oarchive & oa, const A * & a){
@@ -51,4 +50,3 @@ void f5(boost::archive::text_oarchive & oa, const A * & a){
     oa << BOOST_SERIALIZATION_NVP(a);
 }
 #endif
-

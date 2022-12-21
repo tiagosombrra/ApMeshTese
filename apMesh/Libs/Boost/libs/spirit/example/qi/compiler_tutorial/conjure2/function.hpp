@@ -10,27 +10,25 @@
 
 #include "statement.hpp"
 
-namespace client { namespace parser
-{
-    ///////////////////////////////////////////////////////////////////////////////
-    //  The function grammar
-    ///////////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Lexer>
-    struct function : qi::grammar<Iterator, ast::function()>
-    {
-        typedef error_handler<typename Lexer::base_iterator_type, Iterator>
-            error_handler_type;
+namespace client {
+namespace parser {
+///////////////////////////////////////////////////////////////////////////////
+//  The function grammar
+///////////////////////////////////////////////////////////////////////////////
+template <typename Iterator, typename Lexer>
+struct function : qi::grammar<Iterator, ast::function()> {
+  typedef error_handler<typename Lexer::base_iterator_type, Iterator>
+      error_handler_type;
 
-        function(error_handler_type& error_handler, Lexer const& l);
+  function(error_handler_type& error_handler, Lexer const& l);
 
-        statement<Iterator, Lexer> body;
+  statement<Iterator, Lexer> body;
 
-        qi::rule<Iterator, ast::identifier()> identifier;
-        qi::rule<Iterator, std::list<ast::identifier>()> argument_list;
-        qi::rule<Iterator, ast::function()> start;
-    };
-}}
+  qi::rule<Iterator, ast::identifier()> identifier;
+  qi::rule<Iterator, std::list<ast::identifier>()> argument_list;
+  qi::rule<Iterator, ast::function()> start;
+};
+}  // namespace parser
+}  // namespace client
 
 #endif
-
-

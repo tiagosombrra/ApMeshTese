@@ -4,8 +4,6 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
-
 //////////////////////////////////////////////////////////////////////////////
 // This program shows how a state machine can be spread over several
 // translation units if necessary. The inner workings of a digital camera are
@@ -24,7 +22,7 @@
 // |        -------------      |<------------------|              |
 // |       | Configuring |     |                   |              |
 // |        -------------      |                    --------------
-//  ---------------------------                              
+//  ---------------------------
 //
 // The states Configuring and Shooting will contain a large amount of logic,
 // so they are implemented in their own translation units. This way one team
@@ -32,26 +30,20 @@
 // Shooting mode. Once the above state chart is implemented, the teams could
 // work completely independently of each other.
 
-
-
-#include "Precompiled.hpp"
-#include "Camera.hpp"
 #include <iostream>
 
-
+#include "Camera.hpp"
+#include "Precompiled.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
-char GetKey()
-{
+char GetKey() {
   char key;
   std::cin >> key;
   return key;
 }
 
-
 //////////////////////////////////////////////////////////////////////////////
-int main()
-{
+int main() {
   std::cout << "Boost.Statechart Camera example\n\n";
 
   std::cout << "h<CR>: Press shutter half-way\n";
@@ -59,48 +51,36 @@ int main()
   std::cout << "r<CR>: Release shutter\n";
   std::cout << "c<CR>: Enter/exit configuration\n";
   std::cout << "e<CR>: Exits the program\n\n";
-  std::cout << "You may chain commands, e.g. hfr<CR> first presses the shutter half-way,\n";
+  std::cout << "You may chain commands, e.g. hfr<CR> first presses the shutter "
+               "half-way,\n";
   std::cout << "fully and then releases it.\n\n";
-
 
   Camera myCamera;
   myCamera.initiate();
 
   char key = GetKey();
 
-  while ( key != 'e' )
-  {
-    switch( key )
-    {
-      case 'h':
-      {
-        myCamera.process_event( EvShutterHalf() );
-      }
-      break;
+  while (key != 'e') {
+    switch (key) {
+      case 'h': {
+        myCamera.process_event(EvShutterHalf());
+      } break;
 
-      case 'f':
-      {
-        myCamera.process_event( EvShutterFull() );
-      }
-      break;
+      case 'f': {
+        myCamera.process_event(EvShutterFull());
+      } break;
 
-      case 'r':
-      {
-        myCamera.process_event( EvShutterRelease() );
-      }
-      break;
+      case 'r': {
+        myCamera.process_event(EvShutterRelease());
+      } break;
 
-      case 'c':
-      {
-        myCamera.process_event( EvConfig() );
-      }
-      break;
+      case 'c': {
+        myCamera.process_event(EvConfig());
+      } break;
 
-      default:
-      {
+      default: {
         std::cout << "Invalid key!\n";
-      }
-      break;
+      } break;
     }
 
     key = GetKey();

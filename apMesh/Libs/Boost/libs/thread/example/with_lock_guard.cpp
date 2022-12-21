@@ -8,14 +8,14 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <iostream> // std::cout
 #include <boost/thread/scoped_thread.hpp>
 #include <boost/thread/with_lock_guard.hpp>
+#include <iostream>  // std::cout
 
-boost::mutex m; // protection for 'x' and 'std::cout'
+boost::mutex m;  // protection for 'x' and 'std::cout'
 int x;
 
-#if defined(BOOST_NO_CXX11_LAMBDAS)  || (defined BOOST_MSVC && _MSC_VER < 1700)
+#if defined(BOOST_NO_CXX11_LAMBDAS) || (defined BOOST_MSVC && _MSC_VER < 1700)
 void print_x() {
   ++x;
   std::cout << "x = " << x << std::endl;
@@ -30,20 +30,17 @@ void job() {
 #else
 void job() {
   for (int i = 0; i < 10; ++i) {
-    boost::with_lock_guard(
-        m,
-        []() {
-          ++x;
-          std::cout << "x = " << x << std::endl;
-        }
-    );
+    boost::with_lock_guard(m, []() {
+      ++x;
+      std::cout << "x = " << x << std::endl;
+    });
     boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
   }
 }
 #endif
 
 int main() {
-#if defined(BOOST_NO_CXX11_LAMBDAS)  || (defined BOOST_MSVC && _MSC_VER < 1700)
+#if defined(BOOST_NO_CXX11_LAMBDAS) || (defined BOOST_MSVC && _MSC_VER < 1700)
   std::cout << "(no lambdas)" << std::endl;
 #endif
   boost::scoped_thread<> thread_1((boost::thread(job)));

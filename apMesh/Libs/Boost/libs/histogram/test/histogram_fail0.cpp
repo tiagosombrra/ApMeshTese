@@ -16,5 +16,5 @@ int main() {
   h(0, sample(1));
 
   auto values = {0, 1};
-  h.fill(values, sample(values)); // invalid sample argument
+  h.fill(values, sample(values));  // invalid sample argument
 }

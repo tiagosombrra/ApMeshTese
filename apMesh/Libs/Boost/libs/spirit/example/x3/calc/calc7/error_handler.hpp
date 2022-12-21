@@ -10,31 +10,25 @@
 #include <boost/spirit/home/x3.hpp>
 #include <iostream>
 
-namespace client { namespace calculator_grammar
-{
-    ////////////////////////////////////////////////////////////////////////////
-    //  Our error handler
-    ////////////////////////////////////////////////////////////////////////////
-    namespace x3 = boost::spirit::x3;
+namespace client {
+namespace calculator_grammar {
+////////////////////////////////////////////////////////////////////////////
+//  Our error handler
+////////////////////////////////////////////////////////////////////////////
+namespace x3 = boost::spirit::x3;
 
-    struct error_handler
-    {
-        //  Our error handler
-        template <typename Iterator, typename Exception, typename Context>
-        x3::error_handler_result
-        on_error(Iterator&, Iterator const& last, Exception const& x, Context const& context)
-        {
-            std::cout
-                << "Error! Expecting: "
-                << x.which()
-                << " here: \""
-                << std::string(x.where(), last)
-                << "\""
-                << std::endl
-                ;
-            return x3::error_handler_result::fail;
-        }
-    };
-}}
+struct error_handler {
+  //  Our error handler
+  template <typename Iterator, typename Exception, typename Context>
+  x3::error_handler_result on_error(Iterator&, Iterator const& last,
+                                    Exception const& x,
+                                    Context const& context) {
+    std::cout << "Error! Expecting: " << x.which() << " here: \""
+              << std::string(x.where(), last) << "\"" << std::endl;
+    return x3::error_handler_result::fail;
+  }
+};
+}  // namespace calculator_grammar
+}  // namespace client
 
 #endif

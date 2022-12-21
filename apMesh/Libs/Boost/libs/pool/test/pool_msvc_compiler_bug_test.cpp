@@ -4,7 +4,6 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-
 //   This tests whether the Boost Pool library managed to get a regression and
 // hit the MSVC 'variables exported to global namespace' bug again. This bug
 // affects at least MSVC 7.1 & 8.0 releases and has been fixed in the MSVC 9.0
@@ -29,12 +28,9 @@
 //     int main() {}
 //                                                   (17.04.2008.) (Jurko)
 
-
 #include "boost/archive/text_iarchive.hpp"
 #include "boost/pool/detail/mutex.hpp"
 //   Including "boost/pool/pool_alloc.hpp" instead of mutex.hpp should work as
 // well.
 
-int main()
-{
-}
+int main() {}

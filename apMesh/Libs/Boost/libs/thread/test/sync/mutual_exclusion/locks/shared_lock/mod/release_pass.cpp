@@ -18,21 +18,14 @@
 
 // void Mutex* release();
 
-#include <boost/thread/lock_types.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/lock_types.hpp>
 
-struct shared_mutex
-{
+struct shared_mutex {
   static int lock_count;
   static int unlock_count;
-  void lock_shared()
-  {
-    ++lock_count;
-  }
-  void unlock_shared()
-  {
-    ++unlock_count;
-  }
+  void lock_shared() { ++lock_count; }
+  void unlock_shared() { ++unlock_count; }
 };
 
 int shared_mutex::lock_count = 0;
@@ -40,8 +33,7 @@ int shared_mutex::unlock_count = 0;
 
 shared_mutex m;
 
-int main()
-{
+int main() {
   boost::shared_lock<shared_mutex> lk(m);
   BOOST_TEST(lk.mutex() == &m);
   BOOST_TEST(lk.owns_lock() == true);
@@ -55,4 +47,3 @@ int main()
 
   return boost::report_errors();
 }
-

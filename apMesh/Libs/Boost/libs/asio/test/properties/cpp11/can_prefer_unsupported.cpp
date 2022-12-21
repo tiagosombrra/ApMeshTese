@@ -12,34 +12,34 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static constexpr bool is_preferable = true;
 };
 
 template <int>
-struct object
-{
-};
+struct object {};
 
 namespace boost {
 namespace asio {
 
-template<int N, int M>
-struct is_applicable_property<object<N>, prop<M> >
-{
+template <int N, int M>
+struct is_applicable_property<object<N>, prop<M>> {
   static constexpr bool value = true;
 };
 
-} // namespace asio
-} // namespace boost
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   static_assert(boost::asio::can_prefer<object<1>, prop<2>>::value, "");
-  static_assert(boost::asio::can_prefer<object<1>, prop<2>, prop<3>>::value, "");
-  static_assert(boost::asio::can_prefer<object<1>, prop<2>, prop<3>, prop<4>>::value, "");
+  static_assert(boost::asio::can_prefer<object<1>, prop<2>, prop<3>>::value,
+                "");
+  static_assert(
+      boost::asio::can_prefer<object<1>, prop<2>, prop<3>, prop<4>>::value, "");
   static_assert(boost::asio::can_prefer<const object<1>, prop<2>>::value, "");
-  static_assert(boost::asio::can_prefer<const object<1>, prop<2>, prop<3>>::value, "");
-  static_assert(boost::asio::can_prefer<const object<1>, prop<2>, prop<3>, prop<4>>::value, "");
+  static_assert(
+      boost::asio::can_prefer<const object<1>, prop<2>, prop<3>>::value, "");
+  static_assert(boost::asio::can_prefer<const object<1>, prop<2>, prop<3>,
+                                        prop<4>>::value,
+                "");
 }

@@ -12,39 +12,37 @@
 #include "boost/fiber/exceptions.hpp"
 
 #ifdef BOOST_HAS_ABI_HEADERS
-#  include BOOST_ABI_PREFIX
+#include BOOST_ABI_PREFIX
 #endif
 
 namespace boost {
 namespace fibers {
 
-barrier::barrier( std::size_t initial) :
-    initial_{ initial },
-    current_{ initial_ } {
-    if ( BOOST_UNLIKELY( 0 == initial) ) {
-        throw fiber_error{ std::make_error_code( std::errc::invalid_argument),
-                           "boost fiber: zero initial barrier count" };
-    }
+barrier::barrier(std::size_t initial) : initial_{initial}, current_{initial_} {
+  if (BOOST_UNLIKELY(0 == initial)) {
+    throw fiber_error{std::make_error_code(std::errc::invalid_argument),
+                      "boost fiber: zero initial barrier count"};
+  }
 }
 
-bool
-barrier::wait() {
-    std::unique_lock< mutex > lk{ mtx_ };
-    const std::size_t cycle = cycle_;
-    if ( 0 == --current_) {
-        ++cycle_;
-        current_ = initial_;
-        lk.unlock(); // no pessimization
-        cond_.notify_all();
-        return true;
-    }
+bool barrier::wait() {
+  std::unique_lock<mutex> lk{mtx_};
+  const std::size_t cycle = cycle_;
+  if (0 == --current_) {
+    ++cycle_;
+    current_ = initial_;
+    lk.unlock();  // no pessimization
+    cond_.notify_all();
+    return true;
+  }
 
-    cond_.wait( lk, [&]{ return cycle != cycle_; });
-    return false;
+  cond_.wait(lk, [&] { return cycle != cycle_; });
+  return false;
 }
 
-}}
+}  // namespace fibers
+}  // namespace boost
 
 #ifdef BOOST_HAS_ABI_HEADERS
-#  include BOOST_ABI_SUFFIX
+#include BOOST_ABI_SUFFIX
 #endif

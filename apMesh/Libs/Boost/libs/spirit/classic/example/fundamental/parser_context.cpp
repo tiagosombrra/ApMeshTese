@@ -22,10 +22,10 @@
 //  use returned value in the semantic action binded to the int_rule.
 //
 //-----------------------------------------------------------------------------
-#include <iostream>
 #include <boost/cstdlib.hpp>
-#include <boost/spirit/include/phoenix1.hpp>
 #include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/phoenix1.hpp>
+#include <iostream>
 
 using namespace std;
 using namespace boost;
@@ -34,18 +34,14 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 //-----------------------------------------------------------------------------
 
-int main()
-{
-    rule<parser_context<int> > int_rule = int_p;
+int main() {
+  rule<parser_context<int> > int_rule = int_p;
 
-    parse(
-        "123",
+  parse("123",
         // Using a returned value in the semantic action
-        int_rule[cout << arg1 << endl]
-    );
+        int_rule[cout << arg1 << endl]);
 
-    return exit_success;
+  return exit_success;
 }
 
 //-----------------------------------------------------------------------------
-

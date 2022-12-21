@@ -17,25 +17,26 @@ int main() {
   auto h1 = make_histogram(axis::regular<>(2, -1.0, 1.0));
   auto h2 = make_histogram(axis::regular<>(2, -1.0, 1.0));
 
-  h1(-0.5); // counts are: 1 0
-  h2(0.5);  // counts are: 0 1
+  h1(-0.5);  // counts are: 1 0
+  h2(0.5);   // counts are: 0 1
 
   // add them
   auto h3 = h1;
-  h3 += h2; // counts are: 1 1
+  h3 += h2;  // counts are: 1 1
 
-  // adding multiple histograms at once is likely to be optimized by the compiler so that
-  // superfluous temporaries avoided, but no guarantees are given; use this equivalent
-  // code when you want to make sure: h4 = h1; h4 += h2; h4 += h3;
-  auto h4 = h1 + h2 + h3; // counts are: 2 2
+  // adding multiple histograms at once is likely to be optimized by the
+  // compiler so that superfluous temporaries avoided, but no guarantees are
+  // given; use this equivalent code when you want to make sure: h4 = h1; h4 +=
+  // h2; h4 += h3;
+  auto h4 = h1 + h2 + h3;  // counts are: 2 2
 
   assert(h4.at(0) == 2 && h4.at(1) == 2);
 
   // multiply by number, h4 *= 2 also works
-  auto h5 = h4 * 2; // counts are: 4 4
+  auto h5 = h4 * 2;  // counts are: 4 4
 
   // divide by number; s4 /= 4 also works
-  auto h6 = h5 / 4; // counts are: 1 1
+  auto h6 = h5 / 4;  // counts are: 1 1
 
   assert(h6.at(0) == 1 && h6.at(1) == 1);
   assert(h6 != h5 && h5 == 4 * h6);

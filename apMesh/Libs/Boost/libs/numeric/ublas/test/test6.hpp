@@ -13,20 +13,18 @@
 #ifndef TEST6_H
 #define TEST6_H
 
-#include <iostream>
-
-#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/matrix_proxy.hpp>
 #include <boost/numeric/ublas/symmetric.hpp>
-#include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <iostream>
 
 namespace ublas = boost::numeric::ublas;
 
 #include "common/init.hpp"
 
-void test_matrix_vector ();
-void test_matrix ();
-
+void test_matrix_vector();
+void test_matrix();
 
 #endif

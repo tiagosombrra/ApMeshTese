@@ -7,58 +7,60 @@
 // Test with postconditions.
 
 #undef BOOST_CONTRACT_TEST_NO_F_POST
-#include "decl.hpp"
-
 #include <boost/detail/lightweight_test.hpp>
 #include <sstream>
 #include <string>
-        
+
+#include "decl.hpp"
+
 std::string ok_f() {
-    std::ostringstream ok; ok
-        #ifndef BOOST_CONTRACT_NO_PRECONDITIONS
-            << "f::pre" << std::endl
-        #endif
-        #ifndef BOOST_CONTRACT_NO_OLDS
-            << "f::old" << std::endl
-        #endif
-        << "f::body" << std::endl
-        #ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
-            << "f::post" << std::endl // This can fail.
-        #endif
-    ;
-    return ok.str();
+  std::ostringstream ok;
+  ok
+#ifndef BOOST_CONTRACT_NO_PRECONDITIONS
+      << "f::pre" << std::endl
+#endif
+#ifndef BOOST_CONTRACT_NO_OLDS
+      << "f::old" << std::endl
+#endif
+      << "f::body" << std::endl
+#ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
+      << "f::post" << std::endl  // This can fail.
+#endif
+      ;
+  return ok.str();
 }
 
-struct err {}; // Global decl so visible in MSVC10 lambdas.
+struct err {};  // Global decl so visible in MSVC10 lambdas.
 
 int main() {
-    std::ostringstream ok;
+  std::ostringstream ok;
 
-    f_post = true;
-    out.str("");
+  f_post = true;
+  out.str("");
+  f();
+  ok.str("");
+  ok  // Test nothing failed.
+      << ok_f();
+  BOOST_TEST(out.eq(ok.str()));
+
+  boost::contract::set_postcondition_failure(
+      [](boost::contract::from) { throw err(); });
+
+  f_post = false;
+  out.str("");
+  try {
     f();
-    ok.str(""); ok // Test nothing failed.
-        << ok_f()
-    ;
-    BOOST_TEST(out.eq(ok.str()));
-
-    boost::contract::set_postcondition_failure(
-            [] (boost::contract::from) { throw err(); });
-
-    f_post = false;
-    out.str("");
-    try {
-        f();
-        #ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
-                BOOST_TEST(false);
-            } catch(err const&) {
-        #endif
-        ok.str(""); ok
-            << ok_f() // Test f::post failed.
+#ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
+    BOOST_TEST(false);
+  } catch (err const&) {
+#endif
+    ok.str("");
+    ok << ok_f()  // Test f::post failed.
         ;
-        BOOST_TEST(out.eq(ok.str()));
-    } catch(...) { BOOST_TEST(false); }
+    BOOST_TEST(out.eq(ok.str()));
+  } catch (...) {
+    BOOST_TEST(false);
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-

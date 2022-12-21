@@ -7,30 +7,27 @@
 =============================================================================*/
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/qi_operator.hpp>
-#include <boost/spirit/include/qi_char.hpp>
-#include <boost/spirit/include/qi_repeat.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/qi_char.hpp>
+#include <boost/spirit/include/qi_operator.hpp>
+#include <boost/spirit/include/qi_repeat.hpp>
 
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test_attr;
-    using boost::spirit::qi::repeat;
-    using boost::spirit::qi::char_;
-    using boost::phoenix::ref;
+int main() {
+  using boost::phoenix::ref;
+  using boost::spirit::qi::char_;
+  using boost::spirit::qi::repeat;
+  using spirit_test::test_attr;
 
-    int n = 5;
-    std::string s = "";
+  int n = 5;
+  std::string s = "";
 
-    // this was broken by the addition of handles_container, due to incorrect
-    // dispatching of lazy parsers/directives/terminals in pass_container
-    BOOST_TEST(test_attr("foobar", char_ >> repeat(ref(n))[char_], s));
+  // this was broken by the addition of handles_container, due to incorrect
+  // dispatching of lazy parsers/directives/terminals in pass_container
+  BOOST_TEST(test_attr("foobar", char_ >> repeat(ref(n))[char_], s));
 
-    BOOST_TEST_EQ(s, "foobar");
+  BOOST_TEST_EQ(s, "foobar");
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-  

@@ -18,20 +18,17 @@
 
 // lock_guard& operator=(lock_guard const&) = delete;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_guard.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::mutex m0;
 boost::mutex m1;
 
-int main()
-{
+int main() {
   boost::lock_guard<boost::mutex> lk0(m0);
   boost::lock_guard<boost::mutex> lk1(m1);
   lk1 = lk0;
-
 }
 
 #include "../../../../remove_error_code_unused_warning.hpp"
-

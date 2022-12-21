@@ -9,10 +9,10 @@
  *
  */
 
-#include <boost/random/mersenne_twister.hpp>
 #include <algorithm>
-#include <vector>
 #include <boost/cstdint.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <vector>
 
 #define BOOST_RANDOM_URNG boost::random::mt19937
 
@@ -26,56 +26,57 @@
 #define BOOST_RANDOM_DISCARD_COUNT2 20000000
 #define BOOST_RANDOM_DISCARD_MAX
 
-#define BOOST_RANDOM_GENERATE_VALUES { 0xD091BB5CU, 0x22AE9EF6U, 0xE7E1FAEEU, 0xD5C31F79U }
+#define BOOST_RANDOM_GENERATE_VALUES \
+  { 0xD091BB5CU, 0x22AE9EF6U, 0xE7E1FAEEU, 0xD5C31F79U }
 
 #include "test_generator.ipp"
 
 struct seed_seq_0 {
-    template<class It>
-    void generate(It begin, It end) const {
-        std::fill(begin, end, boost::uint32_t(0));
-    }
+  template <class It>
+  void generate(It begin, It end) const {
+    std::fill(begin, end, boost::uint32_t(0));
+  }
 };
 
 struct seed_seq_1 {
-    template<class It>
-    void generate(It begin, It end) const {
-        std::fill(begin, end, boost::uint32_t(0));
-        *(end - 1) = 1;
-    }
+  template <class It>
+  void generate(It begin, It end) const {
+    std::fill(begin, end, boost::uint32_t(0));
+    *(end - 1) = 1;
+  }
 };
 
 BOOST_AUTO_TEST_CASE(test_special_seed) {
-    {
+  {
     seed_seq_1 seed;
     std::vector<boost::uint32_t> vec(624);
     seed.generate(vec.begin(), vec.end());
-    
+
     std::vector<boost::uint32_t>::iterator it = vec.begin();
     boost::mt19937 gen1(it, vec.end());
     BOOST_CHECK_EQUAL(gen1(), 0u);
     BOOST_CHECK_EQUAL(gen1(), 0u);
-    
+
     boost::mt19937 gen2(seed);
     BOOST_CHECK_EQUAL(gen2(), 0u);
     BOOST_CHECK_EQUAL(gen2(), 0u);
 
     BOOST_CHECK_EQUAL(gen1, gen2);
-    }
-    {
+  }
+  {
     seed_seq_0 seed;
     std::vector<boost::uint32_t> vec(624);
     seed.generate(vec.begin(), vec.end());
-    
+
     std::vector<boost::uint32_t>::iterator it = vec.begin();
     boost::mt19937 gen1(it, vec.end());
     BOOST_CHECK_EQUAL(gen1(), 1141379330u);
     BOOST_CHECK_EQUAL(gen1(), 0u);
-    
+
     boost::mt19937 gen2(seed);
     BOOST_CHECK_EQUAL(gen2(), 1141379330u);
     BOOST_CHECK_EQUAL(gen2(), 0u);
 
     BOOST_CHECK_EQUAL(gen1, gen2);
-    }
+  }
 }

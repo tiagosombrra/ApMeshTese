@@ -9,6 +9,7 @@
 #include <boost/histogram/accumulators/weighted_mean.hpp>
 #include <boost/histogram/weight.hpp>
 #include <sstream>
+
 #include "is_close.hpp"
 #include "throw_exception.hpp"
 #include "utility_str.hpp"
@@ -22,7 +23,8 @@ int main() {
 
   // basic interface, string conversion
   {
-    // see https://en.wikipedia.org/wiki/Weighted_arithmetic_mean#Reliability_weights
+    // see
+    // https://en.wikipedia.org/wiki/Weighted_arithmetic_mean#Reliability_weights
 
     m_t a;
     BOOST_TEST_EQ(a.sum_of_weights(), 0);
@@ -38,7 +40,8 @@ int main() {
     BOOST_TEST_IS_CLOSE(
         a.variance(),
         (0.5 * square(1 - m) + square(2 - m) + 0.5 * square(3 - m)) /
-            (a.sum_of_weights() - a.sum_of_weights_squared() / a.sum_of_weights()),
+            (a.sum_of_weights() -
+             a.sum_of_weights_squared() / a.sum_of_weights()),
         1e-3);
 
     BOOST_TEST_EQ(str(a), "weighted_mean(2, 2, 0.8)"s);

@@ -14,9 +14,10 @@
 #include <boost/config.hpp>
 
 #if defined(__INTEL_COMPILER)
-#pragma warning(disable: 193 383 488 981 1418 1419)
+#pragma warning(disable : 193 383 488 981 1418 1419)
 #elif defined(BOOST_MSVC)
-#pragma warning(disable: 4097 4100 4121 4127 4146 4244 4245 4511 4512 4701 4800)
+#pragma warning( \
+    disable : 4097 4100 4121 4127 4146 4244 4245 4511 4512 4701 4800)
 #endif
 
 #include <boost/lexical_cast.hpp>
@@ -26,37 +27,30 @@ using namespace boost;
 
 void test_abstract();
 
-unit_test::test_suite *init_unit_test_suite(int, char *[])
-{
-    unit_test::test_suite *suite =
-        BOOST_TEST_SUITE("lexical_cast unit test");
-    suite->add(BOOST_TEST_CASE(&test_abstract));
+unit_test::test_suite *init_unit_test_suite(int, char *[]) {
+  unit_test::test_suite *suite = BOOST_TEST_SUITE("lexical_cast unit test");
+  suite->add(BOOST_TEST_CASE(&test_abstract));
 
-    return suite;
+  return suite;
 }
 
-class A
-{
-public:
-    virtual void out(std::ostream &) const = 0;
-    virtual ~A() {}
+class A {
+ public:
+  virtual void out(std::ostream &) const = 0;
+  virtual ~A() {}
 };
 
-class B: public A
-{
-public:
-    virtual void out(std::ostream &O) const { O << "B"; }
+class B : public A {
+ public:
+  virtual void out(std::ostream &O) const { O << "B"; }
 };
 
-std::ostream &operator<<(std::ostream &O, const A &a)
-{
-    a.out(O);
-    return O;
+std::ostream &operator<<(std::ostream &O, const A &a) {
+  a.out(O);
+  return O;
 }
 
-void test_abstract()
-{
-    const A &a = B();
-    BOOST_CHECK(boost::lexical_cast<std::string>(a) == "B");
+void test_abstract() {
+  const A &a = B();
+  BOOST_CHECK(boost::lexical_cast<std::string>(a) == "B");
 }
-

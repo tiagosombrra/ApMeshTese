@@ -8,19 +8,18 @@
 //  See http://www.boost.org/libs/sort for library home page.
 
 #include <boost/sort/spreadsort/detail/string_sort.hpp>
-#include <boost/sort/spreadsort/string_sort.hpp>
 #include <boost/sort/spreadsort/spreadsort.hpp>
+#include <boost/sort/spreadsort/string_sort.hpp>
 // Include unit test framework
 #include <boost/test/included/test_exec_monitor.hpp>
 #include <boost/test/test_tools.hpp>
-#include <vector>
 #include <string>
-
+#include <vector>
 
 using namespace std;
 using namespace boost::sort::spreadsort;
-using boost::sort::spreadsort::detail::offset_less_than;
 using boost::sort::spreadsort::detail::offset_greater_than;
+using boost::sort::spreadsort::detail::offset_less_than;
 using boost::sort::spreadsort::detail::update_offset;
 
 struct bracket {
@@ -36,11 +35,11 @@ struct wbracket {
 };
 
 struct get_size {
-  size_t operator()(const string &x) const{ return x.size(); }
+  size_t operator()(const string &x) const { return x.size(); }
 };
 
 struct wget_size {
-  size_t operator()(const wstring &x) const{ return x.size(); }
+  size_t operator()(const wstring &x) const { return x.size(); }
 };
 
 static const unsigned input_count = 100000;
@@ -51,9 +50,8 @@ void update_offset_test() {
   input.push_back("test1");
   input.push_back("test2");
   size_t char_offset = 1;
-  update_offset<vector<string>::iterator, unsigned char>(input.begin(),
-                                                         input.end(),
-                                                         char_offset);
+  update_offset<vector<string>::iterator, unsigned char>(
+      input.begin(), input.end(), char_offset);
   BOOST_CHECK(char_offset == 4);
 
   // Functor version
@@ -91,13 +89,12 @@ void offset_comparison_test() {
   BOOST_CHECK(!offset_greater(input1, input1));
 }
 
-void string_test()
-{
+void string_test() {
   // Prepare inputs
   vector<string> base_vec;
   const unsigned max_length = 32;
   srand(1);
-  //Generating semirandom numbers
+  // Generating semirandom numbers
   for (unsigned u = 0; u < input_count; ++u) {
     unsigned length = rand() % max_length;
     string result;
@@ -109,31 +106,31 @@ void string_test()
   vector<string> sorted_vec = base_vec;
   vector<string> test_vec = base_vec;
   std::sort(sorted_vec.begin(), sorted_vec.end());
-  //Testing basic call
+  // Testing basic call
   string_sort(test_vec.begin(), test_vec.end());
   BOOST_CHECK(test_vec == sorted_vec);
-  //Testing boost::sort::spreadsort wrapper
+  // Testing boost::sort::spreadsort wrapper
   test_vec = base_vec;
   boost::sort::spreadsort::spreadsort(test_vec.begin(), test_vec.end());
   BOOST_CHECK(test_vec == sorted_vec);
-  //Character functors
+  // Character functors
   test_vec = base_vec;
   string_sort(test_vec.begin(), test_vec.end(), bracket(), get_size());
   BOOST_CHECK(test_vec == sorted_vec);
-  //All functors
+  // All functors
   test_vec = base_vec;
   string_sort(test_vec.begin(), test_vec.end(), bracket(), get_size(),
               less<string>());
   BOOST_CHECK(test_vec == sorted_vec);
-  //reverse order
+  // reverse order
   std::sort(sorted_vec.begin(), sorted_vec.end(), greater<string>());
   reverse_string_sort(test_vec.begin(), test_vec.end(), greater<string>());
   BOOST_CHECK(test_vec == sorted_vec);
-  //reverse order with functors
+  // reverse order with functors
   test_vec = base_vec;
   reverse_string_sort(test_vec.begin(), test_vec.end(), bracket(), get_size(),
                       greater<string>());
-  BOOST_CHECK(test_vec == sorted_vec);  
+  BOOST_CHECK(test_vec == sorted_vec);
 }
 
 // Verify that 0, 1, and input_count empty strings all sort correctly.
@@ -151,9 +148,8 @@ void corner_test() {
   }
 }
 
-// test main 
-int test_main( int, char*[] )
-{
+// test main
+int test_main(int, char *[]) {
   update_offset_test();
   offset_comparison_test();
   string_test();

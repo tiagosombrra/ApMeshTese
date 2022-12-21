@@ -14,28 +14,20 @@
   copy at http://www.boost.org/LICENSE_1_0.txt)
 */
 
-
 #ifndef LIBS_NUMERIC_ODEINT_TEST_DUMMY_OBSERVERS_HPP_DEFINED
 #define LIBS_NUMERIC_ODEINT_TEST_DUMMY_OBSERVERS_HPP_DEFINED
-
 
 namespace boost {
 namespace numeric {
 namespace odeint {
 
-
-struct dummy_observer
-{
-    template< class State >
-    void operator()( const State &s ) const
-    {
-    }
+struct dummy_observer {
+  template <class State>
+  void operator()(const State &s) const {}
 };
 
+}  // namespace odeint
+}  // namespace numeric
+}  // namespace boost
 
-} // namespace odeint
-} // namespace numeric
-} // namespace boost
-
-
-#endif // LIBS_NUMERIC_ODEINT_TEST_DUMMY_OBSERVERS_HPP_DEFINED
+#endif  // LIBS_NUMERIC_ODEINT_TEST_DUMMY_OBSERVERS_HPP_DEFINED

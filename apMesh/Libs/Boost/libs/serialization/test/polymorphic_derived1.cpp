@@ -8,30 +8,25 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <boost/serialization/type_info_implementation.hpp>
-#include <boost/serialization/export.hpp>
-
 #include "polymorphic_derived1.hpp"
 
-const char * polymorphic_derived1::get_key() const {
-    return
-        boost::serialization::type_info_implementation<
-            polymorphic_derived1
-        >::type::get_const_instance().get_key();
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/type_info_implementation.hpp>
+
+const char *polymorphic_derived1::get_key() const {
+  return boost::serialization::type_info_implementation<
+             polymorphic_derived1>::type::get_const_instance()
+      .get_key();
 }
 
-#include <boost/archive/polymorphic_oarchive.hpp>
 #include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
 
-template
-void polymorphic_derived1::serialize(
+template void polymorphic_derived1::serialize(
     boost::archive::polymorphic_oarchive &,
     const unsigned int /* file_version */
 );
-template
-void polymorphic_derived1::serialize(
-    boost::archive::polymorphic_iarchive &,
-    const unsigned int
-);
+template void polymorphic_derived1::serialize(
+    boost::archive::polymorphic_iarchive &, const unsigned int);
 
 BOOST_CLASS_EXPORT_IMPLEMENT(polymorphic_derived1)

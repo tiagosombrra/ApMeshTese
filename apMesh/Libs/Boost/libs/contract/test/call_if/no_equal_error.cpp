@@ -6,36 +6,33 @@
 
 // Test assertion error when operations to check them missing (e.g., `==`).
 
-#include <boost/contract/function.hpp>
-#include <boost/contract/check.hpp>
 #include <boost/contract/assert.hpp>
+#include <boost/contract/check.hpp>
+#include <boost/contract/function.hpp>
 #include <vector>
 
-template<typename T>
+template <typename T>
 void push_back(std::vector<T>& vect, T const& value) {
-    boost::contract::check c = boost::contract::function()
-        .postcondition([&] {
-            BOOST_CONTRACT_ASSERT(vect.back() == value); // Error (j has no ==).
-            #ifdef BOOST_CONTRACT_NO_ALL
-                #error "force error if no contracts (ASSERT expands to nothing)"
-            #endif
-        })
-    ;
-    vect.push_back(value);
+  boost::contract::check c = boost::contract::function().postcondition([&] {
+    BOOST_CONTRACT_ASSERT(vect.back() == value);  // Error (j has no ==).
+#ifdef BOOST_CONTRACT_NO_ALL
+#error "force error if no contracts (ASSERT expands to nothing)"
+#endif
+  });
+  vect.push_back(value);
 }
 
-struct j { // Type without operator==.
-    explicit j(int /* i */) {}
+struct j {  // Type without operator==.
+  explicit j(int /* i */) {}
 };
 
 int main() {
-    std::vector<int> vi;
-    push_back(vi, 123);
+  std::vector<int> vi;
+  push_back(vi, 123);
 
-    j jj(456);
-    std::vector<j> vj;
-    push_back(vj, jj);
+  j jj(456);
+  std::vector<j> vj;
+  push_back(vj, jj);
 
-    return 0;
+  return 0;
 }
-

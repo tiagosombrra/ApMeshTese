@@ -25,41 +25,37 @@
 #define BOOST_THREAD_DETAIL_SIGNATURE double
 #endif
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-class A
-{
-    long data_;
+class A {
+  long data_;
 
-public:
-    explicit A(long i) : data_(i) {}
+ public:
+  explicit A(long i) : data_(i) {}
 
-    long operator()() const {return data_;}
-    long operator()(long i, long j) const {return data_ + i + j;}
+  long operator()() const { return data_; }
+  long operator()(long i, long j) const { return data_ + i + j; }
 };
 
-int main()
-{
+int main() {
   {
-      boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p0(A(5));
-      boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p;
-      p.swap(p0);
-      BOOST_TEST(!p0.valid());
-      BOOST_TEST(p.valid());
-      boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      //p(3, 'a');
-      p();
-      BOOST_TEST(f.get() == 5.0);
+    boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p0(A(5));
+    boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p;
+    p.swap(p0);
+    BOOST_TEST(!p0.valid());
+    BOOST_TEST(p.valid());
+    boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    // p(3, 'a');
+    p();
+    BOOST_TEST(f.get() == 5.0);
   }
   {
-      boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p0;
-      boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p;
-      p.swap(p0);
-      BOOST_TEST(!p0.valid());
-      BOOST_TEST(!p.valid());
+    boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p0;
+    boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p;
+    p.swap(p0);
+    BOOST_TEST(!p0.valid());
+    BOOST_TEST(!p.valid());
   }
   return boost::report_errors();
-
 }
-

@@ -6,26 +6,22 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
-
 #include <iostream>
+
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test;
-    using boost::spirit::x3::eoi;
+int main() {
+  using boost::spirit::x3::eoi;
+  using spirit_test::test;
 
-    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eoi);
+  BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eoi);
 
-    {
-        BOOST_TEST((test("", eoi)));
-        BOOST_TEST(!(test("x", eoi)));
-    }
+  {
+    BOOST_TEST((test("", eoi)));
+    BOOST_TEST(!(test("x", eoi)));
+  }
 
-    {
-        BOOST_TEST(what(eoi) == "eoi");
-    }
+  { BOOST_TEST(what(eoi) == "eoi"); }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

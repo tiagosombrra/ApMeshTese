@@ -8,30 +8,27 @@
   26 August 2005 : Initial version.
 */
 
-#include <vector>
-#include <boost/test/minimal.hpp>
 #include <boost/foreach.hpp>
+#include <boost/test/minimal.hpp>
+#include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////
 // use FOREACH to iterate over a sequence with a dependent type
-template<typename Vector>
-void do_test(Vector const & vect)
-{
-    typedef BOOST_DEDUCED_TYPENAME Vector::value_type value_type;
-    BOOST_FOREACH(value_type i, vect)
-    {
-        // no-op, just make sure this compiles
-        ((void)i);
-    }
+template <typename Vector>
+void do_test(Vector const& vect) {
+  typedef BOOST_DEDUCED_TYPENAME Vector::value_type value_type;
+  BOOST_FOREACH (value_type i, vect) {
+    // no-op, just make sure this compiles
+    ((void)i);
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // test_main
-//   
-int test_main( int, char*[] )
-{
-    std::vector<int> vect;
-    do_test(vect);
+//
+int test_main(int, char*[]) {
+  std::vector<int> vect;
+  do_test(vect);
 
-    return 0;
+  return 0;
 }

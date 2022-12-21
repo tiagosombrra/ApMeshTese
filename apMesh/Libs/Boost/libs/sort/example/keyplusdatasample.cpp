@@ -8,23 +8,24 @@
 
 //  See http://www.boost.org/libs/sort for library home page.
 
-#include <boost/sort/spreadsort/spreadsort.hpp>
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include <algorithm>
-#include <vector>
-#include <string>
+#include <boost/sort/spreadsort/spreadsort.hpp>
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 using namespace boost::sort::spreadsort;
 
 struct DATA_TYPE {
-    int key;
-    std::string data;
-    };
-//functor example
+  int key;
+  std::string data;
+};
+// functor example
 struct lessthan {
   inline bool operator()(const DATA_TYPE &x, const DATA_TYPE &y) const {
     return x.key < y.key;
@@ -37,8 +38,8 @@ struct rightshift {
   }
 };
 
-//Pass in an argument to test std::sort
-int main(int argc, const char ** argv) {
+// Pass in an argument to test std::sort
+int main(int argc, const char **argv) {
   size_t uSize = sizeof(int);
   bool stdSort = false;
   unsigned loopCount = 1;
@@ -53,24 +54,24 @@ int main(int argc, const char ** argv) {
     printf("input.txt could not be opened\n");
     return 1;
   }
-  input.seekg (0, std::ios_base::end);
-    size_t length = input.tellg();
+  input.seekg(0, std::ios_base::end);
+  size_t length = input.tellg();
   double total = 0.0;
   std::vector<DATA_TYPE> array;
-  array.reserve(length/uSize);
-  unsigned uCount = length/uSize;
-  //Run multiple loops, if requested
+  array.reserve(length / uSize);
+  unsigned uCount = length / uSize;
+  // Run multiple loops, if requested
   for (unsigned u = 0; u < loopCount; ++u) {
-    input.seekg (0, std::ios_base::beg);
+    input.seekg(0, std::ios_base::beg);
     unsigned v = 0;
-    while (input.good() && v++ < uCount) { // EOF or failure stops the reading
-     DATA_TYPE element;
-     input.read(reinterpret_cast<char *>(&(element.key)), sizeof(element.key));
-     std::stringstream intstr;
-         intstr << element.key;
-         element.data = intstr.str();
-         array.push_back(element);
-    }  
+    while (input.good() && v++ < uCount) {  // EOF or failure stops the reading
+      DATA_TYPE element;
+      input.read(reinterpret_cast<char *>(&(element.key)), sizeof(element.key));
+      std::stringstream intstr;
+      intstr << element.key;
+      element.data = intstr.str();
+      array.push_back(element);
+    }
     clock_t start, end;
     double elapsed;
     start = clock();
@@ -79,17 +80,19 @@ int main(int argc, const char ** argv) {
     else
       integer_sort(array.begin(), array.end(), rightshift(), lessthan());
     end = clock();
-    elapsed = static_cast<double>(end - start) ;
+    elapsed = static_cast<double>(end - start);
     std::ofstream ofile;
     if (stdSort)
       ofile.open("standard_sort_out.txt", std::ios_base::out |
-                 std::ios_base::binary | std::ios_base::trunc);
+                                              std::ios_base::binary |
+                                              std::ios_base::trunc);
     else
       ofile.open("boost_sort_out.txt", std::ios_base::out |
-                 std::ios_base::binary | std::ios_base::trunc);
+                                           std::ios_base::binary |
+                                           std::ios_base::trunc);
     if (ofile.good()) {
       for (unsigned v = 0; v < array.size(); ++v) {
-        ofile.write(reinterpret_cast<char *>(&(array[v].key)), 
+        ofile.write(reinterpret_cast<char *>(&(array[v].key)),
                     sizeof(array[v].key));
         ofile << array[v].data;
       }

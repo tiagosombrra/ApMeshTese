@@ -9,6 +9,5 @@
 #undef BOOST_CONTRACT_PERMISSIVE
 #include "mutable.hpp"
 #ifdef BOOST_CONTRACT_NO_INVARIANTS
-    #error "Forcing error even when invariants not checked"
+#error "Forcing error even when invariants not checked"
 #endif
-

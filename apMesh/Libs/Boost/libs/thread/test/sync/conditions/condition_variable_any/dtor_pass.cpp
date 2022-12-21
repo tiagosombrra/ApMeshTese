@@ -17,11 +17,11 @@
 
 // condition_variable_any(const condition_variable_any&) = delete;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/condition_variable.hpp>
+#include <boost/thread/locks.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/thread/locks.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::condition_variable_any* cv;
 boost::timed_mutex m;
@@ -30,8 +30,7 @@ typedef boost::unique_lock<boost::timed_mutex> Lock;
 bool f_ready = false;
 bool g_ready = false;
 
-void f()
-{
+void f() {
   Lock lk(m);
   f_ready = true;
   cv->notify_one();
@@ -39,25 +38,21 @@ void f()
   delete cv;
 }
 
-void g()
-{
+void g() {
   Lock lk(m);
   g_ready = true;
   cv->notify_one();
-  while (!f_ready)
-  {
+  while (!f_ready) {
     cv->wait(lk);
   }
   cv->notify_one();
 }
 
-int main()
-{
+int main() {
   cv = new boost::condition_variable_any;
   boost::thread th2(g);
   Lock lk(m);
-  while (!g_ready)
-  {
+  while (!g_ready) {
     cv->wait(lk);
   }
   lk.unlock();
@@ -66,4 +61,3 @@ int main()
   th2.join();
   return boost::report_errors();
 }
-

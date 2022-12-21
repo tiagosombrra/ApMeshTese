@@ -10,6 +10,7 @@
 
 #include <boost/numeric/interval.hpp>
 #include <boost/test/minimal.hpp>
+
 #include "bugs.hpp"
 
 bool test_pow(double al, double au, double bl, double bu, int p) {
@@ -26,17 +27,17 @@ int test_main(int, char *[]) {
   BOOST_CHECK(test_pow(-3, -2, -27, -8, 3));
   BOOST_CHECK(test_pow(-3, -2, 16, 81, 4));
 
-  BOOST_CHECK(test_pow(2, 4, 1./64, 1./8, -3));
-  BOOST_CHECK(test_pow(2, 4, 1./256, 1./16, -4));
-  BOOST_CHECK(test_pow(-4, -2, -1./8, -1./64, -3));
-  BOOST_CHECK(test_pow(-4, -2, 1./256, 1./16, -4));
+  BOOST_CHECK(test_pow(2, 4, 1. / 64, 1. / 8, -3));
+  BOOST_CHECK(test_pow(2, 4, 1. / 256, 1. / 16, -4));
+  BOOST_CHECK(test_pow(-4, -2, -1. / 8, -1. / 64, -3));
+  BOOST_CHECK(test_pow(-4, -2, 1. / 256, 1. / 16, -4));
 
   BOOST_CHECK(test_pow(2, 3, 1, 1, 0));
   BOOST_CHECK(test_pow(-3, 2, 1, 1, 0));
   BOOST_CHECK(test_pow(-3, -2, 1, 1, 0));
 
-# ifdef BOOST_BORLANDC
+#ifdef BOOST_BORLANDC
   ::detail::ignore_warnings();
-# endif
+#endif
   return 0;
 }

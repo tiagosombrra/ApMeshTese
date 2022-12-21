@@ -12,21 +12,23 @@
 int main() {
   using namespace boost::histogram;
 
-  // Create a histogram with weight counters that keep track of a variance estimate.
+  // Create a histogram with weight counters that keep track of a variance
+  // estimate.
   auto h = make_weighted_histogram(axis::regular<>(3, 0.0, 1.0));
 
-  h(0.0, weight(1)); // weight 1 goes to first bin
-  h(0.1, weight(2)); // weight 2 goes to first bin
-  h(0.4, weight(3)); // weight 3 goes to second bin
-  h(0.5, weight(4)); // weight 4 goes to second bin
+  h(0.0, weight(1));  // weight 1 goes to first bin
+  h(0.1, weight(2));  // weight 2 goes to first bin
+  h(0.4, weight(3));  // weight 3 goes to second bin
+  h(0.5, weight(4));  // weight 4 goes to second bin
 
   // chunk-wise filling is also supported
   auto x = {0.2, 0.6};
   auto w = {5, 6};
   h.fill(x, weight(w));
 
-  // Weight counters have methods to access the value (sum of weights) and the variance
-  // (sum of weights squared, why this gives the variance is explained in the rationale)
+  // Weight counters have methods to access the value (sum of weights) and the
+  // variance (sum of weights squared, why this gives the variance is explained
+  // in the rationale)
   assert(h[0].value() == 1 + 2 + 5);
   assert(h[0].variance() == 1 * 1 + 2 * 2 + 5 * 5);
   assert(h[1].value() == 3 + 4 + 6);

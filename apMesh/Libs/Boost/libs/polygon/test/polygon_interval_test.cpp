@@ -14,8 +14,7 @@
 
 using namespace boost::polygon;
 
-void interval_data_test()
-{
+void interval_data_test() {
   typedef interval_data<int> interval_type;
   interval_type interval1(1, 2);
   interval_type interval2;
@@ -44,11 +43,11 @@ void interval_data_test()
   BOOST_TEST(interval1 == interval2);
 }
 
-void interval_traits_test()
-{
+void interval_traits_test() {
   typedef interval_data<int> interval_type;
 
-  interval_type interval = interval_mutable_traits<interval_type>::construct(1, 2);
+  interval_type interval =
+      interval_mutable_traits<interval_type>::construct(1, 2);
   BOOST_TEST_EQ(interval_traits<interval_type>::get(interval, LOW), 1);
   BOOST_TEST_EQ(interval_traits<interval_type>::get(interval, HIGH), 2);
 
@@ -66,40 +65,39 @@ struct Interval {
 
 namespace boost {
 namespace polygon {
-  template <typename T>
-  struct geometry_concept< Interval<T> > {
-    typedef interval_concept type;
-  };
+template <typename T>
+struct geometry_concept<Interval<T> > {
+  typedef interval_concept type;
+};
 
-  template <typename T>
-  struct interval_traits< Interval<T> > {
-    typedef T coordinate_type;
+template <typename T>
+struct interval_traits<Interval<T> > {
+  typedef T coordinate_type;
 
-    static coordinate_type get(const Interval<T>& interval, direction_1d dir) {
-      return (dir == LOW) ? interval.left : interval.right;
-    }
-  };
+  static coordinate_type get(const Interval<T>& interval, direction_1d dir) {
+    return (dir == LOW) ? interval.left : interval.right;
+  }
+};
 
-  template <typename T>
-  struct interval_mutable_traits< Interval<T> > {
-    typedef T coordinate_type;
+template <typename T>
+struct interval_mutable_traits<Interval<T> > {
+  typedef T coordinate_type;
 
-    static void set(Interval<T>& interval, direction_1d dir, T value) {
-      (dir == LOW) ? interval.left = value : interval.right = value;
-    }
+  static void set(Interval<T>& interval, direction_1d dir, T value) {
+    (dir == LOW) ? interval.left = value : interval.right = value;
+  }
 
-    static Interval<T> construct(coordinate_type left, coordinate_type right) {
-      Interval<T> interval;
-      interval.left = left;
-      interval.right = right;
-      return interval;
-    }
-  };
-}  // polygon
-}  // boost
+  static Interval<T> construct(coordinate_type left, coordinate_type right) {
+    Interval<T> interval;
+    interval.left = left;
+    interval.right = right;
+    return interval;
+  }
+};
+}  // namespace polygon
+}  // namespace boost
 
-void interval_concept_test1()
-{
+void interval_concept_test1() {
   typedef Interval<int> interval_type;
 
   interval_type interval1 = construct<interval_type>(2, 1);
@@ -123,8 +121,7 @@ void interval_concept_test1()
   BOOST_TEST(equivalence(interval1, interval2));
 }
 
-void interval_concept_test2()
-{
+void interval_concept_test2() {
   typedef Interval<int> interval_type;
 
   interval_type interval1 = construct<interval_type>(1, 3);
@@ -173,8 +170,7 @@ void interval_concept_test2()
   BOOST_TEST_EQ(high(interval1), 1);
 }
 
-void interval_concept_test3()
-{
+void interval_concept_test3() {
   typedef Interval<int> interval_type;
 
   interval_type interval1 = construct<interval_type>(1, 3);
@@ -215,8 +211,7 @@ void interval_concept_test3()
   BOOST_TEST_EQ(high(interval5), 3);
 }
 
-void interval_concept_test4()
-{
+void interval_concept_test4() {
   typedef Interval<int> interval_type;
 
   interval_type interval1 = construct<interval_type>(1, 3);
@@ -259,13 +254,12 @@ void interval_concept_test4()
   BOOST_TEST_EQ(high(interval1), 5);
 }
 
-int main()
-{
-    interval_data_test();
-    interval_traits_test();
-    interval_concept_test1();
-    interval_concept_test2();
-    interval_concept_test3();
-    interval_concept_test4();
-    return boost::report_errors();
+int main() {
+  interval_data_test();
+  interval_traits_test();
+  interval_concept_test1();
+  interval_concept_test2();
+  interval_concept_test3();
+  interval_concept_test4();
+  return boost::report_errors();
 }

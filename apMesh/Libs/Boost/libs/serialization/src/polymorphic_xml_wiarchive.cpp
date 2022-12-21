@@ -9,12 +9,12 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #if (defined _MSC_VER) && (_MSC_VER == 1200)
-#  pragma warning (disable : 4786) // too long name, harmless warning
+#pragma warning(disable : 4786)  // too long name, harmless warning
 #endif
 
 #define BOOST_ARCHIVE_SOURCE
-#include <boost/serialization/config.hpp>
 #include <boost/archive/polymorphic_xml_wiarchive.hpp>
+#include <boost/serialization/config.hpp>
 
 // explicitly instantiate for this type of text stream
 #include <boost/archive/impl/archive_serializer_map.ipp>
@@ -25,6 +25,6 @@ namespace detail {
 
 template class archive_serializer_map<polymorphic_xml_wiarchive>;
 
-} // detail
-} // archive
-} // boost
+}  // namespace detail
+}  // namespace archive
+}  // namespace boost

@@ -7,10 +7,10 @@
  */
 
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_comparison.hpp"
 
-int main()
-{
+int main() {
   test_comparison();
   return boost::report_errors();
 }

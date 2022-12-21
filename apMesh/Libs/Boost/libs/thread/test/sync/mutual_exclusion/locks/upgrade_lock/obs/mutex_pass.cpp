@@ -18,14 +18,13 @@
 
 // Mutex *mutex() const;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/shared_mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::shared_mutex m;
 
-int main()
-{
+int main() {
   boost::upgrade_lock<boost::shared_mutex> lk0;
   BOOST_TEST(lk0.mutex() == 0);
   boost::upgrade_lock<boost::shared_mutex> lk1(m);
@@ -35,4 +34,3 @@ int main()
 
   return boost::report_errors();
 }
-

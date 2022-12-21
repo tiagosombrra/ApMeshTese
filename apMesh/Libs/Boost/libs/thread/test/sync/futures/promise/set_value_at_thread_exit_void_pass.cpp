@@ -20,51 +20,41 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
 int i = 0;
 
 boost::promise<void> p;
-void func()
-{
+void func() {
   p.set_value_at_thread_exit();
   i = 1;
 }
 
-//void func2_mv(BOOST_THREAD_RV_REF(boost::promise<void>) p2)
-void func2_mv(boost::promise<void> p2)
-{
+// void func2_mv(BOOST_THREAD_RV_REF(boost::promise<void>) p2)
+void func2_mv(boost::promise<void> p2) {
   p2.set_value_at_thread_exit();
   i = 2;
 }
 
-void func2(boost::promise<void> *p2)
-{
+void func2(boost::promise<void>* p2) {
   p2->set_value_at_thread_exit();
   i = 2;
 }
-int main()
-{
-  try
-  {
+int main() {
+  try {
     boost::future<void> f = p.get_future();
     boost::thread(func).detach();
     f.get();
     BOOST_TEST(i == 1);
 
-  }
-  catch(std::exception& )
-  {
+  } catch (std::exception&) {
     BOOST_TEST(false);
-  }
-  catch(...)
-  {
+  } catch (...) {
     BOOST_TEST(false);
   }
 
-  try
-  {
+  try {
     boost::promise<void> p2;
     boost::future<void> f = p2.get_future();
     p = boost::move(p2);
@@ -72,19 +62,14 @@ int main()
     f.get();
     BOOST_TEST(i == 1);
 
-  }
-  catch(std::exception& ex)
-  {
+  } catch (std::exception& ex) {
     std::cout << __FILE__ << ":" << __LINE__ << " " << ex.what() << std::endl;
     BOOST_TEST(false);
-  }
-  catch(...)
-  {
+  } catch (...) {
     BOOST_TEST(false);
   }
 
-  try
-  {
+  try {
     boost::promise<void> p2;
     boost::future<void> f = p2.get_future();
 #if defined BOOST_THREAD_PROVIDES_VARIADIC_THREAD
@@ -95,16 +80,11 @@ int main()
     f.wait();
     f.get();
     BOOST_TEST(i == 2);
-  }
-  catch(std::exception& ex)
-  {
+  } catch (std::exception& ex) {
     std::cout << __FILE__ << ":" << __LINE__ << " " << ex.what() << std::endl;
     BOOST_TEST(false);
-  }
-  catch(...)
-  {
+  } catch (...) {
     BOOST_TEST(false);
   }
   return boost::report_errors();
 }
-

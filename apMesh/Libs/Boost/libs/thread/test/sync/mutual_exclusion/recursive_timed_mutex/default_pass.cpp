@@ -18,12 +18,10 @@
 
 // recursive_timed_mutex();
 
-#include <boost/thread/recursive_mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/recursive_mutex.hpp>
 
-int main()
-{
+int main() {
   boost::recursive_timed_mutex m0;
   return boost::report_errors();
 }
-

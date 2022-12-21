@@ -18,21 +18,14 @@
 
 // void Mutex* release();
 
-#include <boost/thread/lock_types.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/lock_types.hpp>
 
-struct mutex
-{
+struct mutex {
   static int lock_count;
   static int unlock_count;
-  void lock()
-  {
-    ++lock_count;
-  }
-  void unlock()
-  {
-    ++unlock_count;
-  }
+  void lock() { ++lock_count; }
+  void unlock() { ++unlock_count; }
 };
 
 int mutex::lock_count = 0;
@@ -40,8 +33,7 @@ int mutex::unlock_count = 0;
 
 mutex m;
 
-int main()
-{
+int main() {
   boost::unique_lock<mutex> lk(m);
   BOOST_TEST(lk.mutex() == &m);
   BOOST_TEST(lk.owns_lock() == true);
@@ -55,4 +47,3 @@ int main()
 
   return boost::report_errors();
 }
-

@@ -8,6 +8,7 @@
 #include <boost/histogram/accumulators/ostream.hpp>
 #include <boost/histogram/accumulators/thread_safe.hpp>
 #include <sstream>
+
 #include "throw_exception.hpp"
 #include "utility_str.hpp"
 

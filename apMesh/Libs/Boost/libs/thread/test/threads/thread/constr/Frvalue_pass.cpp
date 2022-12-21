@@ -19,40 +19,32 @@
 
 #define BOOST_THREAD_USES_MOVE
 
-#include <boost/thread/thread_only.hpp>
-#include <new>
-#include <cstdlib>
-#include <cassert>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <cassert>
+#include <cstdlib>
+#include <new>
 
-class MoveOnly
-{
-public:
+class MoveOnly {
+ public:
   BOOST_THREAD_MOVABLE_ONLY(MoveOnly)
-  MoveOnly()
-  {
-  }
-  MoveOnly(BOOST_THREAD_RV_REF(MoveOnly))
-  {}
+  MoveOnly() {}
+  MoveOnly(BOOST_THREAD_RV_REF(MoveOnly)) {}
 
-  void operator()()
-  {
-  }
+  void operator()() {}
 };
 
-MoveOnly MakeMoveOnly() {
-  return BOOST_THREAD_MAKE_RV_REF(MoveOnly());
-}
+MoveOnly MakeMoveOnly() { return BOOST_THREAD_MAKE_RV_REF(MoveOnly()); }
 
-#if defined  BOOST_NO_CXX11_RVALUE_REFERENCES && defined BOOST_THREAD_USES_MOVE
-BOOST_STATIC_ASSERT(::boost::is_function<boost::rv<boost::rv<MoveOnly> >&>::value==false);
+#if defined BOOST_NO_CXX11_RVALUE_REFERENCES && defined BOOST_THREAD_USES_MOVE
+BOOST_STATIC_ASSERT(
+    ::boost::is_function<boost::rv<boost::rv<MoveOnly> >&>::value == false);
 #endif
 
-int main()
-{
+int main() {
   {
-    boost::thread t(( BOOST_THREAD_MAKE_RV_REF(MakeMoveOnly()) ));
+    boost::thread t((BOOST_THREAD_MAKE_RV_REF(MakeMoveOnly())));
     t.join();
   }
   return boost::report_errors();

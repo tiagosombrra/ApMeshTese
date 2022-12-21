@@ -6,10 +6,9 @@
 
 #include <regex.h>
 
-int main()
-{
-   regex_t pe;
-   int r = regcomp(&pe, "foo", REG_EXTENDED);
-   regfree(&pe);
-   return r;
+int main() {
+  regex_t pe;
+  int r = regcomp(&pe, "foo", REG_EXTENDED);
+  regfree(&pe);
+  return r;
 }

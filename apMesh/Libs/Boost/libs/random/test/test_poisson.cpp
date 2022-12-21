@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/poisson.hpp>
 #include <boost/random/poisson_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/poisson.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::poisson_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME poisson

@@ -20,86 +20,89 @@
 #include <iosfwd>
 #include <string>
 
-struct texture
-{
-  texture(const std::string& str_=""):str(str_){}
+struct texture {
+  texture(const std::string& str_ = "") : str(str_) {}
 
-  friend bool operator==(
-    const texture& x,const texture& y){return x.str==y.str;}
-  friend bool operator< (
-    const texture& x,const texture& y){return x.str< y.str;}
-  friend bool operator!=(
-    const texture& x,const texture& y){return x.str!=y.str;}
-  friend bool operator> (
-    const texture& x,const texture& y){return x.str> y.str;}
-  friend bool operator>=(
-    const texture& x,const texture& y){return x.str>=y.str;}
-  friend bool operator<=(
-    const texture& x,const texture& y){return x.str<=y.str;}
-
-  friend std::ostream& operator<<(std::ostream& os,const texture& x)
-  {
-    return os<<x.str;
+  friend bool operator==(const texture& x, const texture& y) {
+    return x.str == y.str;
+  }
+  friend bool operator<(const texture& x, const texture& y) {
+    return x.str < y.str;
+  }
+  friend bool operator!=(const texture& x, const texture& y) {
+    return x.str != y.str;
+  }
+  friend bool operator>(const texture& x, const texture& y) {
+    return x.str > y.str;
+  }
+  friend bool operator>=(const texture& x, const texture& y) {
+    return x.str >= y.str;
+  }
+  friend bool operator<=(const texture& x, const texture& y) {
+    return x.str <= y.str;
   }
 
-  friend std::istream& operator>>(std::istream& is,texture& x)
-  {
-    return is>>x.str;
+  friend std::ostream& operator<<(std::ostream& os, const texture& x) {
+    return os << x.str;
+  }
+
+  friend std::istream& operator>>(std::istream& is, texture& x) {
+    return is >> x.str;
   }
 
   std::string str;
 };
 
-struct from_texture_to_string
-{
-  const std::string& operator()(const texture& x)const{return x.str;}
+struct from_texture_to_string {
+  const std::string& operator()(const texture& x) const { return x.str; }
 };
 
-struct factorization:private boost::noncopyable
-{
-  factorization(int n_=0):n(n_){}
+struct factorization : private boost::noncopyable {
+  factorization(int n_ = 0) : n(n_) {}
 
-  friend bool operator==(
-    const factorization& x,const factorization& y){return x.n==y.n;}
-  friend bool operator< (
-    const factorization& x,const factorization& y){return x.n< y.n;}
-  friend bool operator!=(
-    const factorization& x,const factorization& y){return x.n!=y.n;}
-  friend bool operator> (
-    const factorization& x,const factorization& y){return x.n> y.n;}
-  friend bool operator>=(
-    const factorization& x,const factorization& y){return x.n>=y.n;}
-  friend bool operator<=(
-    const factorization& x,const factorization& y){return x.n<=y.n;}
-
-  friend std::ostream& operator<<(std::ostream& os,const factorization& x)
-  {
-    return os<<x.n;
+  friend bool operator==(const factorization& x, const factorization& y) {
+    return x.n == y.n;
+  }
+  friend bool operator<(const factorization& x, const factorization& y) {
+    return x.n < y.n;
+  }
+  friend bool operator!=(const factorization& x, const factorization& y) {
+    return x.n != y.n;
+  }
+  friend bool operator>(const factorization& x, const factorization& y) {
+    return x.n > y.n;
+  }
+  friend bool operator>=(const factorization& x, const factorization& y) {
+    return x.n >= y.n;
+  }
+  friend bool operator<=(const factorization& x, const factorization& y) {
+    return x.n <= y.n;
   }
 
-  friend std::istream& operator>>(std::istream& is,factorization& x)
-  {
-    return is>>x.n;
+  friend std::ostream& operator<<(std::ostream& os, const factorization& x) {
+    return os << x.n;
+  }
+
+  friend std::istream& operator>>(std::istream& is, factorization& x) {
+    return is >> x.n;
   }
 
   int n;
 };
 
 #if !defined(BOOST_NO_EXCEPTIONS)
-struct throwing_value_exception{};
+struct throwing_value_exception {};
 
-struct throwing_value
-{
-  throwing_value():n(0){}
-  throwing_value(const throwing_value&){throw throwing_value_exception();}
-  throwing_value(int){throw throwing_value_exception();}
+struct throwing_value {
+  throwing_value() : n(0) {}
+  throwing_value(const throwing_value&) { throw throwing_value_exception(); }
+  throwing_value(int) { throw throwing_value_exception(); }
 
   int n;
 };
 
-struct from_throwing_value_to_int
-{
-  const int& operator()(const throwing_value& x)const{return x.n;}
+struct from_throwing_value_to_int {
+  const int& operator()(const throwing_value& x) const { return x.n; }
 };
 #endif
 

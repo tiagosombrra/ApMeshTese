@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/lognormal.hpp>
 #include <boost/random/lognormal_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/lognormal.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::lognormal_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME lognormal

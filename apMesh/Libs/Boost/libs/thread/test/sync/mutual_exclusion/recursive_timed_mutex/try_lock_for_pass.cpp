@@ -19,9 +19,10 @@
 // template <class Rep, class Period>
 //     bool try_lock_for(const chrono::duration<Rep, Period>& rel_time);
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/recursive_mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
@@ -38,8 +39,7 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f1()
-{
+void f1() {
   t0 = Clock::now();
   BOOST_TEST(m.try_lock_for(ms(750)) == true);
   t1 = Clock::now();
@@ -48,8 +48,7 @@ void f1()
   m.unlock();
 }
 
-void f2()
-{
+void f2() {
   time_point t0 = Clock::now();
   BOOST_TEST(m.try_lock_for(ms(250)) == false);
   time_point t1 = Clock::now();
@@ -57,8 +56,7 @@ void f2()
   BOOST_THREAD_TEST_IT(d, ns(max_diff));
 }
 
-int main()
-{
+int main() {
   {
     m.lock();
     boost::thread t(f1);
@@ -87,6 +85,6 @@ int main()
 }
 
 #else
-#error "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
+#error \
+    "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
 #endif
-

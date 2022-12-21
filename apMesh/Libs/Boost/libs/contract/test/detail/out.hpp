@@ -11,13 +11,18 @@
 
 #include <string>
 
-namespace boost { namespace contract { namespace test { namespace detail {
+namespace boost {
+namespace contract {
+namespace test {
+namespace detail {
 
 std::string BOOST_CONTRACT_TEST_DETAIL_OUT_DECLSPEC out();
 
 void BOOST_CONTRACT_TEST_DETAIL_OUT_DECLSPEC out(std::string const& text);
 
-} } } }
+}  // namespace detail
+}  // namespace test
+}  // namespace contract
+}  // namespace boost
 
-#endif // #include guard
-
+#endif  // #include guard

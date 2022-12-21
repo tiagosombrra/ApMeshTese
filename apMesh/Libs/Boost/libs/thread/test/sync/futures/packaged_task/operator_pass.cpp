@@ -17,12 +17,11 @@
 
 // void operator()();
 
-
 //#define BOOST_THREAD_VERSION 3
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
 #if defined BOOST_THREAD_USES_CHRONO
 
@@ -35,7 +34,7 @@
 #if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK
 #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
 #define BOOST_THREAD_DETAIL_SIGNATURE_2 double(int, char)
-#define BOOST_THREAD_DETAIL_SIGNATURE_2_RES 5 + 3 +'a'
+#define BOOST_THREAD_DETAIL_SIGNATURE_2_RES 5 + 3 + 'a'
 #else
 #define BOOST_THREAD_DETAIL_SIGNATURE_2 double()
 #define BOOST_THREAD_DETAIL_SIGNATURE_2_RES 5
@@ -44,145 +43,131 @@
 #define BOOST_THREAD_DETAIL_SIGNATURE_2 double
 #define BOOST_THREAD_DETAIL_SIGNATURE_2_RES 5
 #endif
-class E : public std::exception
-{
-public:
+class E : public std::exception {
+ public:
   long data;
-  explicit E(long i) :
-    data(i)
-  {
-  }
+  explicit E(long i) : data(i) {}
 
   const char* what() const throw() { return ""; }
 
   ~E() throw() {}
 };
 
-class A
-{
+class A {
   long data_;
 
-public:
-  explicit A(long i) :
-    data_(i)
-  {
-  }
+ public:
+  explicit A(long i) : data_(i) {}
 
-  long operator()() const
-  {
+  long operator()() const {
     if (data_ == 0) BOOST_THROW_EXCEPTION(E(6));
     return data_;
   }
-  long operator()(long i, long j) const
-  {
+  long operator()(long i, long j) const {
     if (j == 'z') BOOST_THROW_EXCEPTION(E(6));
     return data_ + i + j;
   }
   ~A() {}
 };
 
-void func0(boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p)
-{
+void func0(boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p) {
   boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
   p(3, 'a');
 #else
   p();
 #endif
 }
 
-void func1(boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p)
-{
+void func1(boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p) {
   boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
   p(3, 'z');
 #else
   p();
 #endif
 }
 
-void func2(boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p)
-{
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+void func2(boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p) {
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
   p(3, 'a');
 #else
   p();
 #endif
-  try
-  {
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
-  p(3, 'c');
+  try {
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+    p(3, 'c');
 #else
-  p();
+    p();
 #endif
-  }
-  catch (const boost::future_error& e)
-  {
-    BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
+  } catch (const boost::future_error& e) {
+    BOOST_TEST(e.code() == boost::system::make_error_code(
+                               boost::future_errc::promise_already_satisfied));
   }
 }
 
-void func3(boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p)
-{
-  try
-  {
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
-  p(3, 'a');
+void func3(boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p) {
+  try {
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+    p(3, 'a');
 #else
-  p();
+    p();
 #endif
-  }
-  catch (const boost::future_error& e)
-  {
-    BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::no_state));
+  } catch (const boost::future_error& e) {
+    BOOST_TEST(e.code() ==
+               boost::system::make_error_code(boost::future_errc::no_state));
   }
 }
 
-int main()
-{
+int main() {
   {
     boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p(A(5));
     boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
     boost::thread(func0, boost::move(p)).detach();
 #else
-    //p();
+    // p();
 #endif
-    //BOOST_TEST(f.get() == 5.0);
+    // BOOST_TEST(f.get() == 5.0);
   }
   {
     boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p(A(0));
     boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
     boost::thread(func1, boost::move(p)).detach();
 #endif
-    try
-    {
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+    try {
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
 #else
       p();
 #endif
       f.get();
       BOOST_TEST(false);
-    }
-    catch (const E& e)
-    {
+    } catch (const E& e) {
       BOOST_TEST(e.data == 6);
-    }
-    catch (...)
-    {
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
   {
     boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p(A(5));
     boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
     boost::thread t(func2, boost::move(p));
 #else
     p();
 #endif
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
     BOOST_TEST(f.get() == 105);
     t.join();
 #else
@@ -191,21 +176,21 @@ int main()
   }
   {
     boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE_2> p;
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
     boost::thread t(func3, boost::move(p));
     t.join();
 #else
-    try
-    {
-  #if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
-    p(3, 'a');
-  #else
-    p();
-  #endif
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::no_state));
+    try {
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+      p(3, 'a');
+#else
+      p();
+#endif
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(boost::future_errc::no_state));
     }
 #endif
   }
@@ -214,5 +199,6 @@ int main()
 }
 
 #else
-#error "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
+#error \
+    "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
 #endif

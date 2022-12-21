@@ -18,19 +18,16 @@
 
 // shared_lock_guard(shared_lock_guard const&) = delete;
 
-
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/shared_lock_guard.hpp>
 #include <boost/thread/shared_mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::shared_mutex m0;
 boost::shared_mutex m1;
 
-int main()
-{
+int main() {
   boost::shared_lock_guard<boost::shared_mutex> lk0(m0);
   boost::shared_lock_guard<boost::shared_mutex> lk1 = lk0;
 }
 
 #include "../../../../remove_error_code_unused_warning.hpp"
-

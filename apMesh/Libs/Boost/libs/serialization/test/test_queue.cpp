@@ -8,49 +8,46 @@
 
 // should pass compilation and execution
 
-#include <cstddef>
-#include <fstream>
-
-#include <cstdio> // remove
 #include <boost/config.hpp>
+#include <cstddef>
+#include <cstdio>  // remove
+#include <fstream>
 #if defined(BOOST_NO_STDC_NAMESPACE)
-namespace std{
-    using ::remove;
+namespace std {
+using ::remove;
 }
 #endif
 
 #include <boost/archive/archive_exception.hpp>
-#include "test_tools.hpp"
-
 #include <boost/serialization/deque.hpp>
 #include <boost/serialization/queue.hpp>
 
 #include "A.hpp"
 #include "A.ipp"
+#include "test_tools.hpp"
 
-int test_main( int /* argc */, char* /* argv */[] )
-{
-    const char * testfile = boost::archive::tmpnam(NULL);
-    BOOST_REQUIRE(NULL != testfile);
+int test_main(int /* argc */, char* /* argv */[]) {
+  const char* testfile = boost::archive::tmpnam(NULL);
+  BOOST_REQUIRE(NULL != testfile);
 
-    // test array of objects
-    std::queue<A> aqueue, aqueue1;
-    aqueue.push(A());
-    aqueue.push(A());
-    {
-        test_ostream os(testfile, TEST_STREAM_FLAGS);
-        test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
-        oa << boost::serialization::make_nvp("aqueue",aqueue);
-    }
-    {
-        test_istream is(testfile, TEST_STREAM_FLAGS);
-        test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
-        ia >> boost::serialization::make_nvp("aqueue",aqueue1);
-    }
-    BOOST_CHECK(aqueue == aqueue1);
+  // test array of objects
+  std::queue<A> aqueue, aqueue1;
+  aqueue.push(A());
+  aqueue.push(A());
+  {
+    test_ostream os(testfile, TEST_STREAM_FLAGS);
+    test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
+    oa << boost::serialization::make_nvp("aqueue", aqueue);
+  }
+  {
+    test_istream is(testfile, TEST_STREAM_FLAGS);
+    test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
+    ia >> boost::serialization::make_nvp("aqueue", aqueue1);
+  }
+  BOOST_CHECK(aqueue == aqueue1);
 
-    std::remove(testfile);
-    return EXIT_SUCCESS;
+  std::remove(testfile);
+  return EXIT_SUCCESS;
 }
 
 // EOF

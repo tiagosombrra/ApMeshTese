@@ -3,24 +3,22 @@
  * Copyright (c) 1998-2004
  * John Maddock
  *
- * Use, modification and distribution are subject to the 
- * Boost Software License, Version 1.0. (See accompanying file 
+ * Use, modification and distribution are subject to the
+ * Boost Software License, Version 1.0. (See accompanying file
  * LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
  */
 
- /*
-  *   LOCATION:    see http://www.boost.org for most recent version.
-  *   FILE:        regex_debug.cpp
-  *   VERSION:     see <boost/version.hpp>
-  *   DESCRIPTION: Misc. debugging helpers.
-  */
-
+/*
+ *   LOCATION:    see http://www.boost.org for most recent version.
+ *   FILE:        regex_debug.cpp
+ *   VERSION:     see <boost/version.hpp>
+ *   DESCRIPTION: Misc. debugging helpers.
+ */
 
 #define BOOST_REGEX_SOURCE
 
 #include <boost/regex/config.hpp>
-
 
 //
 // regex configuration information: this prints out the settings used
@@ -43,17 +41,11 @@
 
 #include <libs/regex/test/config_info/regex_config_info.cpp>
 
-BOOST_REGEX_DECL void BOOST_REGEX_CALL print_regex_library_info()
-{
-   std::cout << "\n\n";
-   print_separator();
-   std::cout << "Regex library build configuration:\n\n";
-   regex_lib_main2();
+BOOST_REGEX_DECL void BOOST_REGEX_CALL print_regex_library_info() {
+  std::cout << "\n\n";
+  print_separator();
+  std::cout << "Regex library build configuration:\n\n";
+  regex_lib_main2();
 }
 
 #endif
-
-
-
-
-

@@ -8,16 +8,17 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #define EIGEN_NO_ASSERTION_CHECKING
-#include "main.h"
 #include <Eigen/Cholesky>
 #include <Eigen/LU>
+
+#include "main.h"
 
 #ifdef HAS_GSL
 #include "gsl_helper.h"
 #endif
 
-template<typename MatrixType> void cholesky(const MatrixType& m)
-{
+template <typename MatrixType>
+void cholesky(const MatrixType& m) {
   /* this test covers the following files:
      LLT.h LDLT.h
   */
@@ -26,23 +27,24 @@ template<typename MatrixType> void cholesky(const MatrixType& m)
 
   typedef typename MatrixType::Scalar Scalar;
   typedef typename NumTraits<Scalar>::Real RealScalar;
-  typedef Matrix<Scalar, MatrixType::RowsAtCompileTime, MatrixType::RowsAtCompileTime> SquareMatrixType;
+  typedef Matrix<Scalar, MatrixType::RowsAtCompileTime,
+                 MatrixType::RowsAtCompileTime>
+      SquareMatrixType;
   typedef Matrix<Scalar, MatrixType::RowsAtCompileTime, 1> VectorType;
 
-  MatrixType a0 = MatrixType::Random(rows,cols);
+  MatrixType a0 = MatrixType::Random(rows, cols);
   VectorType vecB = VectorType::Random(rows), vecX(rows);
-  MatrixType matB = MatrixType::Random(rows,cols), matX(rows,cols);
-  SquareMatrixType symm =  a0 * a0.adjoint();
+  MatrixType matB = MatrixType::Random(rows, cols), matX(rows, cols);
+  SquareMatrixType symm = a0 * a0.adjoint();
   // let's make sure the matrix is not singular or near singular
-  MatrixType a1 = MatrixType::Random(rows,cols);
+  MatrixType a1 = MatrixType::Random(rows, cols);
   symm += a1 * a1.adjoint();
 
-  #ifdef HAS_GSL
-  if (ei_is_same_type<RealScalar,double>::ret)
-  {
+#ifdef HAS_GSL
+  if (ei_is_same_type<RealScalar, double>::ret) {
     typedef GslTraits<Scalar> Gsl;
-    typename Gsl::Matrix gMatA=0, gSymm=0;
-    typename Gsl::Vector gVecB=0, gVecX=0;
+    typename Gsl::Matrix gMatA = 0, gSymm = 0;
+    typename Gsl::Vector gVecB = 0, gVecX = 0;
     convert<MatrixType>(symm, gSymm);
     convert<MatrixType>(symm, gMatA);
     convert<VectorType>(vecB, gVecB);
@@ -63,13 +65,14 @@ template<typename MatrixType> void cholesky(const MatrixType& m)
     Gsl::free(gVecB);
     Gsl::free(gVecX);
   }
-  #endif
+#endif
 
   {
     LDLT<SquareMatrixType> ldlt(symm);
     VERIFY(ldlt.isPositiveDefinite());
     // in eigen3, LDLT is pivoting
-    //VERIFY_IS_APPROX(symm, ldlt.matrixL() * ldlt.vectorD().asDiagonal() * ldlt.matrixL().adjoint());
+    // VERIFY_IS_APPROX(symm, ldlt.matrixL() * ldlt.vectorD().asDiagonal() *
+    // ldlt.matrixL().adjoint());
     ldlt.solve(vecB, &vecX);
     VERIFY_IS_APPROX(symm * vecX, vecB);
     ldlt.solve(matB, &matX);
@@ -86,7 +89,7 @@ template<typename MatrixType> void cholesky(const MatrixType& m)
     VERIFY_IS_APPROX(symm * matX, matB);
   }
 
-#if 0 // cholesky is not rank-revealing anyway
+#if 0  // cholesky is not rank-revealing anyway
   // test isPositiveDefinite on non definite matrix
   if (rows>4)
   {
@@ -99,15 +102,14 @@ template<typename MatrixType> void cholesky(const MatrixType& m)
 #endif
 }
 
-void test_eigen2_cholesky()
-{
-  for(int i = 0; i < g_repeat; i++) {
-    CALL_SUBTEST_1( cholesky(Matrix<double,1,1>()) );
-    CALL_SUBTEST_2( cholesky(Matrix2d()) );
-    CALL_SUBTEST_3( cholesky(Matrix3f()) );
-    CALL_SUBTEST_4( cholesky(Matrix4d()) );
-    CALL_SUBTEST_5( cholesky(MatrixXcd(7,7)) );
-    CALL_SUBTEST_6( cholesky(MatrixXf(17,17)) );
-    CALL_SUBTEST_7( cholesky(MatrixXd(33,33)) );
+void test_eigen2_cholesky() {
+  for (int i = 0; i < g_repeat; i++) {
+    CALL_SUBTEST_1(cholesky(Matrix<double, 1, 1>()));
+    CALL_SUBTEST_2(cholesky(Matrix2d()));
+    CALL_SUBTEST_3(cholesky(Matrix3f()));
+    CALL_SUBTEST_4(cholesky(Matrix4d()));
+    CALL_SUBTEST_5(cholesky(MatrixXcd(7, 7)));
+    CALL_SUBTEST_6(cholesky(MatrixXf(17, 17)));
+    CALL_SUBTEST_7(cholesky(MatrixXd(33, 33)));
   }
 }

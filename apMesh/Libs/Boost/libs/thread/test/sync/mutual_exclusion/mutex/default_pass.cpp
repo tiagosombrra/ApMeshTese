@@ -18,12 +18,10 @@
 
 // mutex();
 
-#include <boost/thread/mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/mutex.hpp>
 
-int main()
-{
+int main() {
   boost::mutex m0;
   return boost::report_errors();
 }
-

@@ -8,33 +8,33 @@
 
 //  See http://www.boost.org/libs/sort for library home page.
 
-#include <boost/sort/spreadsort/spreadsort.hpp>
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include <algorithm>
-#include <vector>
-#include <string>
+#include <boost/sort/spreadsort/spreadsort.hpp>
 #include <fstream>
 #include <iostream>
+#include <string>
+#include <vector>
 using namespace boost::sort::spreadsort;
 
 #define DATA_TYPE float
 #define CAST_TYPE int
 
-//Casting to an integer before bitshifting
+// Casting to an integer before bitshifting
 struct rightshift {
   inline int operator()(const DATA_TYPE &x, const unsigned offset) const {
     return float_mem_cast<DATA_TYPE, int>(x) >> offset;
   }
 };
 
-
-//Pass in an argument to test std::sort
-//Note that this converts NaNs and -0.0 to 0.0, so that sorting results are
-//identical every time
-int main(int argc, const char ** argv) {
-  size_t uCount,uSize=sizeof(DATA_TYPE);
+// Pass in an argument to test std::sort
+// Note that this converts NaNs and -0.0 to 0.0, so that sorting results are
+// identical every time
+int main(int argc, const char **argv) {
+  size_t uCount, uSize = sizeof(DATA_TYPE);
   bool stdSort = false;
   unsigned loopCount = 1;
   for (int u = 1; u < argc; ++u) {
@@ -50,49 +50,50 @@ int main(int argc, const char ** argv) {
   }
   double total = 0.0;
   std::vector<DATA_TYPE> array;
-  input.seekg (0, std::ios_base::end);
-    size_t length = input.tellg();
-  uCount = length/uSize;
-  //Run multiple loops, if requested
+  input.seekg(0, std::ios_base::end);
+  size_t length = input.tellg();
+  uCount = length / uSize;
+  // Run multiple loops, if requested
   for (unsigned u = 0; u < loopCount; ++u) {
-    input.seekg (0, std::ios_base::beg);
-    //Conversion to a vector
+    input.seekg(0, std::ios_base::beg);
+    // Conversion to a vector
     array.resize(uCount);
     unsigned v = 0;
     while (input.good() && v < uCount) {
-      input.read(reinterpret_cast<char *>(&(array[v])), uSize );
-     //Testcase doesn't sort NaNs; they just cause confusion
-     if (!(array[v] < 0.0) && !(0.0 < array[v]))
-      array[v] = 0.0;
-     //Checking for denormalized numbers
-     if (!(float_mem_cast<float, int>(array[v]) & 0x7f800000)) {
-       //Make the top exponent bit high
-       CAST_TYPE temp = 0x40000000 | float_mem_cast<float, int>(array[v]);
-       memcpy(&(array[v]), &temp, sizeof(DATA_TYPE));
-     }
-     ++v;
+      input.read(reinterpret_cast<char *>(&(array[v])), uSize);
+      // Testcase doesn't sort NaNs; they just cause confusion
+      if (!(array[v] < 0.0) && !(0.0 < array[v])) array[v] = 0.0;
+      // Checking for denormalized numbers
+      if (!(float_mem_cast<float, int>(array[v]) & 0x7f800000)) {
+        // Make the top exponent bit high
+        CAST_TYPE temp = 0x40000000 | float_mem_cast<float, int>(array[v]);
+        memcpy(&(array[v]), &temp, sizeof(DATA_TYPE));
+      }
+      ++v;
     }
     clock_t start, end;
     double elapsed;
     start = clock();
     if (stdSort)
-      //std::sort(&(array[0]), &(array[0]) + uCount);
+      // std::sort(&(array[0]), &(array[0]) + uCount);
       std::sort(array.begin(), array.end());
     else
-      //float_sort(&(array[0]), &(array[0]) + uCount, rightshift());
+      // float_sort(&(array[0]), &(array[0]) + uCount, rightshift());
       float_sort(array.begin(), array.end(), rightshift());
     end = clock();
-    elapsed = static_cast<double>(end - start) ;
+    elapsed = static_cast<double>(end - start);
     std::ofstream ofile;
     if (stdSort)
       ofile.open("standard_sort_out.txt", std::ios_base::out |
-                 std::ios_base::binary | std::ios_base::trunc);
+                                              std::ios_base::binary |
+                                              std::ios_base::trunc);
     else
       ofile.open("boost_sort_out.txt", std::ios_base::out |
-                 std::ios_base::binary | std::ios_base::trunc);
+                                           std::ios_base::binary |
+                                           std::ios_base::trunc);
     if (ofile.good()) {
       for (unsigned v = 0; v < array.size(); ++v) {
-        ofile.write(reinterpret_cast<char *>(&(array[v])), sizeof(array[v]) );
+        ofile.write(reinterpret_cast<char *>(&(array[v])), sizeof(array[v]));
       }
       ofile.close();
     }

@@ -1,7 +1,7 @@
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // basic_archive.cpp:
 
-// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com . 
+// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
 // Use, modification and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -24,7 +24,7 @@
 //      [
 //          object_id
 //      ]
-//          
+//
 //      [   // if a new object id
 //          data...
 //      ]
@@ -32,19 +32,18 @@
 //  * required only for pointers - optional for objects
 
 #define BOOST_ARCHIVE_SOURCE
-#include <boost/serialization/config.hpp>
 #include <boost/archive/basic_archive.hpp>
+#include <boost/serialization/config.hpp>
 
 namespace boost {
 namespace archive {
 
 ///////////////////////////////////////////////////////////////////////
 // constants used in archive signature
-//This should never ever change. note that is not an std::string
+// This should never ever change. note that is not an std::string
 // string.
-BOOST_SYMBOL_VISIBLE const char * 
-BOOST_ARCHIVE_SIGNATURE(){
-    return "serialization::archive";
+BOOST_SYMBOL_VISIBLE const char* BOOST_ARCHIVE_SIGNATURE() {
+  return "serialization::archive";
 }
 
 // this should change if the capabilities are added to the library
@@ -54,7 +53,7 @@ BOOST_ARCHIVE_SIGNATURE(){
 // 2 - made address tracking optional
 // 3 - numerous changes - can't guarentee compatibility with previous versions
 // 4 - Boost 1.34
-//     added item_version to properly support versioning for collections 
+//     added item_version to properly support versioning for collections
 // 5 - Boost 1.36
 //     changed serialization of collections: adding version even for primitive
 //     types caused backwards compatibility breaking change in 1.35
@@ -83,12 +82,12 @@ BOOST_ARCHIVE_SIGNATURE(){
 // 18- addressed undefined behavior in archive constuctors.
 //     init() called from base wrote archive header before archive
 //     was fully constructed.
-//     Boost 1.76 
+//     Boost 1.76
 
 BOOST_SYMBOL_VISIBLE boost::serialization::library_version_type
-BOOST_ARCHIVE_VERSION(){
-    return boost::serialization::library_version_type(19);
+BOOST_ARCHIVE_VERSION() {
+  return boost::serialization::library_version_type(19);
 }
 
-} // namespace archive
-} // namespace boost
+}  // namespace archive
+}  // namespace boost

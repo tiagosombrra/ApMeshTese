@@ -20,10 +20,9 @@
 #include <boost/assert.hpp>
 #undef BOOST_ASSERT_MSG
 
-void test_default()
-{
-    std::string v1 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x1, m1));
-    BOOST_TEST_EQ( v1, "BOOST_ASSERT_MSG(x1,m1)" );
+void test_default() {
+  std::string v1 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x1, m1));
+  BOOST_TEST_EQ(v1, "BOOST_ASSERT_MSG(x1,m1)");
 }
 
 // default case, NDEBUG
@@ -32,10 +31,9 @@ void test_default()
 #define NDEBUG
 #include <boost/assert.hpp>
 
-void test_default_ndebug()
-{
-    std::string v2 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x2, m2));
-    BOOST_TEST_EQ( v2, "((void)(x2))" );
+void test_default_ndebug() {
+  std::string v2 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x2, m2));
+  BOOST_TEST_EQ(v2, "((void)(x2))");
 }
 
 // BOOST_DISABLE_ASSERTS, !NDEBUG
@@ -46,10 +44,9 @@ void test_default_ndebug()
 #undef NDEBUG
 #include <boost/assert.hpp>
 
-void test_disabled()
-{
-    std::string v3 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x3, "m3"));
-    BOOST_TEST_EQ( v3, "((void)(x3))" );
+void test_disabled() {
+  std::string v3 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x3, "m3"));
+  BOOST_TEST_EQ(v3, "((void)(x3))");
 }
 
 // BOOST_DISABLE_ASSERTS, NDEBUG
@@ -58,10 +55,9 @@ void test_disabled()
 #define NDEBUG
 #include <boost/assert.hpp>
 
-void test_disabled_ndebug()
-{
-    std::string v4 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x4, "m4"));
-    BOOST_TEST_EQ( v4, "((void)(x4))" );
+void test_disabled_ndebug() {
+  std::string v4 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x4, "m4"));
+  BOOST_TEST_EQ(v4, "((void)(x4))");
 }
 
 #undef BOOST_DISABLE_ASSERTS
@@ -75,10 +71,9 @@ void test_disabled_ndebug()
 #include <boost/assert.hpp>
 #undef BOOST_ASSERT_MSG
 
-void test_handler()
-{
-    std::string v5 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x5, m5));
-    BOOST_TEST_EQ( v5, "BOOST_ASSERT_MSG(x5,m5)" );
+void test_handler() {
+  std::string v5 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x5, m5));
+  BOOST_TEST_EQ(v5, "BOOST_ASSERT_MSG(x5,m5)");
 }
 
 // BOOST_ENABLE_ASSERT_HANDLER, NDEBUG
@@ -88,10 +83,9 @@ void test_handler()
 #include <boost/assert.hpp>
 #undef BOOST_ASSERT_MSG
 
-void test_handler_ndebug()
-{
-    std::string v6 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x6, m6));
-    BOOST_TEST_EQ( v6, "BOOST_ASSERT_MSG(x6,m6)" );
+void test_handler_ndebug() {
+  std::string v6 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x6, m6));
+  BOOST_TEST_EQ(v6, "BOOST_ASSERT_MSG(x6,m6)");
 }
 
 #undef BOOST_ENABLE_ASSERT_HANDLER
@@ -105,10 +99,9 @@ void test_handler_ndebug()
 #include <boost/assert.hpp>
 #undef BOOST_ASSERT_MSG
 
-void test_debug_handler()
-{
-    std::string v7 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x7, m7));
-    BOOST_TEST_EQ( v7, "BOOST_ASSERT_MSG(x7,m7)" );
+void test_debug_handler() {
+  std::string v7 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x7, m7));
+  BOOST_TEST_EQ(v7, "BOOST_ASSERT_MSG(x7,m7)");
 }
 
 // BOOST_ENABLE_ASSERT_DEBUG_HANDLER, NDEBUG
@@ -117,24 +110,22 @@ void test_debug_handler()
 #define NDEBUG
 #include <boost/assert.hpp>
 
-void test_debug_handler_ndebug()
-{
-    std::string v8 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x8, "m8"));
-    BOOST_TEST_EQ( v8, "((void)(x8))" );
+void test_debug_handler_ndebug() {
+  std::string v8 = BOOST_STRINGIZE(BOOST_VERIFY_MSG(x8, "m8"));
+  BOOST_TEST_EQ(v8, "((void)(x8))");
 }
 
 #undef BOOST_ENABLE_ASSERT_DEBUG_HANDLER
 
-int main()
-{
-    test_default();
-    test_default_ndebug();
-    test_disabled();
-    test_disabled_ndebug();
-    test_handler();
-    test_handler_ndebug();
-    test_debug_handler();
-    test_debug_handler_ndebug();
+int main() {
+  test_default();
+  test_default_ndebug();
+  test_disabled();
+  test_disabled_ndebug();
+  test_handler();
+  test_handler_ndebug();
+  test_debug_handler();
+  test_debug_handler_ndebug();
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

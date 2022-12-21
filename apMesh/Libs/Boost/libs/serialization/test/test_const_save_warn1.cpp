@@ -13,13 +13,9 @@
 using namespace boost::archive;
 
 struct A {
-    template<class Archive>
-    void serialize(Archive & ar, unsigned int version) {
-    }
+  template <class Archive>
+  void serialize(Archive& ar, unsigned int version) {}
 };
 
 // should fail to compile
-void f1(text_oarchive & oa, A  & a){
-    oa << a;
-}
-
+void f1(text_oarchive& oa, A& a) { oa << a; }

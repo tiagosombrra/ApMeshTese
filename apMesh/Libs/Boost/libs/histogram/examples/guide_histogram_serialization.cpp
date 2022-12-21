@@ -9,7 +9,7 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/histogram.hpp>
-#include <boost/histogram/serialization.hpp> // includes serialization code
+#include <boost/histogram/serialization.hpp>  // includes serialization code
 #include <cassert>
 #include <sstream>
 
@@ -20,7 +20,7 @@ int main() {
                           axis::integer<>(0, 2, "axis 1"));
   a(0.5, 1);
 
-  std::string buf; // to hold persistent representation
+  std::string buf;  // to hold persistent representation
 
   // store histogram
   {
@@ -30,9 +30,9 @@ int main() {
     buf = os.str();
   }
 
-  auto b = decltype(a)(); // create a default-constructed second histogram
+  auto b = decltype(a)();  // create a default-constructed second histogram
 
-  assert(b != a); // b is empty, a is not
+  assert(b != a);  // b is empty, a is not
 
   // load histogram
   {
@@ -41,7 +41,7 @@ int main() {
     ia >> b;
   }
 
-  assert(b == a); // now b is equal to a
+  assert(b == a);  // now b is equal to a
 }
 
 //]

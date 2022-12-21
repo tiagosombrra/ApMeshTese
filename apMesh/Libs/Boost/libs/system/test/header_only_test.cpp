@@ -1,4 +1,4 @@
-//  header_only_test.cpp  -----------------------------------------------------//
+//  header_only_test.cpp -----------------------------------------------------//
 
 //  Copyright Beman Dawes 2007
 
@@ -7,7 +7,7 @@
 
 //  See library home page at http://www.boost.org/libs/system
 
-//----------------------------------------------------------------------------// 
+//----------------------------------------------------------------------------//
 
 #include <boost/config/warning_disable.hpp>
 
@@ -16,8 +16,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/system/error_code.hpp>
 
-int main( int, char*[] )
-{
-  boost::system::error_code ec( 0, boost::system::system_category() );
+int main(int, char*[]) {
+  boost::system::error_code ec(0, boost::system::system_category());
   return ::boost::report_errors();
 }

@@ -10,6 +10,7 @@
 #include <limits>
 #include <sstream>
 #include <type_traits>
+
 #include "is_close.hpp"
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
@@ -51,7 +52,7 @@ int main() {
     BOOST_TEST_EQ(a.metadata(), "foo");
     const auto& cref = a;
     BOOST_TEST_EQ(cref.metadata(), "foo");
-    cref.metadata() = "bar"; // this is allowed
+    cref.metadata() = "bar";  // this is allowed
     BOOST_TEST_EQ(cref.metadata(), "bar");
     BOOST_TEST_EQ(a.value(0), -2);
     BOOST_TEST_EQ(a.value(1), -1);
@@ -61,7 +62,8 @@ int main() {
     BOOST_TEST_EQ(a.bin(-1).lower(), -std::numeric_limits<double>::infinity());
     BOOST_TEST_EQ(a.bin(-1).upper(), -2);
     BOOST_TEST_EQ(a.bin(a.size()).lower(), 2);
-    BOOST_TEST_EQ(a.bin(a.size()).upper(), std::numeric_limits<double>::infinity());
+    BOOST_TEST_EQ(a.bin(a.size()).upper(),
+                  std::numeric_limits<double>::infinity());
     BOOST_TEST_EQ(a.index(-10.), -1);
     BOOST_TEST_EQ(a.index(-2.1), -1);
     BOOST_TEST_EQ(a.index(-2.0), 0);
@@ -74,8 +76,9 @@ int main() {
     BOOST_TEST_EQ(a.index(std::numeric_limits<double>::infinity()), 4);
     BOOST_TEST_EQ(a.index(std::numeric_limits<double>::quiet_NaN()), 4);
 
-    BOOST_TEST_EQ(str(a),
-                  "regular(4, -2, 2, metadata=\"bar\", options=underflow | overflow)");
+    BOOST_TEST_EQ(
+        str(a),
+        "regular(4, -2, 2, metadata=\"bar\", options=underflow | overflow)");
   }
 
   // with inverted range
@@ -106,7 +109,7 @@ int main() {
     BOOST_TEST_IS_CLOSE(a.bin(2).lower(), 100.0, 1e-9);
     BOOST_TEST_EQ(a.bin(2).upper(), std::numeric_limits<double>::infinity());
 
-    BOOST_TEST_EQ(a.index(-1), 2); // produces NaN in conversion
+    BOOST_TEST_EQ(a.index(-1), 2);  // produces NaN in conversion
     BOOST_TEST_EQ(a.index(0), -1);
     BOOST_TEST_EQ(a.index(1), 0);
     BOOST_TEST_EQ(a.index(9), 0);
@@ -115,7 +118,8 @@ int main() {
     BOOST_TEST_EQ(a.index(100), 2);
     BOOST_TEST_EQ(a.index(std::numeric_limits<double>::infinity()), 2);
 
-    BOOST_TEST_THROWS((axis::regular<double, tr::log>{2, -1, 0}), std::invalid_argument);
+    BOOST_TEST_THROWS((axis::regular<double, tr::log>{2, -1, 0}),
+                      std::invalid_argument);
 
     BOOST_TEST_CSTR_EQ(
         str(a).c_str(),
@@ -132,7 +136,7 @@ int main() {
     BOOST_TEST_IS_CLOSE(a.bin(2).lower(), 4.0, 1e-9);
     BOOST_TEST_EQ(a.bin(2).upper(), std::numeric_limits<double>::infinity());
 
-    BOOST_TEST_EQ(a.index(-1), 2); // produces NaN in conversion
+    BOOST_TEST_EQ(a.index(-1), 2);  // produces NaN in conversion
     BOOST_TEST_EQ(a.index(0), 0);
     BOOST_TEST_EQ(a.index(0.99), 0);
     BOOST_TEST_EQ(a.index(1), 1);
@@ -141,8 +145,9 @@ int main() {
     BOOST_TEST_EQ(a.index(100), 2);
     BOOST_TEST_EQ(a.index(std::numeric_limits<double>::infinity()), 2);
 
-    BOOST_TEST_EQ(str(a),
-                  "regular(transform::sqrt{}, 2, 0, 4, options=underflow | overflow)");
+    BOOST_TEST_EQ(
+        str(a),
+        "regular(transform::sqrt{}, 2, 0, 4, options=underflow | overflow)");
   }
 
   // with pow transform
@@ -155,7 +160,7 @@ int main() {
     BOOST_TEST_IS_CLOSE(a.bin(2).lower(), 4.0, 1e-9);
     BOOST_TEST_EQ(a.bin(2).upper(), std::numeric_limits<double>::infinity());
 
-    BOOST_TEST_EQ(a.index(-1), 2); // produces NaN in conversion
+    BOOST_TEST_EQ(a.index(-1), 2);  // produces NaN in conversion
     BOOST_TEST_EQ(a.index(0), 0);
     BOOST_TEST_EQ(a.index(0.99), 0);
     BOOST_TEST_EQ(a.index(1), 1);
@@ -164,8 +169,9 @@ int main() {
     BOOST_TEST_EQ(a.index(100), 2);
     BOOST_TEST_EQ(a.index(std::numeric_limits<double>::infinity()), 2);
 
-    BOOST_TEST_EQ(str(a),
-                  "regular(transform::pow{0.5}, 2, 0, 4, options=underflow | overflow)");
+    BOOST_TEST_EQ(
+        str(a),
+        "regular(transform::pow{0.5}, 2, 0, 4, options=underflow | overflow)");
   }
 
   // with step
@@ -218,16 +224,19 @@ int main() {
     BOOST_TEST_EQ(a.size(), 12);
     BOOST_TEST_EQ(a.value(0), -10);
     BOOST_TEST_EQ(a.value(12), 2);
-    BOOST_TEST_EQ(a.update(std::numeric_limits<double>::infinity()), pii_t(a.size(), 0));
-    BOOST_TEST_EQ(a.update(std::numeric_limits<double>::quiet_NaN()), pii_t(a.size(), 0));
-    BOOST_TEST_EQ(a.update(-std::numeric_limits<double>::infinity()), pii_t(-1, 0));
+    BOOST_TEST_EQ(a.update(std::numeric_limits<double>::infinity()),
+                  pii_t(a.size(), 0));
+    BOOST_TEST_EQ(a.update(std::numeric_limits<double>::quiet_NaN()),
+                  pii_t(a.size(), 0));
+    BOOST_TEST_EQ(a.update(-std::numeric_limits<double>::infinity()),
+                  pii_t(-1, 0));
   }
 
   // iterators
   {
     test_axis_iterator(axis::regular<>(5, 0, 1), 0, 5);
-    test_axis_iterator(axis::regular<double, def, def, axis::option::none_t>(5, 0, 1), 0,
-                       5);
+    test_axis_iterator(
+        axis::regular<double, def, def, axis::option::none_t>(5, 0, 1), 0, 5);
     test_axis_iterator(axis::circular<>(5, 0, 1), 0, 5);
   }
 

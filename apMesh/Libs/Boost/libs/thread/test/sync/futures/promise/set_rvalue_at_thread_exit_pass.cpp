@@ -20,25 +20,20 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/thread/detail/memory.hpp>
 #include <boost/thread/csbl/memory/unique_ptr.hpp>
+#include <boost/thread/detail/memory.hpp>
+#include <boost/thread/future.hpp>
 
 boost::promise<boost::csbl::unique_ptr<int> > p;
 boost::promise<boost::csbl::unique_ptr<int> > p2;
-void func()
-{
+void func() {
   boost::csbl::unique_ptr<int> uptr(new int(5));
   p.set_value_at_thread_exit(boost::move(uptr));
 }
-void func2()
-{
-  p2.set_value_at_thread_exit(boost::csbl::make_unique<int>(5));
-}
+void func2() { p2.set_value_at_thread_exit(boost::csbl::make_unique<int>(5)); }
 
-int main()
-{
+int main() {
   {
     boost::future<boost::csbl::unique_ptr<int> > f = p.get_future();
     boost::thread(func).detach();
@@ -52,4 +47,3 @@ int main()
 
   return boost::report_errors();
 }
-

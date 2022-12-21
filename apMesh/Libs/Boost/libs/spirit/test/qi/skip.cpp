@@ -5,51 +5,56 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-
 #include <iostream>
+
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test;
-    using spirit_test::test_attr;
-    using boost::spirit::qi::skip;
-    using boost::spirit::qi::lexeme;
-    using boost::spirit::qi::lit;
-    using boost::spirit::ascii::char_;
-    using boost::spirit::ascii::space;
-    using boost::spirit::ascii::alpha;
+int main() {
+  using boost::spirit::ascii::alpha;
+  using boost::spirit::ascii::char_;
+  using boost::spirit::ascii::space;
+  using boost::spirit::qi::lexeme;
+  using boost::spirit::qi::lit;
+  using boost::spirit::qi::skip;
+  using spirit_test::test;
+  using spirit_test::test_attr;
 
-    {
-        BOOST_TEST((test("a b c d", skip(space)[*char_])));
-    }
+  { BOOST_TEST((test("a b c d", skip(space)[*char_]))); }
 
-    { // test attribute
-        std::string s;
-        BOOST_TEST((test_attr("a b c d", skip(space)[*char_], s)));
-        BOOST_TEST(s == "abcd");
-    }
+  {  // test attribute
+    std::string s;
+    BOOST_TEST((test_attr("a b c d", skip(space)[*char_], s)));
+    BOOST_TEST(s == "abcd");
+  }
 
-    { // reskip
-        BOOST_TEST((test("ab c d", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']], space)));
-        BOOST_TEST((test("abcd", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']], space)));
-        BOOST_TEST(!(test("a bcd", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']], space)));
-        
-        BOOST_TEST((test("ab c d", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]], space)));
-        BOOST_TEST((test("abcd", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]], space)));
-        BOOST_TEST(!(test("a bcd", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]], space)));
-    }
+  {  // reskip
+    BOOST_TEST((test("ab c d", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']],
+                     space)));
+    BOOST_TEST((
+        test("abcd", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']], space)));
+    BOOST_TEST(!(test("a bcd", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']],
+                      space)));
 
-    { // lazy skip
-        using boost::phoenix::val;
+    BOOST_TEST((test("ab c d",
+                     lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]],
+                     space)));
+    BOOST_TEST(
+        (test("abcd", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]],
+              space)));
+    BOOST_TEST(!(test("a bcd",
+                      lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]],
+                      space)));
+  }
 
-        BOOST_TEST((test("a b c d", skip(val(space))[*char_])));
-    }
+  {  // lazy skip
+    using boost::phoenix::val;
 
-    return boost::report_errors();
+    BOOST_TEST((test("a b c d", skip(val(space))[*char_])));
+  }
+
+  return boost::report_errors();
 }

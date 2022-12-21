@@ -14,7 +14,7 @@
 //    - With a lexer using pre-generated (static) DFA tables
 //    - With a lexer using a pre-generated custom switch based state machine
 //
-// Use one of the following preprocessor constants to define, which of those 
+// Use one of the following preprocessor constants to define, which of those
 // will be built:
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -31,8 +31,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // The default is to use the dynamic table driven lexer
-#if CONJURE_LEXER_DYNAMIC_TABLES == 0 && \
-    CONJURE_LEXER_STATIC_TABLES == 0 && \
+#if CONJURE_LEXER_DYNAMIC_TABLES == 0 && CONJURE_LEXER_STATIC_TABLES == 0 && \
     CONJURE_LEXER_STATIC_SWITCH == 0
 
 #define CONJURE_LEXER_DYNAMIC_TABLES 1
@@ -48,4 +47,3 @@
 #endif
 
 #endif
-

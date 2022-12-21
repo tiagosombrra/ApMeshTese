@@ -19,19 +19,17 @@
 // typedef pthread_timed_mutex_t* native_handle_type;
 // native_handle_type native_handle();
 
-#include <boost/thread/mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/mutex.hpp>
 
-
-int main()
-{
+int main() {
 #if defined BOOST_THREAD_DEFINES_TIMED_MUTEX_NATIVE_HANDLE
   boost::timed_mutex m;
   boost::timed_mutex::native_handle_type h = m.native_handle();
   BOOST_TEST(h);
 #else
-#error "Test not applicable: BOOST_THREAD_DEFINES_TIMED_MUTEX_NATIVE_HANDLE not defined for this platform as not supported"
+#error \
+    "Test not applicable: BOOST_THREAD_DEFINES_TIMED_MUTEX_NATIVE_HANDLE not defined for this platform as not supported"
 #endif
   return boost::report_errors();
 }
-

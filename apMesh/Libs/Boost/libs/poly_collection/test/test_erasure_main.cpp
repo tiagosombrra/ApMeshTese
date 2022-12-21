@@ -7,10 +7,10 @@
  */
 
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_erasure.hpp"
 
-int main()
-{
+int main() {
   test_erasure();
   return boost::report_errors();
 }

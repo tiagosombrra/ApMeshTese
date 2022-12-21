@@ -18,13 +18,11 @@
 
 // future& operator=(const future&) = delete;
 
-
 #define BOOST_THREAD_VERSION 3
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-int main()
-{
+int main() {
   {
     typedef int T;
     boost::promise<T> p;
@@ -37,4 +35,3 @@ int main()
 }
 
 #include "../../../remove_error_code_unused_warning.hpp"
-

@@ -17,6 +17,7 @@
 #include <memory>
 #include <numeric>
 #include <vector>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 #include "utility_allocator.hpp"
@@ -30,9 +31,9 @@ std::ostream& operator<<(std::ostream& os, const large_int<Allocator>& x) {
   os << x.data;
   return os;
 }
-} // namespace detail
-} // namespace histogram
-} // namespace boost
+}  // namespace detail
+}  // namespace histogram
+}  // namespace boost
 
 using namespace boost::histogram;
 
@@ -119,7 +120,6 @@ void increase_and_grow() {
 
 template <typename T>
 void convert_foreign_storage() {
-
   {
     vector_storage<T> s;
     s.reset(1);
@@ -128,7 +128,8 @@ void convert_foreign_storage() {
 
     // test converting copy ctor
     unlimited_storage_type u(s);
-    using buffer_t = std::decay_t<decltype(unsafe_access::unlimited_storage_buffer(u))>;
+    using buffer_t =
+        std::decay_t<decltype(unsafe_access::unlimited_storage_buffer(u))>;
     BOOST_TEST_EQ(unsafe_access::unlimited_storage_buffer(u).type,
                   buffer_t::template type_index<T>());
     BOOST_TEST(u == s);
@@ -194,8 +195,8 @@ void convert_foreign_storage() {
 struct adder {
   template <class LHS, class RHS>
   void operator()(boost::mp11::mp_list<LHS, RHS>) {
-    using buffer_type =
-        std::remove_reference_t<decltype(unsafe_access::unlimited_storage_buffer(
+    using buffer_type = std::remove_reference_t<
+        decltype(unsafe_access::unlimited_storage_buffer(
             std::declval<unlimited_storage_type&>()))>;
     constexpr auto iLHS = buffer_type::template type_index<LHS>();
     constexpr auto iRHS = buffer_type::template type_index<RHS>();
@@ -458,7 +459,7 @@ int main() {
     tracing_allocator_db db;
     // db.tracing = true; // uncomment this to monitor allocator activity
     S s(alloc_t{db});
-    s.reset(10); // should work
+    s.reset(10);  // should work
     BOOST_TEST_EQ(db.at<uint8_t>().first, 10);
 
 #ifndef BOOST_NO_EXCEPTIONS
@@ -484,7 +485,8 @@ int main() {
     BOOST_TEST_EQ(buffer.ptr, old_ptr);
     BOOST_TEST_EQ(buffer.type, 3);
 
-    // test buffer.make<large_int>(n), AT::construct, called by serialization code
+    // test buffer.make<large_int>(n), AT::construct, called by serialization
+    // code
     db.failure_countdown = 1;
     BOOST_TEST_THROWS(buffer.make<typename S::large_int>(2), std::bad_alloc);
 

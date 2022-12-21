@@ -7,8 +7,8 @@
 //  See http://www.boost.org for most recent version including documentation.
 
 #include <boost/config.hpp>
-#include <boost/config/workaround.hpp>
 #include <boost/config/pragma_message.hpp>
+#include <boost/config/workaround.hpp>
 
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1600)
 
@@ -22,10 +22,10 @@ int main() {}
 
 #else
 
-#include <utility>
 #include <boost/fusion/adapted/std_pair.hpp>
+#include <utility>
 
-#define TUPLE      std::pair
+#define TUPLE std::pair
 #define MAKE_TUPLE std::make_pair
 
 #include "detail/zip_iterator_test.ipp"

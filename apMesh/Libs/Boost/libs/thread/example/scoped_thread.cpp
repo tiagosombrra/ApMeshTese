@@ -6,57 +6,43 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <iostream>
 #include <boost/thread/scoped_thread.hpp>
+#include <iostream>
 
-void do_something(int& i)
-{
-  ++i;
-}
-void f(int, int)
-{
-}
+void do_something(int& i) { ++i; }
+void f(int, int) {}
 
-struct func
-{
+struct func {
   int& i;
 
-  func(int& i_) :
-    i(i_)
-  {
-  }
+  func(int& i_) : i(i_) {}
 
-  void operator()()
-  {
-    for (unsigned j = 0; j < 1000000; ++j)
-    {
+  void operator()() {
+    for (unsigned j = 0; j < 1000000; ++j) {
       do_something(i);
     }
   }
 };
 
-void do_something_in_current_thread()
-{
-}
+void do_something_in_current_thread() {}
 
-int main()
-{
+int main() {
   {
-    int some_local_state=0;
-    boost::strict_scoped_thread<> t( (boost::thread(func(some_local_state))));
+    int some_local_state = 0;
+    boost::strict_scoped_thread<> t((boost::thread(func(some_local_state))));
 
     do_something_in_current_thread();
   }
   {
-    int some_local_state=0;
-    boost::thread t(( func(some_local_state) ));
-    boost::strict_scoped_thread<> g( (boost::move(t)) );
+    int some_local_state = 0;
+    boost::thread t((func(some_local_state)));
+    boost::strict_scoped_thread<> g((boost::move(t)));
 
     do_something_in_current_thread();
   }
   {
-    int some_local_state=0;
-    boost::scoped_thread<> t( (boost::thread(func(some_local_state))));
+    int some_local_state = 0;
+    boost::scoped_thread<> t((boost::thread(func(some_local_state))));
 
     if (t.joinable())
       t.join();
@@ -75,9 +61,8 @@ int main()
   }
 #endif
   {
-    boost::scoped_thread<> g( &f, 1, 2 );
+    boost::scoped_thread<> g(&f, 1, 2);
     do_something_in_current_thread();
   }
   return 0;
 }
-

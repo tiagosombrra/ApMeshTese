@@ -7,12 +7,9 @@
 
 #include <boost/thread/thread_only.hpp>
 
-void run_thread() {
-        return;
-}
+void run_thread() { return; }
 
 int main() {
-        boost::thread t(&run_thread);
-        return 0;
+  boost::thread t(&run_thread);
+  return 0;
 }
-

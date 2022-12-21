@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/students_t.hpp>
 #include <boost/random/student_t_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/students_t.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::student_t_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME student_t

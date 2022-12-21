@@ -11,13 +11,13 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
-#include <boost/asio/ip/unicast.hpp>
-
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/udp.hpp>
+#include <boost/asio/ip/unicast.hpp>
+
 #include "../unit_test.hpp"
 
 //------------------------------------------------------------------------------
@@ -29,13 +29,11 @@
 
 namespace ip_unicast_compile {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  try
-  {
+  try {
     io_context ioc;
     ip::udp::socket sock(ioc);
 
@@ -47,13 +45,11 @@ void test()
     sock.get_option(hops2);
     hops1 = 1;
     (void)static_cast<int>(hops1.value());
-  }
-  catch (std::exception&)
-  {
+  } catch (std::exception&) {
   }
 }
 
-} // namespace ip_unicast_compile
+}  // namespace ip_unicast_compile
 
 //------------------------------------------------------------------------------
 
@@ -64,8 +60,7 @@ void test()
 
 namespace ip_unicast_runtime {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
@@ -88,29 +83,28 @@ void test()
 
   // hops class.
 
-  if (have_v4)
-  {
+  if (have_v4) {
     ip::unicast::hops hops1(1);
     BOOST_ASIO_CHECK(hops1.value() == 1);
     sock_v4.set_option(hops1, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
     // Option is not supported under Windows CE.
     BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-        ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                             ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
     BOOST_ASIO_CHECK(!ec);
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
     ip::unicast::hops hops2;
     sock_v4.get_option(hops2, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
     // Option is not supported under Windows CE.
     BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-        ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                             ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
     BOOST_ASIO_CHECK(!ec);
     BOOST_ASIO_CHECK(hops2.value() == 1);
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
     ip::unicast::hops hops3(255);
     BOOST_ASIO_CHECK(hops3.value() == 255);
@@ -118,25 +112,24 @@ void test()
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
     // Option is not supported under Windows CE.
     BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-        ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                             ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
     BOOST_ASIO_CHECK(!ec);
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
 
     ip::unicast::hops hops4;
     sock_v4.get_option(hops4, ec);
 #if defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
     // Option is not supported under Windows CE.
     BOOST_ASIO_CHECK_MESSAGE(ec == boost::asio::error::no_protocol_option,
-        ec.value() << ", " << ec.message());
-#else // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+                             ec.value() << ", " << ec.message());
+#else   // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
     BOOST_ASIO_CHECK(!ec);
     BOOST_ASIO_CHECK(hops4.value() == 255);
-#endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
+#endif  // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   }
 
-  if (have_v6)
-  {
+  if (have_v6) {
     ip::unicast::hops hops1(1);
     BOOST_ASIO_CHECK(hops1.value() == 1);
     sock_v6.set_option(hops1, ec);
@@ -159,13 +152,10 @@ void test()
   }
 }
 
-} // namespace ip_unicast_runtime
+}  // namespace ip_unicast_runtime
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "ip/unicast",
-  BOOST_ASIO_TEST_CASE(ip_unicast_compile::test)
-  BOOST_ASIO_TEST_CASE(ip_unicast_runtime::test)
-)
+BOOST_ASIO_TEST_SUITE("ip/unicast",
+                      BOOST_ASIO_TEST_CASE(ip_unicast_compile::test)
+                          BOOST_ASIO_TEST_CASE(ip_unicast_runtime::test))

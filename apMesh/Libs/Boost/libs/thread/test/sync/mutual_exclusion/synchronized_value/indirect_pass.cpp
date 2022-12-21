@@ -12,27 +12,24 @@
 
 #define BOOST_THREAD_VERSION 4
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/synchronized_value.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
-
 struct S {
-  int f() const {return 1;}
-  int g() {return 1;}
+  int f() const { return 1; }
+  int g() { return 1; }
 };
 
-int main()
-{
+int main() {
   {
-      boost::synchronized_value<S> v;
-      BOOST_TEST(v->f()==1);
-      BOOST_TEST(v->g()==1);
+    boost::synchronized_value<S> v;
+    BOOST_TEST(v->f() == 1);
+    BOOST_TEST(v->g() == 1);
   }
   {
-      const boost::synchronized_value<S> v;
-      BOOST_TEST(v->f()==1);
+    const boost::synchronized_value<S> v;
+    BOOST_TEST(v->f() == 1);
   }
 
   return boost::report_errors();
 }
-

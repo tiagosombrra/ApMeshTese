@@ -6,19 +6,18 @@
 
 // Force .cpp never check post/except.
 #ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
-    #error "build must define NO_POSTCONDITIONS"
+#error "build must define NO_POSTCONDITIONS"
 #endif
 #ifndef BOOST_CONTRACT_NO_EXCEPTS
-    #error "build must define NO_EXCEPTS"
+#error "build must define NO_EXCEPTS"
 #endif
 
 #define BOOST_CONTRACT_TEST_LIB_Y_SOURCE
 #include "lib_y.hpp"
 
 namespace lib_y_ {
-    void y_body() {
-        using boost::contract::test::detail::out;
-        out("y::body\n");
-    }
+void y_body() {
+  using boost::contract::test::detail::out;
+  out("y::body\n");
 }
-
+}  // namespace lib_y_

@@ -9,12 +9,13 @@
  * $Id$
  *
  */
- 
+
+#include <boost/math/distributions/non_central_chi_squared.hpp>
 #include <boost/random/non_central_chi_squared_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/non_central_chi_squared.hpp>
 
-#define BOOST_RANDOM_DISTRIBUTION boost::random::non_central_chi_squared_distribution<>
+#define BOOST_RANDOM_DISTRIBUTION \
+  boost::random::non_central_chi_squared_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME non_central_chi_squared
 #define BOOST_MATH_DISTRIBUTION boost::math::non_central_chi_squared
 #define BOOST_RANDOM_ARG1_TYPE double
@@ -24,6 +25,7 @@
 #define BOOST_RANDOM_ARG2_TYPE double
 #define BOOST_RANDOM_ARG2_NAME lambda
 #define BOOST_RANDOM_ARG2_DEFAULT 1000.0
-#define BOOST_RANDOM_ARG2_DISTRIBUTION(lambda) boost::uniform_real<>(0.00001, lambda)
+#define BOOST_RANDOM_ARG2_DISTRIBUTION(lambda) \
+  boost::uniform_real<>(0.00001, lambda)
 
 #include "test_real_distribution.ipp"

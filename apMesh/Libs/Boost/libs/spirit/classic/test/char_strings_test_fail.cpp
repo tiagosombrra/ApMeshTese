@@ -10,10 +10,9 @@
 #include <boost/spirit/include/classic_primitives.hpp>
 #include <boost/spirit/include/classic_rule.hpp>
 
-int main()
-{
-    using BOOST_SPIRIT_CLASSIC_NS::rule;
-    using BOOST_SPIRIT_CLASSIC_NS::ch_p;
+int main() {
+  using BOOST_SPIRIT_CLASSIC_NS::ch_p;
+  using BOOST_SPIRIT_CLASSIC_NS::rule;
 
-    rule<> chars = ch_p("string");
+  rule<> chars = ch_p("string");
 }

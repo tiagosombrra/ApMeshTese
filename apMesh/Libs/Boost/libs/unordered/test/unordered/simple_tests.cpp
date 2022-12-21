@@ -12,13 +12,14 @@
 #include "../helpers/postfix.hpp"
 // clang-format on
 
-#include "../helpers/test.hpp"
-#include <cstdlib>
 #include <algorithm>
-#include "../helpers/equivalent.hpp"
+#include <cstdlib>
 
-template <class X> void simple_test(X const& a)
-{
+#include "../helpers/equivalent.hpp"
+#include "../helpers/test.hpp"
+
+template <class X>
+void simple_test(X const& a) {
   test::unordered_equivalence_tester<X> equivalent(a);
 
   {
@@ -27,9 +28,7 @@ template <class X> void simple_test(X const& a)
     BOOST_TEST(X().size() == 0);
   }
 
-  {
-    BOOST_TEST(equivalent(X(a)));
-  }
+  { BOOST_TEST(equivalent(X(a))); }
 
   {
     X u(a);
@@ -74,12 +73,10 @@ template <class X> void simple_test(X const& a)
 
   {
     BOOST_TEST(a.size() == static_cast<typename X::size_type>(
-                             std::distance(a.begin(), a.end())));
+                               std::distance(a.begin(), a.end())));
   }
 
-  {
-    BOOST_TEST(a.empty() == (a.size() == 0));
-  }
+  { BOOST_TEST(a.empty() == (a.size() == 0)); }
 
   {
     BOOST_TEST(a.empty() == (a.begin() == a.end()));
@@ -88,7 +85,7 @@ template <class X> void simple_test(X const& a)
   }
 }
 
-UNORDERED_AUTO_TEST (simple_tests) {
+UNORDERED_AUTO_TEST(simple_tests) {
   using namespace std;
   srand(14878);
 
@@ -107,8 +104,7 @@ UNORDERED_AUTO_TEST (simple_tests) {
 
   for (int i1 = 0; i1 < 1000; ++i1) {
     int count = rand() % 10, index = rand();
-    for (int j = 0; j < count; ++j)
-      multiset.insert(index);
+    for (int j = 0; j < count; ++j) multiset.insert(index);
   }
   simple_test(multiset);
 

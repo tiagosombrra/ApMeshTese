@@ -6,26 +6,20 @@
 
 #include "bind_processor.hpp"
 
-extern "C"
-{
+extern "C" {
 #include <sys/pthread.h>
 }
 
+#include <boost/config/abi_prefix.hpp>
 #include <stdexcept>
 
-#include <boost/config/abi_prefix.hpp>
-
-void bind_to_processor( unsigned int n)
-{
-    ::pthread_spu_t spu;
-    int errno_(
-        ::pthread_processor_bind_np(
-            PTHREAD_BIND_FORCED_NP,
-            & spu,
-            static_cast< pthread_spu_t >( n),
-            PTHREAD_SELFTID_NP) );
-    if ( errno_ != 0)
-        throw std::runtime_error("::pthread_processor_bind_np() failed");
+void bind_to_processor(unsigned int n) {
+  ::pthread_spu_t spu;
+  int errno_(::pthread_processor_bind_np(PTHREAD_BIND_FORCED_NP, &spu,
+                                         static_cast<pthread_spu_t>(n),
+                                         PTHREAD_SELFTID_NP));
+  if (errno_ != 0)
+    throw std::runtime_error("::pthread_processor_bind_np() failed");
 }
 
 #include <boost/config/abi_suffix.hpp>

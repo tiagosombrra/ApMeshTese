@@ -14,29 +14,24 @@
  copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-
 #define BOOST_TEST_MODULE odeint_unwrap_reference
 
 #include <boost/numeric/odeint/util/unwrap_reference.hpp>
-
 #include <boost/test/unit_test.hpp>
 
 using namespace boost::unit_test;
 
-template< typename T >
-void func( T t )
-{
-    typedef typename boost::numeric::odeint::unwrap_reference< T >::type type;
+template <typename T>
+void func(T t) {
+  typedef typename boost::numeric::odeint::unwrap_reference<T>::type type;
 }
 
-BOOST_AUTO_TEST_SUITE( unwrap_reference_test )
+BOOST_AUTO_TEST_SUITE(unwrap_reference_test)
 
-BOOST_AUTO_TEST_CASE( test_case )
-{
-    int a;
-    func( std::ref( a ) );
-    func( a );
+BOOST_AUTO_TEST_CASE(test_case) {
+  int a;
+  func(std::ref(a));
+  func(a);
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -9,28 +9,29 @@
 #include <boost/contract/check.hpp>
 #include <boost/contract/core/exception.hpp>
 #include <boost/detail/lightweight_test.hpp>
-    
-struct err {}; // Global decl so visible in MSVC10 lambdas.
+
+struct err {};  // Global decl so visible in MSVC10 lambdas.
 
 int main() {
-    boost::contract::set_check_failure([] { throw err(); });
+  boost::contract::set_check_failure([] { throw err(); });
 
-    bool threw = false;
-    try {
-        #ifdef BOOST_CONTRACT_TEST_ERROR
-            BOOST_CONTRACT_CHECK_AUDIT(
-                    BOOST_CONTRACT_TEST_ERROR_expected_undeclared_identifier);
-        #else
-            BOOST_CONTRACT_CHECK_AUDIT(false);
-        #endif
-    } catch(err const&) { threw = true; }
-    
-    #if defined(BOOST_CONTRACT_AUDITS) && !defined(BOOST_CONTRACT_NO_CHECKS)
-        BOOST_TEST(threw);
-    #else
-        BOOST_TEST(!threw);
-    #endif
-    
-    return boost::report_errors();
+  bool threw = false;
+  try {
+#ifdef BOOST_CONTRACT_TEST_ERROR
+    BOOST_CONTRACT_CHECK_AUDIT(
+        BOOST_CONTRACT_TEST_ERROR_expected_undeclared_identifier);
+#else
+    BOOST_CONTRACT_CHECK_AUDIT(false);
+#endif
+  } catch (err const&) {
+    threw = true;
+  }
+
+#if defined(BOOST_CONTRACT_AUDITS) && !defined(BOOST_CONTRACT_NO_CHECKS)
+  BOOST_TEST(threw);
+#else
+  BOOST_TEST(!threw);
+#endif
+
+  return boost::report_errors();
 }
-

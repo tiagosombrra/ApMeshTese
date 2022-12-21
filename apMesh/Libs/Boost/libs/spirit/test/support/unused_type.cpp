@@ -19,27 +19,25 @@ static_assert(std::is_trivial<boost::spirit::unused_type>::value, "");
 void test_use(boost::spirit::unused_type) {}
 
 template <typename Expected, typename T>
-void test(T&)
-{
-    BOOST_STATIC_ASSERT((boost::is_same<T&, Expected>::value));
+void test(T&) {
+  BOOST_STATIC_ASSERT((boost::is_same<T&, Expected>::value));
 }
 
-int main()
-{
-    using boost::spirit::unused;
-    using boost::spirit::unused_type;
+int main() {
+  using boost::spirit::unused;
+  using boost::spirit::unused_type;
 
-    unused_type unused_mut;
-    test<unused_type const&>(unused);
-    test<unused_type&>(unused_mut);
-    test<unused_type const&>(unused = 123);
-    test<unused_type const&>(unused = *&unused);
-    test<unused_type const&>(unused = unused_mut);
-    test<unused_type&>(unused_mut = 123);
-    test<unused_type&>(unused_mut = unused);
-    test<unused_type&>(unused_mut = *&unused_mut);
+  unused_type unused_mut;
+  test<unused_type const&>(unused);
+  test<unused_type&>(unused_mut);
+  test<unused_type const&>(unused = 123);
+  test<unused_type const&>(unused = *&unused);
+  test<unused_type const&>(unused = unused_mut);
+  test<unused_type&>(unused_mut = 123);
+  test<unused_type&>(unused_mut = unused);
+  test<unused_type&>(unused_mut = *&unused_mut);
 
-    test_use(0);
-    test_use(unused);
-    test_use(unused_mut);
+  test_use(0);
+  test_use(unused);
+  test_use(unused_mut);
 }

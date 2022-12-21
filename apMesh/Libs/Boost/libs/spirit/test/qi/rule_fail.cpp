@@ -5,26 +5,24 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>
-#include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_nonterminal.hpp>
+#include <boost/spirit/include/qi_numeric.hpp>
+#include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 
 using namespace boost::spirit;
 using namespace boost::spirit::qi;
 
 // this test must fail compiling
-int main()
-{
-    char const* input = "some input, it doesn't matter";
-    char const* end = &input[strlen(input)];
+int main() {
+  char const* input = "some input, it doesn't matter";
+  char const* end = &input[strlen(input)];
 
-    rule<char const*, rule<char const*> > def;
-    def = int_ >> *(',' >> int_);
+  rule<char const*, rule<char const*> > def;
+  def = int_ >> *(',' >> int_);
 
-    phrase_parse(input, end, def,
-        qi::space | ('%' >> *~char_('\n') >> '\n'));
+  phrase_parse(input, end, def, qi::space | ('%' >> *~char_('\n') >> '\n'));
 
-    return 0;
+  return 0;
 }

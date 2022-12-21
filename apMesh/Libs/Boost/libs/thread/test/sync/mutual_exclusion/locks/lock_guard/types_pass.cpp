@@ -24,18 +24,17 @@
 //     ...
 // };
 
-
+#include <boost/detail/lightweight_test.hpp>
+#include <boost/static_assert.hpp>
 #include <boost/thread/lock_guard.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/static_assert.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
-int main()
-{
-  BOOST_STATIC_ASSERT_MSG((boost::is_same<boost::lock_guard<boost::mutex>::mutex_type,
-      boost::mutex>::value), "");
+int main() {
+  BOOST_STATIC_ASSERT_MSG(
+      (boost::is_same<boost::lock_guard<boost::mutex>::mutex_type,
+                      boost::mutex>::value),
+      "");
 
   return boost::report_errors();
 }
-

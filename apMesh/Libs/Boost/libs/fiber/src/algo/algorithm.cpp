@@ -9,27 +9,29 @@
 #include "boost/fiber/context.hpp"
 
 #ifdef BOOST_HAS_ABI_HEADERS
-#  include BOOST_ABI_PREFIX
+#include BOOST_ABI_PREFIX
 #endif
 
 namespace boost {
 namespace fibers {
 namespace algo {
 
-//static
-fiber_properties *
-algorithm_with_properties_base::get_properties( context * ctx) noexcept {
-    return ctx->get_properties();
+// static
+fiber_properties* algorithm_with_properties_base::get_properties(
+    context* ctx) noexcept {
+  return ctx->get_properties();
 }
 
-//static
-void
-algorithm_with_properties_base::set_properties( context * ctx, fiber_properties * props) noexcept {
-    ctx->set_properties( props);
+// static
+void algorithm_with_properties_base::set_properties(
+    context* ctx, fiber_properties* props) noexcept {
+  ctx->set_properties(props);
 }
 
-}}}
+}  // namespace algo
+}  // namespace fibers
+}  // namespace boost
 
 #ifdef BOOST_HAS_ABI_HEADERS
-#  include BOOST_ABI_SUFFIX
+#include BOOST_ABI_SUFFIX
 #endif

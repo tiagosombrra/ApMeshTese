@@ -11,22 +11,23 @@
 #include <boost/detail/lightweight_test.hpp>
 
 int main() {
-    bool threw = false;
-    try {
-        #ifdef BOOST_CONTRACT_TEST_ERROR
-            BOOST_CONTRACT_ASSERT_AUDIT(
-                    BOOST_CONTRACT_TEST_ERROR_expected_undeclared_identifier);
-        #else
-            BOOST_CONTRACT_ASSERT_AUDIT(false);
-        #endif
-    } catch(boost::contract::assertion_failure const&) { threw = true; }
-    
-    #if defined(BOOST_CONTRACT_AUDITS) && !defined(BOOST_CONTRACT_NO_ALL)
-        BOOST_TEST(threw);
-    #else
-        BOOST_TEST(!threw);
-    #endif
-    
-    return boost::report_errors();
-}
+  bool threw = false;
+  try {
+#ifdef BOOST_CONTRACT_TEST_ERROR
+    BOOST_CONTRACT_ASSERT_AUDIT(
+        BOOST_CONTRACT_TEST_ERROR_expected_undeclared_identifier);
+#else
+    BOOST_CONTRACT_ASSERT_AUDIT(false);
+#endif
+  } catch (boost::contract::assertion_failure const&) {
+    threw = true;
+  }
 
+#if defined(BOOST_CONTRACT_AUDITS) && !defined(BOOST_CONTRACT_NO_ALL)
+  BOOST_TEST(threw);
+#else
+  BOOST_TEST(!threw);
+#endif
+
+  return boost::report_errors();
+}

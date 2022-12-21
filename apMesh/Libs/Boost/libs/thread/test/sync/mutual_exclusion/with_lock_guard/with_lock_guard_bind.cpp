@@ -8,16 +8,14 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/detail/lightweight_test.hpp> // BOOST_TEST
-
+#include <boost/bind/bind.hpp>
+#include <boost/detail/lightweight_test.hpp>  // BOOST_TEST
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/with_lock_guard.hpp>
-#include <boost/bind/bind.hpp>
 
 class Foo {
  public:
-  Foo(int value): value_(value) {
-  }
+  Foo(int value) : value_(value) {}
 
   int func(int a, int b) const {
     BOOST_TEST(a == 1);
@@ -46,17 +44,12 @@ void test_bind() {
 
   Foo foo(2);
 
-  int res_bind = boost::with_lock_guard(
-      m,
-      boost::bind(&Foo::func, foo, 1, 31)
-  );
+  int res_bind = boost::with_lock_guard(m, boost::bind(&Foo::func, foo, 1, 31));
   BOOST_TEST(res_bind == 34);
 
   int a = 0;
   int res_bind_ref = boost::with_lock_guard(
-      m,
-      boost::bind(&Foo::func_ref, foo, boost::ref(a))
-  );
+      m, boost::bind(&Foo::func_ref, foo, boost::ref(a)));
   BOOST_TEST(res_bind_ref == 36);
   BOOST_TEST(a == 133);
 
@@ -65,8 +58,7 @@ void test_bind() {
   int c = 0;
   Foo boo(3);
   boost::with_lock_guard(
-      m, boost::bind(&Foo::func_ref, boo, boost::ref(a), boost::ref(b), &c)
-  );
+      m, boost::bind(&Foo::func_ref, boo, boost::ref(a), boost::ref(b), &c));
   BOOST_TEST(a == 567);
   BOOST_TEST(b == 897);
   BOOST_TEST(c == 345);
@@ -81,8 +73,7 @@ void test_bind_non_const() {
 // calling non-const bind methods supported only with c++11 variadic templates
 class Boo {
  public:
-  Boo(int value): value_(value) {
-  }
+  Boo(int value) : value_(value) {}
 
   int func(int a, int b) {
     BOOST_TEST(a == 7);
@@ -111,17 +102,12 @@ void test_bind_non_const() {
 
   Boo boo(20);
 
-  int res_bind = boost::with_lock_guard(
-      m,
-      boost::bind(&Boo::func, boo, 7, 3)
-  );
+  int res_bind = boost::with_lock_guard(m, boost::bind(&Boo::func, boo, 7, 3));
   BOOST_TEST(res_bind == 24);
 
   int a = 0;
   int res_bind_ref = boost::with_lock_guard(
-      m,
-      boost::bind(&Boo::func_ref, boo, boost::ref(a))
-  );
+      m, boost::bind(&Boo::func_ref, boo, boost::ref(a)));
   BOOST_TEST(res_bind_ref == 23);
   BOOST_TEST(a == 598);
 
@@ -130,8 +116,7 @@ void test_bind_non_const() {
   int c = 0;
   Boo foo(67);
   boost::with_lock_guard(
-      m, boost::bind(&Boo::func_ref, foo, boost::ref(a), boost::ref(b), &c)
-  );
+      m, boost::bind(&Boo::func_ref, foo, boost::ref(a), boost::ref(b), &c));
   BOOST_TEST(a == 111);
   BOOST_TEST(b == 222);
   BOOST_TEST(c == 333);

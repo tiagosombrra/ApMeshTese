@@ -6,34 +6,26 @@
 
 #define BOOST_THREAD_PROVIDES_ONCE_CXX11
 
-#include <boost/thread/thread.hpp>
 #include <boost/thread/once.hpp>
+#include <boost/thread/thread.hpp>
 #include <cassert>
 
-int value=0;
+int value = 0;
 #ifdef BOOST_THREAD_PROVIDES_ONCE_CXX11
 static boost::once_flag once;
-//static boost::once_flag once2 = BOOST_ONCE_INIT;
+// static boost::once_flag once2 = BOOST_ONCE_INIT;
 #else
 static boost::once_flag once = BOOST_ONCE_INIT;
-//static boost::once_flag once2 = once;
+// static boost::once_flag once2 = once;
 #endif
 
-void init()
-{
-    ++value;
-}
+void init() { ++value; }
 
-void thread_proc()
-{
-    boost::call_once(&init, once);
-}
+void thread_proc() { boost::call_once(&init, once); }
 
-int main()
-{
-    boost::thread_group threads;
-    for (int i=0; i<5; ++i)
-        threads.create_thread(&thread_proc);
-    threads.join_all();
-    assert(value == 1);
+int main() {
+  boost::thread_group threads;
+  for (int i = 0; i < 5; ++i) threads.create_thread(&thread_proc);
+  threads.join_all();
+  assert(value == 1);
 }

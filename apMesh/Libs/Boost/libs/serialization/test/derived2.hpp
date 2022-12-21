@@ -3,7 +3,7 @@
 
 // MS compatible compilers support #pragma once
 #if defined(_MSC_VER)
-# pragma once
+#pragma once
 #endif
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
@@ -17,29 +17,27 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <boost/config.hpp>
-
-#include <boost/serialization/export.hpp>
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/export.hpp>
 
 #define BASE_IMPORT
 #include "base.hpp"
 
 #if defined(DERIVED2_IMPORT)
-    #define DLL_DECL BOOST_SYMBOL_IMPORT
+#define DLL_DECL BOOST_SYMBOL_IMPORT
 #elif defined(DERIVED2_EXPORT)
-    #define DLL_DECL BOOST_SYMBOL_EXPORT
+#define DLL_DECL BOOST_SYMBOL_EXPORT
 #else
-    #define DLL_DECL
+#define DLL_DECL
 #endif
 
-class DLL_DECL derived2 :
-    public base
-{
-    friend class boost::serialization::access;
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned int /* file_version */);
-public:
-    ~derived2(){}
+class DLL_DECL derived2 : public base {
+  friend class boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive &ar, const unsigned int /* file_version */);
+
+ public:
+  ~derived2() {}
 };
 
 #undef DLL_DECL
@@ -47,4 +45,4 @@ public:
 // MWerks users can do this to make their code work
 BOOST_SERIALIZATION_MWERKS_BASE_AND_DERIVED(base, derived2)
 
-#endif // BOOST_SERIALIZATION_TEST_DERIVED2_HPP
+#endif  // BOOST_SERIALIZATION_TEST_DERIVED2_HPP

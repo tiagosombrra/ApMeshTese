@@ -6,4 +6,3 @@
 
 #define BOOST_CONTRACT_TEST_ERROR
 #include "axiom.hpp"
-

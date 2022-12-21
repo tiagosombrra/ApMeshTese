@@ -23,18 +23,17 @@
 //  line options, so just because the problem doesn't show up on one
 //  system doesn't mean it has been fixed. Remove this workaround only
 //  when told by Metrowerks that it is safe to do so.
-#include <cstddef> //Metrowerks linker needs at least one standard library
+#include <cstddef>  //Metrowerks linker needs at least one standard library
 #endif
 
 #include <boost/test/included/prg_exec_monitor.hpp>
 
-int
-cpp_main( int argc, char *[] )  // note the name
+int cpp_main(int argc, char *[])  // note the name
 {
-    if( argc > 0 ) // to prevent the unreachable return warning
-        throw "Test error by throwing C-style string exception";
+  if (argc > 0)  // to prevent the unreachable return warning
+    throw "Test error by throwing C-style string exception";
 
-    return 0;
+  return 0;
 }
 
 //____________________________________________________________________________//

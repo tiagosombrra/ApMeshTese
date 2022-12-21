@@ -1,4 +1,5 @@
-//  throw_test.cpp  --------------------------------------------------------===========-//
+//  throw_test.cpp
+//  --------------------------------------------------------===========-//
 
 //  Copyright Beman Dawes 2010
 
@@ -7,22 +8,22 @@
 
 //  Library home page is www.boost.org/libs/system
 
-//--------------------------------------------------------------------------------------// 
+//--------------------------------------------------------------------------------------//
 
 //  See dynamic_link_test.cpp comments for use case.
 
-//--------------------------------------------------------------------------------------// 
+//--------------------------------------------------------------------------------------//
 
-#include <boost/system/system_error.hpp>
 #include <boost/config.hpp>
+#include <boost/system/system_error.hpp>
 
 #if defined(THROW_DYN_LINK)
-# define EXPORT BOOST_SYMBOL_EXPORT
+#define EXPORT BOOST_SYMBOL_EXPORT
 #else
-# define EXPORT
+#define EXPORT
 #endif
 
-EXPORT void throw_test()
-{
-    throw boost::system::system_error( 9999, boost::system::system_category(), "boo boo" );
+EXPORT void throw_test() {
+  throw boost::system::system_error(9999, boost::system::system_category(),
+                                    "boo boo");
 }

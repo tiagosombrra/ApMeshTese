@@ -12,23 +12,24 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
-  template <typename> static constexpr bool is_applicable_property_v = true;
+struct prop {
+  template <typename>
+  static constexpr bool is_applicable_property_v = true;
   static constexpr bool is_preferable = false;
 };
 
 template <int>
-struct object
-{
-};
+struct object {};
 
-int main()
-{
+int main() {
   static_assert(!boost::asio::can_prefer_v<object<1>, prop<1>>, "");
   static_assert(!boost::asio::can_prefer_v<object<1>, prop<1>, prop<1>>, "");
-  static_assert(!boost::asio::can_prefer_v<object<1>, prop<1>, prop<1>, prop<1>>, "");
+  static_assert(
+      !boost::asio::can_prefer_v<object<1>, prop<1>, prop<1>, prop<1>>, "");
   static_assert(!boost::asio::can_prefer_v<const object<1>, prop<1>>, "");
-  static_assert(!boost::asio::can_prefer_v<const object<1>, prop<1>, prop<1>>, "");
-  static_assert(!boost::asio::can_prefer_v<const object<1>, prop<1>, prop<1>, prop<1>>, "");
+  static_assert(!boost::asio::can_prefer_v<const object<1>, prop<1>, prop<1>>,
+                "");
+  static_assert(
+      !boost::asio::can_prefer_v<const object<1>, prop<1>, prop<1>, prop<1>>,
+      "");
 }

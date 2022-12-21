@@ -9,8 +9,8 @@
 
 #include "main.h"
 
-template <typename MatrixType> void run_nesting_ops(const MatrixType& _m)
-{
+template <typename MatrixType>
+void run_nesting_ops(const MatrixType& _m) {
   typename MatrixType::Nested m(_m);
 
   // Make really sure that we are in debug mode!
@@ -18,16 +18,18 @@ template <typename MatrixType> void run_nesting_ops(const MatrixType& _m)
 
   // The only intention of these tests is to ensure that this code does
   // not trigger any asserts or segmentation faults... more to come.
-  VERIFY_IS_APPROX( (m.transpose() * m).diagonal().sum(), (m.transpose() * m).diagonal().sum() );
-  VERIFY_IS_APPROX( (m.transpose() * m).diagonal().array().abs().sum(), (m.transpose() * m).diagonal().array().abs().sum() );
+  VERIFY_IS_APPROX((m.transpose() * m).diagonal().sum(),
+                   (m.transpose() * m).diagonal().sum());
+  VERIFY_IS_APPROX((m.transpose() * m).diagonal().array().abs().sum(),
+                   (m.transpose() * m).diagonal().array().abs().sum());
 
-  VERIFY_IS_APPROX( (m.transpose() * m).array().abs().sum(), (m.transpose() * m).array().abs().sum() );
+  VERIFY_IS_APPROX((m.transpose() * m).array().abs().sum(),
+                   (m.transpose() * m).array().abs().sum());
 }
 
-void test_nesting_ops()
-{
-  CALL_SUBTEST_1(run_nesting_ops(MatrixXf::Random(25,25)));
-  CALL_SUBTEST_2(run_nesting_ops(MatrixXd::Random(25,25)));
+void test_nesting_ops() {
+  CALL_SUBTEST_1(run_nesting_ops(MatrixXf::Random(25, 25)));
+  CALL_SUBTEST_2(run_nesting_ops(MatrixXd::Random(25, 25)));
   CALL_SUBTEST_3(run_nesting_ops(Matrix4f::Random()));
   CALL_SUBTEST_4(run_nesting_ops(Matrix4d::Random()));
 }

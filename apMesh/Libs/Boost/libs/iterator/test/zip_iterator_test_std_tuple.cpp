@@ -8,22 +8,19 @@
 
 #include <boost/config.hpp>
 
-#if !defined(BOOST_NO_CXX11_HDR_TUPLE) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if !defined(BOOST_NO_CXX11_HDR_TUPLE) && \
+    !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
-#include <tuple>
 #include <boost/fusion/adapted/std_tuple.hpp>
+#include <tuple>
 
-#define TUPLE      std::tuple
+#define TUPLE std::tuple
 #define MAKE_TUPLE std::make_tuple
 
 #include "detail/zip_iterator_test.ipp"
 
 #else
 
-int main()
-{
-    return 0;
-}
+int main() { return 0; }
 
 #endif
-

@@ -10,14 +10,13 @@
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
 
-BOOST_AUTO_TEST_CASE(test_bitwise)
-{
+BOOST_AUTO_TEST_CASE(test_bitwise) {
   namespace tt = boost::test_tools;
   int a = 0xAB;
-  BOOST_TEST( a == (a & ~1), tt::bitwise() );
-  BOOST_TEST( a == a + 1, tt::bitwise() );
-  BOOST_TEST( a != a + 1, tt::bitwise() );
+  BOOST_TEST(a == (a & ~1), tt::bitwise());
+  BOOST_TEST(a == a + 1, tt::bitwise());
+  BOOST_TEST(a != a + 1, tt::bitwise());
   int b = 0x88;
-  BOOST_TEST( a == b, tt::bitwise() );
+  BOOST_TEST(a == b, tt::bitwise());
 }
 //]

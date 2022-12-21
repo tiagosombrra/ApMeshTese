@@ -17,12 +17,10 @@
 
 // condition_variable_any(const condition_variable_any&) = delete;
 
-#include <boost/thread/condition_variable.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/condition_variable.hpp>
 
-int main()
-{
+int main() {
   boost::condition_variable_any cv0;
   return boost::report_errors();
 }
-

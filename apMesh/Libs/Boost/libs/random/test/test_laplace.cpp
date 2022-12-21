@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/laplace.hpp>
 #include <boost/random/laplace_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/laplace.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::laplace_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME laplace

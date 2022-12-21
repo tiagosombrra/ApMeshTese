@@ -10,13 +10,13 @@
 #include "../helpers/postfix.hpp"
 // clang-format on
 
-#include "../helpers/test.hpp"
 #include <map>
+
+#include "../helpers/test.hpp"
 
 // Pretty inefficient, but the test is fast enough.
 // Might be too slow if we had larger primes?
-bool is_prime(std::size_t x)
-{
+bool is_prime(std::size_t x) {
   if (x == 2) {
     return true;
   } else if (x == 1 || x % 2 == 0) {
@@ -34,15 +34,13 @@ bool is_prime(std::size_t x)
   }
 }
 
-void test_next_prime(std::size_t value)
-{
+void test_next_prime(std::size_t value) {
   std::size_t x = boost::unordered::detail::next_prime(value);
   BOOST_TEST(is_prime(x));
   BOOST_TEST(x >= value);
 }
 
-void test_prev_prime(std::size_t value)
-{
+void test_prev_prime(std::size_t value) {
   std::size_t x = boost::unordered::detail::prev_prime(value);
   BOOST_TEST(is_prime(x));
   BOOST_TEST(x <= value);
@@ -51,7 +49,7 @@ void test_prev_prime(std::size_t value)
   }
 }
 
-UNORDERED_AUTO_TEST (next_prime_test) {
+UNORDERED_AUTO_TEST(next_prime_test) {
   BOOST_TEST(!is_prime(0));
   BOOST_TEST(!is_prime(1));
   BOOST_TEST(is_prime(2));

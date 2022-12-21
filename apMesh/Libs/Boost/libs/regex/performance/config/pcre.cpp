@@ -9,9 +9,8 @@
 
 #include <pcre2.h>
 
-int main()
-{
-   pcre2_match_data* pdata = pcre2_match_data_create(30, NULL);
-   pcre2_match_data_free(pdata);
-   return 0;
+int main() {
+  pcre2_match_data* pdata = pcre2_match_data_create(30, NULL);
+  pcre2_match_data_free(pdata);
+  return 0;
 }

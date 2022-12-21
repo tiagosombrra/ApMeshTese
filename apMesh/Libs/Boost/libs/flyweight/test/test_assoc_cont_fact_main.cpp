@@ -9,10 +9,10 @@
  */
 
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_assoc_cont_factory.hpp"
 
-int main()
-{
+int main() {
   test_assoc_container_factory();
   return boost::report_errors();
 }

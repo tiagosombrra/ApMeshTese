@@ -15,8 +15,8 @@
 //  [ JDG 6/30/2002 ]
 //
 ////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_attribute.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 #include <iostream>
 #include <string>
 
@@ -30,43 +30,33 @@ using namespace phoenix;
 //  HTML/XML like tag matching grammar
 //
 ////////////////////////////////////////////////////////////////////////////
-struct tags_closure : BOOST_SPIRIT_CLASSIC_NS::closure<tags_closure, string> 
-{
-    member1 tag;
+struct tags_closure : BOOST_SPIRIT_CLASSIC_NS::closure<tags_closure, string> {
+  member1 tag;
 };
 
-struct tags : public grammar<tags> 
-{
-    template <typename ScannerT>
-    struct definition {
+struct tags : public grammar<tags> {
+  template <typename ScannerT>
+  struct definition {
+    definition(tags const& /*self*/) {
+      element = start_tag >> *element >> end_tag;
 
-        definition(tags const& /*self*/)
-        {
-            element = start_tag >> *element >> end_tag;
+      start_tag = '<' >> lexeme_d[(+alpha_p)[
+                             //  construct string from arg1 and arg2 lazily
+                             //  and assign to element.tag
 
-            start_tag =
-                    '<'
-                >>  lexeme_d
-                    [
-                        (+alpha_p)
-                        [
-                            //  construct string from arg1 and arg2 lazily
-                            //  and assign to element.tag
+                             element.tag = construct_<string>(arg1, arg2)]] >>
+                  '>';
 
-                            element.tag = construct_<string>(arg1, arg2)
-                        ]
-                    ]
-                >> '>';
+      end_tag = "</" >> f_str_p(element.tag) >> '>';
+    }
 
-            end_tag = "</" >> f_str_p(element.tag) >> '>';
-        }
+    rule<ScannerT, tags_closure::context_t> element;
+    rule<ScannerT> start_tag, end_tag;
 
-        rule<ScannerT, tags_closure::context_t> element;
-        rule<ScannerT> start_tag, end_tag;
-
-        rule<ScannerT, tags_closure::context_t> const&
-        start() const { return element; }
-    };
+    rule<ScannerT, tags_closure::context_t> const& start() const {
+      return element;
+    }
+  };
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -74,42 +64,33 @@ struct tags : public grammar<tags>
 //  Main program
 //
 ////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "\t\tHTML/XML like tag matching parser demo \n\n";
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "Type an HTML/XML like nested tag input...or [q or Q] to quit\n\n";
-    cout << "Example: <html><head></head><body></body></html>\n\n";
+int main() {
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "\t\tHTML/XML like tag matching parser demo \n\n";
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "Type an HTML/XML like nested tag input...or [q or Q] to quit\n\n";
+  cout << "Example: <html><head></head><body></body></html>\n\n";
 
-    tags p;    //  Our parser
+  tags p;  //  Our parser
 
-    string str;
-    while (getline(cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
+  string str;
+  while (getline(cin, str)) {
+    if (str.empty() || str[0] == 'q' || str[0] == 'Q') break;
 
-        parse_info<> info = parse(str.c_str(), p, space_p);
+    parse_info<> info = parse(str.c_str(), p, space_p);
 
-        if (info.full)
-        {
-            cout << "-------------------------\n";
-            cout << "Parsing succeeded\n";
-            cout << "-------------------------\n";
-        }
-        else
-        {
-            cout << "-------------------------\n";
-            cout << "Parsing failed\n";
-            cout << "stopped at: \": " << info.stop << "\"\n";
-            cout << "-------------------------\n";
-        }
+    if (info.full) {
+      cout << "-------------------------\n";
+      cout << "Parsing succeeded\n";
+      cout << "-------------------------\n";
+    } else {
+      cout << "-------------------------\n";
+      cout << "Parsing failed\n";
+      cout << "stopped at: \": " << info.stop << "\"\n";
+      cout << "-------------------------\n";
     }
+  }
 
-    cout << "Bye... :-) \n\n";
-    return 0;
+  cout << "Bye... :-) \n\n";
+  return 0;
 }
-
-

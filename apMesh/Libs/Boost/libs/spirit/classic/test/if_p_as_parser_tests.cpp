@@ -11,29 +11,26 @@
 
 extern bool fun();
 
-struct ftor
-{
-    bool operator()() const;
+struct ftor {
+  bool operator()() const;
 };
 
-int
-main()
-{
-    //////////////////////////////////
-    // compile time check wether as_parser<> works for if_p
+int main() {
+  //////////////////////////////////
+  // compile time check wether as_parser<> works for if_p
 
-    ::BOOST_SPIRIT_CLASSIC_NS::rule<> r;
+  ::BOOST_SPIRIT_CLASSIC_NS::rule<> r;
 
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p('-')['-'];
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p("-")["-"];
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p('-')['-'].else_p['-'];
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p("-")["-"].else_p["-"];
-    
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(&fun)["foo"];
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(ftor())["foo"];
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(&fun)["foo"].else_p["bar"];
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(ftor())["foo"].else_p["bar"];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p('-')['-'];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p("-")["-"];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p('-')['-'].else_p['-'];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p("-")["-"].else_p["-"];
 
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(r)[r];
-    r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(r)[r].else_p[r];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(&fun)["foo"];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(ftor())["foo"];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(&fun)["foo"].else_p["bar"];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(ftor())["foo"].else_p["bar"];
+
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(r)[r];
+  r = ::BOOST_SPIRIT_CLASSIC_NS::if_p(r)[r].else_p[r];
 }

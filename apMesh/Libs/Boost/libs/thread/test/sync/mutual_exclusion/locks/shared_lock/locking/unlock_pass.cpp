@@ -25,45 +25,33 @@
 
 bool unlock_called = false;
 
-struct shared_mutex
-{
-  void lock_shared()
-  {
-  }
-  void unlock_shared()
-  {
-    unlock_called = true;
-  }
+struct shared_mutex {
+  void lock_shared() {}
+  void unlock_shared() { unlock_called = true; }
 };
 
 shared_mutex m;
 
-int main()
-{
+int main() {
   boost::shared_lock<shared_mutex> lk(m);
   lk.unlock();
   BOOST_TEST(unlock_called == true);
   BOOST_TEST(lk.owns_lock() == false);
-  try
-  {
+  try {
     lk.unlock();
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::operation_not_permitted);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::operation_not_permitted);
   }
   lk.release();
-  try
-  {
+  try {
     lk.unlock();
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::operation_not_permitted);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::operation_not_permitted);
   }
 
   return boost::report_errors();
 }
-

@@ -10,18 +10,20 @@
 
 #define BOOST_THREAD_VERSION 4
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_factories.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../../../timming.hpp"
 
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && ! defined BOOST_THREAD_NO_MAKE_UNIQUE_LOCKS && ! defined BOOST_NO_CXX11_RVALUE_REFERENCES
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && \
+    !defined BOOST_THREAD_NO_MAKE_UNIQUE_LOCKS && \
+    !defined BOOST_NO_CXX11_RVALUE_REFERENCES
 
 boost::mutex m1;
 boost::mutex m2;
 boost::mutex m3;
-
 
 #if defined BOOST_THREAD_USES_CHRONO
 
@@ -37,28 +39,28 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #if defined BOOST_THREAD_USES_CHRONO
   t0 = Clock::now();
   {
-    auto&& _ = boost::make_unique_locks(m1,m2,m3); (void)_;
+    auto&& _ = boost::make_unique_locks(m1, m2, m3);
+    (void)_;
     t1 = Clock::now();
   }
 #else
-  //time_point t0 = Clock::now();
-  //time_point t1;
+  // time_point t0 = Clock::now();
+  // time_point t1;
   {
-    auto&& _ = boost::make_unique_locks(m1,m2,m3); (void)_;
-    //t1 = Clock::now();
+    auto&& _ = boost::make_unique_locks(m1, m2, m3);
+    (void)_;
+    // t1 = Clock::now();
   }
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
 #endif
 }
 
-int main()
-{
+int main() {
   m1.lock();
   m2.lock();
   m3.lock();
@@ -86,9 +88,5 @@ int main()
   return boost::report_errors();
 }
 #else
-int main()
-{
-  return boost::report_errors();
-}
+int main() { return boost::report_errors(); }
 #endif
-

@@ -13,23 +13,20 @@
 
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test_attr;
-    using boost::spirit::qi::float_;
-    
-    std::cerr.precision(9);
+int main() {
+  using boost::spirit::qi::float_;
+  using spirit_test::test_attr;
 
-    float f = 0.0f;
+  std::cerr.precision(9);
 
-    // this should pass, but currently doesn't because of the way the real 
-    // parser handles the fractional part of a number
-    BOOST_TEST(test_attr("123233.4124", float_, f));
-    BOOST_TEST_EQ(f, 123233.4124f); 
-    BOOST_TEST(test_attr("987654.3219", float_, f));
-    BOOST_TEST_EQ(f, 987654.3219f); 
+  float f = 0.0f;
 
-    return boost::report_errors();
+  // this should pass, but currently doesn't because of the way the real
+  // parser handles the fractional part of a number
+  BOOST_TEST(test_attr("123233.4124", float_, f));
+  BOOST_TEST_EQ(f, 123233.4124f);
+  BOOST_TEST(test_attr("987654.3219", float_, f));
+  BOOST_TEST_EQ(f, 987654.3219f);
+
+  return boost::report_errors();
 }
-

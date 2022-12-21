@@ -12,31 +12,27 @@
 #include <boost/serialization/level.hpp>
 #include <boost/serialization/level_enum.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/singleton.hpp>
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/tracking.hpp>
 #include <boost/serialization/tracking_enum.hpp>
 #include <boost/serialization/traits.hpp>
 #include <boost/serialization/type_info_implementation.hpp>
-#include <boost/serialization/singleton.hpp>
 
-struct foo
-{
-    int x;
-private:
-    friend class boost::serialization::access;
+struct foo {
+  int x;
 
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
-    {
-        // In compilers implementing 2-phase lookup, the call to
-        // make_nvp is resolved even if foo::serialize() is never
-        // instantiated.
-        ar & boost::serialization::make_nvp("x",x);
-    }
+ private:
+  friend class boost::serialization::access;
+
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version) {
+    // In compilers implementing 2-phase lookup, the call to
+    // make_nvp is resolved even if foo::serialize() is never
+    // instantiated.
+    ar& boost::serialization::make_nvp("x", x);
+  }
 };
 
-int
-main(int /*argc*/, char * /*argv*/[]){
-    return 0;
-}
+int main(int /*argc*/, char* /*argv*/[]) { return 0; }

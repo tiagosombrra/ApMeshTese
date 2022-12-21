@@ -10,16 +10,15 @@
 //
 // -----------------------------------------------------------
 
-#include "bitset_test.hpp"
-#include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <boost/config.hpp>
+#include <boost/dynamic_bitset/dynamic_bitset.hpp>
 
+#include "bitset_test.hpp"
 
 template <typename Block>
-void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
-{
+void run_test_cases(BOOST_EXPLICIT_TEMPLATE_TYPE(Block)) {
   typedef boost::dynamic_bitset<Block> bitset_type;
-  typedef bitset_test< bitset_type > Tests;
+  typedef bitset_test<bitset_type> Tests;
   const int bits_per_block = bitset_type::bits_per_block;
 
   std::string long_string = get_long_string();
@@ -98,7 +97,7 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   }
   //=====================================================================
   // Test operator<<=
-  { // case pos == 0
+  {  // case pos == 0
     std::size_t pos = 0;
     {
       boost::dynamic_bitset<Block> b;
@@ -118,27 +117,27 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
     // non multiple of bits_per_block
     const int how_many = 10;
     for (int i = 1; i <= how_many; ++i) {
-        std::size_t     multiple = i * bits_per_block;
-        std::size_t non_multiple = multiple - 1;
-        boost::dynamic_bitset<Block> b(long_string);
+      std::size_t multiple = i * bits_per_block;
+      std::size_t non_multiple = multiple - 1;
+      boost::dynamic_bitset<Block> b(long_string);
 
-        Tests::shift_left_assignment(b, multiple);
-        Tests::shift_left_assignment(b, non_multiple);
+      Tests::shift_left_assignment(b, multiple);
+      Tests::shift_left_assignment(b, non_multiple);
     }
   }
-  { // case pos == size()/2
+  {  // case pos == size()/2
     std::size_t pos = long_string.size() / 2;
     boost::dynamic_bitset<Block> b(long_string);
     Tests::shift_left_assignment(b, pos);
   }
-  { // case pos >= n
+  {  // case pos >= n
     std::size_t pos = long_string.size();
     boost::dynamic_bitset<Block> b(long_string);
     Tests::shift_left_assignment(b, pos);
   }
   //=====================================================================
   // Test operator>>=
-  { // case pos == 0
+  {  // case pos == 0
     std::size_t pos = 0;
     {
       boost::dynamic_bitset<Block> b;
@@ -158,21 +157,20 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
     // non multiple of bits_per_block
     const int how_many = 10;
     for (int i = 1; i <= how_many; ++i) {
-        std::size_t     multiple = i * bits_per_block;
-        std::size_t non_multiple = multiple - 1;
-        boost::dynamic_bitset<Block> b(long_string);
+      std::size_t multiple = i * bits_per_block;
+      std::size_t non_multiple = multiple - 1;
+      boost::dynamic_bitset<Block> b(long_string);
 
-        Tests::shift_right_assignment(b, multiple);
-        Tests::shift_right_assignment(b, non_multiple);
+      Tests::shift_right_assignment(b, multiple);
+      Tests::shift_right_assignment(b, non_multiple);
     }
-
   }
-  { // case pos == size()/2
+  {  // case pos == size()/2
     std::size_t pos = long_string.size() / 2;
     boost::dynamic_bitset<Block> b(long_string);
     Tests::shift_right_assignment(b, pos);
   }
-  { // case pos >= n
+  {  // case pos >= n
     std::size_t pos = long_string.size();
     boost::dynamic_bitset<Block> b(long_string);
     Tests::shift_right_assignment(b, pos);
@@ -193,51 +191,53 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   }
   //=====================================================================
   // Test b.set(pos)
-  { // case pos >= b.size()
+  {  // case pos >= b.size()
     boost::dynamic_bitset<Block> b;
     Tests::set_one(b, 0, true);
     Tests::set_one(b, 0, false);
   }
-  { // case pos < b.size()
+  {  // case pos < b.size()
     boost::dynamic_bitset<Block> b(std::string("0"));
     Tests::set_one(b, 0, true);
     Tests::set_one(b, 0, false);
   }
-  { // case pos == b.size() / 2
+  {  // case pos == b.size() / 2
     boost::dynamic_bitset<Block> b(long_string);
-    Tests::set_one(b, long_string.size()/2, true);
-    Tests::set_one(b, long_string.size()/2, false);
+    Tests::set_one(b, long_string.size() / 2, true);
+    Tests::set_one(b, long_string.size() / 2, false);
   }
   //=====================================================================
   // Test b.set(pos, len)
-  { // case size is 1
+  {  // case size is 1
     boost::dynamic_bitset<Block> b(std::string("0"));
     Tests::set_segment(b, 0, 1, true);
     Tests::set_segment(b, 0, 1, false);
   }
-  { // case fill the whole set
+  {  // case fill the whole set
     boost::dynamic_bitset<Block> b(long_string);
     Tests::set_segment(b, 0, b.size(), true);
     Tests::set_segment(b, 0, b.size(), false);
   }
-  { // case pos = size / 4, len = size / 2
+  {  // case pos = size / 4, len = size / 2
     boost::dynamic_bitset<Block> b(long_string);
     Tests::set_segment(b, b.size() / 4, b.size() / 2, true);
     Tests::set_segment(b, b.size() / 4, b.size() / 2, false);
   }
-  { // case pos = block_size / 2, len = size - block_size
+  {  // case pos = block_size / 2, len = size - block_size
     boost::dynamic_bitset<Block> b(long_string);
     Tests::set_segment(b, boost::dynamic_bitset<Block>::bits_per_block / 2,
-            b.size() - boost::dynamic_bitset<Block>::bits_per_block, true);
+                       b.size() - boost::dynamic_bitset<Block>::bits_per_block,
+                       true);
     Tests::set_segment(b, boost::dynamic_bitset<Block>::bits_per_block / 2,
-            b.size() - boost::dynamic_bitset<Block>::bits_per_block, false);
+                       b.size() - boost::dynamic_bitset<Block>::bits_per_block,
+                       false);
   }
-  { // case pos = 1, len = size - 2
+  {  // case pos = 1, len = size - 2
     boost::dynamic_bitset<Block> b(long_string);
     Tests::set_segment(b, 1, b.size() - 2, true);
     Tests::set_segment(b, 1, b.size() - 2, false);
   }
-  { // case pos = 3, len = 7
+  {  // case pos = 3, len = 7
     boost::dynamic_bitset<Block> b(long_string);
     Tests::set_segment(b, 3, 7, true);
     Tests::set_segment(b, 3, 7, false);
@@ -258,42 +258,43 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   }
   //=====================================================================
   // Test b.reset(pos)
-  { // case pos >= b.size()
+  {  // case pos >= b.size()
     boost::dynamic_bitset<Block> b;
     Tests::reset_one(b, 0);
   }
-  { // case pos < b.size()
+  {  // case pos < b.size()
     boost::dynamic_bitset<Block> b(std::string("0"));
     Tests::reset_one(b, 0);
   }
-  { // case pos == b.size() / 2
+  {  // case pos == b.size() / 2
     boost::dynamic_bitset<Block> b(long_string);
-    Tests::reset_one(b, long_string.size()/2);
+    Tests::reset_one(b, long_string.size() / 2);
   }
   //=====================================================================
   // Test b.reset(pos, len)
-  { // case size is 1
+  {  // case size is 1
     boost::dynamic_bitset<Block> b(std::string("0"));
     Tests::reset_segment(b, 0, 1);
   }
-  { // case fill the whole set
+  {  // case fill the whole set
     boost::dynamic_bitset<Block> b(long_string);
     Tests::reset_segment(b, 0, b.size());
   }
-  { // case pos = size / 4, len = size / 2
+  {  // case pos = size / 4, len = size / 2
     boost::dynamic_bitset<Block> b(long_string);
     Tests::reset_segment(b, b.size() / 4, b.size() / 2);
   }
-  { // case pos = block_size / 2, len = size - block_size
+  {  // case pos = block_size / 2, len = size - block_size
     boost::dynamic_bitset<Block> b(long_string);
-    Tests::reset_segment(b, boost::dynamic_bitset<Block>::bits_per_block / 2,
-            b.size() - boost::dynamic_bitset<Block>::bits_per_block);
+    Tests::reset_segment(
+        b, boost::dynamic_bitset<Block>::bits_per_block / 2,
+        b.size() - boost::dynamic_bitset<Block>::bits_per_block);
   }
-  { // case pos = 1, len = size - 2
+  {  // case pos = 1, len = size - 2
     boost::dynamic_bitset<Block> b(long_string);
     Tests::reset_segment(b, 1, b.size() - 2);
   }
-  { // case pos = 3, len = 7
+  {  // case pos = 3, len = 7
     boost::dynamic_bitset<Block> b(long_string);
     Tests::reset_segment(b, 3, 7);
   }
@@ -327,57 +328,56 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   }
   //=====================================================================
   // Test b.flip(pos)
-  { // case pos >= b.size()
+  {  // case pos >= b.size()
     boost::dynamic_bitset<Block> b;
     Tests::flip_one(b, 0);
   }
-  { // case pos < b.size()
+  {  // case pos < b.size()
     boost::dynamic_bitset<Block> b(std::string("0"));
     Tests::flip_one(b, 0);
   }
-  { // case pos == b.size() / 2
+  {  // case pos == b.size() / 2
     boost::dynamic_bitset<Block> b(long_string);
-    Tests::flip_one(b, long_string.size()/2);
+    Tests::flip_one(b, long_string.size() / 2);
   }
   //=====================================================================
   // Test b.flip(pos, len)
-  { // case size is 1
+  {  // case size is 1
     boost::dynamic_bitset<Block> b(std::string("0"));
     Tests::flip_segment(b, 0, 1);
   }
-  { // case fill the whole set
+  {  // case fill the whole set
     boost::dynamic_bitset<Block> b(long_string);
     Tests::flip_segment(b, 0, b.size());
   }
-  { // case pos = size / 4, len = size / 2
+  {  // case pos = size / 4, len = size / 2
     boost::dynamic_bitset<Block> b(long_string);
     Tests::flip_segment(b, b.size() / 4, b.size() / 2);
   }
-  { // case pos = block_size / 2, len = size - block_size
+  {  // case pos = block_size / 2, len = size - block_size
     boost::dynamic_bitset<Block> b(long_string);
-    Tests::flip_segment(b, boost::dynamic_bitset<Block>::bits_per_block / 2,
-            b.size() - boost::dynamic_bitset<Block>::bits_per_block);
+    Tests::flip_segment(
+        b, boost::dynamic_bitset<Block>::bits_per_block / 2,
+        b.size() - boost::dynamic_bitset<Block>::bits_per_block);
   }
-  { // case pos = 1, len = size - 2
+  {  // case pos = 1, len = size - 2
     boost::dynamic_bitset<Block> b(long_string);
     Tests::flip_segment(b, 1, b.size() - 2);
   }
-  { // case pos = 3, len = 7
+  {  // case pos = 3, len = 7
     boost::dynamic_bitset<Block> b(long_string);
     Tests::flip_segment(b, 3, 7);
   }
 }
 
-int
-main()
-{
+int main() {
   run_test_cases<unsigned char>();
   run_test_cases<unsigned short>();
   run_test_cases<unsigned int>();
   run_test_cases<unsigned long>();
-# ifdef BOOST_HAS_LONG_LONG
+#ifdef BOOST_HAS_LONG_LONG
   run_test_cases< ::boost::ulong_long_type>();
-# endif
+#endif
 
   return boost::report_errors();
 }

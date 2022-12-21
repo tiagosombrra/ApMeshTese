@@ -10,21 +10,20 @@
 #include <boost/test/included/unit_test.hpp>
 #include <sstream>
 
-BOOST_AUTO_TEST_CASE( test_logical_not_allowed )
-{
+BOOST_AUTO_TEST_CASE(test_logical_not_allowed) {
   // Boost Unit Test Framework prevents compilation of
   // BOOST_TEST(true && true);
-  BOOST_TEST((true && true)); // with extra brackets, it works as expected
+  BOOST_TEST((true && true));  // with extra brackets, it works as expected
 }
 
-BOOST_AUTO_TEST_CASE( test_ternary )
-{
+BOOST_AUTO_TEST_CASE(test_ternary) {
   int a = 1;
   int b = 2;
   // Boost Unit Test Framework prevents compilation of
   // BOOST_TEST(a == b ? true : false);
-  BOOST_TEST((a + 1 == b ? true : false)); // again works as expected with extra brackets
+  BOOST_TEST((a + 1 == b
+                  ? true
+                  : false));  // again works as expected with extra brackets
 }
-
 
 //]

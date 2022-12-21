@@ -8,58 +8,53 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
-#include <boost/spirit/include/qi_stream.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
+#include <boost/spirit/include/qi_stream.hpp>
 
 #include "test.hpp"
 
-struct complex
-{
-    complex (double a = 0.0, double b = 0.0) : a(a), b(b) {}
-    double a, b;
+struct complex {
+  complex(double a = 0.0, double b = 0.0) : a(a), b(b) {}
+  double a, b;
 };
 
-std::istream& operator>> (std::istream& is, complex& z)
-{
-    char lbrace = '\0', comma = '\0', rbrace = '\0';
-    is >> lbrace >> z.a >> comma >> z.b >> rbrace;
-    if (lbrace != '{' || comma != ',' || rbrace != '}')
-        is.setstate(std::ios_base::failbit);
+std::istream& operator>>(std::istream& is, complex& z) {
+  char lbrace = '\0', comma = '\0', rbrace = '\0';
+  is >> lbrace >> z.a >> comma >> z.b >> rbrace;
+  if (lbrace != '{' || comma != ',' || rbrace != '}')
+    is.setstate(std::ios_base::failbit);
 
-    return is;
+  return is;
 }
 
-int main()
-{
-    using spirit_test::test_attr;
+int main() {
+  using spirit_test::test_attr;
 
-    {
-        using boost::spirit::qi::blank;
-        using boost::spirit::qi::double_;
-        using boost::spirit::qi::stream;
-        using boost::spirit::qi::stream_parser;
-        using boost::fusion::at_c;
+  {
+    using boost::fusion::at_c;
+    using boost::spirit::qi::blank;
+    using boost::spirit::qi::double_;
+    using boost::spirit::qi::stream;
+    using boost::spirit::qi::stream_parser;
 
-        complex c;
-        BOOST_TEST(test_attr("{1.0,2.5}", 
-                stream_parser<char, complex>(), c, blank) && 
-            c.a == 1.0 && c.b == 2.5);
+    complex c;
+    BOOST_TEST(
+        test_attr("{1.0,2.5}", stream_parser<char, complex>(), c, blank) &&
+        c.a == 1.0 && c.b == 2.5);
 
-        boost::variant<complex, double> cd;
-        BOOST_TEST(test_attr("{1.0",
-                stream_parser<char, complex>() | "{" >> double_, cd, blank) && 
-            boost::get<double>(cd) == 1.0);
+    boost::variant<complex, double> cd;
+    BOOST_TEST(test_attr("{1.0",
+                         stream_parser<char, complex>() | "{" >> double_, cd,
+                         blank) &&
+               boost::get<double>(cd) == 1.0);
 
-        boost::fusion::vector<complex, double> d;
-        BOOST_TEST(test_attr("{1.0,2.5},123.456", 
-                stream >> ',' >> double_, d, blank) && 
-            at_c<0>(d).a == 1.0 && at_c<0>(d).b == 2.5 && at_c<1>(d) == 123.456);
-    }
+    boost::fusion::vector<complex, double> d;
+    BOOST_TEST(
+        test_attr("{1.0,2.5},123.456", stream >> ',' >> double_, d, blank) &&
+        at_c<0>(d).a == 1.0 && at_c<0>(d).b == 2.5 && at_c<1>(d) == 123.456);
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-
-

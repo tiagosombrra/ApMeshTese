@@ -17,46 +17,35 @@
 
 // thread(thread&& t);
 
-#include <boost/thread/thread_only.hpp>
-#include <new>
-#include <cstdlib>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <cstdlib>
+#include <new>
 
-class G
-{
+class G {
   int alive_;
-public:
+
+ public:
   static int n_alive;
   static bool op_run;
 
-  G() :
-    alive_(1)
-  {
-    ++n_alive;
-  }
-  G(const G& g) :
-    alive_(g.alive_)
-  {
-    ++n_alive;
-  }
-  ~G()
-  {
+  G() : alive_(1) { ++n_alive; }
+  G(const G& g) : alive_(g.alive_) { ++n_alive; }
+  ~G() {
     alive_ = 0;
     --n_alive;
   }
 
-  void operator()()
-  {
+  void operator()() {
     BOOST_TEST(alive_ == 1);
-    //BOOST_TEST(n_alive == 1);
+    // BOOST_TEST(n_alive == 1);
     op_run = true;
   }
 
-  void operator()(int i, double j)
-  {
+  void operator()(int i, double j) {
     BOOST_TEST(alive_ == 1);
-    std::cout << __FILE__ << ":" << __LINE__ <<" " << n_alive << std::endl;
-    //BOOST_TEST(n_alive == 1);
+    std::cout << __FILE__ << ":" << __LINE__ << " " << n_alive << std::endl;
+    // BOOST_TEST(n_alive == 1);
     BOOST_TEST(i == 5);
     BOOST_TEST(j == 5.5);
     op_run = true;
@@ -66,14 +55,11 @@ public:
 int G::n_alive = 0;
 bool G::op_run = false;
 
-boost::thread make_thread() {
-  return boost::thread(G(), 5, 5.5);
-}
+boost::thread make_thread() { return boost::thread(G(), 5, 5.5); }
 
-int main()
-{
+int main() {
   {
-    //BOOST_TEST(G::n_alive == 0);
+    // BOOST_TEST(G::n_alive == 0);
     BOOST_TEST(!G::op_run);
     boost::thread t0((G()));
     boost::thread::id id = t0.get_id();
@@ -83,12 +69,12 @@ int main()
     t1.join();
     BOOST_TEST(G::op_run);
   }
-  //BOOST_TEST(G::n_alive == 0);
+  // BOOST_TEST(G::n_alive == 0);
   {
     boost::thread t1((BOOST_THREAD_MAKE_RV_REF(make_thread())));
     t1.join();
     BOOST_TEST(G::op_run);
   }
-  //BOOST_TEST(G::n_alive == 0);
+  // BOOST_TEST(G::n_alive == 0);
   return boost::report_errors();
 }

@@ -15,25 +15,24 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( test )
-{
-    int i = 1;
-    BOOST_CHECK( i*i == 1 );
+BOOST_AUTO_TEST_CASE(test) {
+  int i = 1;
+  BOOST_CHECK(i * i == 1);
 }
 
 //____________________________________________________________________________//
 
 bool init_unit_test() {
-    boost::unit_test::framework::master_test_suite().p_name.value = "Custom init func";
+  boost::unit_test::framework::master_test_suite().p_name.value =
+      "Custom init func";
 
-    return true;
+  return true;
 }
 
 //____________________________________________________________________________//
 
-int main(int argc, char* argv[])
-{
-  return boost::unit_test::unit_test_main( &init_unit_test, argc, argv );
+int main(int argc, char* argv[]) {
+  return boost::unit_test::unit_test_main(&init_unit_test, argc, argv);
 }
 
 //____________________________________________________________________________//

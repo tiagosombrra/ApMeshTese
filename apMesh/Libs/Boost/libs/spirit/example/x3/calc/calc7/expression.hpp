@@ -8,19 +8,18 @@
 #define BOOST_SPIRIT_X3_CALC7_EXPRESSION_HPP
 
 #include <boost/spirit/home/x3.hpp>
+
 #include "ast.hpp"
 
-namespace client
-{
-    namespace x3 = boost::spirit::x3;
-    namespace calculator_grammar
-    {
-        struct expression_class;
-        typedef x3::rule<expression_class, ast::expression> expression_type;
-        BOOST_SPIRIT_DECLARE(expression_type);
-    }
-    
-    calculator_grammar::expression_type expression();
-}
+namespace client {
+namespace x3 = boost::spirit::x3;
+namespace calculator_grammar {
+struct expression_class;
+typedef x3::rule<expression_class, ast::expression> expression_type;
+BOOST_SPIRIT_DECLARE(expression_type);
+}  // namespace calculator_grammar
+
+calculator_grammar::expression_type expression();
+}  // namespace client
 
 #endif

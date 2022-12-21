@@ -2,7 +2,7 @@
 //              Copyright (c) 2001 Jeremy Siek
 //           Copyright (c) 2003-2006 Gennaro Prota
 //             Copyright (c) 2014 Ahmed Charles
-//            Copyright (c) 2014 Riccardo Marcangelo 
+//            Copyright (c) 2014 Riccardo Marcangelo
 //
 // Copyright (c) 2014 Glen Joseph Fernandes
 // (glenjofe@gmail.com)
@@ -13,132 +13,118 @@
 //
 // -----------------------------------------------------------
 
-#include "bitset_test.hpp"
+#include <boost/config.hpp>
+#include <boost/config/workaround.hpp>
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <boost/limits.hpp>
-#include <boost/config.hpp>
 
-#include <boost/config/workaround.hpp>
+#include "bitset_test.hpp"
 
 #if !defined(BOOST_NO_CXX11_ALLOCATOR)
 #include <cstdlib>
 
-template<class T>
+template <class T>
 class minimal_allocator {
-public:
-    typedef T value_type;
+ public:
+  typedef T value_type;
 
-    minimal_allocator() {}
+  minimal_allocator() {}
 
-    template <typename U>
-    minimal_allocator(const minimal_allocator<U>&) {}
+  template <typename U>
+  minimal_allocator(const minimal_allocator<U>&) {}
 
-    T* allocate(std::size_t n) {
-        void* p = std::malloc(sizeof(T) * n);
-        if (!p) {
-            throw std::bad_alloc();
-        }
-        return static_cast<T*>(p);
+  T* allocate(std::size_t n) {
+    void* p = std::malloc(sizeof(T) * n);
+    if (!p) {
+      throw std::bad_alloc();
     }
+    return static_cast<T*>(p);
+  }
 
-    void deallocate(T* p, std::size_t) {
-        std::free(p);
-    }
+  void deallocate(T* p, std::size_t) { std::free(p); }
 };
 #endif
 
-#define BOOST_BITSET_TEST_COUNT(x) (sizeof(x)/sizeof(x[0]))
-
+#define BOOST_BITSET_TEST_COUNT(x) (sizeof(x) / sizeof(x[0]))
 
 // Codewarrior 8.3 for Win fails without this.
 // Thanks Howard Hinnant ;)
-#if defined __MWERKS__ && BOOST_WORKAROUND(__MWERKS__, <= 0x3003) // 8.x
-# pragma parse_func_templ off
+#if defined __MWERKS__ && BOOST_WORKAROUND(__MWERKS__, <= 0x3003)  // 8.x
+#pragma parse_func_templ off
 #endif
 
-
 template <typename Tests, typename String>
-void run_string_tests(const String& s
-                      BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(Tests)
-                     )
-{
-
+void run_string_tests(
+    const String& s BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(Tests)) {
   const std::size_t len = s.length();
-  const std::size_t step = len/4 ? len/4 : 1;
+  const std::size_t step = len / 4 ? len / 4 : 1;
 
   // bitset length determined by the string-related arguments
   std::size_t i;
-  for (i = 0; i <= len/2 ; i += step) {
-    Tests::from_string(s, i, len/2);     // len/2 - i bits
-    Tests::from_string(s, i, len);       // len - i   bits
-    Tests::from_string(s, i, 1 + len*2); // len - i   bits
+  for (i = 0; i <= len / 2; i += step) {
+    Tests::from_string(s, i, len / 2);      // len/2 - i bits
+    Tests::from_string(s, i, len);          // len - i   bits
+    Tests::from_string(s, i, 1 + len * 2);  // len - i   bits
   }
 
   // bitset length explicitly specified
-  for (i = 0; i <= len/2; i += step) {
-    for (std::size_t sz = 0; sz <= len*4; sz+= step*2) {
-      Tests::from_string(s, i, len/2, sz);
-      Tests::from_string(s, i, len,   sz);
-      Tests::from_string(s, i, 1 + len*2, sz);
-
-      }
+  for (i = 0; i <= len / 2; i += step) {
+    for (std::size_t sz = 0; sz <= len * 4; sz += step * 2) {
+      Tests::from_string(s, i, len / 2, sz);
+      Tests::from_string(s, i, len, sz);
+      Tests::from_string(s, i, 1 + len * 2, sz);
+    }
   }
-
 }
 
 // tests the do-the-right-thing constructor dispatch
 template <typename Tests, typename T>
-void run_numeric_ctor_tests( BOOST_EXPLICIT_TEMPLATE_TYPE(Tests)
-                             BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(T) )
-{
+void run_numeric_ctor_tests(BOOST_EXPLICIT_TEMPLATE_TYPE(Tests)
+                                BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(T)) {
+  const int bits_per_block = Tests::bits_per_block;
+  const int width = std::numeric_limits<T>::digits;
+  const T ma = (std::numeric_limits<T>::max)();
+  const T mi = (std::numeric_limits<T>::min)();
 
-    const int bits_per_block = Tests::bits_per_block;
-    const int width = std::numeric_limits<T>::digits;
-    const T ma = (std::numeric_limits<T>::max)();
-    const T mi = (std::numeric_limits<T>::min)();
+  int sizes[] = {0,
+                 7 * width / 10,
+                 width,
+                 13 * width / 10,
+                 3 * width,
+                 7 * bits_per_block / 10,
+                 bits_per_block,
+                 13 * bits_per_block / 10,
+                 3 * bits_per_block};
 
-    int sizes[] = {
-        0, 7*width/10,          width,          13*width/10,          3*width,
-           7*bits_per_block/10, bits_per_block, 13*bits_per_block/10, 3*bits_per_block
-    };
+  const T numbers[] = {T(-1), T(-3), T(-8), T(-15), T(mi / 2), T(mi), T(0),
+                       T(1),  T(3),  T(8),  T(15),  T(ma / 2), T(ma)};
 
-    const T numbers[] = {
-              T(-1), T(-3), T(-8), T(-15), T(mi/2), T(mi),
-        T(0), T(1),  T(3),  T(8),  T(15),  T(ma/2), T(ma)
-    };
+  for (std::size_t s = 0; s < BOOST_BITSET_TEST_COUNT(sizes); ++s) {
+    for (std::size_t n = 0; n < BOOST_BITSET_TEST_COUNT(numbers); ++n) {
+      // can match ctor from ulong or templated one
+      Tests::from_unsigned_long(sizes[s], numbers[n]);
 
-    for (std::size_t s = 0; s < BOOST_BITSET_TEST_COUNT(sizes); ++s) {
-      for (std::size_t n = 0; n < BOOST_BITSET_TEST_COUNT(numbers); ++n ) {
+      typedef std::size_t compare_type;
+      const compare_type sz = sizes[s];
+      // this condition is to be sure that size is representable in T, so
+      // that for signed T's we avoid implementation-defined behavior [if ma
+      // is larger than what std::size_t can hold then this is ok for our
+      // purposes: our sizes are anyhow < max(size_t)], which in turn could
+      // make the first argument of from_unsigned_long() a small negative,
+      // later converted to a very large unsigned. Example: signed 8-bit
+      // char (CHAR_MAX=127), bits_per_block=64, sz = 192 > 127.
+      const bool fits = sz <= static_cast<compare_type>(ma);
 
-          // can match ctor from ulong or templated one
-          Tests::from_unsigned_long(sizes[s], numbers[n]);
-
-          typedef std::size_t compare_type;
-          const compare_type sz = sizes[s];
-          // this condition is to be sure that size is representable in T, so
-          // that for signed T's we avoid implementation-defined behavior [if ma
-          // is larger than what std::size_t can hold then this is ok for our
-          // purposes: our sizes are anyhow < max(size_t)], which in turn could
-          // make the first argument of from_unsigned_long() a small negative,
-          // later converted to a very large unsigned. Example: signed 8-bit
-          // char (CHAR_MAX=127), bits_per_block=64, sz = 192 > 127.
-          const bool fits =
-              sz <= static_cast<compare_type>(ma);
-
-          if (fits) {
-            // can match templated ctor only (so we test dispatching)
-            Tests::from_unsigned_long(static_cast<T>(sizes[s]), numbers[n]);
-          }
-
+      if (fits) {
+        // can match templated ctor only (so we test dispatching)
+        Tests::from_unsigned_long(static_cast<T>(sizes[s]), numbers[n]);
       }
     }
-
+  }
 }
 
-
 template <typename Block>
-void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
-{
+void run_test_cases(BOOST_EXPLICIT_TEMPLATE_TYPE(Block)) {
   typedef boost::dynamic_bitset<Block> bitset_type;
   typedef bitset_test<bitset_type> Tests;
   const int bits_per_block = bitset_type::bits_per_block;
@@ -157,17 +143,20 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
     //    we don't have much time to think of a better solution
     //    which is likely to work on broken compilers
     //
-    const int sizes[] = {
-        0,                     1,                                  3,
-           7*bits_per_block/10, bits_per_block, 13*bits_per_block/10, 3*bits_per_block 
-    };
-    
-    const bool values[] = { false, true };
+    const int sizes[] = {0,
+                         1,
+                         3,
+                         7 * bits_per_block / 10,
+                         bits_per_block,
+                         13 * bits_per_block / 10,
+                         3 * bits_per_block};
+
+    const bool values[] = {false, true};
 
     for (std::size_t s = 0; s < BOOST_BITSET_TEST_COUNT(sizes); ++s) {
       for (std::size_t v = 0; v < BOOST_BITSET_TEST_COUNT(values); ++v) {
-          Tests::from_unsigned_long(sizes[s], values[v]);
-          Tests::from_unsigned_long(sizes[s] != 0, values[v]);
+        Tests::from_unsigned_long(sizes[s], values[v]);
+        Tests::from_unsigned_long(sizes[s] != 0, values[v]);
       }
     }
 
@@ -191,18 +180,16 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
     run_numeric_ctor_tests<Tests, ::boost::long_long_type>();
     run_numeric_ctor_tests<Tests, ::boost::ulong_long_type>();
 #endif
-
   }
   //=====================================================================
   // Test construction from a string
   {
-
-    run_string_tests<Tests>(std::string("")); // empty string
+    run_string_tests<Tests>(std::string(""));  // empty string
     run_string_tests<Tests>(std::string("1"));
 
     run_string_tests<Tests>(long_string);
 
-# if !defined BOOST_NO_STD_WSTRING
+#if !defined BOOST_NO_STD_WSTRING
     // I need to decide what to do for non "C" locales here. On
     // one hand I should have better tests. On the other one
     // I don't want tests for dynamic_bitset to cope with locales,
@@ -211,13 +198,12 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
     //
     run_string_tests<Tests>(
         std::wstring(L"11111000000111111111010101010101010101010111111"));
-# endif
+#endif
 
     // Note that these are _valid_ arguments
     Tests::from_string(std::string("x11y"), 1, 2);
     Tests::from_string(std::string("x11"), 1, 10);
     Tests::from_string(std::string("x11"), 1, 10, 10);
-
   }
   //=====================================================================
   // test from_block_range
@@ -284,12 +270,12 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   }
   {
     bitset_type a;
-    bitset_type b(long_string); // b greater than a, a empty
+    bitset_type b(long_string);  // b greater than a, a empty
     Tests::copy_assignment_operator(a, b);
   }
   {
     bitset_type a(std::string("0"));
-    bitset_type b(long_string); // b greater than a
+    bitset_type b(long_string);  // b greater than a
     Tests::copy_assignment_operator(a, b);
   }
 
@@ -324,15 +310,15 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   }
   {
     bitset_type a;
-    bitset_type b(long_string); // b greater than a, a empty
+    bitset_type b(long_string);  // b greater than a, a empty
     Tests::move_assignment_operator(a, b);
   }
   {
     bitset_type a(std::string("0"));
-    bitset_type b(long_string); // b greater than a
+    bitset_type b(long_string);  // b greater than a
     Tests::move_assignment_operator(a, b);
   }
-#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
+#endif  // BOOST_NO_CXX11_RVALUE_REFERENCES
   //=====================================================================
   // Test swap
   {
@@ -385,7 +371,7 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
     Tests::clear(a);
   }
   //=====================================================================
-  // Test pop back 
+  // Test pop back
   {
     boost::dynamic_bitset<Block> a(std::string("01"));
     Tests::pop_back(a);
@@ -511,10 +497,9 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   }
 #if !defined(BOOST_NO_CXX11_ALLOCATOR)
   {
-     typedef boost::dynamic_bitset<Block,
-       minimal_allocator<Block> > Bitset;
-     Bitset b;
-     bitset_test<Bitset>::max_size(b);
+    typedef boost::dynamic_bitset<Block, minimal_allocator<Block> > Bitset;
+    Bitset b;
+    bitset_test<Bitset>::max_size(b);
   }
 #endif
   // Test copy-initialize with default constructor
@@ -524,16 +509,14 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   }
 }
 
-int
-main()
-{
+int main() {
   run_test_cases<unsigned char>();
   run_test_cases<unsigned short>();
   run_test_cases<unsigned int>();
   run_test_cases<unsigned long>();
-# ifdef BOOST_HAS_LONG_LONG
+#ifdef BOOST_HAS_LONG_LONG
   run_test_cases< ::boost::ulong_long_type>();
-# endif
+#endif
 
   return boost::report_errors();
 }

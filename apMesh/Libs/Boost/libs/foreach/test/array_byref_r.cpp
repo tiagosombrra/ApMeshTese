@@ -8,11 +8,12 @@
    25 August 2005 : Initial version.
 */
 
-#include <boost/test/minimal.hpp>
 #include <boost/foreach.hpp>
+#include <boost/test/minimal.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// define the container types, used by utility.hpp to generate the helper functions
+// define the container types, used by utility.hpp to generate the helper
+// functions
 typedef int foreach_container_type[5];
 typedef int const foreach_const_container_type[5];
 typedef int foreach_value_type;
@@ -24,25 +25,24 @@ typedef int const &foreach_const_reference_type;
 ///////////////////////////////////////////////////////////////////////////////
 // define some containers
 //
-int my_array[5] = { 1,2,3,4,5 };
+int my_array[5] = {1, 2, 3, 4, 5};
 int const (&my_const_array)[5] = my_array;
 
 ///////////////////////////////////////////////////////////////////////////////
 // test_main
-//   
-int test_main( int, char*[] )
-{
-    // non-const containers by reference
-    BOOST_CHECK(sequence_equal_byref_n_r(my_array, "\5\4\3\2\1"));
+//
+int test_main(int, char *[]) {
+  // non-const containers by reference
+  BOOST_CHECK(sequence_equal_byref_n_r(my_array, "\5\4\3\2\1"));
 
-    // const containers by reference
-    BOOST_CHECK(sequence_equal_byref_c_r(my_const_array, "\5\4\3\2\1"));
+  // const containers by reference
+  BOOST_CHECK(sequence_equal_byref_c_r(my_const_array, "\5\4\3\2\1"));
 
-    // mutate the mutable collections
-    mutate_foreach_byref_r(my_array);
+  // mutate the mutable collections
+  mutate_foreach_byref_r(my_array);
 
-    // compare the mutated collections to the actual results
-    BOOST_CHECK(sequence_equal_byref_n_r(my_array, "\6\5\4\3\2"));
+  // compare the mutated collections to the actual results
+  BOOST_CHECK(sequence_equal_byref_n_r(my_array, "\6\5\4\3\2"));
 
-    return 0;
+  return 0;
 }

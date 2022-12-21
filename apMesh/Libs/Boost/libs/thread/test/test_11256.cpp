@@ -10,33 +10,26 @@
 #include <boost/thread/thread_pool.hpp>
 #include <cassert>
 
-auto createFuture()
-{
-    boost::promise<void> promise;
-    promise.set_value();
-    return promise.get_future();
+auto createFuture() {
+  boost::promise<void> promise;
+  promise.set_value();
+  return promise.get_future();
 }
 
-auto stepOne(boost::basic_thread_pool &executor)
-{
-    auto sendFuture = createFuture();
-    auto wrappedFuture = sendFuture.then(executor, [](auto f) mutable {
-        return createFuture();
-    });
+auto stepOne(boost::basic_thread_pool &executor) {
+  auto sendFuture = createFuture();
+  auto wrappedFuture =
+      sendFuture.then(executor, [](auto f) mutable { return createFuture(); });
 
-    return wrappedFuture.unwrap();
+  return wrappedFuture.unwrap();
 }
 
-auto stepTwo(boost::basic_thread_pool &executor)
-{
-    auto future = stepOne(executor);
-    return future.then(executor, [](auto f) {
-        assert(f.is_ready());
-    });
+auto stepTwo(boost::basic_thread_pool &executor) {
+  auto future = stepOne(executor);
+  return future.then(executor, [](auto f) { assert(f.is_ready()); });
 }
 
-int main()
-{
-    boost::basic_thread_pool executor{1};
-    stepTwo(executor).get();
+int main() {
+  boost::basic_thread_pool executor{1};
+  stepTwo(executor).get();
 }

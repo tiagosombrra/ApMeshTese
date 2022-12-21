@@ -4,22 +4,16 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
+#include <boost/test/test_tools.hpp>
+#include <stdexcept>
 
 #include "TuTest.hpp"
 
-#include <boost/test/test_tools.hpp>
-
-#include <stdexcept>
-
-
-
-int test_main( int, char* [] )
-{
+int test_main(int, char*[]) {
   TuTest machine;
   machine.initiate();
   // unconsumed_event sanity check
-  BOOST_REQUIRE_THROW( machine.process_event( EvY() ), std::runtime_error );
-  machine.process_event( EvX() );
+  BOOST_REQUIRE_THROW(machine.process_event(EvY()), std::runtime_error);
+  machine.process_event(EvX());
   return 0;
 }

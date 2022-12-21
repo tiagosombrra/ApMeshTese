@@ -19,9 +19,10 @@
 // template <class Clock, class Duration>
 //     bool try_lock_until(const chrono::time_point<Clock, Duration>& abs_time);
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../timming.hpp"
 
 boost::shared_mutex m;
@@ -36,16 +37,14 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f1()
-{
+void f1() {
   t0 = Clock::now();
   BOOST_TEST(m.try_lock_until(Clock::now() + ms(750)) == true);
   t1 = Clock::now();
   m.unlock();
 }
 
-void f2()
-{
+void f2() {
   t0 = Clock::now();
   BOOST_TEST(m.try_lock_until(Clock::now() + ms(250)) == false);
   t1 = Clock::now();
@@ -53,8 +52,7 @@ void f2()
   BOOST_THREAD_TEST_IT(d, ns(max_diff));
 }
 
-int main()
-{
+int main() {
   {
     m.lock();
     boost::thread t(f1);
@@ -81,4 +79,3 @@ int main()
 
   return boost::report_errors();
 }
-

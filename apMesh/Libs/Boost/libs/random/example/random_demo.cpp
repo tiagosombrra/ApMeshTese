@@ -10,38 +10,35 @@
  * A short demo program how to use the random number library.
  */
 
-#include <iostream>
-#include <fstream>
-#include <ctime>            // std::time
-
+#include <boost/generator_iterator.hpp>
 #include <boost/random/linear_congruential.hpp>
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/uniform_real.hpp>
 #include <boost/random/variate_generator.hpp>
-#include <boost/generator_iterator.hpp>
+#include <ctime>  // std::time
+#include <fstream>
+#include <iostream>
 
 // This is a typedef for a random number generator.
 // Try boost::mt19937 or boost::ecuyer1988 instead of boost::minstd_rand
 typedef boost::minstd_rand base_generator_type;
 
 // This is a reproducible simulation experiment.  See main().
-void experiment(base_generator_type & generator)
-{
+void experiment(base_generator_type& generator) {
   // Define a uniform random number distribution of integer values between
   // 1 and 6 inclusive.
   typedef boost::uniform_int<> distribution_type;
-  typedef boost::variate_generator<base_generator_type&, distribution_type> gen_type;
+  typedef boost::variate_generator<base_generator_type&, distribution_type>
+      gen_type;
   gen_type die_gen(generator, distribution_type(1, 6));
 
   // If you want to use an STL iterator interface, use iterator_adaptors.hpp.
   boost::generator_iterator<gen_type> die(&die_gen);
-  for(int i = 0; i < 10; i++)
-    std::cout << *die++ << " ";
+  for (int i = 0; i < 10; i++) std::cout << *die++ << " ";
   std::cout << '\n';
 }
 
-int main()
-{
+int main() {
   // Define a random number generator and initialize it with a reproducible
   // seed.
   base_generator_type generator(42);
@@ -50,15 +47,15 @@ int main()
 
   // Define a uniform random number distribution which produces "double"
   // values between 0 and 1 (0 inclusive, 1 exclusive).
-  boost::uniform_real<> uni_dist(0,1);
-  boost::variate_generator<base_generator_type&, boost::uniform_real<> > uni(generator, uni_dist);
+  boost::uniform_real<> uni_dist(0, 1);
+  boost::variate_generator<base_generator_type&, boost::uniform_real<> > uni(
+      generator, uni_dist);
 
   std::cout.setf(std::ios::fixed);
   // You can now retrieve random numbers from that distribution by means
   // of a STL Generator interface, i.e. calling the generator as a zero-
   // argument function.
-  for(int i = 0; i < 10; i++)
-    std::cout << uni() << '\n';
+  for (int i = 0; i < 10; i++) std::cout << uni() << '\n';
 
   /*
    * Change seed to something else.
@@ -95,10 +92,11 @@ int main()
   assert(generator == saved_generator);
 
   // as a degenerate case, you can set min = max for uniform_int
-  boost::uniform_int<> degen_dist(4,4);
-  boost::variate_generator<base_generator_type&, boost::uniform_int<> > deg(generator, degen_dist);
+  boost::uniform_int<> degen_dist(4, 4);
+  boost::variate_generator<base_generator_type&, boost::uniform_int<> > deg(
+      generator, degen_dist);
   std::cout << deg() << " " << deg() << " " << deg() << std::endl;
-  
+
   {
     // You can save the generator state for future use.  You can read the
     // state back in at any later time using operator>>.

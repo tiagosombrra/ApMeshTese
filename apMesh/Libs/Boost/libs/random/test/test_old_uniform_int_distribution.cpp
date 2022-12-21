@@ -39,40 +39,39 @@
 
 #define BOOST_RANDOM_UNIFORM_INT boost::uniform_int
 
-#include "test_uniform_int.ipp"
-
 #include <algorithm>
 #include <boost/random/random_number_generator.hpp>
 
+#include "test_uniform_int.ipp"
+
 // Test that uniform_int<> can be used with std::random_shuffle
 // Author: Jos Hickson
-BOOST_AUTO_TEST_CASE(test_random_shuffle)
-{
+BOOST_AUTO_TEST_CASE(test_random_shuffle) {
 #ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
-    typedef boost::uniform_int<> distribution_type;
-    typedef boost::variate_generator<boost::mt19937 &, distribution_type> generator_type;
+  typedef boost::uniform_int<> distribution_type;
+  typedef boost::variate_generator<boost::mt19937 &, distribution_type>
+      generator_type;
 
-    boost::mt19937 engine1(1234);
-    boost::mt19937 engine2(1234);
+  boost::mt19937 engine1(1234);
+  boost::mt19937 engine2(1234);
 
-    boost::random::random_number_generator<boost::mt19937> referenceRand(engine1);
+  boost::random::random_number_generator<boost::mt19937> referenceRand(engine1);
 
-    distribution_type dist(0,10);
-    generator_type testRand(engine2, dist);
+  distribution_type dist(0, 10);
+  generator_type testRand(engine2, dist);
 
-    std::vector<int> referenceVec;
+  std::vector<int> referenceVec;
 
-    for (int i = 0; i < 200; ++i) {
-        referenceVec.push_back(i);
-    }
+  for (int i = 0; i < 200; ++i) {
+    referenceVec.push_back(i);
+  }
 
-    std::vector<int> testVec(referenceVec);
+  std::vector<int> testVec(referenceVec);
 
-    std::random_shuffle(referenceVec.begin(), referenceVec.end(), referenceRand);
-    std::random_shuffle(testVec.begin(), testVec.end(), testRand);
+  std::random_shuffle(referenceVec.begin(), referenceVec.end(), referenceRand);
+  std::random_shuffle(testVec.begin(), testVec.end(), testRand);
 
-    BOOST_CHECK_EQUAL_COLLECTIONS(
-        testVec.begin(), testVec.end(),
-        referenceVec.begin(), referenceVec.end());
+  BOOST_CHECK_EQUAL_COLLECTIONS(testVec.begin(), testVec.end(),
+                                referenceVec.begin(), referenceVec.end());
 #endif
 }

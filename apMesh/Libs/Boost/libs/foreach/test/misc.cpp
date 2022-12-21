@@ -10,38 +10,29 @@
    4 March 2008 : Initial version.
 */
 
-#include <vector>
-#include <boost/test/minimal.hpp>
 #include <boost/foreach.hpp>
+#include <boost/test/minimal.hpp>
+#include <vector>
 
-struct xxx : std::vector<int>
-{
-    virtual ~xxx() = 0;
+struct xxx : std::vector<int> {
+  virtual ~xxx() = 0;
 };
 
-void test_abstract(xxx& rng)
-{
-    BOOST_FOREACH (int x, rng)
-    {
-        (void)x;
-    }
+void test_abstract(xxx& rng) {
+  BOOST_FOREACH (int x, rng) {
+    (void)x;
+  }
 }
 
-struct yyy : std::vector<int>
-{
-    void test()
-    {
-        BOOST_FOREACH(int x, *this)
-        {
-            (void)x;
-        }
+struct yyy : std::vector<int> {
+  void test() {
+    BOOST_FOREACH (int x, *this) {
+      (void)x;
     }
+  }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 // test_main
-//   
-int test_main( int, char*[] )
-{
-    return 0;
-}
+//
+int test_main(int, char*[]) { return 0; }

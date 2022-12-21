@@ -3,57 +3,59 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "../objects/test.hpp"
 #include <boost/core/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/unordered/detail/implementation.hpp>
 
-template <class Tp> struct SimpleAllocator
-{
+#include "../objects/test.hpp"
+
+template <class Tp>
+struct SimpleAllocator {
   typedef Tp value_type;
 
   SimpleAllocator() {}
 
-  template <class T> SimpleAllocator(const SimpleAllocator<T>&) {}
+  template <class T>
+  SimpleAllocator(const SimpleAllocator<T>&) {}
 
-  Tp* allocate(std::size_t n)
-  {
+  Tp* allocate(std::size_t n) {
     return static_cast<Tp*>(::operator new(n * sizeof(Tp)));
   }
 
   void deallocate(Tp* p, std::size_t) { ::operator delete((void*)p); }
 };
 
-template <typename T> void test_simple_allocator()
-{
+template <typename T>
+void test_simple_allocator() {
   test::check_instances check_;
 
   typedef boost::unordered::detail::allocator_traits<SimpleAllocator<T> >
-    traits;
+      traits;
 
   BOOST_STATIC_ASSERT((boost::is_same<typename traits::allocator_type,
-    SimpleAllocator<T> >::value));
+                                      SimpleAllocator<T> >::value));
 
   BOOST_STATIC_ASSERT((boost::is_same<typename traits::value_type, T>::value));
 
   BOOST_STATIC_ASSERT((boost::is_same<typename traits::pointer, T*>::value));
   BOOST_STATIC_ASSERT(
-    (boost::is_same<typename traits::const_pointer, T const*>::value));
+      (boost::is_same<typename traits::const_pointer, T const*>::value));
   // BOOST_STATIC_ASSERT((boost::is_same<typename traits::void_pointer, void*
   // >::value));
   // BOOST_STATIC_ASSERT((boost::is_same<typename traits::const_void_pointer,
   // void const*>::value));
 
-  BOOST_STATIC_ASSERT(
-    (boost::is_same<typename traits::difference_type, std::ptrdiff_t>::value));
+  BOOST_STATIC_ASSERT((
+      boost::is_same<typename traits::difference_type, std::ptrdiff_t>::value));
 
 #if BOOST_UNORDERED_USE_ALLOCATOR_TRAITS == 1
-  BOOST_STATIC_ASSERT((boost::is_same<typename traits::size_type,
-    std::make_unsigned<std::ptrdiff_t>::type>::value));
+  BOOST_STATIC_ASSERT(
+      (boost::is_same<typename traits::size_type,
+                      std::make_unsigned<std::ptrdiff_t>::type>::value));
 #else
   BOOST_STATIC_ASSERT(
-    (boost::is_same<typename traits::size_type, std::size_t>::value));
+      (boost::is_same<typename traits::size_type, std::size_t>::value));
 #endif
 
   BOOST_TEST(!traits::propagate_on_container_copy_assignment::value);
@@ -83,8 +85,7 @@ template <typename T> void test_simple_allocator()
   traits::max_size(a);
 }
 
-int main()
-{
+int main() {
   test_simple_allocator<int>();
   test_simple_allocator<test::object>();
 

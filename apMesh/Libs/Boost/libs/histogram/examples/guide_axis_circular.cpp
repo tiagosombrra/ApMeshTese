@@ -26,7 +26,8 @@ int main() {
   assert(r.index(-std::numeric_limits<double>::infinity()) == 2);
   assert(r.index(std::numeric_limits<double>::quiet_NaN()) == 2);
 
-  // since the regular axis is the most common circular axis, there exists an alias
+  // since the regular axis is the most common circular axis, there exists an
+  // alias
   auto c = axis::circular<>{2, 0., 360.};
   assert(r == c);
 

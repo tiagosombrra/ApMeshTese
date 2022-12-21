@@ -8,18 +8,14 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/detail/lightweight_test.hpp> // BOOST_TEST
-
+#include <boost/detail/lightweight_test.hpp>  // BOOST_TEST
+#include <boost/ref.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/with_lock_guard.hpp>
-#include <boost/ref.hpp>
 
-void func_with_0_arg() {
-}
+void func_with_0_arg() {}
 
-void func_with_1_arg(int arg_1) {
-  BOOST_TEST(arg_1 == 3);
-}
+void func_with_1_arg(int arg_1) { BOOST_TEST(arg_1 == 3); }
 
 bool func_with_2_arg(int arg_1, bool arg_2) {
   BOOST_TEST(arg_1 == 3);
@@ -64,14 +60,8 @@ void test_simple() {
   // #4
   int arg3 = 0;
   int arg4 = 0;
-  const char* res4 = boost::with_lock_guard(
-      m,
-      func_with_4_arg,
-      23,
-      false,
-      &arg3,
-      boost::ref(arg4)
-  );
+  const char* res4 = boost::with_lock_guard(m, func_with_4_arg, 23, false,
+                                            &arg3, boost::ref(arg4));
   BOOST_TEST(arg3 == 128);
   BOOST_TEST(arg4 == 456);
   BOOST_TEST(std::string(res4) == "hello");
@@ -106,16 +96,14 @@ void test_variadic_templates() {
 
   int a3 = 0;
   bool a4 = true;
-  int res5 = boost::with_lock_guard(
-      m, func_with_5_args, 12, 'x', a3, &a4, false
-  );
+  int res5 =
+      boost::with_lock_guard(m, func_with_5_args, 12, 'x', a3, &a4, false);
   BOOST_TEST(a3 == 135);
   BOOST_TEST(a4 == false);
   BOOST_TEST(res5 == 45);
 
-  int res6 = boost::with_lock_guard(
-      m, func_with_6_args, 12, 'N', a3, &a4, 2, false
-  );
+  int res6 =
+      boost::with_lock_guard(m, func_with_6_args, 12, 'N', a3, &a4, 2, false);
   BOOST_TEST(a3 == 200);
   BOOST_TEST(a4 == true);
   BOOST_TEST(res6 == 888);
@@ -123,9 +111,8 @@ void test_variadic_templates() {
   a3 = 0;
   a4 = false;
   int a5 = 13;
-  int res6_move = boost::with_lock_guard(
-      m, func_with_6_args, 12, 'N', a3, &a4, boost::move(a5), false
-  );
+  int res6_move = boost::with_lock_guard(m, func_with_6_args, 12, 'N', a3, &a4,
+                                         boost::move(a5), false);
   BOOST_TEST(a3 == 200);
   BOOST_TEST(a4 == true);
   BOOST_TEST_EQ(res6_move, 888);

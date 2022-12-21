@@ -7,4 +7,3 @@
 
 #include "nova.hpp"
 #include "overload_seq.cpp"
-

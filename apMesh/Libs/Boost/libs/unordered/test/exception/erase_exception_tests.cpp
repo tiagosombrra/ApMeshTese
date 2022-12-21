@@ -3,27 +3,24 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "./containers.hpp"
-
 #include "../helpers/helpers.hpp"
 #include "../helpers/invariants.hpp"
 #include "../helpers/random_values.hpp"
+#include "./containers.hpp"
 
 test::seed_t initialize_seed(835193);
 
-template <class T> struct erase_test_base : public test::exception_base
-{
+template <class T>
+struct erase_test_base : public test::exception_base {
   test::random_values<T> values;
-  erase_test_base(unsigned int count = 5) : values(count, test::limited_range)
-  {
-  }
+  erase_test_base(unsigned int count = 5)
+      : values(count, test::limited_range) {}
 
   typedef T data_type;
 
   data_type init() const { return T(values.begin(), values.end()); }
 
-  void check BOOST_PREVENT_MACRO_SUBSTITUTION(T const& x) const
-  {
+  void check BOOST_PREVENT_MACRO_SUBSTITUTION(T const& x) const {
     std::string scope(test::scope);
 
     BOOST_TEST(scope.find("hash::") != std::string::npos ||
@@ -34,10 +31,9 @@ template <class T> struct erase_test_base : public test::exception_base
   }
 };
 
-template <class T> struct erase_by_key_test1 : public erase_test_base<T>
-{
-  void run(T& x) const
-  {
+template <class T>
+struct erase_by_key_test1 : public erase_test_base<T> {
+  void run(T& x) const {
     typedef typename test::random_values<T>::const_iterator iterator;
 
     for (iterator it = this->values.begin(), end = this->values.end();

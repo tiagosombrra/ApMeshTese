@@ -6,61 +6,58 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <vector>
 #include <algorithm>
-#include <iostream>
 #include <cassert>
+#include <iostream>
+#include <vector>
 
 #define PHOENIX_LIMIT 15
+#include <boost/spirit/include/phoenix1_closures.hpp>
+#include <boost/spirit/include/phoenix1_composite.hpp>
+#include <boost/spirit/include/phoenix1_functions.hpp>
 #include <boost/spirit/include/phoenix1_operators.hpp>
 #include <boost/spirit/include/phoenix1_primitives.hpp>
-#include <boost/spirit/include/phoenix1_composite.hpp>
 #include <boost/spirit/include/phoenix1_special_ops.hpp>
 #include <boost/spirit/include/phoenix1_statements.hpp>
-#include <boost/spirit/include/phoenix1_functions.hpp>
-#include <boost/spirit/include/phoenix1_closures.hpp>
 
 //////////////////////////////////
 using namespace phoenix;
 
 //////////////////////////////////
-int
-main()
-{
-    struct my_closure : closure<int, std::string, double> {
+int main() {
+  struct my_closure : closure<int, std::string, double> {
+    member1 num;
+    member2 message;
+    member3 real;
+  };
 
-        member1 num;
-        member2 message;
-        member3 real;
-    };
+  my_closure clos;
 
-    my_closure clos;
+  {  //  First stack frame
+    closure_frame<my_closure::self_t> frame(clos);
+    (clos.num = 123)();
+    (clos.num += 456)();
+    (clos.real = clos.num / 56.5)();
+    (clos.message = "Hello " + std::string("World "))();
 
-    {   //  First stack frame
-        closure_frame<my_closure::self_t> frame(clos);
-        (clos.num = 123)();
-        (clos.num += 456)();
-        (clos.real = clos.num / 56.5)();
-        (clos.message = "Hello " + std::string("World "))();
+    {  //  Second stack frame
+      closure_frame<my_closure::self_t> frame(clos);
+      (clos.num = 987)();
+      (clos.message = "Abracadabra ")();
+      (clos.real = clos.num * 1e30)();
 
-        {   //  Second stack frame
-            closure_frame<my_closure::self_t> frame(clos);
-            (clos.num = 987)();
-            (clos.message = "Abracadabra ")();
-            (clos.real = clos.num * 1e30)();
-
-            {   //  Third stack frame
-                tuple<int, char const*, double> init(-1, "Direct Init ", 3.14);
-                closure_frame<my_closure::self_t> frame(clos, init);
-
-                (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();
-            }
-
-            (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();
-        }
+      {  //  Third stack frame
+        tuple<int, char const*, double> init(-1, "Direct Init ", 3.14);
+        closure_frame<my_closure::self_t> frame(clos, init);
 
         (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();
+      }
+
+      (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();
     }
 
-    return 0;
+    (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();
+  }
+
+  return 0;
 }

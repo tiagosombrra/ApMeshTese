@@ -3,51 +3,44 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include "node_iterator3.hpp"
-#include <string>
-#include <memory>
-#include <iostream>
+
 #include <algorithm>
 #include <boost/mem_fn.hpp>
 #include <cassert>
+#include <iostream>
+#include <memory>
+#include <string>
 
-int main()
-{
-
+int main() {
 #if defined(BOOST_NO_CXX11_SMART_PTR)
 
-    std::auto_ptr<node<int> > nodes(new node<int>(42));
+  std::auto_ptr<node<int> > nodes(new node<int>(42));
 
 #else
 
-    std::unique_ptr<node<int> > nodes(new node<int>(42));
+  std::unique_ptr<node<int> > nodes(new node<int>(42));
 
 #endif
 
-    nodes->append(new node<std::string>(" is greater than "));
-    nodes->append(new node<int>(13));
+  nodes->append(new node<std::string>(" is greater than "));
+  nodes->append(new node<int>(13));
 
-    // Check interoperability
-    assert(node_iterator(nodes.get()) == node_const_iterator(nodes.get()));
-    assert(node_const_iterator(nodes.get()) == node_iterator(nodes.get()));
+  // Check interoperability
+  assert(node_iterator(nodes.get()) == node_const_iterator(nodes.get()));
+  assert(node_const_iterator(nodes.get()) == node_iterator(nodes.get()));
 
-    assert(node_iterator(nodes.get()) != node_const_iterator());
-    assert(node_const_iterator(nodes.get()) != node_iterator());
+  assert(node_iterator(nodes.get()) != node_const_iterator());
+  assert(node_const_iterator(nodes.get()) != node_iterator());
 
-    std::copy(
-        node_iterator(nodes.get()), node_iterator()
-      , std::ostream_iterator<node_base>(std::cout, " ")
-    );
-    std::cout << std::endl;
+  std::copy(node_iterator(nodes.get()), node_iterator(),
+            std::ostream_iterator<node_base>(std::cout, " "));
+  std::cout << std::endl;
 
-    std::for_each(
-        node_iterator(nodes.get()), node_iterator()
-      , boost::mem_fn(&node_base::double_me)
-    );
+  std::for_each(node_iterator(nodes.get()), node_iterator(),
+                boost::mem_fn(&node_base::double_me));
 
-    std::copy(
-        node_const_iterator(nodes.get()), node_const_iterator()
-      , std::ostream_iterator<node_base>(std::cout, "/")
-    );
-    std::cout << std::endl;
-    return 0;
+  std::copy(node_const_iterator(nodes.get()), node_const_iterator(),
+            std::ostream_iterator<node_base>(std::cout, "/"));
+  std::cout << std::endl;
+  return 0;
 }

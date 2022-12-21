@@ -6,23 +6,19 @@
 
 using namespace boost::system;
 
-static void f( error_code & ec )
-{
-    ec = error_code();
-}
+static void f(error_code& ec) { ec = error_code(); }
 
 #if defined(_WIN32)
-# include <windows.h> // SetErrorMode
+#include <windows.h>  // SetErrorMode
 #endif
 
-int main()
-{
+int main() {
 #if defined(_WIN32)
 
-    SetErrorMode( SetErrorMode( 0 ) | SEM_NOGPFAULTERRORBOX );
+  SetErrorMode(SetErrorMode(0) | SEM_NOGPFAULTERRORBOX);
 
 #endif
 
-    // this should crash
-    f( boost::throws() );
+  // this should crash
+  f(boost::throws());
 }

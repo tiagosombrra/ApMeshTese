@@ -12,16 +12,15 @@
 
 namespace tt = boost::test_tools;
 
-BOOST_AUTO_TEST_CASE( test_collections_on_c_arrays )
-{
+BOOST_AUTO_TEST_CASE(test_collections_on_c_arrays) {
   int a[] = {1, 2, 3};
   int b[] = {1, 5, 3, 4};
   std::vector<long> c{1, 5, 3, 4};
-  BOOST_TEST(a == a); // element-wise compare
-  BOOST_TEST(a == b); // element-wise compare
+  BOOST_TEST(a == a);  // element-wise compare
+  BOOST_TEST(a == b);  // element-wise compare
   BOOST_TEST(a != b);
-  BOOST_TEST(a < b); // lexicographical compare
-  BOOST_TEST(b < c); // lexicographical compare
-  BOOST_TEST(c < a); // lexicographical compare
+  BOOST_TEST(a < b);  // lexicographical compare
+  BOOST_TEST(b < c);  // lexicographical compare
+  BOOST_TEST(c < a);  // lexicographical compare
 }
 //]

@@ -15,14 +15,16 @@ int main() {
   using regular = axis::regular<>;
   using regular_float = axis::regular<float>;
   using regular_pow = axis::regular<double, axis::transform::pow>;
-  using regular_no_metadata = axis::regular<double, axis::transform::id, axis::null_type>;
+  using regular_no_metadata =
+      axis::regular<double, axis::transform::id, axis::null_type>;
   using circular = axis::circular<>;
   using variable = axis::variable<>;
   using integer = axis::integer<>;
   using category = axis::category<>;
   using boolean = axis::boolean<>;
   using boolean_no_metadata = axis::boolean<axis::null_type>;
-  using variant = axis::variant<regular, circular, variable, integer, category, boolean>;
+  using variant =
+      axis::variant<regular, circular, variable, integer, category, boolean>;
 
   SHOW_SIZE(regular);
   SHOW_SIZE(regular_float);

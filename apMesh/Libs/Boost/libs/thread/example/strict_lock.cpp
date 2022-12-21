@@ -5,20 +5,19 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/thread/mutex.hpp>
 #include <boost/thread/lock_traits.hpp>
+#include <boost/thread/lock_types.hpp>
+#include <boost/thread/mutex.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/thread/strict_lock.hpp>
-#include <boost/thread/lock_types.hpp>
 #include <iostream>
 
+BOOST_STATIC_ASSERT(
+    boost::is_strict_lock<boost::strict_lock<boost::mutex> >::value);
+BOOST_CONCEPT_ASSERT((boost::BasicLockable<boost::mutex>));
+BOOST_CONCEPT_ASSERT((boost::StrictLock<boost::strict_lock<boost::mutex> >));
 
-BOOST_STATIC_ASSERT(boost::is_strict_lock<boost::strict_lock<boost::mutex> >::value);
-BOOST_CONCEPT_ASSERT(( boost::BasicLockable<boost::mutex> ));
-BOOST_CONCEPT_ASSERT(( boost::StrictLock<boost::strict_lock<boost::mutex> > ));
-
-int main()
-{
+int main() {
   {
     boost::mutex mtx;
     boost::strict_lock<boost::mutex> lk(mtx);

@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/gamma.hpp>
 #include <boost/random/gamma_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/gamma.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::gamma_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME gamma

@@ -9,8 +9,8 @@
  *
  */
 
-#include <boost/random/uniform_real.hpp>
 #include <boost/math/distributions/uniform.hpp>
+#include <boost/random/uniform_real.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::uniform_real<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME uniform_real

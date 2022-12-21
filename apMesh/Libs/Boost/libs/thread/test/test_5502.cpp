@@ -12,38 +12,34 @@
 int XXX = 20;
 int YYY = 10;
 
-#include <boost/thread/thread_only.hpp>
 #include <boost/thread/shared_mutex.hpp>
+#include <boost/thread/thread_only.hpp>
 
 //#include <unistd.h>
-#include <iostream>
 #include <boost/detail/lightweight_test.hpp>
+#include <iostream>
 
 using namespace std;
 
-//void sleepmillis(useconds_t miliis)
-void sleepmillis(int miliis)
-{
-  //usleep(miliis * 1000);
+// void sleepmillis(useconds_t miliis)
+void sleepmillis(int miliis) {
+  // usleep(miliis * 1000);
   boost::this_thread::sleep(boost::posix_time::milliseconds(miliis));
 }
 
-void worker1(boost::shared_mutex * lk, int * x)
-{
-  (*x)++; // 1
+void worker1(boost::shared_mutex* lk, int* x) {
+  (*x)++;  // 1
   cout << "lock b try " << *x << endl;
-  while (1)
-  {
+  while (1) {
     if (lk->timed_lock(boost::posix_time::milliseconds(XXX))) break;
     sleepmillis(YYY);
   }
   cout << "lock b got " << *x << endl;
-  (*x)++; // 2
+  (*x)++;  // 2
   lk->unlock();
 }
 
-void worker2(boost::shared_mutex * lk, int * x)
-{
+void worker2(boost::shared_mutex* lk, int* x) {
   cout << "lock c try" << endl;
   lk->lock_shared();
   (*x)++;
@@ -53,9 +49,7 @@ void worker2(boost::shared_mutex * lk, int * x)
   (*x)++;
 }
 
-int main()
-{
-
+int main() {
   // create
   boost::shared_mutex* lk = new boost::shared_mutex();
 
@@ -79,8 +73,7 @@ int main()
   lk->unlock_shared();
   cout << "unlock a" << endl;
 
-  for (int i = 0; i < 2000; i++)
-  {
+  for (int i = 0; i < 2000; i++) {
     if (x1 == 2) break;
     sleepmillis(10);
   }

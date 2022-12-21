@@ -8,34 +8,27 @@
   25 August 2005 : Initial version.
 */
 
-#include <vector>
-#include <boost/test/minimal.hpp>
 #include <boost/foreach.hpp>
+#include <boost/test/minimal.hpp>
+#include <vector>
 
 #ifdef BOOST_FOREACH_NO_RVALUE_DETECTION
-# error Expected failure : rvalues disallowed
+#error Expected failure : rvalues disallowed
 #else
 
-std::vector<int> get_vector()
-{
-    return std::vector<int>(4, 4);
-}
+std::vector<int> get_vector() { return std::vector<int>(4, 4); }
 
 ///////////////////////////////////////////////////////////////////////////////
 // test_main
-//   
-int test_main( int, char*[] )
-{
-    int counter = 0;
+//
+int test_main(int, char*[]) {
+  int counter = 0;
 
-    BOOST_REVERSE_FOREACH(int i, get_vector())
-    {
-        counter += i;
-    }
+  BOOST_REVERSE_FOREACH(int i, get_vector()) { counter += i; }
 
-    BOOST_CHECK(16 == counter);
+  BOOST_CHECK(16 == counter);
 
-    return 0;
+  return 0;
 }
 
 #endif

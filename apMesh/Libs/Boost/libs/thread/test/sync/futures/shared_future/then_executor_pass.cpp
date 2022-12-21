@@ -14,29 +14,26 @@
 #define BOOST_THREAD_PROVIDES_EXECUTORS
 //#define BOOST_THREAD_USES_LOG
 #define BOOST_THREAD_USES_LOG_THREAD_ID
-#include <boost/thread/detail/log.hpp>
-
-#include <boost/thread/future.hpp>
-#include <boost/thread/executors/basic_thread_pool.hpp>
-#include <boost/thread/executor.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/detail/log.hpp>
+#include <boost/thread/executor.hpp>
+#include <boost/thread/executors/basic_thread_pool.hpp>
+#include <boost/thread/future.hpp>
 
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION
 
 #ifdef BOOST_MSVC
-#pragma warning(disable: 4127) // conditional expression is constant
+#pragma warning(disable : 4127)  // conditional expression is constant
 #endif
 
-int p1()
-{
+int p1() {
   BOOST_THREAD_LOG << "p1 < " << BOOST_THREAD_END_LOG;
   boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
-  BOOST_THREAD_LOG << "p1 >"  << BOOST_THREAD_END_LOG;
+  BOOST_THREAD_LOG << "p1 >" << BOOST_THREAD_END_LOG;
   return 1;
 }
 
-int p2(boost::shared_future<int> f)
-{
+int p2(boost::shared_future<int> f) {
   BOOST_THREAD_LOG << "p2 <" << &f << BOOST_THREAD_END_LOG;
   BOOST_TEST(f.valid());
   int i = f.get();
@@ -45,36 +42,31 @@ int p2(boost::shared_future<int> f)
   return 2 * i;
 }
 
-void p3(boost::shared_future<int> f)
-{
+void p3(boost::shared_future<int> f) {
   BOOST_THREAD_LOG << "p3 <" << &f << BOOST_THREAD_END_LOG;
   BOOST_TEST(f.valid());
   int i = f.get();
   boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
   BOOST_THREAD_LOG << "p3 <" << &f << " " << i << BOOST_THREAD_END_LOG;
-  return ;
+  return;
 }
 
-int main()
-{
+int main() {
   BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
   {
     boost::basic_thread_pool ex(1);
-    boost::shared_future<int> f1 = boost::async(boost::launch::async, &p1).share();
+    boost::shared_future<int> f1 =
+        boost::async(boost::launch::async, &p1).share();
     BOOST_TEST(f1.valid());
     boost::future<int> f2 = f1.then(ex, &p2);
     BOOST_TEST(f2.valid());
-    try
-    {
-      BOOST_TEST(f2.get()==2);
-    }
-    catch (std::exception& ex)
-    {
-      BOOST_THREAD_LOG << "ERRORRRRR "<<ex.what() << "" << BOOST_THREAD_END_LOG;
+    try {
+      BOOST_TEST(f2.get() == 2);
+    } catch (std::exception& ex) {
+      BOOST_THREAD_LOG << "ERRORRRRR " << ex.what() << ""
+                       << BOOST_THREAD_END_LOG;
       BOOST_TEST(false);
-    }
-    catch (...)
-    {
+    } catch (...) {
       BOOST_THREAD_LOG << " ERRORRRRR exception thrown" << BOOST_THREAD_END_LOG;
       BOOST_TEST(false);
     }
@@ -82,21 +74,18 @@ int main()
   BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
   {
     boost::basic_thread_pool ex(1);
-    boost::shared_future<int> f1 = boost::async(boost::launch::async, &p1).share();
+    boost::shared_future<int> f1 =
+        boost::async(boost::launch::async, &p1).share();
     BOOST_TEST(f1.valid());
     boost::future<void> f2 = f1.then(ex, &p3);
     BOOST_TEST(f2.valid());
-    try
-    {
+    try {
       f2.wait();
-    }
-    catch (std::exception& ex)
-    {
-      BOOST_THREAD_LOG << "ERRORRRRR "<<ex.what() << "" << BOOST_THREAD_END_LOG;
+    } catch (std::exception& ex) {
+      BOOST_THREAD_LOG << "ERRORRRRR " << ex.what() << ""
+                       << BOOST_THREAD_END_LOG;
       BOOST_TEST(false);
-    }
-    catch (...)
-    {
+    } catch (...) {
       BOOST_THREAD_LOG << " ERRORRRRR exception thrown" << BOOST_THREAD_END_LOG;
       BOOST_TEST(false);
     }
@@ -105,36 +94,37 @@ int main()
   {
     boost::basic_thread_pool ex(1);
     boost::future<int> f2 = boost::async(p1).share().then(ex, &p2);
-    BOOST_TEST(f2.get()==2);
+    BOOST_TEST(f2.get() == 2);
   }
   BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
   {
     boost::basic_thread_pool ex(1);
     boost::shared_future<int> f1 = boost::async(p1).share();
     boost::shared_future<int> f21 = f1.then(ex, &p2).share();
-    boost::future<int> f2= f21.then(ex, &p2);
-    BOOST_TEST(f2.get()==4);
+    boost::future<int> f2 = f21.then(ex, &p2);
+    BOOST_TEST(f2.get() == 4);
   }
   BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
   {
     boost::basic_thread_pool ex(1);
     boost::shared_future<int> f1 = boost::async(p1).share();
     boost::shared_future<int> f21 = f1.then(ex, &p2).share();
-    boost::future<int> f2= f21.then(&p2);
-    BOOST_TEST(f2.get()==4);
+    boost::future<int> f2 = f21.then(&p2);
+    BOOST_TEST(f2.get() == 4);
   }
   BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
   {
     boost::basic_thread_pool ex(1);
     boost::shared_future<int> f1 = boost::async(p1).share();
-    boost::future<int> f2= f1.then(ex, &p2).share().then(ex, &p2);
-    BOOST_TEST(f2.get()==4);
+    boost::future<int> f2 = f1.then(ex, &p2).share().then(ex, &p2);
+    BOOST_TEST(f2.get() == 4);
   }
   BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
   {
     boost::basic_thread_pool ex(1);
-    boost::future<int> f2 = boost::async(p1).share().then(ex, &p2).share().then(ex, &p2);
-    BOOST_TEST(f2.get()==4);
+    boost::future<int> f2 =
+        boost::async(p1).share().then(ex, &p2).share().then(ex, &p2);
+    BOOST_TEST(f2.get() == 4);
   }
 
   return boost::report_errors();
@@ -142,8 +132,5 @@ int main()
 
 #else
 
-int main()
-{
-  return 0;
-}
+int main() { return 0; }
 #endif

@@ -18,12 +18,10 @@
 
 // null_mutex();
 
-#include <boost/thread/null_mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/null_mutex.hpp>
 
-int main()
-{
+int main() {
   boost::null_mutex m0;
   return boost::report_errors();
 }
-

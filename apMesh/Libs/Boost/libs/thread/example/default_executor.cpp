@@ -4,7 +4,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config.hpp>
-#if ! defined  BOOST_NO_CXX11_DECLTYPE
+#if !defined BOOST_NO_CXX11_DECLTYPE
 #define BOOST_RESULT_OF_USE_DECLTYPE
 #endif
 
@@ -17,28 +17,21 @@
 #include <boost/thread/caller_context.hpp>
 #include <boost/thread/executors/basic_thread_pool.hpp>
 #include <boost/thread/executors/generic_executor_ref.hpp>
-#include <string>
 #include <iostream>
+#include <string>
 
-#include <boost/thread/caller_context.hpp>
-
-
-boost::generic_executor_ref default_executor()
-{
+boost::generic_executor_ref default_executor() {
   static boost::basic_thread_pool tp(4);
   return boost::generic_executor_ref(tp);
 }
 
-void p2()
-{
+void p2() {
   std::cout << BOOST_CONTEXTOF << std::endl;
   boost::this_thread::sleep_for(boost::chrono::milliseconds(200));
   std::cout << BOOST_CONTEXTOF << std::endl;
 }
 
-
-void p1()
-{
+void p1() {
   std::cout << BOOST_CONTEXTOF << std::endl;
   boost::this_thread::sleep_for(boost::chrono::milliseconds(200));
   default_executor().submit(&p2);
@@ -46,8 +39,7 @@ void p1()
   std::cout << BOOST_CONTEXTOF << std::endl;
 }
 
-int main()
-{
+int main() {
   std::cout << BOOST_CONTEXTOF << std::endl;
 
   default_executor().submit(&p1);
@@ -57,5 +49,4 @@ int main()
   std::cout << BOOST_CONTEXTOF << std::endl;
 
   return 1;
-
 }

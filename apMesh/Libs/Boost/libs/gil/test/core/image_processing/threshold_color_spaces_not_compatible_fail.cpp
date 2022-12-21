@@ -9,17 +9,17 @@
 
 namespace gil = boost::gil;
 
-int main()
-{
-    // Source and destination views must have pixels with the same (compatible) color space
-    {
-        gil::rgb8_image_t src;
-        gil::gray8_image_t dst;
-        gil::threshold_binary(const_view(src), view(dst), 0, 255);
-    }
-    {
-        gil::gray8_image_t src;
-        gil::rgb8_image_t dst;
-        gil::threshold_binary(const_view(src), view(dst), 0, 255);
-    }
+int main() {
+  // Source and destination views must have pixels with the same (compatible)
+  // color space
+  {
+    gil::rgb8_image_t src;
+    gil::gray8_image_t dst;
+    gil::threshold_binary(const_view(src), view(dst), 0, 255);
+  }
+  {
+    gil::gray8_image_t src;
+    gil::rgb8_image_t dst;
+    gil::threshold_binary(const_view(src), view(dst), 0, 255);
+  }
 }

@@ -7,14 +7,12 @@
 
 // See http://www.boost.org for updates, documentation, and revision history.
 
-#include <iostream>
-#include <vector>
-
-#include <QtOpenGL/QGLWidget>
 #include <QtGui/QtGui>
-
+#include <QtOpenGL/QGLWidget>
 #include <boost/polygon/polygon.hpp>
 #include <boost/polygon/voronoi.hpp>
+#include <iostream>
+#include <vector>
 using namespace boost::polygon;
 
 #include "voronoi_visual_utils.hpp"
@@ -23,16 +21,14 @@ class GLWidget : public QGLWidget {
   Q_OBJECT
 
  public:
-  explicit GLWidget(QMainWindow* parent = NULL) :
-      QGLWidget(QGLFormat(QGL::SampleBuffers), parent),
-      primary_edges_only_(false),
-      internal_edges_only_(false) {
+  explicit GLWidget(QMainWindow* parent = NULL)
+      : QGLWidget(QGLFormat(QGL::SampleBuffers), parent),
+        primary_edges_only_(false),
+        internal_edges_only_(false) {
     startTimer(40);
   }
 
-  QSize sizeHint() const {
-    return QSize(600, 600);
-  }
+  QSize sizeHint() const { return QSize(600, 600); }
 
   void build(const QString& file_path) {
     // Clear all containers.
@@ -50,14 +46,12 @@ class GLWidget : public QGLWidget {
     construct_brect();
 
     // Construct voronoi diagram.
-    construct_voronoi(
-        point_data_.begin(), point_data_.end(),
-        segment_data_.begin(), segment_data_.end(),
-        &vd_);
+    construct_voronoi(point_data_.begin(), point_data_.end(),
+                      segment_data_.begin(), segment_data_.end(), &vd_);
 
     // Color exterior edges.
-    for (const_edge_iterator it = vd_.edges().begin();
-         it != vd_.edges().end(); ++it) {
+    for (const_edge_iterator it = vd_.edges().begin(); it != vd_.edges().end();
+         ++it) {
       if (!it->is_finite()) {
         color_exterior(&(*it));
       }
@@ -67,13 +61,9 @@ class GLWidget : public QGLWidget {
     update_view_port();
   }
 
-  void show_primary_edges_only() {
-    primary_edges_only_ ^= true;
-  }
+  void show_primary_edges_only() { primary_edges_only_ ^= true; }
 
-  void show_internal_edges_only() {
-    internal_edges_only_ ^= true;
-  }
+  void show_internal_edges_only() { internal_edges_only_ ^= true; }
 
  protected:
   void initializeGL() {
@@ -98,9 +88,7 @@ class GLWidget : public QGLWidget {
     glViewport((width - side) / 2, (height - side) / 2, side, side);
   }
 
-  void timerEvent(QTimerEvent* e) {
-    update();
-  }
+  void timerEvent(QTimerEvent* e) { update(); }
 
  private:
   typedef double coordinate_type;
@@ -132,9 +120,8 @@ class GLWidget : public QGLWidget {
   void read_data(const QString& file_path) {
     QFile data(file_path);
     if (!data.open(QFile::ReadOnly)) {
-      QMessageBox::warning(
-          this, tr("Voronoi Visualizer"),
-          tr("Disable to open file ") + file_path);
+      QMessageBox::warning(this, tr("Voronoi Visualizer"),
+                           tr("Disable to open file ") + file_path);
     }
     QTextStream in_stream(&data);
     std::size_t num_points, num_segments;
@@ -197,9 +184,8 @@ class GLWidget : public QGLWidget {
     glLoadIdentity();
     rect_type view_rect = brect_;
     deconvolve(view_rect, shift_);
-    glOrtho(xl(view_rect), xh(view_rect),
-            yl(view_rect), yh(view_rect),
-            -1.0, 1.0);
+    glOrtho(xl(view_rect), xh(view_rect), yl(view_rect), yh(view_rect), -1.0,
+            1.0);
     glMatrixMode(GL_MODELVIEW);
   }
 
@@ -260,8 +246,8 @@ class GLWidget : public QGLWidget {
     // Draw voronoi edges.
     glColor3f(0.0f, 0.0f, 0.0f);
     glLineWidth(1.7f);
-    for (const_edge_iterator it = vd_.edges().begin();
-         it != vd_.edges().end(); ++it) {
+    for (const_edge_iterator it = vd_.edges().begin(); it != vd_.edges().end();
+         ++it) {
       if (primary_edges_only_ && !it->is_primary()) {
         continue;
       }
@@ -289,8 +275,8 @@ class GLWidget : public QGLWidget {
     }
   }
 
-  void clip_infinite_edge(
-      const edge_type& edge, std::vector<point_type>* clipped_edge) {
+  void clip_infinite_edge(const edge_type& edge,
+                          std::vector<point_type>* clipped_edge) {
     const cell_type& cell1 = *edge.cell();
     const cell_type& cell2 = *edge.twin()->cell();
     point_type origin, direction;
@@ -303,12 +289,10 @@ class GLWidget : public QGLWidget {
       direction.x(p1.y() - p2.y());
       direction.y(p2.x() - p1.x());
     } else {
-      origin = cell1.contains_segment() ?
-          retrieve_point(cell2) :
-          retrieve_point(cell1);
-      segment_type segment = cell1.contains_segment() ?
-          retrieve_segment(cell1) :
-          retrieve_segment(cell2);
+      origin = cell1.contains_segment() ? retrieve_point(cell2)
+                                        : retrieve_point(cell1);
+      segment_type segment = cell1.contains_segment() ? retrieve_segment(cell1)
+                                                      : retrieve_segment(cell2);
       coordinate_type dx = high(segment).x() - low(segment).x();
       coordinate_type dy = high(segment).y() - low(segment).y();
       if ((low(segment) == origin) ^ cell1.contains_point()) {
@@ -323,35 +307,32 @@ class GLWidget : public QGLWidget {
     coordinate_type koef =
         side / (std::max)(fabs(direction.x()), fabs(direction.y()));
     if (edge.vertex0() == NULL) {
-      clipped_edge->push_back(point_type(
-          origin.x() - direction.x() * koef,
-          origin.y() - direction.y() * koef));
+      clipped_edge->push_back(point_type(origin.x() - direction.x() * koef,
+                                         origin.y() - direction.y() * koef));
     } else {
       clipped_edge->push_back(
           point_type(edge.vertex0()->x(), edge.vertex0()->y()));
     }
     if (edge.vertex1() == NULL) {
-      clipped_edge->push_back(point_type(
-          origin.x() + direction.x() * koef,
-          origin.y() + direction.y() * koef));
+      clipped_edge->push_back(point_type(origin.x() + direction.x() * koef,
+                                         origin.y() + direction.y() * koef));
     } else {
       clipped_edge->push_back(
           point_type(edge.vertex1()->x(), edge.vertex1()->y()));
     }
   }
 
-  void sample_curved_edge(
-      const edge_type& edge,
-      std::vector<point_type>* sampled_edge) {
+  void sample_curved_edge(const edge_type& edge,
+                          std::vector<point_type>* sampled_edge) {
     coordinate_type max_dist = 1E-3 * (xh(brect_) - xl(brect_));
-    point_type point = edge.cell()->contains_point() ?
-        retrieve_point(*edge.cell()) :
-        retrieve_point(*edge.twin()->cell());
-    segment_type segment = edge.cell()->contains_point() ?
-        retrieve_segment(*edge.twin()->cell()) :
-        retrieve_segment(*edge.cell());
-    voronoi_visual_utils<coordinate_type>::discretize(
-        point, segment, max_dist, sampled_edge);
+    point_type point = edge.cell()->contains_point()
+                           ? retrieve_point(*edge.cell())
+                           : retrieve_point(*edge.twin()->cell());
+    segment_type segment = edge.cell()->contains_point()
+                               ? retrieve_segment(*edge.twin()->cell())
+                               : retrieve_segment(*edge.cell());
+    voronoi_visual_utils<coordinate_type>::discretize(point, segment, max_dist,
+                                                      sampled_edge);
   }
 
   point_type retrieve_point(const cell_type& cell) {
@@ -404,13 +385,9 @@ class MainWindow : public QWidget {
   }
 
  private slots:
-  void primary_edges_only() {
-    glWidget_->show_primary_edges_only();
-  }
+  void primary_edges_only() { glWidget_->show_primary_edges_only(); }
 
-  void internal_edges_only() {
-    glWidget_->show_internal_edges_only();
-  }
+  void internal_edges_only() { glWidget_->show_internal_edges_only(); }
 
   void browse() {
     QString new_path = QFileDialog::getExistingDirectory(
@@ -435,7 +412,8 @@ class MainWindow : public QWidget {
     if (!file_name_.isEmpty()) {
       QImage screenshot = glWidget_->grabFrameBuffer(true);
       QString output_file = file_dir_.absolutePath() + tr("/") +
-          file_name_.left(file_name_.indexOf('.')) + tr(".png");
+                            file_name_.left(file_name_.indexOf('.')) +
+                            tr(".png");
       screenshot.save(output_file, 0, -1);
     }
   }
@@ -447,21 +425,18 @@ class MainWindow : public QWidget {
     message_label_ = new QLabel("Double click item to build voronoi diagram:");
 
     file_list_ = new QListWidget();
-    file_list_->connect(file_list_,
-                        SIGNAL(itemDoubleClicked(QListWidgetItem*)),
-                        this,
-                        SLOT(build()));
+    file_list_->connect(file_list_, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
+                        this, SLOT(build()));
 
     QCheckBox* primary_checkbox = new QCheckBox("Show primary edges only.");
-    connect(primary_checkbox, SIGNAL(clicked()),
-        this, SLOT(primary_edges_only()));
+    connect(primary_checkbox, SIGNAL(clicked()), this,
+            SLOT(primary_edges_only()));
 
     QCheckBox* internal_checkbox = new QCheckBox("Show internal edges only.");
-    connect(internal_checkbox, SIGNAL(clicked()),
-        this, SLOT(internal_edges_only()));
+    connect(internal_checkbox, SIGNAL(clicked()), this,
+            SLOT(internal_edges_only()));
 
-    QPushButton* browse_button =
-        new QPushButton(tr("Browse Input Directory"));
+    QPushButton* browse_button = new QPushButton(tr("Browse Input Directory"));
     connect(browse_button, SIGNAL(clicked()), this, SLOT(browse()));
     browse_button->setMinimumHeight(50);
 

@@ -10,11 +10,12 @@
 #include <boost/test/included/unit_test.hpp>
 using namespace boost::unit_test;
 
-BOOST_AUTO_TEST_CASE(test_accessing_command_line)
-{
-    BOOST_TEST_REQUIRE( framework::master_test_suite().argc == 3 );
-    BOOST_TEST( framework::master_test_suite().argv[1] == "--specific-param" );
-    BOOST_TEST( framework::master_test_suite().argv[2] == "'additional value with quotes'" );
-    BOOST_TEST_MESSAGE( "'argv[0]' contains " << framework::master_test_suite().argv[0] );
+BOOST_AUTO_TEST_CASE(test_accessing_command_line) {
+  BOOST_TEST_REQUIRE(framework::master_test_suite().argc == 3);
+  BOOST_TEST(framework::master_test_suite().argv[1] == "--specific-param");
+  BOOST_TEST(framework::master_test_suite().argv[2] ==
+             "'additional value with quotes'");
+  BOOST_TEST_MESSAGE("'argv[0]' contains "
+                     << framework::master_test_suite().argv[0]);
 }
 //]

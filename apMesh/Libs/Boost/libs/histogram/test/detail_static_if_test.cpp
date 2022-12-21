@@ -6,6 +6,7 @@
 
 #include <boost/core/lightweight_test.hpp>
 #include <boost/histogram/detail/static_if.hpp>
+
 #include "throw_exception.hpp"
 
 using namespace boost::histogram::detail;
@@ -26,7 +27,8 @@ int main() {
   auto no_throw = [](auto x) noexcept { return x; };
 
   // make this work with -fno-exceptions
-  BOOST_TEST_EQ(noexcept(static_if<F>(no_throw, may_throw, 0)), noexcept(may_throw(0)));
+  BOOST_TEST_EQ(noexcept(static_if<F>(no_throw, may_throw, 0)),
+                noexcept(may_throw(0)));
   BOOST_TEST(noexcept(static_if<T>(no_throw, may_throw, 0)));
 
   return boost::report_errors();

@@ -14,22 +14,19 @@
 #include "polymorphic_portable_binary_oarchive.hpp"
 
 // explicitly instantiate for this type of text stream
-#include <boost/archive/impl/basic_binary_oarchive.ipp>
 #include <boost/archive/impl/archive_pointer_oserializer.ipp>
+#include <boost/archive/impl/basic_binary_oarchive.ipp>
 #include <boost/archive/impl/basic_binary_oprimitive.ipp>
 
 namespace boost {
 namespace archive {
 
 // explicitly instantiate for this type of binary stream
-template class binary_oarchive_impl<
-    polymorphic_portable_binary_oarchive,
-    std::ostream::char_type,
-    std::ostream::traits_type
->;
+template class binary_oarchive_impl<polymorphic_portable_binary_oarchive,
+                                    std::ostream::char_type,
+                                    std::ostream::traits_type>;
 template class detail::archive_pointer_oserializer<
-    polymorphic_portable_binary_oarchive
-> ;
+    polymorphic_portable_binary_oarchive>;
 
-} // namespace archive
-} // namespace boost
+}  // namespace archive
+}  // namespace boost

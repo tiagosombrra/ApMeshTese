@@ -9,8 +9,8 @@
  *
  */
 
-#include <boost/random/mersenne_twister.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/random/mersenne_twister.hpp>
 
 #define BOOST_RANDOM_URNG boost::random::mt19937_64
 
@@ -23,6 +23,7 @@
 #define BOOST_RANDOM_DISCARD_COUNT1 9307
 #define BOOST_RANDOM_DISCARD_COUNT2 20000000
 
-#define BOOST_RANDOM_GENERATE_VALUES { 0xF6F6AEA6U, 0xC96D191CU, 0x8BC80F1CU, 0x401F7AC7U }
+#define BOOST_RANDOM_GENERATE_VALUES \
+  { 0xF6F6AEA6U, 0xC96D191CU, 0x8BC80F1CU, 0x401F7AC7U }
 
 #include "test_generator.ipp"

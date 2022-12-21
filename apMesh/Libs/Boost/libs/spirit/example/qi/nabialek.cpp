@@ -11,88 +11,79 @@
 //
 //  [ Sam Nabialek; Somewhere, sometime in 2003... ]    spirit1
 //  [ JDG November 17, 2009 ]                           spirit2
-//  [ JDG January 10, 2010 ]                            Updated to use rule pointers
+//  [ JDG January 10, 2010 ]                            Updated to use rule
+//  pointers
 //                                                      for efficiency.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/qi.hpp>
 #include <iostream>
 #include <string>
 
-namespace client
-{
-    namespace qi = boost::spirit::qi;
-    namespace ascii = boost::spirit::ascii;
+namespace client {
+namespace qi = boost::spirit::qi;
+namespace ascii = boost::spirit::ascii;
 
-    ///////////////////////////////////////////////////////////////////////////////
-    //  Our nabialek_trick grammar
-    ///////////////////////////////////////////////////////////////////////////////
-    template <typename Iterator>
-    struct nabialek_trick : qi::grammar<
-        Iterator, ascii::space_type, qi::locals<qi::rule<Iterator, ascii::space_type>*> >
-    {
-        nabialek_trick() : nabialek_trick::base_type(start)
-        {
-            using ascii::alnum;
-            using qi::lexeme;
-            using qi::lazy;
-            using qi::_a;
-            using qi::_1;
+///////////////////////////////////////////////////////////////////////////////
+//  Our nabialek_trick grammar
+///////////////////////////////////////////////////////////////////////////////
+template <typename Iterator>
+struct nabialek_trick
+    : qi::grammar<Iterator, ascii::space_type,
+                  qi::locals<qi::rule<Iterator, ascii::space_type>*> > {
+  nabialek_trick() : nabialek_trick::base_type(start) {
+    using ascii::alnum;
+    using qi::_1;
+    using qi::_a;
+    using qi::lazy;
+    using qi::lexeme;
 
-            id = lexeme[*(ascii::alnum | '_')];
-            one = id;
-            two = id >> ',' >> id;
+    id = lexeme[*(ascii::alnum | '_')];
+    one = id;
+    two = id >> ',' >> id;
 
-            keyword.add
-                ("one", &one)
-                ("two", &two)
-                ;
+    keyword.add("one", &one)("two", &two);
 
-            start = *(keyword[_a = _1] >> lazy(*_a));
-        }
+    start = *(keyword[_a = _1] >> lazy(*_a));
+  }
 
-        qi::rule<Iterator, ascii::space_type> id, one, two;
-        qi::rule<Iterator, ascii::space_type, qi::locals<qi::rule<Iterator, ascii::space_type>*> > start;
-        qi::symbols<char, qi::rule<Iterator, ascii::space_type>*> keyword;
-    };
-}
+  qi::rule<Iterator, ascii::space_type> id, one, two;
+  qi::rule<Iterator, ascii::space_type,
+           qi::locals<qi::rule<Iterator, ascii::space_type>*> >
+      start;
+  qi::symbols<char, qi::rule<Iterator, ascii::space_type>*> keyword;
+};
+}  // namespace client
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    using boost::spirit::ascii::space;
-    typedef std::string::const_iterator iterator_type;
-    typedef client::nabialek_trick<iterator_type> nabialek_trick;
+int main() {
+  using boost::spirit::ascii::space;
+  typedef std::string::const_iterator iterator_type;
+  typedef client::nabialek_trick<iterator_type> nabialek_trick;
 
-    nabialek_trick g; // Our grammar
+  nabialek_trick g;  // Our grammar
 
-    std::string str = "one only\none again\ntwo first,second";
-    std::string::const_iterator iter = str.begin();
-    std::string::const_iterator end = str.end();
-    bool r = phrase_parse(iter, end, g, space);
+  std::string str = "one only\none again\ntwo first,second";
+  std::string::const_iterator iter = str.begin();
+  std::string::const_iterator end = str.end();
+  bool r = phrase_parse(iter, end, g, space);
 
-    if (r && iter == end)
-    {
-        std::cout << "-------------------------\n";
-        std::cout << "Parsing succeeded\n";
-        std::cout << "-------------------------\n";
-    }
-    else
-    {
-        std::string rest(iter, end);
-        std::cout << "-------------------------\n";
-        std::cout << "Parsing failed\n";
-        std::cout << "stopped at: \": " << rest << "\"\n";
-        std::cout << "-------------------------\n";
-    }
+  if (r && iter == end) {
+    std::cout << "-------------------------\n";
+    std::cout << "Parsing succeeded\n";
+    std::cout << "-------------------------\n";
+  } else {
+    std::string rest(iter, end);
+    std::cout << "-------------------------\n";
+    std::cout << "Parsing failed\n";
+    std::cout << "stopped at: \": " << rest << "\"\n";
+    std::cout << "-------------------------\n";
+  }
 
-    return 0;
+  return 0;
 }
-
-

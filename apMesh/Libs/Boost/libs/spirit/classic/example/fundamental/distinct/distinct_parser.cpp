@@ -7,10 +7,10 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/assert.hpp>
-#include <iostream>
 #include <boost/cstdlib.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_distinct.hpp>
+#include <iostream>
 
 using namespace std;
 using namespace boost;
@@ -24,45 +24,35 @@ const distinct_parser<> keyword_p("0-9a-zA-Z_");
 // (for mor intricate usage, for example together with symbol tables)
 const distinct_directive<> keyword_d("0-9a-zA-Z_");
 
-struct my_grammar: public grammar<my_grammar>
-{
-    template <typename ScannerT>
-    struct definition
-    {
-        typedef rule<ScannerT> rule_t;
+struct my_grammar : public grammar<my_grammar> {
+  template <typename ScannerT>
+  struct definition {
+    typedef rule<ScannerT> rule_t;
 
-        definition(my_grammar const& self)
-        {
-            top
-                =
-                    keyword_p("declare") // use keyword_p instead of std_p
-                >>  !ch_p(':')
-                >>  keyword_d[str_p("ident")] // use keyword_d
-                ;
-        }
+    definition(my_grammar const& self) {
+      top = keyword_p("declare")  // use keyword_p instead of std_p
+            >> !ch_p(':') >> keyword_d[str_p("ident")]  // use keyword_d
+          ;
+    }
 
-        rule_t top;
+    rule_t top;
 
-        rule_t const& start() const
-        {
-            return top;
-        }
-    };
+    rule_t const& start() const { return top; }
+  };
 };
 
-int main()
-{
-    my_grammar gram;
-    parse_info<> info;
+int main() {
+  my_grammar gram;
+  parse_info<> info;
 
-    info = parse("declare ident", gram, space_p);
-    BOOST_ASSERT(info.full); // valid input
+  info = parse("declare ident", gram, space_p);
+  BOOST_ASSERT(info.full);  // valid input
 
-    info = parse("declare: ident", gram, space_p);
-    BOOST_ASSERT(info.full); // valid input
+  info = parse("declare: ident", gram, space_p);
+  BOOST_ASSERT(info.full);  // valid input
 
-    info = parse("declareident", gram, space_p);
-    BOOST_ASSERT(!info.hit); // invalid input
+  info = parse("declareident", gram, space_p);
+  BOOST_ASSERT(!info.hit);  // invalid input
 
-    return exit_success;
+  return exit_success;
 }

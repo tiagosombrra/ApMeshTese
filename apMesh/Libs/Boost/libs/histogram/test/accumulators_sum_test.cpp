@@ -7,6 +7,7 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/histogram/accumulators/ostream.hpp>
 #include <boost/histogram/accumulators/sum.hpp>
+
 #include "throw_exception.hpp"
 #include "utility_str.hpp"
 
@@ -19,7 +20,7 @@ int main() {
   bad_sum += 1e100;
   bad_sum += 1;
   bad_sum += -1e100;
-  BOOST_TEST_EQ(bad_sum, 0); // instead of 2
+  BOOST_TEST_EQ(bad_sum, 0);  // instead of 2
 
   using s_t = accumulators::sum<double>;
   s_t sum;
@@ -38,7 +39,7 @@ int main() {
   BOOST_TEST_EQ(sum, (s_t{1e100, 2}));
   sum += -1e100;
   BOOST_TEST_EQ(sum, (s_t{0, 2}));
-  BOOST_TEST_EQ(sum, 2); // correct answer
+  BOOST_TEST_EQ(sum, 2);  // correct answer
   BOOST_TEST_EQ(sum.value(), 2);
   BOOST_TEST_EQ(sum.large(), 0);
   BOOST_TEST_EQ(sum.small(), 2);

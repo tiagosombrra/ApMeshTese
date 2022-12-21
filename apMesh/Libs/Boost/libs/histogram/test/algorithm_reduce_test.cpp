@@ -15,6 +15,7 @@
 #include <boost/histogram/ostream.hpp>
 #include <boost/histogram/unsafe_access.hpp>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
@@ -49,8 +50,10 @@ void run_tests() {
     BOOST_TEST_THROWS((void)reduce(h, slice(1, 0, 2), slice(1, 1, 3)),
                       std::invalid_argument);
     // two rebin requests for same axis not allowed
-    BOOST_TEST_THROWS((void)reduce(h, rebin(0, 2), rebin(0, 2)), std::invalid_argument);
-    // rebin and slice_and_rebin with merge > 1 requests for same axis cannot be fused
+    BOOST_TEST_THROWS((void)reduce(h, rebin(0, 2), rebin(0, 2)),
+                      std::invalid_argument);
+    // rebin and slice_and_rebin with merge > 1 requests for same axis cannot be
+    // fused
     BOOST_TEST_THROWS((void)reduce(h, slice_and_rebin(0, 1, 3, 2), rebin(0, 2)),
                       std::invalid_argument);
     BOOST_TEST_THROWS((void)reduce(h, shrink(1, 0, 2), crop(1, 0, 2)),
@@ -63,7 +66,8 @@ void run_tests() {
     // not allowed: crop with lower == upper
     BOOST_TEST_THROWS((void)reduce(h, crop(0, 0, 0)), std::invalid_argument);
     // not allowed: shrink axis to zero size
-    BOOST_TEST_THROWS((void)reduce(h, shrink(0, 10, 11)), std::invalid_argument);
+    BOOST_TEST_THROWS((void)reduce(h, shrink(0, 10, 11)),
+                      std::invalid_argument);
     // not allowed: rebin with zero merge
     BOOST_TEST_THROWS((void)reduce(h, rebin(0, 0)), std::invalid_argument);
     // not allowed: reducing unreducible axis
@@ -73,7 +77,8 @@ void run_tests() {
 
   // shrink and crop behavior when value on edge and not on edge is inclusive:
   // - lower edge of shrink: pick bin which contains edge, lower <= x < upper
-  // - upper edge of shrink: pick bin which contains edge + 1, lower < x <= upper
+  // - upper edge of shrink: pick bin which contains edge + 1, lower < x <=
+  // upper
   {
     auto h = make(Tag(), ID(0, 3));
     const auto& ax = h.axis();
@@ -107,7 +112,8 @@ void run_tests() {
 
   // shrink and rebin
   {
-    auto h = make_s(Tag(), std::vector<int>(), R(4, 1, 5, "1"), R(3, -1, 2, "2"));
+    auto h =
+        make_s(Tag(), std::vector<int>(), R(4, 1, 5, "1"), R(3, -1, 2, "2"));
 
     /*
       matrix layout:
@@ -123,8 +129,8 @@ void run_tests() {
     h.at(2, 0) = 1;
     h.at(2, 2) = 1;
     h.at(3, 2) = 3;
-    h.at(-1, -1) = 1; // underflow
-    h.at(4, 3) = 1;   // overflow
+    h.at(-1, -1) = 1;  // underflow
+    h.at(4, 3) = 1;    // overflow
 
     // should do nothing, index order does not matter
     auto hr = reduce(h, shrink(1, -1, 2), rebin(0, 1));
@@ -144,10 +150,10 @@ void run_tests() {
     BOOST_TEST_EQ(sum(hr), 12);
     BOOST_TEST_EQ(hr.axis(0), R(2, 2, 4, "1"));
     BOOST_TEST_EQ(hr.axis(1), R(3, -1, 2, "2"));
-    BOOST_TEST_EQ(hr.at(-1, 0), 1); // underflow
+    BOOST_TEST_EQ(hr.at(-1, 0), 1);  // underflow
     BOOST_TEST_EQ(hr.at(0, 0), 0);
     BOOST_TEST_EQ(hr.at(1, 0), 1);
-    BOOST_TEST_EQ(hr.at(2, 0), 0); // overflow
+    BOOST_TEST_EQ(hr.at(2, 0), 0);  // overflow
     BOOST_TEST_EQ(hr.at(-1, 1), 1);
     BOOST_TEST_EQ(hr.at(0, 1), 1);
     BOOST_TEST_EQ(hr.at(1, 1), 0);
@@ -170,12 +176,13 @@ void run_tests() {
     BOOST_TEST_EQ(sum(hr), 12);
     BOOST_TEST_EQ(hr.axis(0), R(1, 2, 4, "1"));
     BOOST_TEST_EQ(hr.axis(1), R(1, -1, 2, "2"));
-    BOOST_TEST_EQ(hr.at(-1, 0), 2); // underflow
+    BOOST_TEST_EQ(hr.at(-1, 0), 2);  // underflow
     BOOST_TEST_EQ(hr.at(0, 0), 5);
-    BOOST_TEST_EQ(hr.at(1, 0), 3); // overflow
+    BOOST_TEST_EQ(hr.at(1, 0), 3);  // overflow
 
     // test overload that accepts iterable and test option fusion
-    std::vector<reduce_command> opts{{shrink(0, 2, 5), rebin(0, 2), rebin(1, 3)}};
+    std::vector<reduce_command> opts{
+        {shrink(0, 2, 5), rebin(0, 2), rebin(1, 3)}};
     auto hr2 = reduce(h, opts);
     BOOST_TEST_EQ(hr2, hr);
     reduce_command opts2[3] = {rebin(1, 3), rebin(0, 2), shrink(0, 2, 5)};
@@ -205,8 +212,8 @@ void run_tests() {
     h.at(2, 0) = 1;
     h.at(2, 2) = 1;
     h.at(3, 2) = 3;
-    h.at(-1, -1) = 1; // underflow
-    h.at(4, 3) = 1;   // overflow
+    h.at(-1, -1) = 1;  // underflow
+    h.at(4, 3) = 1;    // overflow
 
     /*
       crop first and last column in x and y
@@ -252,25 +259,29 @@ void run_tests() {
     auto hr1 = reduce(h, crop(0, 3));
     BOOST_TEST_EQ(hr1, reduce(h, slice(-1, 2, slice_mode::crop)));
     BOOST_TEST_EQ(sum(hr1), 3);
-    BOOST_TEST_EQ(hr1.size(), 4); // flow bins are not physically removed, only zeroed
+    BOOST_TEST_EQ(hr1.size(),
+                  4);  // flow bins are not physically removed, only zeroed
 
     // remove underflow
     auto hr2 = reduce(h, crop(1, 3));
     BOOST_TEST_EQ(hr2, reduce(h, slice(0, 2, slice_mode::crop)));
     BOOST_TEST_EQ(sum(hr2), 2);
-    BOOST_TEST_EQ(hr2.size(), 4); // flow bins are not physically removed, only zeroed
+    BOOST_TEST_EQ(hr2.size(),
+                  4);  // flow bins are not physically removed, only zeroed
 
     // keep overflow
     auto hr3 = reduce(h, crop(2, 5));
     BOOST_TEST_EQ(hr3, reduce(h, slice(1, 4, slice_mode::crop)));
     BOOST_TEST_EQ(sum(hr3), 3);
-    BOOST_TEST_EQ(hr3.size(), 4); // flow bins are not physically removed, only zeroed
+    BOOST_TEST_EQ(hr3.size(),
+                  4);  // flow bins are not physically removed, only zeroed
 
     // remove overflow
     auto hr4 = reduce(h, crop(2, 4));
     BOOST_TEST_EQ(hr4, reduce(h, slice(1, 3, slice_mode::crop)));
     BOOST_TEST_EQ(sum(hr4), 2);
-    BOOST_TEST_EQ(hr4.size(), 4); // flow bins are not physically removed, only zeroed
+    BOOST_TEST_EQ(hr4.size(),
+                  4);  // flow bins are not physically removed, only zeroed
   }
 
   // one-sided crop and rebin with regular axis
@@ -289,20 +300,24 @@ void run_tests() {
     // keep underflow
     auto hr1 = reduce(h, crop_and_rebin(0, 5, 2));
     BOOST_TEST_EQ(sum(hr1), 5);
-    BOOST_TEST_EQ(hr1.size(), 4); // flow bins are not physically removed, only zeroed
+    BOOST_TEST_EQ(hr1.size(),
+                  4);  // flow bins are not physically removed, only zeroed
     auto hr2 = reduce(h, crop_and_rebin(0, 3, 2));
     BOOST_TEST_EQ(sum(hr2), 3);
-    BOOST_TEST_EQ(hr2.size(), 3); // flow bins are not physically removed, only zeroed
+    BOOST_TEST_EQ(hr2.size(),
+                  3);  // flow bins are not physically removed, only zeroed
 
     // remove underflow but keep overflow
     auto hr3 = reduce(h, crop_and_rebin(1, 6, 2));
     BOOST_TEST_EQ(sum(hr3), 5);
-    BOOST_TEST_EQ(hr3.size(), 4); // flow bins are not physically removed, only zeroed
+    BOOST_TEST_EQ(hr3.size(),
+                  4);  // flow bins are not physically removed, only zeroed
 
     // remove underflow and overflow
     auto hr4 = reduce(h, crop_and_rebin(1, 3, 2));
     BOOST_TEST_EQ(sum(hr4), 2);
-    BOOST_TEST_EQ(hr4.size(), 3); // flow bins are not physically removed, only zeroed
+    BOOST_TEST_EQ(hr4.size(),
+                  3);  // flow bins are not physically removed, only zeroed
   }
 
   // mixed axis types
@@ -318,7 +333,8 @@ void run_tests() {
     BOOST_TEST_EQ(hr.axis(1), (V{{1., 2., 3.}}));
     BOOST_TEST_EQ(hr.axis(2), (CI{{2, 3}}));
     BOOST_TEST_EQ(hr.axis(3), u);
-    BOOST_TEST_THROWS((void)algorithm::reduce(h, rebin(2, 2)), std::invalid_argument);
+    BOOST_TEST_THROWS((void)algorithm::reduce(h, rebin(2, 2)),
+                      std::invalid_argument);
   }
 
   // reduce on integer axis, rebin must fail
@@ -372,8 +388,9 @@ void run_tests() {
 
   // reduce on histogram with axis without flow bins, see GitHub issue #257
   {
-    auto h = make(Tag(), axis::integer<int, use_default, axis::option::underflow_t>(0, 3),
-                  axis::integer<int, use_default, axis::option::overflow_t>(0, 3));
+    auto h = make(
+        Tag(), axis::integer<int, use_default, axis::option::underflow_t>(0, 3),
+        axis::integer<int, use_default, axis::option::overflow_t>(0, 3));
 
     std::fill(h.begin(), h.end(), 1);
 

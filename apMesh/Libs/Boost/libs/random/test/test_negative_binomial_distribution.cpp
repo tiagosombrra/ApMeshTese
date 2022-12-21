@@ -12,7 +12,8 @@
 #include <boost/random/negative_binomial_distribution.hpp>
 #include <limits>
 
-#define BOOST_RANDOM_DISTRIBUTION boost::random::negative_binomial_distribution<>
+#define BOOST_RANDOM_DISTRIBUTION \
+  boost::random::negative_binomial_distribution<>
 #define BOOST_RANDOM_ARG1 k
 #define BOOST_RANDOM_ARG2 p
 #define BOOST_RANDOM_ARG1_DEFAULT 1

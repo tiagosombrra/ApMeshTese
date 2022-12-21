@@ -8,13 +8,7 @@
 //#include <boost/thread/thread.hpp>
 #include <boost/thread/condition_variable.hpp>
 
-void f()
-{
-    boost::this_thread::sleep_for(boost::chrono::milliseconds(10)); // **
+void f() {
+  boost::this_thread::sleep_for(boost::chrono::milliseconds(10));  // **
 }
-int main()
-{
-
-  return 0;
-}
-
+int main() { return 0; }

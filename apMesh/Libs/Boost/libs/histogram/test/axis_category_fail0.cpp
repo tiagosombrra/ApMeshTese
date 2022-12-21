@@ -10,5 +10,6 @@ using namespace boost::histogram;
 
 int main() {
   // category axis cannot be circular
-  (void)axis::category<int, boost::use_default, axis::option::circular_t>({1, 2});
+  (void)axis::category<int, boost::use_default, axis::option::circular_t>(
+      {1, 2});
 }

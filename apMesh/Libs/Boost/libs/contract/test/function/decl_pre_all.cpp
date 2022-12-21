@@ -7,67 +7,68 @@
 // Test with preconditions.
 
 #undef BOOST_CONTRACT_TEST_NO_F_PRE
-#include "decl.hpp"
-
 #include <boost/detail/lightweight_test.hpp>
 #include <sstream>
 #include <string>
 
+#include "decl.hpp"
+
 std::string ok_f(bool failed = false) {
-    std::ostringstream ok; ok << "" // Suppress a warning.
-        #ifndef BOOST_CONTRACT_NO_PRECONDITIONS
-            << "f::pre" << std::endl // Test no failure here.
-        #endif
-    ;
-    if(!failed) ok
-        #ifndef BOOST_CONTRACT_NO_OLDS
-            << "f::old" << std::endl
-        #endif
+  std::ostringstream ok;
+  ok << ""  // Suppress a warning.
+#ifndef BOOST_CONTRACT_NO_PRECONDITIONS
+     << "f::pre" << std::endl  // Test no failure here.
+#endif
+      ;
+  if (!failed)
+    ok
+#ifndef BOOST_CONTRACT_NO_OLDS
+        << "f::old" << std::endl
+#endif
         << "f::body" << std::endl
-        #ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
-            << "f::post" << std::endl
-        #endif
-    ;
-    return ok.str();
+#ifndef BOOST_CONTRACT_NO_POSTCONDITIONS
+        << "f::post" << std::endl
+#endif
+        ;
+  return ok.str();
 }
 
-struct err {}; // Global decl so visible in MSVC10 lambdas.
+struct err {};  // Global decl so visible in MSVC10 lambdas.
 
 int main() {
-    std::ostringstream ok;
+  std::ostringstream ok;
 
-    f_pre = true;
-    out.str("");
+  f_pre = true;
+  out.str("");
+  f();
+  ok.str("");
+  ok << ok_f();
+  BOOST_TEST(out.eq(ok.str()));
+
+#ifdef BOOST_CONTRACT_NO_PRECONDITIONS
+#define BOOST_CONTRACT_TEST_pre 0
+#else
+#define BOOST_CONTRACT_TEST_pre 1
+#endif
+
+  boost::contract::set_precondition_failure(
+      [](boost::contract::from) { throw err(); });
+
+  f_pre = false;
+  out.str("");
+  try {
     f();
-    ok.str(""); ok
-        << ok_f()
-    ;
+#ifndef BOOST_CONTRACT_NO_PRECONDITIONS
+    BOOST_TEST(false);
+  } catch (err const&) {
+#endif
+    ok.str("");
+    ok << ok_f(BOOST_CONTRACT_TEST_pre);
     BOOST_TEST(out.eq(ok.str()));
+  } catch (...) {
+    BOOST_TEST(false);
+  }
 
-    #ifdef BOOST_CONTRACT_NO_PRECONDITIONS
-        #define BOOST_CONTRACT_TEST_pre 0
-    #else
-        #define BOOST_CONTRACT_TEST_pre 1
-    #endif
-
-    boost::contract::set_precondition_failure(
-            [] (boost::contract::from) { throw err(); });
-
-    f_pre = false;
-    out.str("");
-    try {
-        f();
-        #ifndef BOOST_CONTRACT_NO_PRECONDITIONS
-                BOOST_TEST(false);
-            } catch(err const&) {
-        #endif
-        ok.str(""); ok
-            << ok_f(BOOST_CONTRACT_TEST_pre)
-        ;
-        BOOST_TEST(out.eq(ok.str()));
-    } catch(...) { BOOST_TEST(false); }
-
-    #undef BOOST_CONTRACT_TEST_pre
-    return boost::report_errors();
+#undef BOOST_CONTRACT_TEST_pre
+  return boost::report_errors();
 }
-

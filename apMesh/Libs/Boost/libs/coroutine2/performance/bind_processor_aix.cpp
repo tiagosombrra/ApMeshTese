@@ -6,20 +6,18 @@
 
 #include "bind_processor.hpp"
 
-extern "C"
-{
+extern "C" {
 #include <sys/processor.h>
 #include <sys/thread.h>
 }
 
+#include <boost/config/abi_prefix.hpp>
 #include <stdexcept>
 
-#include <boost/config/abi_prefix.hpp>
-
-void bind_to_processor( unsigned int n)
-{
-    if ( ::bindprocessor( BINDTHREAD, ::thread_yield(), static_cast< cpu_t >( n) ) == -1)
-        throw std::runtime_error("::bindprocessor() failed");
+void bind_to_processor(unsigned int n) {
+  if (::bindprocessor(BINDTHREAD, ::thread_yield(), static_cast<cpu_t>(n)) ==
+      -1)
+    throw std::runtime_error("::bindprocessor() failed");
 }
 
 #include <boost/config/abi_suffix.hpp>

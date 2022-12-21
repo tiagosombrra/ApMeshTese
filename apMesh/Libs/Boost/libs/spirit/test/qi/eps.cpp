@@ -5,40 +5,38 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/qi_auxiliary.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-
 #include <iostream>
+
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test;
-    using boost::spirit::eps;
+int main() {
+  using boost::spirit::eps;
+  using spirit_test::test;
 
-    {
-        BOOST_TEST((test("", eps)));
-        BOOST_TEST((test("xxx", eps, false)));
-        BOOST_TEST((!test("", !eps))); // not predicate
-    }
+  {
+    BOOST_TEST((test("", eps)));
+    BOOST_TEST((test("xxx", eps, false)));
+    BOOST_TEST((!test("", !eps)));  // not predicate
+  }
 
-    {   // test non-lazy semantic predicate
+  {  // test non-lazy semantic predicate
 
-        BOOST_TEST((test("", eps(true))));
-        BOOST_TEST((!test("", eps(false))));
-        BOOST_TEST((test("", !eps(false)))); // not predicate
-    }
+    BOOST_TEST((test("", eps(true))));
+    BOOST_TEST((!test("", eps(false))));
+    BOOST_TEST((test("", !eps(false))));  // not predicate
+  }
 
-    {   // test lazy semantic predicate
+  {  // test lazy semantic predicate
 
-        using boost::phoenix::val;
+    using boost::phoenix::val;
 
-        BOOST_TEST((test("", eps(val(true)))));
-        BOOST_TEST((!test("", eps(val(false)))));
-        BOOST_TEST((test("", !eps(val(false))))); // not predicate
-    }
+    BOOST_TEST((test("", eps(val(true)))));
+    BOOST_TEST((!test("", eps(val(false)))));
+    BOOST_TEST((test("", !eps(val(false)))));  // not predicate
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

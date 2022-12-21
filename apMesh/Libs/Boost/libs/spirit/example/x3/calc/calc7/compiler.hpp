@@ -9,25 +9,22 @@
 
 #include "ast.hpp"
 
-namespace client
-{
-    ///////////////////////////////////////////////////////////////////////////
-    //  The Compiler
-    ///////////////////////////////////////////////////////////////////////////
-    struct compiler
-    {
-        typedef void result_type;
+namespace client {
+///////////////////////////////////////////////////////////////////////////
+//  The Compiler
+///////////////////////////////////////////////////////////////////////////
+struct compiler {
+  typedef void result_type;
 
-        std::vector<int>& code;
-        compiler(std::vector<int>& code)
-          : code(code) {}
+  std::vector<int>& code;
+  compiler(std::vector<int>& code) : code(code) {}
 
-        void operator()(ast::nil) const;
-        void operator()(unsigned int n) const;
-        void operator()(ast::operation const& x) const;
-        void operator()(ast::signed_ const& x) const;
-        void operator()(ast::expression const& x) const;
-    };
-}
+  void operator()(ast::nil) const;
+  void operator()(unsigned int n) const;
+  void operator()(ast::operation const& x) const;
+  void operator()(ast::signed_ const& x) const;
+  void operator()(ast::expression const& x) const;
+};
+}  // namespace client
 
 #endif

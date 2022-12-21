@@ -8,26 +8,26 @@
 #include <vector>
 
 #if BOOST_UNORDERED_TEMPLATE_DEDUCTION_GUIDES
-struct hash_equals
-{
-  template <typename T> bool operator()(T const& x) const
-  {
+struct hash_equals {
+  template <typename T>
+  bool operator()(T const& x) const {
     boost::hash<T> hf;
     return hf(x);
   }
 
-  template <typename T> bool operator()(T const& x, T const& y) const
-  {
+  template <typename T>
+  bool operator()(T const& x, T const& y) const {
     std::equal_to<T> eq;
     return eq(x, y);
   }
 };
 
-template <typename T> struct test_allocator
-{
+template <typename T>
+struct test_allocator {
   typedef T value_type;
   test_allocator() = default;
-  template <typename T2> test_allocator(test_allocator<T2> const&) {}
+  template <typename T2>
+  test_allocator(test_allocator<T2> const&) {}
   T* allocate(std::size_t n) const { return (T*)malloc(sizeof(T) * n); }
   void deallocate(T* ptr, std::size_t) const { free(ptr); }
   bool operator==(test_allocator const&) { return true; }
@@ -35,8 +35,7 @@ template <typename T> struct test_allocator
 };
 #endif
 
-int main()
-{
+int main() {
   std::cout << "BOOST_UNORDERED_TEMPLATE_DEDUCTION_GUIDES: "
             << BOOST_UNORDERED_TEMPLATE_DEDUCTION_GUIDES << std::endl;
 
@@ -65,7 +64,7 @@ int main()
   {
     boost::unordered_map m(x.begin(), x.end());
     static_assert(
-      std::is_same<decltype(m), boost::unordered_map<int, int> >::value);
+        std::is_same<decltype(m), boost::unordered_map<int, int> >::value);
   }
 
   /* Ambiguous:
@@ -85,10 +84,12 @@ int main()
 
   {
     boost::unordered_map m(x.begin(), x.end(), 0, std::hash<int>(),
-      std::equal_to<int>(), pair_allocator);
-    static_assert(std::is_same<decltype(m),
-      boost::unordered_map<int, int, std::hash<int>, std::equal_to<int>,
-        test_allocator<std::pair<const int, int> > > >::value);
+                           std::equal_to<int>(), pair_allocator);
+    static_assert(
+        std::is_same<decltype(m),
+                     boost::unordered_map<
+                         int, int, std::hash<int>, std::equal_to<int>,
+                         test_allocator<std::pair<const int, int> > > >::value);
   }
 
   /*
@@ -104,7 +105,7 @@ int main()
   {
     boost::unordered_map m({std::pair<int const, int>(1, 2)});
     static_assert(
-      std::is_same<decltype(m), boost::unordered_map<int, int> >::value);
+        std::is_same<decltype(m), boost::unordered_map<int, int> >::value);
   }
 
   /* Ambiguous
@@ -124,11 +125,13 @@ int main()
   */
 
   {
-    boost::unordered_map m(
-      {std::pair<int const, int>(1, 2)}, 0, f, f, pair_allocator);
-    static_assert(std::is_same<decltype(m),
-      boost::unordered_map<int, int, hash_equals, hash_equals,
-        test_allocator<std::pair<const int, int> > > >::value);
+    boost::unordered_map m({std::pair<int const, int>(1, 2)}, 0, f, f,
+                           pair_allocator);
+    static_assert(
+        std::is_same<decltype(m),
+                     boost::unordered_map<
+                         int, int, hash_equals, hash_equals,
+                         test_allocator<std::pair<const int, int> > > >::value);
   }
 
   /*
@@ -211,9 +214,11 @@ int main()
 
   {
     boost::unordered_map m({std::pair<int const, int>(1, 2)}, pair_allocator);
-    static_assert(std::is_same<decltype(m),
-      boost::unordered_map<int, int, boost::hash<int>, std::equal_to<int>,
-        test_allocator<std::pair<const int, int> > > >::value);
+    static_assert(
+        std::is_same<decltype(m),
+                     boost::unordered_map<
+                         int, int, boost::hash<int>, std::equal_to<int>,
+                         test_allocator<std::pair<const int, int> > > >::value);
   }
 
   /*
@@ -239,7 +244,7 @@ int main()
   {
     boost::unordered_multimap m(x.begin(), x.end());
     static_assert(
-      std::is_same<decltype(m), boost::unordered_multimap<int, int> >::value);
+        std::is_same<decltype(m), boost::unordered_multimap<int, int> >::value);
   }
 
   /* Ambiguous:
@@ -259,16 +264,18 @@ int main()
 
   {
     boost::unordered_multimap m(x.begin(), x.end(), 0, std::hash<int>(),
-      std::equal_to<int>(), pair_allocator);
-    static_assert(std::is_same<decltype(m),
-      boost::unordered_multimap<int, int, std::hash<int>, std::equal_to<int>,
-        test_allocator<std::pair<const int, int> > > >::value);
+                                std::equal_to<int>(), pair_allocator);
+    static_assert(
+        std::is_same<decltype(m),
+                     boost::unordered_multimap<
+                         int, int, std::hash<int>, std::equal_to<int>,
+                         test_allocator<std::pair<const int, int> > > >::value);
   }
 
   {
     boost::unordered_multimap m({std::pair<int const, int>(1, 2)});
     static_assert(
-      std::is_same<decltype(m), boost::unordered_multimap<int, int> >::value);
+        std::is_same<decltype(m), boost::unordered_multimap<int, int> >::value);
   }
 
   /* Ambiguous
@@ -288,11 +295,13 @@ int main()
   */
 
   {
-    boost::unordered_multimap m(
-      {std::pair<int const, int>(1, 2)}, 0, f, f, pair_allocator);
-    static_assert(std::is_same<decltype(m),
-      boost::unordered_multimap<int, int, hash_equals, hash_equals,
-        test_allocator<std::pair<const int, int> > > >::value);
+    boost::unordered_multimap m({std::pair<int const, int>(1, 2)}, 0, f, f,
+                                pair_allocator);
+    static_assert(
+        std::is_same<decltype(m),
+                     boost::unordered_multimap<
+                         int, int, hash_equals, hash_equals,
+                         test_allocator<std::pair<const int, int> > > >::value);
   }
 
   /* Ambiguous
@@ -331,22 +340,24 @@ int main()
   */
 
   {
-    boost::unordered_multimap m(
-      {std::pair<int const, int>(1, 2)}, pair_allocator);
-    static_assert(std::is_same<decltype(m),
-      boost::unordered_multimap<int, int, boost::hash<int>, std::equal_to<int>,
-        test_allocator<std::pair<const int, int> > > >::value);
+    boost::unordered_multimap m({std::pair<int const, int>(1, 2)},
+                                pair_allocator);
+    static_assert(
+        std::is_same<decltype(m),
+                     boost::unordered_multimap<
+                         int, int, boost::hash<int>, std::equal_to<int>,
+                         test_allocator<std::pair<const int, int> > > >::value);
   }
 
-/* Ambiguous
-{
-  boost::unordered_multimap m({std::pair<int const, int>(1,2)}, 0, f,
-pair_allocator);
-  static_assert(std::is_same<decltype(m),boost::unordered_multimap<int, int,
-boost::hash<int>, std::equal_to<int>, test_allocator<std::pair<const int,
-int>>>>::value);
-}
-*/
+  /* Ambiguous
+  {
+    boost::unordered_multimap m({std::pair<int const, int>(1,2)}, 0, f,
+  pair_allocator);
+    static_assert(std::is_same<decltype(m),boost::unordered_multimap<int, int,
+  boost::hash<int>, std::equal_to<int>, test_allocator<std::pair<const int,
+  int>>>>::value);
+  }
+  */
 
 #endif
 }

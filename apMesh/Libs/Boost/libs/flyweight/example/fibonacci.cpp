@@ -29,29 +29,28 @@ struct compute_fibonacci;
  * further information on tracking policies.
  */
 
-typedef flyweight<key_value<int,compute_fibonacci>,no_tracking> fibonacci;
+typedef flyweight<key_value<int, compute_fibonacci>, no_tracking> fibonacci;
 
 /* Implementation of compute_fibonacci. Note that the construction
  * of compute_fibonacci(n) uses fibonacci(n-1) and fibonacci(n-2),
  * which effectively memoizes the computation.
  */
 
-struct compute_fibonacci:private boost::noncopyable
-{
-  compute_fibonacci(int n):
-    result(n==0?0:n==1?1:fibonacci(n-2).get()+fibonacci(n-1).get())
-  {}
+struct compute_fibonacci : private boost::noncopyable {
+  compute_fibonacci(int n)
+      : result(n == 0   ? 0
+               : n == 1 ? 1
+                        : fibonacci(n - 2).get() + fibonacci(n - 1).get()) {}
 
-  operator int()const{return result;}
+  operator int() const { return result; }
   int result;
 };
 
-int main()
-{
+int main() {
   /* list some Fibonacci numbers */
 
-  for(int n=0;n<40;++n){
-    std::cout<<"F("<<n<<")="<<fibonacci(n)<<std::endl;
+  for (int n = 0; n < 40; ++n) {
+    std::cout << "F(" << n << ")=" << fibonacci(n) << std::endl;
   }
 
   return 0;

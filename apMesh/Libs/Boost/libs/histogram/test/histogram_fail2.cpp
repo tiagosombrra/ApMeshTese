@@ -15,7 +15,8 @@ int main() {
     void operator()(weight_type<double>, double) {}
   };
 
-  auto h = make_histogram_with(dense_storage<accumulator>(), axis::integer<>(0, 5));
+  auto h =
+      make_histogram_with(dense_storage<accumulator>(), axis::integer<>(0, 5));
 
   // accumulator requires sample
   h(0, weight(1));

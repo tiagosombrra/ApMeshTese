@@ -16,14 +16,16 @@ int main() {
 
   // custom axis, which adapts builtin integer axis
   struct custom_axis : public axis::integer<> {
-    using value_type = const char*; // type that is fed to the axis
+    using value_type = const char*;  // type that is fed to the axis
 
-    using integer::integer; // inherit ctors of base
+    using integer::integer;  // inherit ctors of base
 
     // the customization point
     // - accept const char* and convert to int
     // - then call index method of base class
-    axis::index_type index(value_type s) const { return integer::index(std::atoi(s)); }
+    axis::index_type index(value_type s) const {
+      return integer::index(std::atoi(s));
+    }
   };
 
   auto h = make_histogram(custom_axis(3, 6));
@@ -39,9 +41,10 @@ int main() {
 
   std::cout << os.str() << std::endl;
 
-  assert(os.str() == "bin 0 [3] 1\n"
-                     "bin 1 [4] 1\n"
-                     "bin 2 [5] 0\n");
+  assert(os.str() ==
+         "bin 0 [3] 1\n"
+         "bin 1 [4] 1\n"
+         "bin 2 [5] 0\n");
 }
 
 //]

@@ -18,13 +18,11 @@
 
 // unique_lock(mutex_type& m, adopt_lock_t);
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
-
-int main()
-{
+int main() {
   boost::mutex m;
   m.lock();
   boost::unique_lock<boost::mutex> lk(m, boost::adopt_lock);
@@ -33,4 +31,3 @@ int main()
 
   return boost::report_errors();
 }
-

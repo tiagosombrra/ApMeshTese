@@ -17,11 +17,10 @@
 #pragma hdrstop
 #endif
 
-int main()
-{
-  boost::value_initialized<int const> cx ;
+int main() {
+  boost::value_initialized<int const> cx;
 
-  get(cx) = 1234 ; // this should produce an ERROR
+  get(cx) = 1234;  // this should produce an ERROR
 
   return 0;
 }

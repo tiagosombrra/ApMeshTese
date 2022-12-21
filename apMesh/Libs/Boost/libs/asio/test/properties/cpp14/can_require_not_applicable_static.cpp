@@ -12,24 +12,25 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static constexpr bool is_requirable = true;
-  template <typename> static constexpr bool static_query_v = true;
+  template <typename>
+  static constexpr bool static_query_v = true;
   static constexpr bool value() { return true; }
 };
 
 template <int>
-struct object
-{
-};
+struct object {};
 
-int main()
-{
+int main() {
   static_assert(!boost::asio::can_require_v<object<1>, prop<1>>, "");
   static_assert(!boost::asio::can_require_v<object<1>, prop<1>, prop<1>>, "");
-  static_assert(!boost::asio::can_require_v<object<1>, prop<1>, prop<1>, prop<1>>, "");
+  static_assert(
+      !boost::asio::can_require_v<object<1>, prop<1>, prop<1>, prop<1>>, "");
   static_assert(!boost::asio::can_require_v<const object<1>, prop<1>>, "");
-  static_assert(!boost::asio::can_require_v<const object<1>, prop<1>, prop<1>>, "");
-  static_assert(!boost::asio::can_require_v<const object<1>, prop<1>, prop<1>, prop<1>>, "");
+  static_assert(!boost::asio::can_require_v<const object<1>, prop<1>, prop<1>>,
+                "");
+  static_assert(
+      !boost::asio::can_require_v<const object<1>, prop<1>, prop<1>, prop<1>>,
+      "");
 }

@@ -7,15 +7,16 @@
 // Test error when make_old(...) not used by mistake.
 
 #ifndef BOOST_CONTRACT_TEST_OLD_PTR_TYPE
-    #error "must define BOOST_CONTRACT_TEST_OLD_PTR_TYPE"
+#error "must define BOOST_CONTRACT_TEST_OLD_PTR_TYPE"
 #endif
 
 #include <boost/contract/old.hpp>
 
 int main() {
-    int x = 1;
-    BOOST_CONTRACT_TEST_OLD_PTR_TYPE<int> old_x = boost::contract::copy_old() ?
-            x : boost::contract::null_old(); // Error (missing make_old(...)).
-    return 0;
+  int x = 1;
+  BOOST_CONTRACT_TEST_OLD_PTR_TYPE<int> old_x =
+      boost::contract::copy_old()
+          ? x
+          : boost::contract::null_old();  // Error (missing make_old(...)).
+  return 0;
 }
-

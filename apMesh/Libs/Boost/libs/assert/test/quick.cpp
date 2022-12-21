@@ -11,8 +11,8 @@
 
 #include <boost/assert.hpp>
 
-int main()
-{
-    int x = 1; (void)x;
-    BOOST_ASSERT( x == 1 );
+int main() {
+  int x = 1;
+  (void)x;
+  BOOST_ASSERT(x == 1);
 }

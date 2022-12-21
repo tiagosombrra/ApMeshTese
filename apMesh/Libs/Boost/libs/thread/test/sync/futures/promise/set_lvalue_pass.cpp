@@ -20,13 +20,11 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/thread/future.hpp>
 
-int main()
-{
-
+int main() {
   {
     typedef int& T;
     int i = 3;
@@ -37,17 +35,14 @@ int main()
     BOOST_TEST(j == 3);
     ++i;
     BOOST_TEST(j == 4);
-    try
-    {
+    try {
       p.set_value(i);
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
-    }
-    catch (...)
-    {
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(
+                     boost::future_errc::promise_already_satisfied));
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
@@ -61,17 +56,14 @@ int main()
     BOOST_TEST(j == 3);
     ++i;
     BOOST_TEST(j == 4);
-    try
-    {
+    try {
       p.set_value_deferred(i);
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
-    }
-    catch (...)
-    {
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(
+                     boost::future_errc::promise_already_satisfied));
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
@@ -87,17 +79,14 @@ int main()
     BOOST_TEST(j == 3);
     ++i;
     BOOST_TEST(j == 4);
-    try
-    {
+    try {
       p.set_value_deferred(i);
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
-    }
-    catch (...)
-    {
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(
+                     boost::future_errc::promise_already_satisfied));
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
@@ -113,20 +102,16 @@ int main()
     BOOST_TEST(j == 3);
     ++i;
     BOOST_TEST(j == 4);
-    try
-    {
+    try {
       p.set_value(i);
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
-    }
-    catch (...)
-    {
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(
+                     boost::future_errc::promise_already_satisfied));
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
   return boost::report_errors();
 }
-

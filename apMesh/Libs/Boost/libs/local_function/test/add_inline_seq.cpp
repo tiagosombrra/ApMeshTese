@@ -5,24 +5,24 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // Home at http://www.boost.org/libs/local_function
 
-#include <boost/local_function.hpp>
-#include <boost/detail/lightweight_test.hpp>
-#include <vector>
 #include <algorithm>
+#include <boost/detail/lightweight_test.hpp>
+#include <boost/local_function.hpp>
+#include <vector>
 
 int main(void) {
-    int sum = 0, factor = 10;
+  int sum = 0, factor = 10;
 
-    void BOOST_LOCAL_FUNCTION( (const bind factor) (bind& sum) (int num) ) {
-        sum += factor * num;
-    } BOOST_LOCAL_FUNCTION_NAME(inline add)
+  void BOOST_LOCAL_FUNCTION((const bind factor)(bind & sum)(int num)) {
+    sum += factor * num;
+  }
+  BOOST_LOCAL_FUNCTION_NAME(inline add)
 
-    std::vector<int> v(100);
-    std::fill(v.begin(), v.end(), 1);
+  std::vector<int> v(100);
+  std::fill(v.begin(), v.end(), 1);
 
-    for(size_t i = 0; i < v.size(); ++i) add(v[i]);
+  for (size_t i = 0; i < v.size(); ++i) add(v[i]);
 
-    BOOST_TEST(sum == 1000);
-    return boost::report_errors();
+  BOOST_TEST(sum == 1000);
+  return boost::report_errors();
 }
-

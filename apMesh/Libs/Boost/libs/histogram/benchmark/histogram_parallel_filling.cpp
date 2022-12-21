@@ -5,10 +5,12 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <benchmark/benchmark.h>
+
 #include <boost/histogram/accumulators/thread_safe.hpp>
 #include <boost/histogram/axis/regular.hpp>
 #include <boost/histogram/histogram.hpp>
 #include <boost/histogram/make_histogram.hpp>
+#include <cassert>
 #include <chrono>
 #include <functional>
 #include <mutex>
@@ -16,12 +18,11 @@
 #include <random>
 #include <thread>
 #include <vector>
-#include "../test/throw_exception.hpp"
 
-#include <cassert>
+#include "../test/throw_exception.hpp"
 struct assert_check {
   assert_check() {
-    assert(false); // don't run with asserts enabled
+    assert(false);  // don't run with asserts enabled
   }
 } _;
 

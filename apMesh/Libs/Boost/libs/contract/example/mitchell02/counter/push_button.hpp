@@ -12,75 +12,70 @@
 #include <cassert>
 
 class push_button {
-public:
-    // No inv and no bases so contracts optional if no pre, post, and override.
+ public:
+  // No inv and no bases so contracts optional if no pre, post, and override.
 
-    /* Creation */
+  /* Creation */
 
-    // Create an enabled button.
-    push_button() : enabled_(true) {
-        boost::contract::check c = boost::contract::constructor(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(enabled()); // Enabled.
-            })
-        ;
-    }
+  // Create an enabled button.
+  push_button() : enabled_(true) {
+    boost::contract::check c =
+        boost::contract::constructor(this).postcondition([&] {
+          BOOST_CONTRACT_ASSERT(enabled());  // Enabled.
+        });
+  }
 
-    // Destroy button.
-    virtual ~push_button() {
-        // Could have omitted contracts here (nothing to check).
-        boost::contract::check c = boost::contract::destructor(this);
-    }
+  // Destroy button.
+  virtual ~push_button() {
+    // Could have omitted contracts here (nothing to check).
+    boost::contract::check c = boost::contract::destructor(this);
+  }
 
-    /* Queries */
+  /* Queries */
 
-    // If button is enabled.
-    bool enabled() const {
-        // Could have omitted contracts here (nothing to check).
-        boost::contract::check c = boost::contract::public_function(this);
-        return enabled_;
-    }
+  // If button is enabled.
+  bool enabled() const {
+    // Could have omitted contracts here (nothing to check).
+    boost::contract::check c = boost::contract::public_function(this);
+    return enabled_;
+  }
 
-    /* Commands */
+  /* Commands */
 
-    // Enable button.
-    void enable() {
-        boost::contract::check c = boost::contract::public_function(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(enabled()); // Enabled.
-            })
-        ;
+  // Enable button.
+  void enable() {
+    boost::contract::check c =
+        boost::contract::public_function(this).postcondition([&] {
+          BOOST_CONTRACT_ASSERT(enabled());  // Enabled.
+        });
 
-        enabled_ = true;
-    }
+    enabled_ = true;
+  }
 
-    // Disable button.
-    void disable() {
-        boost::contract::check c = boost::contract::public_function(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(!enabled()); // Disabled.
-            })
-        ;
+  // Disable button.
+  void disable() {
+    boost::contract::check c =
+        boost::contract::public_function(this).postcondition([&] {
+          BOOST_CONTRACT_ASSERT(!enabled());  // Disabled.
+        });
 
-        enabled_ = false;
-    }
+    enabled_ = false;
+  }
 
-    // Invoke externally when button clicked.
-    virtual void on_bn_clicked(boost::contract::virtual_* v = 0) = 0;
+  // Invoke externally when button clicked.
+  virtual void on_bn_clicked(boost::contract::virtual_* v = 0) = 0;
 
-private:
-    bool enabled_;
+ private:
+  bool enabled_;
 };
 
 void push_button::on_bn_clicked(boost::contract::virtual_* v) {
-    boost::contract::check c = boost::contract::public_function(v, this)
-        .precondition([&] {
-            BOOST_CONTRACT_ASSERT(enabled()); // Enabled.
-        })
-    ;
-    assert(false);
+  boost::contract::check c =
+      boost::contract::public_function(v, this).precondition([&] {
+        BOOST_CONTRACT_ASSERT(enabled());  // Enabled.
+      });
+  assert(false);
 }
 
-#endif // #include guard
+#endif  // #include guard
 //]
-

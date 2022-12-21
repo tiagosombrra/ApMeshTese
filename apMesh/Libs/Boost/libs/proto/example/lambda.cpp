@@ -6,12 +6,12 @@
 //
 // This example builds a simple but functional lambda library using Proto.
 
-#include <iostream>
 #include "./lambda.hpp"
 
-int main()
-{
-    using namespace boost::lambda;
-    int i = (_1 + _1)(42);
-    std::cout << i << std::endl;
+#include <iostream>
+
+int main() {
+  using namespace boost::lambda;
+  int i = (_1 + _1)(42);
+  std::cout << i << std::endl;
 }

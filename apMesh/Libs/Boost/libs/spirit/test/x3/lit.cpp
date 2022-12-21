@@ -6,50 +6,47 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
-
 #include <string>
 
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test_attr;
-    using boost::spirit::x3::lit;
-    using boost::spirit::x3::char_;
+int main() {
+  using boost::spirit::x3::char_;
+  using boost::spirit::x3::lit;
+  using spirit_test::test_attr;
 
-    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(lit("x"));
+  BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(lit("x"));
 
-    {
-        std::string attr;
-        auto p = char_ >> lit("\n");
-        BOOST_TEST(test_attr("A\n", p, attr));
-        BOOST_TEST(attr == "A");
-    }
+  {
+    std::string attr;
+    auto p = char_ >> lit("\n");
+    BOOST_TEST(test_attr("A\n", p, attr));
+    BOOST_TEST(attr == "A");
+  }
 
-    {
-        using namespace boost::spirit::x3::ascii;
-        std::string attr;
-        auto p = char_ >> lit("\n");
-        BOOST_TEST(test_attr("A\n", p, attr));
-        BOOST_TEST(attr == "A");
-    }
+  {
+    using namespace boost::spirit::x3::ascii;
+    std::string attr;
+    auto p = char_ >> lit("\n");
+    BOOST_TEST(test_attr("A\n", p, attr));
+    BOOST_TEST(attr == "A");
+  }
 
-    {
-        using namespace boost::spirit::x3::iso8859_1;
-        std::string attr;
-        auto p = char_ >> lit("\n");
-        BOOST_TEST(test_attr("É\n", p, attr));
-        BOOST_TEST(attr == "É");
-    }
+  {
+    using namespace boost::spirit::x3::iso8859_1;
+    std::string attr;
+    auto p = char_ >> lit("\n");
+    BOOST_TEST(test_attr("É\n", p, attr));
+    BOOST_TEST(attr == "É");
+  }
 
-    {
-        using namespace boost::spirit::x3::standard_wide;
-        std::wstring attr;
-        auto p = char_ >> lit("\n");
-        BOOST_TEST(test_attr(l"É\n", p, attr));
-        BOOST_TEST(attr == "A");
-    }
+  {
+    using namespace boost::spirit::x3::standard_wide;
+    std::wstring attr;
+    auto p = char_ >> lit("\n");
+    BOOST_TEST(test_attr(l "É\n", p, attr));
+    BOOST_TEST(attr == "A");
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

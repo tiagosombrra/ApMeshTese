@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/cauchy.hpp>
 #include <boost/random/cauchy_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/cauchy.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::cauchy_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME cauchy

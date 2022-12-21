@@ -8,64 +8,63 @@
 #ifndef COUNTER_HPP_
 #define COUNTER_HPP_
 
-#include "../observer/subject.hpp"
 #include <boost/contract.hpp>
 
+#include "../observer/subject.hpp"
+
 class counter
-    #define BASES public subject
-    : BASES
-{
-    friend class boost::contract::access;
+#define BASES \
+ public       \
+  subject
+    : BASES {
+  friend class boost::contract::access;
 
-    typedef BOOST_CONTRACT_BASE_TYPES(BASES) base_types;
-    #undef BASES
+  typedef BOOST_CONTRACT_BASE_TYPES(BASES) base_types;
+#undef BASES
 
-public:
-    /* Creation */
+ public:
+  /* Creation */
 
-    // Construct counter with specified value.
-    explicit counter(int a_value = 10) : value_(a_value) {
-        boost::contract::check c = boost::contract::constructor(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(value() == a_value); // Value set.
-            })
-        ;
-    }
+  // Construct counter with specified value.
+  explicit counter(int a_value = 10) : value_(a_value) {
+    boost::contract::check c =
+        boost::contract::constructor(this).postcondition([&] {
+          BOOST_CONTRACT_ASSERT(value() == a_value);  // Value set.
+        });
+  }
 
-    // Destroy counter.
-    virtual ~counter() {
-        // Could have omitted contracts here (nothing to check).
-        boost::contract::check c = boost::contract::destructor(this);
-    }
+  // Destroy counter.
+  virtual ~counter() {
+    // Could have omitted contracts here (nothing to check).
+    boost::contract::check c = boost::contract::destructor(this);
+  }
 
-    /* Queries */
+  /* Queries */
 
-    // Current counter value.
-    int value() const {
-        // Could have omitted contracts here (nothing to check).
-        boost::contract::check c = boost::contract::public_function(this);
-        return value_;
-    }
+  // Current counter value.
+  int value() const {
+    // Could have omitted contracts here (nothing to check).
+    boost::contract::check c = boost::contract::public_function(this);
+    return value_;
+  }
 
-    /* Commands */
+  /* Commands */
 
-    // Decrement counter value.
-    void decrement() {
-        boost::contract::old_ptr<int> old_value = BOOST_CONTRACT_OLDOF(value());
-        boost::contract::check c = boost::contract::public_function(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(value() == *old_value - 1); // Decrement.
-            })
-        ;
+  // Decrement counter value.
+  void decrement() {
+    boost::contract::old_ptr<int> old_value = BOOST_CONTRACT_OLDOF(value());
+    boost::contract::check c =
+        boost::contract::public_function(this).postcondition([&] {
+          BOOST_CONTRACT_ASSERT(value() == *old_value - 1);  // Decrement.
+        });
 
-        --value_;
-        notify(); // Notify all attached observers.
-    }
+    --value_;
+    notify();  // Notify all attached observers.
+  }
 
-private:
-    int value_;
+ private:
+  int value_;
 };
 
-#endif // #include guard
+#endif  // #include guard
 //]
-

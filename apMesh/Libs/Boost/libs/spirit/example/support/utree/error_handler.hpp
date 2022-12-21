@@ -9,104 +9,92 @@
 #if !defined(BOOST_SPIRIT_UTREE_EXAMPLE_ERROR_HANDLER_HPP)
 #define BOOST_SPIRIT_UTREE_EXAMPLE_ERROR_HANDLER_HPP
 
-#include <string>
-#include <sstream>
-
 #include <boost/config.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/include/support_line_pos_iterator.hpp>
+#include <sstream>
+#include <string>
 
-namespace sexpr
-{
+namespace sexpr {
 
 using boost::spirit::info;
- 
+
 template <typename Out>
-struct print_info
-{
-    typedef boost::spirit::utf8_string string;
+struct print_info {
+  typedef boost::spirit::utf8_string string;
 
-    print_info(Out& out) : out(out), first(true) {}
+  print_info(Out& out) : out(out), first(true) {}
 
-    void element(string const& tag, string const& value, int) const
-    {
-        if (!first) {
-            out << ' ';
-            first = false;
-        }        
-
-        if (value == "")
-            out << tag;
-        else
-            out << "\"" << value << '"';
+  void element(string const& tag, string const& value, int) const {
+    if (!first) {
+      out << ' ';
+      first = false;
     }
 
-    Out& out;
-    mutable bool first;
+    if (value == "")
+      out << tag;
+    else
+      out << "\"" << value << '"';
+  }
+
+  Out& out;
+  mutable bool first;
 };
 
-struct expected_component : std::exception
-{
-    std::string msg;
+struct expected_component : std::exception {
+  std::string msg;
 
-    expected_component(std::string const& source, std::size_t line
-                     , info const& w)
-    {
-        using boost::spirit::basic_info_walker;
+  expected_component(std::string const& source, std::size_t line,
+                     info const& w) {
+    using boost::spirit::basic_info_walker;
 
-        std::ostringstream oss;
-        oss << "(exception \"" << source << "\" ";
-      
-        if (line == -1)
-          oss << -1;
-        else
-          oss << line;
+    std::ostringstream oss;
+    oss << "(exception \"" << source << "\" ";
 
-        oss << " '(expected_component (";
+    if (line == -1)
+      oss << -1;
+    else
+      oss << line;
 
-        print_info<std::ostringstream> pr(oss);
-        basic_info_walker<print_info<std::ostringstream> >
-        walker(pr, w.tag, 0);
+    oss << " '(expected_component (";
 
-        boost::apply_visitor(walker, w.value);
+    print_info<std::ostringstream> pr(oss);
+    basic_info_walker<print_info<std::ostringstream> > walker(pr, w.tag, 0);
 
-        oss << ")))";
+    boost::apply_visitor(walker, w.value);
 
-        msg = oss.str();
-    }
+    oss << ")))";
 
-    virtual ~expected_component() BOOST_NOEXCEPT_OR_NOTHROW {}
+    msg = oss.str();
+  }
 
-    virtual char const* what() const BOOST_NOEXCEPT_OR_NOTHROW
-    {
-        return msg.c_str();
-    }
+  virtual ~expected_component() BOOST_NOEXCEPT_OR_NOTHROW {}
+
+  virtual char const* what() const BOOST_NOEXCEPT_OR_NOTHROW {
+    return msg.c_str();
+  }
 };
 
 template <typename Iterator>
-struct error_handler
-{
-    template <typename, typename, typename, typename>
-    struct result
-    {
-        typedef void type;
-    };
+struct error_handler {
+  template <typename, typename, typename, typename>
+  struct result {
+    typedef void type;
+  };
 
-    std::string source;
+  std::string source;
 
-    error_handler(std::string const& source_ = "<string>") : source(source_) {}
+  error_handler(std::string const& source_ = "<string>") : source(source_) {}
 
-    void operator()(Iterator first, Iterator last, Iterator err_pos
-                  , info const& what) const
-    {
-        using boost::spirit::get_line;
-        Iterator eol = err_pos;
-        std::size_t line = get_line(err_pos);
-        throw expected_component(source, line, what);
-    }
+  void operator()(Iterator first, Iterator last, Iterator err_pos,
+                  info const& what) const {
+    using boost::spirit::get_line;
+    Iterator eol = err_pos;
+    std::size_t line = get_line(err_pos);
+    throw expected_component(source, line, what);
+  }
 };
 
-} // sexpr
+}  // namespace sexpr
 
-#endif // BOOST_SPIRIT_UTREE_EXAMPLE_ERROR_HANDLER_HPP
-
+#endif  // BOOST_SPIRIT_UTREE_EXAMPLE_ERROR_HANDLER_HPP

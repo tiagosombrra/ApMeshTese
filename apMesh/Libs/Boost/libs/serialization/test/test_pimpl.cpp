@@ -8,41 +8,39 @@
 
 // should pass compilation and execution
 
-#include <boost/compatibility/cpp_c_headers/cstdio> // for tmpnam
-
-#include <fstream>
+#include <boost/compatibility/cpp_c_headers/cstdio>  // for tmpnam
 #include <boost/serialization/nvp.hpp>
+#include <fstream>
 
 #include "test_tools.hpp"
 
 class B;
 
 class A {
-    friend boost::serialization::access;
-    B *pimpl;
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int file_version);
+  friend boost::serialization::access;
+  B* pimpl;
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int file_version);
 };
 
-int test_main( int argc, char* argv[] )
-{
-    char testfile[TMP_MAX];
-    std::tmpnam(testfile);
-//    BOOST_REQUIRE(NULL != testfile);
+int test_main(int argc, char* argv[]) {
+  char testfile[TMP_MAX];
+  std::tmpnam(testfile);
+  //    BOOST_REQUIRE(NULL != testfile);
 
-    A a, a1;
-    {
-        test_ostream os(testfile, TEST_STREAM_FLAGS);
-        test_oarchive oa(os);
-        oa << BOOST_SERIALIZATION_NVP(a);
-    }
-    {
-        test_istream is(testfile, TEST_STREAM_FLAGS);
-        test_iarchive ia(is);
-        BOOST_SERIALIZATION_NVP(a1);
-    }
-//    BOOST_CHECK(a != a1);
-    return 0;
+  A a, a1;
+  {
+    test_ostream os(testfile, TEST_STREAM_FLAGS);
+    test_oarchive oa(os);
+    oa << BOOST_SERIALIZATION_NVP(a);
+  }
+  {
+    test_istream is(testfile, TEST_STREAM_FLAGS);
+    test_iarchive ia(is);
+    BOOST_SERIALIZATION_NVP(a1);
+  }
+  //    BOOST_CHECK(a != a1);
+  return 0;
 }
 
 // EOF

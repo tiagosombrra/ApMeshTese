@@ -11,45 +11,43 @@
 // Test suite for push_back_actor
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "action_tests.hpp"
+#include <algorithm>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_lists.hpp>
+#include <boost/spirit/include/classic_push_back_actor.hpp>
+#include <cstring>
+#include <deque>
+#include <iostream>
 #include <string>
 #include <vector>
-#include <deque>
-#include <cstring>
-#include <iostream>
-#include <boost/spirit/include/classic_core.hpp>
-#include <algorithm>
-#include <boost/spirit/include/classic_push_back_actor.hpp>
-#include <boost/spirit/include/classic_lists.hpp>
 
-template<typename ContainerT>
-void push_back_test()
-{
-    using namespace BOOST_SPIRIT_CLASSIC_NS;
+#include "action_tests.hpp"
 
-    const char* cp = "one,two,three";
-    const char* cp_first = cp;
-    const char* cp_last = cp + test_impl::string_length(cp);
-    const char* cp_i[] = {"one","two","three"};
-    int i;
-    ContainerT c;
-    typename ContainerT::const_iterator it;
+template <typename ContainerT>
+void push_back_test() {
+  using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-    scanner<char const*> scan( cp_first, cp_last );
-    match<> hit;
+  const char* cp = "one,two,three";
+  const char* cp_first = cp;
+  const char* cp_last = cp + test_impl::string_length(cp);
+  const char* cp_i[] = {"one", "two", "three"};
+  int i;
+  ContainerT c;
+  typename ContainerT::const_iterator it;
 
-    hit = list_p( (*alpha_p)[ push_back_a(c)] , ch_p(',') ).parse(scan);
-    BOOST_CHECK(hit);
-    BOOST_CHECK_EQUAL(scan.first, scan.last);
-    BOOST_CHECK_EQUAL( c.size(), static_cast<typename ContainerT::size_type>(3));
-    for (i=0, it = c.begin();i<3 && it != c.end();++i, ++it)
-        BOOST_CHECK_EQUAL( cp_i[i], *it);
-    scan.first = cp;
+  scanner<char const*> scan(cp_first, cp_last);
+  match<> hit;
+
+  hit = list_p((*alpha_p)[push_back_a(c)], ch_p(',')).parse(scan);
+  BOOST_CHECK(hit);
+  BOOST_CHECK_EQUAL(scan.first, scan.last);
+  BOOST_CHECK_EQUAL(c.size(), static_cast<typename ContainerT::size_type>(3));
+  for (i = 0, it = c.begin(); i < 3 && it != c.end(); ++i, ++it)
+    BOOST_CHECK_EQUAL(cp_i[i], *it);
+  scan.first = cp;
 }
 
-void push_back_action_test()
-{
-    push_back_test< std::deque<std::string> >();
-    push_back_test< std::vector<std::string> >();
+void push_back_action_test() {
+  push_back_test<std::deque<std::string> >();
+  push_back_test<std::vector<std::string> >();
 }
-

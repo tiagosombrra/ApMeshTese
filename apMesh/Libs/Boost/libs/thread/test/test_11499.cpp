@@ -5,11 +5,11 @@
 
 #define BOOST_THREAD_VERSION 4
 
+#include <atomic>
 #include <boost/thread/shared_mutex.hpp>
-#include <thread>
 #include <mutex>
 #include <shared_mutex>
-#include <atomic>
+#include <thread>
 #include <vector>
 
 using MutexT = boost::shared_mutex;
@@ -19,38 +19,31 @@ using WriterLockT = std::shared_lock<MutexT>;
 MutexT gMutex;
 std::atomic<bool> running(true);
 
-
-void myread()
-{
+void myread() {
   long reads = 0;
-   while (running && reads < 100000)
-   {
-      ReaderLockT lock(gMutex);
-      std::this_thread::yield();
-      ++reads;
-   }
+  while (running && reads < 100000) {
+    ReaderLockT lock(gMutex);
+    std::this_thread::yield();
+    ++reads;
+  }
 }
 
-int main()
-{
-   using namespace std;
+int main() {
+  using namespace std;
 
-   vector<thread> threads;
-   for (int i = 0; i < 256; ++i)
-   {
-      threads.emplace_back(thread(myread));
-   }
+  vector<thread> threads;
+  for (int i = 0; i < 256; ++i) {
+    threads.emplace_back(thread(myread));
+  }
 
-//   string str;
-//
-//   getline(std::cin, str);
-   running = false;
+  //   string str;
+  //
+  //   getline(std::cin, str);
+  running = false;
 
-   for (auto& thread : threads)
-   {
-      thread.join();
-   }
+  for (auto& thread : threads) {
+    thread.join();
+  }
 
-   return 0;
+  return 0;
 }
-

@@ -18,12 +18,11 @@
 
 // bool try_lock();
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/null_mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../timming.hpp"
-
-
 
 boost::null_mutex m;
 
@@ -38,8 +37,7 @@ typedef boost::chrono::nanoseconds ns;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #if defined BOOST_THREAD_USES_CHRONO
   time_point t0 = Clock::now();
   BOOST_TEST(m.try_lock());
@@ -57,8 +55,7 @@ void f()
 #endif
 }
 
-int main()
-{
+int main() {
   m.lock();
   boost::thread t(f);
   m.unlock();
@@ -66,5 +63,3 @@ int main()
 
   return boost::report_errors();
 }
-
-

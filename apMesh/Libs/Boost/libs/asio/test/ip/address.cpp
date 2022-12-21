@@ -11,13 +11,13 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
 #include <boost/asio/ip/address.hpp>
+#include <sstream>
 
 #include "../unit_test.hpp"
-#include <sstream>
 
 //------------------------------------------------------------------------------
 
@@ -28,13 +28,11 @@
 
 namespace ip_address_compile {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  try
-  {
+  try {
     boost::system::error_code ec;
 
     // address constructors.
@@ -71,7 +69,7 @@ void test()
     std::string string_value = addr1.to_string();
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
     string_value = addr1.to_string(ec);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // address static functions.
 
@@ -80,7 +78,7 @@ void test()
     addr1 = ip::address::from_string("127.0.0.1", ec);
     addr1 = ip::address::from_string(string_value);
     addr1 = ip::address::from_string(string_value, ec);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // address comparisons.
 
@@ -109,14 +107,14 @@ void test()
     addr1 = ip::make_address(string_value);
     addr1 = ip::make_address(string_value, ec);
 #if defined(BOOST_ASIO_HAS_STRING_VIEW)
-# if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
+#if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
     std::string_view string_view_value("127.0.0.1");
-# elif defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
+#elif defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
     std::experimental::string_view string_view_value("127.0.0.1");
-# endif // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
+#endif  // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
     addr1 = ip::make_address(string_view_value);
     addr1 = ip::make_address(string_view_value, ec);
-#endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+#endif  // defined(BOOST_ASIO_HAS_STRING_VIEW)
 
     // address I/O.
 
@@ -126,24 +124,19 @@ void test()
 #if !defined(BOOST_NO_STD_WSTREAMBUF)
     std::wostringstream wos;
     wos << addr1;
-#endif // !defined(BOOST_NO_STD_WSTREAMBUF)
+#endif  // !defined(BOOST_NO_STD_WSTREAMBUF)
 
 #if defined(BOOST_ASIO_HAS_STD_HASH)
     std::size_t hash1 = std::hash<ip::address>()(addr1);
     (void)hash1;
-#endif // defined(BOOST_ASIO_HAS_STD_HASH)
-  }
-  catch (std::exception&)
-  {
+#endif  // defined(BOOST_ASIO_HAS_STD_HASH)
+  } catch (std::exception&) {
   }
 }
 
-} // namespace ip_address_compile
+}  // namespace ip_address_compile
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "ip/address",
-  BOOST_ASIO_TEST_CASE(ip_address_compile::test)
-)
+BOOST_ASIO_TEST_SUITE("ip/address",
+                      BOOST_ASIO_TEST_CASE(ip_address_compile::test))

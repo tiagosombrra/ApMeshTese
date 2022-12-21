@@ -7,10 +7,10 @@
  */
 
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_algorithm.hpp"
 
-int main()
-{
+int main() {
   test_algorithm();
   return boost::report_errors();
 }

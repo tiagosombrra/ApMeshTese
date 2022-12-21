@@ -5,35 +5,29 @@
 
 #define BOOST_THREAD_PROVIDES_INTERRUPTIONS
 
-#include <iostream>
-#include <boost/thread/thread_only.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <iostream>
 
 #if defined BOOST_THREAD_USES_CHRONO
 
-//using namespace boost;
+// using namespace boost;
 using namespace boost::chrono;
 
 bool interrupted = false;
-void f()
-{
-  try
-  {
+void f() {
+  try {
     std::cout << "Starting sleep in thread" << std::endl;
-    for (;;)
-    {
+    for (;;) {
       boost::this_thread::sleep_for(seconds(60));
     }
-  }
-  catch (const boost::thread_interrupted&)
-  {
+  } catch (const boost::thread_interrupted&) {
     interrupted = true;
     std::cout << "Thread interrupted." << std::endl;
   }
 }
 
-int main()
-{
+int main() {
   boost::thread t(f);
   t.interrupt();
   t.join();
@@ -43,5 +37,6 @@ int main()
 }
 
 #else
-#error "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
+#error \
+    "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
 #endif

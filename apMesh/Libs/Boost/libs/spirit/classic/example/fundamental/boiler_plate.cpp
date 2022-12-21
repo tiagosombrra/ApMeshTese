@@ -26,14 +26,12 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 //  Semantic actions
 //
 ///////////////////////////////////////////////////////////////////////////////
-struct my_action
-{
-    template <typename IteratorT>
-    void operator()(IteratorT first, IteratorT last) const
-    {
-        string s(first, last);
-        cout << "\tMy Action got: " << s << endl;
-    }
+struct my_action {
+  template <typename IteratorT>
+  void operator()(IteratorT first, IteratorT last) const {
+    string s(first, last);
+    cout << "\tMy Action got: " << s << endl;
+  }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -41,22 +39,16 @@ struct my_action
 //  My grammar
 //
 ///////////////////////////////////////////////////////////////////////////////
-struct my_grammar : public grammar<my_grammar>
-{
-    template <typename ScannerT>
-    struct definition
-    {
-        definition(my_grammar const& self)
-        {
-            my_rule =
-                *lexeme_d[(+graph_p)[my_action()]]
-                ;
-        }
+struct my_grammar : public grammar<my_grammar> {
+  template <typename ScannerT>
+  struct definition {
+    definition(my_grammar const& self) {
+      my_rule = *lexeme_d[(+graph_p)[my_action()]];
+    }
 
-        rule<ScannerT> my_rule;
-        rule<ScannerT> const&
-        start() const { return my_rule; }
-    };
+    rule<ScannerT> my_rule;
+    rule<ScannerT> const& start() const { return my_rule; }
+  };
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -64,34 +56,25 @@ struct my_grammar : public grammar<my_grammar>
 //  Main program
 //
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "\t\t A boiler-plate parser...\n\n";
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "Type anything or [q or Q] to quit\n\n";
+int main() {
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "\t\t A boiler-plate parser...\n\n";
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "Type anything or [q or Q] to quit\n\n";
 
-    my_grammar g;
+  my_grammar g;
 
-    string str;
-    while (getline(cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
+  string str;
+  while (getline(cin, str)) {
+    if (str.empty() || str[0] == 'q' || str[0] == 'Q') break;
 
-        if (parse(str.c_str(), g, space_p).full)
-        {
-            cout << "parsing succeeded\n";
-        }
-        else
-        {
-            cout << "parsing failed\n";
-        }
+    if (parse(str.c_str(), g, space_p).full) {
+      cout << "parsing succeeded\n";
+    } else {
+      cout << "parsing failed\n";
     }
+  }
 
-    cout << "Bye... :-) \n\n";
-    return 0;
+  cout << "Bye... :-) \n\n";
+  return 0;
 }
-
-

@@ -14,6 +14,7 @@
 #include <tuple>
 #include <utility>
 #include <vector>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 
@@ -146,8 +147,10 @@ int main() {
       using V = axis::variant<R, I>;
       auto t1 = std::vector<V>{{V{I(0, 1)}, V{R(2, 0, 2)}}};
       auto t2 = std::vector<V>{{V{I(0, 1)}, V{R(2, 0, 2)}}};
-      auto t3 = detail::axes_transform(
-          t1, t2, [](const auto& a, const auto& b) { return I(0, a.size() + b.size()); });
+      auto t3 =
+          detail::axes_transform(t1, t2, [](const auto& a, const auto& b) {
+            return I(0, a.size() + b.size());
+          });
       auto t4 = std::vector<V>{{I(0, 2), I(0, 4)}};
       BOOST_TEST(detail::axes_equal(t3, t4));
     }

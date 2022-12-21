@@ -6,19 +6,18 @@
 
 // Test destructor cannot use `.precondition(...)`.
 
-#include <boost/contract/destructor.hpp>
 #include <boost/contract/check.hpp>
+#include <boost/contract/destructor.hpp>
 
 struct a {
-    ~a() {
-        boost::contract::check c = boost::contract::destructor(this)
-            .precondition([] {}) // Error (no dtor func arg so never pre).
+  ~a() {
+    boost::contract::check c = boost::contract::destructor(this).precondition(
+        [] {})  // Error (no dtor func arg so never pre).
         ;
-    }
+  }
 };
 
 int main() {
-    a aa;
-    return 0;
+  a aa;
+  return 0;
 }
-

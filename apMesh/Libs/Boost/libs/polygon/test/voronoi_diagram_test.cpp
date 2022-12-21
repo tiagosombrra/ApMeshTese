@@ -18,8 +18,7 @@ typedef voronoi_vertex<double> voronoi_vertex_type;
 typedef voronoi_edge<double> voronoi_edge_type;
 typedef voronoi_diagram<double> voronoi_diagram_type;
 
-void voronoi_cell_test()
-{
+void voronoi_cell_test() {
   voronoi_cell_type cell(1, SOURCE_CATEGORY_INITIAL_SEGMENT);
   cell.color(27);
   BOOST_TEST(!cell.contains_point());
@@ -36,8 +35,7 @@ void voronoi_cell_test()
   BOOST_TEST(cell.incident_edge() == &edge);
 }
 
-void voronoi_vertex_test()
-{
+void voronoi_vertex_test() {
   voronoi_vertex_type vertex(1, 2);
   vertex.color(27);
   BOOST_TEST(vertex.is_degenerate());
@@ -52,8 +50,7 @@ void voronoi_vertex_test()
   BOOST_TEST(vertex.incident_edge() == &edge);
 }
 
-void voronoi_edge_test()
-{
+void voronoi_edge_test() {
   voronoi_edge_type edge1(false, false);
   edge1.color(13);
   BOOST_TEST(!edge1.is_primary());
@@ -106,8 +103,7 @@ void voronoi_edge_test()
   BOOST_TEST(edge2.is_finite());
 }
 
-void voronoi_diagram_test()
-{
+void voronoi_diagram_test() {
   voronoi_diagram_type vd;
   BOOST_TEST(vd.num_cells() == 0);
   BOOST_TEST(vd.num_vertices() == 0);
@@ -115,11 +111,10 @@ void voronoi_diagram_test()
   vd.clear();
 }
 
-int main()
-{
-    voronoi_cell_test();
-    voronoi_vertex_test();
-    voronoi_edge_test();
-    voronoi_diagram_test();
-    return boost::report_errors();
+int main() {
+  voronoi_cell_test();
+  voronoi_vertex_test();
+  voronoi_edge_test();
+  voronoi_diagram_test();
+  return boost::report_errors();
 }

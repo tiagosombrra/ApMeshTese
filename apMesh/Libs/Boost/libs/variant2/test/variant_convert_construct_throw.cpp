@@ -7,89 +7,70 @@
 // http://www.boost.org/LICENSE_1_0.txt
 
 #if defined(_MSC_VER)
-# pragma warning( disable: 4702 ) // unreachable code
+#pragma warning(disable : 4702)  // unreachable code
 #endif
 
-#include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test.hpp>
+#include <boost/variant2/variant.hpp>
 #include <stdexcept>
 
 using namespace boost::variant2;
 
-struct X
-{
-    static int instances;
+struct X {
+  static int instances;
 
-    X()
-    {
-        ++instances;
-    }
+  X() { ++instances; }
 
-    X( X const& )
-    {
-        throw std::runtime_error( "X(X const&)" );
-    }
+  X(X const&) { throw std::runtime_error("X(X const&)"); }
 
-    ~X()
-    {
-        --instances;
-    }
+  ~X() { --instances; }
 };
 
 int X::instances = 0;
 
-void test_copy()
-{
-    X::instances = 0;
+void test_copy() {
+  X::instances = 0;
 
-    {
-        variant<X> v1;
+  {
+    variant<X> v1;
 
-        BOOST_TEST_EQ( X::instances, 1 );
+    BOOST_TEST_EQ(X::instances, 1);
 
-        try
-        {
-            variant<X, int, float> v2( v1 );
-            BOOST_TEST_EQ( X::instances, 2 );
-        }
-        catch( std::exception const& )
-        {
-        }
-
-        BOOST_TEST_EQ( X::instances, 1 );
+    try {
+      variant<X, int, float> v2(v1);
+      BOOST_TEST_EQ(X::instances, 2);
+    } catch (std::exception const&) {
     }
 
-    BOOST_TEST_EQ( X::instances, 0 );
+    BOOST_TEST_EQ(X::instances, 1);
+  }
+
+  BOOST_TEST_EQ(X::instances, 0);
 }
 
-void test_move()
-{
-    X::instances = 0;
+void test_move() {
+  X::instances = 0;
 
-    {
-        variant<X> v1;
+  {
+    variant<X> v1;
 
-        BOOST_TEST_EQ( X::instances, 1 );
+    BOOST_TEST_EQ(X::instances, 1);
 
-        try
-        {
-            variant<X, int, float> v2( std::move( v1 ) );
-            BOOST_TEST_EQ( X::instances, 2 );
-        }
-        catch( std::exception const& )
-        {
-        }
-
-        BOOST_TEST_EQ( X::instances, 1 );
+    try {
+      variant<X, int, float> v2(std::move(v1));
+      BOOST_TEST_EQ(X::instances, 2);
+    } catch (std::exception const&) {
     }
 
-    BOOST_TEST_EQ( X::instances, 0 );
+    BOOST_TEST_EQ(X::instances, 1);
+  }
+
+  BOOST_TEST_EQ(X::instances, 0);
 }
 
-int main()
-{
-    test_copy();
-    test_move();
+int main() {
+  test_copy();
+  test_move();
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

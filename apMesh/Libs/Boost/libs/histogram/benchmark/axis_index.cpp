@@ -5,15 +5,16 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <benchmark/benchmark.h>
+
 #include <boost/histogram/axis.hpp>
+#include <cassert>
 #include <numeric>
+
 #include "../test/throw_exception.hpp"
 #include "generator.hpp"
-
-#include <cassert>
 struct assert_check {
   assert_check() {
-    assert(false); // don't run with asserts enabled
+    assert(false);  // don't run with asserts enabled
   }
 } _;
 
@@ -43,7 +44,9 @@ static void integer(benchmark::State& state) {
 template <class Distribution>
 static void variable(benchmark::State& state) {
   std::vector<double> v;
-  for (double x = 0; x <= state.range(0); ++x) { v.push_back(x / state.range(0)); }
+  for (double x = 0; x <= state.range(0); ++x) {
+    v.push_back(x / state.range(0));
+  }
   auto a = axis::variable<>(v);
   generator<Distribution> gen;
   for (auto _ : state) benchmark::DoNotOptimize(a.index(gen()));
@@ -60,7 +63,8 @@ static void category(benchmark::State& state) {
 static void boolean(benchmark::State& state) {
   auto a = axis::boolean<>();
   generator<uniform_int> gen(1);
-  for (auto _ : state) benchmark::DoNotOptimize(a.index(static_cast<bool>(gen())));
+  for (auto _ : state)
+    benchmark::DoNotOptimize(a.index(static_cast<bool>(gen())));
 }
 
 BENCHMARK_TEMPLATE(regular, uniform);

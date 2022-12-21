@@ -8,36 +8,33 @@
 
 struct err {};
 #ifndef BOOST_CONTRACT_ON_MISSING_CHECK_DECL
-    #error "build must define ON_MISSING_CHECK_DECL=`{ throw err(); }`"
+#error "build must define ON_MISSING_CHECK_DECL=`{ throw err(); }`"
 #endif
 
-#include <boost/contract/function.hpp>
 #include <boost/contract/check.hpp>
+#include <boost/contract/function.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 int main() {
-    boost::contract::check c = boost::contract::function() // Test this is OK.
+  boost::contract::check c = boost::contract::function()  // Test this is OK.
+                                 .precondition([] {})
+                                 .old([] {})
+                                 .postcondition([] {});
+
+  try {
+    boost::contract::function()  // Test no `check c = ...` errors.
         .precondition([] {})
         .old([] {})
-        .postcondition([] {})
-    ;
-
-    try {
-        boost::contract::function() // Test no `check c = ...` errors.
-            .precondition([] {})
-            .old([] {})
-            .postcondition([] {})
-        ;
-        #if     !defined(BOOST_CONTRACT_NO_PRECONDITIONS) || \
-                !defined(BOOST_CONTRACT_NO_POSTCONDITIONS) || \
-                !defined(BOOST_CONTRACT_NO_INVARIANTS)
-            BOOST_TEST(false); // Error, must throw.
-        #endif
-    } catch(err const&) {
-        // OK, threw as expected.
-    } catch(...) {
-        BOOST_TEST(false); // Error, unexpected throw.
-    }
-    return boost::report_errors();
+        .postcondition([] {});
+#if !defined(BOOST_CONTRACT_NO_PRECONDITIONS) ||  \
+    !defined(BOOST_CONTRACT_NO_POSTCONDITIONS) || \
+    !defined(BOOST_CONTRACT_NO_INVARIANTS)
+    BOOST_TEST(false);  // Error, must throw.
+#endif
+  } catch (err const&) {
+    // OK, threw as expected.
+  } catch (...) {
+    BOOST_TEST(false);  // Error, unexpected throw.
+  }
+  return boost::report_errors();
 }
-

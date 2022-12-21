@@ -6,11 +6,11 @@
 
 //[ guide_custom_storage
 
-#include <algorithm> // std::for_each
+#include <algorithm>  // std::for_each
 #include <array>
 #include <boost/histogram.hpp>
 #include <boost/histogram/algorithm/sum.hpp>
-#include <functional> // std::ref
+#include <functional>  // std::ref
 #include <unordered_map>
 #include <vector>
 

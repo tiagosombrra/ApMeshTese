@@ -15,7 +15,7 @@ extern "C" {
 #include <system_error>
 
 #ifdef BOOST_HAS_ABI_HEADERS
-# include BOOST_ABI_PREFIX
+#include BOOST_ABI_PREFIX
 #endif
 
 namespace boost {
@@ -23,21 +23,21 @@ namespace fibers {
 namespace numa {
 
 BOOST_FIBERS_DECL
-void pin_thread( std::uint32_t cpuid) {
-    pin_thread( cpuid, ::thread_self() );
-}
+void pin_thread(std::uint32_t cpuid) { pin_thread(cpuid, ::thread_self()); }
 
 BOOST_FIBERS_DECL
-void pin_thread( std::uint32_t cpuid, std::thread::native_handle_type h) {
-    if ( BOOST_UNLIKELY( -1 == ::bindprocessor( BINDTHREAD, h, static_cast< cpu_t >( cpuid) ) ) ) {
-        throw std::system_error(
-                std::error_code( errno, std::system_category() ),
-                "bindprocessor() failed");
-    }
+void pin_thread(std::uint32_t cpuid, std::thread::native_handle_type h) {
+  if (BOOST_UNLIKELY(
+          -1 == ::bindprocessor(BINDTHREAD, h, static_cast<cpu_t>(cpuid)))) {
+    throw std::system_error(std::error_code(errno, std::system_category()),
+                            "bindprocessor() failed");
+  }
 }
 
-}}}
+}  // namespace numa
+}  // namespace fibers
+}  // namespace boost
 
 #ifdef BOOST_HAS_ABI_HEADERS
-# include BOOST_ABI_SUFFIX
+#include BOOST_ABI_SUFFIX
 #endif

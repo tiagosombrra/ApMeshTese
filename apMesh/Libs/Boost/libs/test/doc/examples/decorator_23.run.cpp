@@ -11,14 +11,9 @@
 
 namespace utf = boost::unit_test;
 
-BOOST_AUTO_TEST_CASE(test_1) 
-{
-  BOOST_TEST(true);
-}
- 
-BOOST_AUTO_TEST_CASE(test_net,
-  * utf::description("requires network"))
-{
+BOOST_AUTO_TEST_CASE(test_1) { BOOST_TEST(true); }
+
+BOOST_AUTO_TEST_CASE(test_net, *utf::description("requires network")) {
   BOOST_TEST(true);
 }
 //]

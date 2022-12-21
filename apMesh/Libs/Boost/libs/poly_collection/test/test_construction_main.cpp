@@ -7,10 +7,10 @@
  */
 
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_construction.hpp"
 
-int main()
-{
+int main() {
   test_construction();
   return boost::report_errors();
 }

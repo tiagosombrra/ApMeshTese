@@ -10,25 +10,26 @@
 #include "test_lib.hpp"
 
 namespace user_defined_namespace {
-    class user_defined{};
-}
+class user_defined {};
+}  // namespace user_defined_namespace
 
 namespace test_lib {
 
 boost::typeindex::type_index get_integer() {
-    return boost::typeindex::type_id<int>();
+  return boost::typeindex::type_id<int>();
 }
 
 boost::typeindex::type_index get_user_defined_class() {
-    return boost::typeindex::type_id<user_defined_namespace::user_defined>();
+  return boost::typeindex::type_id<user_defined_namespace::user_defined>();
 }
 
 boost::typeindex::type_index get_const_integer() {
-    return boost::typeindex::type_id_with_cvr<const int>();
+  return boost::typeindex::type_id_with_cvr<const int>();
 }
 
 boost::typeindex::type_index get_const_user_defined_class() {
-    return boost::typeindex::type_id_with_cvr<const user_defined_namespace::user_defined>();
+  return boost::typeindex::type_id_with_cvr<
+      const user_defined_namespace::user_defined>();
 }
 
 #if !defined(BOOST_HAS_PRAGMA_DETECT_MISMATCH) || !defined(_CPPRTTI)
@@ -36,5 +37,4 @@ boost::typeindex::type_index get_const_user_defined_class() {
 void accept_typeindex(const boost::typeindex::type_index&) {}
 #endif
 
-}
-
+}  // namespace test_lib

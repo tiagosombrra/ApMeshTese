@@ -18,12 +18,11 @@
 
 // thread();
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/thread_only.hpp>
 #include <cassert>
-#include <boost/detail/lightweight_test.hpp>
 
-int main()
-{
+int main() {
   boost::thread t;
   BOOST_TEST(t.get_id() == boost::thread::id());
   return boost::report_errors();

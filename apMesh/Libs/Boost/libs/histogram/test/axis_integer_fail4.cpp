@@ -11,5 +11,6 @@ using namespace boost::histogram;
 int main() {
   // growing integer axis cannot have entries in underflow or overflow bins
   (void)axis::integer<int, boost::use_default,
-                      decltype(axis::option::growth | axis::option::overflow)>(1, 2);
+                      decltype(axis::option::growth | axis::option::overflow)>(
+      1, 2);
 }

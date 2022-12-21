@@ -19,13 +19,14 @@
 #include <tuple>
 #include <utility>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
 using namespace boost::histogram;
 
 struct modified_axis : public axis::integer<> {
-  using integer::integer; // inherit ctors of base
+  using integer::integer;  // inherit ctors of base
   // customization point: convert argument and call base class
   auto index(const char* s) const { return integer::index(std::atoi(s)); }
 };
@@ -43,7 +44,7 @@ struct axis2d {
 };
 
 class axis2d_growing {
-public:
+ public:
   auto index(std::tuple<double, double> xy) const {
     const auto x = std::get<0>(xy);
     const auto y = std::get<1>(xy);
@@ -63,7 +64,7 @@ public:
 
   axis::index_type size() const { return size_; }
 
-private:
+ private:
   axis::index_type size_ = 0;
 };
 
@@ -72,11 +73,11 @@ void run_tests() {
   // one 2d axis
   {
     auto h = make(Tag(), axis2d());
-    h(1, 2);                  // ok, forwards 2d tuple to axis
-    h(std::make_tuple(1, 2)); // also ok, forwards 2d tuple to axis
+    h(1, 2);                   // ok, forwards 2d tuple to axis
+    h(std::make_tuple(1, 2));  // also ok, forwards 2d tuple to axis
     BOOST_TEST_THROWS(h(1), std::invalid_argument);
     BOOST_TEST_THROWS(h(1, 2, 3), std::invalid_argument);
-    BOOST_TEST_EQ(h.at(0), 0); // ok, bin access is still 1d
+    BOOST_TEST_EQ(h.at(0), 0);  // ok, bin access is still 1d
     BOOST_TEST_EQ(h[std::make_tuple(1)], 2);
     // also works with weights
     h(1, 2, weight(2));

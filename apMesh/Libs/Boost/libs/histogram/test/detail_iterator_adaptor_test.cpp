@@ -14,6 +14,7 @@
 #include <set>
 #include <type_traits>
 #include <vector>
+
 #include "std_ostream.hpp"
 #include "utility_iterator.hpp"
 
@@ -38,16 +39,17 @@ struct my_gen {
 
 template <class V>
 struct ptr_iterator : iterator_adaptor<ptr_iterator<V>, V*> {
-private:
+ private:
   typedef iterator_adaptor<ptr_iterator<V>, V*> super_t;
 
-public:
+ public:
   using base_type = typename super_t::base_type;
 
   ptr_iterator() {}
   ptr_iterator(V* d) : super_t(d) {}
 
-  template <class V2, class = std::enable_if_t<std::is_convertible<V2*, V*>::value>>
+  template <class V2,
+            class = std::enable_if_t<std::is_convertible<V2*, V*>::value>>
   ptr_iterator(const ptr_iterator<V2>& x) : super_t(x.base()) {}
 
   V& operator*() const { return *(this->base()); }
@@ -57,8 +59,9 @@ template <class Iter>
 struct constant_iterator
     : iterator_adaptor<constant_iterator<Iter>, Iter,
                        typename std::iterator_traits<Iter>::value_type const&> {
-  typedef iterator_adaptor<constant_iterator<Iter>, Iter,
-                           typename std::iterator_traits<Iter>::value_type const&>
+  typedef iterator_adaptor<
+      constant_iterator<Iter>, Iter,
+      typename std::iterator_traits<Iter>::value_type const&>
       base_t;
 
   constant_iterator() {}
@@ -85,12 +88,14 @@ struct constant_it : iterator_adaptor<constant_it, int const*> {
   explicit constant_it(int* p) : super_t(p) {}
   constant_it(mutable_it const& x) : super_t(x.base()) {}
 
-  bool equal(constant_it const& rhs) const { return this->base() == rhs.base(); }
+  bool equal(constant_it const& rhs) const {
+    return this->base() == rhs.base();
+  }
 };
 
 template <class T>
 class static_object {
-public:
+ public:
   static T& get() {
     static char d[sizeof(T)];
     return *reinterpret_cast<T*>(d);
@@ -98,14 +103,17 @@ public:
 };
 
 int main() {
-  dummyT array[] = {dummyT(0), dummyT(1), dummyT(2), dummyT(3), dummyT(4), dummyT(5)};
+  dummyT array[] = {dummyT(0), dummyT(1), dummyT(2),
+                    dummyT(3), dummyT(4), dummyT(5)};
   const int N = sizeof(array) / sizeof(dummyT);
 
   // Test the iterator_adaptor
   {
     ptr_iterator<dummyT> i(array);
-    using reference = typename std::iterator_traits<ptr_iterator<dummyT>>::reference;
-    using pointer = typename std::iterator_traits<ptr_iterator<dummyT>>::pointer;
+    using reference =
+        typename std::iterator_traits<ptr_iterator<dummyT>>::reference;
+    using pointer =
+        typename std::iterator_traits<ptr_iterator<dummyT>>::pointer;
     BOOST_TEST_TRAIT_SAME(reference, dummyT&);
     BOOST_TEST_TRAIT_SAME(pointer, dummyT*);
 

@@ -11,48 +11,41 @@
 // *** chapter "Techniques" of the Spirit documentation
 // *** for information regarding this snippet
 
-#include <iostream>
-#include <boost/spirit/include/classic_core.hpp>
 #include <boost/assert.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <iostream>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-struct skip_grammar : grammar<skip_grammar>
-{
-    template <typename ScannerT>
-    struct definition
-    {
-        definition(skip_grammar const& /*self*/)
-        : skip
-            (       space_p
-                |   "//" >> *(anychar_p - '\n') >> '\n'
-                |   "/*" >> *(anychar_p - "*/") >> "*/"
-            )
-        {
-        }
+struct skip_grammar : grammar<skip_grammar> {
+  template <typename ScannerT>
+  struct definition {
+    definition(skip_grammar const& /*self*/)
+        : skip(space_p | "//" >> *(anychar_p - '\n') >> '\n' |
+               "/*" >> *(anychar_p - "*/") >> "*/") {}
 
-        typedef
-           alternative<alternative<space_parser, sequence<sequence<
-           strlit<const char*>, kleene_star<difference<anychar_parser,
-           chlit<char> > > >, chlit<char> > >, sequence<sequence<
-           strlit<const char*>, kleene_star<difference<anychar_parser,
-           strlit<const char*> > > >, strlit<const char*> > >
+    typedef alternative<
+        alternative<space_parser,
+                    sequence<sequence<strlit<const char*>,
+                                      kleene_star<difference<anychar_parser,
+                                                             chlit<char> > > >,
+                             chlit<char> > >,
+        sequence<sequence<strlit<const char*>,
+                          kleene_star<difference<anychar_parser,
+                                                 strlit<const char*> > > >,
+                 strlit<const char*> > >
         skip_t;
-        skip_t skip;
+    skip_t skip;
 
-        skip_t const&
-        start() const { return skip; }
-    };
+    skip_t const& start() const { return skip; }
+  };
 };
 
-int
-main()
-{
-    skip_grammar g;
-    bool success = parse(
-        "/*this is a comment*/\n//this is a c++ comment\n\n",
-        *g).full;
-    BOOST_ASSERT(success);
-    std::cout << "SUCCESS!!!\n";
-    return 0;
+int main() {
+  skip_grammar g;
+  bool success =
+      parse("/*this is a comment*/\n//this is a c++ comment\n\n", *g).full;
+  BOOST_ASSERT(success);
+  std::cout << "SUCCESS!!!\n";
+  return 0;
 }

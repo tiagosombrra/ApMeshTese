@@ -9,51 +9,54 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #ifndef EIGEN_NO_STATIC_ASSERT
-#define EIGEN_NO_STATIC_ASSERT // turn static asserts into runtime asserts in order to check them
+#define EIGEN_NO_STATIC_ASSERT  // turn static asserts into runtime asserts in
+                                // order to check them
 #endif
 
 #ifndef EIGEN_DONT_VECTORIZE
-#define EIGEN_DONT_VECTORIZE // SSE intrinsics aren't designed to allow mixing types
+#define EIGEN_DONT_VECTORIZE  // SSE intrinsics aren't designed to allow mixing
+                              // types
 #endif
 
 #include "main.h"
 
-
-template<int SizeAtCompileType> void mixingtypes(int size = SizeAtCompileType)
-{
+template <int SizeAtCompileType>
+void mixingtypes(int size = SizeAtCompileType) {
   typedef Matrix<float, SizeAtCompileType, SizeAtCompileType> Mat_f;
   typedef Matrix<double, SizeAtCompileType, SizeAtCompileType> Mat_d;
-  typedef Matrix<std::complex<float>, SizeAtCompileType, SizeAtCompileType> Mat_cf;
-  typedef Matrix<std::complex<double>, SizeAtCompileType, SizeAtCompileType> Mat_cd;
+  typedef Matrix<std::complex<float>, SizeAtCompileType, SizeAtCompileType>
+      Mat_cf;
+  typedef Matrix<std::complex<double>, SizeAtCompileType, SizeAtCompileType>
+      Mat_cd;
   typedef Matrix<float, SizeAtCompileType, 1> Vec_f;
   typedef Matrix<double, SizeAtCompileType, 1> Vec_d;
   typedef Matrix<std::complex<float>, SizeAtCompileType, 1> Vec_cf;
   typedef Matrix<std::complex<double>, SizeAtCompileType, 1> Vec_cd;
 
-  Mat_f mf(size,size);
-  Mat_d md(size,size);
-  Mat_cf mcf(size,size);
-  Mat_cd mcd(size,size);
-  Vec_f vf(size,1);
-  Vec_d vd(size,1);
-  Vec_cf vcf(size,1);
-  Vec_cd vcd(size,1);
+  Mat_f mf(size, size);
+  Mat_d md(size, size);
+  Mat_cf mcf(size, size);
+  Mat_cd mcd(size, size);
+  Vec_f vf(size, 1);
+  Vec_d vd(size, 1);
+  Vec_cf vcf(size, 1);
+  Vec_cd vcd(size, 1);
 
-  mf+mf;
-  VERIFY_RAISES_ASSERT(mf+md);
-  VERIFY_RAISES_ASSERT(mf+mcf);
-  VERIFY_RAISES_ASSERT(vf=vd);
-  VERIFY_RAISES_ASSERT(vf+=vd);
-  VERIFY_RAISES_ASSERT(mcd=md);
+  mf + mf;
+  VERIFY_RAISES_ASSERT(mf + md);
+  VERIFY_RAISES_ASSERT(mf + mcf);
+  VERIFY_RAISES_ASSERT(vf = vd);
+  VERIFY_RAISES_ASSERT(vf += vd);
+  VERIFY_RAISES_ASSERT(mcd = md);
 
-  mf*mf;
-  md*mcd;
-  mcd*md;
-  mf*vcf;
-  mcf*vf;
+  mf* mf;
+  md* mcd;
+  mcd* md;
+  mf* vcf;
+  mcf* vf;
   mcf *= mf;
-  vcd = md*vcd;
-  vcf = mcf*vf;
+  vcd = md * vcd;
+  vcf = mcf * vf;
 #if 0
   // these are know generating hard build errors in eigen3
   VERIFY_RAISES_ASSERT(mf*md);
@@ -68,8 +71,7 @@ template<int SizeAtCompileType> void mixingtypes(int size = SizeAtCompileType)
 #endif
 }
 
-void test_eigen2_mixingtypes()
-{
+void test_eigen2_mixingtypes() {
   // check that our operator new is indeed called:
   CALL_SUBTEST_1(mixingtypes<3>());
   CALL_SUBTEST_2(mixingtypes<4>());

@@ -12,68 +12,63 @@
 #include "../helpers/postfix.hpp"
 // clang-format on
 
-#include "../helpers/test.hpp"
-#include "../helpers/list.hpp"
-#include "../helpers/invariants.hpp"
-#include "../helpers/helpers.hpp"
-#include <set>
 #include <iterator>
+#include <set>
+
+#include "../helpers/helpers.hpp"
+#include "../helpers/invariants.hpp"
+#include "../helpers/list.hpp"
+#include "../helpers/test.hpp"
 #include "../objects/test.hpp"
 
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1400)
-#pragma warning(disable : 4267) // conversion from 'size_t' to 'unsigned int',
-                                // possible loss of data.
+#pragma warning(disable : 4267)  // conversion from 'size_t' to 'unsigned int',
+                                 // possible loss of data.
 #endif
 
-struct write_pair_type
-{
+struct write_pair_type {
   template <class X1, class X2>
-  void operator()(std::pair<X1, X2> const& x) const
-  {
+  void operator()(std::pair<X1, X2> const& x) const {
     BOOST_LIGHTWEIGHT_TEST_OSTREAM << "(" << x.first << "," << x.second << ")";
   }
 } write_pair;
 
-template <class Container> void write_container(Container const& x)
-{
+template <class Container>
+void write_container(Container const& x) {
   std::for_each(x.begin(), x.end(), write_pair);
   BOOST_LIGHTWEIGHT_TEST_OSTREAM << "\n";
 }
 
 // Make everything collide - for testing erase in a single bucket.
-struct collision_hash
-{
+struct collision_hash {
   std::size_t operator()(int) const { return 0; }
 };
 
 // For testing erase in 2 buckets.
-struct collision2_hash
-{
-  std::size_t operator()(int x) const
-  {
+struct collision2_hash {
+  std::size_t operator()(int x) const {
     return static_cast<std::size_t>(x & 1);
   }
 };
 
 // For testing erase in lots of buckets.
-struct collision3_hash
-{
+struct collision3_hash {
   std::size_t operator()(int x) const { return static_cast<std::size_t>(x); }
 };
 
 typedef boost::unordered_multimap<int, int, collision_hash, std::equal_to<int>,
-  test::allocator1<std::pair<int const, int> > >
-  collide_map;
+                                  test::allocator1<std::pair<int const, int> > >
+    collide_map;
 typedef boost::unordered_multimap<int, int, collision2_hash, std::equal_to<int>,
-  test::allocator2<std::pair<int const, int> > >
-  collide_map2;
+                                  test::allocator2<std::pair<int const, int> > >
+    collide_map2;
 typedef boost::unordered_multimap<int, int, collision3_hash, std::equal_to<int>,
-  test::allocator2<std::pair<int const, int> > >
-  collide_map3;
+                                  test::allocator2<std::pair<int const, int> > >
+    collide_map3;
 typedef collide_map::value_type collide_value;
 typedef test::list<collide_value> collide_list;
 
-UNORDERED_AUTO_TEST (empty_range_tests) {
+UNORDERED_AUTO_TEST(empty_range_tests) {
   collide_map x;
   x.erase(x.begin(), x.end());
   x.erase(x.begin(), x.begin());
@@ -81,7 +76,7 @@ UNORDERED_AUTO_TEST (empty_range_tests) {
   test::check_equivalent_keys(x);
 }
 
-UNORDERED_AUTO_TEST (single_item_tests) {
+UNORDERED_AUTO_TEST(single_item_tests) {
   collide_list init;
   init.push_back(collide_value(1, 1));
 
@@ -97,7 +92,7 @@ UNORDERED_AUTO_TEST (single_item_tests) {
   test::check_equivalent_keys(x);
 }
 
-UNORDERED_AUTO_TEST (two_equivalent_item_tests) {
+UNORDERED_AUTO_TEST(two_equivalent_item_tests) {
   collide_list init;
   init.push_back(collide_value(1, 1));
   init.push_back(collide_value(1, 2));
@@ -131,8 +126,7 @@ UNORDERED_AUTO_TEST (two_equivalent_item_tests) {
 // More automated tests...
 
 template <class Range1, class Range2>
-bool compare(Range1 const& x, Range2 const& y)
-{
+bool compare(Range1 const& x, Range2 const& y) {
   collide_list a(x.begin(), x.end());
   collide_list b(y.begin(), y.end());
   a.sort();
@@ -141,8 +135,8 @@ bool compare(Range1 const& x, Range2 const& y)
 }
 
 template <class Container>
-bool general_erase_range_test(Container& x, std::size_t start, std::size_t end)
-{
+bool general_erase_range_test(Container& x, std::size_t start,
+                              std::size_t end) {
   collide_list l(x.begin(), x.end());
 
   l.erase(test::next(l.begin(), start), test::next(l.begin(), end));
@@ -152,8 +146,8 @@ bool general_erase_range_test(Container& x, std::size_t start, std::size_t end)
   return compare(l, x);
 }
 
-template <class Container> void erase_subrange_tests(Container const& x)
-{
+template <class Container>
+void erase_subrange_tests(Container const& x) {
   for (std::size_t length = 0; length < x.size(); ++length) {
     for (std::size_t position = 0; position < x.size() - length; ++position) {
       Container y(x);
@@ -170,8 +164,7 @@ template <class Container> void erase_subrange_tests(Container const& x)
 }
 
 template <class Container>
-void x_by_y_erase_range_tests(Container*, int values, int duplicates)
-{
+void x_by_y_erase_range_tests(Container*, int values, int duplicates) {
   Container y;
 
   for (int i = 0; i < values; ++i) {
@@ -186,8 +179,7 @@ void x_by_y_erase_range_tests(Container*, int values, int duplicates)
 }
 
 template <class Container>
-void exhaustive_erase_tests(Container* x, int num_values, int num_duplicated)
-{
+void exhaustive_erase_tests(Container* x, int num_values, int num_duplicated) {
   for (int i = 0; i < num_values; ++i) {
     for (int j = 0; j < num_duplicated; ++j) {
       x_by_y_erase_range_tests(x, i, j);
@@ -195,20 +187,20 @@ void exhaustive_erase_tests(Container* x, int num_values, int num_duplicated)
   }
 }
 
-UNORDERED_AUTO_TEST (exhaustive_collide_tests) {
+UNORDERED_AUTO_TEST(exhaustive_collide_tests) {
   BOOST_LIGHTWEIGHT_TEST_OSTREAM << "exhaustive_collide_tests:\n";
   collide_map m;
   exhaustive_erase_tests((collide_map*)0, 4, 4);
   BOOST_LIGHTWEIGHT_TEST_OSTREAM << "\n";
 }
 
-UNORDERED_AUTO_TEST (exhaustive_collide2_tests) {
+UNORDERED_AUTO_TEST(exhaustive_collide2_tests) {
   BOOST_LIGHTWEIGHT_TEST_OSTREAM << "exhaustive_collide2_tests:\n";
   exhaustive_erase_tests((collide_map2*)0, 8, 4);
   BOOST_LIGHTWEIGHT_TEST_OSTREAM << "\n";
 }
 
-UNORDERED_AUTO_TEST (exhaustive_collide3_tests) {
+UNORDERED_AUTO_TEST(exhaustive_collide3_tests) {
   BOOST_LIGHTWEIGHT_TEST_OSTREAM << "exhaustive_collide3_tests:\n";
   exhaustive_erase_tests((collide_map3*)0, 8, 4);
   BOOST_LIGHTWEIGHT_TEST_OSTREAM << "\n";

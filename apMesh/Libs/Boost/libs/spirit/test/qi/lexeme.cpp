@@ -5,37 +5,35 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_char.hpp>
-#include <boost/spirit/include/qi_operator.hpp>
+#include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_nonterminal.hpp>
-
+#include <boost/spirit/include/qi_operator.hpp>
 #include <iostream>
+
 #include "test.hpp"
 
-int
-main()
-{
-    using spirit_test::test;
-    using boost::spirit::ascii::space;
-    using boost::spirit::ascii::space_type;
-    using boost::spirit::ascii::digit;
-    using boost::spirit::qi::lexeme;
-    using boost::spirit::qi::rule;
+int main() {
+  using boost::spirit::ascii::digit;
+  using boost::spirit::ascii::space;
+  using boost::spirit::ascii::space_type;
+  using boost::spirit::qi::lexeme;
+  using boost::spirit::qi::rule;
+  using spirit_test::test;
 
-    {
-        BOOST_TEST((test(" 1 2 3 4 5", +digit, space)));
-        BOOST_TEST((!test(" 1 2 3 4 5", lexeme[+digit], space)));
-        BOOST_TEST((test(" 12345", lexeme[+digit], space)));
-        BOOST_TEST((test(" 12345  ", lexeme[+digit], space, false)));
+  {
+    BOOST_TEST((test(" 1 2 3 4 5", +digit, space)));
+    BOOST_TEST((!test(" 1 2 3 4 5", lexeme[+digit], space)));
+    BOOST_TEST((test(" 12345", lexeme[+digit], space)));
+    BOOST_TEST((test(" 12345  ", lexeme[+digit], space, false)));
 
-        rule<char const*, space_type> rr;
-        rule<char const*> r;
-        r = +digit;
-        rr = lexeme[r];
-        BOOST_TEST((!test(" 1 2 3 4 5", rr, space)));
-        BOOST_TEST((test(" 12345", rr, space)));
-    }
+    rule<char const*, space_type> rr;
+    rule<char const*> r;
+    r = +digit;
+    rr = lexeme[r];
+    BOOST_TEST((!test(" 1 2 3 4 5", rr, space)));
+    BOOST_TEST((test(" 12345", rr, space)));
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

@@ -21,20 +21,17 @@
 
 using namespace boost::unit_test;
 
-template< typename T >
-void func( T t )
-{
-    typedef typename boost::numeric::odeint::unwrap_reference< T >::type type;
+template <typename T>
+void func(T t) {
+  typedef typename boost::numeric::odeint::unwrap_reference<T>::type type;
 }
 
-BOOST_AUTO_TEST_SUITE( unwrap_boost_reference_test )
+BOOST_AUTO_TEST_SUITE(unwrap_boost_reference_test)
 
-BOOST_AUTO_TEST_CASE( test_case )
-{
-    int a;
-    func( boost::ref( a ) );
-    func( a );
+BOOST_AUTO_TEST_CASE(test_case) {
+  int a;
+  func(boost::ref(a));
+  func(a);
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()

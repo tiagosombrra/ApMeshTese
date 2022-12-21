@@ -17,12 +17,14 @@
 // template <class Mutex> class shared_lock;
 
 // template <class Clock, class Duration>
-//   shared_lock(mutex_type& m, const chrono::time_point<Clock, Duration>& abs_time);
+//   shared_lock(mutex_type& m, const chrono::time_point<Clock, Duration>&
+//   abs_time);
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../../../timming.hpp"
 
 boost::shared_mutex m;
@@ -37,16 +39,14 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f1()
-{
+void f1() {
   t0 = Clock::now();
   boost::shared_lock<boost::shared_mutex> lk(m, Clock::now() + ms(750));
   BOOST_TEST(lk.owns_lock() == true);
   t1 = Clock::now();
 }
 
-void f2()
-{
+void f2() {
   t0 = Clock::now();
   boost::shared_lock<boost::shared_mutex> lk(m, Clock::now() + ms(250));
   BOOST_TEST(lk.owns_lock() == false);
@@ -55,8 +55,7 @@ void f2()
   BOOST_THREAD_TEST_IT(d, ns(max_diff));
 }
 
-int main()
-{
+int main() {
   {
     m.lock();
     boost::thread t(f1);
@@ -83,4 +82,3 @@ int main()
 
   return boost::report_errors();
 }
-

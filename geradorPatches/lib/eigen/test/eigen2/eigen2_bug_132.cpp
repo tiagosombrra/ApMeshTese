@@ -14,13 +14,16 @@ void test_eigen2_bug_132() {
   MatrixXd A(size, size);
   VectorXd b(size), c(size);
   {
-    VectorXd y = A.transpose() * (b-c);  // bug 132: infinite recursion in coeffRef
-    VectorXd z = (b-c).transpose() * A;  // bug 132: infinite recursion in coeffRef
+    VectorXd y =
+        A.transpose() * (b - c);  // bug 132: infinite recursion in coeffRef
+    VectorXd z =
+        (b - c).transpose() * A;  // bug 132: infinite recursion in coeffRef
   }
 
-  // the following ones weren't failing, but let's include them for completeness:
+  // the following ones weren't failing, but let's include them for
+  // completeness:
   {
-    VectorXd y = A * (b-c);
-    VectorXd z = (b-c).transpose() * A.transpose();
+    VectorXd y = A * (b - c);
+    VectorXd z = (b - c).transpose() * A.transpose();
   }
 }

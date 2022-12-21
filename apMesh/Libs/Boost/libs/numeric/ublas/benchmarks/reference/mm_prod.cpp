@@ -8,74 +8,74 @@
 
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/program_options.hpp>
-#include "../init.hpp"
-#include "../benchmark.hpp"
 #include <complex>
 #include <string>
 
+#include "../benchmark.hpp"
+#include "../init.hpp"
+
 namespace po = boost::program_options;
 namespace ublas = boost::numeric::ublas;
-namespace boost { namespace numeric { namespace ublas { namespace benchmark {
+namespace boost {
+namespace numeric {
+namespace ublas {
+namespace benchmark {
 
 template <typename T>
-class prod : public benchmark
-{
-public:
+class prod : public benchmark {
+ public:
   prod(std::string const &name) : benchmark(name) {}
-  virtual void setup(long l)
-  {
+  virtual void setup(long l) {
     init(a, l, 200);
     init(b, l, 200);
   }
-  virtual void operation(long l)
-  {
+  virtual void operation(long l) {
     for (int i = 0; i < l; ++i)
-      for (int j = 0; j < l; ++j)
-      {
-	c(i,j) = 0;
-	for (int k = 0; k < l; ++k)
-	  c(i,j) += a(i,k) * b(k,j);
+      for (int j = 0; j < l; ++j) {
+        c(i, j) = 0;
+        for (int k = 0; k < l; ++k) c(i, j) += a(i, k) * b(k, j);
       }
   }
-private:
+
+ private:
   ublas::matrix<T> a;
   ublas::matrix<T> b;
   ublas::matrix<T> c;
 };
 
-}}}}
+}  // namespace benchmark
+}  // namespace ublas
+}  // namespace numeric
+}  // namespace boost
 
 namespace bm = boost::numeric::ublas::benchmark;
 
 template <typename T>
-void benchmark(std::string const &type)
-{
+void benchmark(std::string const &type) {
   //  using matrix = ublas::matrix<T, ublas::basic_row_major<>>;
   bm::prod<T> p("ref::prod(matrix<" + type + ">)");
-  p.run(std::vector<long>({1, 2, 4, 8, 16, 32, 64, 128, 256, 512}));//, 1024}));
+  p.run(
+      std::vector<long>({1, 2, 4, 8, 16, 32, 64, 128, 256, 512}));  //, 1024}));
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   po::variables_map vm;
-  try
-  {
-    po::options_description desc("Matrix product (reference implementation)\n"
-                                 "Allowed options");
+  try {
+    po::options_description desc(
+        "Matrix product (reference implementation)\n"
+        "Allowed options");
     desc.add_options()("help,h", "produce help message");
-    desc.add_options()("type,t", po::value<std::string>(), "select value-type (float, double, fcomplex, dcomplex)");
+    desc.add_options()("type,t", po::value<std::string>(),
+                       "select value-type (float, double, fcomplex, dcomplex)");
 
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
 
-    if (vm.count("help"))
-    {
+    if (vm.count("help")) {
       std::cout << desc << std::endl;
       return 0;
     }
-  }
-  catch(std::exception &e)
-  {
+  } catch (std::exception &e) {
     std::cerr << "error: " << e.what() << std::endl;
     return 1;
   }
@@ -89,5 +89,6 @@ int main(int argc, char **argv)
   else if (type == "dcomplex")
     benchmark<std::complex<double>>("std::complex<double>");
   else
-    std::cerr << "unsupported value-type \"" << vm["type"].as<std::string>() << '\"' << std::endl;
+    std::cerr << "unsupported value-type \"" << vm["type"].as<std::string>()
+              << '\"' << std::endl;
 }

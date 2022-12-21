@@ -8,23 +8,21 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/utility/annotate_on_success.hpp>
-#include <string>
 #include <sstream>
+#include <string>
 
 namespace x3 = boost::spirit::x3;
 
-struct error_handler_base
-{
-    template <typename Iterator, typename Exception, typename Context>
-    x3::error_handler_result on_error(
-        Iterator&, Iterator const&
-      , Exception const& x, Context const& context) const
-    {
-        std::string message = "Error! Expecting: " + x.which() + " here:";
-        auto& error_handler = x3::get<x3::error_handler_tag>(context).get();
-        error_handler(x.where(), message);
-        return x3::error_handler_result::fail;
-    }
+struct error_handler_base {
+  template <typename Iterator, typename Exception, typename Context>
+  x3::error_handler_result on_error(Iterator&, Iterator const&,
+                                    Exception const& x,
+                                    Context const& context) const {
+    std::string message = "Error! Expecting: " + x.which() + " here:";
+    auto& error_handler = x3::get<x3::error_handler_tag>(context).get();
+    error_handler(x.where(), message);
+    return x3::error_handler_result::fail;
+  }
 };
 
 struct test_rule_class : x3::annotate_on_success, error_handler_base {};
@@ -35,23 +33,26 @@ auto const test_rule_def = x3::lit("foo") > x3::lit("bar") > x3::lit("git");
 BOOST_SPIRIT_DEFINE(test_rule)
 
 void test(std::string const& line_break) {
-    std::string const input("foo" + line_break + "  foo" + line_break + "git");
-    auto const begin = std::begin(input);
-    auto const end = std::end(input);
+  std::string const input("foo" + line_break + "  foo" + line_break + "git");
+  auto const begin = std::begin(input);
+  auto const end = std::end(input);
 
-    std::stringstream stream;
-    x3::error_handler<std::string::const_iterator> error_handler{begin, end, stream};
+  std::stringstream stream;
+  x3::error_handler<std::string::const_iterator> error_handler{begin, end,
+                                                               stream};
 
-    auto const parser = x3::with<x3::error_handler_tag>(std::ref(error_handler))[test_rule];
-    x3::phrase_parse(begin, end, parser, x3::space);
+  auto const parser =
+      x3::with<x3::error_handler_tag>(std::ref(error_handler))[test_rule];
+  x3::phrase_parse(begin, end, parser, x3::space);
 
-    BOOST_TEST_EQ(stream.str(), "In line 2:\nError! Expecting: \"bar\" here:\n  foo\n__^_\n");
+  BOOST_TEST_EQ(stream.str(),
+                "In line 2:\nError! Expecting: \"bar\" here:\n  foo\n__^_\n");
 }
 
 int main() {
-    test("\n");
-    test("\r");
-    test("\r\n");
+  test("\n");
+  test("\r");
+  test("\r\n");
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

@@ -9,10 +9,10 @@
  */
 
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_no_locking.hpp"
 
-int main()
-{
+int main() {
   test_no_locking();
   return boost::report_errors();
 }

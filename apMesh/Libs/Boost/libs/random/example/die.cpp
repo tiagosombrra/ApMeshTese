@@ -35,26 +35,26 @@ boost::random::mt19937 gen;
   six-sided die.
 */
 int roll_die() {
-    /*<< __mt19937 produces integers in the range [0, 2[sup 32]-1].
-        However, we want numbers in the range [1, 6].  The distribution
-        __uniform_int_distribution performs this transformation.
-        [warning Contrary to common C++ usage __uniform_int_distribution
-        does not take a /half-open range/.  Instead it takes a /closed range/.
-        Given the parameters 1 and 6, __uniform_int_distribution
-        can produce any of the values 1, 2, 3, 4, 5, or 6.]
-    >>*/
-    boost::random::uniform_int_distribution<> dist(1, 6);
-    /*<< A distribution is a function object.  We generate a random
-        number by calling `dist` with the generator.
-    >>*/
-    return dist(gen);
+  /*<< __mt19937 produces integers in the range [0, 2[sup 32]-1].
+      However, we want numbers in the range [1, 6].  The distribution
+      __uniform_int_distribution performs this transformation.
+      [warning Contrary to common C++ usage __uniform_int_distribution
+      does not take a /half-open range/.  Instead it takes a /closed range/.
+      Given the parameters 1 and 6, __uniform_int_distribution
+      can produce any of the values 1, 2, 3, 4, 5, or 6.]
+  >>*/
+  boost::random::uniform_int_distribution<> dist(1, 6);
+  /*<< A distribution is a function object.  We generate a random
+      number by calling `dist` with the generator.
+  >>*/
+  return dist(gen);
 }
 //]
 
 #include <iostream>
 
 int main() {
-    for(int i = 0; i < 10; ++i) {
-        std::cout << roll_die() << std::endl;
-    }
+  for (int i = 0; i < 10; ++i) {
+    std::cout << roll_die() << std::endl;
+  }
 }

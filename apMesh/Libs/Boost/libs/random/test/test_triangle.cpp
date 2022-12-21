@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/triangular.hpp>
 #include <boost/random/triangle_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/triangular.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::triangle_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME lognormal

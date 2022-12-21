@@ -13,7 +13,8 @@ int main() {
   };
 
   using namespace boost::histogram;
-  auto h = make_histogram_with(dense_storage<accumulator>(), axis::integer<>(0, 5));
+  auto h =
+      make_histogram_with(dense_storage<accumulator>(), axis::integer<>(0, 5));
 
   // wrong number of sample arguments
   h(0, sample(1, 2));

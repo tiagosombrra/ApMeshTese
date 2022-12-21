@@ -27,8 +27,9 @@ int main() {
   // 1D histograms are rendered as an ASCII drawing
   os << h1;
 
-  auto h2 = make_histogram(axis::regular<>(2, -1.0, 1.0, "axis 1"),
-                           axis::category<std::string>({"red", "blue"}, "axis 2"));
+  auto h2 =
+      make_histogram(axis::regular<>(2, -1.0, 1.0, "axis 1"),
+                     axis::category<std::string>({"red", "blue"}, "axis 2"));
 
   // higher dimensional histograms just have their cell counts listed
   os << h2;
@@ -37,16 +38,26 @@ int main() {
 
   assert(
       os.str() ==
-      "histogram(regular(5, -1, 1, metadata=\"axis 1\", options=underflow | overflow))\n"
-      "               +-------------------------------------------------------------+\n"
-      "[-inf,   -1) 0 |                                                             |\n"
-      "[  -1, -0.6) 2 |==============================                               |\n"
-      "[-0.6, -0.2) 4 |============================================================ |\n"
-      "[-0.2,  0.2) 3 |=============================================                |\n"
-      "[ 0.2,  0.6) 0 |                                                             |\n"
-      "[ 0.6,    1) 1 |===============                                              |\n"
-      "[   1,  inf) 0 |                                                             |\n"
-      "               +-------------------------------------------------------------+\n"
+      "histogram(regular(5, -1, 1, metadata=\"axis 1\", options=underflow | "
+      "overflow))\n"
+      "               "
+      "+-------------------------------------------------------------+\n"
+      "[-inf,   -1) 0 |                                                        "
+      "     |\n"
+      "[  -1, -0.6) 2 |==============================                          "
+      "     |\n"
+      "[-0.6, -0.2) 4 "
+      "|============================================================ |\n"
+      "[-0.2,  0.2) 3 |=============================================           "
+      "     |\n"
+      "[ 0.2,  0.6) 0 |                                                        "
+      "     |\n"
+      "[ 0.6,    1) 1 |===============                                         "
+      "     |\n"
+      "[   1,  inf) 0 |                                                        "
+      "     |\n"
+      "               "
+      "+-------------------------------------------------------------+\n"
       "histogram(\n"
       "  regular(2, -1, 1, metadata=\"axis 1\", options=underflow | overflow)\n"
       "  category(\"red\", \"blue\", metadata=\"axis 2\", options=overflow)\n"

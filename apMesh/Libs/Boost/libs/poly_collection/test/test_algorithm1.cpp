@@ -11,10 +11,8 @@
 #include "any_types.hpp"
 #include "test_algorithm_impl.hpp"
 
-void test_algorithm1()
-{
-  test_algorithm<
-    any_types::collection,jammed_auto_increment,any_types::to_int,
-    any_types::t1,any_types::t2,any_types::t3,
-    any_types::t4,any_types::t5>();
+void test_algorithm1() {
+  test_algorithm<any_types::collection, jammed_auto_increment,
+                 any_types::to_int, any_types::t1, any_types::t2, any_types::t3,
+                 any_types::t4, any_types::t5>();
 }

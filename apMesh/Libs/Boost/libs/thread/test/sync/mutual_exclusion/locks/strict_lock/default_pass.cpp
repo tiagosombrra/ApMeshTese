@@ -9,10 +9,11 @@
 
 // strict_lock(Mutex &);
 
-#include <boost/thread/strict_lock.hpp>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/strict_lock.hpp>
+#include <boost/thread/thread.hpp>
+
 #include "../../../../timming.hpp"
 
 #ifdef BOOST_THREAD_USES_CHRONO
@@ -29,8 +30,7 @@ boost::mutex m;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #ifdef BOOST_THREAD_USES_CHRONO
   t0 = Clock::now();
   {
@@ -38,19 +38,18 @@ void f()
     t1 = Clock::now();
   }
 #else
-  //time_point t0 = Clock::now();
-  //time_point t1;
+  // time_point t0 = Clock::now();
+  // time_point t1;
   {
     boost::strict_lock<boost::mutex> lg(m);
-    //t1 = Clock::now();
+    // t1 = Clock::now();
   }
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
 #endif
 }
 
-int main()
-{
+int main() {
   m.lock();
   boost::thread t(f);
 #ifdef BOOST_THREAD_USES_CHRONO

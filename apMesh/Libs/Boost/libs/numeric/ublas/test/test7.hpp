@@ -13,24 +13,21 @@
 #ifndef TEST7_H
 #define TEST7_H
 
-#include <iostream>
-
 #include <boost/numeric/interval.hpp>
 #include <boost/numeric/interval/io.hpp>
-
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/vector_proxy.hpp>
+#include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/matrix_proxy.hpp>
-#include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/vector_proxy.hpp>
+#include <iostream>
 
 namespace ublas = boost::numeric::ublas;
 
 #include "common/init.hpp"
 
-void test_vector ();
-void test_matrix_vector ();
-void test_matrix ();
-
+void test_vector();
+void test_matrix_vector();
+void test_matrix();
 
 #endif

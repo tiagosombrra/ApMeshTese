@@ -4,42 +4,37 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/thread.hpp>
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
 
 int count = 0;
 boost::mutex mutex;
 
-void increment_count()
-{
-    boost::unique_lock<boost::mutex> lock(mutex);
-    std::cout << "count = " << ++count << std::endl;
+void increment_count() {
+  boost::unique_lock<boost::mutex> lock(mutex);
+  std::cout << "count = " << ++count << std::endl;
 }
 
 boost::thread_group threads2;
 boost::thread* th2 = 0;
 
-void increment_count_2()
-{
-    boost::unique_lock<boost::mutex> lock(mutex);
-    BOOST_TEST(threads2.is_this_thread_in());
-    std::cout << "count = " << ++count << std::endl;
+void increment_count_2() {
+  boost::unique_lock<boost::mutex> lock(mutex);
+  BOOST_TEST(threads2.is_this_thread_in());
+  std::cout << "count = " << ++count << std::endl;
 }
 
-int main()
-{
+int main() {
   {
     boost::thread_group threads;
-    for (int i = 0; i < 3; ++i)
-        threads.create_thread(&increment_count);
+    for (int i = 0; i < 3; ++i) threads.create_thread(&increment_count);
     threads.join_all();
   }
 #if defined BOOST_THREAD_PROVIDES_INTERRUPTIONS
   {
     boost::thread_group threads;
-    for (int i = 0; i < 3; ++i)
-        threads.create_thread(&increment_count);
+    for (int i = 0; i < 3; ++i) threads.create_thread(&increment_count);
     threads.interrupt_all();
     threads.join_all();
   }
@@ -48,7 +43,7 @@ int main()
     boost::thread_group threads;
     boost::thread* th = new boost::thread(&increment_count);
     threads.add_thread(th);
-    BOOST_TEST(! threads.is_this_thread_in());
+    BOOST_TEST(!threads.is_this_thread_in());
     threads.join_all();
   }
   {
@@ -57,7 +52,7 @@ int main()
     threads.add_thread(th);
     BOOST_TEST(threads.is_thread_in(th));
     threads.remove_thread(th);
-    BOOST_TEST(! threads.is_thread_in(th));
+    BOOST_TEST(!threads.is_thread_in(th));
     th->join();
     delete th;
   }

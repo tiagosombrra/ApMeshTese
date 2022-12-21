@@ -13,11 +13,11 @@
 // shared_iterator_test.cpp - Regression tests for shared_container_iterator.
 //
 
+#include <boost/core/lightweight_test.hpp>
+#include <vector>
 
 #include "boost/shared_container_iterator.hpp"
 #include "boost/shared_ptr.hpp"
-#include <boost/core/lightweight_test.hpp>
-#include <vector>
 
 struct resource {
   static int count;
@@ -29,31 +29,26 @@ int resource::count = 0;
 
 typedef std::vector<resource> resources_t;
 
-typedef boost::shared_container_iterator< resources_t > iterator;
+typedef boost::shared_container_iterator<resources_t> iterator;
 
+void set_range(iterator& i, iterator& end) {
+  boost::shared_ptr<resources_t> objs(new resources_t());
 
-void set_range(iterator& i, iterator& end)  {
+  for (int j = 0; j != 6; ++j) objs->push_back(resource());
 
-  boost::shared_ptr< resources_t > objs(new resources_t());
-
-  for (int j = 0; j != 6; ++j)
-    objs->push_back(resource());
-
-  i = iterator(objs->begin(),objs);
-  end = iterator(objs->end(),objs);
+  i = iterator(objs->begin(), objs);
+  end = iterator(objs->end(), objs);
   BOOST_TEST_EQ(resource::count, 6);
 }
 
-
 int main() {
-
   BOOST_TEST_EQ(resource::count, 0);
 
   {
     iterator i;
     {
       iterator end;
-      set_range(i,end);
+      set_range(i, end);
       BOOST_TEST_EQ(resource::count, 6);
     }
     BOOST_TEST_EQ(resource::count, 6);

@@ -7,51 +7,45 @@
 #if !defined(BOOST_SPIRIT_X3_REPR_PRINTER_HPP)
 #define BOOST_SPIRIT_X3_REPR_PRINTER_HPP
 
-#include "ast.hpp"
-
 #include <ostream>
 
-namespace rexpr { namespace ast
-{
-    ///////////////////////////////////////////////////////////////////////////
-    //  Print out the rexpr tree
-    ///////////////////////////////////////////////////////////////////////////
-    int const tabsize = 4;
+#include "ast.hpp"
 
-    struct rexpr_printer
-    {
-        typedef void result_type;
+namespace rexpr {
+namespace ast {
+///////////////////////////////////////////////////////////////////////////
+//  Print out the rexpr tree
+///////////////////////////////////////////////////////////////////////////
+int const tabsize = 4;
 
-        rexpr_printer(std::ostream& out, int indent = 0)
-          : out(out), indent(indent) {}
+struct rexpr_printer {
+  typedef void result_type;
 
-        void operator()(rexpr const& ast) const
-        {
-            out << '{' << std::endl;
-            for (auto const& entry : ast.entries)
-            {
-                tab(indent+tabsize);
-                out << '"' << entry.first << "\" = ";
-                boost::apply_visitor(rexpr_printer(out, indent+tabsize), entry.second);
-            }
-            tab(indent);
-            out << '}' << std::endl;
-        }
+  rexpr_printer(std::ostream& out, int indent = 0) : out(out), indent(indent) {}
 
-        void operator()(std::string const& text) const
-        {
-            out << '"' << text << '"' << std::endl;
-        }
+  void operator()(rexpr const& ast) const {
+    out << '{' << std::endl;
+    for (auto const& entry : ast.entries) {
+      tab(indent + tabsize);
+      out << '"' << entry.first << "\" = ";
+      boost::apply_visitor(rexpr_printer(out, indent + tabsize), entry.second);
+    }
+    tab(indent);
+    out << '}' << std::endl;
+  }
 
-        void tab(int spaces) const
-        {
-            for (int i = 0; i < spaces; ++i)
-                out << ' ';
-        }
+  void operator()(std::string const& text) const {
+    out << '"' << text << '"' << std::endl;
+  }
 
-        std::ostream& out;
-        int indent;
-    };
-}}
+  void tab(int spaces) const {
+    for (int i = 0; i < spaces; ++i) out << ' ';
+  }
+
+  std::ostream& out;
+  int indent;
+};
+}  // namespace ast
+}  // namespace rexpr
 
 #endif

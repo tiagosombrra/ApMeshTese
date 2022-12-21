@@ -7,23 +7,18 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include "test_polymorphic_A.hpp"
+
 #include <boost/serialization/nvp.hpp>
 
 #include "A.hpp"
 #include "A.ipp"
 
-data::data() :
-    a(new A)
-{}
-data::~data(){
-    delete a;
-}
+data::data() : a(new A) {}
+data::~data() { delete a; }
 
-bool data::operator==(const data & rhs) const {
-    return * (a) == *(rhs.a);
-}
+bool data::operator==(const data& rhs) const { return *(a) == *(rhs.a); }
 
-#if 0 // this method fails with msvc 6.0 and borland
+#if 0  // this method fails with msvc 6.0 and borland
 // now we can define the serialization for class A
 template<class Archive>
 void data::serialize(Archive & ar, const unsigned int /* file_version */){
@@ -49,10 +44,12 @@ template void data::serialize<boost::archive::polymorphic_iarchive>(
 #endif
 
 // so use this
-void data::serialize(boost::archive::polymorphic_oarchive & ar, const unsigned int /* file_version */){
-    ar & BOOST_SERIALIZATION_NVP(a);
+void data::serialize(boost::archive::polymorphic_oarchive& ar,
+                     const unsigned int /* file_version */) {
+  ar& BOOST_SERIALIZATION_NVP(a);
 }
 
-void data::serialize(boost::archive::polymorphic_iarchive & ar, const unsigned int /* file_version */){
-    ar & BOOST_SERIALIZATION_NVP(a);
+void data::serialize(boost::archive::polymorphic_iarchive& ar,
+                     const unsigned int /* file_version */) {
+  ar& BOOST_SERIALIZATION_NVP(a);
 }

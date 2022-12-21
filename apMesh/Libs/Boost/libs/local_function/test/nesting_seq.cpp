@@ -5,24 +5,23 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // Home at http://www.boost.org/libs/local_function
 
-#include <boost/local_function.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/local_function.hpp>
 
 int main(void) {
-    int x = 0;
+  int x = 0;
 
-    void BOOST_LOCAL_FUNCTION( (bind& x) ) {
-        void BOOST_LOCAL_FUNCTION( (bind& x) ) {
-            x++;
-        } BOOST_LOCAL_FUNCTION_NAME(g)
+  void BOOST_LOCAL_FUNCTION((bind & x)) {
+    void BOOST_LOCAL_FUNCTION((bind & x)) { x++; }
+    BOOST_LOCAL_FUNCTION_NAME(g)
 
-        x--;
-        g();
-    } BOOST_LOCAL_FUNCTION_NAME(f)
-    
-    f();
+    x--;
+    g();
+  }
+  BOOST_LOCAL_FUNCTION_NAME(f)
 
-    BOOST_TEST(x == 0);
-    return boost::report_errors();
+  f();
+
+  BOOST_TEST(x == 0);
+  return boost::report_errors();
 }
-

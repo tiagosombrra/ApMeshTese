@@ -5,25 +5,20 @@
 #include <boost/config.hpp>
 
 #if defined(SINGLE_INSTANCE_DYN_LINK)
-# define EXPORT BOOST_SYMBOL_EXPORT
+#define EXPORT BOOST_SYMBOL_EXPORT
 #else
-# define EXPORT
+#define EXPORT
 #endif
 
 #include <boost/system/error_code.hpp>
 using namespace boost::system;
 
-namespace lib2
-{
+namespace lib2 {
 
-EXPORT error_code get_system_code()
-{
-    return error_code( 0, system_category() );
+EXPORT error_code get_system_code() { return error_code(0, system_category()); }
+
+EXPORT error_code get_generic_code() {
+  return error_code(0, generic_category());
 }
 
-EXPORT error_code get_generic_code()
-{
-    return error_code( 0, generic_category() );
-}
-
-} // namespace lib2
+}  // namespace lib2

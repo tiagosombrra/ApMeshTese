@@ -6,30 +6,26 @@
 ////////////////////////////////////////////
 
 //#define BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN
-#include <iostream>
-#include <boost/thread/thread_only.hpp>
 #include <boost/thread/shared_mutex.hpp>
-// shared_mutex_deadlock.cpp : Defines the entry point for the console application.
+#include <boost/thread/thread_only.hpp>
+#include <iostream>
+// shared_mutex_deadlock.cpp : Defines the entry point for the console
+// application.
 //
-
 
 boost::shared_mutex mutex;
 
-void thread2_func()
-{
-  int i (0);
-  for (;;)
-  {
-    if (mutex.timed_lock(boost::posix_time::milliseconds(500)))
-    {
+void thread2_func() {
+  int i(0);
+  for (;;) {
+    if (mutex.timed_lock(boost::posix_time::milliseconds(500))) {
       std::cout << "Unique lock acquired" << std::endl
-        << "Test successful" << std::endl;
+                << "Test successful" << std::endl;
       mutex.unlock();
       break;
     }
     ++i;
-    if (i == 100)
-    {
+    if (i == 100) {
       std::cout << "Test failed. App is deadlocked" << std::endl;
       break;
     }
@@ -37,21 +33,17 @@ void thread2_func()
   }
 }
 
-void thread3_func()
-{
-  boost::shared_lock<boost::shared_mutex> lock (mutex);
+void thread3_func() {
+  boost::shared_lock<boost::shared_mutex> lock(mutex);
   std::cout << "Shared lock acquired" << std::endl
-        << "Test successful" << std::endl;
+            << "Test successful" << std::endl;
 }
 
-void thread3_func_workaround()
-{
-  for (;;)
-  {
-    if (mutex.timed_lock_shared(boost::posix_time::milliseconds(200)))
-    {
+void thread3_func_workaround() {
+  for (;;) {
+    if (mutex.timed_lock_shared(boost::posix_time::milliseconds(200))) {
       std::cout << "Shared lock acquired" << std::endl
-        << "Test successful" << std::endl;
+                << "Test successful" << std::endl;
       mutex.unlock_shared();
       break;
     }
@@ -59,12 +51,11 @@ void thread3_func_workaround()
   }
 }
 
-int main()
-{
+int main() {
   std::cout << "Starting" << std::endl;
 
   // 1 - lock the mutex
-  boost::shared_lock<boost::shared_mutex> lock (mutex);
+  boost::shared_lock<boost::shared_mutex> lock(mutex);
 
   // 2 - start thread#2
   boost::thread thread2(&thread2_func);
@@ -76,19 +67,18 @@ int main()
 
   // - start thread3
   boost::thread thread3(&thread3_func);
-  //boost::thread thread3(&thread3_func_workaround);
+  // boost::thread thread3(&thread3_func_workaround);
 
-  std::cout << "Thread#3 is started and blocked. It never will waked" << std::endl;
+  std::cout << "Thread#3 is started and blocked. It never will waked"
+            << std::endl;
 
-  thread3.join(); // will never return
+  thread3.join();  // will never return
 
-  lock.unlock(); // release shared ownership. thread#2 will take unique ownership
+  lock.unlock();  // release shared ownership. thread#2 will take unique
+                  // ownership
 
   thread2.join();
 
   std::cout << "Finished" << std::endl;
   return 0;
 }
-
-
-

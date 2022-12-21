@@ -5,8 +5,7 @@
 using namespace Eigen;
 using namespace std;
 
-int main()
-{
+int main() {
   Matrix3i m = Matrix3i::Random();
   cout << "Here is the matrix m:" << endl << m << endl;
   Matrix3i n = Matrix3i::Random();

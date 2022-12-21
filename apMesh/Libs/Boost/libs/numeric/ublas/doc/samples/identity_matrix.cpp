@@ -10,12 +10,11 @@
 //  GeNeSys mbH & Co. KG in producing this work.
 //
 
-#include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
 
-int main () {
-    using namespace boost::numeric::ublas;
-    identity_matrix<double> m (3);
-    std::cout << m << std::endl;
+int main() {
+  using namespace boost::numeric::ublas;
+  identity_matrix<double> m(3);
+  std::cout << m << std::endl;
 }
-

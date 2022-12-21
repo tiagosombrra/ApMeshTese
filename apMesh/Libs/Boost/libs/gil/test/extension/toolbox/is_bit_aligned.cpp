@@ -11,14 +11,9 @@
 
 namespace gil = boost::gil;
 
-void test_is_bit_aligned()
-{
-    using image_t = gil::bit_aligned_image1_type< 4, gil::gray_layout_t>::type;
-    static_assert(gil::is_bit_aligned<image_t::view_t::value_type>::value, "");
+void test_is_bit_aligned() {
+  using image_t = gil::bit_aligned_image1_type<4, gil::gray_layout_t>::type;
+  static_assert(gil::is_bit_aligned<image_t::view_t::value_type>::value, "");
 }
 
-int main()
-{
-    test_is_bit_aligned();
-}
-
+int main() { test_is_bit_aligned(); }

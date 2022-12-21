@@ -12,23 +12,21 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static constexpr bool is_requirable_concept = true;
 };
 
 template <int>
-struct object
-{
+struct object {
   template <int N>
-  friend constexpr object<N> require_concept(const object&, prop<N>)
-  {
+  friend constexpr object<N> require_concept(const object&, prop<N>) {
     return object<N>();
   }
 };
 
-int main()
-{
-  static_assert(!boost::asio::can_require_concept<object<1>, prop<2>>::value, "");
-  static_assert(!boost::asio::can_require_concept<const object<1>, prop<2>>::value, "");
+int main() {
+  static_assert(!boost::asio::can_require_concept<object<1>, prop<2>>::value,
+                "");
+  static_assert(
+      !boost::asio::can_require_concept<const object<1>, prop<2>>::value, "");
 }

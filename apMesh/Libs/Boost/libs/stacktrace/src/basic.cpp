@@ -8,7 +8,7 @@
 #define BOOST_STACKTRACE_LINK
 
 #ifndef _GNU_SOURCE
-#   define _GNU_SOURCE
+#define _GNU_SOURCE
 #endif
 
 #include <boost/stacktrace/detail/frame_unwind.ipp>

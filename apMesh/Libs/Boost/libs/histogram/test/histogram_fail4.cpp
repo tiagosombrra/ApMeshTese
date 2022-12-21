@@ -14,7 +14,8 @@ int main() {
     void operator()(std::string) {}
   };
 
-  auto h = make_histogram_with(dense_storage<accumulator>(), axis::integer<>(0, 5));
+  auto h =
+      make_histogram_with(dense_storage<accumulator>(), axis::integer<>(0, 5));
 
   // invalid weight argument
   h(0, sample(1));

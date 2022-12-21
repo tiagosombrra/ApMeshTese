@@ -9,15 +9,10 @@
 #include <boost/test/included/unit_test.hpp>
 using namespace boost::unit_test;
 
-void free_test_function()
-{
-  BOOST_TEST( 2 == 1 );
-}
+void free_test_function() { BOOST_TEST(2 == 1); }
 
-test_suite* init_unit_test_suite( int, char* [] )
-{
-  framework::master_test_suite().
-    add( BOOST_TEST_CASE( &free_test_function ), 2 );
+test_suite* init_unit_test_suite(int, char*[]) {
+  framework::master_test_suite().add(BOOST_TEST_CASE(&free_test_function), 2);
 
   return 0;
 }

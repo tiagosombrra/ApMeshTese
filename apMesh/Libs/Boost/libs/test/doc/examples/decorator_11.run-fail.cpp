@@ -10,10 +10,10 @@
 #include <boost/test/included/unit_test.hpp>
 namespace utf = boost::unit_test;
 
-BOOST_AUTO_TEST_CASE(test1, * utf::timeout(2))
-{
+BOOST_AUTO_TEST_CASE(test1, *utf::timeout(2)) {
 #ifdef BOOST_SIGACTION_BASED_SIGNAL_HANDLING
-  for(;;) {}
+  for (;;) {
+  }
   BOOST_TEST(true);
 #else
   BOOST_TEST(false);

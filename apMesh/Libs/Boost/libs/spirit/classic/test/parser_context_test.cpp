@@ -7,18 +7,16 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 
 using namespace boost;
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-int main()
-{
-    rule<parser_context<int> > int_rule = int_p;
-    int result(0);
-    parse("123", int_rule[assign_a(result)]); 
-    BOOST_TEST(result == 123);
-    return boost::report_errors();
+int main() {
+  rule<parser_context<int> > int_rule = int_p;
+  int result(0);
+  parse("123", int_rule[assign_a(result)]);
+  BOOST_TEST(result == 123);
+  return boost::report_errors();
 }
-

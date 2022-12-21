@@ -8,13 +8,14 @@
    25 August 2005 : Initial version.
 */
 
-#include <boost/test/minimal.hpp>
 #include <boost/foreach.hpp>
+#include <boost/test/minimal.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// define the container types, used by utility.hpp to generate the helper functions
-typedef std::pair<int*,int*> foreach_container_type;
-typedef std::pair<int const*,int const*> const foreach_const_container_type;
+// define the container types, used by utility.hpp to generate the helper
+// functions
+typedef std::pair<int *, int *> foreach_container_type;
+typedef std::pair<int const *, int const *> const foreach_const_container_type;
 typedef int foreach_value_type;
 typedef int &foreach_reference_type;
 typedef int const &foreach_const_reference_type;
@@ -24,23 +25,22 @@ typedef int const &foreach_const_reference_type;
 ///////////////////////////////////////////////////////////////////////////////
 // define some containers
 //
-int my_array[] = { 1,2,3,4,5 };
-std::pair<int*,int*> my_pair(my_array,my_array+5);
-std::pair<int const*,int const*> const my_const_pair(my_array,my_array+5);
+int my_array[] = {1, 2, 3, 4, 5};
+std::pair<int *, int *> my_pair(my_array, my_array + 5);
+std::pair<int const *, int const *> const my_const_pair(my_array, my_array + 5);
 
 ///////////////////////////////////////////////////////////////////////////////
 // test_main
-//   
-int test_main( int, char*[] )
-{
-    boost::mpl::true_ *p = BOOST_FOREACH_IS_LIGHTWEIGHT_PROXY(my_pair);
-    (void)p;
+//
+int test_main(int, char *[]) {
+  boost::mpl::true_ *p = BOOST_FOREACH_IS_LIGHTWEIGHT_PROXY(my_pair);
+  (void)p;
 
-    // non-const containers by value
-    BOOST_CHECK(sequence_equal_byval_n(my_pair, "\1\2\3\4\5"));
+  // non-const containers by value
+  BOOST_CHECK(sequence_equal_byval_n(my_pair, "\1\2\3\4\5"));
 
-    // const containers by value
-    BOOST_CHECK(sequence_equal_byval_c(my_const_pair, "\1\2\3\4\5"));
+  // const containers by value
+  BOOST_CHECK(sequence_equal_byval_c(my_const_pair, "\1\2\3\4\5"));
 
-    return 0;
+  return 0;
 }

@@ -39,8 +39,9 @@ struct tracing_allocator_db : std::pair<int, int> {
 
   std::size_t size() const { return map_.size(); }
 
-private:
-  using map_t = std::unordered_map<const boost::core::typeinfo*, std::pair<int, int>>;
+ private:
+  using map_t =
+      std::unordered_map<const boost::core::typeinfo*, std::pair<int, int>>;
   map_t map_;
 };
 
@@ -72,7 +73,8 @@ struct tracing_allocator {
                 " [failure in ", count, "]");
         if (count == 0) BOOST_THROW_EXCEPTION(std::bad_alloc{});
       } else
-        db->log("allocator +", n, " ", boost::histogram::detail::type_name<T>());
+        db->log("allocator +", n, " ",
+                boost::histogram::detail::type_name<T>());
       auto& p = db->at<T>();
       p.first += static_cast<int>(n);
       p.second += static_cast<int>(n);
@@ -96,17 +98,20 @@ struct tracing_allocator {
     if (db) {
       if (db->failure_countdown >= 0) {
         const auto count = db->failure_countdown--;
-        db->log("allocator construct ", boost::histogram::detail::type_name<T>(),
-                "[ failure in ", count, "]");
+        db->log("allocator construct ",
+                boost::histogram::detail::type_name<T>(), "[ failure in ",
+                count, "]");
         if (count == 0) BOOST_THROW_EXCEPTION(std::bad_alloc{});
       } else
-        db->log("allocator construct ", boost::histogram::detail::type_name<T>());
+        db->log("allocator construct ",
+                boost::histogram::detail::type_name<T>());
     }
     ::new (static_cast<void*>(p)) T(std::forward<Ts>(ts)...);
   }
 
   void destroy(T* p) {
-    if (db) db->log("allocator destroy ", boost::histogram::detail::type_name<T>());
+    if (db)
+      db->log("allocator destroy ", boost::histogram::detail::type_name<T>());
     p->~T();
   }
 };

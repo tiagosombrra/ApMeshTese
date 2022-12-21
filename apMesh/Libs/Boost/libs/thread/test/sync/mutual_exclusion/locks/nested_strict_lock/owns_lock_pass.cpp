@@ -9,13 +9,12 @@
 
 // bool owns_lock(Mutex *) const;
 
-#include <boost/thread/lock_types.hpp>
-#include <boost/thread/strict_lock.hpp>
-#include <boost/thread/mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/lock_types.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/strict_lock.hpp>
 
-int main()
-{
+int main() {
   boost::mutex m;
   boost::mutex m2;
   {
@@ -25,7 +24,7 @@ int main()
       BOOST_TEST(nlk.owns_lock(&m) == true);
       BOOST_TEST(!nlk.owns_lock(&m2) == true);
     }
-    BOOST_TEST(lk.owns_lock() == true && lk.mutex()==&m);
+    BOOST_TEST(lk.owns_lock() == true && lk.mutex() == &m);
   }
   {
     m.lock();
@@ -35,7 +34,7 @@ int main()
       BOOST_TEST(nlk.owns_lock(&m) == true);
       BOOST_TEST(!nlk.owns_lock(&m2) == true);
     }
-    BOOST_TEST(lk.owns_lock() == true && lk.mutex()==&m);
+    BOOST_TEST(lk.owns_lock() == true && lk.mutex() == &m);
   }
   {
     boost::unique_lock<boost::mutex> lk(m, boost::defer_lock);
@@ -44,7 +43,7 @@ int main()
       BOOST_TEST(nlk.owns_lock(&m) == true);
       BOOST_TEST(!nlk.owns_lock(&m2) == true);
     }
-    BOOST_TEST(lk.owns_lock() == true && lk.mutex()==&m);
+    BOOST_TEST(lk.owns_lock() == true && lk.mutex() == &m);
   }
   {
     boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
@@ -53,7 +52,7 @@ int main()
       BOOST_TEST(nlk.owns_lock(&m) == true);
       BOOST_TEST(!nlk.owns_lock(&m2) == true);
     }
-    BOOST_TEST(lk.owns_lock() == true && lk.mutex()==&m);
+    BOOST_TEST(lk.owns_lock() == true && lk.mutex() == &m);
   }
 
   return boost::report_errors();

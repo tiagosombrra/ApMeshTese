@@ -23,54 +23,45 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 //  Our calculator grammar
 //
 ////////////////////////////////////////////////////////////////////////////
-struct calculator : public grammar<calculator>
-{
-    static const int integerID = 1;
-    static const int factorID = 2;
-    static const int termID = 3;
-    static const int expressionID = 4;
+struct calculator : public grammar<calculator> {
+  static const int integerID = 1;
+  static const int factorID = 2;
+  static const int termID = 3;
+  static const int expressionID = 4;
 
-    template <typename ScannerT>
-    struct definition
-    {
-        definition(calculator const& /*self*/)
-        {
-            //  Start grammar definition
-            integer     =   leaf_node_d[ lexeme_d[
-                                (!ch_p('-') >> +digit_p)
-                            ] ];
+  template <typename ScannerT>
+  struct definition {
+    definition(calculator const& /*self*/) {
+      //  Start grammar definition
+      integer = leaf_node_d[lexeme_d[(!ch_p('-') >> +digit_p)]];
 
-            factor      =   integer
-                        |   inner_node_d[ch_p('(') >> expression >> ch_p(')')]
-                        |   (root_node_d[ch_p('-')] >> factor);
+      factor = integer | inner_node_d[ch_p('(') >> expression >> ch_p(')')] |
+               (root_node_d[ch_p('-')] >> factor);
 
-            term        =   factor >>
-                            *(  (root_node_d[ch_p('*')] >> factor)
-                              | (root_node_d[ch_p('/')] >> factor)
-                            );
+      term = factor >> *((root_node_d[ch_p('*')] >> factor) |
+                         (root_node_d[ch_p('/')] >> factor));
 
-            expression  =   term >>
-                            *(  (root_node_d[ch_p('+')] >> term)
-                              | (root_node_d[ch_p('-')] >> term)
-                            );
-            //  End grammar definition
+      expression = term >> *((root_node_d[ch_p('+')] >> term) |
+                             (root_node_d[ch_p('-')] >> term));
+      //  End grammar definition
 
-            // turn on the debugging info.
-            BOOST_SPIRIT_DEBUG_RULE(integer);
-            BOOST_SPIRIT_DEBUG_RULE(factor);
-            BOOST_SPIRIT_DEBUG_RULE(term);
-            BOOST_SPIRIT_DEBUG_RULE(expression);
-        }
+      // turn on the debugging info.
+      BOOST_SPIRIT_DEBUG_RULE(integer);
+      BOOST_SPIRIT_DEBUG_RULE(factor);
+      BOOST_SPIRIT_DEBUG_RULE(term);
+      BOOST_SPIRIT_DEBUG_RULE(expression);
+    }
 
-        rule<ScannerT, parser_context<>, parser_tag<expressionID> >   expression;
-        rule<ScannerT, parser_context<>, parser_tag<termID> >         term;
-        rule<ScannerT, parser_context<>, parser_tag<factorID> >       factor;
-        rule<ScannerT, parser_context<>, parser_tag<integerID> >      integer;
+    rule<ScannerT, parser_context<>, parser_tag<expressionID> > expression;
+    rule<ScannerT, parser_context<>, parser_tag<termID> > term;
+    rule<ScannerT, parser_context<>, parser_tag<factorID> > factor;
+    rule<ScannerT, parser_context<>, parser_tag<integerID> > integer;
 
-        rule<ScannerT, parser_context<>, parser_tag<expressionID> > const&
-        start() const { return expression; }
-    };
+    rule<ScannerT, parser_context<>, parser_tag<expressionID> > const& start()
+        const {
+      return expression;
+    }
+  };
 };
 
 #endif
-

@@ -5,11 +5,9 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#include <boost/core/lightweight_test.hpp>
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/tiff.hpp>
-
-#include <boost/core/lightweight_test.hpp>
-
 #include <string>
 
 #include "tiff_tiled_write_macros.hpp"
@@ -21,39 +19,39 @@ namespace gil = boost::gil;
 BOOST_PP_REPEAT_FROM_TO(11, 16, GENERATE_WRITE_TILE_BIT_ALIGNED_RGB, rgb)
 BOOST_PP_REPEAT_FROM_TO(17, 21, GENERATE_WRITE_TILE_BIT_ALIGNED_RGB, rgb)
 
-void test_write_tile_and_compare_with_rgb_strip_contig_16()
-{
-    std::string filename_strip(tiff_in_GM + "tiger-rgb-strip-contig-16.tif");
+void test_write_tile_and_compare_with_rgb_strip_contig_16() {
+  std::string filename_strip(tiff_in_GM + "tiger-rgb-strip-contig-16.tif");
 
-    gil::rgb16_image_t img_strip, img_saved;
+  gil::rgb16_image_t img_strip, img_saved;
 
-    gil::read_image(filename_strip, img_strip, gil::tiff_tag());
+  gil::read_image(filename_strip, img_strip, gil::tiff_tag());
 
-    gil::image_write_info<gil::tiff_tag> info;
-    info._is_tiled   = true;
-    info._tile_width = info._tile_length = 16;
+  gil::image_write_info<gil::tiff_tag> info;
+  info._is_tiled = true;
+  info._tile_width = info._tile_length = 16;
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
-    gil::write_view(
-        tiff_out + "write_tile_and_compare_with_rgb_strip_contig_16.tif", gil::view(img_strip),
-        info);
-    gil::read_image(
-        tiff_out + "write_tile_and_compare_with_rgb_strip_contig_16.tif", img_saved,
-        gil::tiff_tag());
+  gil::write_view(
+      tiff_out + "write_tile_and_compare_with_rgb_strip_contig_16.tif",
+      gil::view(img_strip), info);
+  gil::read_image(
+      tiff_out + "write_tile_and_compare_with_rgb_strip_contig_16.tif",
+      img_saved, gil::tiff_tag());
 
-    BOOST_TEST(gil::equal_pixels(gil::const_view(img_strip), gil::const_view(img_saved)));
+  BOOST_TEST(gil::equal_pixels(gil::const_view(img_strip),
+                               gil::const_view(img_saved)));
 #endif  // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
-int main()
-{
-    test_write_tile_and_compare_with_rgb_strip_contig_16();
+int main() {
+  test_write_tile_and_compare_with_rgb_strip_contig_16();
 
-    // TODO: Make sure generated test cases are executed. See tiff_subimage_test.cpp. ~mloskot
+  // TODO: Make sure generated test cases are executed. See
+  // tiff_subimage_test.cpp. ~mloskot
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
 
 #else
 int main() {}
-#endif // BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES
+#endif  // BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES

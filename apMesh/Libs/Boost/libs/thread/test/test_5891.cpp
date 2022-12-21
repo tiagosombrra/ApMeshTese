@@ -5,30 +5,23 @@
 
 #define BOOST_THREAD_VERSION 2
 
-#include <iostream>
 #include <boost/thread/thread_only.hpp>
+#include <iostream>
 
 using namespace std;
 using namespace boost;
 
-  struct X {
-    void operator()()
-    {
-        boost::this_thread::sleep(posix_time::seconds(2));
-    }
-  };
-int main()
-{
+struct X {
+  void operator()() { boost::this_thread::sleep(posix_time::seconds(2)); }
+};
+int main() {
   X run;
   boost::thread myThread(run);
   boost::this_thread::yield();
-  if(myThread.timed_join(posix_time::seconds(5)))
-  {
+  if (myThread.timed_join(posix_time::seconds(5))) {
     cout << "thats ok";
     return 0;
-  }
-  else
-  {
+  } else {
     cout << "too late";
     return 1;
   }

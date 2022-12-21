@@ -9,8 +9,8 @@
  *
  */
 
-#include <boost/random/ranlux.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/random/ranlux.hpp>
 #include <cmath>
 
 #define BOOST_RANDOM_URNG boost::random::ranlux64_4
@@ -22,6 +22,7 @@
 #define BOOST_RANDOM_SEED_SEQ_VALIDATION_VALUE UINT64_C(160535400540538)
 #define BOOST_RANDOM_ITERATOR_VALIDATION_VALUE UINT64_C(40074210927900)
 
-#define BOOST_RANDOM_GENERATE_VALUES { 0xC35F616BU, 0xDC3C4DF1U, 0xF3F90D0AU, 0x206F9C9EU }
+#define BOOST_RANDOM_GENERATE_VALUES \
+  { 0xC35F616BU, 0xDC3C4DF1U, 0xF3F90D0AU, 0x206F9C9EU }
 
 #include "test_generator.ipp"

@@ -11,12 +11,12 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/windows/object_handle.hpp>
 
-#include <boost/asio/io_context.hpp>
 #include "../archetypes/async_result.hpp"
 #include "../unit_test.hpp"
 
@@ -30,18 +30,14 @@
 
 namespace windows_object_handle_compile {
 
-void wait_handler(const boost::system::error_code&)
-{
-}
+void wait_handler(const boost::system::error_code&) {}
 
-void test()
-{
+void test() {
 #if defined(BOOST_ASIO_HAS_WINDOWS_OBJECT_HANDLE)
   using namespace boost::asio;
   namespace win = boost::asio::windows;
 
-  try
-  {
+  try {
     io_context ioc;
     const io_context::executor_type ioc_ex = ioc.get_executor();
     archetypes::lazy_handler lazy;
@@ -63,14 +59,14 @@ void test()
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     win::object_handle handle5(std::move(handle4));
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_object_handle operators.
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     handle1 = win::object_handle(ioc);
     handle1 = std::move(handle3);
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
@@ -79,13 +75,13 @@ void test()
 
     // basic_handle functions.
 
-    win::object_handle::lowest_layer_type& lowest_layer
-      = handle1.lowest_layer();
+    win::object_handle::lowest_layer_type& lowest_layer =
+        handle1.lowest_layer();
     (void)lowest_layer;
 
     const win::object_handle& handle6 = handle1;
-    const win::object_handle::lowest_layer_type& lowest_layer3
-      = handle6.lowest_layer();
+    const win::object_handle::lowest_layer_type& lowest_layer3 =
+        handle6.lowest_layer();
     (void)lowest_layer3;
 
     HANDLE native_handle4 = INVALID_HANDLE_VALUE;
@@ -97,8 +93,8 @@ void test()
     handle1.close();
     handle1.close(ec);
 
-    win::object_handle::native_handle_type native_handle3
-      = handle1.native_handle();
+    win::object_handle::native_handle_type native_handle3 =
+        handle1.native_handle();
     (void)native_handle3;
 
     handle1.cancel();
@@ -112,19 +108,14 @@ void test()
     handle1.async_wait(&wait_handler);
     int i1 = handle1.async_wait(lazy);
     (void)i1;
+  } catch (std::exception&) {
   }
-  catch (std::exception&)
-  {
-  }
-#endif // defined(BOOST_ASIO_HAS_WINDOWS_OBJECT_HANDLE)
+#endif  // defined(BOOST_ASIO_HAS_WINDOWS_OBJECT_HANDLE)
 }
 
-} // namespace windows_object_handle_compile
+}  // namespace windows_object_handle_compile
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "windows/object_handle",
-  BOOST_ASIO_TEST_CASE(windows_object_handle_compile::test)
-)
+BOOST_ASIO_TEST_SUITE("windows/object_handle",
+                      BOOST_ASIO_TEST_CASE(windows_object_handle_compile::test))

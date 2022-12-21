@@ -4,33 +4,31 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/context/fiber.hpp>
 #include <cstdlib>
 #include <iostream>
 #include <memory>
 
-#include <boost/context/fiber.hpp>
-
 namespace ctx = boost::context;
 
 int main() {
-    int a;
-    ctx::fiber f{
-        [&a](ctx::fiber && f){
-            a=0;
-            int b=1;
-            for(;;){
-                f = std::move( f).resume();
-                int next=a+b;
-                a=b;
-                b=next;
-            }
-            return std::move( f);
-        }};
-    for ( int j = 0; j < 10; ++j) {
-        f = std::move( f).resume();
-        std::cout << a << " ";
+  int a;
+  ctx::fiber f{[&a](ctx::fiber&& f) {
+    a = 0;
+    int b = 1;
+    for (;;) {
+      f = std::move(f).resume();
+      int next = a + b;
+      a = b;
+      b = next;
     }
-    std::cout << std::endl;
-    std::cout << "main: done" << std::endl;
-    return EXIT_SUCCESS;
+    return std::move(f);
+  }};
+  for (int j = 0; j < 10; ++j) {
+    f = std::move(f).resume();
+    std::cout << a << " ";
+  }
+  std::cout << std::endl;
+  std::cout << "main: done" << std::endl;
+  return EXIT_SUCCESS;
 }

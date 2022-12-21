@@ -7,7 +7,6 @@
 // Test no error if permissive even when static inv declared const.
 
 #ifndef BOOST_CONTRACT_PERMISSIVE
-    #error "build must define PERMISSIVE"
+#error "build must define PERMISSIVE"
 #endif
 #include "static_const.hpp"
-

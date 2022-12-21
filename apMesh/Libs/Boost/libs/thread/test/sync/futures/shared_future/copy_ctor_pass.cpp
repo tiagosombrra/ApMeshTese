@@ -17,13 +17,11 @@
 
 // shared_future(const future&);
 
-
 #define BOOST_THREAD_VERSION 3
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-int main()
-{
+int main() {
   {
     typedef int T;
     boost::promise<T> p;
@@ -34,7 +32,7 @@ int main()
   }
   {
     typedef int T;
-    boost::shared_future < T > f0;
+    boost::shared_future<T> f0;
     boost::shared_future<T> f = f0;
     BOOST_TEST(!f0.valid());
     BOOST_TEST(!f.valid());
@@ -49,7 +47,7 @@ int main()
   }
   {
     typedef int& T;
-    boost::shared_future < T > f0;
+    boost::shared_future<T> f0;
     boost::shared_future<T> f = boost::move(f0);
     BOOST_TEST(!f0.valid());
     BOOST_TEST(!f.valid());
@@ -64,7 +62,7 @@ int main()
   }
   {
     typedef void T;
-    boost::shared_future < T > f0;
+    boost::shared_future<T> f0;
     boost::shared_future<T> f = f0;
     BOOST_TEST(!f0.valid());
     BOOST_TEST(!f.valid());
@@ -74,4 +72,3 @@ int main()
 }
 
 //#include "../../../remove_error_code_unused_warning.hpp"
-

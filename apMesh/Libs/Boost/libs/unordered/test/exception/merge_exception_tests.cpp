@@ -9,8 +9,8 @@
 #include "../helpers/random_values.hpp"
 #include "./containers.hpp"
 
-template <typename T1, typename T2> void merge_exception_test(T1 x, T2 y)
-{
+template <typename T1, typename T2>
+void merge_exception_test(T1 x, T2 y) {
   std::size_t size = x.size() + y.size();
 
   try {
@@ -36,8 +36,8 @@ template <typename T1, typename T2> void merge_exception_test(T1 x, T2 y)
 
 template <typename T1, typename T2>
 void merge_exception_test(T1 const*, T2 const*, std::size_t count12, int tag12,
-  test::random_generator gen1, test::random_generator gen2)
-{
+                          test::random_generator gen1,
+                          test::random_generator gen2) {
   std::size_t count1 = count12 / 256;
   std::size_t count2 = count12 % 256;
   int tag1 = tag12 / 256;
@@ -45,25 +45,27 @@ void merge_exception_test(T1 const*, T2 const*, std::size_t count12, int tag12,
   test::random_values<T1> v1(count1, gen1);
   test::random_values<T2> v2(count2, gen2);
   T1 x(v1.begin(), v1.end(), 0, test::exception::hash(tag1),
-    test::exception::equal_to(tag1));
+       test::exception::equal_to(tag1));
   T2 y(v2.begin(), v2.end(), 0, test::exception::hash(tag2),
-    test::exception::equal_to(tag2));
+       test::exception::equal_to(tag2));
 
   EXCEPTION_LOOP(merge_exception_test(x, y))
 }
 
-boost::unordered_set<test::exception::object, test::exception::hash,
-  test::exception::equal_to,
-  test::exception::allocator<test::exception::object> >* test_set_;
-boost::unordered_multiset<test::exception::object, test::exception::hash,
-  test::exception::equal_to,
-  test::exception::allocator<test::exception::object> >* test_multiset_;
+boost::unordered_set<
+    test::exception::object, test::exception::hash, test::exception::equal_to,
+    test::exception::allocator<test::exception::object> >* test_set_;
+boost::unordered_multiset<
+    test::exception::object, test::exception::hash, test::exception::equal_to,
+    test::exception::allocator<test::exception::object> >* test_multiset_;
 boost::unordered_map<test::exception::object, test::exception::object,
-  test::exception::hash, test::exception::equal_to,
-  test::exception::allocator2<test::exception::object> >* test_map_;
-boost::unordered_multimap<test::exception::object, test::exception::object,
-  test::exception::hash, test::exception::equal_to,
-  test::exception::allocator2<test::exception::object> >* test_multimap_;
+                     test::exception::hash, test::exception::equal_to,
+                     test::exception::allocator2<test::exception::object> >*
+    test_map_;
+boost::unordered_multimap<
+    test::exception::object, test::exception::object, test::exception::hash,
+    test::exception::equal_to,
+    test::exception::allocator2<test::exception::object> >* test_multimap_;
 
 using test::default_generator;
 using test::generate_collisions;

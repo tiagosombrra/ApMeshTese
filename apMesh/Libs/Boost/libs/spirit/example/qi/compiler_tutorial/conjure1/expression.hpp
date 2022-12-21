@@ -22,54 +22,42 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/spirit/include/qi.hpp>
+#include <vector>
+
 #include "ast.hpp"
 #include "error_handler.hpp"
 #include "skipper.hpp"
-#include <vector>
 
-namespace client { namespace parser
-{
-    namespace qi = boost::spirit::qi;
-    namespace ascii = boost::spirit::ascii;
+namespace client {
+namespace parser {
+namespace qi = boost::spirit::qi;
+namespace ascii = boost::spirit::ascii;
 
-    ///////////////////////////////////////////////////////////////////////////////
-    //  The expression grammar
-    ///////////////////////////////////////////////////////////////////////////////
-    template <typename Iterator>
-    struct expression : qi::grammar<Iterator, ast::expression(), skipper<Iterator> >
-    {
-        expression(error_handler<Iterator>& error_handler);
+///////////////////////////////////////////////////////////////////////////////
+//  The expression grammar
+///////////////////////////////////////////////////////////////////////////////
+template <typename Iterator>
+struct expression
+    : qi::grammar<Iterator, ast::expression(), skipper<Iterator> > {
+  expression(error_handler<Iterator>& error_handler);
 
-        qi::rule<Iterator, ast::expression(), skipper<Iterator> >
-            expr
-            ;
+  qi::rule<Iterator, ast::expression(), skipper<Iterator> > expr;
 
-        qi::rule<Iterator, ast::operand(), skipper<Iterator> >
-            unary_expr, primary_expr
-            ;
+  qi::rule<Iterator, ast::operand(), skipper<Iterator> > unary_expr,
+      primary_expr;
 
-        qi::rule<Iterator, ast::function_call(), skipper<Iterator> >
-            function_call
-            ;
+  qi::rule<Iterator, ast::function_call(), skipper<Iterator> > function_call;
 
-        qi::rule<Iterator, std::list<ast::expression>(), skipper<Iterator> >
-            argument_list
-            ;
+  qi::rule<Iterator, std::list<ast::expression>(), skipper<Iterator> >
+      argument_list;
 
-        qi::rule<Iterator, std::string(), skipper<Iterator> >
-            identifier
-            ;
+  qi::rule<Iterator, std::string(), skipper<Iterator> > identifier;
 
-        qi::symbols<char, ast::optoken>
-            unary_op, binary_op
-            ;
+  qi::symbols<char, ast::optoken> unary_op, binary_op;
 
-        qi::symbols<char>
-            keywords
-            ;
-    };
-}}
+  qi::symbols<char> keywords;
+};
+}  // namespace parser
+}  // namespace client
 
 #endif
-
-

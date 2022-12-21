@@ -8,22 +8,30 @@
  * copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#include <boost/numeric/interval/interval.hpp>
 #include <boost/numeric/interval/arith.hpp>
-#include <boost/numeric/interval/rounding.hpp>
-#include <boost/numeric/interval/rounded_arith.hpp>
-#include <boost/numeric/interval/utility.hpp>
+#include <boost/numeric/interval/interval.hpp>
 #include <boost/numeric/interval/policies.hpp>
+#include <boost/numeric/interval/rounded_arith.hpp>
+#include <boost/numeric/interval/rounding.hpp>
+#include <boost/numeric/interval/utility.hpp>
 #include <boost/test/minimal.hpp>
+
 #include "bugs.hpp"
 
-typedef enum { EXPR_VAR, EXPR_NEG, EXPR_UP, EXPR_DOWN, EXPR_ADD, EXPR_SUB } e_type;
+typedef enum {
+  EXPR_VAR,
+  EXPR_NEG,
+  EXPR_UP,
+  EXPR_DOWN,
+  EXPR_ADD,
+  EXPR_SUB
+} e_type;
 
 struct expr;
 struct pexpr {
   expr *ptr;
-  expr* operator->() { return ptr; }
-  pexpr(expr *p = NULL): ptr(p) { }
+  expr *operator->() { return ptr; }
+  pexpr(expr *p = NULL) : ptr(p) {}
 };
 
 struct expr {
@@ -47,7 +55,8 @@ pexpr operator-(pexpr);
 pexpr operator+(pexpr a, pexpr b) {
   if (a->type == EXPR_NEG) return b - a->e;
   if (b->type == EXPR_NEG) return a - b->e;
-  if (a->type == EXPR_VAR && b->type == EXPR_VAR && a->var > b->var) return b + a;
+  if (a->type == EXPR_VAR && b->type == EXPR_VAR && a->var > b->var)
+    return b + a;
   pexpr c = new expr;
   c->type = EXPR_ADD;
   c->e1 = a;
@@ -104,119 +113,125 @@ namespace boost {
 namespace numeric {
 namespace interval_lib {
 
-template<>
+template <>
 struct rounding_control<pexpr> {
   typedef enum { RND_U, RND_M, RND_D } rounding_mode;
   static rounding_mode mode;
   rounding_control() { mode = RND_M; }
-  void get_rounding_mode(rounding_mode& m) { m = mode; }
-  void set_rounding_mode(rounding_mode m)  { mode = m; }
-  void upward()   { mode = RND_U; }
+  void get_rounding_mode(rounding_mode &m) { m = mode; }
+  void set_rounding_mode(rounding_mode m) { mode = m; }
+  void upward() { mode = RND_U; }
   void downward() { mode = RND_D; }
   pexpr force_rounding(pexpr a) {
     switch (mode) {
-    case RND_U: return up(a);
-    case RND_D: return down(a);
-    default: throw "Unset rounding mode";
+      case RND_U:
+        return up(a);
+      case RND_D:
+        return down(a);
+      default:
+        throw "Unset rounding mode";
     }
   }
 };
 
 rounding_control<pexpr>::rounding_mode rounding_control<pexpr>::mode = RND_M;
 
-} // namespace interval_lib
-} // namespace numeric
-} // namespace boost
+}  // namespace interval_lib
+}  // namespace numeric
+}  // namespace boost
 
-template<class I>
+template <class I>
 bool test_neg() {
   I a(var(0), var(1));
   return equal(-a, I(-var(1), -var(0)));
 }
 
-template<class I>
+template <class I>
 bool test_add() {
   I a(var(0), var(1)), b(var(2), var(3));
   return equal(a + b, I(down(var(0) + var(2)), up(var(1) + var(3))));
 }
 
-template<class I>
+template <class I>
 bool test_add1() {
   I a(var(0), var(1));
   return equal(a + var(2), I(down(var(0) + var(2)), up(var(1) + var(2))));
 }
 
-template<class I>
+template <class I>
 bool test_add2() {
   I a(var(0), var(1));
   return equal(var(2) + a, I(down(var(0) + var(2)), up(var(1) + var(2))));
 }
 
-template<class I>
+template <class I>
 bool test_sub() {
   I a(var(0), var(1)), b(var(2), var(3));
   return equal(a - b, I(down(var(0) - var(3)), up(var(1) - var(2))));
 }
 
-template<class I>
+template <class I>
 bool test_sub1() {
   I a(var(0), var(1));
   return equal(a - var(2), I(down(var(0) - var(2)), up(var(1) - var(2))));
 }
 
-template<class I>
+template <class I>
 bool test_sub2() {
   I a(var(0), var(1));
   return equal(var(2) - a, I(down(var(2) - var(1)), up(var(2) - var(0))));
 }
 
-template<class I>
+template <class I>
 bool test_addeq() {
   I a(var(0), var(1)), b(var(2), var(3));
   return equal(a += b, I(down(var(0) + var(2)), up(var(1) + var(3))));
 }
 
-template<class I>
+template <class I>
 bool test_addeq1() {
   I a(var(0), var(1));
   return equal(a += var(2), I(down(var(0) + var(2)), up(var(1) + var(2))));
 }
 
-template<class I>
+template <class I>
 bool test_subeq() {
   I a(var(0), var(1)), b(var(2), var(3));
   return equal(a -= b, I(down(var(0) - var(3)), up(var(1) - var(2))));
 }
 
-template<class I>
+template <class I>
 bool test_subeq1() {
   I a(var(0), var(1));
   return equal(a -= var(2), I(down(var(0) - var(2)), up(var(1) - var(2))));
 }
 
-struct my_checking
-{
+struct my_checking {
   static pexpr pos_inf() { throw; }
   static pexpr neg_inf() { throw; }
   static pexpr nan() { throw; }
-  static bool is_nan(const pexpr&) { return false; }
+  static bool is_nan(const pexpr &) { return false; }
   static pexpr empty_lower() { throw; }
   static pexpr empty_upper() { throw; }
-  static bool is_empty(const pexpr&, const pexpr&) { return false; }
+  static bool is_empty(const pexpr &, const pexpr &) { return false; }
 };
 
-template<class Rounding>
+template <class Rounding>
 struct my_interval {
-private:
+ private:
   typedef boost::numeric::interval_lib::save_state<Rounding> my_rounding;
-  typedef boost::numeric::interval_lib::policies<my_rounding, my_checking> my_policies;
-public:
+  typedef boost::numeric::interval_lib::policies<my_rounding, my_checking>
+      my_policies;
+
+ public:
   typedef boost::numeric::interval<pexpr, my_policies> type;
 };
 
 int test_main(int, char *[]) {
-  typedef my_interval<boost::numeric::interval_lib::rounded_arith_std<pexpr> >::type I1;
-  typedef my_interval<boost::numeric::interval_lib::rounded_arith_opp<pexpr> >::type I2;
+  typedef my_interval<
+      boost::numeric::interval_lib::rounded_arith_std<pexpr> >::type I1;
+  typedef my_interval<
+      boost::numeric::interval_lib::rounded_arith_opp<pexpr> >::type I2;
   BOOST_CHECK((test_neg<I1>()));
   BOOST_CHECK((test_neg<I2>()));
   BOOST_CHECK((test_add<I1>()));

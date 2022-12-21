@@ -10,12 +10,10 @@
 //  bits(2) = 10
 //  bits(3) = 11
 
-
-#include <iostream>
 #include <boost/dynamic_bitset.hpp>
+#include <iostream>
 
-int main()
-{
+int main() {
   const boost::dynamic_bitset<> b0(2, 0ul);
   std::cout << "bits(0) = " << b0 << std::endl;
 

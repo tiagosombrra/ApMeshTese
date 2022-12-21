@@ -17,48 +17,50 @@
 
 #include <boost/thread/future.hpp>
 
-
-int main()
-{
+int main() {
 #if __cplusplus >= 201103L
 
-    int value = 0;
-    int tmpValue = 0;
-    boost::promise<void> promise1;
-    boost::promise<void> promise2;
+  int value = 0;
+  int tmpValue = 0;
+  boost::promise<void> promise1;
+  boost::promise<void> promise2;
 
-    auto future1 = promise1.get_future();
+  auto future1 = promise1.get_future();
 
-    auto waitFuture = future1.then([&tmpValue, &promise2](boost::future<void> future){
-        assert(future.is_ready());  // this works correctly and is ready.
+  auto waitFuture =
+      future1
+          .then([&tmpValue, &promise2](boost::future<void> future) {
+            assert(future.is_ready());  // this works correctly and is ready.
 
-        auto fut = boost::async(boost::launch::async, [&promise2, &tmpValue](){
-          boost::this_thread::sleep_for(boost::chrono::seconds(1));
-            tmpValue = 1;
-            promise2.set_value();
-            std::cout << "Step 2 "<< std::endl; // should print 1 but prints 0
-        });
-        std::cout << "Step 1 "<< std::endl; // should print 1 but prints 0
+            auto fut =
+                boost::async(boost::launch::async, [&promise2, &tmpValue]() {
+                  boost::this_thread::sleep_for(boost::chrono::seconds(1));
+                  tmpValue = 1;
+                  promise2.set_value();
+                  std::cout << "Step 2 "
+                            << std::endl;  // should print 1 but prints 0
+                });
+            std::cout << "Step 1 " << std::endl;  // should print 1 but prints 0
 
-        return promise2.get_future();
-        //return ;
-    }).then([&value, &tmpValue](boost::future<boost::future<void>> future){
-    //}).then([&value, &tmpValue](boost::future<void> future){
-      // error: no matching function for call to ‘boost::future<boost::future<void> >::then(main()::<lambda(boost::future<void>)>)’
-      // as expected
+            return promise2.get_future();
+            // return ;
+          })
+          .then([&value, &tmpValue](boost::future<boost::future<void>> future) {
+            //}).then([&value, &tmpValue](boost::future<void> future){
+            // error: no matching function for call to
+            // ‘boost::future<boost::future<void>
+            // >::then(main()::<lambda(boost::future<void>)>)’ as expected
 
-        assert(future.is_ready());  // this doesn't work correctly and is not ready.
+            assert(future.is_ready());  // this doesn't work correctly and is
+                                        // not ready.
 
+            value = tmpValue;
+          });
 
-        value = tmpValue;
-    });
+  promise1.set_value();
+  waitFuture.wait();
 
-
-    promise1.set_value();
-    waitFuture.wait();
-
-    std::cout << "value = " << value << std::endl; // should print 1 but prints 0
+  std::cout << "value = " << value << std::endl;  // should print 1 but prints 0
 #endif
-    return 0;
+  return 0;
 }
-

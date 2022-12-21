@@ -17,23 +17,17 @@
 typedef long double fpt80;
 
 // Random generators and distributions.
+#include <boost/polygon/voronoi.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
 #include <boost/timer/timer.hpp>
-
-#include <boost/polygon/voronoi.hpp>
 using namespace boost::polygon;
 
 struct my_ulp_comparison {
-  enum Result {
-    LESS = -1,
-    EQUAL = 0,
-    MORE = 1
-  };
+  enum Result { LESS = -1, EQUAL = 0, MORE = 1 };
 
   Result operator()(fpt80 a, fpt80 b, unsigned int maxUlps) const {
-    if (a == b)
-      return EQUAL;
+    if (a == b) return EQUAL;
     if (a > b) {
       Result res = operator()(b, a, maxUlps);
       if (res == EQUAL) return res;
@@ -44,20 +38,18 @@ struct my_ulp_comparison {
     rhs.d = b;
     if (lhs.ieee.negative ^ rhs.ieee.negative)
       return lhs.ieee.negative ? LESS : MORE;
-    boost::uint64_t le = lhs.ieee.exponent; le =
-        (le << 32) + lhs.ieee.mantissa0;
-    boost::uint64_t re = rhs.ieee.exponent; re =
-        (re << 32) + rhs.ieee.mantissa0;
+    boost::uint64_t le = lhs.ieee.exponent;
+    le = (le << 32) + lhs.ieee.mantissa0;
+    boost::uint64_t re = rhs.ieee.exponent;
+    re = (re << 32) + rhs.ieee.mantissa0;
     if (lhs.ieee.negative) {
-      if (le - 1 > re)
-        return LESS;
+      if (le - 1 > re) return LESS;
       le = (le == re) ? 0 : 1;
       le = (le << 32) + lhs.ieee.mantissa1;
       re = rhs.ieee.mantissa1;
       return (re + maxUlps < le) ? LESS : EQUAL;
     } else {
-      if (le + 1 < re)
-        return LESS;
+      if (le + 1 < re) return LESS;
       le = lhs.ieee.mantissa0;
       re = (le == re) ? 0 : 1;
       re = (re << 32) + rhs.ieee.mantissa1;
@@ -68,7 +60,7 @@ struct my_ulp_comparison {
 
 struct my_fpt_converter {
   template <typename T>
-  fpt80 operator()(const T& that) const {
+  fpt80 operator()(const T &that) const {
     return static_cast<fpt80>(that);
   }
 
@@ -76,8 +68,7 @@ struct my_fpt_converter {
   fpt80 operator()(const typename detail::extended_int<N> &that) const {
     fpt80 result = 0.0;
     for (std::size_t i = 1; i <= (std::min)((std::size_t)3, that.size()); ++i) {
-      if (i != 1)
-        result *= static_cast<fpt80>(0x100000000ULL);
+      if (i != 1) result *= static_cast<fpt80>(0x100000000ULL);
       result += that.chunks()[that.size() - i];
     }
     return (that.count() < 0) ? -result : result;
@@ -91,13 +82,14 @@ struct my_voronoi_diagram_traits {
   typedef voronoi_vertex<coordinate_type> vertex_type;
   typedef voronoi_edge<coordinate_type> edge_type;
   class vertex_equality_predicate_type {
-  public:
+   public:
     enum { ULPS = 128 };
     bool operator()(const vertex_type &v1, const vertex_type &v2) const {
       return (ulp_cmp(v1.x(), v2.x(), ULPS) == my_ulp_comparison::EQUAL &&
               ulp_cmp(v1.y(), v2.y(), ULPS) == my_ulp_comparison::EQUAL);
     }
-  private:
+
+   private:
     my_ulp_comparison ulp_cmp;
   };
 };
@@ -120,7 +112,7 @@ const boost::int64_t MAX = 0x1000000000000LL;
 
 int main() {
   boost::mt19937_64 gen(std::time(0));
-  boost::random::uniform_int_distribution<boost::int64_t> distr(-MAX, MAX-1);
+  boost::random::uniform_int_distribution<boost::int64_t> distr(-MAX, MAX - 1);
   voronoi_builder<boost::int64_t, my_voronoi_ctype_traits> vb;
   for (size_t i = 0; i < GENERATED_POINTS; ++i) {
     boost::int64_t x = distr(gen);

@@ -4,105 +4,88 @@
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
 // This code has been adapted from libs/spirit/optimization/qi/int_parser.cpp.
-// This code uses the performance testing framework from libs/spirit/optimization/measure.cpp.
-// See these mentioned files for the copyright notice.
+// This code uses the performance testing framework from
+// libs/spirit/optimization/measure.cpp. See these mentioned files for the
+// copyright notice.
 
 #include "./test.hpp"
 
 #if defined(BOOST_CONVERT_IS_NOT_SUPPORTED)
-int main(int, char const* []) { return 0; }
+int main(int, char const*[]) { return 0; }
 #else
 
-#include "./prepare.hpp"
 #include <boost/convert.hpp>
+#include <boost/convert/lexical_cast.hpp>
 #include <boost/convert/spirit.hpp>
 #include <boost/convert/strtol.hpp>
-#include <boost/convert/lexical_cast.hpp>
-
-#include <libs/spirit/workbench/measure.hpp>
 #include <boost/spirit/include/qi.hpp>
+#include <libs/spirit/workbench/measure.hpp>
 #include <vector>
 
-namespace
-{
-    namespace local
-    {
-        struct base : test::base
-        {
-            base() : strings_(local::get_strs()) {}
+#include "./prepare.hpp"
 
-            // Test strings are created as part of the object, i.e. on the stack to make sure
-            // they are easily accessed.
-            local::strings strings_;
-        };
-    }
-    struct raw_lxcast_str_to_int_test : local::base
-    {
-        void benchmark()
-        {
-            for (size_t i = 0; i < strings_.size(); ++i)
-                this->val += boost::lexical_cast<int>(strings_[i].c_str());
-        }
-    };
-    struct cnv_lxcast_str_to_int_test : local::base
-    {
-        void benchmark()
-        {
-            for (size_t i = 0; i < strings_.size(); ++i)
-                this->val += boost::convert<int>(strings_[i].c_str(), cnv).value();
-        }
-        boost::cnv::lexical_cast cnv;
-    };
-    struct raw_spirit_str_to_int_test : local::base
-    {
-        static int parse(char const* str)
-        {
-            char const* beg = str;
-            char const* end = beg + strlen(str);
-            int n;
+namespace {
+namespace local {
+struct base : test::base {
+  base() : strings_(local::get_strs()) {}
 
-            if (boost::spirit::qi::parse(beg, end, boost::spirit::qi::int_, n))
-                if (beg == end)
-                    return n;
+  // Test strings are created as part of the object, i.e. on the stack to make
+  // sure they are easily accessed.
+  local::strings strings_;
+};
+}  // namespace local
+struct raw_lxcast_str_to_int_test : local::base {
+  void benchmark() {
+    for (size_t i = 0; i < strings_.size(); ++i)
+      this->val += boost::lexical_cast<int>(strings_[i].c_str());
+  }
+};
+struct cnv_lxcast_str_to_int_test : local::base {
+  void benchmark() {
+    for (size_t i = 0; i < strings_.size(); ++i)
+      this->val += boost::convert<int>(strings_[i].c_str(), cnv).value();
+  }
+  boost::cnv::lexical_cast cnv;
+};
+struct raw_spirit_str_to_int_test : local::base {
+  static int parse(char const* str) {
+    char const* beg = str;
+    char const* end = beg + strlen(str);
+    int n;
 
-            return (BOOST_ASSERT(0), 0);
-        }
-        void benchmark()
-        {
-            for (size_t i = 0; i < strings_.size(); ++i)
-                this->val += parse(strings_[i].c_str());
-        }
-    };
-    struct cnv_spirit_str_to_int_test : local::base
-    {
-        void benchmark()
-        {
-            for (size_t i = 0; i < strings_.size(); ++i)
-                this->val += boost::convert<int>(strings_[i].c_str(), cnv).value();
-        }
-        boost::cnv::spirit cnv;
-    };
-}
+    if (boost::spirit::qi::parse(beg, end, boost::spirit::qi::int_, n))
+      if (beg == end) return n;
 
-int
-main(int, char const* [])
-{
-    // This code has been adapted from libs/spirit/optimization/qi/int_parser.cpp.
-    // This code uses the performance testing framework from libs/spirit/optimization/measure.cpp.
-    // See these mentioned files for the copyright notice.
+    return (BOOST_ASSERT(0), 0);
+  }
+  void benchmark() {
+    for (size_t i = 0; i < strings_.size(); ++i)
+      this->val += parse(strings_[i].c_str());
+  }
+};
+struct cnv_spirit_str_to_int_test : local::base {
+  void benchmark() {
+    for (size_t i = 0; i < strings_.size(); ++i)
+      this->val += boost::convert<int>(strings_[i].c_str(), cnv).value();
+  }
+  boost::cnv::spirit cnv;
+};
+}  // namespace
 
-    BOOST_SPIRIT_TEST_BENCHMARK(
-        10000000, // This is the maximum repetitions to execute
-        (raw_lxcast_str_to_int_test)
-        (cnv_lxcast_str_to_int_test)
-        (raw_spirit_str_to_int_test)
-        (cnv_spirit_str_to_int_test)
-    )
+int main(int, char const*[]) {
+  // This code has been adapted from libs/spirit/optimization/qi/int_parser.cpp.
+  // This code uses the performance testing framework from
+  // libs/spirit/optimization/measure.cpp. See these mentioned files for the
+  // copyright notice.
 
-    // This is ultimately responsible for preventing all the test code
-    // from being optimized away.  Change this to return 0 and you
-    // unplug the whole test's life support system.
-    return test::live_code != 0;
+  BOOST_SPIRIT_TEST_BENCHMARK(
+      10000000,  // This is the maximum repetitions to execute
+      (raw_lxcast_str_to_int_test)(cnv_lxcast_str_to_int_test)(raw_spirit_str_to_int_test)(cnv_spirit_str_to_int_test))
+
+  // This is ultimately responsible for preventing all the test code
+  // from being optimized away.  Change this to return 0 and you
+  // unplug the whole test's life support system.
+  return test::live_code != 0;
 }
 
 #endif

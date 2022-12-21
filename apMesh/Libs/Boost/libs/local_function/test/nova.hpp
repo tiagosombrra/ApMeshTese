@@ -14,8 +14,7 @@
 
 // Force no variadic macros but avoiding macro redefinition warning/error.
 #ifndef BOOST_NO_CXX11_VARIADIC_MACROS
-#   define BOOST_NO_CXX11_VARIADIC_MACROS
+#define BOOST_NO_CXX11_VARIADIC_MACROS
 #endif
 
-#endif // #include guard
-
+#endif  // #include guard

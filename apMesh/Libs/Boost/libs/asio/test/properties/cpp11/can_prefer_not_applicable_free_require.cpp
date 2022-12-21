@@ -12,27 +12,29 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static constexpr bool is_preferable = true;
 };
 
 template <int>
-struct object
-{
+struct object {
   template <int N>
-  friend constexpr object<N> require(const object&, prop<N>)
-  {
+  friend constexpr object<N> require(const object&, prop<N>) {
     return object<N>();
   }
 };
 
-int main()
-{
+int main() {
   static_assert(!boost::asio::can_prefer<object<1>, prop<2>>::value, "");
-  static_assert(!boost::asio::can_prefer<object<1>, prop<2>, prop<3>>::value, "");
-  static_assert(!boost::asio::can_prefer<object<1>, prop<2>, prop<3>, prop<4>>::value, "");
+  static_assert(!boost::asio::can_prefer<object<1>, prop<2>, prop<3>>::value,
+                "");
+  static_assert(
+      !boost::asio::can_prefer<object<1>, prop<2>, prop<3>, prop<4>>::value,
+      "");
   static_assert(!boost::asio::can_prefer<const object<1>, prop<2>>::value, "");
-  static_assert(!boost::asio::can_prefer<const object<1>, prop<2>, prop<3>>::value, "");
-  static_assert(!boost::asio::can_prefer<const object<1>, prop<2>, prop<3>, prop<4>>::value, "");
+  static_assert(
+      !boost::asio::can_prefer<const object<1>, prop<2>, prop<3>>::value, "");
+  static_assert(!boost::asio::can_prefer<const object<1>, prop<2>, prop<3>,
+                                         prop<4>>::value,
+                "");
 }

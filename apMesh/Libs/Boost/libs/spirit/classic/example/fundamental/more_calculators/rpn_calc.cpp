@@ -16,8 +16,8 @@
 //  [ JDG 6/29/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_attribute.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/phoenix1_functions.hpp>
 #include <iostream>
 #include <string>
@@ -57,59 +57,47 @@ using namespace phoenix;
 //          driver code that uses the calculator below).
 //
 ///////////////////////////////////////////////////////////////////////////////
-struct pow_
-{
-    template <typename X, typename Y>
-    struct result { typedef X type; };
+struct pow_ {
+  template <typename X, typename Y>
+  struct result {
+    typedef X type;
+  };
 
-    template <typename X, typename Y>
-    X operator()(X x, Y y) const
-    {
-        using namespace std;
-        return pow(x, y);
-    }
+  template <typename X, typename Y>
+  X operator()(X x, Y y) const {
+    using namespace std;
+    return pow(x, y);
+  }
 };
 
 //  Notice how power(x, y) is lazily implemented using Phoenix function.
 function<pow_> power;
 
-struct calc_closure : BOOST_SPIRIT_CLASSIC_NS::closure<calc_closure, double, double>
-{
-    member1 x;
-    member2 y;
+struct calc_closure
+    : BOOST_SPIRIT_CLASSIC_NS::closure<calc_closure, double, double> {
+  member1 x;
+  member2 y;
 };
 
-struct calculator : public grammar<calculator, calc_closure::context_t>
-{
-    template <typename ScannerT>
-    struct definition {
+struct calculator : public grammar<calculator, calc_closure::context_t> {
+  template <typename ScannerT>
+  struct definition {
+    definition(calculator const& self) {
+      top = expr[self.x = arg1];
+      expr = real_p[expr.x = arg1] >>
+             *(expr[expr.y = arg1] >>
+                   (ch_p('+')[expr.x += expr.y] | ch_p('-')[expr.x -= expr.y] |
+                    ch_p('*')[expr.x *= expr.y] | ch_p('/')[expr.x /= expr.y] |
+                    ch_p('^')[expr.x = power(expr.x, expr.y)]) |
+               ch_p('n')[expr.x = -expr.x]);
+    }
 
-        definition(calculator const& self)
-        {
-            top = expr                      [self.x = arg1];
-            expr =
-                real_p                      [expr.x = arg1]
-                >> *(
-                        expr                [expr.y = arg1]
-                        >>  (
-                                ch_p('+')   [expr.x += expr.y]
-                            |   ch_p('-')   [expr.x -= expr.y]
-                            |   ch_p('*')   [expr.x *= expr.y]
-                            |   ch_p('/')   [expr.x /= expr.y]
-                            |   ch_p('^')   [expr.x = power(expr.x, expr.y)]
-                            )
-                    |   ch_p('n')           [expr.x = -expr.x]
-                    )
-                ;
-        }
+    typedef rule<ScannerT, calc_closure::context_t> rule_t;
+    rule_t expr;
+    rule<ScannerT> top;
 
-        typedef rule<ScannerT, calc_closure::context_t> rule_t;
-        rule_t expr;
-        rule<ScannerT> top;
-
-        rule<ScannerT> const&
-        start() const { return top; }
-    };
+    rule<ScannerT> const& start() const { return top; }
+  };
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -117,47 +105,38 @@ struct calculator : public grammar<calculator, calc_closure::context_t>
 //  Main program
 //
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "\t\tExpression parser using Phoenix...\n\n";
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "Type an expression...or [q or Q] to quit\n\n";
+int main() {
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "\t\tExpression parser using Phoenix...\n\n";
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    calculator calc;    //  Our parser
+  calculator calc;  //  Our parser
 
-    string str;
-    while (getline(cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
+  string str;
+  while (getline(cin, str)) {
+    if (str.empty() || str[0] == 'q' || str[0] == 'Q') break;
 
-        double n = 0;
-        parse_info<> info = parse(str.c_str(), calc[var(n) = arg1], space_p);
+    double n = 0;
+    parse_info<> info = parse(str.c_str(), calc[var(n) = arg1], space_p);
 
-        //  calc[var(n) = arg1] invokes the calculator and extracts
-        //  the result of the computation. See calculator grammar
-        //  note above.
+    //  calc[var(n) = arg1] invokes the calculator and extracts
+    //  the result of the computation. See calculator grammar
+    //  note above.
 
-        if (info.full)
-        {
-            cout << "-------------------------\n";
-            cout << "Parsing succeeded\n";
-            cout << "result = " << n << endl;
-            cout << "-------------------------\n";
-        }
-        else
-        {
-            cout << "-------------------------\n";
-            cout << "Parsing failed\n";
-            cout << "stopped at: \": " << info.stop << "\"\n";
-            cout << "-------------------------\n";
-        }
+    if (info.full) {
+      cout << "-------------------------\n";
+      cout << "Parsing succeeded\n";
+      cout << "result = " << n << endl;
+      cout << "-------------------------\n";
+    } else {
+      cout << "-------------------------\n";
+      cout << "Parsing failed\n";
+      cout << "stopped at: \": " << info.stop << "\"\n";
+      cout << "-------------------------\n";
     }
+  }
 
-    cout << "Bye... :-) \n\n";
-    return 0;
+  cout << "Bye... :-) \n\n";
+  return 0;
 }
-
-

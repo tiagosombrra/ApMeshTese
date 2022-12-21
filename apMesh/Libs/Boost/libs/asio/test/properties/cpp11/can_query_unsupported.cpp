@@ -11,28 +11,22 @@
 #include <boost/asio/query.hpp>
 #include <cassert>
 
-struct prop
-{
-};
+struct prop {};
 
-struct object
-{
-};
+struct object {};
 
 namespace boost {
 namespace asio {
 
-template<>
-struct is_applicable_property<object, prop>
-{
+template <>
+struct is_applicable_property<object, prop> {
   static constexpr bool value = true;
 };
 
-} // namespace asio
-} // namespace boost
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   static_assert(!boost::asio::can_query<object, prop>::value, "");
   static_assert(!boost::asio::can_query<const object, prop>::value, "");
 }

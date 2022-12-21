@@ -17,12 +17,10 @@
 
 // static unsigned hardware_concurrency();
 
-#include <boost/thread/thread_only.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/thread_only.hpp>
 
-int main()
-{
+int main() {
   BOOST_TEST(boost::thread::hardware_concurrency() > 0);
   return boost::report_errors();
 }
-

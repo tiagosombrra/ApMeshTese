@@ -9,44 +9,37 @@
  *
  */
 
+#include <boost/random/random_device.hpp>
+#include <boost/timer.hpp>
 #include <iostream>
 #include <string>
-#include <boost/timer.hpp>
-#include <boost/random/random_device.hpp>
 
 // set to your CPU frequency
 static const double cpu_frequency = 1.87 * 1e9;
 
-static void show_elapsed(double end, int iter, const std::string & name)
-{
-  double usec = end/iter*1e6;
-  double cycles = usec * cpu_frequency/1e6;
-  std::cout << name << ": " 
-            << usec*1e3 << " nsec/loop = " 
-            << cycles << " CPU cycles"
-            << std::endl;
+static void show_elapsed(double end, int iter, const std::string& name) {
+  double usec = end / iter * 1e6;
+  double cycles = usec * cpu_frequency / 1e6;
+  std::cout << name << ": " << usec * 1e3 << " nsec/loop = " << cycles
+            << " CPU cycles" << std::endl;
 }
 
-template<class Result, class RNG>
-static void timing(RNG & rng, int iter, const std::string& name)
-{
-  volatile Result tmp; // make sure we're not optimizing too much
+template <class Result, class RNG>
+static void timing(RNG& rng, int iter, const std::string& name) {
+  volatile Result tmp;  // make sure we're not optimizing too much
   boost::timer t;
-  for(int i = 0; i < iter; i++)
-    tmp = rng();
+  for (int i = 0; i < iter; i++) tmp = rng();
   show_elapsed(t.elapsed(), iter, name);
 }
 
-template<class RNG>
-void run(int iter, const std::string & name)
-{
+template <class RNG>
+void run(int iter, const std::string& name) {
   RNG rng;
   timing<long>(rng, iter, name);
 }
 
-int main(int argc, char*argv[])
-{
-  if(argc != 2) {
+int main(int argc, char* argv[]) {
+  if (argc != 2) {
     std::cerr << "usage: " << argv[0] << " iterations" << std::endl;
     return 1;
   }

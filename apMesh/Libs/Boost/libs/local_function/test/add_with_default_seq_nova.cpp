@@ -5,6 +5,5 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // Home at http://www.boost.org/libs/local_function
 
-#include "nova.hpp"
 #include "add_with_default_seq.cpp"
-
+#include "nova.hpp"

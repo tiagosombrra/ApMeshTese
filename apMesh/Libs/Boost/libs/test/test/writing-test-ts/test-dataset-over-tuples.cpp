@@ -11,20 +11,19 @@
 
 #define BOOST_TEST_MODULE boost_test_tuple_prob
 
-#include <boost/test/unit_test.hpp>
-#include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
-
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/unit_test.hpp>
+#include <iostream>
 #include <tuple>
 #include <vector>
-#include <iostream>
 
-const std::vector< std::tuple<int, int>> values = {
-        std::tuple<int, int>{  1, 11 },
-        std::tuple<int, int>{  2, 12 },
-        std::tuple<int, int>{  3, 13 },
+const std::vector<std::tuple<int, int>> values = {
+    std::tuple<int, int>{1, 11},
+    std::tuple<int, int>{2, 12},
+    std::tuple<int, int>{3, 13},
 };
 
-BOOST_DATA_TEST_CASE( test1, boost::unit_test::data::make( values ), var1, var2 ) {
-        std::cout << var1 << ", " << var2 << "\n";
+BOOST_DATA_TEST_CASE(test1, boost::unit_test::data::make(values), var1, var2) {
+  std::cout << var1 << ", " << var2 << "\n";
 }

@@ -16,7 +16,4 @@
 #include BOOST_SPIRIT_HEADER
 #include BOOST_SPIRIT_HEADER
 
-int main() 
-{
-    return 0;
-}
+int main() { return 0; }

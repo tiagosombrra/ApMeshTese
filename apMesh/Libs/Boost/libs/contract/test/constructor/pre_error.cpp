@@ -6,19 +6,18 @@
 
 // Test constructor cannot use `.precondition(...)`.
 
-#include <boost/contract/constructor.hpp>
 #include <boost/contract/check.hpp>
+#include <boost/contract/constructor.hpp>
 
 struct a {
-    a() {
-        boost::contract::check c = boost::contract::constructor(this)
-            .precondition([] {}) // Error (must use constructor_precondition).
+  a() {
+    boost::contract::check c = boost::contract::constructor(this).precondition(
+        [] {})  // Error (must use constructor_precondition).
         ;
-    }
+  }
 };
 
 int main() {
-    a aa;
-    return 0;
+  a aa;
+  return 0;
 }
-

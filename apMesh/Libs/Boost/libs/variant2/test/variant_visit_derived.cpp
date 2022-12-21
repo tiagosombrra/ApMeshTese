@@ -4,54 +4,82 @@
 // https://www.boost.org/LICENSE_1_0.txt
 
 #if defined(_MSC_VER)
-# pragma warning( disable: 4244 ) // conversion from float to int, possible loss of data
+#pragma warning( \
+    disable : 4244)  // conversion from float to int, possible loss of data
 #endif
 
-#include <boost/variant2/variant.hpp>
-#include <boost/core/lightweight_test.hpp>
 #include <boost/config.hpp>
 #include <boost/config/workaround.hpp>
+#include <boost/core/lightweight_test.hpp>
+#include <boost/variant2/variant.hpp>
 #include <utility>
 
-struct X: boost::variant2::variant<int, float>
-{
-#if BOOST_WORKAROUND( BOOST_MSVC, < 1930 )
+struct X : boost::variant2::variant<int, float> {
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1930)
 
-    template<class T> explicit X( T&& t ): variant( std::forward<T>( t ) ) {};
+  template <class T>
+  explicit X(T&& t) : variant(std::forward<T>(t)){};
 
 #else
 
-    using variant::variant;
+  using variant::variant;
 
 #endif
 };
 
-template<class... T> struct Y: boost::variant2::variant<T...>
-{
-    using boost::variant2::variant<T...>::variant;
+template <class... T>
+struct Y : boost::variant2::variant<T...> {
+  using boost::variant2::variant<T...>::variant;
 };
 
-int main()
-{
-    {
-        X v1( 1 );
-        X const v2( 3.14f );
+int main() {
+  {
+    X v1(1);
+    X const v2(3.14f);
 
-        BOOST_TEST_EQ( (visit( []( int x1, float x2 ){ return (int)(x1 * 1000) + (int)(x2 * 100); }, v1, v2 )), 1314 );
+    BOOST_TEST_EQ(
+        (visit(
+            [](int x1, float x2) { return (int)(x1 * 1000) + (int)(x2 * 100); },
+            v1, v2)),
+        1314);
 
-        visit( []( int x1, float x2 ){ BOOST_TEST_EQ( x1, 1 ); BOOST_TEST_EQ( x2, 3.14f ); }, v1, v2 );
-        visit( []( int x1, float x2 ){ BOOST_TEST_EQ( x1, 1 ); BOOST_TEST_EQ( x2, 3.14f ); }, std::move(v1), std::move(v2) );
-    }
+    visit(
+        [](int x1, float x2) {
+          BOOST_TEST_EQ(x1, 1);
+          BOOST_TEST_EQ(x2, 3.14f);
+        },
+        v1, v2);
+    visit(
+        [](int x1, float x2) {
+          BOOST_TEST_EQ(x1, 1);
+          BOOST_TEST_EQ(x2, 3.14f);
+        },
+        std::move(v1), std::move(v2));
+  }
 
-    {
-        Y<int, float> v1( 1 );
-        Y<int, float> const v2( 3.14f );
+  {
+    Y<int, float> v1(1);
+    Y<int, float> const v2(3.14f);
 
-        BOOST_TEST_EQ( (visit( []( int x1, float x2 ){ return (int)(x1 * 1000) + (int)(x2 * 100); }, v1, v2 )), 1314 );
+    BOOST_TEST_EQ(
+        (visit(
+            [](int x1, float x2) { return (int)(x1 * 1000) + (int)(x2 * 100); },
+            v1, v2)),
+        1314);
 
-        visit( []( int x1, float x2 ){ BOOST_TEST_EQ( x1, 1 ); BOOST_TEST_EQ( x2, 3.14f ); }, v1, v2 );
-        visit( []( int x1, float x2 ){ BOOST_TEST_EQ( x1, 1 ); BOOST_TEST_EQ( x2, 3.14f ); }, std::move(v1), std::move(v2) );
-    }
+    visit(
+        [](int x1, float x2) {
+          BOOST_TEST_EQ(x1, 1);
+          BOOST_TEST_EQ(x2, 3.14f);
+        },
+        v1, v2);
+    visit(
+        [](int x1, float x2) {
+          BOOST_TEST_EQ(x1, 1);
+          BOOST_TEST_EQ(x2, 3.14f);
+        },
+        std::move(v1), std::move(v2));
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

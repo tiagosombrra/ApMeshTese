@@ -32,10 +32,10 @@ int main() {
   h(1, 4.0);
   h(2, 4.0);
 
-  assert(h.at(0, 0) == 1); // even, below threshold
-  assert(h.at(0, 1) == 1); // even, above threshold
-  assert(h.at(1, 0) == 0); // odd, below threshold
-  assert(h.at(1, 1) == 1); // odd, above threshold
+  assert(h.at(0, 0) == 1);  // even, below threshold
+  assert(h.at(0, 1) == 1);  // even, above threshold
+  assert(h.at(1, 0) == 0);  // odd, below threshold
+  assert(h.at(1, 1) == 1);  // odd, above threshold
 }
 
 //]

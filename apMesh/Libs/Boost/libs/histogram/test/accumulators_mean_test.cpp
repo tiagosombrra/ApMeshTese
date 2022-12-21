@@ -9,6 +9,7 @@
 #include <boost/histogram/accumulators/ostream.hpp>
 #include <boost/histogram/weight.hpp>
 #include <sstream>
+
 #include "is_close.hpp"
 #include "throw_exception.hpp"
 #include "utility_str.hpp"

@@ -7,6 +7,7 @@
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/histogram/detail/args_type.hpp>
 #include <tuple>
+
 #include "std_ostream.hpp"
 
 namespace dtl = boost::histogram::detail;
@@ -21,8 +22,10 @@ struct Foo {
 int main() {
   BOOST_TEST_TRAIT_SAME(dtl::args_type<decltype(&Foo::f1)>, std::tuple<char>);
   BOOST_TEST_TRAIT_SAME(dtl::args_type<decltype(&Foo::f2)>, std::tuple<long>);
-  BOOST_TEST_TRAIT_SAME(dtl::args_type<decltype(&Foo::f3)>, std::tuple<char, int>);
-  BOOST_TEST_TRAIT_SAME(dtl::args_type<decltype(&Foo::f4)>, std::tuple<char, int>);
+  BOOST_TEST_TRAIT_SAME(dtl::args_type<decltype(&Foo::f3)>,
+                        std::tuple<char, int>);
+  BOOST_TEST_TRAIT_SAME(dtl::args_type<decltype(&Foo::f4)>,
+                        std::tuple<char, int>);
 
   BOOST_TEST_TRAIT_SAME(dtl::arg_type<decltype(&Foo::f3)>, char);
   BOOST_TEST_TRAIT_SAME(dtl::arg_type<decltype(&Foo::f3), 1>, int);

@@ -6,38 +6,35 @@
 
 // Test forcing compiler error for old values of non-copyable types.
 
-#include "if_copyable.hpp"
+#include <boost/contract/assert.hpp>
+#include <boost/contract/check.hpp>
 #include <boost/contract/function.hpp>
 #include <boost/contract/old.hpp>
-#include <boost/contract/check.hpp>
-#include <boost/contract/assert.hpp>
 #include <boost/noncopyable.hpp>
 
+#include "if_copyable.hpp"
 
-template<typename T>
+template <typename T>
 void next(T& x) {
-    boost::contract::old_ptr<T> old_x = BOOST_CONTRACT_OLDOF(x);
-    boost::contract::check c = boost::contract::function()
-        .postcondition([&] {
-            // No need to check `if(old_x) ...` here.
-            BOOST_CONTRACT_ASSERT(x == *old_x + T(1));
-            #ifdef BOOST_CONTRACT_NO_ALL
-                #error "force error if no contracts (ASSERT expands to nothing)"
-            #endif
-        })
-    ;
-    ++x;
+  boost::contract::old_ptr<T> old_x = BOOST_CONTRACT_OLDOF(x);
+  boost::contract::check c = boost::contract::function().postcondition([&] {
+    // No need to check `if(old_x) ...` here.
+    BOOST_CONTRACT_ASSERT(x == *old_x + T(1));
+#ifdef BOOST_CONTRACT_NO_ALL
+#error "force error if no contracts (ASSERT expands to nothing)"
+#endif
+  });
+  ++x;
 }
 
 int main() {
-    int i = 1; // Test built-in copyable type.
-    cp c(1); // Test custom copyable type.
-    ncp n(1); // Test non-copyable type.
+  int i = 1;  // Test built-in copyable type.
+  cp c(1);    // Test custom copyable type.
+  ncp n(1);   // Test non-copyable type.
 
-    next(i); // OK.
-    next(c); // OK.
-    next(n); // Error.
+  next(i);  // OK.
+  next(c);  // OK.
+  next(n);  // Error.
 
-    return 0;
+  return 0;
 }
-

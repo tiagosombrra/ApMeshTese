@@ -10,17 +10,13 @@
 #include <boost/test/parameterized_test.hpp>
 using namespace boost::unit_test;
 
-void free_test_function( int i )
-{
-  BOOST_TEST( i < 4 /* test assertion */ );
-}
+void free_test_function(int i) { BOOST_TEST(i < 4 /* test assertion */); }
 
-test_suite* init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
-{
-  int params[] = { 1, 2, 3, 4, 5 };
+test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[]) {
+  int params[] = {1, 2, 3, 4, 5};
 
-  framework::master_test_suite().
-    add( BOOST_PARAM_TEST_CASE( &free_test_function, params, params+5 ) );
+  framework::master_test_suite().add(
+      BOOST_PARAM_TEST_CASE(&free_test_function, params, params + 5));
 
   return 0;
 }

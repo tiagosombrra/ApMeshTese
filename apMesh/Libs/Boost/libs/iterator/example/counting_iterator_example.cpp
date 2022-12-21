@@ -3,18 +3,16 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-
-#include <boost/config.hpp>
 #include <algorithm>
+#include <boost/config.hpp>
+#include <boost/cstdlib.hpp>
+#include <boost/iterator/counting_iterator.hpp>
+#include <boost/iterator/indirect_iterator.hpp>
 #include <iostream>
 #include <iterator>
 #include <vector>
-#include <boost/iterator/counting_iterator.hpp>
-#include <boost/iterator/indirect_iterator.hpp>
-#include <boost/cstdlib.hpp>
 
-int main(int, char*[])
-{
+int main(int, char*[]) {
   // Example of using counting_iterator
   std::cout << "counting from 0 to 4:" << std::endl;
   boost::counting_iterator<int> first(0), last(4);
@@ -26,10 +24,8 @@ int main(int, char*[])
   std::vector<int> numbers;
   typedef std::vector<int>::iterator n_iter;
   // Fill "numbers" array with [0,N)
-  std::copy(
-      boost::counting_iterator<int>(0)
-      , boost::counting_iterator<int>(N)
-      , std::back_inserter(numbers));
+  std::copy(boost::counting_iterator<int>(0), boost::counting_iterator<int>(N),
+            std::back_inserter(numbers));
 
   std::vector<std::vector<int>::iterator> pointers;
 
@@ -41,8 +37,8 @@ int main(int, char*[])
 
   // Use indirect iterator to print out numbers by accessing
   // them through the array of pointers.
-  std::cout << "indirectly printing out the numbers from 0 to "
-            << N << std::endl;
+  std::cout << "indirectly printing out the numbers from 0 to " << N
+            << std::endl;
   std::copy(boost::make_indirect_iterator(pointers.begin()),
             boost::make_indirect_iterator(pointers.end()),
             std::ostream_iterator<int>(std::cout, " "));

@@ -18,21 +18,19 @@
 
 // explicit operator bool() const;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/shared_mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::shared_mutex m;
 
-int main()
-{
-  boost::shared_lock < boost::shared_mutex > lk0;
+int main() {
+  boost::shared_lock<boost::shared_mutex> lk0;
   BOOST_TEST(bool(lk0) == false);
-  boost::shared_lock < boost::shared_mutex > lk1(m);
+  boost::shared_lock<boost::shared_mutex> lk1(m);
   BOOST_TEST(bool(lk1) == true);
   lk1.unlock();
   BOOST_TEST(bool(lk1) == false);
 
   return boost::report_errors();
 }
-

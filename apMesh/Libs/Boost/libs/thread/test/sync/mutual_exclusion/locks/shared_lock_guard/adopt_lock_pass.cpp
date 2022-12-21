@@ -18,10 +18,11 @@
 
 // shared_lock_guard(mutex_type& m, adopt_lock_t);
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/shared_lock_guard.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
@@ -39,8 +40,7 @@ boost::shared_mutex m;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #if defined BOOST_THREAD_USES_CHRONO
   t0 = Clock::now();
   {
@@ -49,20 +49,19 @@ void f()
     t1 = Clock::now();
   }
 #else
-  //time_point t0 = Clock::now();
-  //time_point t1;
+  // time_point t0 = Clock::now();
+  // time_point t1;
   {
     m.lock_shared();
     boost::shared_lock_guard<boost::shared_mutex> lg(m, boost::adopt_lock);
-    //t1 = Clock::now();
+    // t1 = Clock::now();
   }
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
 #endif
 }
 
-int main()
-{
+int main() {
   m.lock();
   boost::thread t(f);
 #if defined BOOST_THREAD_USES_CHRONO
@@ -85,4 +84,3 @@ int main()
 
   return boost::report_errors();
 }
-

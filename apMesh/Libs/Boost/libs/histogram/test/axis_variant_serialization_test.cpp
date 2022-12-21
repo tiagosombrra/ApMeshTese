@@ -4,15 +4,17 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// This test is inspired by the corresponding boost/beast test of detail_variant.
+// This test is inspired by the corresponding boost/beast test of
+// detail_variant.
 
-#include <cassert>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/histogram/axis/integer.hpp>
 #include <boost/histogram/axis/ostream.hpp>
 #include <boost/histogram/axis/regular.hpp>
 #include <boost/histogram/axis/variant.hpp>
 #include <boost/histogram/serialization.hpp>
+#include <cassert>
+
 #include "throw_exception.hpp"
 #include "utility_axis.hpp"
 #include "utility_serialization.hpp"
@@ -34,7 +36,7 @@ int main(int argc, char** argv) {
   load_xml(filename, a);
   BOOST_TEST_EQ(a, b);
 
-  variant<I> c; // load incompatible version
+  variant<I> c;  // load incompatible version
   BOOST_TEST_THROWS(load_xml(filename, c), std::runtime_error);
 
   return boost::report_errors();

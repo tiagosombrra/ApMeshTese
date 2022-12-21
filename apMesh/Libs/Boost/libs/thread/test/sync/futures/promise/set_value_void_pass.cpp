@@ -20,41 +20,30 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/thread/future.hpp>
 
-struct A
-{
-  A()
-  {
-  }
-  A(const A&)
-  {
-    throw 10;
-  }
+struct A {
+  A() {}
+  A(const A&) { throw 10; }
 };
 
-int main()
-{
-
+int main() {
   {
     typedef void T;
     boost::promise<T> p;
     boost::future<T> f = p.get_future();
     p.set_value();
     f.get();
-    try
-    {
+    try {
       p.set_value();
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
-    }
-    catch (...)
-    {
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(
+                     boost::future_errc::promise_already_satisfied));
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
@@ -65,20 +54,16 @@ int main()
     p.set_value_deferred();
     p.notify_deferred();
     f.get();
-    try
-    {
+    try {
       p.set_value();
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
-    }
-    catch (...)
-    {
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(
+                     boost::future_errc::promise_already_satisfied));
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
   return boost::report_errors();
 }
-

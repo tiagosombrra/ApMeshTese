@@ -6,47 +6,50 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/home/qi.hpp>
 #include <boost/range/adaptor/transformed.hpp>
-
+#include <boost/spirit/home/qi.hpp>
+#include <functional>
 #include <iostream>
 #include <string>
-#include <functional>
 
 namespace {
-    char transform_func(char c) {
-        return c < 'a' || 'z' < c ? c : static_cast<char>(c - 'a' + 'A');
-    }
+char transform_func(char c) {
+  return c < 'a' || 'z' < c ? c : static_cast<char>(c - 'a' + 'A');
 }
+}  // namespace
 
-int main()
-{
-    using boost::adaptors::transform;
-    using boost::spirit::qi::raw;
-    using boost::spirit::qi::eps;
-    using boost::spirit::qi::eoi;
-    using boost::spirit::qi::upper;
-    using boost::spirit::qi::repeat;
-    using boost::spirit::qi::parse;
+int main() {
+  using boost::adaptors::transform;
+  using boost::spirit::qi::eoi;
+  using boost::spirit::qi::eps;
+  using boost::spirit::qi::parse;
+  using boost::spirit::qi::raw;
+  using boost::spirit::qi::repeat;
+  using boost::spirit::qi::upper;
 
-    std::string input = "abcde";
-    boost::transformed_range<char(*)(char), std::string> const rng = transform(input, transform_func);
+  std::string input = "abcde";
+  boost::transformed_range<char (*)(char), std::string> const rng =
+      transform(input, transform_func);
 
-    {
-        std::string str;
-        BOOST_TEST((parse(boost::begin(rng), boost::end(rng), +upper >> eoi, str)));
-        BOOST_TEST(("ABCDE"==str));
-    }
+  {
+    std::string str;
+    BOOST_TEST((parse(boost::begin(rng), boost::end(rng), +upper >> eoi, str)));
+    BOOST_TEST(("ABCDE" == str));
+  }
 
-    {
-        boost::iterator_range<boost::range_iterator<boost::transformed_range<char(*)(char), std::string> const>::type> str;
-        BOOST_TEST((parse(boost::begin(rng), boost::end(rng), raw[+upper >> eoi], str)));
-        BOOST_TEST((boost::equal(std::string("ABCDE"), str)));
-    }
+  {
+    boost::iterator_range<boost::range_iterator<
+        boost::transformed_range<char (*)(char), std::string> const>::type>
+        str;
+    BOOST_TEST(
+        (parse(boost::begin(rng), boost::end(rng), raw[+upper >> eoi], str)));
+    BOOST_TEST((boost::equal(std::string("ABCDE"), str)));
+  }
 
-    {
-        BOOST_TEST((parse(boost::begin(rng), boost::end(rng), (repeat(6)[upper] | repeat(5)[upper]) >> eoi)));
-    }
+  {
+    BOOST_TEST((parse(boost::begin(rng), boost::end(rng),
+                      (repeat(6)[upper] | repeat(5)[upper]) >> eoi)));
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

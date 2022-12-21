@@ -11,13 +11,13 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
 #include <boost/asio/ip/address_v6.hpp>
+#include <sstream>
 
 #include "../unit_test.hpp"
-#include <sstream>
 
 //------------------------------------------------------------------------------
 
@@ -28,19 +28,17 @@
 
 namespace ip_address_v6_compile {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  try
-  {
+  try {
     boost::system::error_code ec;
 
     // address_v6 constructors.
 
     ip::address_v6 addr1;
-    const ip::address_v6::bytes_type const_bytes_value = { { 0 } };
+    const ip::address_v6::bytes_type const_bytes_value = {{0}};
     ip::address_v6 addr2(const_bytes_value);
 
     // address_v6 functions.
@@ -69,7 +67,7 @@ void test()
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
     b = addr1.is_v4_compatible();
     (void)b;
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     b = addr1.is_multicast_node_local();
     (void)b;
@@ -92,11 +90,11 @@ void test()
     std::string string_value = addr1.to_string();
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
     string_value = addr1.to_string(ec);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
     ip::address_v4 addr3 = addr1.to_v4();
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // address_v6 static functions.
 
@@ -105,7 +103,7 @@ void test()
     addr1 = ip::address_v6::from_string("0::0", ec);
     addr1 = ip::address_v6::from_string(string_value);
     addr1 = ip::address_v6::from_string(string_value, ec);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     addr1 = ip::address_v6::any();
 
@@ -115,7 +113,7 @@ void test()
     addr1 = ip::address_v6::v4_mapped(addr3);
 
     addr1 = ip::address_v6::v4_compatible(addr3);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // address_v6 comparisons.
 
@@ -145,19 +143,19 @@ void test()
     addr1 = ip::make_address_v6(string_value);
     addr1 = ip::make_address_v6(string_value, ec);
 #if defined(BOOST_ASIO_HAS_STRING_VIEW)
-# if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
+#if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
     std::string_view string_view_value("0::0");
-# else // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
+#else   // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
     std::experimental::string_view string_view_value("0::0");
-# endif // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
+#endif  // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
     addr1 = ip::make_address_v6(string_view_value);
     addr1 = ip::make_address_v6(string_view_value, ec);
-#endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+#endif  // defined(BOOST_ASIO_HAS_STRING_VIEW)
 
     // address_v6 IPv4-mapped conversion.
 #if defined(BOOST_ASIO_NO_DEPRECATED)
     ip::address_v4 addr3;
-#endif // defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // defined(BOOST_ASIO_NO_DEPRECATED)
     addr1 = ip::make_address_v6(ip::v4_mapped, addr3);
     addr3 = ip::make_address_v4(ip::v4_mapped, addr1);
 
@@ -169,19 +167,17 @@ void test()
 #if !defined(BOOST_NO_STD_WSTREAMBUF)
     std::wostringstream wos;
     wos << addr1;
-#endif // !defined(BOOST_NO_STD_WSTREAMBUF)
+#endif  // !defined(BOOST_NO_STD_WSTREAMBUF)
 
 #if defined(BOOST_ASIO_HAS_STD_HASH)
     std::size_t hash1 = std::hash<ip::address_v6>()(addr1);
     (void)hash1;
-#endif // defined(BOOST_ASIO_HAS_STD_HASH)
-  }
-  catch (std::exception&)
-  {
+#endif  // defined(BOOST_ASIO_HAS_STD_HASH)
+  } catch (std::exception&) {
   }
 }
 
-} // namespace ip_address_v6_compile
+}  // namespace ip_address_v6_compile
 
 //------------------------------------------------------------------------------
 
@@ -192,16 +188,15 @@ void test()
 
 namespace ip_address_v6_runtime {
 
-void test()
-{
+void test() {
   using boost::asio::ip::address_v6;
 
   address_v6 a1;
   BOOST_ASIO_CHECK(a1.is_unspecified());
   BOOST_ASIO_CHECK(a1.scope_id() == 0);
 
-  address_v6::bytes_type b1 = {{ 1, 2, 3, 4, 5,
-    6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }};
+  address_v6::bytes_type b1 = {
+      {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}};
   address_v6 a2(b1, 12345);
   BOOST_ASIO_CHECK(a2.to_bytes()[0] == 1);
   BOOST_ASIO_CHECK(a2.to_bytes()[1] == 2);
@@ -226,31 +221,31 @@ void test()
   BOOST_ASIO_CHECK(a3.scope_id() == 12345);
 
   address_v6 unspecified_address;
-  address_v6::bytes_type loopback_bytes = {{ 0 }};
+  address_v6::bytes_type loopback_bytes = {{0}};
   loopback_bytes[15] = 1;
   address_v6 loopback_address(loopback_bytes);
-  address_v6::bytes_type link_local_bytes = {{ 0xFE, 0x80, 1 }};
+  address_v6::bytes_type link_local_bytes = {{0xFE, 0x80, 1}};
   address_v6 link_local_address(link_local_bytes);
-  address_v6::bytes_type site_local_bytes = {{ 0xFE, 0xC0, 1 }};
+  address_v6::bytes_type site_local_bytes = {{0xFE, 0xC0, 1}};
   address_v6 site_local_address(site_local_bytes);
-  address_v6::bytes_type v4_mapped_bytes = {{ 0 }};
+  address_v6::bytes_type v4_mapped_bytes = {{0}};
   v4_mapped_bytes[10] = 0xFF, v4_mapped_bytes[11] = 0xFF;
   v4_mapped_bytes[12] = 1, v4_mapped_bytes[13] = 2;
   v4_mapped_bytes[14] = 3, v4_mapped_bytes[15] = 4;
   address_v6 v4_mapped_address(v4_mapped_bytes);
-  address_v6::bytes_type v4_compat_bytes = {{ 0 }};
+  address_v6::bytes_type v4_compat_bytes = {{0}};
   v4_compat_bytes[12] = 1, v4_compat_bytes[13] = 2;
   v4_compat_bytes[14] = 3, v4_compat_bytes[15] = 4;
   address_v6 v4_compat_address(v4_compat_bytes);
-  address_v6::bytes_type mcast_global_bytes = {{ 0xFF, 0x0E, 1 }};
+  address_v6::bytes_type mcast_global_bytes = {{0xFF, 0x0E, 1}};
   address_v6 mcast_global_address(mcast_global_bytes);
-  address_v6::bytes_type mcast_link_local_bytes = {{ 0xFF, 0x02, 1 }};
+  address_v6::bytes_type mcast_link_local_bytes = {{0xFF, 0x02, 1}};
   address_v6 mcast_link_local_address(mcast_link_local_bytes);
-  address_v6::bytes_type mcast_node_local_bytes = {{ 0xFF, 0x01, 1 }};
+  address_v6::bytes_type mcast_node_local_bytes = {{0xFF, 0x01, 1}};
   address_v6 mcast_node_local_address(mcast_node_local_bytes);
-  address_v6::bytes_type mcast_org_local_bytes = {{ 0xFF, 0x08, 1 }};
+  address_v6::bytes_type mcast_org_local_bytes = {{0xFF, 0x08, 1}};
   address_v6 mcast_org_local_address(mcast_org_local_bytes);
-  address_v6::bytes_type mcast_site_local_bytes = {{ 0xFF, 0x05, 1 }};
+  address_v6::bytes_type mcast_site_local_bytes = {{0xFF, 0x05, 1}};
   address_v6 mcast_site_local_address(mcast_site_local_bytes);
 
   BOOST_ASIO_CHECK(!unspecified_address.is_loopback());
@@ -325,7 +320,7 @@ void test()
   BOOST_ASIO_CHECK(!mcast_node_local_address.is_v4_compatible());
   BOOST_ASIO_CHECK(!mcast_org_local_address.is_v4_compatible());
   BOOST_ASIO_CHECK(!mcast_site_local_address.is_v4_compatible());
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
   BOOST_ASIO_CHECK(!unspecified_address.is_multicast());
   BOOST_ASIO_CHECK(!loopback_address.is_multicast());
@@ -402,13 +397,10 @@ void test()
   BOOST_ASIO_CHECK(address_v6::loopback().is_loopback());
 }
 
-} // namespace ip_address_v6_runtime
+}  // namespace ip_address_v6_runtime
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "ip/address_v6",
-  BOOST_ASIO_TEST_CASE(ip_address_v6_compile::test)
-  BOOST_ASIO_TEST_CASE(ip_address_v6_runtime::test)
-)
+BOOST_ASIO_TEST_SUITE("ip/address_v6",
+                      BOOST_ASIO_TEST_CASE(ip_address_v6_compile::test)
+                          BOOST_ASIO_TEST_CASE(ip_address_v6_runtime::test))

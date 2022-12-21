@@ -9,6 +9,7 @@
 #include <boost/histogram/serialization.hpp>
 #include <boost/histogram/weight.hpp>
 #include <cassert>
+
 #include "throw_exception.hpp"
 #include "utility_serialization.hpp"
 
@@ -20,7 +21,8 @@ int main(int argc, char** argv) {
 
   // mean v0
   {
-    const auto filename = join(argv[1], "accumulators_serialization_test_mean_v0.xml");
+    const auto filename =
+        join(argv[1], "accumulators_serialization_test_mean_v0.xml");
     accumulators::mean<> a;
     load_xml(filename, a);
     BOOST_TEST_EQ(a.count(), 3);
@@ -30,7 +32,8 @@ int main(int argc, char** argv) {
 
   // mean
   {
-    const auto filename = join(argv[1], "accumulators_serialization_test_mean.xml");
+    const auto filename =
+        join(argv[1], "accumulators_serialization_test_mean.xml");
     accumulators::mean<> a;
     a(1);
     a(weight(0.5), 2);
@@ -45,7 +48,8 @@ int main(int argc, char** argv) {
 
   // sum
   {
-    const auto filename = join(argv[1], "accumulators_serialization_test_sum.xml");
+    const auto filename =
+        join(argv[1], "accumulators_serialization_test_sum.xml");
     accumulators::sum<> a;
     a += 1e100;
     a += 1;

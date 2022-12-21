@@ -6,36 +6,27 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
+#include <cstddef>  // size_t
 
 #include "UniqueObjectAllocator.hpp"
 
-#include <cstddef> // size_t
-
-
-
 //////////////////////////////////////////////////////////////////////////////
-template< class Derived >
-class UniqueObject
-{
-  public:
-    //////////////////////////////////////////////////////////////////////////
-    void * operator new( std::size_t size )
-    {
-      return UniqueObjectAllocator< Derived >::allocate( size );
-    }
+template <class Derived>
+class UniqueObject {
+ public:
+  //////////////////////////////////////////////////////////////////////////
+  void* operator new(std::size_t size) {
+    return UniqueObjectAllocator<Derived>::allocate(size);
+  }
 
-    void operator delete( void * p, std::size_t size )
-    {
-      UniqueObjectAllocator< Derived >::deallocate( p, size );
-    }
+  void operator delete(void* p, std::size_t size) {
+    UniqueObjectAllocator<Derived>::deallocate(p, size);
+  }
 
-  protected:
-    //////////////////////////////////////////////////////////////////////////
-    UniqueObject() {}
-    ~UniqueObject() {}
+ protected:
+  //////////////////////////////////////////////////////////////////////////
+  UniqueObject() {}
+  ~UniqueObject() {}
 };
-
-
 
 #endif

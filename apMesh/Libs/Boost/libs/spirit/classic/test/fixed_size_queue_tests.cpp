@@ -7,11 +7,11 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/spirit/include/classic_fixed_size_queue.hpp>
-#include <boost/mpl/assert.hpp>
-#include <boost/type_traits/is_same.hpp>
 #include <boost/concept_check.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/mpl/assert.hpp>
+#include <boost/spirit/include/classic_fixed_size_queue.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <iostream>
 
 typedef BOOST_SPIRIT_CLASSIC_NS::fixed_size_queue<int, 5> queue_t;
@@ -25,73 +25,72 @@ BOOST_CLASS_REQUIRE(const_iter_t, boost, RandomAccessIteratorConcept);
 //  iterator, and this class is not really meant for public use yet.
 BOOST_CLASS_REQUIRE(iter_t, boost, RandomAccessIteratorConcept);
 
-int main(int, char**)
-{
-    queue_t q;
-    const queue_t& cq = q;
+int main(int, char**) {
+  queue_t q;
+  const queue_t& cq = q;
 
-    q.push_back(1);
-    q.push_back(2);
-    q.push_back(3);
-    q.push_back(4);
-    BOOST_TEST(q.front() == 1);
-    q.pop_front();
-    BOOST_TEST(q.front() == 2);
-    q.pop_front();
-    BOOST_TEST(q.front() == 3);
-    q.pop_front();
-    BOOST_TEST(q.front() == 4);
-    q.pop_front();
-    q.push_back(5);
-    q.push_back(6);
-    q.push_back(7);
-    q.push_back(8);
-    BOOST_TEST(q.front() == 5);
-    q.pop_front();
-    BOOST_TEST(q.front() == 6);
-    q.pop_front();
-    BOOST_TEST(q.front() == 7);
-    q.pop_front();
-    BOOST_TEST(q.front() == 8);
-    q.pop_front();
+  q.push_back(1);
+  q.push_back(2);
+  q.push_back(3);
+  q.push_back(4);
+  BOOST_TEST(q.front() == 1);
+  q.pop_front();
+  BOOST_TEST(q.front() == 2);
+  q.pop_front();
+  BOOST_TEST(q.front() == 3);
+  q.pop_front();
+  BOOST_TEST(q.front() == 4);
+  q.pop_front();
+  q.push_back(5);
+  q.push_back(6);
+  q.push_back(7);
+  q.push_back(8);
+  BOOST_TEST(q.front() == 5);
+  q.pop_front();
+  BOOST_TEST(q.front() == 6);
+  q.pop_front();
+  BOOST_TEST(q.front() == 7);
+  q.pop_front();
+  BOOST_TEST(q.front() == 8);
+  q.pop_front();
 
-    q.push_front(5);
-    q.push_front(4);
-    q.push_front(3);
-    q.push_front(2);
-    q.push_front(1);
+  q.push_front(5);
+  q.push_front(4);
+  q.push_front(3);
+  q.push_front(2);
+  q.push_front(1);
 
-    // NOTE: Iterator tests are not exhaustive and they are not meant to be so.
+  // NOTE: Iterator tests are not exhaustive and they are not meant to be so.
 
-    // Check iterator
-    iter_t b = q.begin();
-    BOOST_TEST(*b++ == 1);
-    BOOST_TEST(*b++ == 2);
-    BOOST_TEST(*b++ == 3);
-    BOOST_TEST(*b++ == 4);
-    BOOST_TEST(*b++ == 5);
-    BOOST_TEST(b == q.end());
-    BOOST_TEST(*--b == 5);
-    BOOST_TEST(*--b == 4);
-    BOOST_TEST(*--b == 3);
-    BOOST_TEST(*--b == 2);
-    BOOST_TEST(*--b == 1);
-    BOOST_TEST(b == q.begin());
+  // Check iterator
+  iter_t b = q.begin();
+  BOOST_TEST(*b++ == 1);
+  BOOST_TEST(*b++ == 2);
+  BOOST_TEST(*b++ == 3);
+  BOOST_TEST(*b++ == 4);
+  BOOST_TEST(*b++ == 5);
+  BOOST_TEST(b == q.end());
+  BOOST_TEST(*--b == 5);
+  BOOST_TEST(*--b == 4);
+  BOOST_TEST(*--b == 3);
+  BOOST_TEST(*--b == 2);
+  BOOST_TEST(*--b == 1);
+  BOOST_TEST(b == q.begin());
 
-    // Check const_iterator
-    const_iter_t c = cq.begin();
-    BOOST_TEST(*c++ == 1);
-    BOOST_TEST(*c++ == 2);
-    BOOST_TEST(*c++ == 3);
-    BOOST_TEST(*c++ == 4);
-    BOOST_TEST(*c++ == 5);
-    BOOST_TEST(c == cq.end());
-    BOOST_TEST(*--c == 5);
-    BOOST_TEST(*--c == 4);
-    BOOST_TEST(*--c == 3);
-    BOOST_TEST(*--c == 2);
-    BOOST_TEST(*--c == 1);
-    BOOST_TEST(c == cq.begin());
+  // Check const_iterator
+  const_iter_t c = cq.begin();
+  BOOST_TEST(*c++ == 1);
+  BOOST_TEST(*c++ == 2);
+  BOOST_TEST(*c++ == 3);
+  BOOST_TEST(*c++ == 4);
+  BOOST_TEST(*c++ == 5);
+  BOOST_TEST(c == cq.end());
+  BOOST_TEST(*--c == 5);
+  BOOST_TEST(*--c == 4);
+  BOOST_TEST(*--c == 3);
+  BOOST_TEST(*--c == 2);
+  BOOST_TEST(*--c == 1);
+  BOOST_TEST(c == cq.begin());
 
 #if 0
 
@@ -124,14 +123,13 @@ int main(int, char**)
 
 #endif
 
-    // Check that you can actually modify the queue with an iterator
-    *b = 123;
-    BOOST_TEST(*c == 123);
+  // Check that you can actually modify the queue with an iterator
+  *b = 123;
+  BOOST_TEST(*c == 123);
 
-    // Check random access
-    BOOST_TEST(*((c+4)-4) == 123);
-    BOOST_TEST(*((c-4)+4) == 123);
+  // Check random access
+  BOOST_TEST(*((c + 4) - 4) == 123);
+  BOOST_TEST(*((c - 4) + 4) == 123);
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-

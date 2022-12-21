@@ -7,27 +7,34 @@
 // file LICENSE_1_0.txt or a copy at http://www.boost.org/LICENSE_1_0.txt).
 // See: http://www.boost.org/doc/libs/release/libs/contract/doc/html/index.html
 
-#include "out.hpp"
 #include <iostream>
 
-namespace boost { namespace contract { namespace test { namespace detail {
+#include "out.hpp"
+
+namespace boost {
+namespace contract {
+namespace test {
+namespace detail {
 
 namespace out_ {
-    std::string out;
+std::string out;
 }
 
 std::string out() { return out_::out; }
 
 void out(std::string const& text) {
-    if(text == "") out_::out = "";
-    else {
-        out_::out = out_::out + text;
-        std::clog << text;
-        std::clog.flush();
-    }
+  if (text == "")
+    out_::out = "";
+  else {
+    out_::out = out_::out + text;
+    std::clog << text;
+    std::clog.flush();
+  }
 }
 
-} } } }
+}  // namespace detail
+}  // namespace test
+}  // namespace contract
+}  // namespace boost
 
-#endif // #include guard
-
+#endif  // #include guard

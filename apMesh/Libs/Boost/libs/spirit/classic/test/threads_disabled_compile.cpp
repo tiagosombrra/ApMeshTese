@@ -12,7 +12,7 @@
 
 #undef BOOST_SPIRIT_THREADSAFE
 #ifndef BOOST_DISABLE_THREADS
-# define BOOST_DISABLE_THREADS
+#define BOOST_DISABLE_THREADS
 #endif
 #include <boost/spirit/include/classic.hpp>
 

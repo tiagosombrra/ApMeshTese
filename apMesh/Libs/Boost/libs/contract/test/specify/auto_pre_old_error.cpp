@@ -8,20 +8,18 @@
 
 #include <boost/config.hpp>
 // Not just __cplusplus to detect C++17 as MSVC defines it correctly sometimes.
-#if     (defined(__cplusplus) && __cplusplus >= 201703L) || \
-        !defined(BOOST_NO_CXX17_IF_CONSTEXPR)
-    #error "C++17 copy elision invalidates test so forcing expected failure"
+#if (defined(__cplusplus) && __cplusplus >= 201703L) || \
+    !defined(BOOST_NO_CXX17_IF_CONSTEXPR)
+#error "C++17 copy elision invalidates test so forcing expected failure"
 #else
 
 #include <boost/contract/function.hpp>
 
 int main() {
-    auto c = boost::contract::function() // Error (can't use auto).
-        .precondition([] {})
-        .old([] {})
-    ;
-    return 0;
+  auto c = boost::contract::function()  // Error (can't use auto).
+               .precondition([] {})
+               .old([] {});
+  return 0;
 }
 
 #endif
-

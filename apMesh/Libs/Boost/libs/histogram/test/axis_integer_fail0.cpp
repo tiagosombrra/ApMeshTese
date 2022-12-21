@@ -11,5 +11,6 @@ using namespace boost::histogram;
 int main() {
   // circular integer axis cannot be growing
   (void)axis::integer<int, boost::use_default,
-                      decltype(axis::option::circular | axis::option::growth)>(1, 2);
+                      decltype(axis::option::circular | axis::option::growth)>(
+      1, 2);
 }

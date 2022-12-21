@@ -6,15 +6,12 @@
 #include <boost/pfr/tuple_size.hpp>
 
 struct test_with_virtual {
-    int i = 0;
-    char c = 'a';
-    double d = 3.4;
-    float f = 3.5f;
+  int i = 0;
+  char c = 'a';
+  double d = 3.4;
+  float f = 3.5f;
 
-    virtual double sum() const { return i + d + c + f; }
+  virtual double sum() const { return i + d + c + f; }
 };
 
-int main() {
-    return boost::pfr::tuple_size<test_with_virtual>::value;
-}
-
+int main() { return boost::pfr::tuple_size<test_with_virtual>::value; }

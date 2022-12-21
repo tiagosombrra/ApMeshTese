@@ -7,33 +7,31 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_LAMBDAS
-#   error "lambda functions required"
+#error "lambda functions required"
 #else
 
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 //[expensive_copy_cxx11_lambda
 struct n {
-    int i;
-    n(int _i): i(_i) {}
-    n(n const& x): i(x.i) { // Some time consuming copy operation.
-        for (unsigned i = 0; i < 10000; ++i) std::cout << '.';
-    }
+  int i;
+  n(int _i) : i(_i) {}
+  n(n const& x) : i(x.i) {  // Some time consuming copy operation.
+    for (unsigned i = 0; i < 10000; ++i) std::cout << '.';
+  }
 };
 
-
 int main(void) {
-    n x(-1);
+  n x(-1);
 
-    auto f = [x]() {        // Problem: Expensive copy, but if bind
-        assert(x.i == -1);  // by `&x` then `x` is not constant.
-    };
-    f();
+  auto f = [x]() {      // Problem: Expensive copy, but if bind
+    assert(x.i == -1);  // by `&x` then `x` is not constant.
+  };
+  f();
 
-    return 0;
+  return 0;
 }
 //]
 
-#endif // NO_LAMBDAS
-
+#endif  // NO_LAMBDAS

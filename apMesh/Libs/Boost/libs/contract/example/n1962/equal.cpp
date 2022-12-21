@@ -9,43 +9,38 @@
 #include <cassert>
 
 // Forward declaration because == and != contracts use one another's function.
-template<typename T>
+template <typename T>
 bool operator==(T const& left, T const& right);
 
-template<typename T>
+template <typename T>
 bool operator!=(T const& left, T const& right) {
-    bool result;
-    boost::contract::check c = boost::contract::function()
-        .postcondition([&] {
-            BOOST_CONTRACT_ASSERT(result == !(left == right));
-        })
-    ;
+  bool result;
+  boost::contract::check c = boost::contract::function().postcondition(
+      [&] { BOOST_CONTRACT_ASSERT(result == !(left == right)); });
 
-    return result = (left.value != right.value);
+  return result = (left.value != right.value);
 }
 
-template<typename T>
+template <typename T>
 bool operator==(T const& left, T const& right) {
-    bool result;
-    boost::contract::check c = boost::contract::function()
-        .postcondition([&] {
-            BOOST_CONTRACT_ASSERT(result == !(left != right));
-        })
-    ;
+  bool result;
+  boost::contract::check c = boost::contract::function().postcondition(
+      [&] { BOOST_CONTRACT_ASSERT(result == !(left != right)); });
 
-    return result = (left.value == right.value);
+  return result = (left.value == right.value);
 }
 
-struct number { int value; };
+struct number {
+  int value;
+};
 
 int main() {
-    number n;
-    n.value = 123;
+  number n;
+  n.value = 123;
 
-    assert((n == n) == true);   // Explicitly call operator==.
-    assert((n != n) == false);  // Explicitly call operator!=.
+  assert((n == n) == true);   // Explicitly call operator==.
+  assert((n != n) == false);  // Explicitly call operator!=.
 
-    return 0;
+  return 0;
 }
 //]
-

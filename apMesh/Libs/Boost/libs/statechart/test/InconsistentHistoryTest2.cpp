@@ -4,39 +4,30 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
-
-#include <boost/statechart/state_machine.hpp>
-#include <boost/statechart/simple_state.hpp>
 #include <boost/statechart/event.hpp>
 #include <boost/statechart/shallow_history.hpp>
+#include <boost/statechart/simple_state.hpp>
+#include <boost/statechart/state_machine.hpp>
 #include <boost/statechart/transition.hpp>
-
-
 
 namespace sc = boost::statechart;
 
-
-
-struct EvX : sc::event< EvX > {};
+struct EvX : sc::event<EvX> {};
 
 struct A;
-struct InconsistentHistoryTest : sc::state_machine<
-  InconsistentHistoryTest, A > {};
+struct InconsistentHistoryTest : sc::state_machine<InconsistentHistoryTest, A> {
+};
 
 struct B;
 // A only has deep history
-struct A : sc::simple_state<
-  A, InconsistentHistoryTest, B, sc::has_deep_history >
-{
-  typedef sc::transition< EvX, sc::shallow_history< B > > reactions;
+struct A
+    : sc::simple_state<A, InconsistentHistoryTest, B, sc::has_deep_history> {
+  typedef sc::transition<EvX, sc::shallow_history<B> > reactions;
 };
 
-  struct B : sc::simple_state< B, A > {};
+struct B : sc::simple_state<B, A> {};
 
-
-int main()
-{
+int main() {
   InconsistentHistoryTest machine;
   machine.initiate();
   return 0;

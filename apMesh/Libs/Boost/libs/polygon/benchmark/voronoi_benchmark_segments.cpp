@@ -8,15 +8,14 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 
 #include <algorithm>
-#include <iomanip>
-#include <iostream>
-#include <fstream>
-#include <numeric>
-#include <vector>
-#include <utility>
-
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/timer/timer.hpp>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <numeric>
+#include <utility>
+#include <vector>
 
 typedef boost::int32_t int32;
 using boost::timer::cpu_times;
@@ -27,13 +26,14 @@ using boost::timer::nanosecond_type;
 typedef boost::polygon::voronoi_diagram<double> VD_BOOST;
 
 // Includes for the CGAL library.
-#include <CGAL/Simple_cartesian.h>
-#include <CGAL/Segment_Delaunay_graph_filtered_traits_2.h>
 #include <CGAL/Segment_Delaunay_graph_2.h>
+#include <CGAL/Segment_Delaunay_graph_filtered_traits_2.h>
+#include <CGAL/Simple_cartesian.h>
 
 typedef CGAL::Simple_cartesian<double> K;
-typedef CGAL::Segment_Delaunay_graph_filtered_traits_without_intersections_2<K> GT;
-typedef CGAL::Segment_Delaunay_graph_2<GT>  SDT_CGAL;
+typedef CGAL::Segment_Delaunay_graph_filtered_traits_without_intersections_2<K>
+    GT;
+typedef CGAL::Segment_Delaunay_graph_2<GT> SDT_CGAL;
 typedef SDT_CGAL::Point_2 Point_CGAL;
 typedef SDT_CGAL::Site_2 Site_CGAL;
 
@@ -60,11 +60,10 @@ void format_line(int num_points, int num_tests, double time_per_test) {
 
 double get_elapsed_secs() {
   cpu_times elapsed_times(timer.elapsed());
-  return 1E-9 * static_cast<double>(
-      elapsed_times.system + elapsed_times.user);
+  return 1E-9 * static_cast<double>(elapsed_times.system + elapsed_times.user);
 }
 
-void clean_segment_set(std::vector<SEGMENT_POLYGON>* data) {
+void clean_segment_set(std::vector<SEGMENT_POLYGON> *data) {
   typedef int32 Unit;
   typedef boost::polygon::scanline_base<Unit>::Point Point;
   typedef boost::polygon::scanline_base<Unit>::half_edge half_edge;
@@ -90,8 +89,7 @@ void clean_segment_set(std::vector<SEGMENT_POLYGON>* data) {
     POINT_POLYGON l = half_edges_out[i].first.first;
     POINT_POLYGON h = half_edges_out[i].first.second;
     SEGMENT_POLYGON orig_seg = data->at(id);
-    if (orig_seg.high() < orig_seg.low())
-      std::swap(l, h);
+    if (orig_seg.high() < orig_seg.low()) std::swap(l, h);
     result.push_back(SEGMENT_POLYGON(l, h));
   }
   std::swap(result, *data);
@@ -109,8 +107,8 @@ std::vector<double> get_intersection_runtime() {
         int32 y1 = gen();
         int32 dx = (gen() & 1023) + 1;
         int32 dy = (gen() & 1023) + 1;
-        ssd.push_back(SEGMENT_POLYGON(
-            POINT_POLYGON(x1, y1), POINT_POLYGON(x1 + dx, y1 + dy)));
+        ssd.push_back(SEGMENT_POLYGON(POINT_POLYGON(x1, y1),
+                                      POINT_POLYGON(x1 + dx, y1 + dy)));
       }
       clean_segment_set(&ssd);
     }
@@ -132,9 +130,8 @@ void run_boost_voronoi_test(const std::vector<double> &running_times) {
         int32 y1 = gen();
         int32 dx = (gen() & 1023) + 1;
         int32 dy = (gen() & 1023) + 1;
-        ssd.push_back(SEGMENT_POLYGON(
-            POINT_POLYGON(x1, y1),
-            POINT_POLYGON(x1 + dx, y1 + dy)));
+        ssd.push_back(SEGMENT_POLYGON(POINT_POLYGON(x1, y1),
+                                      POINT_POLYGON(x1 + dx, y1 + dy)));
       }
       clean_segment_set(&ssd);
       boost::polygon::construct_voronoi(ssd.begin(), ssd.end(), &vd);
@@ -158,34 +155,31 @@ void run_cgal_delaunay_test(const std::vector<double> &running_times) {
         int32 y1 = gen();
         int32 dx = (gen() & 1023) + 1;
         int32 dy = (gen() & 1023) + 1;
-        ssd.push_back(SEGMENT_POLYGON(
-            POINT_POLYGON(x1, y1),
-            POINT_POLYGON(x1 + dx, y1 + dy)));
+        ssd.push_back(SEGMENT_POLYGON(POINT_POLYGON(x1, y1),
+                                      POINT_POLYGON(x1 + dx, y1 + dy)));
       }
       clean_segment_set(&ssd);
 
       typedef std::vector<Point_CGAL> Points_container;
       typedef std::vector<Points_container>::size_type Index_type;
-      typedef std::vector< std::pair<Index_type, Index_type> > Constraints_container;
+      typedef std::vector<std::pair<Index_type, Index_type> >
+          Constraints_container;
       Points_container points;
       Constraints_container constraints;
       points.reserve(ssd.size() * 2);
       constraints.reserve(ssd.size());
       for (SSD_POLYGON::iterator it = ssd.begin(); it != ssd.end(); ++it) {
-        points.push_back(Point_CGAL(
-            boost::polygon::x(it->low()),
-            boost::polygon::y(it->low())));
-        points.push_back(Point_CGAL(
-            boost::polygon::x(it->high()),
-            boost::polygon::y(it->high())));
+        points.push_back(Point_CGAL(boost::polygon::x(it->low()),
+                                    boost::polygon::y(it->low())));
+        points.push_back(Point_CGAL(boost::polygon::x(it->high()),
+                                    boost::polygon::y(it->high())));
         constraints.push_back(
             std::make_pair(points.size() - 2, points.size() - 1));
       }
 
       SDT_CGAL sdg;
-      sdg.insert_segments(
-          points.begin(), points.end(),
-          constraints.begin(), constraints.end());
+      sdg.insert_segments(points.begin(), points.end(), constraints.begin(),
+                          constraints.end());
     }
     double time_per_test =
         (get_elapsed_secs() - running_times[i]) / NUM_RUNS[i];

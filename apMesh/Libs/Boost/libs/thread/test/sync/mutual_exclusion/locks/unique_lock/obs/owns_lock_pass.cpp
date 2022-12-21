@@ -18,13 +18,11 @@
 
 // bool owns_lock() const;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
-
-int main()
-{
+int main() {
   boost::mutex m;
 
   boost::unique_lock<boost::mutex> lk0;
@@ -34,7 +32,5 @@ int main()
   lk1.unlock();
   BOOST_TEST(lk1.owns_lock() == false);
 
-
   return boost::report_errors();
 }
-

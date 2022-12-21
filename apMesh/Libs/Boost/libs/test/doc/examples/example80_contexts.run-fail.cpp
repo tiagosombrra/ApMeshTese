@@ -9,17 +9,13 @@
 #define BOOST_TEST_MODULE example80
 #include <boost/test/included/unit_test.hpp>
 
-void test()
-{
-  BOOST_TEST(false);
-}
+void test() { BOOST_TEST(false); }
 
-BOOST_AUTO_TEST_CASE(test_case1)
-{
+BOOST_AUTO_TEST_CASE(test_case1) {
   BOOST_TEST_INFO("Alpha");
   BOOST_TEST_INFO("Beta");
   BOOST_TEST(true);
-  
+
   BOOST_TEST_INFO("Gamma");
   char a = 'a';
   BOOST_TEST_INFO("Delt" << a);

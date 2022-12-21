@@ -7,14 +7,10 @@
 
 #include <boost/thread/thread.hpp>
 
-void thread_main()
-{
-}
+void thread_main() {}
 
-int main(void)
-{
-        boost::thread t(thread_main);
-        t.join();
-        return 0;
+int main(void) {
+  boost::thread t(thread_main);
+  t.join();
+  return 0;
 }
-

@@ -8,8 +8,6 @@
 #include <unwind.h>
 
 int main() {
-    backtrace_state* state = backtrace_create_state(
-        0, 1, 0, 0
-    );
-    (void)state;
+  backtrace_state* state = backtrace_create_state(0, 1, 0, 0);
+  (void)state;
 }

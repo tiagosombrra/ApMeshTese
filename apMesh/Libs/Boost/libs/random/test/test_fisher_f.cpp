@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/fisher_f.hpp>
 #include <boost/random/fisher_f_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/fisher_f.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::fisher_f_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME fisher_f

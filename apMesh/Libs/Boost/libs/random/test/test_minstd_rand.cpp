@@ -9,8 +9,8 @@
  *
  */
 
-#include <boost/random/linear_congruential.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/random/linear_congruential.hpp>
 
 #define BOOST_RANDOM_URNG boost::random::minstd_rand
 
@@ -21,6 +21,7 @@
 #define BOOST_RANDOM_SEED_SEQ_VALIDATION_VALUE 1000962296U
 #define BOOST_RANDOM_ITERATOR_VALIDATION_VALUE 182651141U
 
-#define BOOST_RANDOM_GENERATE_VALUES { 0x8400BC8EU, 0xF45B895FU, 0x145F0F91U, 0xE5F8F088U }
+#define BOOST_RANDOM_GENERATE_VALUES \
+  { 0x8400BC8EU, 0xF45B895FU, 0x145F0F91U, 0xE5F8F088U }
 
 #include "test_generator.ipp"

@@ -20,48 +20,41 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS
 #include "../test_allocator.hpp"
 
-int main()
-{
+int main() {
   BOOST_TEST(test_alloc_base::count == 0);
   {
-      boost::promise<int> p(boost::allocator_arg, test_allocator<int>());
-      BOOST_TEST(test_alloc_base::count == 1);
-      boost::future<int> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      BOOST_TEST(test_alloc_base::count == 1);
-      BOOST_TEST(f.valid());
+    boost::promise<int> p(boost::allocator_arg, test_allocator<int>());
+    BOOST_TEST(test_alloc_base::count == 1);
+    boost::future<int> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    BOOST_TEST(test_alloc_base::count == 1);
+    BOOST_TEST(f.valid());
   }
   BOOST_TEST(test_alloc_base::count == 0);
   {
-      boost::promise<int&> p(boost::allocator_arg, test_allocator<int>());
-      BOOST_TEST(test_alloc_base::count == 1);
-      boost::future<int&> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      BOOST_TEST(test_alloc_base::count == 1);
-      BOOST_TEST(f.valid());
+    boost::promise<int&> p(boost::allocator_arg, test_allocator<int>());
+    BOOST_TEST(test_alloc_base::count == 1);
+    boost::future<int&> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    BOOST_TEST(test_alloc_base::count == 1);
+    BOOST_TEST(f.valid());
   }
   BOOST_TEST(test_alloc_base::count == 0);
   {
-      boost::promise<void> p(boost::allocator_arg, test_allocator<void>());
-      BOOST_TEST(test_alloc_base::count == 1);
-      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      BOOST_TEST(test_alloc_base::count == 1);
-      BOOST_TEST(f.valid());
+    boost::promise<void> p(boost::allocator_arg, test_allocator<void>());
+    BOOST_TEST(test_alloc_base::count == 1);
+    boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    BOOST_TEST(test_alloc_base::count == 1);
+    BOOST_TEST(f.valid());
   }
   BOOST_TEST(test_alloc_base::count == 0);
-
 
   return boost::report_errors();
 }
 
 #else
-int main()
-{
-  return boost::report_errors();
-}
+int main() { return boost::report_errors(); }
 #endif
-
-

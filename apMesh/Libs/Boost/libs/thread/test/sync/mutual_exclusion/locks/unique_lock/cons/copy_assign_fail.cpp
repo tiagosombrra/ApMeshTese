@@ -18,15 +18,14 @@
 
 // unique_lock& operator=(unique_lock const&) = delete;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::mutex m0;
 boost::mutex m1;
 
-int main()
-{
+int main() {
   boost::unique_lock<boost::mutex> lk0(m0);
   boost::unique_lock<boost::mutex> lk1(m1);
   lk1 = lk0;
@@ -34,8 +33,6 @@ int main()
   BOOST_TEST(lk1.owns_lock() == true);
   BOOST_TEST(lk0.mutex() == 0);
   BOOST_TEST(lk0.owns_lock() == false);
-
 }
 
 #include "../../../../../remove_error_code_unused_warning.hpp"
-

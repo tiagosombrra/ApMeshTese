@@ -4,13 +4,11 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/thread/thread.hpp>
 
-void do_nothing()
-{}
+void do_nothing() {}
 
-void test()
-{
-    boost::thread t1(do_nothing);
-    boost::thread t2(t1);
+void test() {
+  boost::thread t1(do_nothing);
+  boost::thread t2(t1);
 }
 
 #include "./remove_error_code_unused_warning.hpp"

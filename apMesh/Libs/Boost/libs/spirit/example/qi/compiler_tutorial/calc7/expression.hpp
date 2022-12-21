@@ -22,32 +22,32 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/spirit/include/qi.hpp>
-#include "ast.hpp"
-#include "error_handler.hpp"
 #include <vector>
 
-namespace client { namespace parser
-{
-    namespace qi = boost::spirit::qi;
-    namespace ascii = boost::spirit::ascii;
+#include "ast.hpp"
+#include "error_handler.hpp"
 
-    ///////////////////////////////////////////////////////////////////////////////
-    //  The expression grammar
-    ///////////////////////////////////////////////////////////////////////////////
-    template <typename Iterator>
-    struct expression : qi::grammar<Iterator, ast::expression(), ascii::space_type>
-    {
-        expression(error_handler<Iterator>& error_handler);
+namespace client {
+namespace parser {
+namespace qi = boost::spirit::qi;
+namespace ascii = boost::spirit::ascii;
 
-        qi::rule<Iterator, ast::expression(), ascii::space_type> expr;
-        qi::rule<Iterator, ast::expression(), ascii::space_type> additive_expr;
-        qi::rule<Iterator, ast::expression(), ascii::space_type> multiplicative_expr;
-        qi::rule<Iterator, ast::operand(), ascii::space_type> unary_expr;
-        qi::rule<Iterator, ast::operand(), ascii::space_type> primary_expr;
-        qi::rule<Iterator, std::string(), ascii::space_type> identifier;
-    };
-}}
+///////////////////////////////////////////////////////////////////////////////
+//  The expression grammar
+///////////////////////////////////////////////////////////////////////////////
+template <typename Iterator>
+struct expression
+    : qi::grammar<Iterator, ast::expression(), ascii::space_type> {
+  expression(error_handler<Iterator>& error_handler);
+
+  qi::rule<Iterator, ast::expression(), ascii::space_type> expr;
+  qi::rule<Iterator, ast::expression(), ascii::space_type> additive_expr;
+  qi::rule<Iterator, ast::expression(), ascii::space_type> multiplicative_expr;
+  qi::rule<Iterator, ast::operand(), ascii::space_type> unary_expr;
+  qi::rule<Iterator, ast::operand(), ascii::space_type> primary_expr;
+  qi::rule<Iterator, std::string(), ascii::space_type> identifier;
+};
+}  // namespace parser
+}  // namespace client
 
 #endif
-
-

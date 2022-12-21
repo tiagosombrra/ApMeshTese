@@ -9,11 +9,12 @@
 
 // nested_strict_lock(Mutex &);
 
-#include <boost/thread/lock_types.hpp>
-#include <boost/thread/strict_lock.hpp>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/lock_types.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/strict_lock.hpp>
+#include <boost/thread/thread.hpp>
+
 #include "../../../../timming.hpp"
 
 #ifdef BOOST_THREAD_USES_CHRONO
@@ -30,8 +31,7 @@ boost::mutex m;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #ifdef BOOST_THREAD_USES_CHRONO
   t0 = Clock::now();
   boost::unique_lock<boost::mutex> lg(m);
@@ -40,38 +40,37 @@ void f()
     t1 = Clock::now();
   }
 #else
-  //time_point t0 = Clock::now();
-  //time_point t1;
+  // time_point t0 = Clock::now();
+  // time_point t1;
   boost::unique_lock<boost::mutex> lg(m);
   {
     boost::nested_strict_lock<boost::unique_lock<boost::mutex> > nlg(lg);
-    //t1 = Clock::now();
+    // t1 = Clock::now();
   }
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
 #endif
 }
 
-int main()
-{
+int main() {
   {
-  m.lock();
-  boost::thread t(f);
+    m.lock();
+    boost::thread t(f);
 #ifdef BOOST_THREAD_USES_CHRONO
-  time_point t2 = Clock::now();
-  boost::this_thread::sleep_for(ms(250));
-  time_point t3 = Clock::now();
+    time_point t2 = Clock::now();
+    boost::this_thread::sleep_for(ms(250));
+    time_point t3 = Clock::now();
 #endif
-  m.unlock();
-  t.join();
+    m.unlock();
+    t.join();
 
 #if defined BOOST_THREAD_USES_CHRONO
-  ns sleep_time = t3 - t2;
-  ns d_ns = t1 - t0 - sleep_time;
-  ms d_ms = boost::chrono::duration_cast<boost::chrono::milliseconds>(d_ns);
-  // BOOST_TEST_GE(d_ms.count(), 0);
-  BOOST_THREAD_TEST_IT(d_ms, max_diff);
-  BOOST_THREAD_TEST_IT(d_ns, ns(max_diff));
+    ns sleep_time = t3 - t2;
+    ns d_ns = t1 - t0 - sleep_time;
+    ms d_ms = boost::chrono::duration_cast<boost::chrono::milliseconds>(d_ns);
+    // BOOST_TEST_GE(d_ms.count(), 0);
+    BOOST_THREAD_TEST_IT(d_ms, max_diff);
+    BOOST_THREAD_TEST_IT(d_ns, ns(max_diff));
 #endif
   }
 

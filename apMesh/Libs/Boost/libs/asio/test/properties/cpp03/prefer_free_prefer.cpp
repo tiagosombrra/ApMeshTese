@@ -12,17 +12,14 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static const bool is_preferable = true;
 };
 
 template <int>
-struct object
-{
+struct object {
   template <int N>
-  friend object<N> prefer(const object&, prop<N>)
-  {
+  friend object<N> prefer(const object&, prop<N>) {
     return object<N>();
   }
 };
@@ -30,28 +27,25 @@ struct object
 namespace boost {
 namespace asio {
 
-template<int N, int M>
-struct is_applicable_property<object<N>, prop<M> >
-{
+template <int N, int M>
+struct is_applicable_property<object<N>, prop<M> > {
   static const bool value = true;
 };
 
 namespace traits {
 
-template<int N, int M>
-struct prefer_free<object<N>, prop<M> >
-{
+template <int N, int M>
+struct prefer_free<object<N>, prop<M> > {
   static const bool is_valid = true;
   static const bool is_noexcept = true;
   typedef object<M> result_type;
 };
 
-} // namespace traits
-} // namespace asio
-} // namespace boost
+}  // namespace traits
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   object<1> o1 = {};
   object<2> o2 = boost::asio::prefer(o1, prop<2>());
   object<3> o3 = boost::asio::prefer(o1, prop<2>(), prop<3>());

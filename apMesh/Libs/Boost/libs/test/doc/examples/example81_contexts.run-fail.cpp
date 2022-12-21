@@ -9,23 +9,20 @@
 #define BOOST_TEST_MODULE example81
 #include <boost/test/included/unit_test.hpp>
 
-void test()
-{
-  BOOST_TEST(2 != 2);
-}
+void test() { BOOST_TEST(2 != 2); }
 
-BOOST_AUTO_TEST_CASE(test_case1)
-{
+BOOST_AUTO_TEST_CASE(test_case1) {
   BOOST_TEST_CONTEXT("Alpha") {
     BOOST_TEST(1 != 1);
     test();
-    
-    BOOST_TEST_CONTEXT("Be" << "ta")
-      BOOST_TEST(3 != 3);
-      
+
+    BOOST_TEST_CONTEXT("Be"
+                       << "ta")
+    BOOST_TEST(3 != 3);
+
     BOOST_TEST(4 == 4);
   }
-  
+
   BOOST_TEST(5 != 5);
 }
 //]

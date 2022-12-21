@@ -6,23 +6,24 @@ Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt).
 */
 
-//parse_layout.hpp
+// parse_layout.hpp
 #ifndef BOOST_POLYGON_TUTORIAL_PARSE_LAYOUT_HPP
 #define BOOST_POLYGON_TUTORIAL_PARSE_LAYOUT_HPP
-#include <string>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <string>
 #include <vector>
-#include "layout_rectangle.hpp"
-#include "layout_pin.hpp"
 
-//populates vectors of layout rectangles and pins
-inline void parse_layout(std::vector<layout_rectangle>& rects, std::vector<layout_pin>& pins, 
-                  std::ifstream& sin) {
-  while(!sin.eof()) {
+#include "layout_pin.hpp"
+#include "layout_rectangle.hpp"
+
+// populates vectors of layout rectangles and pins
+inline void parse_layout(std::vector<layout_rectangle>& rects,
+                         std::vector<layout_pin>& pins, std::ifstream& sin) {
+  while (!sin.eof()) {
     std::string type_id;
     sin >> type_id;
-    if(type_id == "Rectangle") {
+    if (type_id == "Rectangle") {
       layout_rectangle rect;
       sin >> rect;
       rects.push_back(rect);

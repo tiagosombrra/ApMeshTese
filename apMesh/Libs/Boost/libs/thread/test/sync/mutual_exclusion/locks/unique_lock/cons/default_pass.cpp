@@ -18,16 +18,14 @@
 
 // unique_lock(unique_lock const&) = delete;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
-int main()
-{
+int main() {
   boost::unique_lock<boost::mutex> ul;
   BOOST_TEST(!ul.owns_lock());
   BOOST_TEST(ul.mutex() == 0);
 
   return boost::report_errors();
 }
-

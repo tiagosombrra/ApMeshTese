@@ -1,4 +1,4 @@
-// (c) Copyright Jeremy Siek 2002. 
+// (c) Copyright Jeremy Siek 2002.
 
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -9,20 +9,18 @@
 // <> <> <Hello> <|> <world> <|> <> <|> <> <foo> <> <bar> <yow> <baz> <|> <>
 
 // char_sep_example_2.cpp
-#include <iostream>
 #include <boost/tokenizer.hpp>
+#include <iostream>
 #include <string>
 
-int main()
-{
+int main() {
   std::string str = ";;Hello|world||-foo--bar;yow;baz|";
 
-  typedef boost::tokenizer<boost::char_separator<char> > 
-    tokenizer;
+  typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
   boost::char_separator<char> sep("-;", "|", boost::keep_empty_tokens);
   tokenizer tokens(str, sep);
-  for (tokenizer::iterator tok_iter = tokens.begin();
-       tok_iter != tokens.end(); ++tok_iter)
+  for (tokenizer::iterator tok_iter = tokens.begin(); tok_iter != tokens.end();
+       ++tok_iter)
     std::cout << "<" << *tok_iter << "> ";
   std::cout << "\n";
   return EXIT_SUCCESS;

@@ -12,13 +12,13 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
 #include <boost/asio/ip/network_v4.hpp>
+#include <sstream>
 
 #include "../unit_test.hpp"
-#include <sstream>
 
 //------------------------------------------------------------------------------
 
@@ -29,20 +29,18 @@
 
 namespace ip_network_v4_compile {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  try
-  {
+  try {
     boost::system::error_code ec;
 
     // network_v4 constructors.
 
     ip::network_v4 net1(ip::make_address_v4("192.168.1.0"), 32);
     ip::network_v4 net2(ip::make_address_v4("192.168.1.0"),
-        ip::make_address_v4("255.255.255.0"));
+                        ip::make_address_v4("255.255.255.0"));
 
     // network_v4 functions.
 
@@ -96,14 +94,14 @@ void test()
     net1 = ip::make_network_v4(s1);
     net1 = ip::make_network_v4(s1, ec);
 #if defined(BOOST_ASIO_HAS_STRING_VIEW)
-# if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
+#if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
     std::string_view string_view_value("10.0.0.0/8");
-# elif defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
+#elif defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
     std::experimental::string_view string_view_value("10.0.0.0/8");
-# endif // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
+#endif  // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
     net1 = ip::make_network_v4(string_view_value);
     net1 = ip::make_network_v4(string_view_value, ec);
-#endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+#endif  // defined(BOOST_ASIO_HAS_STRING_VIEW)
 
     // network_v4 I/O.
 
@@ -113,14 +111,12 @@ void test()
 #if !defined(BOOST_NO_STD_WSTREAMBUF)
     std::wostringstream wos;
     wos << net1;
-#endif // !defined(BOOST_NO_STD_WSTREAMBUF)
-  }
-  catch (std::exception&)
-  {
+#endif  // !defined(BOOST_NO_STD_WSTREAMBUF)
+  } catch (std::exception&) {
   }
 }
 
-} // namespace ip_network_v4_compile
+}  // namespace ip_network_v4_compile
 
 //------------------------------------------------------------------------------
 
@@ -131,12 +127,11 @@ void test()
 
 namespace ip_network_v4_runtime {
 
-void test()
-{
+void test() {
   using boost::asio::ip::address_v4;
   using boost::asio::ip::make_address_v4;
-  using boost::asio::ip::network_v4;
   using boost::asio::ip::make_network_v4;
+  using boost::asio::ip::network_v4;
 
   address_v4 addr = make_address_v4("1.2.3.4");
 
@@ -152,23 +147,17 @@ void test()
   BOOST_ASIO_CHECK(net3.prefix_length() == 1);
 
   std::string msg;
-  try
-  {
+  try {
     make_network_v4(addr, make_address_v4("255.255.255.1"));
-  }
-  catch(std::exception& ex)
-  {
+  } catch (std::exception& ex) {
     msg = ex.what();
   }
   BOOST_ASIO_CHECK(msg == std::string("non-contiguous netmask"));
 
   msg.clear();
-  try
-  {
+  try {
     make_network_v4(addr, make_address_v4("0.255.255.0"));
-  }
-  catch(std::exception& ex)
-  {
+  } catch (std::exception& ex) {
     msg = ex.what();
   }
   BOOST_ASIO_CHECK(msg == std::string("non-contiguous netmask"));
@@ -200,25 +189,31 @@ void test()
   BOOST_ASIO_CHECK(net11.netmask() == make_address_v4("0.0.0.0"));
 
   msg.clear();
-  try
-  {
+  try {
     make_network_v4(addr, 33);
-  }
-  catch(std::out_of_range& ex)
-  {
+  } catch (std::out_of_range& ex) {
     msg = ex.what();
   }
   BOOST_ASIO_CHECK(msg == std::string("prefix length too large"));
 
   // construct address range from address and prefix length
-  BOOST_ASIO_CHECK(network_v4(make_address_v4("192.168.77.100"), 32).network() == make_address_v4("192.168.77.100"));
-  BOOST_ASIO_CHECK(network_v4(make_address_v4("192.168.77.100"), 24).network() == make_address_v4("192.168.77.0"));
-  BOOST_ASIO_CHECK(network_v4(make_address_v4("192.168.77.128"), 25).network() == make_address_v4("192.168.77.128"));
+  BOOST_ASIO_CHECK(
+      network_v4(make_address_v4("192.168.77.100"), 32).network() ==
+      make_address_v4("192.168.77.100"));
+  BOOST_ASIO_CHECK(
+      network_v4(make_address_v4("192.168.77.100"), 24).network() ==
+      make_address_v4("192.168.77.0"));
+  BOOST_ASIO_CHECK(
+      network_v4(make_address_v4("192.168.77.128"), 25).network() ==
+      make_address_v4("192.168.77.128"));
 
   // construct address range from string in CIDR notation
-  BOOST_ASIO_CHECK(make_network_v4("192.168.77.100/32").network() == make_address_v4("192.168.77.100"));
-  BOOST_ASIO_CHECK(make_network_v4("192.168.77.100/24").network() == make_address_v4("192.168.77.0"));
-  BOOST_ASIO_CHECK(make_network_v4("192.168.77.128/25").network() == make_address_v4("192.168.77.128"));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.77.100/32").network() ==
+                   make_address_v4("192.168.77.100"));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.77.100/24").network() ==
+                   make_address_v4("192.168.77.0"));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.77.128/25").network() ==
+                   make_address_v4("192.168.77.128"));
 
   // construct network from invalid string
   boost::system::error_code ec;
@@ -235,39 +230,58 @@ void test()
 
   // prefix length
   BOOST_ASIO_CHECK(make_network_v4("193.99.144.80/24").prefix_length() == 24);
-  BOOST_ASIO_CHECK(network_v4(make_address_v4("193.99.144.80"), 24).prefix_length() == 24);
-  BOOST_ASIO_CHECK(network_v4(make_address_v4("192.168.77.0"), make_address_v4("255.255.255.0")).prefix_length() == 24);
+  BOOST_ASIO_CHECK(
+      network_v4(make_address_v4("193.99.144.80"), 24).prefix_length() == 24);
+  BOOST_ASIO_CHECK(network_v4(make_address_v4("192.168.77.0"),
+                              make_address_v4("255.255.255.0"))
+                       .prefix_length() == 24);
 
   // to string
   std::string a("192.168.77.0/32");
   BOOST_ASIO_CHECK(make_network_v4(a.c_str()).to_string() == a);
-  BOOST_ASIO_CHECK(network_v4(make_address_v4("192.168.77.10"), 24).to_string() == std::string("192.168.77.10/24"));
+  BOOST_ASIO_CHECK(
+      network_v4(make_address_v4("192.168.77.10"), 24).to_string() ==
+      std::string("192.168.77.10/24"));
 
   // return host part
-  BOOST_ASIO_CHECK(make_network_v4("192.168.77.11/24").address() == make_address_v4("192.168.77.11"));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.77.11/24").address() ==
+                   make_address_v4("192.168.77.11"));
 
   // return host in CIDR notation
-  BOOST_ASIO_CHECK(make_network_v4("192.168.78.30/20").address().to_string() == "192.168.78.30");
+  BOOST_ASIO_CHECK(make_network_v4("192.168.78.30/20").address().to_string() ==
+                   "192.168.78.30");
 
   // return network in CIDR notation
-  BOOST_ASIO_CHECK(make_network_v4("192.168.78.30/20").canonical().to_string() == "192.168.64.0/20");
+  BOOST_ASIO_CHECK(
+      make_network_v4("192.168.78.30/20").canonical().to_string() ==
+      "192.168.64.0/20");
 
   // is host
   BOOST_ASIO_CHECK(make_network_v4("192.168.77.0/32").is_host());
   BOOST_ASIO_CHECK(!make_network_v4("192.168.77.0/31").is_host());
 
   // is real subnet of
-  BOOST_ASIO_CHECK(make_network_v4("192.168.0.192/24").is_subnet_of(make_network_v4("192.168.0.0/16")));
-  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/24").is_subnet_of(make_network_v4("192.168.192.168/16")));
-  BOOST_ASIO_CHECK(make_network_v4("192.168.0.192/24").is_subnet_of(make_network_v4("192.168.192.168/16")));
-  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/24").is_subnet_of(make_network_v4("192.168.0.0/16")));
-  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/24").is_subnet_of(make_network_v4("192.168.0.0/23")));
-  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/24").is_subnet_of(make_network_v4("192.168.0.0/0")));
-  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/32").is_subnet_of(make_network_v4("192.168.0.0/24")));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.0.192/24")
+                       .is_subnet_of(make_network_v4("192.168.0.0/16")));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/24")
+                       .is_subnet_of(make_network_v4("192.168.192.168/16")));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.0.192/24")
+                       .is_subnet_of(make_network_v4("192.168.192.168/16")));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/24")
+                       .is_subnet_of(make_network_v4("192.168.0.0/16")));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/24")
+                       .is_subnet_of(make_network_v4("192.168.0.0/23")));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/24")
+                       .is_subnet_of(make_network_v4("192.168.0.0/0")));
+  BOOST_ASIO_CHECK(make_network_v4("192.168.0.0/32")
+                       .is_subnet_of(make_network_v4("192.168.0.0/24")));
 
-  BOOST_ASIO_CHECK(!make_network_v4("192.168.0.0/32").is_subnet_of(make_network_v4("192.168.0.0/32")));
-  BOOST_ASIO_CHECK(!make_network_v4("192.168.0.0/24").is_subnet_of(make_network_v4("192.168.1.0/24")));
-  BOOST_ASIO_CHECK(!make_network_v4("192.168.0.0/16").is_subnet_of(make_network_v4("192.168.1.0/24")));
+  BOOST_ASIO_CHECK(!make_network_v4("192.168.0.0/32")
+                        .is_subnet_of(make_network_v4("192.168.0.0/32")));
+  BOOST_ASIO_CHECK(!make_network_v4("192.168.0.0/24")
+                        .is_subnet_of(make_network_v4("192.168.1.0/24")));
+  BOOST_ASIO_CHECK(!make_network_v4("192.168.0.0/16")
+                        .is_subnet_of(make_network_v4("192.168.1.0/24")));
 
   network_v4 r(make_network_v4("192.168.0.0/24"));
   BOOST_ASIO_CHECK(!r.is_subnet_of(r));
@@ -288,27 +302,33 @@ void test()
   BOOST_ASIO_CHECK(net13.broadcast() == make_address_v4("192.168.1.15"));
   BOOST_ASIO_CHECK(net14.broadcast() == make_address_v4("192.168.1.31"));
   // iterator
-  BOOST_ASIO_CHECK(std::distance(net12.hosts().begin(),net12.hosts().end()) == 254);
+  BOOST_ASIO_CHECK(std::distance(net12.hosts().begin(), net12.hosts().end()) ==
+                   254);
   BOOST_ASIO_CHECK(*net12.hosts().begin() == make_address_v4("192.168.0.1"));
-  BOOST_ASIO_CHECK(net12.hosts().end() != net12.hosts().find(make_address_v4("192.168.0.10")));
-  BOOST_ASIO_CHECK(net12.hosts().end() == net12.hosts().find(make_address_v4("192.168.1.10")));
-  BOOST_ASIO_CHECK(std::distance(net13.hosts().begin(),net13.hosts().end()) == 14);
+  BOOST_ASIO_CHECK(net12.hosts().end() !=
+                   net12.hosts().find(make_address_v4("192.168.0.10")));
+  BOOST_ASIO_CHECK(net12.hosts().end() ==
+                   net12.hosts().find(make_address_v4("192.168.1.10")));
+  BOOST_ASIO_CHECK(std::distance(net13.hosts().begin(), net13.hosts().end()) ==
+                   14);
   BOOST_ASIO_CHECK(*net13.hosts().begin() == make_address_v4("192.168.1.1"));
-  BOOST_ASIO_CHECK(net13.hosts().end() != net13.hosts().find(make_address_v4("192.168.1.14")));
-  BOOST_ASIO_CHECK(net13.hosts().end() == net13.hosts().find(make_address_v4("192.168.1.15")));
-  BOOST_ASIO_CHECK(std::distance(net14.hosts().begin(),net14.hosts().end()) == 14);
+  BOOST_ASIO_CHECK(net13.hosts().end() !=
+                   net13.hosts().find(make_address_v4("192.168.1.14")));
+  BOOST_ASIO_CHECK(net13.hosts().end() ==
+                   net13.hosts().find(make_address_v4("192.168.1.15")));
+  BOOST_ASIO_CHECK(std::distance(net14.hosts().begin(), net14.hosts().end()) ==
+                   14);
   BOOST_ASIO_CHECK(*net14.hosts().begin() == make_address_v4("192.168.1.17"));
-  BOOST_ASIO_CHECK(net14.hosts().end() != net14.hosts().find(make_address_v4("192.168.1.30")));
-  BOOST_ASIO_CHECK(net14.hosts().end() == net14.hosts().find(make_address_v4("192.168.1.31")));
+  BOOST_ASIO_CHECK(net14.hosts().end() !=
+                   net14.hosts().find(make_address_v4("192.168.1.30")));
+  BOOST_ASIO_CHECK(net14.hosts().end() ==
+                   net14.hosts().find(make_address_v4("192.168.1.31")));
 }
 
-} // namespace ip_network_v4_runtime
+}  // namespace ip_network_v4_runtime
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "ip/network_v4",
-  BOOST_ASIO_TEST_CASE(ip_network_v4_compile::test)
-  BOOST_ASIO_TEST_CASE(ip_network_v4_runtime::test)
-)
+BOOST_ASIO_TEST_SUITE("ip/network_v4",
+                      BOOST_ASIO_TEST_CASE(ip_network_v4_compile::test)
+                          BOOST_ASIO_TEST_CASE(ip_network_v4_runtime::test))

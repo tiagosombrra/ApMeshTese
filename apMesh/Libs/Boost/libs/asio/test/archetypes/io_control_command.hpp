@@ -13,20 +13,13 @@
 
 namespace archetypes {
 
-class io_control_command
-{
-public:
-  int name() const
-  {
-    return 0;
-  }
+class io_control_command {
+ public:
+  int name() const { return 0; }
 
-  void* data()
-  {
-    return 0;
-  }
+  void* data() { return 0; }
 };
 
-} // namespace archetypes
+}  // namespace archetypes
 
-#endif // ARCHETYPES_IO_CONTROL_COMMAND_HPP
+#endif  // ARCHETYPES_IO_CONTROL_COMMAND_HPP

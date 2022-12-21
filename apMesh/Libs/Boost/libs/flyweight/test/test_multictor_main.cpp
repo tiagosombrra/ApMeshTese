@@ -9,10 +9,10 @@
  */
 
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_multictor.hpp"
 
-int main()
-{
+int main() {
   test_multictor();
   return boost::report_errors();
 }

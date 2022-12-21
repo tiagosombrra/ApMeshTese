@@ -7,7 +7,6 @@
 // Test pre disable no assertion (in programs, but same for libraries).
 
 #ifndef BOOST_CONTRACT_PRECONDITIONS_DISABLE_NO_ASSERTION
-    #error "build must define PRECONDITIONS_DISABLE_NO_ASSERTION"
+#error "build must define PRECONDITIONS_DISABLE_NO_ASSERTION"
 #endif
 #include "prog.hpp"
-

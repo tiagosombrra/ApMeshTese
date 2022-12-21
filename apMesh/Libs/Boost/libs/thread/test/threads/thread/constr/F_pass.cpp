@@ -17,25 +17,25 @@
 
 // template <class F, class ...Args> thread(F f, Args... args);
 
-#include <new>
-#include <cstdlib>
-#include <cassert>
-#include <boost/thread/thread_only.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <cassert>
+#include <cstdlib>
+#include <new>
 
 unsigned throw_one = 0xFFFF;
 
 #if defined _GLIBCXX_THROW
-void* operator new(std::size_t s) _GLIBCXX_THROW (std::bad_alloc)
+void* operator new(std::size_t s) _GLIBCXX_THROW(std::bad_alloc)
 #elif defined BOOST_MSVC
 void* operator new(std::size_t s)
 #elif __cplusplus > 201402L
 void* operator new(std::size_t s)
 #else
-void* operator new(std::size_t s) throw (std::bad_alloc)
+void* operator new(std::size_t s) throw(std::bad_alloc)
 #endif
 {
-  //std::cout << __FILE__ << ":" << __LINE__ << std::endl;
+  // std::cout << __FILE__ << ":" << __LINE__ << std::endl;
   if (throw_one == 0) throw std::bad_alloc();
   --throw_one;
   return std::malloc(s);
@@ -47,55 +47,39 @@ void operator delete(void* p)
 void operator delete(void* p) BOOST_NOEXCEPT_OR_NOTHROW
 #endif
 {
-  //std::cout << __FILE__ << ":" << __LINE__ << std::endl;
+  // std::cout << __FILE__ << ":" << __LINE__ << std::endl;
   std::free(p);
 }
 
 bool f_run = false;
 
-void f()
-{
-  f_run = true;
-}
+void f() { f_run = true; }
 
-class G
-{
+class G {
   int alive_;
-public:
+
+ public:
   static int n_alive;
   static bool op_run;
 
-  G() :
-    alive_(1)
-  {
-    ++n_alive;
-  }
-  G(const G& g) :
-    alive_(g.alive_)
-  {
-    ++n_alive;
-  }
-  ~G()
-  {
+  G() : alive_(1) { ++n_alive; }
+  G(const G& g) : alive_(g.alive_) { ++n_alive; }
+  ~G() {
     alive_ = 0;
     --n_alive;
   }
 
-  void operator()()
-  {
+  void operator()() {
     BOOST_TEST(alive_ == 1);
-    //BOOST_TEST(n_alive >= 1);
+    // BOOST_TEST(n_alive >= 1);
     op_run = true;
   }
-
 };
 
 int G::n_alive = 0;
 bool G::op_run = false;
 
-
-int main()
-{
+int main() {
   {
     boost::thread t(f);
     t.join();
@@ -104,14 +88,11 @@ int main()
   f_run = false;
 #if !defined(BOOST_MSVC) && !defined(__MINGW32__)
   {
-    try
-    {
+    try {
       throw_one = 0;
       boost::thread t(f);
       BOOST_TEST(false);
-    }
-    catch (...)
-    {
+    } catch (...) {
       throw_one = 0xFFFF;
       BOOST_TEST(!f_run);
     }
@@ -120,7 +101,7 @@ int main()
   {
     BOOST_TEST(G::n_alive == 0);
     BOOST_TEST(!G::op_run);
-    boost::thread t( (G()));
+    boost::thread t((G()));
     t.join();
     BOOST_TEST(G::n_alive == 0);
     BOOST_TEST(G::op_run);
@@ -128,19 +109,17 @@ int main()
 #if !defined(BOOST_MSVC) && !defined(__MINGW32__)
   G::op_run = false;
   {
-    try
-    {
+    try {
       throw_one = 0;
       BOOST_TEST(G::n_alive == 0);
       BOOST_TEST(!G::op_run);
-      boost::thread t( (G()));
+      boost::thread t((G()));
       BOOST_TEST(false);
-    }
-    catch (...)
-    {
+    } catch (...) {
       throw_one = 0xFFFF;
       BOOST_TEST(G::n_alive == 0);
-      std::cout << __FILE__ << ":" << __LINE__ <<" " << G::n_alive << std::endl;
+      std::cout << __FILE__ << ":" << __LINE__ << " " << G::n_alive
+                << std::endl;
       BOOST_TEST(!G::op_run);
     }
   }

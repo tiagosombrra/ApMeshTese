@@ -21,9 +21,9 @@
 
 #define BOOST_SPIRIT_DEBUG
 #include <boost/spirit/include/classic_core.hpp>
+#include <functional>
 #include <iostream>
 #include <stack>
-#include <functional>
 #include <string>
 
 ////////////////////////////////////////////////////////////////////////////
@@ -35,66 +35,55 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 //  Semantic actions
 //
 ////////////////////////////////////////////////////////////////////////////
-struct push_int
-{
-    push_int(stack<long>& eval_)
-    : eval(eval_) {}
+struct push_int {
+  push_int(stack<long>& eval_) : eval(eval_) {}
 
-    void operator()(char const* str, char const* /*end*/) const
-    {
-        long n = strtol(str, 0, 10);
-        eval.push(n);
-        cout << "push\t" << long(n) << endl;
-    }
+  void operator()(char const* str, char const* /*end*/) const {
+    long n = strtol(str, 0, 10);
+    eval.push(n);
+    cout << "push\t" << long(n) << endl;
+  }
 
-    stack<long>& eval;
+  stack<long>& eval;
 };
 
 template <typename op>
-struct do_op
-{
-    do_op(op const& the_op, stack<long>& eval_)
-    : m_op(the_op), eval(eval_) {}
+struct do_op {
+  do_op(op const& the_op, stack<long>& eval_) : m_op(the_op), eval(eval_) {}
 
-    void operator()(char const*, char const*) const
-    {
-        long rhs = eval.top();
-        eval.pop();
-        long lhs = eval.top();
-        eval.pop();
+  void operator()(char const*, char const*) const {
+    long rhs = eval.top();
+    eval.pop();
+    long lhs = eval.top();
+    eval.pop();
 
-        cout << "popped " << lhs << " and " << rhs << " from the stack. ";
-        cout << "pushing " << m_op(lhs, rhs) << " onto the stack.\n";
-        eval.push(m_op(lhs, rhs));
-    }
+    cout << "popped " << lhs << " and " << rhs << " from the stack. ";
+    cout << "pushing " << m_op(lhs, rhs) << " onto the stack.\n";
+    eval.push(m_op(lhs, rhs));
+  }
 
-    op m_op;
-    stack<long>& eval;
+  op m_op;
+  stack<long>& eval;
 };
 
 template <class op>
-do_op<op>
-make_op(op const& the_op, stack<long>& eval)
-{
-    return do_op<op>(the_op, eval);
+do_op<op> make_op(op const& the_op, stack<long>& eval) {
+  return do_op<op>(the_op, eval);
 }
 
-struct do_negate
-{
-    do_negate(stack<long>& eval_)
-    : eval(eval_) {}
+struct do_negate {
+  do_negate(stack<long>& eval_) : eval(eval_) {}
 
-    void operator()(char const*, char const*) const
-    {
-        long lhs = eval.top();
-        eval.pop();
+  void operator()(char const*, char const*) const {
+    long lhs = eval.top();
+    eval.pop();
 
-        cout << "popped " << lhs << " from the stack. ";
-        cout << "pushing " << -lhs << " onto the stack.\n";
-        eval.push(-lhs);
-    }
+    cout << "popped " << lhs << " from the stack. ";
+    cout << "pushing " << -lhs << " onto the stack.\n";
+    eval.push(-lhs);
+  }
 
-    stack<long>& eval;
+  stack<long>& eval;
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -102,53 +91,35 @@ struct do_negate
 //  Our calculator grammar
 //
 ////////////////////////////////////////////////////////////////////////////
-struct calculator : public grammar<calculator>
-{
-    calculator(stack<long>& eval_)
-    : eval(eval_) {}
+struct calculator : public grammar<calculator> {
+  calculator(stack<long>& eval_) : eval(eval_) {}
 
-    template <typename ScannerT>
-    struct definition
-    {
-        definition(calculator const& self)
-        {
-            integer =
-                lexeme_d[ (+digit_p)[push_int(self.eval)] ]
-                ;
+  template <typename ScannerT>
+  struct definition {
+    definition(calculator const& self) {
+      integer = lexeme_d[(+digit_p)[push_int(self.eval)]];
 
-            factor =
-                    integer
-                |   '(' >> expression >> ')'
-                |   ('-' >> factor)[do_negate(self.eval)]
-                |   ('+' >> factor)
-                ;
+      factor = integer | '(' >> expression >> ')' |
+               ('-' >> factor)[do_negate(self.eval)] | ('+' >> factor);
 
-            term =
-                factor
-                >> *(   ('*' >> factor)[make_op(multiplies<long>(), self.eval)]
-                    |   ('/' >> factor)[make_op(divides<long>(), self.eval)]
-                    )
-                    ;
+      term =
+          factor >> *(('*' >> factor)[make_op(multiplies<long>(), self.eval)] |
+                      ('/' >> factor)[make_op(divides<long>(), self.eval)]);
 
-            expression =
-                term
-                >> *(  ('+' >> term)[make_op(plus<long>(), self.eval)]
-                    |   ('-' >> term)[make_op(minus<long>(), self.eval)]
-                    )
-                    ;
+      expression = term >> *(('+' >> term)[make_op(plus<long>(), self.eval)] |
+                             ('-' >> term)[make_op(minus<long>(), self.eval)]);
 
-            BOOST_SPIRIT_DEBUG_NODE(integer);
-            BOOST_SPIRIT_DEBUG_NODE(factor);
-            BOOST_SPIRIT_DEBUG_NODE(term);
-            BOOST_SPIRIT_DEBUG_NODE(expression);
-        }
+      BOOST_SPIRIT_DEBUG_NODE(integer);
+      BOOST_SPIRIT_DEBUG_NODE(factor);
+      BOOST_SPIRIT_DEBUG_NODE(term);
+      BOOST_SPIRIT_DEBUG_NODE(expression);
+    }
 
-        rule<ScannerT> expression, term, factor, integer;
-        rule<ScannerT> const&
-        start() const { return expression; }
-    };
+    rule<ScannerT> expression, term, factor, integer;
+    rule<ScannerT> const& start() const { return expression; }
+  };
 
-    stack<long>& eval;
+  stack<long>& eval;
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -156,44 +127,35 @@ struct calculator : public grammar<calculator>
 //  Main program
 //
 ////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "\t\tThe simplest working calculator...\n\n";
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "Type an expression...or [q or Q] to quit\n\n";
+int main() {
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "\t\tThe simplest working calculator...\n\n";
+  cout << "/////////////////////////////////////////////////////////\n\n";
+  cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    stack<long> eval;
-    calculator  calc(eval); //  Our parser
-    BOOST_SPIRIT_DEBUG_NODE(calc);
+  stack<long> eval;
+  calculator calc(eval);  //  Our parser
+  BOOST_SPIRIT_DEBUG_NODE(calc);
 
-    string str;
-    while (getline(cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
+  string str;
+  while (getline(cin, str)) {
+    if (str.empty() || str[0] == 'q' || str[0] == 'Q') break;
 
-        parse_info<> info = parse(str.c_str(), calc, space_p);
+    parse_info<> info = parse(str.c_str(), calc, space_p);
 
-        if (info.full)
-        {
-            cout << "-------------------------\n";
-            cout << "Parsing succeeded\n";
-            cout << "result = " << calc.eval.top() << endl;
-            cout << "-------------------------\n";
-        }
-        else
-        {
-            cout << "-------------------------\n";
-            cout << "Parsing failed\n";
-            cout << "stopped at: \": " << info.stop << "\"\n";
-            cout << "-------------------------\n";
-        }
+    if (info.full) {
+      cout << "-------------------------\n";
+      cout << "Parsing succeeded\n";
+      cout << "result = " << calc.eval.top() << endl;
+      cout << "-------------------------\n";
+    } else {
+      cout << "-------------------------\n";
+      cout << "Parsing failed\n";
+      cout << "stopped at: \": " << info.stop << "\"\n";
+      cout << "-------------------------\n";
     }
+  }
 
-    cout << "Bye... :-) \n\n";
-    return 0;
+  cout << "Bye... :-) \n\n";
+  return 0;
 }
-
-

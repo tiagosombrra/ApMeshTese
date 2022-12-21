@@ -5,7 +5,6 @@
 // See: http://www.boost.org/doc/libs/release/libs/contract/doc/html/index.html
 
 #ifndef BOOST_CONTRACT_AUDITS
-    #error "build must define AUDITS"
+#error "build must define AUDITS"
 #endif
 #include "audit.hpp"
-

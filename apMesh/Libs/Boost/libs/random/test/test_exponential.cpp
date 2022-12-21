@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/exponential.hpp>
 #include <boost/random/exponential_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/exponential.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::exponential_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME exponential

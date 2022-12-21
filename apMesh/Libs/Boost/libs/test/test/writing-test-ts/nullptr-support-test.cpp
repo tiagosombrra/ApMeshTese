@@ -8,14 +8,12 @@
 #define BOOST_TEST_MODULE nullptr_support
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test1)
-{
-    int *p = nullptr;
-    BOOST_TEST(p == nullptr);
+BOOST_AUTO_TEST_CASE(test1) {
+  int *p = nullptr;
+  BOOST_TEST(p == nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(test2)
-{
-    int *p = nullptr;
-    BOOST_CHECK_EQUAL(p, nullptr);
+BOOST_AUTO_TEST_CASE(test2) {
+  int *p = nullptr;
+  BOOST_CHECK_EQUAL(p, nullptr);
 }

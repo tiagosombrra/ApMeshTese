@@ -10,22 +10,23 @@
 
 #include <boost/numeric/interval.hpp>
 #include <boost/test/minimal.hpp>
+
 #include "bugs.hpp"
 
-template<class I>
+template <class I>
 void test_one(typename I::base_type x, typename I::base_type f) {
   I y = x;
   typename I::base_type g = 1 / f;
   const int nb = 10000;
-  for(int i = 0; i < nb; i++) y *= f;
-  for(int i = 0; i < nb; i++) y *= g;
+  for (int i = 0; i < nb; i++) y *= f;
+  for (int i = 0; i < nb; i++) y *= g;
   BOOST_CHECK(in(x, y));
-# ifdef BOOST_BORLANDC
+#ifdef BOOST_BORLANDC
   ::detail::ignore_unused_variable_warning(nb);
-# endif
+#endif
 }
 
-template<class I>
+template <class I>
 void test() {
   test_one<I>(1., 25.);
   test_one<I>(1., 0.04);
@@ -36,9 +37,9 @@ void test() {
 int test_main(int, char *[]) {
   test<boost::numeric::interval<float> >();
   test<boost::numeric::interval<double> >();
-  //test<boost::numeric::interval<long double> >();
-# ifdef BOOST_BORLANDC
+  // test<boost::numeric::interval<long double> >();
+#ifdef BOOST_BORLANDC
   ::detail::ignore_warnings();
-# endif
+#endif
   return 0;
 }

@@ -12,28 +12,29 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
-  template <typename> static constexpr bool is_applicable_property_v = true;
+struct prop {
+  template <typename>
+  static constexpr bool is_applicable_property_v = true;
   static constexpr bool is_requirable = true;
 };
 
 template <int>
-struct object
-{
+struct object {
   template <int N>
-  friend constexpr object<N> require(const object&, prop<N>)
-  {
+  friend constexpr object<N> require(const object&, prop<N>) {
     return object<N>();
   }
 };
 
-int main()
-{
+int main() {
   static_assert(boost::asio::can_require_v<object<1>, prop<2>>, "");
   static_assert(boost::asio::can_require_v<object<1>, prop<2>, prop<3>>, "");
-  static_assert(boost::asio::can_require_v<object<1>, prop<2>, prop<3>, prop<4>>, "");
+  static_assert(
+      boost::asio::can_require_v<object<1>, prop<2>, prop<3>, prop<4>>, "");
   static_assert(boost::asio::can_require_v<const object<1>, prop<2>>, "");
-  static_assert(boost::asio::can_require_v<const object<1>, prop<2>, prop<3>>, "");
-  static_assert(boost::asio::can_require_v<const object<1>, prop<2>, prop<3>, prop<4>>, "");
+  static_assert(boost::asio::can_require_v<const object<1>, prop<2>, prop<3>>,
+                "");
+  static_assert(
+      boost::asio::can_require_v<const object<1>, prop<2>, prop<3>, prop<4>>,
+      "");
 }

@@ -7,10 +7,10 @@
  */
 
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_registration.hpp"
 
-int main()
-{
+int main() {
   test_registration();
   return boost::report_errors();
 }

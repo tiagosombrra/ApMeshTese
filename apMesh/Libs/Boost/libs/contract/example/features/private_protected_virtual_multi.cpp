@@ -14,196 +14,169 @@
 // possible to override a member that is public in one base but private or
 // protected in other base using this library on MSVC (that can be done instead
 // using this library on GCC or CLang).
-int main() { return 0; } // Trivial program for MSVC.
+int main() { return 0; }  // Trivial program for MSVC.
 
 #else
 
 #include <boost/contract.hpp>
-#include <limits>
 #include <cassert>
+#include <limits>
 
 class counter {
-    // Virtual private and protected functions still declare extra
-    // `virtual_* = 0` parameter (otherwise they cannot be overridden).
-protected:
-    virtual void set(int n, boost::contract::virtual_* = 0) {
-        boost::contract::check c = boost::contract::function()
+  // Virtual private and protected functions still declare extra
+  // `virtual_* = 0` parameter (otherwise they cannot be overridden).
+ protected:
+  virtual void set(int n, boost::contract::virtual_* = 0) {
+    boost::contract::check c =
+        boost::contract::function()
+            .precondition([&] { BOOST_CONTRACT_ASSERT(n <= 0); })
+            .postcondition([&] { BOOST_CONTRACT_ASSERT(get() == n); });
+
+    n_ = n;
+  }
+
+ private:
+  virtual void dec(boost::contract::virtual_* = 0) {
+    boost::contract::old_ptr<int> old_get = BOOST_CONTRACT_OLDOF(get());
+    boost::contract::check c =
+        boost::contract::function()
             .precondition([&] {
-                BOOST_CONTRACT_ASSERT(n <= 0);
+              BOOST_CONTRACT_ASSERT(get() + 1 >=
+                                    std::numeric_limits<int>::min());
             })
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(get() == n);
-            })
-        ;
+            .postcondition(
+                [&] { BOOST_CONTRACT_ASSERT(get() == *old_get - 1); });
 
-        n_ = n;
-    }
+    set(get() - 1);
+  }
 
-private:
-    virtual void dec(boost::contract::virtual_* = 0) {
-        boost::contract::old_ptr<int> old_get = BOOST_CONTRACT_OLDOF(get());
-        boost::contract::check c = boost::contract::function()
-            .precondition([&] {
-                BOOST_CONTRACT_ASSERT(
-                        get() + 1 >= std::numeric_limits<int>::min());
-            })
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(get() == *old_get - 1);
-            })
-        ;
+  int n_;
 
-        set(get() - 1);
-    }
-    
-    int n_;
+ public:
+  virtual int get(boost::contract::virtual_* v = 0) const {
+    int result;
+    boost::contract::check c = boost::contract::public_function(v, result, this)
+                                   .postcondition([&](int const result) {
+                                     BOOST_CONTRACT_ASSERT(result <= 0);
+                                     BOOST_CONTRACT_ASSERT(result == n_);
+                                   });
 
-public:
-    virtual int get(boost::contract::virtual_* v = 0) const {
-        int result;
-        boost::contract::check c = boost::contract::public_function(
-                v, result, this)
-            .postcondition([&] (int const result) {
-                BOOST_CONTRACT_ASSERT(result <= 0);
-                BOOST_CONTRACT_ASSERT(result == n_);
-            })
-        ;
+    return result = n_;
+  }
 
-        return result = n_;
-    }
+  counter() : n_(0) {}  // Should contract constructor and destructor too.
 
-    counter() : n_(0) {} // Should contract constructor and destructor too.
-    
-    void invariant() const {
-        BOOST_CONTRACT_ASSERT(get() <= 0);
-    }
+  void invariant() const { BOOST_CONTRACT_ASSERT(get() <= 0); }
 
-    friend int main();
+  friend int main();
 };
 
 //[private_protected_virtual_multi_countable
 class countable {
-public:
-    void invariant() const {
-        BOOST_CONTRACT_ASSERT(get() <= 0);
-    }
+ public:
+  void invariant() const { BOOST_CONTRACT_ASSERT(get() <= 0); }
 
-    virtual void dec(boost::contract::virtual_* v = 0) = 0;
-    virtual void set(int n, boost::contract::virtual_* v = 0) = 0;
-    virtual int get(boost::contract::virtual_* v = 0) const = 0;
+  virtual void dec(boost::contract::virtual_* v = 0) = 0;
+  virtual void set(int n, boost::contract::virtual_* v = 0) = 0;
+  virtual int get(boost::contract::virtual_* v = 0) const = 0;
 };
 
 /* ... */
 //]
 
 void countable::dec(boost::contract::virtual_* v) {
-    boost::contract::old_ptr<int> old_get = BOOST_CONTRACT_OLDOF(v, get());
-    boost::contract::check c = boost::contract::public_function(v, this)
-        .precondition([&] {
+  boost::contract::old_ptr<int> old_get = BOOST_CONTRACT_OLDOF(v, get());
+  boost::contract::check c =
+      boost::contract::public_function(v, this)
+          .precondition([&] {
             BOOST_CONTRACT_ASSERT(get() > std::numeric_limits<int>::min());
-        })
-        .postcondition([&] {
-            BOOST_CONTRACT_ASSERT(get() < *old_get);
-        })
-    ;
-    assert(false); // Never executed by this library.
+          })
+          .postcondition([&] { BOOST_CONTRACT_ASSERT(get() < *old_get); });
+  assert(false);  // Never executed by this library.
 }
 
 void countable::set(int n, boost::contract::virtual_* v) {
-    boost::contract::check c = boost::contract::public_function(
-            v, this)
-        .precondition([&] {
-            BOOST_CONTRACT_ASSERT(n <= 0);
-        })
-        .postcondition([&] {
-            BOOST_CONTRACT_ASSERT(get() == n);
-        })
-    ;
-    assert(false); // Never executed by this library.
+  boost::contract::check c =
+      boost::contract::public_function(v, this)
+          .precondition([&] { BOOST_CONTRACT_ASSERT(n <= 0); })
+          .postcondition([&] { BOOST_CONTRACT_ASSERT(get() == n); });
+  assert(false);  // Never executed by this library.
 }
 
 int countable::get(boost::contract::virtual_* v) const {
-    int result;
-    boost::contract::check c = boost::contract::public_function(
-            v, result, this);
-    assert(false); // Never executed by this library.
+  int result;
+  boost::contract::check c = boost::contract::public_function(v, result, this);
+  assert(false);  // Never executed by this library.
 }
 
 //[private_protected_virtual_multi_counter10
-class counter10 
-    #define BASES public countable, public counter // Multiple inheritance.
-    : BASES
-{
-public:
-    typedef BOOST_CONTRACT_BASE_TYPES(BASES) base_types;
-    #undef BASES
+class counter10
+#define BASES \
+ public       \
+  countable, public counter  // Multiple inheritance.
+    : BASES {
+ public:
+  typedef BOOST_CONTRACT_BASE_TYPES(BASES) base_types;
+#undef BASES
 
-    // Overriding from public members from `countable` so use `override_...`.
+  // Overriding from public members from `countable` so use `override_...`.
 
-    virtual void set(int n, boost::contract::virtual_* v = 0) /* override */ {
-        boost::contract::check c = boost::contract::public_function<
-                override_set>(v, &counter10::set, this, n)
+  virtual void set(int n, boost::contract::virtual_* v = 0) /* override */ {
+    boost::contract::check c =
+        boost::contract::public_function<override_set>(v, &counter10::set, this,
+                                                       n)
+            .precondition([&] { BOOST_CONTRACT_ASSERT(n % 10 == 0); })
+            .postcondition([&] { BOOST_CONTRACT_ASSERT(get() == n); });
+
+    counter::set(n);
+  }
+
+  virtual void dec(boost::contract::virtual_* v = 0) /* override */ {
+    boost::contract::old_ptr<int> old_get = BOOST_CONTRACT_OLDOF(v, get());
+    boost::contract::check c =
+        boost::contract::public_function<override_dec>(v, &counter10::dec, this)
             .precondition([&] {
-                BOOST_CONTRACT_ASSERT(n % 10 == 0);
+              BOOST_CONTRACT_ASSERT(get() + 10 >=
+                                    std::numeric_limits<int>::min());
             })
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(get() == n);
-            })
-        ;
+            .postcondition(
+                [&] { BOOST_CONTRACT_ASSERT(get() == *old_get - 10); });
 
-        counter::set(n);
-    }
-    
-    virtual void dec(boost::contract::virtual_* v = 0) /* override */ {
-        boost::contract::old_ptr<int> old_get = BOOST_CONTRACT_OLDOF(v, get());
-        boost::contract::check c = boost::contract::public_function<
-                override_dec>(v, &counter10::dec, this)
-            .precondition([&] {
-                BOOST_CONTRACT_ASSERT(
-                        get() + 10 >= std::numeric_limits<int>::min());
-            })
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(get() == *old_get - 10);
-            })
-        ;
+    set(get() - 10);
+  }
 
-        set(get() - 10);
-    }
-    
-    BOOST_CONTRACT_OVERRIDES(set, dec)
+  BOOST_CONTRACT_OVERRIDES(set, dec)
 
-    /* ... */
-//]
-    
-    virtual int get(boost::contract::virtual_* v = 0) const {
-        int result;
-        boost::contract::check c = boost::contract::public_function<
-                override_get>(v, result, &counter10::get, this);
+  /* ... */
+  //]
 
-        return result = counter::get();
-    }
-    BOOST_CONTRACT_OVERRIDE(get)
+  virtual int get(boost::contract::virtual_* v = 0) const {
+    int result;
+    boost::contract::check c = boost::contract::public_function<override_get>(
+        v, result, &counter10::get, this);
 
-    // Should contract default constructor and destructor too.
-    
-    void invariant() const {
-        BOOST_CONTRACT_ASSERT(get() % 10 == 0);
-    }
+    return result = counter::get();
+  }
+  BOOST_CONTRACT_OVERRIDE(get)
+
+  // Should contract default constructor and destructor too.
+
+  void invariant() const { BOOST_CONTRACT_ASSERT(get() % 10 == 0); }
 };
 
 int main() {
-    counter cnt;
-    assert(cnt.get() == 0);
-    cnt.dec();
-    assert(cnt.get() == -1);
+  counter cnt;
+  assert(cnt.get() == 0);
+  cnt.dec();
+  assert(cnt.get() == -1);
 
-    counter10 cnt10;
-    countable& b = cnt10; // Polymorphic calls. 
-    assert(b.get() == 0);
-    b.dec();
-    assert(b.get() == -10);
+  counter10 cnt10;
+  countable& b = cnt10;  // Polymorphic calls.
+  assert(b.get() == 0);
+  b.dec();
+  assert(b.get() == -10);
 
-    return 0;
+  return 0;
 }
 
-#endif // MSVC
-
+#endif  // MSVC

@@ -9,12 +9,12 @@
 #if !defined(BOOST_SPIRIT_TEST_QI_UINT_HPP)
 #define BOOST_SPIRIT_TEST_QI_UINT_HPP
 
-#include <climits>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
+#include <climits>
+#include <cstring>
 
 #include "test.hpp"
-#include <cstring>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -24,36 +24,37 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-    char const* max_unsigned = "4294967295";
-    char const* unsigned_overflow = "4294967296";
-    char const* max_int = "2147483647";
-    char const* int_overflow = "2147483648";
-    char const* min_int = "-2147483648";
-    char const* int_underflow = "-2147483649";
-    char const* max_binary = "11111111111111111111111111111111";
-    char const* binary_overflow = "100000000000000000000000000000000";
-    char const* max_octal = "37777777777";
-    char const* octal_overflow = "100000000000";
-    char const* max_hex = "FFFFFFFF";
-    char const* hex_overflow = "100000000";
+char const* max_unsigned = "4294967295";
+char const* unsigned_overflow = "4294967296";
+char const* max_int = "2147483647";
+char const* int_overflow = "2147483648";
+char const* min_int = "-2147483648";
+char const* int_underflow = "-2147483649";
+char const* max_binary = "11111111111111111111111111111111";
+char const* binary_overflow = "100000000000000000000000000000000";
+char const* max_octal = "37777777777";
+char const* octal_overflow = "100000000000";
+char const* max_hex = "FFFFFFFF";
+char const* hex_overflow = "100000000";
 
 ///////////////////////////////////////////////////////////////////////////////
 // A custom int type
-struct custom_uint
-{
-    unsigned n;
-    custom_uint() : n(0) {}
-    explicit custom_uint(unsigned n_) : n(n_) {}
-    custom_uint& operator=(unsigned n_) { n = n_; return *this; }
-    friend bool operator==(custom_uint a, custom_uint b)
-        { return a.n == b.n; }
-    friend bool operator==(custom_uint a, unsigned b)
-        { return a.n == b; }
-    friend custom_uint operator*(custom_uint a, custom_uint b)
-        { return custom_uint(a.n * b.n); }
-    friend custom_uint operator+(custom_uint a, custom_uint b)
-        { return custom_uint(a.n + b.n); }
+struct custom_uint {
+  unsigned n;
+  custom_uint() : n(0) {}
+  explicit custom_uint(unsigned n_) : n(n_) {}
+  custom_uint& operator=(unsigned n_) {
+    n = n_;
+    return *this;
+  }
+  friend bool operator==(custom_uint a, custom_uint b) { return a.n == b.n; }
+  friend bool operator==(custom_uint a, unsigned b) { return a.n == b; }
+  friend custom_uint operator*(custom_uint a, custom_uint b) {
+    return custom_uint(a.n * b.n);
+  }
+  friend custom_uint operator+(custom_uint a, custom_uint b) {
+    return custom_uint(a.n + b.n);
+  }
 };
 
 #endif
-

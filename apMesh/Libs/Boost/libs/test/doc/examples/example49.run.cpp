@@ -7,13 +7,12 @@
 
 //[example_code
 #define BOOST_TEST_MODULE example49
-#include <boost/test/included/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
+#include <boost/test/included/unit_test.hpp>
 using namespace boost::unit_test;
 
-BOOST_DATA_TEST_CASE( free_test_function, boost::unit_test::data::xrange(1000) )
-{
+BOOST_DATA_TEST_CASE(free_test_function, boost::unit_test::data::xrange(1000)) {
   // sleep(1);
-  BOOST_TEST( true /* test assertion */ );
+  BOOST_TEST(true /* test assertion */);
 }
 //]

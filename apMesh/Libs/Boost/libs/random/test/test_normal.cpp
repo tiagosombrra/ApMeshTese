@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/normal.hpp>
 #include <boost/random/normal_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/normal.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::normal_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME normal

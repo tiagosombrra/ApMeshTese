@@ -16,46 +16,39 @@
 #include <memory>
 #include <vector>
 
-
-
 #ifdef BOOST_NO_CXX11_SMART_PTR
-    template <class T> struct shared_ptr_like {};
-    typedef shared_ptr_like<boost::recursive_variant_> ptr_t;
+template <class T>
+struct shared_ptr_like {};
+typedef shared_ptr_like<boost::recursive_variant_> ptr_t;
 #else
-    typedef std::shared_ptr<boost::recursive_variant_> ptr_t;
+typedef std::shared_ptr<boost::recursive_variant_> ptr_t;
 #endif
 
 template <class F>
-class func{};
+class func {};
 
 int main() {
-    typedef boost::make_recursive_variant<
-        int,
-        ptr_t
-    >::type node;
+  typedef boost::make_recursive_variant<int, ptr_t>::type node;
 
-    node x = 1;
-    (void)x;
+  node x = 1;
+  (void)x;
 
+  typedef boost::make_recursive_variant<
+      std::string, int, double, bool, ptr_t,
+      std::map<const std::string, boost::recursive_variant_>,
+      std::vector<boost::recursive_variant_> >::type node2;
 
-    typedef boost::make_recursive_variant<
-        std::string, int, double, bool,
-        ptr_t,
-        std::map<const std::string, boost::recursive_variant_>,
-        std::vector<boost::recursive_variant_>
-    >::type node2;
+  node2 x2 = 1;
+  (void)x2;
 
-    node2 x2 = 1;
-    (void)x2;
+  typedef boost::make_recursive_variant<
+      int,
+      func<boost::recursive_variant_ (*)(boost::recursive_variant_&,
+                                         const boost::recursive_variant_&)>,
+      boost::recursive_variant_& (*)(boost::recursive_variant_,
+                                     boost::recursive_variant_*),
+      ptr_t>::type node3;
 
-
-    typedef boost::make_recursive_variant<
-        int,
-        func<boost::recursive_variant_(*)(boost::recursive_variant_&, const boost::recursive_variant_&)>,
-        boost::recursive_variant_&(*)(boost::recursive_variant_, boost::recursive_variant_*),
-        ptr_t
-    >::type node3;
-
-    node3 x3 = func<node3(*)(node3&, const node3&)>();
-    (void)x3;
+  node3 x3 = func<node3 (*)(node3&, const node3&)>();
+  (void)x3;
 }

@@ -14,8 +14,7 @@
 
 using namespace boost::polygon;
 
-void segment_data_test()
-{
+void segment_data_test() {
   typedef point_data<int> point_type;
   typedef segment_data<int> segment_type;
   point_type point1(1, 2);
@@ -47,8 +46,7 @@ void segment_data_test()
   BOOST_TEST(segment1 == segment2);
 }
 
-void segment_traits_test()
-{
+void segment_traits_test() {
   typedef point_data<int> point_type;
   typedef segment_data<int> segment_type;
 
@@ -76,44 +74,44 @@ struct Segment {
 
 namespace boost {
 namespace polygon {
-  template <typename T>
-  struct geometry_concept< Segment<T> > {
-    typedef segment_concept type;
-  };
+template <typename T>
+struct geometry_concept<Segment<T> > {
+  typedef segment_concept type;
+};
 
-  template <typename T>
-  struct segment_traits< Segment<T> > {
-    typedef T coordinate_type;
-    typedef point_data<int> point_type;
+template <typename T>
+struct segment_traits<Segment<T> > {
+  typedef T coordinate_type;
+  typedef point_data<int> point_type;
 
-    static point_type get(const Segment<T>& segment, direction_1d dir) {
-      return dir.to_int() ? segment.p1 : segment.p0;
-    }
-  };
+  static point_type get(const Segment<T>& segment, direction_1d dir) {
+    return dir.to_int() ? segment.p1 : segment.p0;
+  }
+};
 
-  template <typename T>
-  struct segment_mutable_traits< Segment<T> > {
-    typedef T coordinate_type;
-    typedef point_data<int> point_type;
+template <typename T>
+struct segment_mutable_traits<Segment<T> > {
+  typedef T coordinate_type;
+  typedef point_data<int> point_type;
 
-    static void set(
-        Segment<T>& segment, direction_1d dir, const point_type& point) {
-      dir.to_int() ? segment.p1 = point : segment.p0 = point;;
-    }
+  static void set(Segment<T>& segment, direction_1d dir,
+                  const point_type& point) {
+    dir.to_int() ? segment.p1 = point : segment.p0 = point;
+    ;
+  }
 
-    static Segment<T> construct(
-        const point_type& point1, const point_type& point2) {
-      Segment<T> segment;
-      segment.p0 = point1;
-      segment.p1 = point2;
-      return segment;
-    }
-  };
-}
-}
+  static Segment<T> construct(const point_type& point1,
+                              const point_type& point2) {
+    Segment<T> segment;
+    segment.p0 = point1;
+    segment.p1 = point2;
+    return segment;
+  }
+};
+}  // namespace polygon
+}  // namespace boost
 
-void segment_concept_test1()
-{
+void segment_concept_test1() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
@@ -140,20 +138,19 @@ void segment_concept_test1()
   BOOST_TEST(segment1.p0 == point1);
   BOOST_TEST(segment1.p1 == point2);
 
-  segment_data<int> segment2 = copy_construct< segment_data<int> >(segment1);
+  segment_data<int> segment2 = copy_construct<segment_data<int> >(segment1);
   BOOST_TEST(segment1.p0 == segment2.low());
   BOOST_TEST(segment1.p1 == segment2.high());
   BOOST_TEST(equivalence(segment1, segment2));
 
-  segment_data<int> segment3 = construct< segment_data<int> >(point2, point1);
+  segment_data<int> segment3 = construct<segment_data<int> >(point2, point1);
   assign(segment1, segment3);
   BOOST_TEST(segment1.p0 == point2);
   BOOST_TEST(segment1.p1 == point1);
   BOOST_TEST(!equivalence(segment1, segment2));
 }
 
-void segment_concept_test2()
-{
+void segment_concept_test2() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
@@ -187,21 +184,20 @@ void segment_concept_test2()
   BOOST_TEST(orientation(segment3, point3) == 1);
 }
 
-void segment_concept_test3()
-{
+void segment_concept_test3() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
-  segment_type segment1 = construct<segment_type>(
-      point_type(0, 0), point_type(1, 2));
-  segment_type segment2 = construct<segment_type>(
-      point_type(0, 0), point_type(2, 4));
-  segment_type segment3 = construct<segment_type>(
-      point_type(0, 0), point_type(2, 3));
-  segment_type segment4 = construct<segment_type>(
-      point_type(0, 0), point_type(2, 5));
-  segment_type segment5 = construct<segment_type>(
-      point_type(0, 2), point_type(2, 0));
+  segment_type segment1 =
+      construct<segment_type>(point_type(0, 0), point_type(1, 2));
+  segment_type segment2 =
+      construct<segment_type>(point_type(0, 0), point_type(2, 4));
+  segment_type segment3 =
+      construct<segment_type>(point_type(0, 0), point_type(2, 3));
+  segment_type segment4 =
+      construct<segment_type>(point_type(0, 0), point_type(2, 5));
+  segment_type segment5 =
+      construct<segment_type>(point_type(0, 2), point_type(2, 0));
 
   BOOST_TEST(orientation(segment1, segment2) == 0);
   BOOST_TEST(orientation(segment1, segment3) == -1);
@@ -212,8 +208,7 @@ void segment_concept_test3()
   BOOST_TEST(orientation(segment5, segment1) == 1);
 }
 
-void segment_concept_test4()
-{
+void segment_concept_test4() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
@@ -233,8 +228,7 @@ void segment_concept_test4()
   BOOST_TEST(!contains(segment, point5, true));
 }
 
-void segment_concept_test5()
-{
+void segment_concept_test5() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
@@ -254,8 +248,7 @@ void segment_concept_test5()
   BOOST_TEST(!contains(segment, point5, true));
 }
 
-void segment_concept_test6()
-{
+void segment_concept_test6() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
@@ -278,7 +271,7 @@ void segment_concept_test6()
   BOOST_TEST(!contains(segment1, segment1, false));
 }
 
-template<typename T>
+template <typename T>
 struct Transformer {
   void scale(T& x, T& y) const {
     x *= 2;
@@ -292,8 +285,7 @@ struct Transformer {
   }
 };
 
-void segment_concept_test7()
-{
+void segment_concept_test7() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
@@ -332,19 +324,18 @@ void segment_concept_test7()
   BOOST_TEST(high(segment1) == point_type(12, 8));
 }
 
-void segment_concept_test8()
-{
+void segment_concept_test8() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
-  segment_type segment1 = construct<segment_type>(
-      point_type(0, 0), point_type(1, 2));
-  segment_type segment2 = construct<segment_type>(
-      point_type(1, 2), point_type(2, 4));
-  segment_type segment3 = construct<segment_type>(
-      point_type(2, 4), point_type(0, 4));
-  segment_type segment4 = construct<segment_type>(
-      point_type(0, 4), point_type(0, 0));
+  segment_type segment1 =
+      construct<segment_type>(point_type(0, 0), point_type(1, 2));
+  segment_type segment2 =
+      construct<segment_type>(point_type(1, 2), point_type(2, 4));
+  segment_type segment3 =
+      construct<segment_type>(point_type(2, 4), point_type(0, 4));
+  segment_type segment4 =
+      construct<segment_type>(point_type(0, 4), point_type(0, 0));
 
   BOOST_TEST(abuts(segment1, segment2, HIGH));
   BOOST_TEST(abuts(segment2, segment3, HIGH));
@@ -365,21 +356,20 @@ void segment_concept_test8()
   BOOST_TEST(!abuts(segment2, segment4));
 }
 
-void segment_concept_test9()
-{
+void segment_concept_test9() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
-  segment_type segment1 = construct<segment_type>(
-      point_type(0, 0), point_type(2, 2));
-  segment_type segment2 = construct<segment_type>(
-      point_type(1, 1), point_type(3, 3));
-  segment_type segment3 = construct<segment_type>(
-      point_type(2, 2), point_type(-1, -1));
-  segment_type segment4 = construct<segment_type>(
-      point_type(1, 3), point_type(3, 1));
-  segment_type segment5 = construct<segment_type>(
-      point_type(2, 2), point_type(1, 3));
+  segment_type segment1 =
+      construct<segment_type>(point_type(0, 0), point_type(2, 2));
+  segment_type segment2 =
+      construct<segment_type>(point_type(1, 1), point_type(3, 3));
+  segment_type segment3 =
+      construct<segment_type>(point_type(2, 2), point_type(-1, -1));
+  segment_type segment4 =
+      construct<segment_type>(point_type(1, 3), point_type(3, 1));
+  segment_type segment5 =
+      construct<segment_type>(point_type(2, 2), point_type(1, 3));
 
   BOOST_TEST(intersects(segment1, segment2, false));
   BOOST_TEST(intersects(segment1, segment2, true));
@@ -395,23 +385,22 @@ void segment_concept_test9()
   BOOST_TEST(intersects(segment3, segment5, true));
 }
 
-void segment_concept_test10()
-{
+void segment_concept_test10() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
-  segment_type segment1 = construct<segment_type>(
-      point_type(0, 0), point_type(0, 2));
-  segment_type segment2 = construct<segment_type>(
-      point_type(0, 1), point_type(0, 3));
-  segment_type segment3 = construct<segment_type>(
-      point_type(0, 1), point_type(0, 2));
-  segment_type segment4 = construct<segment_type>(
-      point_type(0, 2), point_type(0, 3));
-  segment_type segment5 = construct<segment_type>(
-      point_type(0, 2), point_type(2, 2));
-  segment_type segment6 = construct<segment_type>(
-      point_type(0, 1), point_type(1, 1));
+  segment_type segment1 =
+      construct<segment_type>(point_type(0, 0), point_type(0, 2));
+  segment_type segment2 =
+      construct<segment_type>(point_type(0, 1), point_type(0, 3));
+  segment_type segment3 =
+      construct<segment_type>(point_type(0, 1), point_type(0, 2));
+  segment_type segment4 =
+      construct<segment_type>(point_type(0, 2), point_type(0, 3));
+  segment_type segment5 =
+      construct<segment_type>(point_type(0, 2), point_type(2, 2));
+  segment_type segment6 =
+      construct<segment_type>(point_type(0, 1), point_type(1, 1));
 
   BOOST_TEST(intersects(segment1, segment1, false));
   BOOST_TEST(intersects(segment1, segment1, true));
@@ -429,8 +418,7 @@ void segment_concept_test10()
   BOOST_TEST(intersects(segment1, segment6, true));
 }
 
-void segment_concept_test11()
-{
+void segment_concept_test11() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
@@ -446,40 +434,38 @@ void segment_concept_test11()
   BOOST_TEST(euclidean_distance(segment1, point_type(8, 3)) == 5.0);
 }
 
-void segment_concept_test12()
-{
+void segment_concept_test12() {
   typedef point_data<int> point_type;
   typedef Segment<int> segment_type;
 
-  segment_type segment1 = construct<segment_type>(
-      point_type(0, 0), point_type(3, 4));
-  segment_type segment2 = construct<segment_type>(
-      point_type(2, 0), point_type(0, 2));
-  segment_type segment3 = construct<segment_type>(
-      point_type(1, -7), point_type(10, 5));
-  segment_type segment4 = construct<segment_type>(
-      point_type(7, 7), point_type(10, 11));
+  segment_type segment1 =
+      construct<segment_type>(point_type(0, 0), point_type(3, 4));
+  segment_type segment2 =
+      construct<segment_type>(point_type(2, 0), point_type(0, 2));
+  segment_type segment3 =
+      construct<segment_type>(point_type(1, -7), point_type(10, 5));
+  segment_type segment4 =
+      construct<segment_type>(point_type(7, 7), point_type(10, 11));
 
   BOOST_TEST(euclidean_distance(segment1, segment2) == 0.0);
   BOOST_TEST(euclidean_distance(segment1, segment3) == 5.0);
   BOOST_TEST(euclidean_distance(segment1, segment4) == 5.0);
 }
 
-int main()
-{
-    segment_data_test();
-    segment_traits_test();
-    segment_concept_test1();
-    segment_concept_test2();
-    segment_concept_test3();
-    segment_concept_test4();
-    segment_concept_test5();
-    segment_concept_test6();
-    segment_concept_test7();
-    segment_concept_test8();
-    segment_concept_test9();
-    segment_concept_test10();
-    segment_concept_test11();
-    segment_concept_test12();
-    return boost::report_errors();
+int main() {
+  segment_data_test();
+  segment_traits_test();
+  segment_concept_test1();
+  segment_concept_test2();
+  segment_concept_test3();
+  segment_concept_test4();
+  segment_concept_test5();
+  segment_concept_test6();
+  segment_concept_test7();
+  segment_concept_test8();
+  segment_concept_test9();
+  segment_concept_test10();
+  segment_concept_test11();
+  segment_concept_test12();
+  return boost::report_errors();
 }

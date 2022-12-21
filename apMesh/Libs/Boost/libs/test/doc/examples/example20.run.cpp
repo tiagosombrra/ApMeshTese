@@ -13,16 +13,13 @@
 //____________________________________________________________________________//
 
 struct MyConfig {
-  MyConfig()   { std::cout << "global setup\n"; }
-  ~MyConfig()  { std::cout << "global teardown\n"; }
+  MyConfig() { std::cout << "global setup\n"; }
+  ~MyConfig() { std::cout << "global teardown\n"; }
 };
 
 //____________________________________________________________________________//
 
-BOOST_TEST_GLOBAL_FIXTURE( MyConfig );
+BOOST_TEST_GLOBAL_FIXTURE(MyConfig);
 
-BOOST_AUTO_TEST_CASE( test_case )
-{
-  BOOST_TEST( true );
-}
+BOOST_AUTO_TEST_CASE(test_case) { BOOST_TEST(true); }
 //]

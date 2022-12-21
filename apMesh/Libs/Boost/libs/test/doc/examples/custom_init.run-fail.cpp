@@ -10,13 +10,9 @@
 #include <boost/test/included/unit_test.hpp>
 #include <iostream>
 
-BOOST_AUTO_TEST_CASE(test1)
-{
-  BOOST_TEST(false);
-}
+BOOST_AUTO_TEST_CASE(test1) { BOOST_TEST(false); }
 
-bool init_unit_test()
-{
+bool init_unit_test() {
   std::cout << "using custom init" << std::endl;
   return true;
 }

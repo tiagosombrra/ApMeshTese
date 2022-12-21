@@ -10,13 +10,12 @@
 #ifndef BOOST_POLYGON_VORONOI_VISUAL_UTILS
 #define BOOST_POLYGON_VORONOI_VISUAL_UTILS
 
-#include <stack>
-#include <vector>
-
 #include <boost/polygon/isotropy.hpp>
 #include <boost/polygon/point_concept.hpp>
-#include <boost/polygon/segment_concept.hpp>
 #include <boost/polygon/rectangle_concept.hpp>
+#include <boost/polygon/segment_concept.hpp>
+#include <stack>
+#include <vector>
 
 namespace boost {
 namespace polygon {
@@ -41,29 +40,17 @@ class voronoi_visual_utils {
   //
   // Important:
   //   discretization should contain both edge endpoints initially.
-  template <class InCT1, class InCT2,
-            template<class> class Point,
-            template<class> class Segment>
-  static
-  typename enable_if<
-    typename gtl_and<
-      typename gtl_if<
-        typename is_point_concept<
-          typename geometry_concept< Point<InCT1> >::type
-        >::type
-      >::type,
-      typename gtl_if<
-        typename is_segment_concept<
-          typename geometry_concept< Segment<InCT2> >::type
-        >::type
-      >::type
-    >::type,
-    void
-  >::type discretize(
-      const Point<InCT1>& point,
-      const Segment<InCT2>& segment,
-      const CT max_dist,
-      std::vector< Point<CT> >* discretization) {
+  template <class InCT1, class InCT2, template <class> class Point,
+            template <class> class Segment>
+  static typename enable_if<
+      typename gtl_and<
+          typename gtl_if<typename is_point_concept<
+              typename geometry_concept<Point<InCT1> >::type>::type>::type,
+          typename gtl_if<typename is_segment_concept<typename geometry_concept<
+              Segment<InCT2> >::type>::type>::type>::type,
+      void>::type
+  discretize(const Point<InCT1>& point, const Segment<InCT2>& segment,
+             const CT max_dist, std::vector<Point<CT> >* discretization) {
     // Apply the linear transformation to move start point of the segment to
     // the point with coordinates (0, 0) and the direction of the segment to
     // coincide the positive direction of the x-axis.
@@ -74,9 +61,9 @@ class voronoi_visual_utils {
     // Compute x-coordinates of the endpoints of the edge
     // in the transformed space.
     CT projection_start = sqr_segment_length *
-        get_point_projection((*discretization)[0], segment);
+                          get_point_projection((*discretization)[0], segment);
     CT projection_end = sqr_segment_length *
-        get_point_projection((*discretization)[1], segment);
+                        get_point_projection((*discretization)[1], segment);
 
     // Compute parabola parameters in the transformed space.
     // Parabola has next representation:
@@ -109,17 +96,20 @@ class voronoi_visual_utils {
 
       // Compute maximum distance between the given parabolic arc
       // and line segment that discretize it.
-      CT dist = (new_y - cur_y) * (mid_x - cur_x) -
-          (new_x - cur_x) * (mid_y - cur_y);
-      dist = dist * dist / ((new_y - cur_y) * (new_y - cur_y) +
-          (new_x - cur_x) * (new_x - cur_x));
+      CT dist =
+          (new_y - cur_y) * (mid_x - cur_x) - (new_x - cur_x) * (mid_y - cur_y);
+      dist = dist * dist /
+             ((new_y - cur_y) * (new_y - cur_y) +
+              (new_x - cur_x) * (new_x - cur_x));
       if (dist <= max_dist_transformed) {
         // Distance between parabola and line segment is less than max_dist.
         point_stack.pop();
-        CT inter_x = (segm_vec_x * new_x - segm_vec_y * new_y) /
-            sqr_segment_length + cast(x(low(segment)));
-        CT inter_y = (segm_vec_x * new_y + segm_vec_y * new_x) /
-            sqr_segment_length + cast(y(low(segment)));
+        CT inter_x =
+            (segm_vec_x * new_x - segm_vec_y * new_y) / sqr_segment_length +
+            cast(x(low(segment)));
+        CT inter_y =
+            (segm_vec_x * new_y + segm_vec_y * new_x) / sqr_segment_length +
+            cast(y(low(segment)));
         discretization->push_back(Point<CT>(inter_x, inter_y));
         cur_x = new_x;
         cur_y = new_y;
@@ -145,26 +135,16 @@ class voronoi_visual_utils {
   // sqrt computation during transformation from the initial space to the
   // transformed one and vice versa. The assumption is made that projection of
   // the point lies between the start-point and endpoint of the segment.
-  template <class InCT,
-            template<class> class Point,
-            template<class> class Segment>
-  static
-  typename enable_if<
-    typename gtl_and<
-      typename gtl_if<
-        typename is_point_concept<
-          typename geometry_concept< Point<int> >::type
-        >::type
-      >::type,
-      typename gtl_if<
-        typename is_segment_concept<
-          typename geometry_concept< Segment<long> >::type
-        >::type
-      >::type
-    >::type,
-    CT
-  >::type get_point_projection(
-      const Point<CT>& point, const Segment<InCT>& segment) {
+  template <class InCT, template <class> class Point,
+            template <class> class Segment>
+  static typename enable_if<
+      typename gtl_and<
+          typename gtl_if<typename is_point_concept<
+              typename geometry_concept<Point<int> >::type>::type>::type,
+          typename gtl_if<typename is_segment_concept<typename geometry_concept<
+              Segment<long> >::type>::type>::type>::type,
+      CT>::type
+  get_point_projection(const Point<CT>& point, const Segment<InCT>& segment) {
     CT segment_vec_x = cast(x(high(segment))) - cast(x(low(segment)));
     CT segment_vec_y = cast(y(high(segment))) - cast(y(low(segment)));
     CT point_vec_x = x(point) - cast(x(low(segment)));
@@ -180,7 +160,7 @@ class voronoi_visual_utils {
     return static_cast<CT>(value);
   }
 };
-}
-}
+}  // namespace polygon
+}  // namespace boost
 
 #endif  // BOOST_POLYGON_VORONOI_VISUAL_UTILS

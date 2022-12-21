@@ -12,10 +12,11 @@
 #include <exception>
 #include <iostream>
 
-BOOST_AUTO_TEST_CASE( check )
-{
+BOOST_AUTO_TEST_CASE(check) {
   using namespace boost::unit_test;
   master_test_suite_t master_copy = framework::master_test_suite();
-  std::cerr << "Test called with " << master_copy.argc << " arguments" << std::endl; // to prevent optimization, just in case it compiles...
+  std::cerr
+      << "Test called with " << master_copy.argc << " arguments"
+      << std::endl;  // to prevent optimization, just in case it compiles...
   throw std::runtime_error("Should not reach here ");
 }

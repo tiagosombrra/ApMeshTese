@@ -18,14 +18,13 @@
 
 // bool owns_lock() const;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/shared_mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 boost::shared_mutex m;
 
-int main()
-{
+int main() {
   boost::shared_lock<boost::shared_mutex> lk0;
   BOOST_TEST(lk0.owns_lock() == false);
   boost::shared_lock<boost::shared_mutex> lk1(m);
@@ -33,7 +32,5 @@ int main()
   lk1.unlock();
   BOOST_TEST(lk1.owns_lock() == false);
 
-
   return boost::report_errors();
 }
-

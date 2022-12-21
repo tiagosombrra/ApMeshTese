@@ -7,7 +7,6 @@
 // Test error if permissive even when static inv declared mutable.
 
 #ifndef BOOST_CONTRACT_PERMISSIVE
-    #error "build must define PERMISSIVE"
+#error "build must define PERMISSIVE"
 #endif
 #include "static_mutable.hpp"
-

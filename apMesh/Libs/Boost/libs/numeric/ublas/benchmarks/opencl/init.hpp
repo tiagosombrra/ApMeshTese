@@ -9,32 +9,36 @@
 #pragma once
 
 #include <boost/numeric/ublas/opencl.hpp>
+
 #include "../init.hpp"
 
-namespace boost { namespace numeric { namespace ublas { namespace benchmark {
+namespace boost {
+namespace numeric {
+namespace ublas {
+namespace benchmark {
 
 template <typename T>
-void init(T &v, unsigned long size, int max_value)
-{
+void init(T &v, unsigned long size, int max_value) {
   // TBD
 }
 
 template <typename T>
-void init(vector<T, opencl::storage> &v, unsigned long size, int max_value)
-{
+void init(vector<T, opencl::storage> &v, unsigned long size, int max_value) {
   // TBD
 }
 
 template <typename T>
-void init(matrix<T, opencl::storage> &m, unsigned long size1, unsigned long size2, int max_value)
-{
+void init(matrix<T, opencl::storage> &m, unsigned long size1,
+          unsigned long size2, int max_value) {
   // TBD
 }
 
 template <typename T>
-void init(matrix<T, opencl::storage> &m, unsigned long size, int max_value)
-{
+void init(matrix<T, opencl::storage> &m, unsigned long size, int max_value) {
   init(m, size, size, max_value);
 }
 
-}}}}
+}  // namespace benchmark
+}  // namespace ublas
+}  // namespace numeric
+}  // namespace boost

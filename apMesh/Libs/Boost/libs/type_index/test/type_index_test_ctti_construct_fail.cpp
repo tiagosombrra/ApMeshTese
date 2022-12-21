@@ -8,8 +8,7 @@
 #include <boost/type_index/ctti_type_index.hpp>
 
 int main() {
-    using namespace boost::typeindex;
-    ctti_type_index::type_info_t t;
-    (void)t;
+  using namespace boost::typeindex;
+  ctti_type_index::type_info_t t;
+  (void)t;
 }
-

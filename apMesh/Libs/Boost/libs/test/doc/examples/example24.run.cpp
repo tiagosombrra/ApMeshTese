@@ -6,10 +6,10 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
+#include <boost/test/included/prg_exec_monitor.hpp>
 #include <iostream>
-#include <boost/test/included/prg_exec_monitor.hpp> 
 
-int cpp_main( int, char* [] ) // note name cpp_main, not main.
+int cpp_main(int, char*[])  // note name cpp_main, not main.
 {
   std::cout << "Hello, world\n";
 

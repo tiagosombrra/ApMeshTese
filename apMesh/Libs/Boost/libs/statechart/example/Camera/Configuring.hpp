@@ -6,34 +6,24 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
-
-#include "Camera.hpp"
-
+#include <boost/config.hpp>
 #include <boost/statechart/simple_state.hpp>
 #include <boost/statechart/transition.hpp>
 
-#include <boost/config.hpp>
+#include "Camera.hpp"
 
 #ifdef BOOST_INTEL
-#  pragma warning( disable: 304 ) // access control not specified
+#pragma warning(disable : 304)  // access control not specified
 #endif
-
-
 
 namespace sc = boost::statechart;
 
-
-
 //////////////////////////////////////////////////////////////////////////////
-struct Configuring : sc::simple_state< Configuring, NotShooting >
-{
-  typedef sc::transition< EvConfig, Idle > reactions;
+struct Configuring : sc::simple_state<Configuring, NotShooting> {
+  typedef sc::transition<EvConfig, Idle> reactions;
 
   Configuring();
   ~Configuring();
 };
-
-
 
 #endif

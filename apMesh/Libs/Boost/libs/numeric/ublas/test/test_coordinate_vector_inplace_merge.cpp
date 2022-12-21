@@ -5,50 +5,49 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_UBLAS_NO_ELEMENT_PROXIES
-# define BOOST_UBLAS_NO_ELEMENT_PROXIES
+#define BOOST_UBLAS_NO_ELEMENT_PROXIES
 #endif
 
 #include <boost/numeric/ublas/assignment.hpp>
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/vector_sparse.hpp>
-#include <boost/numeric/ublas/vector_expression.hpp>
 #include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/vector_expression.hpp>
+#include <boost/numeric/ublas/vector_sparse.hpp>
+
 #include "common/testhelper.hpp"
 #include "utils.hpp"
 
 const double TOL = 1e-15;
 
-template<typename T>
-bool check_sortedness(const boost::numeric::ublas::coordinate_vector<T>& vector) {
+template <typename T>
+bool check_sortedness(
+    const boost::numeric::ublas::coordinate_vector<T>& vector) {
   bool result = true;
   typedef boost::numeric::ublas::coordinate_vector<T> vector_type;
   typename vector_type::index_array_type idx = vector.index_data();
   typename vector_type::size_type size = vector.filled();
 
-  for (typename vector_type::size_type i = 0; i + 1 < size && result; ++ i) {
+  for (typename vector_type::size_type i = 0; i + 1 < size && result; ++i) {
     result &= (idx[i] < idx[i + 1]);
   }
   return result;
 }
 
-void print_entries(size_t size,
-                   const std::vector<size_t>& entries)
-{
+void print_entries(size_t size, const std::vector<size_t>& entries) {
   std::cerr << "Error entries - Size:" << size << ". Entries: ";
-  for (size_t i = 0; i < entries.size(); ++ i) {
+  for (size_t i = 0; i < entries.size(); ++i) {
     std::cerr << entries[i] << "; ";
   }
   std::cerr << "\n";
 }
 
-BOOST_UBLAS_TEST_DEF( test_coordinate_vector_inplace_merge_random )
-{
+BOOST_UBLAS_TEST_DEF(test_coordinate_vector_inplace_merge_random) {
   const size_t max_repeats = 100;
   const size_t max_size = 100;
   const size_t dim_var = 10;
   const size_t nr_entries = 10;
 
-  for (size_t repeats = 1; repeats < max_repeats; ++repeats ) {
+  for (size_t repeats = 1; repeats < max_repeats; ++repeats) {
     for (size_t size = 1; size < max_size; size += 5) {
       size_t size_vec = size + rand() % dim_var;
 
@@ -58,7 +57,7 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_vector_inplace_merge_random )
       vector_coord.sort();
 
       std::vector<size_t> entries;
-      for (size_t entry = 0; entry < nr_entries; ++ entry) {
+      for (size_t entry = 0; entry < nr_entries; ++entry) {
         int x = rand() % size_vec;
         entries.push_back(x);
         vector_coord.append_element(x, 1);
@@ -72,11 +71,12 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_vector_inplace_merge_random )
         if (!(sorted && identical)) {
           print_entries(size_vec, entries);
         }
-        BOOST_UBLAS_TEST_CHECK( check_sortedness(vector_coord) );
-        BOOST_UBLAS_TEST_CHECK( compare_distance(vector_coord, vector_dense, TOL) );
+        BOOST_UBLAS_TEST_CHECK(check_sortedness(vector_coord));
+        BOOST_UBLAS_TEST_CHECK(
+            compare_distance(vector_coord, vector_dense, TOL));
       }
 
-      for (size_t entry = 0; entry < nr_entries; ++ entry) {
+      for (size_t entry = 0; entry < nr_entries; ++entry) {
         int x = rand() % size_vec;
         entries.push_back(x);
         vector_coord(x) += 1;
@@ -90,18 +90,17 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_vector_inplace_merge_random )
         if (!(sorted && identical)) {
           print_entries(size_vec, entries);
         }
-        BOOST_UBLAS_TEST_CHECK( sorted );
-        BOOST_UBLAS_TEST_CHECK( identical );
+        BOOST_UBLAS_TEST_CHECK(sorted);
+        BOOST_UBLAS_TEST_CHECK(identical);
       }
     }
   }
 }
 
-int main()
-{
-    BOOST_UBLAS_TEST_BEGIN();
+int main() {
+  BOOST_UBLAS_TEST_BEGIN();
 
-    BOOST_UBLAS_TEST_DO( test_coordinate_vector_inplace_merge_random );
+  BOOST_UBLAS_TEST_DO(test_coordinate_vector_inplace_merge_random);
 
-    BOOST_UBLAS_TEST_END();
+  BOOST_UBLAS_TEST_END();
 }

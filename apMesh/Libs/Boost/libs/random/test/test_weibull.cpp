@@ -9,9 +9,9 @@
  *
  */
 
-#include <boost/random/weibull_distribution.hpp>
-#include <boost/random/uniform_real.hpp>
 #include <boost/math/distributions/weibull.hpp>
+#include <boost/random/uniform_real.hpp>
+#include <boost/random/weibull_distribution.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::weibull_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME weibull

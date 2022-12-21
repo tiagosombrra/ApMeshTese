@@ -13,15 +13,14 @@
 #include "boost/config.hpp"
 
 #ifdef BOOST_MSVC
-#pragma warning(disable:4244) // conversion from 'const int' to 'const short'
+#pragma warning(disable : 4244)  // conversion from 'const int' to 'const short'
 #endif
+
+#include <string>
 
 #include "boost/core/lightweight_test.hpp"
 #include "boost/variant.hpp"
-
 #include "jobs.h"
-
-#include <string>
 
 struct class_a;
 
@@ -32,26 +31,25 @@ typedef variant<std::string, class_a, short> var_type_2;
 
 #include "class_a.h"
 
-int main()
-{
-   using namespace boost;
+int main() {
+  using namespace boost;
 
-   var_type_1 v1;
-   var_type_2 v2;
+  var_type_1 v1;
+  var_type_2 v2;
 
-   v1 = class_a();
-   verify(v1, spec<class_a>(), "[V] class_a(5511)");
+  v1 = class_a();
+  verify(v1, spec<class_a>(), "[V] class_a(5511)");
 
-   verify(v2, spec<std::string>(), "[V] ");
+  verify(v2, spec<std::string>(), "[V] ");
 
-   v2 = "abcde";
-   verify(v2, spec<std::string>(), "[V] abcde");
+  v2 = "abcde";
+  verify(v2, spec<std::string>(), "[V] abcde");
 
-   v2 = v1;
-   verify(v2, spec<class_a>(), "[V] class_a(5511)");
+  v2 = v1;
+  verify(v2, spec<class_a>(), "[V] class_a(5511)");
 
-   v2 = 5;
-   v1 = v2;
+  v2 = 5;
+  v1 = v2;
 
-   return boost::report_errors();
+  return boost::report_errors();
 }

@@ -55,7 +55,8 @@ int main() {
   // make an integer axis called "foo"
   auto i_with_label = axis::integer<>{-1, 2, "foo"};
   // all builtin axis types allow you to pass some optional metadata as the last
-  // argument in the constructor; a string by default, but can be any copyable type
+  // argument in the constructor; a string by default, but can be any copyable
+  // type
 
   // two axis do not compare equal if they differ in their metadata
   assert(i != i_with_label);
@@ -66,12 +67,14 @@ int main() {
   assert(i_for_enum.index(red) == 0);
   assert(i_for_enum.index(blue) == 1);
 
-  // make a category axis from a scoped enum and/or if the identifiers are not consecutive
+  // make a category axis from a scoped enum and/or if the identifiers are not
+  // consecutive
   enum class Bar { red = 12, blue = 6 };
   auto c = axis::category<Bar>{Bar::red, Bar::blue};
   assert(c.index(Bar::red) == 0);
   assert(c.index(Bar::blue) == 1);
-  // c.index(12) is a compile-time error, since the argument must be of type `Bar`
+  // c.index(12) is a compile-time error, since the argument must be of type
+  // `Bar`
 
   // category axis can be created for any copyable and equal-comparable type
   auto c_str = axis::category<std::string>{"red", "blue"};

@@ -12,17 +12,14 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static const bool is_requirable = true;
 };
 
 template <int>
-struct object
-{
+struct object {
   template <int N>
-  friend object<N> require(const object&, prop<N>)
-  {
+  friend object<N> require(const object&, prop<N>) {
     return object<N>();
   }
 };
@@ -31,24 +28,25 @@ namespace boost {
 namespace asio {
 namespace traits {
 
-template<int N, int M>
-struct require_free<object<N>, prop<M> >
-{
+template <int N, int M>
+struct require_free<object<N>, prop<M> > {
   static const bool is_valid = true;
   static const bool is_noexcept = true;
   typedef object<M> result_type;
 };
 
-} // namespace traits
-} // namespace asio
-} // namespace boost
+}  // namespace traits
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   assert((!boost::asio::can_require<object<1>, prop<2> >::value));
   assert((!boost::asio::can_require<object<1>, prop<2>, prop<3> >::value));
-  assert((!boost::asio::can_require<object<1>, prop<2>, prop<3>, prop<4> >::value));
+  assert((
+      !boost::asio::can_require<object<1>, prop<2>, prop<3>, prop<4> >::value));
   assert((!boost::asio::can_require<const object<1>, prop<2> >::value));
-  assert((!boost::asio::can_require<const object<1>, prop<2>, prop<3> >::value));
-  assert((!boost::asio::can_require<const object<1>, prop<2>, prop<3>, prop<4> >::value));
+  assert(
+      (!boost::asio::can_require<const object<1>, prop<2>, prop<3> >::value));
+  assert((!boost::asio::can_require<const object<1>, prop<2>, prop<3>,
+                                    prop<4> >::value));
 }

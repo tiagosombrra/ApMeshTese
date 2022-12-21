@@ -10,33 +10,30 @@
 
 #include "expression.hpp"
 
-namespace client { namespace parser
-{
-    ///////////////////////////////////////////////////////////////////////////////
-    //  The statement grammar
-    ///////////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Lexer>
-    struct statement : qi::grammar<Iterator, ast::statement_list()>
-    {
-        typedef error_handler<typename Lexer::base_iterator_type, Iterator>
-            error_handler_type;
+namespace client {
+namespace parser {
+///////////////////////////////////////////////////////////////////////////////
+//  The statement grammar
+///////////////////////////////////////////////////////////////////////////////
+template <typename Iterator, typename Lexer>
+struct statement : qi::grammar<Iterator, ast::statement_list()> {
+  typedef error_handler<typename Lexer::base_iterator_type, Iterator>
+      error_handler_type;
 
-        statement(error_handler_type& error_handler, Lexer const& l);
+  statement(error_handler_type& error_handler, Lexer const& l);
 
-        expression<Iterator, Lexer> expr;
+  expression<Iterator, Lexer> expr;
 
-        qi::rule<Iterator, ast::statement_list()>
-            statement_list, compound_statement;
+  qi::rule<Iterator, ast::statement_list()> statement_list, compound_statement;
 
-        qi::rule<Iterator, ast::statement()> statement_;
-        qi::rule<Iterator, ast::variable_declaration()> variable_declaration;
-        qi::rule<Iterator, ast::assignment()> assignment;
-        qi::rule<Iterator, ast::if_statement()> if_statement;
-        qi::rule<Iterator, ast::while_statement()> while_statement;
-        qi::rule<Iterator, ast::return_statement()> return_statement;
-    };
-}}
+  qi::rule<Iterator, ast::statement()> statement_;
+  qi::rule<Iterator, ast::variable_declaration()> variable_declaration;
+  qi::rule<Iterator, ast::assignment()> assignment;
+  qi::rule<Iterator, ast::if_statement()> if_statement;
+  qi::rule<Iterator, ast::while_statement()> while_statement;
+  qi::rule<Iterator, ast::return_statement()> return_statement;
+};
+}  // namespace parser
+}  // namespace client
 
 #endif
-
-

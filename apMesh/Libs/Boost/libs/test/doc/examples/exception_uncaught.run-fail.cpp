@@ -10,21 +10,16 @@
 #include <boost/test/included/unit_test.hpp>
 
 struct my_struct {
-  my_struct(int var_) : var(var_)
-  {
-    if(var_ < 0) throw std::runtime_error("negative value not allowed");
+  my_struct(int var_) : var(var_) {
+    if (var_ < 0) throw std::runtime_error("negative value not allowed");
   }
   int var;
 };
 
-BOOST_AUTO_TEST_CASE( test )
-{
+BOOST_AUTO_TEST_CASE(test) {
   my_struct instance(-2);
   // ...
 }
 
-BOOST_AUTO_TEST_CASE( test2 )
-{
-  BOOST_TEST(true);
-}
+BOOST_AUTO_TEST_CASE(test2) { BOOST_TEST(true); }
 //]

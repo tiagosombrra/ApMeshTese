@@ -19,11 +19,9 @@
     and __uniform_01 distribution.
  */
 
+#include <boost/math/constants/constants.hpp>
 #include <boost/random/niederreiter_base2.hpp>
 #include <boost/random/uniform_01.hpp>
-
-#include <boost/math/constants/constants.hpp>
-
 #include <boost/tuple/tuple.hpp>
 
 /*`
@@ -31,12 +29,10 @@
  */
 boost::random::niederreiter_base2 gen(4);
 
-
-int main()
-{
+int main() {
   typedef boost::tuple<double, double, double> point_t;
 
-  const std::size_t n_points = 100; // we will generate 100 points
+  const std::size_t n_points = 100;  // we will generate 100 points
 
   std::vector<point_t> points;
   points.reserve(n_points);
@@ -47,22 +43,24 @@ int main()
   >>*/
   boost::random::uniform_01<double> dist;
 
-  for (std::size_t i = 0; i != n_points; ++i)
-  {
+  for (std::size_t i = 0; i != n_points; ++i) {
     /*`
-      Using formula from J. Rovira et al., "Point sampling with uniformly distributed lines", 2005
-      to compute uniformly distributed chord entry and exit points on the surface of a sphere.
+      Using formula from J. Rovira et al., "Point sampling with uniformly
+      distributed lines", 2005 to compute uniformly distributed chord entry and
+      exit points on the surface of a sphere.
     */
     double cos_theta = 1 - 2 * dist(gen);
     double sin_theta = std::sqrt(1 - cos_theta * cos_theta);
     double phi = boost::math::constants::two_pi<double>() * dist(gen);
     double sin_phi = std::sin(phi), cos_phi = std::cos(phi);
 
-    point_t point_on_sphere(sin_theta*sin_phi, cos_theta, sin_theta*cos_phi);
+    point_t point_on_sphere(sin_theta * sin_phi, cos_theta,
+                            sin_theta * cos_phi);
 
     /*`
-      Here we assume that our sphere is a unit sphere at origin. If your sphere was
-      different then now would be the time to scale and translate the `point_on_sphere`.
+      Here we assume that our sphere is a unit sphere at origin. If your sphere
+      was different then now would be the time to scale and translate the
+      `point_on_sphere`.
     */
 
     points.push_back(point_on_sphere);

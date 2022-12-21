@@ -10,20 +10,19 @@
 
 #define BOOST_THREAD_VERSION 4
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_factories.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
-int main()
-{
+int main() {
   boost::mutex m;
   m.lock();
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
   auto
 #else
   boost::unique_lock<boost::mutex>
 #endif
-  lk = boost::make_unique_lock(m, boost::adopt_lock);
+      lk = boost::make_unique_lock(m, boost::adopt_lock);
   BOOST_TEST(lk.mutex() == &m);
   BOOST_TEST(lk.owns_lock() == true);
 

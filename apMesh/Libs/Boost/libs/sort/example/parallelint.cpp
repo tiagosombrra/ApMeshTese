@@ -8,17 +8,18 @@
 
 //  See http://www.boost.org/libs/sort for library home page.
 
-#include <boost/sort/spreadsort/spreadsort.hpp>
-#include <boost/thread.hpp>
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include <algorithm>
-#include <vector>
-#include <string>
+#include <boost/sort/spreadsort/spreadsort.hpp>
+#include <boost/thread.hpp>
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 using namespace boost::sort::spreadsort;
 
 #define DATA_TYPE int
@@ -32,7 +33,7 @@ bool is_sorted(const std::vector<DATA_TYPE> &array) {
   return true;
 }
 
-void sort_loop(const std::vector<DATA_TYPE> &base_array, bool stdSort, 
+void sort_loop(const std::vector<DATA_TYPE> &base_array, bool stdSort,
                unsigned loopCount) {
   std::vector<DATA_TYPE> array(base_array);
   for (unsigned u = 0; u < loopCount; ++u) {
@@ -50,16 +51,16 @@ void sort_loop(const std::vector<DATA_TYPE> &base_array, bool stdSort,
   }
 }
 
-//Pass in an argument to test std::sort
-int main(int argc, const char ** argv) {
-  size_t uCount,uSize=sizeof(DATA_TYPE);
+// Pass in an argument to test std::sort
+int main(int argc, const char **argv) {
+  size_t uCount, uSize = sizeof(DATA_TYPE);
   bool stdSort = false;
   int threadCount = -1;
   unsigned loopCount = 0;
   for (int u = 1; u < argc; ++u) {
     if (std::string(argv[u]) == "-std")
       stdSort = true;
-    else if(threadCount < 0)
+    else if (threadCount < 0)
       threadCount = atoi(argv[u]);
     else
       loopCount = atoi(argv[u]);
@@ -75,19 +76,18 @@ int main(int argc, const char ** argv) {
     return 1;
   }
   std::vector<DATA_TYPE> base_array;
-  input.seekg (0, std::ios_base::end);
+  input.seekg(0, std::ios_base::end);
   size_t length = input.tellg();
-  uCount = length/uSize;
-  input.seekg (0, std::ios_base::beg);
-  //Conversion to a vector
+  uCount = length / uSize;
+  input.seekg(0, std::ios_base::beg);
+  // Conversion to a vector
   base_array.resize(uCount);
   unsigned v = 0;
   while (input.good() && v < uCount)
-    input.read(reinterpret_cast<char *>(&(base_array[v++])), uSize );
+    input.read(reinterpret_cast<char *>(&(base_array[v++])), uSize);
   input.close();
-  if (v < uCount)
-    base_array.resize(v);
-  //Run multiple loops, if requested
+  if (v < uCount) base_array.resize(v);
+  // Run multiple loops, if requested
   clock_t start, end;
   double elapsed;
   std::vector<boost::thread *> workers;
@@ -96,8 +96,8 @@ int main(int argc, const char ** argv) {
     sort_loop(base_array, stdSort, loopCount);
   } else {
     for (int i = 0; i < threadCount; ++i) {
-      workers.push_back(new boost::thread(sort_loop, base_array, stdSort, 
-                                          loopCount));
+      workers.push_back(
+          new boost::thread(sort_loop, base_array, stdSort, loopCount));
     }
     for (int i = 0; i < threadCount; ++i) {
       workers[i]->join();
@@ -105,11 +105,13 @@ int main(int argc, const char ** argv) {
     }
   }
   end = clock();
-  elapsed = static_cast<double>(end - start) ;
-  
+  elapsed = static_cast<double>(end - start);
+
   if (stdSort)
-    printf("std::sort clock time %lf\n", elapsed/CLOCKS_PER_SEC/threadCount);
+    printf("std::sort clock time %lf\n",
+           elapsed / CLOCKS_PER_SEC / threadCount);
   else
-    printf("spreadsort clock time %lf\n", elapsed/CLOCKS_PER_SEC/threadCount);
+    printf("spreadsort clock time %lf\n",
+           elapsed / CLOCKS_PER_SEC / threadCount);
   return 0;
 }

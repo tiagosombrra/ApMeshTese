@@ -9,28 +9,25 @@
 // test implementation level "object_serializable"
 // should pass compilation and execution
 
-#include <cstddef> // NULL
-#include <cstdio> // remove
-#include <fstream>
-
 #include <boost/config.hpp>
+#include <cstddef>  // NULL
+#include <cstdio>   // remove
+#include <fstream>
 #if defined(BOOST_NO_STDC_NAMESPACE)
-namespace std{
-    using ::remove;
+namespace std {
+using ::remove;
 }
 #endif
-
-#include "test_tools.hpp"
 
 #include <boost/serialization/level.hpp>
 #include <boost/serialization/nvp.hpp>
 
-class A
-{
-    friend class boost::serialization::access;
-    template<class Archive>
-    void serialize(Archive & /* ar */, const unsigned int /* file_version */){
-    }
+#include "test_tools.hpp"
+
+class A {
+  friend class boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive & /* ar */, const unsigned int /* file_version */) {}
 };
 
 BOOST_CLASS_IMPLEMENTATION(A, boost::serialization::object_serializable)
@@ -40,31 +37,27 @@ BOOST_CLASS_IMPLEMENTATION(A, boost::serialization::object_serializable)
 // a static assertion
 // BOOST_CLASS_VERSION(A, 2);
 
-void out(const char *testfile, A & a)
-{
-    test_ostream os(testfile, TEST_STREAM_FLAGS);
-    test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
-    oa << BOOST_SERIALIZATION_NVP(a);
+void out(const char *testfile, A &a) {
+  test_ostream os(testfile, TEST_STREAM_FLAGS);
+  test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
+  oa << BOOST_SERIALIZATION_NVP(a);
 }
 
-void in(const char *testfile, A & a)
-{
-    test_istream is(testfile, TEST_STREAM_FLAGS);
-    test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
-    ia >> BOOST_SERIALIZATION_NVP(a);
+void in(const char *testfile, A &a) {
+  test_istream is(testfile, TEST_STREAM_FLAGS);
+  test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
+  ia >> BOOST_SERIALIZATION_NVP(a);
 }
 
-int
-test_main( int /* argc */, char* /* argv */[] )
-{
-    const char * testfile = boost::archive::tmpnam(NULL);
-    BOOST_REQUIRE(NULL != testfile);
+int test_main(int /* argc */, char * /* argv */[]) {
+  const char *testfile = boost::archive::tmpnam(NULL);
+  BOOST_REQUIRE(NULL != testfile);
 
-    A a;
-    out(testfile, a);
-    in(testfile, a);
-    std::remove(testfile);
-    return EXIT_SUCCESS;
+  A a;
+  out(testfile, a);
+  in(testfile, a);
+  std::remove(testfile);
+  return EXIT_SUCCESS;
 }
 
 // EOF

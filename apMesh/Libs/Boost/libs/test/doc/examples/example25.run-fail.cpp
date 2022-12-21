@@ -6,12 +6,12 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
+#include <boost/test/included/prg_exec_monitor.hpp>
 #include <stdexcept>
-#include <boost/test/included/prg_exec_monitor.hpp> 
 
-int foo() { throw std::runtime_error( "big trouble" ); }
+int foo() { throw std::runtime_error("big trouble"); }
 
-int cpp_main( int, char* [] ) // note the name
+int cpp_main(int, char*[])  // note the name
 {
   foo();
 

@@ -10,7 +10,6 @@
  */
 
 #include <boost/random/poisson_distribution.hpp>
-
 #include <limits>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::poisson_distribution<>

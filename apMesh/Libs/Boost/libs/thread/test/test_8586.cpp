@@ -6,13 +6,9 @@
 #include <boost/thread/thread.hpp>
 #include <iostream>
 
-void hello_world()
-{
-    std::cout << "Hello from thread!" << std::endl;
-}
+void hello_world() { std::cout << "Hello from thread!" << std::endl; }
 
-int main()
-{
-    boost::thread my_thread(&hello_world);
-    my_thread.join();
+int main() {
+  boost::thread my_thread(&hello_world);
+  my_thread.join();
 }

@@ -9,24 +9,21 @@
 
 #include <boost/spirit/include/classic_primitives.hpp>
 #include <boost/spirit/include/classic_rule.hpp>
-
 #include <string>
 
-int main()
-{
-    using BOOST_SPIRIT_CLASSIC_NS::rule;
-    using BOOST_SPIRIT_CLASSIC_NS::str_p;
-    using BOOST_SPIRIT_CLASSIC_NS::ch_p;
+int main() {
+  using BOOST_SPIRIT_CLASSIC_NS::ch_p;
+  using BOOST_SPIRIT_CLASSIC_NS::rule;
+  using BOOST_SPIRIT_CLASSIC_NS::str_p;
 
-    using std::string;
+  using std::string;
 
-    string str = "abcd";
+  string str = "abcd";
 
-    rule<> strings = str_p("abcd");
-    strings = str_p('a');
-    strings = str_p(str.begin(), str.end());
+  rule<> strings = str_p("abcd");
+  strings = str_p('a');
+  strings = str_p(str.begin(), str.end());
 
-    rule<> chars = ch_p('a');
-    chars = ch_p("b");
+  rule<> chars = ch_p('a');
+  chars = ch_p("b");
 }
-

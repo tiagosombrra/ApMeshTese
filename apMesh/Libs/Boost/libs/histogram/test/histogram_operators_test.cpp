@@ -15,6 +15,7 @@
 #include <boost/throw_exception.hpp>
 #include <string>
 #include <vector>
+
 #include "dummy_storage.hpp"
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
@@ -73,7 +74,7 @@ void run_tests() {
     BOOST_TEST_EQ(d3.at(1), 9);
     BOOST_TEST_EQ(d3.at(2), 81);
 
-    auto d4 = d3 * (1 * d); // converted return type
+    auto d4 = d3 * (1 * d);  // converted return type
     BOOST_TEST_TRAIT_FALSE((boost::core::is_same<decltype(d4), decltype(d3)>));
     BOOST_TEST_EQ(d4.at(0), 8);
     BOOST_TEST_EQ(d4.at(1), 27);
@@ -84,8 +85,8 @@ void run_tests() {
     BOOST_TEST_EQ(d5.at(0), 2);
     BOOST_TEST_EQ(d5.at(1), 3);
 
-    auto e = 3 * a; // converted return type
-    auto f = b * 2; // converted return type
+    auto e = 3 * a;  // converted return type
+    auto f = b * 2;  // converted return type
     BOOST_TEST_TRAIT_FALSE((boost::core::is_same<decltype(e), decltype(a)>));
     BOOST_TEST_TRAIT_FALSE((boost::core::is_same<decltype(f), decltype(a)>));
     BOOST_TEST_EQ(e.at(0), 3);
@@ -129,7 +130,8 @@ void run_tests() {
     BOOST_TEST_EQ(a5, (a / b));
   }
 
-  // arithmetic operators with mixed storage: vector<unsigned char> vs. vector<unsigned>
+  // arithmetic operators with mixed storage: vector<unsigned char> vs.
+  // vector<unsigned>
   {
     auto ia = axis::integer<int, axis::null_type, axis::option::none_t>(0, 2);
     auto a = make_s(Tag(), std::vector<unsigned long>{}, ia);
@@ -222,15 +224,16 @@ void run_tests() {
       BOOST_TEST_EQ(a.axis(1), (I{4, 6}));
       BOOST_TEST_EQ(a.at(0, 0), 1);
       BOOST_TEST_EQ(a.at(1, 0), 1);
-      BOOST_TEST_EQ(a.at(2, 0), 0); // v=(3, 4) did not exist in a or b
-      BOOST_TEST_EQ(a.at(0, 1), 0); // v=(1, 5) did not exist in a or b
+      BOOST_TEST_EQ(a.at(2, 0), 0);  // v=(3, 4) did not exist in a or b
+      BOOST_TEST_EQ(a.at(0, 1), 0);  // v=(1, 5) did not exist in a or b
       BOOST_TEST_EQ(a.at(1, 1), 1);
       BOOST_TEST_EQ(a.at(2, 1), 1);
     }
 
     {
       using CI = axis::category<int, use_default, axis::option::growth_t>;
-      using CS = axis::category<std::string, use_default, axis::option::growth_t>;
+      using CS =
+          axis::category<std::string, use_default, axis::option::growth_t>;
 
       auto h1 = make(Tag{}, CI{}, CS{});
       auto h2 = make(Tag{}, CI{}, CS{});
@@ -305,24 +308,26 @@ void run_tests() {
 
   // scaling
   {
-    auto b = make_s(Tag{}, dummy_storage<double, true>{}, axis::integer<>(0, 1));
+    auto b =
+        make_s(Tag{}, dummy_storage<double, true>{}, axis::integer<>(0, 1));
     b(0);
     BOOST_TEST_EQ(b[0], 1);
-    b *= 2; // intentionally does not do anything
+    b *= 2;  // intentionally does not do anything
     BOOST_TEST_EQ(b[0], 1);
 
-    auto c = make_s(Tag{}, dummy_storage<double, false>{}, axis::integer<>(0, 1));
+    auto c =
+        make_s(Tag{}, dummy_storage<double, false>{}, axis::integer<>(0, 1));
     c(0);
     BOOST_TEST_EQ(c[0], 1);
-    c *= 2; // this calls *= on each element
+    c *= 2;  // this calls *= on each element
     BOOST_TEST_EQ(c[0], 2);
 
-    using h1_t = decltype(
-        make_s(Tag{}, dummy_storage<unscaleable, false>{}, axis::integer<>(0, 1)));
+    using h1_t = decltype(make_s(Tag{}, dummy_storage<unscaleable, false>{},
+                                 axis::integer<>(0, 1)));
     BOOST_TEST_NOT((detail::has_operator_rmul<h1_t, double>::value));
 
-    using h2_t = decltype(
-        make_s(Tag{}, dummy_storage<unscaleable, true>{}, axis::integer<>(0, 1)));
+    using h2_t = decltype(make_s(Tag{}, dummy_storage<unscaleable, true>{},
+                                 axis::integer<>(0, 1)));
     BOOST_TEST_NOT((detail::has_operator_rmul<h2_t, double>::value));
   }
 }

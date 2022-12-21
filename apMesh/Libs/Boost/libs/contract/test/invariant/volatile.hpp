@@ -8,21 +8,20 @@
 
 // Test error if non-static inv declared volatile (unless PERMISSIVE #defined).
 
-#include <boost/contract/public_function.hpp>
 #include <boost/contract/check.hpp>
+#include <boost/contract/public_function.hpp>
 
 struct a {
-    void invariant() volatile {}
+  void invariant() volatile {}
 
-    void f() {
-        // Same for ctor and dtor (because they all use check_pre_post_inv).
-        boost::contract::check c = boost::contract::public_function(this);
-    }
+  void f() {
+    // Same for ctor and dtor (because they all use check_pre_post_inv).
+    boost::contract::check c = boost::contract::public_function(this);
+  }
 };
 
 int main() {
-    a aa;
-    aa.f();
-    return 0;
+  a aa;
+  aa.f();
+  return 0;
 }
-

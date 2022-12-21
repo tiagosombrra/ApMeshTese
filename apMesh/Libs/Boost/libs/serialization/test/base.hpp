@@ -3,7 +3,7 @@
 
 // MS compatible compilers support #pragma once
 #if defined(_MSC_VER)
-# pragma once
+#pragma once
 #endif
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
@@ -17,30 +17,29 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <boost/config.hpp>
-
+#include <boost/preprocessor/facilities/empty.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/assume_abstract.hpp>
-#include <boost/preprocessor/facilities/empty.hpp>
 
 #if defined(BASE_IMPORT)
-    #define DLL_DECL BOOST_SYMBOL_IMPORT
+#define DLL_DECL BOOST_SYMBOL_IMPORT
 #elif defined(BASE_EXPORT)
-    #define DLL_DECL BOOST_SYMBOL_EXPORT
+#define DLL_DECL BOOST_SYMBOL_EXPORT
 #else
-    #define DLL_DECL
+#define DLL_DECL
 #endif
 
-class DLL_DECL base
-{
-    friend class boost::serialization::access;
-    template<class Archive>
-    void serialize(Archive & /* ar */, const unsigned int /* file_version */);
-public:
-    virtual ~base(){};
+class DLL_DECL base {
+  friend class boost::serialization::access;
+  template <class Archive>
+  void serialize(Archive& /* ar */, const unsigned int /* file_version */);
+
+ public:
+  virtual ~base(){};
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(base)
 
-#undef  DLL_DECL
+#undef DLL_DECL
 
-#endif // BOOST_SERIALIZATION_TEST_BASE_HPP
+#endif  // BOOST_SERIALIZATION_TEST_BASE_HPP

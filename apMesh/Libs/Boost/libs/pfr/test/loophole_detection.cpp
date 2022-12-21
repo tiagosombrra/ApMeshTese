@@ -9,12 +9,14 @@
 #include <type_traits>
 
 #if defined(_MSC_VER) && _MSC_VER <= 1916
-#   error Compiler fails to do compile time computations for LoopHole. Fixed in later versions of the compiler
-// Error: boost/pfr/detail/core14_loophole.hpp(98): error C3779: 'boost::pfr::detail::loophole': a function that returns 'auto' cannot be used before it is defined
+#error Compiler fails to do compile time computations for LoopHole. Fixed in later versions of the compiler
+// Error: boost/pfr/detail/core14_loophole.hpp(98): error C3779:
+// 'boost::pfr::detail::loophole': a function that returns 'auto' cannot be used
+// before it is defined
 #endif
 
-
-template <unsigned> struct tag{};
+template <unsigned>
+struct tag {};
 
 template <class T, unsigned N>
 struct loophole_t {
@@ -24,6 +26,7 @@ struct loophole_t {
 auto loophole(tag<0>);
 
 int main() {
-   sizeof(loophole_t<unsigned, 0>);
-   static_assert( std::is_same<unsigned, decltype( loophole(tag<0>{}) ) >::value, "");
+  sizeof(loophole_t<unsigned, 0>);
+  static_assert(std::is_same<unsigned, decltype(loophole(tag<0>{}))>::value,
+                "");
 }

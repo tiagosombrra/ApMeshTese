@@ -10,14 +10,13 @@
 //  GeNeSys mbH & Co. KG in producing this work.
 //
 
-#include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/vector.hpp>
 
-int main () {
-    using namespace boost::numeric::ublas;
-    for (int i = 0; i < 3; ++ i) {
-        unit_vector<double> v (3, i);
-        std::cout << v << std::endl;
-    }
+int main() {
+  using namespace boost::numeric::ublas;
+  for (int i = 0; i < 3; ++i) {
+    unit_vector<double> v(3, i);
+    std::cout << v << std::endl;
+  }
 }
-

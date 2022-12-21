@@ -9,8 +9,7 @@
 
 namespace gil = boost::gil;
 
-int main()
-{
-    gil::kernel_1d_fixed<int, 0> k0;
-    gil::kernel_1d_fixed<int, 4> k4;
+int main() {
+  gil::kernel_1d_fixed<int, 0> k0;
+  gil::kernel_1d_fixed<int, 4> k4;
 }

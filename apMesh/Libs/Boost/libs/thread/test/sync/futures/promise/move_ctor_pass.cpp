@@ -20,16 +20,15 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS
 #include "../test_allocator.hpp"
 #endif
 
 boost::mutex m;
 
-int main()
-{
+int main() {
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS
   BOOST_TEST(test_alloc_base::count == 0);
   {
@@ -42,14 +41,12 @@ int main()
     BOOST_TEST(test_alloc_base::count == 1);
     BOOST_TEST(f.valid());
     std::cout << __LINE__ << std::endl;
-    try
-    {
+    try {
       f = BOOST_THREAD_MAKE_RV_REF(p0.get_future());
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::no_state));
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(boost::future_errc::no_state));
     }
     std::cout << __LINE__ << std::endl;
     BOOST_TEST(test_alloc_base::count == 1);
@@ -63,14 +60,12 @@ int main()
     boost::future<int&> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
     BOOST_TEST(test_alloc_base::count == 1);
     BOOST_TEST(f.valid());
-    try
-    {
+    try {
       f = BOOST_THREAD_MAKE_RV_REF(p0.get_future());
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::no_state));
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(boost::future_errc::no_state));
     }
     BOOST_TEST(test_alloc_base::count == 1);
   }
@@ -82,14 +77,12 @@ int main()
     boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
     BOOST_TEST(test_alloc_base::count == 1);
     BOOST_TEST(f.valid());
-    try
-    {
+    try {
       f = BOOST_THREAD_MAKE_RV_REF(p0.get_future());
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::no_state));
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(boost::future_errc::no_state));
     }
     BOOST_TEST(test_alloc_base::count == 1);
   }
@@ -103,14 +96,12 @@ int main()
     std::cout << __LINE__ << std::endl;
     BOOST_TEST(f.valid());
     std::cout << __LINE__ << std::endl;
-    try
-    {
+    try {
       f = BOOST_THREAD_MAKE_RV_REF(p0.get_future());
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::no_state));
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(boost::future_errc::no_state));
     }
     std::cout << __LINE__ << std::endl;
   }
@@ -120,14 +111,12 @@ int main()
     boost::promise<int&> p(boost::move(p0));
     boost::future<int&> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
     BOOST_TEST(f.valid());
-    try
-    {
+    try {
       f = BOOST_THREAD_MAKE_RV_REF(p0.get_future());
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::no_state));
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(boost::future_errc::no_state));
     }
   }
   {
@@ -135,17 +124,14 @@ int main()
     boost::promise<void> p(boost::move(p0));
     boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
     BOOST_TEST(f.valid());
-    try
-    {
+    try {
       f = BOOST_THREAD_MAKE_RV_REF(p0.get_future());
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::no_state));
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(boost::future_errc::no_state));
     }
   }
 
   return boost::report_errors();
 }
-

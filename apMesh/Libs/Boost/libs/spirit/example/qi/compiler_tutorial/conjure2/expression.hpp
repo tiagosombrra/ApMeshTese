@@ -23,36 +23,35 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/spirit/include/qi.hpp>
-#include "ast.hpp"
-#include "error_handler.hpp"
 #include <vector>
 
-namespace client { namespace parser
-{
-    namespace qi = boost::spirit::qi;
-    namespace ascii = boost::spirit::ascii;
+#include "ast.hpp"
+#include "error_handler.hpp"
 
-    ///////////////////////////////////////////////////////////////////////////////
-    //  The expression grammar
-    ///////////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Lexer>
-    struct expression : qi::grammar<Iterator, ast::expression()>
-    {
-        typedef error_handler<typename Lexer::base_iterator_type, Iterator>
-            error_handler_type;
+namespace client {
+namespace parser {
+namespace qi = boost::spirit::qi;
+namespace ascii = boost::spirit::ascii;
 
-        expression(error_handler_type& error_handler, Lexer const& l);
+///////////////////////////////////////////////////////////////////////////////
+//  The expression grammar
+///////////////////////////////////////////////////////////////////////////////
+template <typename Iterator, typename Lexer>
+struct expression : qi::grammar<Iterator, ast::expression()> {
+  typedef error_handler<typename Lexer::base_iterator_type, Iterator>
+      error_handler_type;
 
-        Lexer const& lexer;
+  expression(error_handler_type& error_handler, Lexer const& l);
 
-        qi::rule<Iterator, ast::expression()> expr;
-        qi::rule<Iterator, ast::operand()> unary_expr, primary_expr;
-        qi::rule<Iterator, ast::function_call()> function_call;
-        qi::rule<Iterator, std::list<ast::expression>()> argument_list;
-        qi::rule<Iterator, std::string()> identifier;
-    };
-}}
+  Lexer const& lexer;
+
+  qi::rule<Iterator, ast::expression()> expr;
+  qi::rule<Iterator, ast::operand()> unary_expr, primary_expr;
+  qi::rule<Iterator, ast::function_call()> function_call;
+  qi::rule<Iterator, std::list<ast::expression>()> argument_list;
+  qi::rule<Iterator, std::string()> identifier;
+};
+}  // namespace parser
+}  // namespace client
 
 #endif
-
-

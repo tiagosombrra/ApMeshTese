@@ -10,19 +10,19 @@
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_assoc_cont_factory.hpp"
 #include "test_basic.hpp"
 #include "test_custom_factory.hpp"
-#include "test_intermod_holder.hpp"
 #include "test_init.hpp"
+#include "test_intermod_holder.hpp"
 #include "test_multictor.hpp"
 #include "test_no_locking.hpp"
 #include "test_no_tracking.hpp"
 #include "test_serialization.hpp"
 #include "test_set_factory.hpp"
 
-int main()
-{
+int main() {
   test_assoc_container_factory();
   test_basic();
   test_custom_factory();

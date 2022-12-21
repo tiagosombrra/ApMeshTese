@@ -5,62 +5,47 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if __cplusplus < 201103L
-int main()
-{
-  return 0;
-}
+int main() { return 0; }
 #else
+#include <boost/thread/thread_guard.hpp>
+#include <boost/thread/thread_only.hpp>
 #include <iostream>
 #include <string>
-#include <boost/thread/thread_only.hpp>
-#include <boost/thread/thread_guard.hpp>
 #include <thread>
 
-void do_something(int& i)
-{
-    ++i;
-}
+void do_something(int& i) { ++i; }
 
-struct func
-{
-    int& i;
+struct func {
+  int& i;
 
-    func(int& i_):i(i_){}
+  func(int& i_) : i(i_) {}
 
-    void operator()()
-    {
-        for(unsigned j=0;j<1000000;++j)
-        {
-            do_something(i);
-        }
+  void operator()() {
+    for (unsigned j = 0; j < 1000000; ++j) {
+      do_something(i);
     }
+  }
 
-private:
-    func& operator=(func const&);
-
+ private:
+  func& operator=(func const&);
 };
 
-void do_something_in_current_thread()
-{}
+void do_something_in_current_thread() {}
 
 using thread_guard = boost::thread_guard<boost::join_if_joinable, std::thread>;
 
+void f() {
+  int some_local_state;
+  func my_func(some_local_state);
+  std::thread t(my_func);
+  thread_guard g(t);
 
-void f()
-{
-    int some_local_state;
-    func my_func(some_local_state);
-    std::thread t(my_func);
-    thread_guard g(t);
-
-    do_something_in_current_thread();
+  do_something_in_current_thread();
 }
 
-int main()
-{
-    f();
-    return 0;
+int main() {
+  f();
+  return 0;
 }
-
 
 #endif

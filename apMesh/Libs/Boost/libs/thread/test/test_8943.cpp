@@ -9,22 +9,18 @@
 #include <tchar.h>
 #endif
 
+#include <boost/thread/once.hpp>
 #include <cstdlib>
 #include <iostream>
-#include <boost/thread/once.hpp>
 
 namespace {
 
-class foo
-{
-public:
-  void operator()() const
-  {
-    std::cout << "foo" << std::endl;
-  }
-}; // class foo
+class foo {
+ public:
+  void operator()() const { std::cout << "foo" << std::endl; }
+};  // class foo
 
-}
+}  // namespace
 
 #if defined(WIN32)
 int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
@@ -32,14 +28,11 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 int main(int /*argc*/, char* /*argv*/[])
 #endif
 {
-  try
-  {
+  try {
     boost::once_flag once_flag = BOOST_ONCE_INIT;
     boost::call_once(once_flag, foo());
     return EXIT_SUCCESS;
-  }
-  catch (...)
-  {
+  } catch (...) {
     std::cerr << "Unknown exception" << std::endl;
     BOOST_TEST(false);
   }

@@ -4,11 +4,12 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config.hpp>
-
-#include <string>
-#include <cstring>
 #include <windows.h>
+
+#include <boost/config.hpp>
+#include <cstring>
+#include <string>
+
 #include "dbgeng.h"
 
 #ifdef BOOST_NO_CXX11_THREAD_LOCAL
@@ -16,13 +17,13 @@
 #endif
 
 int foo() {
-    static thread_local std::string i = std::string();
-    
-    return static_cast<int>(i.size());
+  static thread_local std::string i = std::string();
+
+  return static_cast<int>(i.size());
 }
 
 int main() {
-    ::CoInitializeEx(0, COINIT_MULTITHREADED);
-    
-    return foo();
+  ::CoInitializeEx(0, COINIT_MULTITHREADED);
+
+  return foo();
 }

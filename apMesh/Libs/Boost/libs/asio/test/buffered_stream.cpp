@@ -11,71 +11,60 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
-#include <boost/asio/buffered_stream.hpp>
-
-#include <cstring>
-#include "archetypes/async_result.hpp"
 #include <boost/asio/buffer.hpp>
+#include <boost/asio/buffered_stream.hpp>
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/system/system_error.hpp>
+#include <cstring>
+
+#include "archetypes/async_result.hpp"
 #include "unit_test.hpp"
 
 #if defined(BOOST_ASIO_HAS_BOOST_ARRAY)
-# include <boost/array.hpp>
-#else // defined(BOOST_ASIO_HAS_BOOST_ARRAY)
-# include <array>
-#endif // defined(BOOST_ASIO_HAS_BOOST_ARRAY)
+#include <boost/array.hpp>
+#else  // defined(BOOST_ASIO_HAS_BOOST_ARRAY)
+#include <array>
+#endif  // defined(BOOST_ASIO_HAS_BOOST_ARRAY)
 
 #if defined(BOOST_ASIO_HAS_BOOST_BIND)
-# include <boost/bind/bind.hpp>
-#else // defined(BOOST_ASIO_HAS_BOOST_BIND)
-# include <functional>
-#endif // defined(BOOST_ASIO_HAS_BOOST_BIND)
+#include <boost/bind/bind.hpp>
+#else  // defined(BOOST_ASIO_HAS_BOOST_BIND)
+#include <functional>
+#endif  // defined(BOOST_ASIO_HAS_BOOST_BIND)
 
-typedef boost::asio::buffered_stream<
-    boost::asio::ip::tcp::socket> stream_type;
+typedef boost::asio::buffered_stream<boost::asio::ip::tcp::socket> stream_type;
 
-void write_some_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void write_some_handler(const boost::system::error_code&, std::size_t) {}
 
-void flush_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void flush_handler(const boost::system::error_code&, std::size_t) {}
 
-void fill_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void fill_handler(const boost::system::error_code&, std::size_t) {}
 
-void read_some_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void read_some_handler(const boost::system::error_code&, std::size_t) {}
 
-void test_compile()
-{
+void test_compile() {
 #if defined(BOOST_ASIO_HAS_BOOST_ARRAY)
   using boost::array;
-#else // defined(BOOST_ASIO_HAS_BOOST_ARRAY)
+#else   // defined(BOOST_ASIO_HAS_BOOST_ARRAY)
   using std::array;
-#endif // defined(BOOST_ASIO_HAS_BOOST_ARRAY)
+#endif  // defined(BOOST_ASIO_HAS_BOOST_ARRAY)
 
   using namespace boost::asio;
 
-  try
-  {
+  try {
     io_context ioc;
     char mutable_char_buffer[128] = "";
     const char const_char_buffer[128] = "";
-    array<boost::asio::mutable_buffer, 2> mutable_buffers = {{
-        boost::asio::buffer(mutable_char_buffer, 10),
-        boost::asio::buffer(mutable_char_buffer + 10, 10) }};
-    array<boost::asio::const_buffer, 2> const_buffers = {{
-        boost::asio::buffer(const_char_buffer, 10),
-        boost::asio::buffer(const_char_buffer + 10, 10) }};
+    array<boost::asio::mutable_buffer, 2> mutable_buffers = {
+        {boost::asio::buffer(mutable_char_buffer, 10),
+         boost::asio::buffer(mutable_char_buffer + 10, 10)}};
+    array<boost::asio::const_buffer, 2> const_buffers = {
+        {boost::asio::buffer(const_char_buffer, 10),
+         boost::asio::buffer(const_char_buffer + 10, 10)}};
     archetypes::lazy_handler lazy;
     boost::system::error_code ec;
 
@@ -145,19 +134,17 @@ void test_compile()
     (void)i9;
     int i10 = stream1.async_read_some(null_buffers(), lazy);
     (void)i10;
-  }
-  catch (std::exception&)
-  {
+  } catch (std::exception&) {
   }
 }
 
-void test_sync_operations()
-{
-  using namespace std; // For memcmp.
+void test_sync_operations() {
+  using namespace std;  // For memcmp.
 
   boost::asio::io_context io_context;
 
-  boost::asio::ip::tcp::acceptor acceptor(io_context,
+  boost::asio::ip::tcp::acceptor acceptor(
+      io_context,
       boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 0));
   boost::asio::ip::tcp::endpoint server_endpoint = acceptor.local_endpoint();
   server_endpoint.address(boost::asio::ip::address_v4::loopback());
@@ -168,13 +155,12 @@ void test_sync_operations()
   stream_type server_socket(io_context);
   acceptor.accept(server_socket.lowest_layer());
 
-  const char write_data[]
-    = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  const char write_data[] =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   const boost::asio::const_buffer write_buf = boost::asio::buffer(write_data);
 
   std::size_t bytes_written = 0;
-  while (bytes_written < sizeof(write_data))
-  {
+  while (bytes_written < sizeof(write_data)) {
     bytes_written += client_socket.write_some(
         boost::asio::buffer(write_buf + bytes_written));
     client_socket.flush();
@@ -184,10 +170,9 @@ void test_sync_operations()
   const boost::asio::mutable_buffer read_buf = boost::asio::buffer(read_data);
 
   std::size_t bytes_read = 0;
-  while (bytes_read < sizeof(read_data))
-  {
-    bytes_read += server_socket.read_some(
-        boost::asio::buffer(read_buf + bytes_read));
+  while (bytes_read < sizeof(read_data)) {
+    bytes_read +=
+        server_socket.read_some(boost::asio::buffer(read_buf + bytes_read));
   }
 
   BOOST_ASIO_CHECK(bytes_written == sizeof(write_data));
@@ -195,18 +180,16 @@ void test_sync_operations()
   BOOST_ASIO_CHECK(memcmp(write_data, read_data, sizeof(write_data)) == 0);
 
   bytes_written = 0;
-  while (bytes_written < sizeof(write_data))
-  {
+  while (bytes_written < sizeof(write_data)) {
     bytes_written += server_socket.write_some(
         boost::asio::buffer(write_buf + bytes_written));
     server_socket.flush();
   }
 
   bytes_read = 0;
-  while (bytes_read < sizeof(read_data))
-  {
-    bytes_read += client_socket.read_some(
-        boost::asio::buffer(read_buf + bytes_read));
+  while (bytes_read < sizeof(read_data)) {
+    bytes_read +=
+        client_socket.read_some(boost::asio::buffer(read_buf + bytes_read));
   }
 
   BOOST_ASIO_CHECK(bytes_written == sizeof(write_data));
@@ -215,8 +198,7 @@ void test_sync_operations()
 
   server_socket.close();
   boost::system::error_code error;
-  bytes_read = client_socket.read_some(
-      boost::asio::buffer(read_buf), error);
+  bytes_read = client_socket.read_some(boost::asio::buffer(read_buf), error);
 
   BOOST_ASIO_CHECK(bytes_read == 0);
   BOOST_ASIO_CHECK(error == boost::asio::error::eof);
@@ -224,58 +206,46 @@ void test_sync_operations()
   client_socket.close(error);
 }
 
-void handle_accept(const boost::system::error_code& e)
-{
-  BOOST_ASIO_CHECK(!e);
-}
+void handle_accept(const boost::system::error_code& e) { BOOST_ASIO_CHECK(!e); }
 
 void handle_write(const boost::system::error_code& e,
-    std::size_t bytes_transferred,
-    std::size_t* total_bytes_written)
-{
+                  std::size_t bytes_transferred,
+                  std::size_t* total_bytes_written) {
   BOOST_ASIO_CHECK(!e);
-  if (e)
-    throw boost::system::system_error(e); // Terminate test.
+  if (e) throw boost::system::system_error(e);  // Terminate test.
   *total_bytes_written += bytes_transferred;
 }
 
-void handle_flush(const boost::system::error_code& e)
-{
-  BOOST_ASIO_CHECK(!e);
-}
+void handle_flush(const boost::system::error_code& e) { BOOST_ASIO_CHECK(!e); }
 
 void handle_read(const boost::system::error_code& e,
-    std::size_t bytes_transferred,
-    std::size_t* total_bytes_read)
-{
+                 std::size_t bytes_transferred, std::size_t* total_bytes_read) {
   BOOST_ASIO_CHECK(!e);
-  if (e)
-    throw boost::system::system_error(e); // Terminate test.
+  if (e) throw boost::system::system_error(e);  // Terminate test.
   *total_bytes_read += bytes_transferred;
 }
 
 void handle_read_eof(const boost::system::error_code& e,
-    std::size_t bytes_transferred)
-{
+                     std::size_t bytes_transferred) {
   BOOST_ASIO_CHECK(e == boost::asio::error::eof);
   BOOST_ASIO_CHECK(bytes_transferred == 0);
 }
 
-void test_async_operations()
-{
-  using namespace std; // For memcmp.
+void test_async_operations() {
+  using namespace std;  // For memcmp.
 
 #if defined(BOOST_ASIO_HAS_BOOST_BIND)
   namespace bindns = boost;
-#else // defined(BOOST_ASIO_HAS_BOOST_BIND)
+#else   // defined(BOOST_ASIO_HAS_BOOST_BIND)
   namespace bindns = std;
-#endif // defined(BOOST_ASIO_HAS_BOOST_BIND)
+#endif  // defined(BOOST_ASIO_HAS_BOOST_BIND)
   using bindns::placeholders::_1;
   using bindns::placeholders::_2;
 
   boost::asio::io_context io_context;
 
-  boost::asio::ip::tcp::acceptor acceptor(io_context,
+  boost::asio::ip::tcp::acceptor acceptor(
+      io_context,
       boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 0));
   boost::asio::ip::tcp::endpoint server_endpoint = acceptor.local_endpoint();
   server_endpoint.address(boost::asio::ip::address_v4::loopback());
@@ -288,20 +258,18 @@ void test_async_operations()
   io_context.run();
   io_context.restart();
 
-  const char write_data[]
-    = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  const char write_data[] =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   const boost::asio::const_buffer write_buf = boost::asio::buffer(write_data);
 
   std::size_t bytes_written = 0;
-  while (bytes_written < sizeof(write_data))
-  {
+  while (bytes_written < sizeof(write_data)) {
     client_socket.async_write_some(
         boost::asio::buffer(write_buf + bytes_written),
         bindns::bind(handle_write, _1, _2, &bytes_written));
     io_context.run();
     io_context.restart();
-    client_socket.async_flush(
-        bindns::bind(handle_flush, _1));
+    client_socket.async_flush(bindns::bind(handle_flush, _1));
     io_context.run();
     io_context.restart();
   }
@@ -310,8 +278,7 @@ void test_async_operations()
   const boost::asio::mutable_buffer read_buf = boost::asio::buffer(read_data);
 
   std::size_t bytes_read = 0;
-  while (bytes_read < sizeof(read_data))
-  {
+  while (bytes_read < sizeof(read_data)) {
     server_socket.async_read_some(
         boost::asio::buffer(read_buf + bytes_read),
         bindns::bind(handle_read, _1, _2, &bytes_read));
@@ -324,22 +291,19 @@ void test_async_operations()
   BOOST_ASIO_CHECK(memcmp(write_data, read_data, sizeof(write_data)) == 0);
 
   bytes_written = 0;
-  while (bytes_written < sizeof(write_data))
-  {
+  while (bytes_written < sizeof(write_data)) {
     server_socket.async_write_some(
         boost::asio::buffer(write_buf + bytes_written),
         bindns::bind(handle_write, _1, _2, &bytes_written));
     io_context.run();
     io_context.restart();
-    server_socket.async_flush(
-        bindns::bind(handle_flush, _1));
+    server_socket.async_flush(bindns::bind(handle_flush, _1));
     io_context.run();
     io_context.restart();
   }
 
   bytes_read = 0;
-  while (bytes_read < sizeof(read_data))
-  {
+  while (bytes_read < sizeof(read_data)) {
     client_socket.async_read_some(
         boost::asio::buffer(read_buf + bytes_read),
         bindns::bind(handle_read, _1, _2, &bytes_read));
@@ -355,10 +319,7 @@ void test_async_operations()
   client_socket.async_read_some(boost::asio::buffer(read_buf), handle_read_eof);
 }
 
-BOOST_ASIO_TEST_SUITE
-(
-  "buffered_stream",
-  BOOST_ASIO_TEST_CASE(test_compile)
-  BOOST_ASIO_TEST_CASE(test_sync_operations)
-  BOOST_ASIO_TEST_CASE(test_async_operations)
-)
+BOOST_ASIO_TEST_SUITE("buffered_stream",
+                      BOOST_ASIO_TEST_CASE(test_compile)
+                          BOOST_ASIO_TEST_CASE(test_sync_operations)
+                              BOOST_ASIO_TEST_CASE(test_async_operations))

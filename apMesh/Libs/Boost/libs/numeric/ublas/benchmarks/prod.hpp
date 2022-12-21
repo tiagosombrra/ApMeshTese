@@ -6,31 +6,34 @@
 // Boost Software License, Version 1.0.
 // (Consult LICENSE or http://www.boost.org/LICENSE_1_0.txt)
 
-#include "init.hpp"
 #include "benchmark.hpp"
+#include "init.hpp"
 
-namespace boost { namespace numeric { namespace ublas { namespace benchmark {
+namespace boost {
+namespace numeric {
+namespace ublas {
+namespace benchmark {
 
-template <typename S> class prod;
+template <typename S>
+class prod;
 
 template <typename R, typename O1, typename O2>
-class prod<R(O1, O2)> : public benchmark
-{
-public:
+class prod<R(O1, O2)> : public benchmark {
+ public:
   prod(std::string const &name) : benchmark(name) {}
-  virtual void setup(long l)
-  {
+  virtual void setup(long l) {
     init(a, l, 200);
     init(b, l, 200);
   }
-  virtual void operation(long l)
-  {
-    c = ublas::prod(a, b);
-  }
-private:
+  virtual void operation(long l) { c = ublas::prod(a, b); }
+
+ private:
   O1 a;
   O2 b;
   R c;
 };
 
-}}}}
+}  // namespace benchmark
+}  // namespace ublas
+}  // namespace numeric
+}  // namespace boost

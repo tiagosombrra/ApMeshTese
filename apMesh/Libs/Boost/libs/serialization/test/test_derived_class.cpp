@@ -8,42 +8,39 @@
 
 // should pass compilation and execution
 
-#include <fstream>
-
-#include <cstdio> // remove
 #include <boost/config.hpp>
+#include <cstdio>  // remove
+#include <fstream>
 #if defined(BOOST_NO_STDC_NAMESPACE)
-namespace std{
-    using ::remove;
+namespace std {
+using ::remove;
 }
 #endif
 
+#include "A.ipp"
+#include "B.hpp"
 #include "test_tools.hpp"
 
-#include "B.hpp"
-#include "A.ipp"
-
-int test_main( int /*argc*/, char* /*argv*/[] )
-{
-  const char * testfile = boost::archive::tmpnam(NULL);
+int test_main(int /*argc*/, char* /*argv*/[]) {
+  const char* testfile = boost::archive::tmpnam(NULL);
 
   BOOST_REQUIRE(NULL != testfile);
 
-    B b, b1;
+  B b, b1;
 
-    {
-        test_ostream os(testfile, TEST_STREAM_FLAGS);
-        test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
-        oa << boost::serialization::make_nvp("b", b);
-    }
-    {
-        test_istream is(testfile, TEST_STREAM_FLAGS);
-        test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
-        ia >> boost::serialization::make_nvp("b1", b1);
-    }
-    BOOST_CHECK(b == b1);
-    std::remove(testfile);
-    return EXIT_SUCCESS;
+  {
+    test_ostream os(testfile, TEST_STREAM_FLAGS);
+    test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
+    oa << boost::serialization::make_nvp("b", b);
+  }
+  {
+    test_istream is(testfile, TEST_STREAM_FLAGS);
+    test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
+    ia >> boost::serialization::make_nvp("b1", b1);
+  }
+  BOOST_CHECK(b == b1);
+  std::remove(testfile);
+  return EXIT_SUCCESS;
 }
 
 // EOF

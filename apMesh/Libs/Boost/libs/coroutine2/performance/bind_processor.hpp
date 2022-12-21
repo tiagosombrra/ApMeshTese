@@ -7,6 +7,6 @@
 #ifndef BIND_TO_PROCESSOR_H
 #define BIND_TO_PROCESSOR_H
 
-void bind_to_processor( unsigned int n);
+void bind_to_processor(unsigned int n);
 
-#endif // BIND_TO_PROCESSOR_H
+#endif  // BIND_TO_PROCESSOR_H

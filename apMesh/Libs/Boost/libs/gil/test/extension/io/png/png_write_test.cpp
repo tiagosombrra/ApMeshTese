@@ -8,10 +8,9 @@
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 #define BOOST_GIL_IO_ENABLE_GRAY_ALPHA
 #define BOOST_FILESYSTEM_VERSION 3
+#include <boost/core/lightweight_test.hpp>
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
-
-#include <boost/core/lightweight_test.hpp>
 
 #include "color_space_write_test.hpp"
 #include "paths.hpp"
@@ -19,15 +18,13 @@
 
 namespace gil = boost::gil;
 
-void test_rgb_color_space_write()
-{
-    color_space_write_test<gil::png_tag>(
-        png_out + "rgb_color_space_test.png", png_out + "bgr_color_space_test.png");
+void test_rgb_color_space_write() {
+  color_space_write_test<gil::png_tag>(png_out + "rgb_color_space_test.png",
+                                       png_out + "bgr_color_space_test.png");
 }
 
-int main()
-{
-    test_rgb_color_space_write();
+int main() {
+  test_rgb_color_space_write();
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

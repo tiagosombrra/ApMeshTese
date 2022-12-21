@@ -6,21 +6,20 @@
 #include <boost/pfr/tuple_size.hpp>
 
 class test_with_protected {
-protected:
-    int i;
-    char c;
+ protected:
+  int i;
+  char c;
 
-public:
-    double d;
-    float f;
+ public:
+  double d;
+  float f;
 };
 
 int main() {
 #ifndef __cpp_lib_is_aggregate
 // TODO: No known way to detect protected fields
-#   error No known way to detect protected fields.
+#error No known way to detect protected fields.
 #endif
 
-    return boost::pfr::tuple_size<test_with_protected>::value;
+  return boost::pfr::tuple_size<test_with_protected>::value;
 }
-

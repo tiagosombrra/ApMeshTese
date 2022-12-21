@@ -9,18 +9,17 @@
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
 
-class my_exception{};
+class my_exception {};
 
-void some_func( int i ) { if( i<0 ) throw my_exception(); }
+void some_func(int i) {
+  if (i < 0) throw my_exception();
+}
 
-BOOST_AUTO_TEST_CASE( test )
-{
-    BOOST_CHECK_NO_THROW( some_func(-1) );
-    BOOST_CHECK_NO_THROW(
-      do {
-        int i(-2);
-        some_func(i);
-      } while(0)
-    );
+BOOST_AUTO_TEST_CASE(test) {
+  BOOST_CHECK_NO_THROW(some_func(-1));
+  BOOST_CHECK_NO_THROW(do {
+    int i(-2);
+    some_func(i);
+  } while (0));
 }
 //]

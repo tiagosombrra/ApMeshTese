@@ -30,7 +30,7 @@ using grammar_type = x3::rule<class grammar_r>;
 const grammar_type grammar;
 BOOST_SPIRIT_DECLARE(grammar_type)
 
-}
+}  // namespace unused_attr
 
 // Check instantiation when rule has an attribute.
 
@@ -46,4 +46,4 @@ using grammar_type = x3::rule<class grammar_r, int, true>;
 const grammar_type grammar;
 BOOST_SPIRIT_DECLARE(grammar_type)
 
-}
+}  // namespace used_attr

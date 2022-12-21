@@ -7,40 +7,35 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <iostream>
 #include <boost/detail/lightweight_test.hpp>
+#include <iostream>
 
 #define PHOENIX_LIMIT 15
-#include <boost/spirit/include/phoenix1_primitives.hpp>
 #include <boost/spirit/include/phoenix1_new.hpp>
+#include <boost/spirit/include/phoenix1_primitives.hpp>
 
 using namespace phoenix;
 using namespace std;
 
-class X
-{
-public:
-    X(int i_ = 1)
-    :   i(i_)
-    {}
+class X {
+ public:
+  X(int i_ = 1) : i(i_) {}
 
-    int i;
+  int i;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    int i2 = 2;
-    X   x3(3);
+int main() {
+  int i2 = 2;
+  X x3(3);
 
-    BOOST_TEST(new_<int>()() != NULL);
-    BOOST_TEST(*new_<int>(arg1)(i2) == 2);
+  BOOST_TEST(new_<int>()() != NULL);
+  BOOST_TEST(*new_<int>(arg1)(i2) == 2);
 
-    BOOST_TEST(new_<X>()() != NULL);
-    BOOST_TEST(new_<X>()()->i == 1);
-    BOOST_TEST(new_<X>(arg1)(i2)->i == 2);
-    BOOST_TEST(new_<X>(arg1)(x3)->i == 3);
+  BOOST_TEST(new_<X>()() != NULL);
+  BOOST_TEST(new_<X>()()->i == 1);
+  BOOST_TEST(new_<X>(arg1)(i2)->i == 2);
+  BOOST_TEST(new_<X>(arg1)(x3)->i == 3);
 
-    return boost::report_errors();    
+  return boost::report_errors();
 }

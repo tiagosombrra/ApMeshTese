@@ -15,19 +15,17 @@
 //____________________________________________________________________________//
 
 struct MyConfig2 {
-    MyConfig2() { std::cout << "global setup part2\n"; }
-    ~MyConfig2() { std::cout << "global teardown part2\n"; }
+  MyConfig2() { std::cout << "global setup part2\n"; }
+  ~MyConfig2() { std::cout << "global teardown part2\n"; }
 };
 
-// structure MyConfig2 is used as a global fixture. You could have any number of global fxtures
-BOOST_TEST_GLOBAL_FIXTURE( MyConfig2 );
+// structure MyConfig2 is used as a global fixture. You could have any number of
+// global fxtures
+BOOST_TEST_GLOBAL_FIXTURE(MyConfig2);
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( my_test2 )
-{
-    BOOST_CHECK( true );
-}
+BOOST_AUTO_TEST_CASE(my_test2) { BOOST_CHECK(true); }
 
 //____________________________________________________________________________//
 

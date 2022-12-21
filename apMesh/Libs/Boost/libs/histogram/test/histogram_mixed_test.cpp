@@ -14,6 +14,7 @@
 #include <boost/histogram/storage_adaptor.hpp>
 #include <boost/histogram/unlimited_storage.hpp>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
@@ -35,11 +36,13 @@ void run_tests() {
 
   // operators
   {
-    auto a = make(T1{}, axis::integer<int, use_default, axis::option::none_t>{0, 2});
-    auto b = make(T2{}, axis::integer<int, use_default, axis::option::none_t>{0, 2});
+    auto a =
+        make(T1{}, axis::integer<int, use_default, axis::option::none_t>{0, 2});
+    auto b =
+        make(T2{}, axis::integer<int, use_default, axis::option::none_t>{0, 2});
     BOOST_TEST_EQ(a, b);
-    a(0); // 1 0
-    b(1); // 0 1
+    a(0);  // 1 0
+    b(1);  // 0 1
     a += b;
     BOOST_TEST_EQ(a[0], 1);
     BOOST_TEST_EQ(a[1], 1);
@@ -57,10 +60,14 @@ void run_tests() {
     BOOST_TEST_EQ(a[0], 1);
     BOOST_TEST_EQ(a[1], 2);
 
-    BOOST_TEST_THROWS(a += make(T2{}, axis::integer<>{0, 3}), std::invalid_argument);
-    BOOST_TEST_THROWS(a -= make(T2{}, axis::integer<>{0, 3}), std::invalid_argument);
-    BOOST_TEST_THROWS(a *= make(T2{}, axis::integer<>{0, 3}), std::invalid_argument);
-    BOOST_TEST_THROWS(a /= make(T2{}, axis::integer<>{0, 3}), std::invalid_argument);
+    BOOST_TEST_THROWS(a += make(T2{}, axis::integer<>{0, 3}),
+                      std::invalid_argument);
+    BOOST_TEST_THROWS(a -= make(T2{}, axis::integer<>{0, 3}),
+                      std::invalid_argument);
+    BOOST_TEST_THROWS(a *= make(T2{}, axis::integer<>{0, 3}),
+                      std::invalid_argument);
+    BOOST_TEST_THROWS(a /= make(T2{}, axis::integer<>{0, 3}),
+                      std::invalid_argument);
   }
 
   // copy_assign
@@ -81,9 +88,10 @@ int main() {
 
   // copy assign
   {
-    auto a = make(static_tag{}, axis::regular<>{3, 0, 3}, axis::integer<>{0, 2});
-    auto b = make(dynamic_tag{}, axis::regular<>{3, 0, 3}, axis::regular<>{2, 0, 2},
-                  axis::integer<>{0, 2});
+    auto a =
+        make(static_tag{}, axis::regular<>{3, 0, 3}, axis::integer<>{0, 2});
+    auto b = make(dynamic_tag{}, axis::regular<>{3, 0, 3},
+                  axis::regular<>{2, 0, 2}, axis::integer<>{0, 2});
     BOOST_TEST_THROWS(a = b, std::invalid_argument);
   }
 

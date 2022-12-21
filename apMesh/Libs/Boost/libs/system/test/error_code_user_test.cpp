@@ -14,49 +14,48 @@
 
 //  Motivation was a Boost posting by Christopher Kohlhoff on June 28, 2006.
 
-#include <boost/system/error_code.hpp>
 #include <boost/cerrno.hpp>
-#include <string>
-#include <cstdio>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/system/error_code.hpp>
+#include <cstdio>
+#include <string>
 
 #ifdef BOOST_POSIX_API
-# include <sys/stat.h>
+#include <sys/stat.h>
 #else
-# include <windows.h>
+#include <windows.h>
 #endif
 
 //  ------------------------------------------------------------------------  //
 
 //  Library 1: User function passes through an error code from the
-//  operating system. 
+//  operating system.
 
-
-boost::system::error_code my_mkdir( const std::string & path )
-{
+boost::system::error_code my_mkdir(const std::string &path) {
   return boost::system::error_code(
-#   ifdef BOOST_POSIX_API
-      ::mkdir( path.c_str(), S_IRWXU|S_IRWXG|S_IROTH|S_IXOTH ) == 0 ? 0 : errno,
-#   else
-      ::CreateDirectoryA( path.c_str(), 0 ) != 0 ? 0 : ::GetLastError(),
-#   endif
-      boost::system::system_category() );
+#ifdef BOOST_POSIX_API
+      ::mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0 ? 0
+                                                                        : errno,
+#else
+      ::CreateDirectoryA(path.c_str(), 0) != 0 ? 0 : ::GetLastError(),
+#endif
+      boost::system::system_category());
 }
 
 //  ------------------------------------------------------------------------  //
 
-//  Library 2: User function passes through errno from the C-runtime. 
+//  Library 2: User function passes through errno from the C-runtime.
 
 #include <cstdio>
 
-boost::system::error_code my_remove( const std::string & path )
-{
+boost::system::error_code my_remove(const std::string &path) {
   return boost::system::error_code(
-    std::remove( path.c_str() ) == 0 ? 0 : errno,
-    boost::system::generic_category() ); // OK for both Windows and POSIX
-                                     // Alternatively, could use generic_category()
-                                     // on Windows and system_category() on
-                                     // POSIX-based systems.
+      std::remove(path.c_str()) == 0 ? 0 : errno,
+      boost::system::generic_category());  // OK for both Windows and POSIX
+                                           // Alternatively, could use
+                                           // generic_category() on Windows and
+                                           // system_category() on POSIX-based
+                                           // systems.
 }
 
 //  ------------------------------------------------------------------------  //
@@ -68,141 +67,126 @@ boost::system::error_code my_remove( const std::string & path )
 
 //  header lib3.hpp:
 
-namespace boost
-{
-  namespace lib3
-  {
-    // lib3 has its own error_category:
-    const boost::system::error_category & get_lib3_error_category() BOOST_SYSTEM_NOEXCEPT;
-    const boost::system::error_category & lib3_error_category = get_lib3_error_category();
-    
-    enum error
-    {
-      boo_boo=123,
-      big_boo_boo
-    };
-  }
+namespace boost {
+namespace lib3 {
+// lib3 has its own error_category:
+const boost::system::error_category &get_lib3_error_category()
+    BOOST_SYSTEM_NOEXCEPT;
+const boost::system::error_category &lib3_error_category =
+    get_lib3_error_category();
 
-  namespace system
-  {
-    template<> struct is_error_code_enum<boost::lib3::error>
-      { static const bool value = true; };
-  }
+enum error { boo_boo = 123, big_boo_boo };
+}  // namespace lib3
 
-  namespace lib3
-  {
-    inline boost::system::error_code make_error_code(error e)
-      { return boost::system::error_code(e,lib3_error_category); }
-  }
+namespace system {
+template <>
+struct is_error_code_enum<boost::lib3::error> {
+  static const bool value = true;
+};
+}  // namespace system
 
+namespace lib3 {
+inline boost::system::error_code make_error_code(error e) {
+  return boost::system::error_code(e, lib3_error_category);
 }
+}  // namespace lib3
+
+}  // namespace boost
 
 //  implementation file lib3.cpp:
 
 //  #include <lib3.hpp>
 
-namespace boost
-{
-  namespace lib3
-  {
-    class lib3_error_category_imp : public boost::system::error_category
-    {
-    public:
-      lib3_error_category_imp() : boost::system::error_category() { }
+namespace boost {
+namespace lib3 {
+class lib3_error_category_imp : public boost::system::error_category {
+ public:
+  lib3_error_category_imp() : boost::system::error_category() {}
 
-      const char * name() const BOOST_SYSTEM_NOEXCEPT
-      {
-        return "lib3";
-      }
+  const char *name() const BOOST_SYSTEM_NOEXCEPT { return "lib3"; }
 
-      boost::system::error_condition default_error_condition( int ev ) const BOOST_SYSTEM_NOEXCEPT
-      {
-        return ev == boo_boo
-          ? boost::system::error_condition( boost::system::errc::io_error,
-              boost::system::generic_category() )
-          : boost::system::error_condition( ev,
-              boost::lib3::lib3_error_category );
-      }
-      
-      std::string message( int ev ) const
-      {
-        if ( ev == boo_boo ) return std::string("boo boo");
-        if ( ev == big_boo_boo ) return std::string("big boo boo");
-        return std::string("unknown error");
-      }
-
-    };
-
-    const boost::system::error_category & get_lib3_error_category() BOOST_SYSTEM_NOEXCEPT
-    {
-      static const lib3_error_category_imp l3ecat;
-      return l3ecat;
-    }
+  boost::system::error_condition default_error_condition(int ev) const
+      BOOST_SYSTEM_NOEXCEPT {
+    return ev == boo_boo ? boost::system::error_condition(
+                               boost::system::errc::io_error,
+                               boost::system::generic_category())
+                         : boost::system::error_condition(
+                               ev, boost::lib3::lib3_error_category);
   }
+
+  std::string message(int ev) const {
+    if (ev == boo_boo) return std::string("boo boo");
+    if (ev == big_boo_boo) return std::string("big boo boo");
+    return std::string("unknown error");
+  }
+};
+
+const boost::system::error_category &get_lib3_error_category()
+    BOOST_SYSTEM_NOEXCEPT {
+  static const lib3_error_category_imp l3ecat;
+  return l3ecat;
 }
+}  // namespace lib3
+}  // namespace boost
 
 //  ------------------------------------------------------------------------  //
 
 //  Library 4: Library uses const error_code's to identify library specific
-//  errors. 
+//  errors.
 
 //  This particular example is for a library not within the parent namespace.
 //  For an example of a library within the parent namespace, see library 3.
 
 //  header lib4.hpp:
 
-namespace lib4
-{
-  // lib4 has its own error_category:
-  const boost::system::error_category & get_lib4_error_category() BOOST_SYSTEM_NOEXCEPT;
-  const boost::system::error_category & lib4_error_category = get_lib4_error_category();
-  
-  extern const boost::system::error_code boo_boo;
-  extern const boost::system::error_code big_boo_boo;
-}
+namespace lib4 {
+// lib4 has its own error_category:
+const boost::system::error_category &get_lib4_error_category()
+    BOOST_SYSTEM_NOEXCEPT;
+const boost::system::error_category &lib4_error_category =
+    get_lib4_error_category();
+
+extern const boost::system::error_code boo_boo;
+extern const boost::system::error_code big_boo_boo;
+}  // namespace lib4
 
 //  implementation file lib4.cpp:
 
 //  #include <lib4.hpp>
 
-namespace lib4
-{
-  class lib4_error_category_imp : public boost::system::error_category
-  {
-  public:
-    lib4_error_category_imp() : boost::system::error_category() { }
+namespace lib4 {
+class lib4_error_category_imp : public boost::system::error_category {
+ public:
+  lib4_error_category_imp() : boost::system::error_category() {}
 
-    const char * name() const BOOST_SYSTEM_NOEXCEPT
-    {
-      return "lib4";
-    }
+  const char *name() const BOOST_SYSTEM_NOEXCEPT { return "lib4"; }
 
-    boost::system::error_condition default_error_condition( int ev ) const  BOOST_SYSTEM_NOEXCEPT
-    {
-      return ev == boo_boo.value()
-        ? boost::system::error_condition( boost::system::errc::io_error,
-            boost::system::generic_category() )
-        : boost::system::error_condition( ev, lib4::lib4_error_category );
-    }
-    
-    std::string message( int ev ) const
-    {
-      if ( ev == boo_boo.value() ) return std::string("boo boo");
-      if ( ev == big_boo_boo.value() ) return std::string("big boo boo");
-      return std::string("unknown error");
-    }
-  };
-
-  const boost::system::error_category & get_lib4_error_category() BOOST_SYSTEM_NOEXCEPT
-  {
-    static const lib4_error_category_imp l4ecat;
-    return l4ecat;
+  boost::system::error_condition default_error_condition(int ev) const
+      BOOST_SYSTEM_NOEXCEPT {
+    return ev == boo_boo.value()
+               ? boost::system::error_condition(
+                     boost::system::errc::io_error,
+                     boost::system::generic_category())
+               : boost::system::error_condition(ev, lib4::lib4_error_category);
   }
 
-  const boost::system::error_code boo_boo( 456, lib4_error_category );
-  const boost::system::error_code big_boo_boo( 789, lib4_error_category );
+  std::string message(int ev) const {
+    if (ev == boo_boo.value()) return std::string("boo boo");
+    if (ev == big_boo_boo.value()) return std::string("big boo boo");
+    return std::string("unknown error");
+  }
+};
 
+const boost::system::error_category &get_lib4_error_category()
+    BOOST_SYSTEM_NOEXCEPT {
+  static const lib4_error_category_imp l4ecat;
+  return l4ecat;
 }
+
+const boost::system::error_code boo_boo(456, lib4_error_category);
+const boost::system::error_code big_boo_boo(789, lib4_error_category);
+
+}  // namespace lib4
 
 //  ------------------------------------------------------------------------  //
 
@@ -214,7 +198,7 @@ namespace lib4
 // out_of_memory, but add additional mappings for a user-defined error category.
 //
 
-//namespace test3 {
+// namespace test3 {
 
 //  enum user_err
 //  {
@@ -237,17 +221,24 @@ namespace lib4
 //      switch (ev)
 //      {
 //        case user_success:
-//          return boost::system::error_code(boost::system::errc::success, boost::system::generic_category());
+//          return boost::system::error_code(boost::system::errc::success,
+//          boost::system::generic_category());
 //        case user_permission_denied:
-//          return boost::system::error_code(boost::system::errc::permission_denied, boost::system::generic_category());
+//          return
+//          boost::system::error_code(boost::system::errc::permission_denied,
+//          boost::system::generic_category());
 //        case user_out_of_memory:
-//          return boost::system::error_code(boost::system::errc::not_enough_memory, boost::system::generic_category());
+//          return
+//          boost::system::error_code(boost::system::errc::not_enough_memory,
+//          boost::system::generic_category());
 //        default:
 //          break;
 //      }
-//      return boost::system::error_code(boost::system::errc::no_posix_equivalent, boost::system::generic_category());
+//      return
+//      boost::system::error_code(boost::system::errc::no_posix_equivalent,
+//      boost::system::generic_category());
 //    }
-//    
+//
 //  };
 //
 //  const user_error_category_imp user_error_category_const;
@@ -271,7 +262,8 @@ namespace lib4
 //      std::cout << "no...  " << (expect ? "fail" : "ok") << '\n';
 //  }
 //
-//  void check_permission_denied(const boost::system::error_code& ec, bool expect)
+//  void check_permission_denied(const boost::system::error_code& ec, bool
+//  expect)
 //  {
 //    BOOST_TEST( (ec == boost::system::errc::permission_denied) == expect );
 //    if (ec ==  boost::system::errc::permission_denied)
@@ -333,70 +325,67 @@ namespace lib4
 //
 //} // namespace test3
 
-
-
 //  ------------------------------------------------------------------------  //
 
-int main( int, char *[] )
-{
+int main(int, char *[]) {
   boost::system::error_code ec;
 
   // Library 1 tests:
-  
-  ec = my_mkdir( "/no-such-file-or-directory/will-not-succeed" );
+
+  ec = my_mkdir("/no-such-file-or-directory/will-not-succeed");
   std::cout << "ec.value() is " << ec.value() << '\n';
 
-  BOOST_TEST( ec );
-  BOOST_TEST( ec == boost::system::errc::no_such_file_or_directory );
-  BOOST_TEST( ec.category() == boost::system::system_category() );
+  BOOST_TEST(ec);
+  BOOST_TEST(ec == boost::system::errc::no_such_file_or_directory);
+  BOOST_TEST(ec.category() == boost::system::system_category());
 
   // Library 2 tests:
 
-  ec = my_remove( "/no-such-file-or-directory" );
+  ec = my_remove("/no-such-file-or-directory");
   std::cout << "ec.value() is " << ec.value() << '\n';
 
-  BOOST_TEST( ec );
-  BOOST_TEST( ec == boost::system::errc::no_such_file_or_directory );
-  BOOST_TEST( ec.category() == boost::system::generic_category() );
+  BOOST_TEST(ec);
+  BOOST_TEST(ec == boost::system::errc::no_such_file_or_directory);
+  BOOST_TEST(ec.category() == boost::system::generic_category());
 
   // Library 3 tests:
 
   ec = boost::lib3::boo_boo;
   std::cout << "ec.value() is " << ec.value() << '\n';
 
-  BOOST_TEST( ec );
-  BOOST_TEST( ec == boost::lib3::boo_boo );
-  BOOST_TEST( ec.value() == boost::lib3::boo_boo );
-  BOOST_TEST( ec.category() == boost::lib3::lib3_error_category );
+  BOOST_TEST(ec);
+  BOOST_TEST(ec == boost::lib3::boo_boo);
+  BOOST_TEST(ec.value() == boost::lib3::boo_boo);
+  BOOST_TEST(ec.category() == boost::lib3::lib3_error_category);
 
-  BOOST_TEST( ec == boost::system::errc::io_error );
+  BOOST_TEST(ec == boost::system::errc::io_error);
 
-  boost::system::error_code ec3( boost::lib3::boo_boo+100,
-    boost::lib3::lib3_error_category );
-  BOOST_TEST( ec3.category() == boost::lib3::lib3_error_category );
-  BOOST_TEST( ec3.default_error_condition().category()
-    == boost::lib3::lib3_error_category );
+  boost::system::error_code ec3(boost::lib3::boo_boo + 100,
+                                boost::lib3::lib3_error_category);
+  BOOST_TEST(ec3.category() == boost::lib3::lib3_error_category);
+  BOOST_TEST(ec3.default_error_condition().category() ==
+             boost::lib3::lib3_error_category);
 
   // Library 4 tests:
 
   ec = lib4::boo_boo;
   std::cout << "ec.value() is " << ec.value() << '\n';
 
-  BOOST_TEST( ec );
-  BOOST_TEST( ec == lib4::boo_boo );
-  BOOST_TEST( ec.value() == lib4::boo_boo.value() );
-  BOOST_TEST( ec.category() == lib4::lib4_error_category );
+  BOOST_TEST(ec);
+  BOOST_TEST(ec == lib4::boo_boo);
+  BOOST_TEST(ec.value() == lib4::boo_boo.value());
+  BOOST_TEST(ec.category() == lib4::lib4_error_category);
 
-  BOOST_TEST( ec == boost::system::errc::io_error );
+  BOOST_TEST(ec == boost::system::errc::io_error);
 
-  boost::system::error_code ec4( lib4::boo_boo.value()+100,
-    lib4::lib4_error_category );
-  BOOST_TEST( ec4.default_error_condition().category()
-    == lib4::lib4_error_category );
+  boost::system::error_code ec4(lib4::boo_boo.value() + 100,
+                                lib4::lib4_error_category);
+  BOOST_TEST(ec4.default_error_condition().category() ==
+             lib4::lib4_error_category);
 
   // Test 3
 
-  //test3::run();
+  // test3::run();
 
   return ::boost::report_errors();
 }

@@ -11,10 +11,8 @@
 #include "base_types.hpp"
 #include "test_algorithm_impl.hpp"
 
-void test_algorithm2()
-{
-  test_algorithm<
-    base_types::collection,jammed_auto_increment,base_types::to_int,
-    base_types::t1,base_types::t2,base_types::t3,
-    base_types::t4,base_types::t5>();
+void test_algorithm2() {
+  test_algorithm<base_types::collection, jammed_auto_increment,
+                 base_types::to_int, base_types::t1, base_types::t2,
+                 base_types::t3, base_types::t4, base_types::t5>();
 }

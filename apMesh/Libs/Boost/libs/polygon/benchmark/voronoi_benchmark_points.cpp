@@ -8,15 +8,14 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 
 #include <algorithm>
-#include <iomanip>
-#include <iostream>
-#include <fstream>
-#include <numeric>
-#include <vector>
-#include <utility>
-
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/timer/timer.hpp>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <numeric>
+#include <utility>
+#include <vector>
 
 typedef boost::int32_t int32;
 using boost::timer::cpu_times;
@@ -28,8 +27,8 @@ typedef boost::polygon::default_voronoi_builder VB_BOOST;
 typedef boost::polygon::voronoi_diagram<double> VD_BOOST;
 
 // Includes for the CGAL library.
-#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Delaunay_triangulation_2.h>
+#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 typedef CGAL::Exact_predicates_inexact_constructions_kernel CGAL_KERNEL;
 typedef CGAL::Delaunay_triangulation_2<CGAL_KERNEL> DT_CGAL;
 typedef CGAL_KERNEL::Point_2 POINT_CGAL;
@@ -54,8 +53,7 @@ void format_line(int num_points, int num_tests, double time_per_test) {
 
 double get_elapsed_secs() {
   cpu_times elapsed_times(timer.elapsed());
-  return 1E-9 * static_cast<double>(
-      elapsed_times.system + elapsed_times.user);
+  return 1E-9 * static_cast<double>(elapsed_times.system + elapsed_times.user);
 }
 
 void run_boost_voronoi_test() {
@@ -114,7 +112,7 @@ void run_shull_delaunay_test() {
     for (int j = 0; j < NUM_RUNS[i]; ++j) {
       // S-Hull doesn't deal properly with duplicates so we need
       // to eliminate them before running the algorithm.
-      std::vector< pair<int32, int32> > upts;
+      std::vector<pair<int32, int32> > upts;
       std::vector<Shx> pts;
       std::vector<Triad> triads;
       Shx pt;

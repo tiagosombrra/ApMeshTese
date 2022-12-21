@@ -9,7 +9,6 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-
 // Test from https://github.com/boostorg/variant/pull/21
 
 #include <boost/fusion/container/vector.hpp>
@@ -17,6 +16,6 @@
 #include <boost/variant/variant.hpp>
 
 int main() {
-    boost::make_variant_over<boost::fusion::vector<int, char> >::type t;
-    (void)t;
+  boost::make_variant_over<boost::fusion::vector<int, char> >::type t;
+  (void)t;
 }

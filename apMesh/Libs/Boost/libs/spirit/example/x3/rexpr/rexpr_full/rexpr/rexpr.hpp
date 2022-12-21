@@ -7,27 +7,23 @@
 #if !defined(BOOST_SPIRIT_X3_REXPR_HPP)
 #define BOOST_SPIRIT_X3_REXPR_HPP
 
-#include "ast.hpp"
-
 #include <boost/spirit/home/x3.hpp>
 
-namespace rexpr
-{
-    namespace x3 = boost::spirit::x3;
+#include "ast.hpp"
 
-    ///////////////////////////////////////////////////////////////////////////
-    // rexpr public interface
-    ///////////////////////////////////////////////////////////////////////////
-    namespace parser
-    {
-        struct rexpr_class;
-        typedef
-            x3::rule<rexpr_class, ast::rexpr>
-        rexpr_type;
-        BOOST_SPIRIT_DECLARE(rexpr_type);
-    }
+namespace rexpr {
+namespace x3 = boost::spirit::x3;
 
-    parser::rexpr_type const& rexpr();
-}
+///////////////////////////////////////////////////////////////////////////
+// rexpr public interface
+///////////////////////////////////////////////////////////////////////////
+namespace parser {
+struct rexpr_class;
+typedef x3::rule<rexpr_class, ast::rexpr> rexpr_type;
+BOOST_SPIRIT_DECLARE(rexpr_type);
+}  // namespace parser
+
+parser::rexpr_type const& rexpr();
+}  // namespace rexpr
 
 #endif

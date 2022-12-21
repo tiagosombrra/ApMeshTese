@@ -16,18 +16,18 @@
 #define BOOST_TEST_ALTERNATIVE_INIT_API
 #include <boost/test/included/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE( test )
-{
-    int i = 1;
-    BOOST_CHECK( i*i == 1 );
+BOOST_AUTO_TEST_CASE(test) {
+  int i = 1;
+  BOOST_CHECK(i * i == 1);
 }
 
 //____________________________________________________________________________//
 
 bool init_unit_test() {
-    boost::unit_test::framework::master_test_suite().p_name.value = "Custom init func";
+  boost::unit_test::framework::master_test_suite().p_name.value =
+      "Custom init func";
 
-    return true;
+  return true;
 }
 
 //____________________________________________________________________________//

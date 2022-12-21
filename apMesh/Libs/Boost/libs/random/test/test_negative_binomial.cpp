@@ -9,12 +9,13 @@
  *
  */
 
-#include <boost/random/negative_binomial_distribution.hpp>
-#include <boost/random/uniform_int.hpp>
-#include <boost/random/uniform_01.hpp>
 #include <boost/math/distributions/negative_binomial.hpp>
+#include <boost/random/negative_binomial_distribution.hpp>
+#include <boost/random/uniform_01.hpp>
+#include <boost/random/uniform_int.hpp>
 
-#define BOOST_RANDOM_DISTRIBUTION boost::random::negative_binomial_distribution<>
+#define BOOST_RANDOM_DISTRIBUTION \
+  boost::random::negative_binomial_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME negative_binomial
 #define BOOST_MATH_DISTRIBUTION boost::math::negative_binomial
 #define BOOST_RANDOM_ARG1_TYPE int

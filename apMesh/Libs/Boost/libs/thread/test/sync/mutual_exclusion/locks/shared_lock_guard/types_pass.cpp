@@ -24,18 +24,17 @@
 //     ...
 // };
 
-
-#include <boost/thread/shared_mutex.hpp>
-#include <boost/thread/shared_lock_guard.hpp>
-#include <boost/static_assert.hpp>
-#include <boost/type_traits/is_same.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/static_assert.hpp>
+#include <boost/thread/shared_lock_guard.hpp>
+#include <boost/thread/shared_mutex.hpp>
+#include <boost/type_traits/is_same.hpp>
 
-int main()
-{
-  BOOST_STATIC_ASSERT_MSG((boost::is_same<boost::shared_lock_guard<boost::shared_mutex>::mutex_type,
-      boost::shared_mutex>::value), "");
+int main() {
+  BOOST_STATIC_ASSERT_MSG(
+      (boost::is_same<boost::shared_lock_guard<boost::shared_mutex>::mutex_type,
+                      boost::shared_mutex>::value),
+      "");
 
   return boost::report_errors();
 }
-

@@ -11,55 +11,51 @@
 // Test suite for assign_actor
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "action_tests.hpp"
-#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 
-void assign_test()
-{
-    using namespace BOOST_SPIRIT_CLASSIC_NS;
+#include "action_tests.hpp"
 
-    const char* cp = "63";
-    const char* cp_first = cp;
-    const char* cp_last = cp + test_impl::string_length(cp);
-    int h=127;
-    int hm=h;
+void assign_test() {
+  using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-    scanner<char const*> scan( cp_first, cp_last );
-    match<> hit;
+  const char* cp = "63";
+  const char* cp_first = cp;
+  const char* cp_last = cp + test_impl::string_length(cp);
+  int h = 127;
+  int hm = h;
 
-    hit = int_p[ assign_a(hm)].parse(scan);
-    BOOST_CHECK(hit);
-    BOOST_CHECK_EQUAL(scan.first, scan.last);
+  scanner<char const*> scan(cp_first, cp_last);
+  match<> hit;
 
-    h=63;
-    BOOST_CHECK_EQUAL( hm,h);
+  hit = int_p[assign_a(hm)].parse(scan);
+  BOOST_CHECK(hit);
+  BOOST_CHECK_EQUAL(scan.first, scan.last);
+
+  h = 63;
+  BOOST_CHECK_EQUAL(hm, h);
 }
 
-void assign_test_ref()
-{
-    using namespace BOOST_SPIRIT_CLASSIC_NS;
-    
+void assign_test_ref() {
+  using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-    const char* cp = "63";
-    const char* cp_first = cp;
-    const char* cp_last = cp + test_impl::string_length(cp);
-    int h=127;
-    int hm=63;
+  const char* cp = "63";
+  const char* cp_first = cp;
+  const char* cp_last = cp + test_impl::string_length(cp);
+  int h = 127;
+  int hm = 63;
 
-    scanner<char const*> scan( cp_first, cp_last );
-    match<> hit;
+  scanner<char const*> scan(cp_first, cp_last);
+  match<> hit;
 
-    hit = int_p[ assign_a(h,hm)].parse(scan);
-    BOOST_CHECK(hit);
-    BOOST_CHECK_EQUAL(scan.first, scan.last);
+  hit = int_p[assign_a(h, hm)].parse(scan);
+  BOOST_CHECK(hit);
+  BOOST_CHECK_EQUAL(scan.first, scan.last);
 
-    BOOST_CHECK_EQUAL( hm,h);
+  BOOST_CHECK_EQUAL(hm, h);
 }
 
-void assign_action_test()
-{
-    assign_test();
-    assign_test_ref();
+void assign_action_test() {
+  assign_test();
+  assign_test_ref();
 }
-

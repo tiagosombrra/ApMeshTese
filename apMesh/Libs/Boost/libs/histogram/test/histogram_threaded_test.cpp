@@ -14,6 +14,7 @@
 #include <iostream>
 #include <random>
 #include <thread>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
@@ -28,7 +29,8 @@ void fill_test(const A1& a1, const A2& a2, const X& x, const Y& y) {
   auto xy = {x, y};
   h1.fill(xy);
 
-  auto h2 = make_s(Tag{}, dense_storage<accumulators::thread_safe<int>>(), a1, a2);
+  auto h2 =
+      make_s(Tag{}, dense_storage<accumulators::thread_safe<int>>(), a1, a2);
   auto run = [&h2, &x, &y](int k) {
     constexpr auto shift = n_fill / 4;
     auto xit = x.cbegin() + k * shift;

@@ -8,21 +8,22 @@
 //[example_code
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
-#include <stdexcept>
 #include <fstream>
+#include <stdexcept>
 
 //! Computes the histogram of the words in a text file
-class FileWordHistogram
-{
-public:
+class FileWordHistogram {
+ public:
   //!@throw std::exception if the file does not exist
-  FileWordHistogram(std::string filename) : is_processed(false), fileStream_(filename) {
-    if(!fileStream_.is_open()) throw std::runtime_error("Cannot open the file");
+  FileWordHistogram(std::string filename)
+      : is_processed(false), fileStream_(filename) {
+    if (!fileStream_.is_open())
+      throw std::runtime_error("Cannot open the file");
   }
 
   //! @returns true on success, false otherwise
   bool process() {
-    if(is_processed) return true;
+    if (is_processed) return true;
 
     // ...
     is_processed = true;
@@ -31,27 +32,26 @@ public:
 
   //!@pre process has been called with status success
   //!@throw std::logic_error if preconditions not met
-  std::map<std::string, std::size_t>
-  result() const {
-    if(!is_processed)
-      throw std::runtime_error("\"process\" has not been called or was not successful");
+  std::map<std::string, std::size_t> result() const {
+    if (!is_processed)
+      throw std::runtime_error(
+          "\"process\" has not been called or was not successful");
     return histogram;
   }
 
-private:
+ private:
   bool is_processed;
   std::ifstream fileStream_;
   std::map<std::string, std::size_t> histogram;
 };
 
-BOOST_AUTO_TEST_CASE( test_throw_behaviour )
-{
+BOOST_AUTO_TEST_CASE(test_throw_behaviour) {
   // __FILE__ is accessible, no exception expected
-  BOOST_REQUIRE_NO_THROW( FileWordHistogram(__FILE__) );
+  BOOST_REQUIRE_NO_THROW(FileWordHistogram(__FILE__));
 
   // ".. __FILE__" does not exist, API says std::exception, and implementation
   // raises std::runtime_error child of std::exception
-  BOOST_CHECK_THROW( FileWordHistogram(".." __FILE__), std::exception );
+  BOOST_CHECK_THROW(FileWordHistogram(".." __FILE__), std::exception);
 
   {
     FileWordHistogram instance(__FILE__);

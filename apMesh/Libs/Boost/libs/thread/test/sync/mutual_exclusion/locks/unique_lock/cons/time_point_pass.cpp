@@ -17,14 +17,16 @@
 // template <class Mutex> class unique_lock;
 
 // template <class Clock, class Duration>
-//   unique_lock(mutex_type& m, const chrono::time_point<Clock, Duration>& abs_time);
+//   unique_lock(mutex_type& m, const chrono::time_point<Clock, Duration>&
+//   abs_time);
 
 #define BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
@@ -41,16 +43,14 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f1()
-{
+void f1() {
   t0 = Clock::now();
   boost::unique_lock<boost::timed_mutex> lk(m, Clock::now() + ms(750));
   BOOST_TEST(lk.owns_lock() == true);
   t1 = Clock::now();
 }
 
-void f2()
-{
+void f2() {
   t0 = Clock::now();
   boost::unique_lock<boost::timed_mutex> lk(m, Clock::now() + ms(250));
   BOOST_TEST(lk.owns_lock() == false);
@@ -59,8 +59,7 @@ void f2()
   BOOST_TEST(d < max_diff);
 }
 
-int main()
-{
+int main() {
   {
     m.lock();
     boost::thread t(f1);
@@ -89,5 +88,6 @@ int main()
 }
 
 #else
-#error "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
+#error \
+    "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
 #endif

@@ -10,11 +10,11 @@
 
 // invoke header for a custom archive test.
 
-#include <fstream>
 #include <boost/config.hpp>
+#include <fstream>
 #if defined(BOOST_NO_STDC_NAMESPACE)
-namespace std{
-    using ::remove;
+namespace std {
+using ::remove;
 }
 #endif
 
@@ -25,60 +25,54 @@ namespace std{
 #include "test_tools.hpp"
 
 class Base {
-    friend class boost::serialization::access;
-    int m_i;
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int version){
-        ar & BOOST_SERIALIZATION_NVP(m_i);
-    }
-protected:
-    bool equals(const Base &rhs) const {
-        return m_i == rhs.m_i;
-    }
-    Base(int i = 0) :
-        m_i(i)
-    {}
-public:
+  friend class boost::serialization::access;
+  int m_i;
+  template <class Archive>
+  void serialize(Archive &ar, const unsigned int version) {
+    ar &BOOST_SERIALIZATION_NVP(m_i);
+  }
+
+ protected:
+  bool equals(const Base &rhs) const { return m_i == rhs.m_i; }
+  Base(int i = 0) : m_i(i) {}
+
+ public:
 };
 
 class Derived : private Base {
-    friend class boost::serialization::access;
-private:
-    Base & base_cast(){
-        return static_cast<Base &>(*this);
-    }
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int version){
-        ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Base);
-    }
-public:
-    bool operator==(const Derived &rhs) const {
-        return Base::equals(static_cast<const Base &>(rhs));
-    }
-    Derived(int i = 0) :
-        Base(i)
-    {}
+  friend class boost::serialization::access;
+
+ private:
+  Base &base_cast() { return static_cast<Base &>(*this); }
+  template <class Archive>
+  void serialize(Archive &ar, const unsigned int version) {
+    ar &BOOST_SERIALIZATION_BASE_OBJECT_NVP(Base);
+  }
+
+ public:
+  bool operator==(const Derived &rhs) const {
+    return Base::equals(static_cast<const Base &>(rhs));
+  }
+  Derived(int i = 0) : Base(i) {}
 };
 
-int
-test_main( int /* argc */, char* /* argv */[] )
-{
-    const char * testfile = boost::archive::tmpnam(NULL);
-    BOOST_REQUIRE(NULL != testfile);
+int test_main(int /* argc */, char * /* argv */[]) {
+  const char *testfile = boost::archive::tmpnam(NULL);
+  BOOST_REQUIRE(NULL != testfile);
 
-    Derived a(1), a1(2);
-    {
-        test_ostream os(testfile, TEST_STREAM_FLAGS);
-        test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
-        oa << boost::serialization::make_nvp("a", a);
-    }
-    {
-        test_istream is(testfile, TEST_STREAM_FLAGS);
-        test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
-        ia >> boost::serialization::make_nvp("a", a1);
-    }
-    BOOST_CHECK_EQUAL(a, a1);
-    std::remove(testfile);
+  Derived a(1), a1(2);
+  {
+    test_ostream os(testfile, TEST_STREAM_FLAGS);
+    test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
+    oa << boost::serialization::make_nvp("a", a);
+  }
+  {
+    test_istream is(testfile, TEST_STREAM_FLAGS);
+    test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
+    ia >> boost::serialization::make_nvp("a", a1);
+  }
+  BOOST_CHECK_EQUAL(a, a1);
+  std::remove(testfile);
 
-    return 0;
+  return 0;
 }

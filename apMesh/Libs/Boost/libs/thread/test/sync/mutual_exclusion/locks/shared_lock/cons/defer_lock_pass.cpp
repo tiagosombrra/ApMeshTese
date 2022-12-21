@@ -18,12 +18,11 @@
 
 // shared_lock(mutex_type& m, adopt_lock_t);
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/shared_mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
-int main()
-{
+int main() {
   boost::shared_mutex m;
   m.lock();
   boost::shared_lock<boost::shared_mutex> lk(m, boost::defer_lock);
@@ -32,4 +31,3 @@ int main()
 
   return boost::report_errors();
 }
-

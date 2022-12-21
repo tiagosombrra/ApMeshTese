@@ -12,6 +12,7 @@
 #include <boost/histogram/ostream.hpp>
 #include <string>
 #include <utility>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
@@ -22,14 +23,15 @@ using def = use_default;
 
 using regular = axis::regular<double, def, def, axis::option::growth_t>;
 
-using integer = axis::integer<double, def,
-                              decltype(axis::option::underflow | axis::option::overflow |
-                                       axis::option::growth)>;
+using integer =
+    axis::integer<double, def,
+                  decltype(axis::option::underflow | axis::option::overflow |
+                           axis::option::growth)>;
 
 using category = axis::category<std::string, def, axis::option::growth_t>;
 
 class custom_2d_axis {
-public:
+ public:
   auto index(std::tuple<double, double> xy) const {
     const auto x = std::get<0>(xy);
     const auto y = std::get<1>(xy);
@@ -49,7 +51,7 @@ public:
 
   axis::index_type size() const { return size_; }
 
-private:
+ private:
   axis::index_type size_ = 0;
 };
 

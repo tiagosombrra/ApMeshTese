@@ -6,32 +6,29 @@
 
 // Test specifying except, no pre, old, or post (same if not free func).
 
-#include "../detail/oteststream.hpp"
-#include <boost/contract/function.hpp>
 #include <boost/contract/check.hpp>
+#include <boost/contract/function.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <sstream>
+
+#include "../detail/oteststream.hpp"
 
 boost::contract::test::detail::oteststream out;
 
 void f() {
-    boost::contract::check c = boost::contract::function()
-        .except([] { out << "f::except" << std::endl; })
-    ;
-    out << "f::body" << std::endl;
+  boost::contract::check c = boost::contract::function().except(
+      [] { out << "f::except" << std::endl; });
+  out << "f::body" << std::endl;
 }
 
 int main() {
-    std::ostringstream ok;
+  std::ostringstream ok;
 
-    out.str("");
-    f();
-    ok.str("");
-    ok
-        << "f::body" << std::endl
-    ;
-    BOOST_TEST(out.eq(ok.str()));
+  out.str("");
+  f();
+  ok.str("");
+  ok << "f::body" << std::endl;
+  BOOST_TEST(out.eq(ok.str()));
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-

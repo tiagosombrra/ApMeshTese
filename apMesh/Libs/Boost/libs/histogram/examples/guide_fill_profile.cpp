@@ -20,10 +20,11 @@ int main() {
   auto h = make_profile(axis::integer<>(0, 3));
 
   // mean is computed from the values marked with the sample() helper function
-  h(0, sample(1)); // sample goes to cell 0
-  h(0, sample(2)); // sample goes to cell 0
-  h(1, sample(3)); // sample goes to cell 1
-  h(sample(4), 1); // sample goes to cell 1; sample can be first or last argument
+  h(0, sample(1));  // sample goes to cell 0
+  h(0, sample(2));  // sample goes to cell 0
+  h(1, sample(3));  // sample goes to cell 1
+  h(sample(4),
+    1);  // sample goes to cell 1; sample can be first or last argument
 
   // fills from tuples are also supported, 5 and 6 go to cell 2
   auto a = std::make_tuple(2, sample(5));
@@ -37,17 +38,19 @@ int main() {
     // use `.` to access methods of accessor, like `index()`
     // use `->` to access methods of accumulator
     const auto i = x.index();
-    const auto n = x->count();     // how many samples are in this bin
-    const auto vl = x->value();    // mean value
-    const auto vr = x->variance(); // estimated variance of the mean value
-    os << boost::format("index %i count %i value %.1f variance %.1f\n") % i % n % vl % vr;
+    const auto n = x->count();      // how many samples are in this bin
+    const auto vl = x->value();     // mean value
+    const auto vr = x->variance();  // estimated variance of the mean value
+    os << boost::format("index %i count %i value %.1f variance %.1f\n") % i %
+              n % vl % vr;
   }
 
   std::cout << os.str() << std::flush;
 
-  assert(os.str() == "index 0 count 2 value 1.5 variance 0.5\n"
-                     "index 1 count 2 value 3.5 variance 0.5\n"
-                     "index 2 count 2 value 5.5 variance 0.5\n");
+  assert(os.str() ==
+         "index 0 count 2 value 1.5 variance 0.5\n"
+         "index 1 count 2 value 3.5 variance 0.5\n"
+         "index 2 count 2 value 5.5 variance 0.5\n");
 }
 
 //]

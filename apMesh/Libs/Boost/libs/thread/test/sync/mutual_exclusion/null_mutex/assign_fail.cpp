@@ -18,11 +18,10 @@
 
 // null_mutex& operator=(const null_mutex&) = delete;
 
-#include <boost/thread/null_mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/null_mutex.hpp>
 
-int main()
-{
+int main() {
   boost::null_mutex m0;
   boost::null_mutex m1(m0);
 }

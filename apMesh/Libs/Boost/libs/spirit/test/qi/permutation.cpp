@@ -5,125 +5,123 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/qi_operator.hpp>
-#include <boost/spirit/include/qi_char.hpp>
-#include <boost/spirit/include/qi_string.hpp>
-#include <boost/spirit/include/qi_numeric.hpp>
-#include <boost/spirit/include/qi_action.hpp>
-#include <boost/spirit/include/qi_nonterminal.hpp>
-#include <boost/spirit/include/support_argument.hpp>
-#include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
+#include <boost/fusion/include/vector.hpp>
+#include <boost/optional.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/optional.hpp>
-
-#include <string>
+#include <boost/spirit/include/qi_action.hpp>
+#include <boost/spirit/include/qi_char.hpp>
+#include <boost/spirit/include/qi_nonterminal.hpp>
+#include <boost/spirit/include/qi_numeric.hpp>
+#include <boost/spirit/include/qi_operator.hpp>
+#include <boost/spirit/include/qi_string.hpp>
+#include <boost/spirit/include/support_argument.hpp>
 #include <iostream>
+#include <string>
+
 #include "test.hpp"
 
 using namespace spirit_test;
 
-int
-main()
-{
-    using boost::spirit::qi::int_;
-    using boost::spirit::qi::_1;
-    using boost::spirit::qi::_2;
-    using boost::spirit::qi::rule;
-    using boost::spirit::ascii::alpha;
-    using boost::spirit::ascii::char_;
+int main() {
+  using boost::spirit::ascii::alpha;
+  using boost::spirit::ascii::char_;
+  using boost::spirit::qi::_1;
+  using boost::spirit::qi::_2;
+  using boost::spirit::qi::int_;
+  using boost::spirit::qi::rule;
 
-    using boost::fusion::vector;
-    using boost::fusion::at_c;
-    using boost::optional;
+  using boost::optional;
+  using boost::fusion::at_c;
+  using boost::fusion::vector;
 
-    {
-        BOOST_TEST((test("a", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("b", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("ab", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("ba", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("abc", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("acb", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("bca", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("bac", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("cab", char_('a') ^ char_('b') ^ char_('c'))));
-        BOOST_TEST((test("cba", char_('a') ^ char_('b') ^ char_('c'))));
+  {
+    BOOST_TEST((test("a", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("b", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("ab", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("ba", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("abc", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("acb", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("bca", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("bac", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("cab", char_('a') ^ char_('b') ^ char_('c'))));
+    BOOST_TEST((test("cba", char_('a') ^ char_('b') ^ char_('c'))));
 
-        BOOST_TEST((!test("cca", char_('a') ^ char_('b') ^ char_('c'))));
-    }
+    BOOST_TEST((!test("cca", char_('a') ^ char_('b') ^ char_('c'))));
+  }
 
-    {   // test optional must stay uninitialized
-        optional<int> i;
-        BOOST_TEST((test_attr("", -int_ ^ int_, i)));
-        BOOST_TEST(!i);
-    }
+  {  // test optional must stay uninitialized
+    optional<int> i;
+    BOOST_TEST((test_attr("", -int_ ^ int_, i)));
+    BOOST_TEST(!i);
+  }
 
-    {
-        vector<optional<int>, optional<char> > attr;
+  {
+    vector<optional<int>, optional<char> > attr;
 
-        BOOST_TEST((test_attr("a", int_ ^ alpha, attr)));
-        BOOST_TEST((!at_c<0>(attr)));
-        BOOST_TEST((at_c<1>(attr).get() == 'a'));
+    BOOST_TEST((test_attr("a", int_ ^ alpha, attr)));
+    BOOST_TEST((!at_c<0>(attr)));
+    BOOST_TEST((at_c<1>(attr).get() == 'a'));
 
-        at_c<1>(attr) = optional<char>(); // clear the optional
-        BOOST_TEST((test_attr("123", int_ ^ alpha, attr)));
-        BOOST_TEST((at_c<0>(attr).get() == 123));
-        BOOST_TEST((!at_c<1>(attr)));
+    at_c<1>(attr) = optional<char>();  // clear the optional
+    BOOST_TEST((test_attr("123", int_ ^ alpha, attr)));
+    BOOST_TEST((at_c<0>(attr).get() == 123));
+    BOOST_TEST((!at_c<1>(attr)));
 
-        at_c<0>(attr) = optional<int>(); // clear the optional
-        BOOST_TEST((test_attr("123a", int_ ^ alpha, attr)));
-        BOOST_TEST((at_c<0>(attr).get() == 123));
-        BOOST_TEST((at_c<1>(attr).get() == 'a'));
+    at_c<0>(attr) = optional<int>();  // clear the optional
+    BOOST_TEST((test_attr("123a", int_ ^ alpha, attr)));
+    BOOST_TEST((at_c<0>(attr).get() == 123));
+    BOOST_TEST((at_c<1>(attr).get() == 'a'));
 
-        at_c<0>(attr) = optional<int>(); // clear the optional
-        at_c<1>(attr) = optional<char>(); // clear the optional
-        BOOST_TEST((test_attr("a123", int_ ^ alpha, attr)));
-        BOOST_TEST((at_c<0>(attr).get() == 123));
-        BOOST_TEST((at_c<1>(attr).get() == 'a'));
-    }
+    at_c<0>(attr) = optional<int>();   // clear the optional
+    at_c<1>(attr) = optional<char>();  // clear the optional
+    BOOST_TEST((test_attr("a123", int_ ^ alpha, attr)));
+    BOOST_TEST((at_c<0>(attr).get() == 123));
+    BOOST_TEST((at_c<1>(attr).get() == 'a'));
+  }
 
-    {   // test action
-        using namespace boost::phoenix;
-        namespace phx = boost::phoenix;
+  {  // test action
+    using namespace boost::phoenix;
+    namespace phx = boost::phoenix;
 
-        optional<int> i;
-        optional<char> c;
+    optional<int> i;
+    optional<char> c;
 
-        BOOST_TEST((test("123a", (int_ ^ alpha)[(phx::ref(i) = _1, phx::ref(c) = _2)])));
-        BOOST_TEST((i.get() == 123));
-        BOOST_TEST((c.get() == 'a'));
-    }
+    BOOST_TEST(
+        (test("123a", (int_ ^ alpha)[(phx::ref(i) = _1, phx::ref(c) = _2)])));
+    BOOST_TEST((i.get() == 123));
+    BOOST_TEST((c.get() == 'a'));
+  }
 
-    {   // test rule %=
+  {  // test rule %=
 
-        typedef vector<optional<int>, optional<char> > attr_type;
-        attr_type attr;
+    typedef vector<optional<int>, optional<char> > attr_type;
+    attr_type attr;
 
-        rule<char const*, attr_type()> r;
-        r %= int_ ^ alpha;
+    rule<char const*, attr_type()> r;
+    r %= int_ ^ alpha;
 
-        BOOST_TEST((test_attr("a", r, attr)));
-        BOOST_TEST((!at_c<0>(attr)));
-        BOOST_TEST((at_c<1>(attr).get() == 'a'));
+    BOOST_TEST((test_attr("a", r, attr)));
+    BOOST_TEST((!at_c<0>(attr)));
+    BOOST_TEST((at_c<1>(attr).get() == 'a'));
 
-        at_c<1>(attr) = optional<char>(); // clear the optional
-        BOOST_TEST((test_attr("123", r, attr)));
-        BOOST_TEST((at_c<0>(attr).get() == 123));
-        BOOST_TEST((!at_c<1>(attr)));
+    at_c<1>(attr) = optional<char>();  // clear the optional
+    BOOST_TEST((test_attr("123", r, attr)));
+    BOOST_TEST((at_c<0>(attr).get() == 123));
+    BOOST_TEST((!at_c<1>(attr)));
 
-        at_c<0>(attr) = optional<int>(); // clear the optional
-        BOOST_TEST((test_attr("123a", r, attr)));
-        BOOST_TEST((at_c<0>(attr).get() == 123));
-        BOOST_TEST((at_c<1>(attr).get() == 'a'));
+    at_c<0>(attr) = optional<int>();  // clear the optional
+    BOOST_TEST((test_attr("123a", r, attr)));
+    BOOST_TEST((at_c<0>(attr).get() == 123));
+    BOOST_TEST((at_c<1>(attr).get() == 'a'));
 
-        at_c<0>(attr) = optional<int>(); // clear the optional
-        at_c<1>(attr) = optional<char>(); // clear the optional
-        BOOST_TEST((test_attr("a123", r, attr)));
-        BOOST_TEST((at_c<0>(attr).get() == 123));
-        BOOST_TEST((at_c<1>(attr).get() == 'a'));
-    }
+    at_c<0>(attr) = optional<int>();   // clear the optional
+    at_c<1>(attr) = optional<char>();  // clear the optional
+    BOOST_TEST((test_attr("a123", r, attr)));
+    BOOST_TEST((at_c<0>(attr).get() == 123));
+    BOOST_TEST((at_c<1>(attr).get() == 'a'));
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-

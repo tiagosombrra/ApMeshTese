@@ -6,20 +6,19 @@
 #include <boost/pfr/tuple_size.hpp>
 
 struct X {
-    X() = default;
-    X(X&&) = default;
-    X(const X&) = delete;
+  X() = default;
+  X(X&&) = default;
+  X(const X&) = delete;
 
-    X& operator=(X&&) = default;
-    X& operator=(const X&) = delete;
+  X& operator=(X&&) = default;
+  X& operator=(const X&) = delete;
 };
 
 struct test_lvalue_ref_and_movable {
-    X x;
-    char& c;
+  X x;
+  char& c;
 };
 
 int main() {
-    return boost::pfr::tuple_size<test_lvalue_ref_and_movable>::value;
+  return boost::pfr::tuple_size<test_lvalue_ref_and_movable>::value;
 }
-

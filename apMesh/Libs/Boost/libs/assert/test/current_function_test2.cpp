@@ -8,18 +8,17 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 
-#include <boost/current_function.hpp>
 #include <boost/core/lightweight_test.hpp>
+#include <boost/current_function.hpp>
 #include <string>
 
-int f()
-{
-    BOOST_TEST_EQ( std::string( BOOST_CURRENT_FUNCTION ).substr( 0, 4 ), std::string( "int " ) );
-    return 0;
+int f() {
+  BOOST_TEST_EQ(std::string(BOOST_CURRENT_FUNCTION).substr(0, 4),
+                std::string("int "));
+  return 0;
 }
 
-int main()
-{
-    f();
-    return boost::report_errors();
+int main() {
+  f();
+  return boost::report_errors();
 }

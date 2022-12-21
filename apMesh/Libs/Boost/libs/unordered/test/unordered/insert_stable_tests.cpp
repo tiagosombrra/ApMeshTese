@@ -13,25 +13,22 @@
 #include "../helpers/test.hpp"
 
 namespace insert_stable {
-  struct member
-  {
-    int tag1_;
-    int tag2_;
+struct member {
+  int tag1_;
+  int tag2_;
 
-    member() : tag1_(0), tag2_(0) {}
-    member(int t1, int t2) : tag1_(t1), tag2_(t2) {}
+  member() : tag1_(0), tag2_(0) {}
+  member(int t1, int t2) : tag1_(t1), tag2_(t2) {}
 
-    friend bool operator==(member const& x, member const& y)
-    {
-      return x.tag1_ == y.tag1_;
-    }
+  friend bool operator==(member const& x, member const& y) {
+    return x.tag1_ == y.tag1_;
+  }
 
-    friend bool operator!=(member const& x, member const& y)
-    {
-      return x.tag1_ != y.tag1_;
-    }
-  };
-}
+  friend bool operator!=(member const& x, member const& y) {
+    return x.tag1_ != y.tag1_;
+  }
+};
+}  // namespace insert_stable
 
 #ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
 namespace boost
@@ -39,11 +36,10 @@ namespace boost
 namespace insert_stable
 #endif
 {
-  std::size_t hash_value(insert_stable::member const& x)
-  {
-    return static_cast<std::size_t>(x.tag1_);
-  }
+std::size_t hash_value(insert_stable::member const& x) {
+  return static_cast<std::size_t>(x.tag1_);
 }
+}  // namespace boost
 
 // This is no longer supported, as there's no longer an efficient way to get to
 // the end of a group of equivalent nodes.

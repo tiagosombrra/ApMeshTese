@@ -11,6 +11,7 @@
 #include <boost/histogram/axis/integer.hpp>
 #include <boost/histogram/make_histogram.hpp>
 #include <boost/histogram/storage_adaptor.hpp>
+
 #include "throw_exception.hpp"
 
 namespace ba = boost::accumulators;
@@ -34,7 +35,7 @@ int main() {
     BOOST_TEST_EQ(ba::mean(h[1]), 2.5);
     BOOST_TEST_EQ(ba::count(h[2]), 0);
 
-    auto h2 = h; // copy ok
+    auto h2 = h;  // copy ok
     BOOST_TEST_EQ(ba::count(h2[0]), 3);
     BOOST_TEST_EQ(ba::mean(h2[0]), 2);
     BOOST_TEST_EQ(ba::count(h2[1]), 2);

@@ -7,4 +7,3 @@
 
 #include "nova.hpp"
 #include "same_line_seq.cpp"
-

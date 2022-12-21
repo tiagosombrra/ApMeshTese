@@ -10,86 +10,66 @@
 //  This example uses typeof to build a nonrecursive grammar.
 //  See boost/spirit/include/rule_parser.hpp for details.
 //------------------------------------------------------------------------------
-#include <string>
-#include <iostream>
-
-#include <boost/typeof/typeof.hpp>
-
-#include <boost/spirit/include/classic_core.hpp>
-#include <boost/spirit/include/classic_typeof.hpp>
-
 #include <boost/spirit/include/classic_confix.hpp>
-#include <boost/spirit/include/classic_typeof.hpp>
-
+#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_rule_parser.hpp>
+#include <boost/spirit/include/classic_typeof.hpp>
+#include <boost/typeof/typeof.hpp>
+#include <iostream>
+#include <string>
 
 // It's important to create an own registration group, even if there are no
 // manual Typeof registrations like in this case.
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
+namespace my_project {
+namespace my_module {
 
-namespace my_project { namespace my_module {
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-  using namespace BOOST_SPIRIT_CLASSIC_NS;
+// A semantic action.
+void echo_uint(unsigned i) { std::cout << "- " << i << std::endl; }
 
+#define BOOST_SPIRIT__NAMESPACE (2, (my_project, my_module))
 
-  // A semantic action.
-  void echo_uint(unsigned i) { std::cout << "- " << i << std::endl; }
+// C/C++ comment and whitespace skip parser..
+BOOST_SPIRIT_RULE_PARSER(skipper, -, -, -,
 
+                         (confix_p("//", *anychar_p, eol_p) |
+                          confix_p("/*", *anychar_p, "*/") | space_p))
 
-  #define BOOST_SPIRIT__NAMESPACE (2,(my_project,my_module))
+// Parser for unsigned decimal, hexadecimal and binary literals.
+BOOST_SPIRIT_RULE_PARSER(uint_literal, -, -, -,
 
-  // C/C++ comment and whitespace skip parser..
-  BOOST_SPIRIT_RULE_PARSER(skipper,
-    -,-,-, 
+                         "0x" >> hex_p[&echo_uint] | "0b" >> bin_p[&echo_uint] |
+                             uint_p[&echo_uint])
 
-    (   confix_p("//",*anychar_p,eol_p) 
-      | confix_p("/*",*anychar_p,"*/") 
-      | space_p 
-    )
-  )
+// A generic list parser (in some ways similar to Spirit's list_p utility or
+// the % operator) with two parameters.
+BOOST_SPIRIT_RULE_PARSER(enumeration_parser,
+                         (2, (element_parser, delimiter_parser)), -, -,
 
-  // Parser for unsigned decimal, hexadecimal and binary literals.
-  BOOST_SPIRIT_RULE_PARSER(uint_literal,
-    -,-,-,
+                         element_parser >>
+                             *(delimiter_parser >> element_parser))
 
-      "0x" >> hex_p[ & echo_uint ]
-    | "0b" >> bin_p[ & echo_uint ]
-    | uint_p[ & echo_uint ]
-  ) 
+// Parse an optional, comma separated list of uints with explicit post-skip.
+BOOST_SPIRIT_RULE_PARSER(line, -, -, -,
+                         !enumeration_parser(uint_literal, ',') >>
+                             lexeme_d[!skipper])
 
-  // A generic list parser (in some ways similar to Spirit's list_p utility or
-  // the % operator) with two parameters.
-  BOOST_SPIRIT_RULE_PARSER(enumeration_parser,
-    (2,( element_parser, delimiter_parser )),-,-,
+bool parse_line(char const* str) {
+  return BOOST_SPIRIT_CLASSIC_NS::parse(str, line, skipper).full;
+}
 
-    element_parser >> *(delimiter_parser >> element_parser)
-  ) 
+#undef BOOST_SPIRIT__NAMESPACE
 
-  // Parse an optional, comma separated list of uints with explicit post-skip.
-  BOOST_SPIRIT_RULE_PARSER(line,
-    -,-,-,
-    ! enumeration_parser(uint_literal,',') 
-    >> lexeme_d[ !skipper ]
-  )
+}  // namespace my_module
+}  // namespace my_project
 
-  bool parse_line(char const * str)
-  {
-    return BOOST_SPIRIT_CLASSIC_NS::parse(str,line,skipper).full;
-  }
-
-  #undef BOOST_SPIRIT__NAMESPACE
-
-} } // namespace ::my_project::my_module
-
-
-int main()
-{
+int main() {
   std::string str;
-  while (std::getline(std::cin, str))
-  {
-    if (str.empty())
-      break;
+  while (std::getline(std::cin, str)) {
+    if (str.empty()) break;
 
     str += '\n';
 
@@ -100,4 +80,3 @@ int main()
   }
   return 0;
 }
-

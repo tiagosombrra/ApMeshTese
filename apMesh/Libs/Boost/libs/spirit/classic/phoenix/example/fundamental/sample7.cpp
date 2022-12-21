@@ -6,14 +6,14 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <vector>
 #include <algorithm>
 #include <iostream>
+#include <vector>
 
 #define PHOENIX_LIMIT 5
+#include <boost/spirit/include/phoenix1_composite.hpp>
 #include <boost/spirit/include/phoenix1_operators.hpp>
 #include <boost/spirit/include/phoenix1_primitives.hpp>
-#include <boost/spirit/include/phoenix1_composite.hpp>
 #include <boost/spirit/include/phoenix1_special_ops.hpp>
 #include <boost/spirit/include/phoenix1_statements.hpp>
 
@@ -35,13 +35,12 @@ namespace phoenix {
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TupleArgsT, typename TupleLocsT>
 struct local_tuple : public TupleArgsT {
+  typedef TupleLocsT local_vars_t;
 
-    typedef TupleLocsT local_vars_t;
+  local_tuple(TupleArgsT const& args, TupleLocsT const& locs_)
+      : TupleArgsT(args), locs(locs_) {}
 
-    local_tuple(TupleArgsT const& args, TupleLocsT const& locs_)
-    :   TupleArgsT(args), locs(locs_) {}
-
-    mutable TupleLocsT locs;
+  mutable TupleLocsT locs;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -56,15 +55,13 @@ struct local_tuple : public TupleArgsT {
 ///////////////////////////////////////////////////////////////////////////////
 template <int N, typename TupleT>
 struct local_var_result {
-
-    typedef nil_t type;
+  typedef nil_t type;
 };
 
 //////////////////////////////////
 template <int N, typename TupleArgsT, typename TupleLocsT>
 struct local_var_result<N, local_tuple<TupleArgsT, TupleLocsT> > {
-
-    typedef typename tuple_element<N, TupleLocsT>::type& type;
+  typedef typename tuple_element<N, TupleLocsT>::type& type;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -85,19 +82,15 @@ struct local_var_result<N, local_tuple<TupleArgsT, TupleLocsT> > {
 ///////////////////////////////////////////////////////////////////////////////
 template <int N>
 struct local_var {
+  template <typename TupleT>
+  struct result {
+    typedef typename local_var_result<N, TupleT>::type type;
+  };
 
-    template <typename TupleT>
-    struct result {
-
-        typedef typename local_var_result<N, TupleT>::type type;
-    };
-
-    template <typename TupleT>
-    typename local_var_result<N, TupleT>::type
-    eval(TupleT const& tuple) const
-    {
-        return tuple.locs[tuple_index<N>()];
-    }
+  template <typename TupleT>
+  typename local_var_result<N, TupleT>::type eval(TupleT const& tuple) const {
+    return tuple.locs[tuple_index<N>()];
+  }
 };
 
 //////////////////////////////////
@@ -126,24 +119,23 @@ actor<local_var<4> > const loc5 = local_var<4>();
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ActorT, typename LocsT>
 struct locals_composite {
+  typedef locals_composite<ActorT, LocsT> self_t;
 
-    typedef locals_composite<ActorT, LocsT> self_t;
+  template <typename TupleT>
+  struct result {
+    typedef typename actor_result<ActorT, TupleT>::type type;
+  };
 
-    template <typename TupleT>
-    struct result { typedef typename actor_result<ActorT, TupleT>::type type; };
+  locals_composite(ActorT const& actor_, LocsT const& locals_)
+      : actor(actor_), locals(locals_) {}
 
-    locals_composite(ActorT const& actor_, LocsT const& locals_)
-    :   actor(actor_), locals(locals_) {}
+  template <typename TupleT>
+  typename actor_result<ActorT, TupleT>::type eval(TupleT const& args) const {
+    actor.eval(local_tuple<TupleT, LocsT>(args, locals));
+  }
 
-    template <typename TupleT>
-    typename actor_result<ActorT, TupleT>::type
-    eval(TupleT const& args) const
-    {
-        actor.eval(local_tuple<TupleT, LocsT>(args, locals));
-    }
-
-    ActorT actor;
-    LocsT locals;
+  ActorT actor;
+  LocsT locals;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -159,19 +151,16 @@ struct locals_composite {
 ///////////////////////////////////////////////////////////////////////////////
 template <typename LocsT>
 struct locals_gen {
+  locals_gen(LocsT const& locals_) : locals(locals_) {}
 
-    locals_gen(LocsT const& locals_)
-    :   locals(locals_) {}
+  template <typename ActorT>
+  actor<locals_composite<typename as_actor<ActorT>::type, LocsT> > operator[](
+      ActorT const& actor) {
+    return locals_composite<typename as_actor<ActorT>::type, LocsT>(
+        as_actor<ActorT>::convert(actor), locals);
+  }
 
-    template <typename ActorT>
-    actor<locals_composite<typename as_actor<ActorT>::type, LocsT> >
-    operator[](ActorT const& actor)
-    {
-        return locals_composite<typename as_actor<ActorT>::type, LocsT>
-            (as_actor<ActorT>::convert(actor), locals);
-    }
-
-    LocsT locals;
+  LocsT locals;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -182,94 +171,67 @@ struct locals_gen {
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T0>
-inline locals_gen<tuple<T0> >
-locals(
-    T0 const& _0 = T0()
-)
-{
-    typedef tuple<T0> tuple_t;
-    return locals_gen<tuple_t>(tuple_t(_0));
+inline locals_gen<tuple<T0> > locals(T0 const& _0 = T0()) {
+  typedef tuple<T0> tuple_t;
+  return locals_gen<tuple_t>(tuple_t(_0));
 }
 
 //////////////////////////////////
 template <typename T0, typename T1>
-inline locals_gen<tuple<T0, T1> >
-locals(
-    T0 const& _0 = T0(),
-    T1 const& _1 = T1()
-)
-{
-    typedef tuple<T0, T1> tuple_t;
-    return locals_gen<tuple_t>(tuple_t(_0, _1));
+inline locals_gen<tuple<T0, T1> > locals(T0 const& _0 = T0(),
+                                         T1 const& _1 = T1()) {
+  typedef tuple<T0, T1> tuple_t;
+  return locals_gen<tuple_t>(tuple_t(_0, _1));
 }
 
 //////////////////////////////////
 template <typename T0, typename T1, typename T2>
-inline locals_gen<tuple<T0, T1, T2> >
-locals(
-    T0 const& _0 = T0(),
-    T1 const& _1 = T1(),
-    T2 const& _2 = T2()
-)
-{
-    typedef tuple<T0, T1, T2> tuple_t;
-    return locals_gen<tuple_t>(tuple_t(_0, _1, _2));
+inline locals_gen<tuple<T0, T1, T2> > locals(T0 const& _0 = T0(),
+                                             T1 const& _1 = T1(),
+                                             T2 const& _2 = T2()) {
+  typedef tuple<T0, T1, T2> tuple_t;
+  return locals_gen<tuple_t>(tuple_t(_0, _1, _2));
 }
 
 //////////////////////////////////
 template <typename T0, typename T1, typename T2, typename T3>
-inline locals_gen<tuple<T0, T1, T2, T3> >
-locals(
-    T0 const& _0 = T0(),
-    T1 const& _1 = T1(),
-    T2 const& _2 = T2(),
-    T3 const& _3 = T3()
-)
-{
-    typedef tuple<T0, T1, T2, T3> tuple_t;
-    return locals_gen<tuple_t>(tuple_t(_0, _1, _2, _3));
+inline locals_gen<tuple<T0, T1, T2, T3> > locals(T0 const& _0 = T0(),
+                                                 T1 const& _1 = T1(),
+                                                 T2 const& _2 = T2(),
+                                                 T3 const& _3 = T3()) {
+  typedef tuple<T0, T1, T2, T3> tuple_t;
+  return locals_gen<tuple_t>(tuple_t(_0, _1, _2, _3));
 }
 
 //////////////////////////////////
 template <typename T0, typename T1, typename T2, typename T3, typename T4>
-inline locals_gen<tuple<T0, T1, T2, T3, T4> >
-locals(
-    T0 const& _0 = T0(),
-    T1 const& _1 = T1(),
-    T2 const& _2 = T2(),
-    T3 const& _3 = T3(),
-    T4 const& _4 = T4()
-)
-{
-    typedef tuple<T0, T1, T2, T3> tuple_t;
-    return locals_gen<tuple_t>(tuple_t(_0, _1, _2, _3, _4));
+inline locals_gen<tuple<T0, T1, T2, T3, T4> > locals(T0 const& _0 = T0(),
+                                                     T1 const& _1 = T1(),
+                                                     T2 const& _2 = T2(),
+                                                     T3 const& _3 = T3(),
+                                                     T4 const& _4 = T4()) {
+  typedef tuple<T0, T1, T2, T3> tuple_t;
+  return locals_gen<tuple_t>(tuple_t(_0, _1, _2, _3, _4));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-}
+}  // namespace phoenix
 
 //////////////////////////////////
 using namespace std;
 using namespace phoenix;
 
 //////////////////////////////////
-int
-main()
-{
-    int init[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    vector<int> c(init, init + 10);
-    typedef vector<int>::iterator iterator;
+int main() {
+  int init[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  vector<int> c(init, init + 10);
+  typedef vector<int>::iterator iterator;
 
-    for_each(c.begin(), c.end(),
-        locals<int, char const*>(0, "...That's all\n")
-        [
-            for_(loc1 = 0, loc1 < arg1, ++loc1)
-            [
-                cout << loc1 << ", "
-            ],
-            cout << loc2
-        ]
-    );
+  for_each(c.begin(), c.end(),
+           locals<int, char const*>(
+               0, "...That's all\n")[for_(loc1 = 0, loc1 < arg1,
+                                          ++loc1)[cout << loc1 << ", "],
+                                     cout << loc2]);
 
-    return 0;
+  return 0;
 }

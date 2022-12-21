@@ -11,7 +11,7 @@
 #include "test_assoc_cont_factory.hpp"
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
-#include <boost/flyweight/assoc_container_factory.hpp> 
+#include <boost/flyweight/assoc_container_factory.hpp>
 #include <boost/flyweight/detail/is_placeholder_expr.hpp>
 #include <boost/flyweight/flyweight.hpp>
 #include <boost/flyweight/refcounted.hpp>
@@ -20,28 +20,22 @@
 #include <boost/mpl/if.hpp>
 #include <functional>
 #include <set>
+
 #include "test_basic_template.hpp"
 
 using namespace boost::flyweights;
 
-struct reverse_set_specifier
-{
-  template<typename Entry,typename Key>
-  struct apply
-  {
-    typedef std::set<Entry,std::greater<Key> > type;
+struct reverse_set_specifier {
+  template <typename Entry, typename Key>
+  struct apply {
+    typedef std::set<Entry, std::greater<Key> > type;
   };
 };
 
-struct assoc_container_factory_flyweight_specifier1
-{
-  template<typename T>
-  struct apply
-  {
-    typedef flyweight<
-      T,
-      assoc_container_factory<reverse_set_specifier>
-    > type;
+struct assoc_container_factory_flyweight_specifier1 {
+  template <typename T>
+  struct apply {
+    typedef flyweight<T, assoc_container_factory<reverse_set_specifier> > type;
   };
 };
 
@@ -53,39 +47,25 @@ struct assoc_container_factory_flyweight_specifier1
  * MPL placeholder expression. We avoid this mess with protected_set<...>.
  */
 
-struct protected_set_empty_base{};
+struct protected_set_empty_base {};
 
-template<typename K,typename C,typename A>
-struct protected_set:
-  boost::mpl::if_c<
-    boost::flyweights::detail::is_placeholder_expression<
-      protected_set<K,C,A>
-    >::value,
-    protected_set_empty_base,
-    std::set<K,C,A>
-  >::type
-{};
+template <typename K, typename C, typename A>
+struct protected_set
+    : boost::mpl::if_c<boost::flyweights::detail::is_placeholder_expression<
+                           protected_set<K, C, A> >::value,
+                       protected_set_empty_base, std::set<K, C, A> >::type {};
 
-struct assoc_container_factory_flyweight_specifier2
-{
-  template<typename T>
-  struct apply
-  {
-    typedef flyweight<
-      T,
-      assoc_container_factory_class<
-        protected_set<
-          boost::mpl::_1,
-          std::greater<boost::mpl::_2>,
-          std::allocator<boost::mpl::_1>
-        >
-      >
-    > type;
+struct assoc_container_factory_flyweight_specifier2 {
+  template <typename T>
+  struct apply {
+    typedef flyweight<T, assoc_container_factory_class<protected_set<
+                             boost::mpl::_1, std::greater<boost::mpl::_2>,
+                             std::allocator<boost::mpl::_1> > > >
+        type;
   };
 };
 
-void test_assoc_container_factory()
-{
+void test_assoc_container_factory() {
   test_basic_template<assoc_container_factory_flyweight_specifier1>();
   test_basic_template<assoc_container_factory_flyweight_specifier2>();
 }

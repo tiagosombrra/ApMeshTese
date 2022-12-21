@@ -7,10 +7,10 @@
  */
 
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_capacity.hpp"
 
-int main()
-{
+int main() {
   test_capacity();
   return boost::report_errors();
 }

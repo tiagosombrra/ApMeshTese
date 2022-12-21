@@ -11,12 +11,12 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/windows/stream_handle.hpp>
 
-#include <boost/asio/io_context.hpp>
 #include "../archetypes/async_result.hpp"
 #include "../unit_test.hpp"
 
@@ -30,22 +30,16 @@
 
 namespace windows_stream_handle_compile {
 
-void write_some_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void write_some_handler(const boost::system::error_code&, std::size_t) {}
 
-void read_some_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void read_some_handler(const boost::system::error_code&, std::size_t) {}
 
-void test()
-{
+void test() {
 #if defined(BOOST_ASIO_HAS_WINDOWS_STREAM_HANDLE)
   using namespace boost::asio;
   namespace win = boost::asio::windows;
 
-  try
-  {
+  try {
     io_context ioc;
     const io_context::executor_type ioc_ex = ioc.get_executor();
     char mutable_char_buffer[128] = "";
@@ -69,14 +63,14 @@ void test()
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     win::stream_handle handle5(std::move(handle4));
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_stream_handle operators.
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     handle1 = win::stream_handle(ioc);
     handle1 = std::move(handle4);
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
@@ -85,13 +79,13 @@ void test()
 
     // basic_overlapped_handle functions.
 
-    win::stream_handle::lowest_layer_type& lowest_layer
-      = handle1.lowest_layer();
+    win::stream_handle::lowest_layer_type& lowest_layer =
+        handle1.lowest_layer();
     (void)lowest_layer;
 
     const win::stream_handle& handle6 = handle1;
-    const win::stream_handle::lowest_layer_type& lowest_layer2
-      = handle6.lowest_layer();
+    const win::stream_handle::lowest_layer_type& lowest_layer2 =
+        handle6.lowest_layer();
     (void)lowest_layer2;
 
     HANDLE native_handle3 = INVALID_HANDLE_VALUE;
@@ -103,8 +97,8 @@ void test()
     handle1.close();
     handle1.close(ec);
 
-    win::stream_handle::native_handle_type native_handle4
-      = handle1.native_handle();
+    win::stream_handle::native_handle_type native_handle4 =
+        handle1.native_handle();
     (void)native_handle4;
 
     handle1.cancel();
@@ -130,19 +124,14 @@ void test()
     handle1.async_read_some(buffer(mutable_char_buffer), &read_some_handler);
     int i3 = handle1.async_read_some(buffer(mutable_char_buffer), lazy);
     (void)i3;
+  } catch (std::exception&) {
   }
-  catch (std::exception&)
-  {
-  }
-#endif // defined(BOOST_ASIO_HAS_WINDOWS_STREAM_HANDLE)
+#endif  // defined(BOOST_ASIO_HAS_WINDOWS_STREAM_HANDLE)
 }
 
-} // namespace windows_stream_handle_compile
+}  // namespace windows_stream_handle_compile
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "windows/stream_handle",
-  BOOST_ASIO_TEST_CASE(windows_stream_handle_compile::test)
-)
+BOOST_ASIO_TEST_SUITE("windows/stream_handle",
+                      BOOST_ASIO_TEST_CASE(windows_stream_handle_compile::test))

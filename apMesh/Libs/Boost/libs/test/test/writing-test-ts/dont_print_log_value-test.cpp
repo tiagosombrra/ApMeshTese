@@ -10,25 +10,23 @@
 // *****************************************************************************
 
 #define BOOST_TEST_MODULE BOOST_TEST_DONT_PRINT_LOG_VALUE unit test
-#include <boost/test/unit_test.hpp>
-#include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
-
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/unit_test.hpp>
 #include <vector>
 
 struct dummy_class {
-    operator bool() const { return true; }
+  operator bool() const { return true; }
 
-    bool operator==(dummy_class const&) const { return true;  }
-    bool operator!=(dummy_class const&) const { return false; }
+  bool operator==(dummy_class const&) const { return true; }
+  bool operator!=(dummy_class const&) const { return false; }
 };
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE(dummy_class)
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE(single_object)
-{
+BOOST_AUTO_TEST_CASE(single_object) {
   dummy_class actual, expected;
   BOOST_TEST(actual == expected);
 }
@@ -36,8 +34,7 @@ BOOST_AUTO_TEST_CASE(single_object)
 //____________________________________________________________________________//
 
 // this one tests for contexts printing in dataset tests
-std::vector<dummy_class> generate_vector()
-{
+std::vector<dummy_class> generate_vector() {
   std::vector<dummy_class> out;
   out.push_back(dummy_class());
   out.push_back(dummy_class());
@@ -47,8 +44,8 @@ std::vector<dummy_class> generate_vector()
 
 //____________________________________________________________________________//
 
-BOOST_DATA_TEST_CASE( test_data_case, boost::unit_test::data::make(generate_vector()))
-{
+BOOST_DATA_TEST_CASE(test_data_case,
+                     boost::unit_test::data::make(generate_vector())) {
   BOOST_TEST(sample);
 }
 

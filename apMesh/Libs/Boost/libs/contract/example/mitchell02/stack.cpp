@@ -7,132 +7,127 @@
 //[mitchell02_stack
 #include <boost/contract.hpp>
 #include <boost/optional.hpp>
-#include <vector>
 #include <cassert>
+#include <vector>
 
-template<typename T>
+template <typename T>
 class stack {
-    friend class boost::contract::access;
+  friend class boost::contract::access;
 
-    void invariant() const {
-        BOOST_CONTRACT_ASSERT(count() >= 0); // Non-negative count.
-    }
+  void invariant() const {
+    BOOST_CONTRACT_ASSERT(count() >= 0);  // Non-negative count.
+  }
 
-public:
-    /* Creation */
+ public:
+  /* Creation */
 
-    // Create empty stack.
-    stack() {
-        boost::contract::check c = boost::contract::constructor(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(count() == 0); // Empty.
-            })
-        ;
-    }
+  // Create empty stack.
+  stack() {
+    boost::contract::check c =
+        boost::contract::constructor(this).postcondition([&] {
+          BOOST_CONTRACT_ASSERT(count() == 0);  // Empty.
+        });
+  }
 
-    // Destroy stack.
-    virtual ~stack() {
-        // Check invariants.
-        boost::contract::check c = boost::contract::destructor(this);
-    }
+  // Destroy stack.
+  virtual ~stack() {
+    // Check invariants.
+    boost::contract::check c = boost::contract::destructor(this);
+  }
 
-    /* Basic Queries */
+  /* Basic Queries */
 
-    // Number of items.
-    int count() const {
-        // Check invariants.
-        boost::contract::check c = boost::contract::public_function(this);
-        return items_.size();
-    }
+  // Number of items.
+  int count() const {
+    // Check invariants.
+    boost::contract::check c = boost::contract::public_function(this);
+    return items_.size();
+  }
 
-    // Item at index in [1, count()] (as in Eiffel).
-    T const& item_at(int index) const {
-        boost::contract::check c = boost::contract::public_function(this)
+  // Item at index in [1, count()] (as in Eiffel).
+  T const& item_at(int index) const {
+    boost::contract::check c =
+        boost::contract::public_function(this).precondition([&] {
+          BOOST_CONTRACT_ASSERT(index > 0);         // Positive index.
+          BOOST_CONTRACT_ASSERT(index <= count());  // Index within count.
+        });
+
+    return items_[index - 1];
+  }
+
+  /* Derived Queries */
+
+  // If no items.
+  bool is_empty() const {
+    bool result;
+    boost::contract::check c =
+        boost::contract::public_function(this).postcondition([&] {
+          // Consistent with count.
+          BOOST_CONTRACT_ASSERT(result == (count() == 0));
+        });
+
+    return result = (count() == 0);
+  }
+
+  // Top item.
+  T const& item() const {
+    boost::optional<T const&> result;  // Avoid extra construction of T.
+    boost::contract::check c =
+        boost::contract::public_function(this)
             .precondition([&] {
-                BOOST_CONTRACT_ASSERT(index > 0); // Positive index.
-                BOOST_CONTRACT_ASSERT(index <= count()); // Index within count.
+              BOOST_CONTRACT_ASSERT(count() > 0);  // Not empty.
             })
-        ;
-
-        return items_[index - 1];
-    }
-
-    /* Derived Queries */
-
-    // If no items.
-    bool is_empty() const {
-        bool result;
-        boost::contract::check c = boost::contract::public_function(this)
             .postcondition([&] {
-                // Consistent with count.
-                BOOST_CONTRACT_ASSERT(result == (count() == 0));
-            })
-        ;
+              // Item on top.
+              BOOST_CONTRACT_ASSERT(*result == item_at(count()));
+            });
 
-        return result = (count() == 0);
-    }
+    return *(result = item_at(count()));
+  }
 
-    // Top item.
-    T const& item() const {
-        boost::optional<T const&> result; // Avoid extra construction of T.
-        boost::contract::check c = boost::contract::public_function(this)
+  /* Commands */
+
+  // Push item to the top.
+  void put(T const& new_item) {
+    boost::contract::old_ptr<int> old_count = BOOST_CONTRACT_OLDOF(count());
+    boost::contract::check c =
+        boost::contract::public_function(this).postcondition([&] {
+          BOOST_CONTRACT_ASSERT(count() == *old_count + 1);  // Count inc.
+          BOOST_CONTRACT_ASSERT(item() == new_item);         // Item set.
+        });
+
+    items_.push_back(new_item);
+  }
+
+  // Pop top item.
+  void remove() {
+    boost::contract::old_ptr<int> old_count = BOOST_CONTRACT_OLDOF(count());
+    boost::contract::check c =
+        boost::contract::public_function(this)
             .precondition([&] {
-                BOOST_CONTRACT_ASSERT(count() > 0); // Not empty.
+              BOOST_CONTRACT_ASSERT(count() > 0);  // Not empty.
             })
             .postcondition([&] {
-                // Item on top.
-                BOOST_CONTRACT_ASSERT(*result == item_at(count()));
-            })
-        ;
+              BOOST_CONTRACT_ASSERT(count() == *old_count - 1);  // Count dec.
+            });
 
-        return *(result = item_at(count()));
-    }
+    items_.pop_back();
+  }
 
-    /* Commands */
-
-    // Push item to the top.
-    void put(T const& new_item) {
-        boost::contract::old_ptr<int> old_count = BOOST_CONTRACT_OLDOF(count());
-        boost::contract::check c = boost::contract::public_function(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(count() == *old_count + 1); // Count inc.
-                BOOST_CONTRACT_ASSERT(item() == new_item); // Item set.
-            })
-        ;
-
-        items_.push_back(new_item);
-    }
-
-    // Pop top item.
-    void remove() {
-        boost::contract::old_ptr<int> old_count = BOOST_CONTRACT_OLDOF(count());
-        boost::contract::check c = boost::contract::public_function(this)
-            .precondition([&] {
-                BOOST_CONTRACT_ASSERT(count() > 0); // Not empty.
-            })
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(count() == *old_count - 1); // Count dec.
-            })
-        ;
-
-        items_.pop_back();
-    }
-
-private:
-    std::vector<T> items_;
+ private:
+  std::vector<T> items_;
 };
 
 int main() {
-    stack<int> s;
-    assert(s.count() == 0);
+  stack<int> s;
+  assert(s.count() == 0);
 
-    s.put(123);
-    assert(s.item() == 123);
+  s.put(123);
+  assert(s.item() == 123);
 
-    s.remove();
-    assert(s.is_empty());
+  s.remove();
+  assert(s.is_empty());
 
-    return 0;
+  return 0;
 }
 //]
-

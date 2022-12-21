@@ -9,10 +9,8 @@
 
 #define BOOST_TYPEOF_EMULATION
 #include <boost/spirit/include/classic_typeof.hpp>
-
 #include <boost/spirit/include/classic_utility.hpp>
 
 // currently not in the master header
-#include <boost/spirit/include/classic_regex.hpp>
 #include <boost/spirit/include/classic_grammar_def.hpp>
-
+#include <boost/spirit/include/classic_regex.hpp>

@@ -7,13 +7,11 @@
 
 #include <cstdint>
 
-namespace third_party
-{
-    struct record
-    {
-      uint32_t   id;       // big endian
-      int32_t    balance;  // big endian
+namespace third_party {
+struct record {
+  uint32_t id;      // big endian
+  int32_t balance;  // big endian
 
-      // ...  data members whose endianness is not a concern
-    };
-}
+  // ...  data members whose endianness is not a concern
+};
+}  // namespace third_party

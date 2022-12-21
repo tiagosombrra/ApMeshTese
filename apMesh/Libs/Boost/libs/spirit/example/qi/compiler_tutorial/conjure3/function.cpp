@@ -6,12 +6,12 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #if defined(_MSC_VER)
-# pragma warning(disable: 4345)
+#pragma warning(disable : 4345)
 #endif
 
 #include "config.hpp"
-#include "lexer.hpp"
 #include "function_def.hpp"
+#include "lexer.hpp"
 
 typedef std::string::const_iterator base_iterator_type;
 typedef client::lexer::conjure_tokens<base_iterator_type> lexer_type;

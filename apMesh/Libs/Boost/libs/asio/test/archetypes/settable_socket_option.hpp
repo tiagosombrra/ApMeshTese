@@ -16,34 +16,29 @@
 namespace archetypes {
 
 template <typename PointerType>
-class settable_socket_option
-{
-public:
+class settable_socket_option {
+ public:
   template <typename Protocol>
-  int level(const Protocol&) const
-  {
+  int level(const Protocol&) const {
     return 0;
   }
 
   template <typename Protocol>
-  int name(const Protocol&) const
-  {
+  int name(const Protocol&) const {
     return 0;
   }
 
   template <typename Protocol>
-  const PointerType* data(const Protocol&) const
-  {
+  const PointerType* data(const Protocol&) const {
     return 0;
   }
 
   template <typename Protocol>
-  std::size_t size(const Protocol&) const
-  {
+  std::size_t size(const Protocol&) const {
     return 0;
   }
 };
 
-} // namespace archetypes
+}  // namespace archetypes
 
-#endif // ARCHETYPES_SETTABLE_SOCKET_OPTION_HPP
+#endif  // ARCHETYPES_SETTABLE_SOCKET_OPTION_HPP

@@ -7,7 +7,7 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_VARIADIC_MACROS
-#   error "variadic macros required"
+#error "variadic macros required"
 #else
 
 #include <boost/local_function.hpp>
@@ -17,22 +17,24 @@
 
 //[operator
 struct point {
-    int x;
-    int y;
+  int x;
+  int y;
 };
-BOOST_TYPEOF_REGISTER_TYPE(point) // Register for `NAME` below.
+BOOST_TYPEOF_REGISTER_TYPE(point)  // Register for `NAME` below.
 
 int main(void) {
-    bool BOOST_LOCAL_FUNCTION(const point& p, const point& q) {
-        return p.x == q.x && p.y == q.y;
-    } BOOST_LOCAL_FUNCTION_NAME(equal) // OK: not using `operator==`.
+  bool BOOST_LOCAL_FUNCTION(const point& p, const point& q) {
+    return p.x == q.x && p.y == q.y;
+  }
+  BOOST_LOCAL_FUNCTION_NAME(equal)  // OK: not using `operator==`.
 
-    point a; a.x = 1; a.y = 2;
-    point b = a;
-    BOOST_TEST(equal(a, b));
-    return boost::report_errors();
+  point a;
+  a.x = 1;
+  a.y = 2;
+  point b = a;
+  BOOST_TEST(equal(a, b));
+  return boost::report_errors();
 }
 //]
 
-#endif // VARIADIC_MACROS
-
+#endif  // VARIADIC_MACROS

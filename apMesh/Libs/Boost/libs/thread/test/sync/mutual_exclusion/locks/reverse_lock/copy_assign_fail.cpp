@@ -10,13 +10,10 @@
 // reverse_lock& operator=(reverse_lock const&) = delete;
 
 #include <boost/thread/lock_types.hpp>
-#include <boost/thread/reverse_lock.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/thread/lock_types.hpp>
+#include <boost/thread/reverse_lock.hpp>
 
-
-int main()
-{
+int main() {
   boost::mutex m0;
   boost::mutex m1;
   boost::unique_lock<boost::mutex> lk0(m0);
@@ -26,8 +23,6 @@ int main()
     boost::reverse_lock<boost::unique_lock<boost::mutex> > lg1(lk1);
     lg1 = lg0;
   }
-
 }
 
 #include "../../../../remove_error_code_unused_warning.hpp"
-

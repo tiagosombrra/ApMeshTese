@@ -11,6 +11,7 @@
 #include <boost/histogram/axis/integer.hpp>
 #include <unordered_map>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
@@ -51,8 +52,9 @@ void run_tests() {
 
   {
     using W = accumulators::weighted_sum<>;
-    auto h = make_s(Tag(), std::vector<W>(), axis::integer<>(0, 2),
-                    axis::integer<int, axis::null_type, axis::option::none_t>(2, 4));
+    auto h =
+        make_s(Tag(), std::vector<W>(), axis::integer<>(0, 2),
+               axis::integer<int, axis::null_type, axis::option::none_t>(2, 4));
     W w(0, 2);
     for (auto&& x : h) {
       x = w;

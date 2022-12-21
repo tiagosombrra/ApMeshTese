@@ -1,5 +1,5 @@
 #ifndef _MSC_VER
-  #warning deprecated
+#warning deprecated
 #endif
 /*
 Matrix3d m = Matrix3d::Zero();

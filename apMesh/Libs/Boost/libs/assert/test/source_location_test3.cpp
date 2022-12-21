@@ -6,25 +6,25 @@
 #include <boost/core/lightweight_test.hpp>
 #include <sstream>
 
-int main()
-{
-    {
-        boost::source_location loc;
+int main() {
+  {
+    boost::source_location loc;
 
-        std::ostringstream os;
-        os << loc;
+    std::ostringstream os;
+    os << loc;
 
-        BOOST_TEST_EQ( os.str(), std::string( "(unknown source location)" ) );
-    }
+    BOOST_TEST_EQ(os.str(), std::string("(unknown source location)"));
+  }
 
-    {
-        boost::source_location loc = BOOST_CURRENT_LOCATION;
+  {
+    boost::source_location loc = BOOST_CURRENT_LOCATION;
 
-        std::ostringstream os;
-        os << loc;
+    std::ostringstream os;
+    os << loc;
 
-        BOOST_TEST_EQ( os.str(), std::string( __FILE__ ) + ":21: in function '" + BOOST_CURRENT_FUNCTION + "'" );
-    }
+    BOOST_TEST_EQ(os.str(), std::string(__FILE__) + ":21: in function '" +
+                                BOOST_CURRENT_FUNCTION + "'");
+  }
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

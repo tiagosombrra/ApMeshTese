@@ -5,141 +5,136 @@
 // See: http://www.boost.org/doc/libs/release/libs/contract/doc/html/index.html
 
 //[mitchell02_name_list
+#include <algorithm>
 #include <boost/contract.hpp>
+#include <cassert>
 #include <string>
 #include <vector>
-#include <algorithm>
-#include <cassert>
 
 // List of names.
 class name_list {
-    friend class boost::contract::access;
+  friend class boost::contract::access;
 
-    void invariant() const {
-        BOOST_CONTRACT_ASSERT(count() >= 0); // Non-negative count.
-    }
-    
-public:
-    /* Creation */
+  void invariant() const {
+    BOOST_CONTRACT_ASSERT(count() >= 0);  // Non-negative count.
+  }
 
-    // Create an empty list.
-    name_list() {
-        boost::contract::check c = boost::contract::constructor(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(count() == 0); // Empty list.
-            })
-        ;
-    }
+ public:
+  /* Creation */
 
-    // Destroy list.
-    virtual ~name_list() {
-        // Check invariants.
-        boost::contract::check c = boost::contract::destructor(this);
-    }
+  // Create an empty list.
+  name_list() {
+    boost::contract::check c =
+        boost::contract::constructor(this).postcondition([&] {
+          BOOST_CONTRACT_ASSERT(count() == 0);  // Empty list.
+        });
+  }
 
-    /* Basic Queries */
+  // Destroy list.
+  virtual ~name_list() {
+    // Check invariants.
+    boost::contract::check c = boost::contract::destructor(this);
+  }
 
-    // Number of names in list.
-    int count() const {
-        // Check invariants.
-        boost::contract::check c = boost::contract::public_function(this);
-        return names_.size();
-    }
+  /* Basic Queries */
 
-    // Is name in list?
-    bool has(std::string const& name) const {
-        bool result;
-        boost::contract::check c = boost::contract::public_function(this)
-            .postcondition([&] {
-                // If empty, has not.
-                if(count() == 0) BOOST_CONTRACT_ASSERT(!result);
-            })
-        ;
+  // Number of names in list.
+  int count() const {
+    // Check invariants.
+    boost::contract::check c = boost::contract::public_function(this);
+    return names_.size();
+  }
 
-        return result = names_.cend() != std::find(names_.cbegin(),
-                names_.cend(), name);
-    }
+  // Is name in list?
+  bool has(std::string const& name) const {
+    bool result;
+    boost::contract::check c =
+        boost::contract::public_function(this).postcondition([&] {
+          // If empty, has not.
+          if (count() == 0) BOOST_CONTRACT_ASSERT(!result);
+        });
 
-    /* Commands */
+    return result =
+               names_.cend() != std::find(names_.cbegin(), names_.cend(), name);
+  }
 
-    // Add name to list, if name not already in list.
-    virtual void put(std::string const& name,
-            boost::contract::virtual_* v = 0) {
-        boost::contract::old_ptr<bool> old_has_name =
-                BOOST_CONTRACT_OLDOF(v, has(name));
-        boost::contract::old_ptr<int> old_count =
-                BOOST_CONTRACT_OLDOF(v, count());
-        boost::contract::check c = boost::contract::public_function(v, this)
+  /* Commands */
+
+  // Add name to list, if name not already in list.
+  virtual void put(std::string const& name, boost::contract::virtual_* v = 0) {
+    boost::contract::old_ptr<bool> old_has_name =
+        BOOST_CONTRACT_OLDOF(v, has(name));
+    boost::contract::old_ptr<int> old_count = BOOST_CONTRACT_OLDOF(v, count());
+    boost::contract::check c =
+        boost::contract::public_function(v, this)
             .precondition([&] {
-                BOOST_CONTRACT_ASSERT(!has(name)); // Not already in list.
+              BOOST_CONTRACT_ASSERT(!has(name));  // Not already in list.
             })
             .postcondition([&] {
-                if(!*old_has_name) { // If-guard allows to relax subcontracts.
-                    BOOST_CONTRACT_ASSERT(has(name)); // Name in list.
-                    BOOST_CONTRACT_ASSERT(count() == *old_count + 1); // Inc.
-                }
-            })
-        ;
+              if (!*old_has_name) {  // If-guard allows to relax subcontracts.
+                BOOST_CONTRACT_ASSERT(has(name));  // Name in list.
+                BOOST_CONTRACT_ASSERT(count() == *old_count + 1);  // Inc.
+              }
+            });
 
-        names_.push_back(name);
-    }
+    names_.push_back(name);
+  }
 
-private:
-    std::vector<std::string> names_;
+ private:
+  std::vector<std::string> names_;
 };
 
 class relaxed_name_list
-    #define BASES public name_list
-    : BASES
-{
-    friend class boost::contract::access;
+#define BASES \
+ public       \
+  name_list
+    : BASES {
+  friend class boost::contract::access;
 
-    typedef BOOST_CONTRACT_BASE_TYPES(BASES) base_types; // Subcontracting.
-    #undef BASES
-    
-    BOOST_CONTRACT_OVERRIDE(put);
+  typedef BOOST_CONTRACT_BASE_TYPES(BASES) base_types;  // Subcontracting.
+#undef BASES
 
-public:
-    /*  Commands */
+  BOOST_CONTRACT_OVERRIDE(put);
 
-    // Add name to list, or do nothing if name already in list (relaxed).
-    void put(std::string const& name,
-            boost::contract::virtual_* v = 0) /* override */ {
-        boost::contract::old_ptr<bool> old_has_name =
-                BOOST_CONTRACT_OLDOF(v, has(name));
-        boost::contract::old_ptr<int> old_count =
-                BOOST_CONTRACT_OLDOF(v, count());
-        boost::contract::check c = boost::contract::public_function<
-                override_put>(v, &relaxed_name_list::put, this, name)
-            .precondition([&] { // Relax inherited preconditions.
-                BOOST_CONTRACT_ASSERT(has(name)); // Already in list.
+ public:
+  /*  Commands */
+
+  // Add name to list, or do nothing if name already in list (relaxed).
+  void put(std::string const& name,
+           boost::contract::virtual_* v = 0) /* override */ {
+    boost::contract::old_ptr<bool> old_has_name =
+        BOOST_CONTRACT_OLDOF(v, has(name));
+    boost::contract::old_ptr<int> old_count = BOOST_CONTRACT_OLDOF(v, count());
+    boost::contract::check c =
+        boost::contract::public_function<override_put>(
+            v, &relaxed_name_list::put, this, name)
+            .precondition([&] {  // Relax inherited preconditions.
+              BOOST_CONTRACT_ASSERT(has(name));  // Already in list.
             })
-            .postcondition([&] { // Inherited post. not checked given if-guard.
-                if(*old_has_name) {
-                    // Count unchanged if name already in list.
-                    BOOST_CONTRACT_ASSERT(count() == *old_count);
-                }
-            })
-        ;
+            .postcondition([&] {  // Inherited post. not checked given if-guard.
+              if (*old_has_name) {
+                // Count unchanged if name already in list.
+                BOOST_CONTRACT_ASSERT(count() == *old_count);
+              }
+            });
 
-        if(!has(name)) name_list::put(name); // Else, do nothing.
-    }
+    if (!has(name)) name_list::put(name);  // Else, do nothing.
+  }
 };
 
 int main() {
-    std::string const js = "John Smith";
+  std::string const js = "John Smith";
 
-    relaxed_name_list rl;
-    rl.put(js);
-    assert(rl.has(js));
-    rl.put(js); // OK, relaxed contracts allow calling this again (do nothing).
+  relaxed_name_list rl;
+  rl.put(js);
+  assert(rl.has(js));
+  rl.put(js);  // OK, relaxed contracts allow calling this again (do nothing).
 
-    name_list nl;
-    nl.put(js);
-    assert(nl.has(js));
-    // nl.put(js); // Error, contracts do not allow calling this again.
+  name_list nl;
+  nl.put(js);
+  assert(nl.has(js));
+  // nl.put(js); // Error, contracts do not allow calling this again.
 
-    return 0;
+  return 0;
 }
 //]
-

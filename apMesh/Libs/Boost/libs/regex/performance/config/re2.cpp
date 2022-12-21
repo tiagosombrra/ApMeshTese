@@ -6,7 +6,4 @@
 
 #include <re2.h>
 
-int main()
-{
-   return re2::RE2::FullMatch("a", "a") ? 0 : 1;
-}
+int main() { return re2::RE2::FullMatch("a", "a") ? 0 : 1; }

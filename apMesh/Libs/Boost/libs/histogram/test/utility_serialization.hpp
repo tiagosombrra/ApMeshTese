@@ -9,7 +9,7 @@
 
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
-#include <boost/config.hpp> // BOOST_WINDOWS
+#include <boost/config.hpp>  // BOOST_WINDOWS
 #include <boost/core/nvp.hpp>
 #include <cassert>
 #include <fstream>

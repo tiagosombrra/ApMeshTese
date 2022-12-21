@@ -5,11 +5,12 @@
 
 #define BOOST_THREAD_VERSION 2
 
-#include <boost/thread/thread_only.hpp>
-#include <boost/date_time/posix_time/posix_time_io.hpp>
 #include <assert.h>
-#include <iostream>
 #include <stdlib.h>
+
+#include <boost/date_time/posix_time/posix_time_io.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <iostream>
 #if defined(BOOST_THREAD_PLATFORM_PTHREAD)
 #include <unistd.h>
 #endif
@@ -19,19 +20,17 @@ boost::condition_variable cv;
 
 using namespace boost::posix_time;
 using namespace boost::gregorian;
-int main()
-{
+int main() {
 #if defined(BOOST_THREAD_PLATFORM_PTHREAD)
 
-  for (int i=0; i<3; ++i)
-  {
+  for (int i = 0; i < 3; ++i) {
     const time_t now_time = ::time(0);
-    const time_t wait_time = now_time+1;
+    const time_t wait_time = now_time + 1;
     time_t end_time;
     assert(now_time < wait_time);
 
     boost::unique_lock<boost::mutex> lk(mtx);
-    //const bool res =
+    // const bool res =
     (void)cv.timed_wait(lk, from_time_t(wait_time));
     end_time = ::time(0);
     std::cerr << "now_time =" << now_time << " \n";

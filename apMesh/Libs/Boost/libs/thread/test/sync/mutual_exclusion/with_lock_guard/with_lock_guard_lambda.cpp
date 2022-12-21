@@ -9,21 +9,18 @@
 #include <boost/config.hpp>
 
 #if !defined(BOOST_NO_CXX11_DECLTYPE)
-# define BOOST_RESULT_OF_USE_DECLTYPE
+#define BOOST_RESULT_OF_USE_DECLTYPE
 #endif
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/detail/lightweight_test.hpp> // BOOST_TEST
-
-#include <iostream> // std::cout
+#include <boost/detail/lightweight_test.hpp>  // BOOST_TEST
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/with_lock_guard.hpp>
+#include <iostream>  // std::cout
 
 #if defined(BOOST_NO_CXX11_LAMBDAS) || (defined BOOST_MSVC && _MSC_VER < 1700)
-void test_lambda() {
-  std::cout << "C++11 lambda disabled" << std::endl;
-}
+void test_lambda() { std::cout << "C++11 lambda disabled" << std::endl; }
 #else
 void test_lambda() {
   boost::mutex m;
@@ -33,8 +30,7 @@ void test_lambda() {
         BOOST_TEST(a == 13);
         return a + 3;
       },
-      13
-  );
+      13);
   BOOST_TEST(res_1 == 16);
 
   int v = 0;
@@ -45,8 +41,7 @@ void test_lambda() {
         v = 15;
         return 45;
       },
-      55
-  );
+      55);
   BOOST_TEST(res_2 == 45);
   BOOST_TEST(v == 15);
 }

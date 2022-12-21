@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <iosfwd>
 #include <limits>
+
 #include "std_ostream.hpp"
 
 namespace boost {
@@ -19,9 +20,9 @@ std::ostream& operator<<(std::ostream& os, const large_int<Allocator>& x) {
   os << "large_int" << x.data;
   return os;
 }
-} // namespace detail
-} // namespace histogram
-} // namespace boost
+}  // namespace detail
+}  // namespace histogram
+}  // namespace boost
 
 using namespace boost::histogram;
 
@@ -111,14 +112,14 @@ int main() {
     BOOST_TEST_NOT(large_int(1u) < nan);
     BOOST_TEST_NOT(large_int(1u) > nan);
     BOOST_TEST_NOT(large_int(1u) == nan);
-    BOOST_TEST(large_int(1u) != nan); // same behavior as int compared to nan
+    BOOST_TEST(large_int(1u) != nan);  // same behavior as int compared to nan
     BOOST_TEST_NOT(large_int(1u) <= nan);
     BOOST_TEST_NOT(large_int(1u) >= nan);
 
     BOOST_TEST_NOT(nan < large_int(1u));
     BOOST_TEST_NOT(nan > large_int(1u));
     BOOST_TEST_NOT(nan == large_int(1u));
-    BOOST_TEST(nan != large_int(1u)); // same behavior as int compared to nan
+    BOOST_TEST(nan != large_int(1u));  // same behavior as int compared to nan
     BOOST_TEST_NOT(nan <= large_int(1u));
     BOOST_TEST_NOT(nan >= large_int(1u));
   }

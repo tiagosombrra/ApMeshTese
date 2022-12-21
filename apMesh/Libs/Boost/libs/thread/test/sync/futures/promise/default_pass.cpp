@@ -20,28 +20,25 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-int main()
-{
-
+int main() {
   {
-      boost::promise<int> p;
-      boost::future<int> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      BOOST_TEST(f.valid());
+    boost::promise<int> p;
+    boost::future<int> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    BOOST_TEST(f.valid());
   }
   {
-      boost::promise<int&> p;
-      boost::future<int&> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      BOOST_TEST(f.valid());
+    boost::promise<int&> p;
+    boost::future<int&> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    BOOST_TEST(f.valid());
   }
   {
-      boost::promise<void> p;
-      boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      BOOST_TEST(f.valid());
+    boost::promise<void> p;
+    boost::future<void> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    BOOST_TEST(f.valid());
   }
 
   return boost::report_errors();
 }
-

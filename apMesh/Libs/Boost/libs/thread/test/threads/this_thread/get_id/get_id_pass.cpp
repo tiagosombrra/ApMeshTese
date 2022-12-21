@@ -15,14 +15,11 @@
 
 // thread::id this_thread::get_id();
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/thread_only.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
-
-int main()
-{
+int main() {
   boost::thread::id id = boost::this_thread::get_id();
   BOOST_TEST(id != boost::thread::id());
   return boost::report_errors();
 }
-

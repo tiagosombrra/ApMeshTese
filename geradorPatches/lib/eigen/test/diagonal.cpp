@@ -9,8 +9,8 @@
 
 #include "main.h"
 
-template<typename MatrixType> void diagonal(const MatrixType& m)
-{
+template <typename MatrixType>
+void diagonal(const MatrixType& m) {
   typedef typename MatrixType::Index Index;
   typedef typename MatrixType::Scalar Scalar;
 
@@ -20,58 +20,71 @@ template<typename MatrixType> void diagonal(const MatrixType& m)
   MatrixType m1 = MatrixType::Random(rows, cols),
              m2 = MatrixType::Random(rows, cols);
 
-  //check diagonal()
+  // check diagonal()
   VERIFY_IS_APPROX(m1.diagonal(), m1.transpose().diagonal());
   m2.diagonal() = 2 * m1.diagonal();
   m2.diagonal()[0] *= 3;
 
-  if (rows>2)
-  {
+  if (rows > 2) {
     enum {
-      N1 = MatrixType::RowsAtCompileTime>2 ?  2 : 0,
-      N2 = MatrixType::RowsAtCompileTime>1 ? -1 : 0
+      N1 = MatrixType::RowsAtCompileTime > 2 ? 2 : 0,
+      N2 = MatrixType::RowsAtCompileTime > 1 ? -1 : 0
     };
 
     // check sub/super diagonal
-    if(MatrixType::SizeAtCompileTime!=Dynamic)
-    {
-      VERIFY(m1.template diagonal<N1>().RowsAtCompileTime == m1.diagonal(N1).size());
-      VERIFY(m1.template diagonal<N2>().RowsAtCompileTime == m1.diagonal(N2).size());
+    if (MatrixType::SizeAtCompileTime != Dynamic) {
+      VERIFY(m1.template diagonal<N1>().RowsAtCompileTime ==
+             m1.diagonal(N1).size());
+      VERIFY(m1.template diagonal<N2>().RowsAtCompileTime ==
+             m1.diagonal(N2).size());
     }
 
     m2.template diagonal<N1>() = 2 * m1.template diagonal<N1>();
-    VERIFY_IS_APPROX(m2.template diagonal<N1>(), static_cast<Scalar>(2) * m1.diagonal(N1));
+    VERIFY_IS_APPROX(m2.template diagonal<N1>(),
+                     static_cast<Scalar>(2) * m1.diagonal(N1));
     m2.template diagonal<N1>()[0] *= 3;
-    VERIFY_IS_APPROX(m2.template diagonal<N1>()[0], static_cast<Scalar>(6) * m1.template diagonal<N1>()[0]);
-
+    VERIFY_IS_APPROX(m2.template diagonal<N1>()[0],
+                     static_cast<Scalar>(6) * m1.template diagonal<N1>()[0]);
 
     m2.template diagonal<N2>() = 2 * m1.template diagonal<N2>();
     m2.template diagonal<N2>()[0] *= 3;
-    VERIFY_IS_APPROX(m2.template diagonal<N2>()[0], static_cast<Scalar>(6) * m1.template diagonal<N2>()[0]);
+    VERIFY_IS_APPROX(m2.template diagonal<N2>()[0],
+                     static_cast<Scalar>(6) * m1.template diagonal<N2>()[0]);
 
     m2.diagonal(N1) = 2 * m1.diagonal(N1);
-    VERIFY_IS_APPROX(m2.template diagonal<N1>(), static_cast<Scalar>(2) * m1.diagonal(N1));
+    VERIFY_IS_APPROX(m2.template diagonal<N1>(),
+                     static_cast<Scalar>(2) * m1.diagonal(N1));
     m2.diagonal(N1)[0] *= 3;
-    VERIFY_IS_APPROX(m2.diagonal(N1)[0], static_cast<Scalar>(6) * m1.diagonal(N1)[0]);
+    VERIFY_IS_APPROX(m2.diagonal(N1)[0],
+                     static_cast<Scalar>(6) * m1.diagonal(N1)[0]);
 
     m2.diagonal(N2) = 2 * m1.diagonal(N2);
-    VERIFY_IS_APPROX(m2.template diagonal<N2>(), static_cast<Scalar>(2) * m1.diagonal(N2));
+    VERIFY_IS_APPROX(m2.template diagonal<N2>(),
+                     static_cast<Scalar>(2) * m1.diagonal(N2));
     m2.diagonal(N2)[0] *= 3;
-    VERIFY_IS_APPROX(m2.diagonal(N2)[0], static_cast<Scalar>(6) * m1.diagonal(N2)[0]);
+    VERIFY_IS_APPROX(m2.diagonal(N2)[0],
+                     static_cast<Scalar>(6) * m1.diagonal(N2)[0]);
   }
 }
 
-void test_diagonal()
-{
-  for(int i = 0; i < g_repeat; i++) {
-    CALL_SUBTEST_1( diagonal(Matrix<float, 1, 1>()) );
-    CALL_SUBTEST_1( diagonal(Matrix<float, 4, 9>()) );
-    CALL_SUBTEST_1( diagonal(Matrix<float, 7, 3>()) );
-    CALL_SUBTEST_2( diagonal(Matrix4d()) );
-    CALL_SUBTEST_2( diagonal(MatrixXcf(internal::random<int>(1,EIGEN_TEST_MAX_SIZE), internal::random<int>(1,EIGEN_TEST_MAX_SIZE))) );
-    CALL_SUBTEST_2( diagonal(MatrixXi(internal::random<int>(1,EIGEN_TEST_MAX_SIZE), internal::random<int>(1,EIGEN_TEST_MAX_SIZE))) );
-    CALL_SUBTEST_2( diagonal(MatrixXcd(internal::random<int>(1,EIGEN_TEST_MAX_SIZE), internal::random<int>(1,EIGEN_TEST_MAX_SIZE))) );
-    CALL_SUBTEST_1( diagonal(MatrixXf(internal::random<int>(1,EIGEN_TEST_MAX_SIZE), internal::random<int>(1,EIGEN_TEST_MAX_SIZE))) );
-    CALL_SUBTEST_1( diagonal(Matrix<float,Dynamic,4>(3, 4)) );
+void test_diagonal() {
+  for (int i = 0; i < g_repeat; i++) {
+    CALL_SUBTEST_1(diagonal(Matrix<float, 1, 1>()));
+    CALL_SUBTEST_1(diagonal(Matrix<float, 4, 9>()));
+    CALL_SUBTEST_1(diagonal(Matrix<float, 7, 3>()));
+    CALL_SUBTEST_2(diagonal(Matrix4d()));
+    CALL_SUBTEST_2(
+        diagonal(MatrixXcf(internal::random<int>(1, EIGEN_TEST_MAX_SIZE),
+                           internal::random<int>(1, EIGEN_TEST_MAX_SIZE))));
+    CALL_SUBTEST_2(
+        diagonal(MatrixXi(internal::random<int>(1, EIGEN_TEST_MAX_SIZE),
+                          internal::random<int>(1, EIGEN_TEST_MAX_SIZE))));
+    CALL_SUBTEST_2(
+        diagonal(MatrixXcd(internal::random<int>(1, EIGEN_TEST_MAX_SIZE),
+                           internal::random<int>(1, EIGEN_TEST_MAX_SIZE))));
+    CALL_SUBTEST_1(
+        diagonal(MatrixXf(internal::random<int>(1, EIGEN_TEST_MAX_SIZE),
+                          internal::random<int>(1, EIGEN_TEST_MAX_SIZE))));
+    CALL_SUBTEST_1(diagonal(Matrix<float, Dynamic, 4>(3, 4)));
   }
 }

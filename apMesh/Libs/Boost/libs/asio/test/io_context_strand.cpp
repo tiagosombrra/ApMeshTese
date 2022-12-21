@@ -11,35 +11,35 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
-#include <boost/asio/io_context_strand.hpp>
-
-#include <sstream>
-#include <boost/asio/io_context.hpp>
-#include <boost/asio/dispatch.hpp>
-#include <boost/asio/post.hpp>
 #include <boost/asio/detail/thread.hpp>
+#include <boost/asio/dispatch.hpp>
+#include <boost/asio/io_context.hpp>
+#include <boost/asio/io_context_strand.hpp>
+#include <boost/asio/post.hpp>
+#include <sstream>
+
 #include "unit_test.hpp"
 
 #if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
-# include <boost/asio/deadline_timer.hpp>
-#else // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
-# include <boost/asio/steady_timer.hpp>
-#endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+#include <boost/asio/deadline_timer.hpp>
+#else  // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+#include <boost/asio/steady_timer.hpp>
+#endif  // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
 
 #if defined(BOOST_ASIO_HAS_BOOST_BIND)
-# include <boost/bind/bind.hpp>
-#else // defined(BOOST_ASIO_HAS_BOOST_BIND)
-# include <functional>
-#endif // defined(BOOST_ASIO_HAS_BOOST_BIND)
+#include <boost/bind/bind.hpp>
+#else  // defined(BOOST_ASIO_HAS_BOOST_BIND)
+#include <functional>
+#endif  // defined(BOOST_ASIO_HAS_BOOST_BIND)
 
 using namespace boost::asio;
 
 #if defined(BOOST_ASIO_HAS_BOOST_BIND)
 namespace bindns = boost;
-#else // defined(BOOST_ASIO_HAS_BOOST_BIND)
+#else  // defined(BOOST_ASIO_HAS_BOOST_BIND)
 namespace bindns = std;
 #endif
 
@@ -49,15 +49,11 @@ namespace chronons = boost::posix_time;
 #elif defined(BOOST_ASIO_HAS_CHRONO)
 typedef steady_timer timer;
 namespace chronons = boost::asio::chrono;
-#endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+#endif  // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
 
-void increment(int* count)
-{
-  ++(*count);
-}
+void increment(int* count) { ++(*count); }
 
-void increment_without_lock(io_context::strand* s, int* count)
-{
+void increment_without_lock(io_context::strand* s, int* count) {
   BOOST_ASIO_CHECK(!s->running_in_this_thread());
 
   int original_count = *count;
@@ -69,8 +65,7 @@ void increment_without_lock(io_context::strand* s, int* count)
   BOOST_ASIO_CHECK(*count == original_count + 1);
 }
 
-void increment_with_lock(io_context::strand* s, int* count)
-{
+void increment_with_lock(io_context::strand* s, int* count) {
   BOOST_ASIO_CHECK(s->running_in_this_thread());
 
   int original_count = *count;
@@ -82,36 +77,27 @@ void increment_with_lock(io_context::strand* s, int* count)
   BOOST_ASIO_CHECK(*count == original_count + 1);
 }
 
-void sleep_increment(io_context* ioc, int* count)
-{
+void sleep_increment(io_context* ioc, int* count) {
   timer t(*ioc, chronons::seconds(2));
   t.wait();
 
   ++(*count);
 }
 
-void increment_by_a(int* count, int a)
-{
-  (*count) += a;
-}
+void increment_by_a(int* count, int a) { (*count) += a; }
 
-void increment_by_a_b(int* count, int a, int b)
-{
-  (*count) += a + b;
-}
+void increment_by_a_b(int* count, int a, int b) { (*count) += a + b; }
 
-void increment_by_a_b_c(int* count, int a, int b, int c)
-{
+void increment_by_a_b_c(int* count, int a, int b, int c) {
   (*count) += a + b + c;
 }
 
-void increment_by_a_b_c_d(int* count, int a, int b, int c, int d)
-{
+void increment_by_a_b_c_d(int* count, int a, int b, int c, int d) {
   (*count) += a + b + c + d;
 }
 
-void start_sleep_increments(io_context* ioc, io_context::strand* s, int* count)
-{
+void start_sleep_increments(io_context* ioc, io_context::strand* s,
+                            int* count) {
   // Give all threads a chance to start.
   timer t(*ioc, chronons::seconds(2));
   t.wait();
@@ -122,18 +108,11 @@ void start_sleep_increments(io_context* ioc, io_context::strand* s, int* count)
   post(*s, bindns::bind(sleep_increment, ioc, count));
 }
 
-void throw_exception()
-{
-  throw 1;
-}
+void throw_exception() { throw 1; }
 
-void io_context_run(io_context* ioc)
-{
-  ioc->run();
-}
+void io_context_run(io_context* ioc) { ioc->run(); }
 
-void strand_test()
-{
+void strand_test() {
   io_context ioc;
   io_context::strand s(ioc);
   int count = 0;
@@ -172,16 +151,16 @@ void strand_test()
   BOOST_ASIO_CHECK(count == 0);
 #if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
   timer1.expires_at(timer1.expires_at() + chronons::seconds(2));
-#else // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+#else   // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
   timer1.expires_at(timer1.expiry() + chronons::seconds(2));
-#endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+#endif  // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
   timer1.wait();
   BOOST_ASIO_CHECK(count == 1);
 #if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
   timer1.expires_at(timer1.expires_at() + chronons::seconds(2));
-#else // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+#else   // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
   timer1.expires_at(timer1.expiry() + chronons::seconds(2));
-#endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+#endif  // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
   timer1.wait();
   BOOST_ASIO_CHECK(count == 2);
 
@@ -204,15 +183,11 @@ void strand_test()
   BOOST_ASIO_CHECK(count == 0);
   BOOST_ASIO_CHECK(exception_count == 0);
 
-  for (;;)
-  {
-    try
-    {
+  for (;;) {
+    try {
       ioc.run();
       break;
-    }
-    catch (int)
-    {
+    } catch (int) {
       ++exception_count;
     }
   }
@@ -237,8 +212,7 @@ void strand_test()
   BOOST_ASIO_CHECK(count == 0);
 }
 
-void strand_wrap_test()
-{
+void strand_wrap_test() {
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   io_context ioc;
   io_context::strand s(ioc);
@@ -314,12 +288,8 @@ void strand_wrap_test()
 
   // The run() calls will not return until all work has finished.
   BOOST_ASIO_CHECK(count == 10);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 }
 
-BOOST_ASIO_TEST_SUITE
-(
-  "strand",
-  BOOST_ASIO_TEST_CASE(strand_test)
-  BOOST_ASIO_TEST_CASE(strand_wrap_test)
-)
+BOOST_ASIO_TEST_SUITE("strand", BOOST_ASIO_TEST_CASE(strand_test)
+                                    BOOST_ASIO_TEST_CASE(strand_wrap_test))

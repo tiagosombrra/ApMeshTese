@@ -22,12 +22,10 @@
 //     size_t operator()(T val) const;
 // };
 
-
-#include <boost/thread/thread_only.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/thread_only.hpp>
 
-int main()
-{
+int main() {
   {
     boost::thread::id id1;
     boost::thread::id id2 = boost::this_thread::get_id();
@@ -37,4 +35,3 @@ int main()
   }
   return boost::report_errors();
 }
-

@@ -18,80 +18,68 @@
 
 */
 
-
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/parsers.hpp>
 #include <boost/program_options/variables_map.hpp>
-#include <boost/tokenizer.hpp>
 #include <boost/token_functions.hpp>
+#include <boost/tokenizer.hpp>
 using namespace boost;
 using namespace boost::program_options;
 
-#include <iostream>
-#include <fstream>
 #include <exception>
+#include <fstream>
+#include <iostream>
 using namespace std;
 
-int main(int ac, char* av[])
-{
-    try {
-        // Declare three groups of options.
-        options_description general("General options");
-        general.add_options()
-            ("help", "produce a help message")
-            ("help-module", value<string>(),
-                "produce a help for a given module")
-            ("version", "output the version number")
-            ;
+int main(int ac, char* av[]) {
+  try {
+    // Declare three groups of options.
+    options_description general("General options");
+    general.add_options()("help", "produce a help message")(
+        "help-module", value<string>(), "produce a help for a given module")(
+        "version", "output the version number");
 
-        options_description gui("GUI options");
-        gui.add_options()
-            ("display", value<string>(), "display to use")
-            ;
+    options_description gui("GUI options");
+    gui.add_options()("display", value<string>(), "display to use");
 
-        options_description backend("Backend options");
-        backend.add_options()
-            ("num-threads", value<int>(), "the initial number of threads")
-            ;
-            
-        // Declare an options description instance which will include
-        // all the options
-        options_description all("Allowed options");
-        all.add(general).add(gui).add(backend);
+    options_description backend("Backend options");
+    backend.add_options()("num-threads", value<int>(),
+                          "the initial number of threads");
 
-        // Declare an options description instance which will be shown
-        // to the user
-        options_description visible("Allowed options");
-        visible.add(general).add(gui);
-           
+    // Declare an options description instance which will include
+    // all the options
+    options_description all("Allowed options");
+    all.add(general).add(gui).add(backend);
 
-        variables_map vm;
-        store(parse_command_line(ac, av, all), vm);
+    // Declare an options description instance which will be shown
+    // to the user
+    options_description visible("Allowed options");
+    visible.add(general).add(gui);
 
-        if (vm.count("help")) 
-        {
-            cout << visible;
-            return 0;
-        }
-        if (vm.count("help-module")) {
-            const string& s = vm["help-module"].as<string>();
-            if (s == "gui") {
-                cout << gui;
-            } else if (s == "backend") {
-                cout << backend;
-            } else {
-                cout << "Unknown module '" 
-                     << s << "' in the --help-module option\n";
-                return 1;
-            }
-            return 0;
-        }
-        if (vm.count("num-threads")) {
-            cout << "The 'num-threads' options was set to "
-                 << vm["num-threads"].as<int>() << "\n";            
-        }                           
+    variables_map vm;
+    store(parse_command_line(ac, av, all), vm);
+
+    if (vm.count("help")) {
+      cout << visible;
+      return 0;
     }
-    catch(std::exception& e) {
-        cout << e.what() << "\n";
+    if (vm.count("help-module")) {
+      const string& s = vm["help-module"].as<string>();
+      if (s == "gui") {
+        cout << gui;
+      } else if (s == "backend") {
+        cout << backend;
+      } else {
+        cout << "Unknown module '" << s << "' in the --help-module option\n";
+        return 1;
+      }
+      return 0;
     }
+    if (vm.count("num-threads")) {
+      cout << "The 'num-threads' options was set to "
+           << vm["num-threads"].as<int>() << "\n";
+    }
+  } catch (std::exception& e) {
+    cout << e.what() << "\n";
+  }
 }

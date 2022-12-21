@@ -7,14 +7,12 @@
 
 #include <boost/thread/future.hpp>
 
-void func(int) { }
+void func(int) {}
 
-int main()
-{
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
-  {
-  boost::packaged_task<void(int)> task{func};
-  }
+int main() {
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+  { boost::packaged_task<void(int)> task{func}; }
   {
     boost::packaged_task<void(int)> task{func};
 

@@ -18,11 +18,11 @@
 
 // bool try_lock();
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
-#include "../../../timming.hpp"
 
+#include "../../../timming.hpp"
 
 boost::mutex m;
 
@@ -38,8 +38,7 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #if defined BOOST_THREAD_USES_CHRONO
   t0 = Clock::now();
   BOOST_TEST(!m.try_lock());
@@ -50,22 +49,20 @@ void f()
   t1 = Clock::now();
   m.unlock();
 #else
-  //time_point t0 = Clock::now();
-  //BOOST_TEST(!m.try_lock());
-  //BOOST_TEST(!m.try_lock());
-  //BOOST_TEST(!m.try_lock());
+  // time_point t0 = Clock::now();
+  // BOOST_TEST(!m.try_lock());
+  // BOOST_TEST(!m.try_lock());
+  // BOOST_TEST(!m.try_lock());
   while (!m.try_lock())
     ;
-  //time_point t1 = Clock::now();
+  // time_point t1 = Clock::now();
   m.unlock();
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
 #endif
-
 }
 
-int main()
-{
+int main() {
   m.lock();
   boost::thread t(f);
 #if defined BOOST_THREAD_USES_CHRONO
@@ -87,5 +84,3 @@ int main()
 
   return boost::report_errors();
 }
-
-

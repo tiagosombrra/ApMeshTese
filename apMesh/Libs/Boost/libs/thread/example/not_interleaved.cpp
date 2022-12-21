@@ -8,34 +8,31 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <iostream>
-#include <boost/thread/scoped_thread.hpp>
 #include <boost/thread/externally_locked_stream.hpp>
+#include <boost/thread/scoped_thread.hpp>
+#include <iostream>
 
-void use_cerr(boost::externally_locked_stream<std::ostream> &mcerr)
-{
+void use_cerr(boost::externally_locked_stream<std::ostream> &mcerr) {
   using namespace boost;
-  chrono::steady_clock::time_point tf = chrono::steady_clock::now() + chrono::seconds(10);
-  while (chrono::steady_clock::now() < tf)
-  {
+  chrono::steady_clock::time_point tf =
+      chrono::steady_clock::now() + chrono::seconds(10);
+  while (chrono::steady_clock::now() < tf) {
     mcerr << "logging data to cerr\n";
     this_thread::sleep_for(chrono::milliseconds(500));
   }
 }
 
-void use_cout(boost::externally_locked_stream<std::ostream> &mcout)
-{
+void use_cout(boost::externally_locked_stream<std::ostream> &mcout) {
   using namespace boost;
-  chrono::steady_clock::time_point tf = chrono::steady_clock::now() + chrono::seconds(5);
-  while (chrono::steady_clock::now() < tf)
-  {
+  chrono::steady_clock::time_point tf =
+      chrono::steady_clock::now() + chrono::seconds(5);
+  while (chrono::steady_clock::now() < tf) {
     mcout << "logging data to cout\n";
     this_thread::sleep_for(chrono::milliseconds(250));
   }
 }
 
-int main()
-{
+int main() {
   using namespace boost;
 
   recursive_mutex terminal_mutex;
@@ -50,14 +47,13 @@ int main()
   std::string nm;
   {
     strict_lock<recursive_mutex> lk(terminal_mutex);
-    std::ostream & gcout = mcout.get(lk);
-    //std::istream & gcin = mcin.get(lk);
+    std::ostream &gcout = mcout.get(lk);
+    // std::istream & gcin = mcin.get(lk);
     gcout << "Enter name: ";
-    //gcin >> nm;
+    // gcin >> nm;
   }
   t1.join();
   t2.join();
   mcout << nm << '\n';
   return 0;
 }
-

@@ -8,13 +8,9 @@
 
 #include <boost/thread/thread_only.hpp>
 
-void myFunc()
-{
-  boost::this_thread::sleep(boost::posix_time::seconds(5));
-}
+void myFunc() { boost::this_thread::sleep(boost::posix_time::seconds(5)); }
 
-int main(int, char **)
-{
+int main(int, char **) {
   boost::thread p(myFunc);
 
   p.join();

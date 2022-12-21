@@ -12,27 +12,15 @@
 namespace utf = boost::unit_test;
 namespace tt = boost::test_tools;
 
-tt::assertion_result fail(utf::test_unit_id)
-{
+tt::assertion_result fail(utf::test_unit_id) {
   tt::assertion_result ans(false);
   ans.message() << "precondition failed";
   return ans;
 }
 
-BOOST_AUTO_TEST_CASE(test_1)
-{
-  BOOST_TEST(false);
-}
- 
-BOOST_AUTO_TEST_CASE(test_2,
-  * utf::depends_on("test_1"))
-{
-  BOOST_TEST(true);
-}
+BOOST_AUTO_TEST_CASE(test_1) { BOOST_TEST(false); }
 
-BOOST_AUTO_TEST_CASE(test_3,
-  * utf::precondition(fail))
-{
-  BOOST_TEST(true);
-}
+BOOST_AUTO_TEST_CASE(test_2, *utf::depends_on("test_1")) { BOOST_TEST(true); }
+
+BOOST_AUTO_TEST_CASE(test_3, *utf::precondition(fail)) { BOOST_TEST(true); }
 //]

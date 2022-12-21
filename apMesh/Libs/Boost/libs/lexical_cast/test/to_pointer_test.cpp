@@ -14,10 +14,10 @@
 #define BOOST_INCLUDE_MAIN
 #include <boost/test/test_tools.hpp>
 
-int test_main(int, char*[])
-{
-    boost::lexical_cast<char*>("Hello");
-    BOOST_CHECK(false); // suppressing warning about 'boost::unit_test::{anonymous}::unit_test_log' defined but not used
-    return 0;
+int test_main(int, char*[]) {
+  boost::lexical_cast<char*>("Hello");
+  BOOST_CHECK(false);  // suppressing warning about
+                       // 'boost::unit_test::{anonymous}::unit_test_log' defined
+                       // but not used
+  return 0;
 }
-

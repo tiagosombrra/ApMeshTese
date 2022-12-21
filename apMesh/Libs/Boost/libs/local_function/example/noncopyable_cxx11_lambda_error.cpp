@@ -7,30 +7,28 @@
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_CXX11_LAMBDAS
-#   error "lambda functions required"
+#error "lambda functions required"
 #else
 
 #include <boost/noncopyable.hpp>
 #include <cassert>
 
 //[noncopyable_cxx11_lambda_error
-struct n: boost::noncopyable {
-    int i;
-    n(int _i): i(_i) {}
+struct n : boost::noncopyable {
+  int i;
+  n(int _i) : i(_i) {}
 };
 
-
 int main(void) {
-    n x(-1);
+  n x(-1);
 
-    auto f = [x](void) {    // Error: x is non-copyable, but if
-        assert(x.i == -1);  // bind `&x` then `x` is not constant.
-    };
-    f();
+  auto f = [x](void) {  // Error: x is non-copyable, but if
+    assert(x.i == -1);  // bind `&x` then `x` is not constant.
+  };
+  f();
 
-    return 0;
+  return 0;
 }
 //]
 
-#endif // LAMBDAS
-
+#endif  // LAMBDAS

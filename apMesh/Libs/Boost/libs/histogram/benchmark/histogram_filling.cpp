@@ -5,17 +5,18 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <benchmark/benchmark.h>
+
 #include <boost/histogram/axis/regular.hpp>
 #include <boost/histogram/storage_adaptor.hpp>
+#include <cassert>
 #include <memory>
+
 #include "../test/throw_exception.hpp"
 #include "../test/utility_histogram.hpp"
 #include "generator.hpp"
-
-#include <cassert>
 struct assert_check {
   assert_check() {
-    assert(false); // don't run with asserts enabled
+    assert(false);  // don't run with asserts enabled
   }
 } _;
 
@@ -68,7 +69,8 @@ static void fill_n_2d(benchmark::State& state) {
 
 template <class Distribution, class Tag, class Storage = SStore>
 static void fill_3d(benchmark::State& state) {
-  auto h = make_s(Tag(), Storage(), reg(100, 0, 1), reg(100, 0, 1), reg(100, 0, 1));
+  auto h =
+      make_s(Tag(), Storage(), reg(100, 0, 1), reg(100, 0, 1), reg(100, 0, 1));
   auto gen = generator<Distribution>();
   for (auto _ : state) benchmark::DoNotOptimize(h(gen(), gen(), gen()));
   state.SetItemsProcessed(state.iterations() * 3);
@@ -76,7 +78,8 @@ static void fill_3d(benchmark::State& state) {
 
 template <class Distribution, class Tag, class Storage = SStore>
 static void fill_n_3d(benchmark::State& state) {
-  auto h = make_s(Tag(), Storage(), reg(100, 0, 1), reg(100, 0, 1), reg(100, 0, 1));
+  auto h =
+      make_s(Tag(), Storage(), reg(100, 0, 1), reg(100, 0, 1), reg(100, 0, 1));
   auto gen = generator<Distribution>();
   auto v = {gen, gen, gen};
   for (auto _ : state) h.fill(v);

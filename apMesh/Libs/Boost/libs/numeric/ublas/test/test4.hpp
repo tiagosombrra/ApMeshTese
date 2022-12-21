@@ -13,13 +13,12 @@
 #ifndef TEST4_H
 #define TEST4_H
 
-#include <iostream>
-
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/matrix_proxy.hpp>
 #include <boost/numeric/ublas/banded.hpp>
 #include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/matrix_proxy.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <iostream>
 
 namespace ublas = boost::numeric::ublas;
 
@@ -28,10 +27,8 @@ namespace ublas = boost::numeric::ublas;
 //#define USE_BANDED
 #define USE_DIAGONAL
 
-
-void test_matrix_vector ();
-void test_matrix ();
-
+void test_matrix_vector();
+void test_matrix();
 
 // FIXME slice are failing in assignment to zero elements
 #undef USE_SLICE

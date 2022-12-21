@@ -20,45 +20,38 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-int main()
-{
+int main() {
   {
-      boost::promise<double> p;
+    boost::promise<double> p;
+    boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    p.set_value(105.5);
+    BOOST_TEST(f.get() == 105.5);
+  }
+  {
+    boost::promise<double> p;
+    boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    try {
+      f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+      BOOST_TEST(false);
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() == boost::system::make_error_code(
+                                 boost::future_errc::future_already_retrieved));
+    }
+  }
+  {
+    boost::promise<double> p;
+    boost::promise<double> p0 = boost::move(p);
+    try {
       boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      p.set_value(105.5);
-      BOOST_TEST(f.get() == 105.5);
+      BOOST_TEST(false);
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(boost::future_errc::no_state));
+    }
   }
-  {
-      boost::promise<double> p;
-      boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      try
-      {
-          f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-          BOOST_TEST(false);
-      }
-      catch (const boost::future_error& e)
-      {
-          BOOST_TEST(e.code() ==  boost::system::make_error_code(boost::future_errc::future_already_retrieved));
-      }
-  }
-  {
-      boost::promise<double> p;
-      boost::promise<double> p0 = boost::move(p);
-      try
-      {
-          boost::future<double> f = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-          BOOST_TEST(false);
-      }
-      catch (const boost::future_error& e)
-      {
-          BOOST_TEST(e.code() ==  boost::system::make_error_code(boost::future_errc::no_state));
-      }
-  }
-
 
   return boost::report_errors();
 }
-

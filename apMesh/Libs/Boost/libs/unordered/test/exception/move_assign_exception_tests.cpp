@@ -3,21 +3,20 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "./containers.hpp"
-
 #include "../helpers/invariants.hpp"
 #include "../helpers/random_values.hpp"
 #include "../helpers/tracker.hpp"
+#include "./containers.hpp"
 
 #if defined(BOOST_MSVC)
-#pragma warning(                                                               \
-  disable : 4512) // move_assignment operator could not be generated
+#pragma warning( \
+    disable : 4512)  // move_assignment operator could not be generated
 #endif
 
 test::seed_t initialize_seed(12847);
 
-template <class T> struct move_assign_base : public test::exception_base
-{
+template <class T>
+struct move_assign_base : public test::exception_base {
   test::random_values<T> x_values, y_values;
   T x, y;
 
@@ -26,18 +25,17 @@ template <class T> struct move_assign_base : public test::exception_base
   typedef typename T::allocator_type allocator_type;
 
   move_assign_base(int tag1, int tag2, float mlf1 = 1.0, float mlf2 = 1.0)
-      : x_values(), y_values(),
+      : x_values(),
+        y_values(),
         x(0, hasher(tag1), key_equal(tag1), allocator_type(tag1)),
-        y(0, hasher(tag2), key_equal(tag2), allocator_type(tag2))
-  {
+        y(0, hasher(tag2), key_equal(tag2), allocator_type(tag2)) {
     x.max_load_factor(mlf1);
     y.max_load_factor(mlf2);
   }
 
   typedef T data_type;
   T init() const { return T(x); }
-  void run(T& x1) const
-  {
+  void run(T& x1) const {
     test::exceptions_enable disable_exceptions(false);
     T y1 = y;
     disable_exceptions.release();
@@ -48,8 +46,7 @@ template <class T> struct move_assign_base : public test::exception_base
     test::check_equivalent_keys(x1);
   }
 
-  void check BOOST_PREVENT_MACRO_SUBSTITUTION(T const& x1) const
-  {
+  void check BOOST_PREVENT_MACRO_SUBSTITUTION(T const& x1) const {
     test::check_equivalent_keys(x1);
 
     // If the container is empty at the point of the exception, the
@@ -63,12 +60,11 @@ template <class T> struct move_assign_base : public test::exception_base
   }
 };
 
-template <class T> struct move_assign_values : move_assign_base<T>
-{
+template <class T>
+struct move_assign_values : move_assign_base<T> {
   move_assign_values(unsigned int count1, unsigned int count2, int tag1,
-    int tag2, float mlf1 = 1.0, float mlf2 = 1.0)
-      : move_assign_base<T>(tag1, tag2, mlf1, mlf2)
-  {
+                     int tag2, float mlf1 = 1.0, float mlf2 = 1.0)
+      : move_assign_base<T>(tag1, tag2, mlf1, mlf2) {
     this->x_values.fill(count1, test::limited_range);
     this->y_values.fill(count2, test::limited_range);
     this->x.insert(this->x_values.begin(), this->x_values.end());
@@ -76,40 +72,39 @@ template <class T> struct move_assign_values : move_assign_base<T>
   }
 };
 
-template <class T> struct move_assign_test1 : move_assign_values<T>
-{
+template <class T>
+struct move_assign_test1 : move_assign_values<T> {
   move_assign_test1() : move_assign_values<T>(0, 0, 0, 0) {}
 };
 
-template <class T> struct move_assign_test2 : move_assign_values<T>
-{
+template <class T>
+struct move_assign_test2 : move_assign_values<T> {
   move_assign_test2() : move_assign_values<T>(60, 0, 0, 0) {}
 };
 
-template <class T> struct move_assign_test3 : move_assign_values<T>
-{
+template <class T>
+struct move_assign_test3 : move_assign_values<T> {
   move_assign_test3() : move_assign_values<T>(0, 60, 0, 0) {}
 };
 
-template <class T> struct move_assign_test4 : move_assign_values<T>
-{
+template <class T>
+struct move_assign_test4 : move_assign_values<T> {
   move_assign_test4() : move_assign_values<T>(10, 10, 1, 2) {}
 };
 
-template <class T> struct move_assign_test4a : move_assign_values<T>
-{
+template <class T>
+struct move_assign_test4a : move_assign_values<T> {
   move_assign_test4a() : move_assign_values<T>(10, 100, 1, 2) {}
 };
 
-template <class T> struct move_assign_test5 : move_assign_values<T>
-{
+template <class T>
+struct move_assign_test5 : move_assign_values<T> {
   move_assign_test5() : move_assign_values<T>(5, 60, 0, 0, 1.0f, 0.1f) {}
 };
 
-template <class T> struct equivalent_test1 : move_assign_base<T>
-{
-  equivalent_test1() : move_assign_base<T>(0, 0)
-  {
+template <class T>
+struct equivalent_test1 : move_assign_base<T> {
+  equivalent_test1() : move_assign_base<T>(0, 0) {
     test::random_values<T> x_values2(10, test::limited_range);
     this->x_values.insert(x_values2.begin(), x_values2.end());
     this->x_values.insert(x_values2.begin(), x_values2.end());

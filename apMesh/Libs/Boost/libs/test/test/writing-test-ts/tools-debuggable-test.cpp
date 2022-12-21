@@ -19,25 +19,21 @@
 
 //____________________________________________________________________________//
 
-static int
-foo( int arg )
-{
-  if( arg == 0 )
-    throw std::runtime_error("Oops");
+static int foo(int arg) {
+  if (arg == 0) throw std::runtime_error("Oops");
 
   return arg * arg;
 }
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test )
-{
-    int i = 2;
-    BOOST_TEST( foo(i)+1 == 5 );
+BOOST_AUTO_TEST_CASE(test) {
+  int i = 2;
+  BOOST_TEST(foo(i) + 1 == 5);
 
-    BOOST_TEST( foo(i)+1 == 5, "My message" );
+  BOOST_TEST(foo(i) + 1 == 5, "My message");
 
-    BOOST_CHECK_THROW( foo(0), std::runtime_error );
+  BOOST_CHECK_THROW(foo(0), std::runtime_error);
 }
 
 // EOF

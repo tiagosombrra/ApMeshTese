@@ -10,36 +10,33 @@
 // *****************************************************************************
 
 //[example_code
-#define BOOST_TEST_MODULE logger-customization-point
+#define BOOST_TEST_MODULE logger - customization - point
 #include <boost/test/included/unit_test.hpp>
 
 namespace user_defined_namespace {
-  struct user_defined_type {
-      int value;
+struct user_defined_type {
+  int value;
 
-      user_defined_type(int value_) : value(value_)
-      {}
+  user_defined_type(int value_) : value(value_) {}
 
-      bool operator==(int right) const {
-          return right == value;
-      }
-  };
-}
+  bool operator==(int right) const { return right == value; }
+};
+}  // namespace user_defined_namespace
 
 namespace user_defined_namespace {
-  std::ostream& boost_test_print_type(std::ostream& ostr, user_defined_type const& right) {
-      ostr << "** value of user_defined_type is " << right.value << " **";
-      return ostr;
-  }
+std::ostream& boost_test_print_type(std::ostream& ostr,
+                                    user_defined_type const& right) {
+  ostr << "** value of user_defined_type is " << right.value << " **";
+  return ostr;
 }
+}  // namespace user_defined_namespace
 
-BOOST_AUTO_TEST_CASE(test1)
-{
-    user_defined_namespace::user_defined_type t(10);
-    BOOST_TEST(t == 11);
+BOOST_AUTO_TEST_CASE(test1) {
+  user_defined_namespace::user_defined_type t(10);
+  BOOST_TEST(t == 11);
 
-    using namespace user_defined_namespace;
-    user_defined_type t2(11);
-    BOOST_TEST(t2 == 11);
+  using namespace user_defined_namespace;
+  user_defined_type t2(11);
+  BOOST_TEST(t2 == 11);
 }
 //]

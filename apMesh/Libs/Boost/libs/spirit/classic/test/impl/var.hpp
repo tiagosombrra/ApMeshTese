@@ -11,24 +11,19 @@
 
 #include <boost/ref.hpp>
 
-namespace test
-{
-    template <typename T>
-    struct var_wrapper
-        : public ::boost::reference_wrapper<T>
-    {
-        typedef ::boost::reference_wrapper<T> parent;
+namespace test {
+template <typename T>
+struct var_wrapper : public ::boost::reference_wrapper<T> {
+  typedef ::boost::reference_wrapper<T> parent;
 
-        explicit inline var_wrapper(T& t) : parent(t) {}
+  explicit inline var_wrapper(T& t) : parent(t) {}
 
-        inline T& operator()() const { return parent::get(); }
-    };
+  inline T& operator()() const { return parent::get(); }
+};
 
-    template <typename T>
-    inline var_wrapper<T>
-    var(T& t)
-    {
-        return var_wrapper<T>(t);
-    }
+template <typename T>
+inline var_wrapper<T> var(T& t) {
+  return var_wrapper<T>(t);
 }
-#endif // BOOST_SPIRIT_TEST_IMPL_VAR_HPP
+}  // namespace test
+#endif  // BOOST_SPIRIT_TEST_IMPL_VAR_HPP

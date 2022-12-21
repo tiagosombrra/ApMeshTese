@@ -48,11 +48,13 @@ void CurvaturaDiscreta::ordenaAdjacencia(const Noh& n) {
 
   //		se nova_lista não estiver vazia
   //			fator = M_PI ( n está na borda! )
-  //			E recebe primeiro elemento da lista elementos ( sem retirar
-  //) 			enquanto encontrar um elemento adjacente à direita de E faça
+  //			E recebe primeiro elemento da lista elementos ( sem
+  // retirar
+  //) 			enquanto encontrar um elemento adjacente à direita de E
+  // faça
 
   //				retire E' de nova_lista e insira no início de
-  //elementos 				E recebe E'
+  // elementos 				E recebe E'
   if (!nova_lista.empty()) {
     this->fator = M_PI;  // n está na borda !!!
     E = this->elementos.front();
@@ -69,8 +71,9 @@ void CurvaturaDiscreta::ordenaAdjacencia(const Noh& n) {
     }
   }
   //		senão
-  //			se o primeiro elemento P de elementos for adjacente ao último
-  //U 				fator = 2*M_PI ( n está no interior ) 			senão 				fator = M_PI ( n está na borda
+  //			se o primeiro elemento P de elementos for adjacente ao
+  //último U 				fator = 2*M_PI ( n está no interior )
+  // senão 				fator = M_PI ( n está na borda
   //)
   else {
     if (Adjacente::confirmaDir(n, *(this->elementos.front()),

@@ -12,8 +12,9 @@ int main() {
   using namespace boost::histogram;
 
   // create a 2d-histogram with an "age" and an "income" axis
-  auto h = make_histogram(axis::regular<>(20, 0.0, 100.0, "age in years"),
-                          axis::regular<>(20, 0.0, 100.0, "yearly income in Thousands"));
+  auto h = make_histogram(
+      axis::regular<>(20, 0.0, 100.0, "age in years"),
+      axis::regular<>(20, 0.0, 100.0, "yearly income in Thousands"));
 
   // do something with h
 }

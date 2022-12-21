@@ -9,8 +9,8 @@
  *
  */
 
-#include <boost/random/linear_congruential.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/random/linear_congruential.hpp>
 
 #define BOOST_RANDOM_URNG boost::random::rand48
 
@@ -21,6 +21,7 @@
 #define BOOST_RANDOM_SEED_SEQ_VALIDATION_VALUE 1286950069U
 #define BOOST_RANDOM_ITERATOR_VALIDATION_VALUE 839037874U
 
-#define BOOST_RANDOM_GENERATE_VALUES { 0x55424A4U, 0x3A2CCEF5U, 0x6ADB4A65U, 0x2B019719U }
+#define BOOST_RANDOM_GENERATE_VALUES \
+  { 0x55424A4U, 0x3A2CCEF5U, 0x6ADB4A65U, 0x2B019719U }
 
 #include "test_generator.ipp"

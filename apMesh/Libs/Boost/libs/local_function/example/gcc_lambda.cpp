@@ -7,30 +7,29 @@
 
 #include <boost/config.hpp>
 #ifndef __GNUC__
-#   error "GCC required (using non-standard GCC statement expressions)"
+#error "GCC required (using non-standard GCC statement expressions)"
 #else
 
-#include "gcc_lambda.hpp"
-#include <boost/detail/lightweight_test.hpp>
 #include <algorithm>
+#include <boost/detail/lightweight_test.hpp>
+
+#include "gcc_lambda.hpp"
 
 int main(void) {
-    //[gcc_lambda
-    int val = 2;
-    int nums[] = {1, 2, 3};
-    int* end = nums + 3;
+  //[gcc_lambda
+  int val = 2;
+  int nums[] = {1, 2, 3};
+  int* end = nums + 3;
 
-    int* iter = std::find_if(nums, end,
-        GCC_LAMBDA(const bind val, int num, return bool) {
-            return num == val;
-        } GCC_LAMBDA_END
-    );
-    //]
+  int* iter = std::find_if(
+      nums, end, GCC_LAMBDA(const bind val, int num, return bool) {
+        return num == val;
+      } GCC_LAMBDA_END);
+  //]
 
-    BOOST_TEST(iter != end);
-    BOOST_TEST(*iter == val);
-    return boost::report_errors();
+  BOOST_TEST(iter != end);
+  BOOST_TEST(*iter == val);
+  return boost::report_errors();
 }
 
-#endif // GCC
-
+#endif  // GCC

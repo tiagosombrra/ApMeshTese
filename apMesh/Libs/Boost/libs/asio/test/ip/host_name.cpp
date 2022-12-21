@@ -11,7 +11,7 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
 #include <boost/asio/ip/host_name.hpp>
@@ -27,29 +27,22 @@
 
 namespace ip_host_name_compile {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  try
-  {
+  try {
     boost::system::error_code ec;
 
     std::string host_name = ip::host_name();
     std::string host_name2 = ip::host_name(ec);
-  }
-  catch (std::exception&)
-  {
+  } catch (std::exception&) {
   }
 }
 
-} // namespace ip_host_name_compile
+}  // namespace ip_host_name_compile
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "ip/host_name",
-  BOOST_ASIO_TEST_CASE(ip_host_name_compile::test)
-)
+BOOST_ASIO_TEST_SUITE("ip/host_name",
+                      BOOST_ASIO_TEST_CASE(ip_host_name_compile::test))

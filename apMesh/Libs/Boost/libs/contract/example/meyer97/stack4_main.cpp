@@ -5,26 +5,26 @@
 // See: http://www.boost.org/doc/libs/release/libs/contract/doc/html/index.html
 
 //[meyer97_stack4_main
-#include "stack4.hpp"
 #include <cassert>
 
+#include "stack4.hpp"
+
 int main() {
-    stack4<int> s(3);
-    assert(s.capacity() == 3);
-    assert(s.count() == 0);
-    assert(s.empty());
-    assert(!s.full());
+  stack4<int> s(3);
+  assert(s.capacity() == 3);
+  assert(s.count() == 0);
+  assert(s.empty());
+  assert(!s.full());
 
-    s.put(123);
-    assert(!s.empty());
-    assert(!s.full());
-    assert(s.item() == 123);
+  s.put(123);
+  assert(!s.empty());
+  assert(!s.full());
+  assert(s.item() == 123);
 
-    s.remove();
-    assert(s.empty());
-    assert(!s.full());
+  s.remove();
+  assert(s.empty());
+  assert(!s.full());
 
-    return 0;
+  return 0;
 }
 //]
-

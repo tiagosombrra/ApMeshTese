@@ -8,6 +8,7 @@
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/histogram/axis.hpp>
 #include <boost/histogram/axis/traits.hpp>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 #include "utility_axis.hpp"
@@ -26,9 +27,9 @@ template <>
 struct value_type_deducer<ValueTypeOverride> {
   using type = char;
 };
-} // namespace detail
-} // namespace histogram
-} // namespace boost
+}  // namespace detail
+}  // namespace histogram
+}  // namespace boost
 
 int main() {
   // value_type
@@ -111,7 +112,9 @@ int main() {
   {
     struct empty {};
     struct with_opts_not_inclusive {
-      static constexpr unsigned options() { return option::underflow | option::overflow; }
+      static constexpr unsigned options() {
+        return option::underflow | option::overflow;
+      }
       static constexpr bool inclusive() { return false; }
     };
 
@@ -123,35 +126,43 @@ int main() {
 
     BOOST_TEST_TRAIT_TRUE((traits::is_inclusive<regular<>>));
     BOOST_TEST_TRAIT_FALSE(
-        (traits::is_inclusive<
-            regular<double, boost::use_default, boost::use_default, option::growth_t>>));
-    BOOST_TEST_TRAIT_FALSE(
-        (traits::is_inclusive<regular<double, boost::use_default, boost::use_default,
-                                      option::circular_t>>));
+        (traits::is_inclusive<regular<double, boost::use_default,
+                                      boost::use_default, option::growth_t>>));
+    BOOST_TEST_TRAIT_FALSE((
+        traits::is_inclusive<regular<double, boost::use_default,
+                                     boost::use_default, option::circular_t>>));
 
     BOOST_TEST_TRAIT_TRUE((traits::is_inclusive<variable<>>));
     BOOST_TEST_TRAIT_FALSE(
-        (traits::is_inclusive<variable<double, boost::use_default, option::growth_t>>));
+        (traits::is_inclusive<
+            variable<double, boost::use_default, option::growth_t>>));
     BOOST_TEST_TRAIT_FALSE(
-        (traits::is_inclusive<variable<double, boost::use_default, option::circular_t>>));
+        (traits::is_inclusive<
+            variable<double, boost::use_default, option::circular_t>>));
 
     BOOST_TEST_TRAIT_TRUE((traits::is_inclusive<integer<int>>));
     BOOST_TEST_TRAIT_TRUE(
-        (traits::is_inclusive<integer<int, boost::use_default, option::growth_t>>));
+        (traits::is_inclusive<
+            integer<int, boost::use_default, option::growth_t>>));
     BOOST_TEST_TRAIT_TRUE(
-        (traits::is_inclusive<integer<int, boost::use_default, option::circular_t>>));
+        (traits::is_inclusive<
+            integer<int, boost::use_default, option::circular_t>>));
 
     BOOST_TEST_TRAIT_TRUE((traits::is_inclusive<integer<double>>));
     BOOST_TEST_TRAIT_FALSE(
-        (traits::is_inclusive<integer<double, boost::use_default, option::growth_t>>));
+        (traits::is_inclusive<
+            integer<double, boost::use_default, option::growth_t>>));
     BOOST_TEST_TRAIT_FALSE(
-        (traits::is_inclusive<integer<double, boost::use_default, option::circular_t>>));
+        (traits::is_inclusive<
+            integer<double, boost::use_default, option::circular_t>>));
 
     BOOST_TEST_TRAIT_TRUE((traits::is_inclusive<category<int>>));
     BOOST_TEST_TRAIT_TRUE(
-        (traits::is_inclusive<category<int, boost::use_default, option::growth_t>>));
+        (traits::is_inclusive<
+            category<int, boost::use_default, option::growth_t>>));
     BOOST_TEST_TRAIT_FALSE(
-        (traits::is_inclusive<category<int, boost::use_default, option::none_t>>));
+        (traits::is_inclusive<
+            category<int, boost::use_default, option::none_t>>));
   }
 
   // is_ordered, ordered()
@@ -218,7 +229,7 @@ int main() {
     BOOST_TEST_EQ(traits::rank(v), 2u);
 
     struct E : integer<> {
-      using integer::integer; // inherit ctors of base
+      using integer::integer;  // inherit ctors of base
       // customization point: convert argument and call base class
       auto index(const char* s) const { return integer::index(std::atoi(s)); }
     };
@@ -229,11 +240,13 @@ int main() {
   // update
   {
     auto a = integer<int, null_type, option::growth_t>();
-    BOOST_TEST_EQ(traits::update(a, 0), (std::pair<index_type, index_type>(0, -1)));
+    BOOST_TEST_EQ(traits::update(a, 0),
+                  (std::pair<index_type, index_type>(0, -1)));
     BOOST_TEST_THROWS(traits::update(a, "foo"), std::invalid_argument);
 
     variant<integer<int, null_type, option::growth_t>, integer<>> v(a);
-    BOOST_TEST_EQ(traits::update(v, 0), (std::pair<index_type, index_type>(0, 0)));
+    BOOST_TEST_EQ(traits::update(v, 0),
+                  (std::pair<index_type, index_type>(0, 0)));
   }
 
   // metadata
@@ -255,8 +268,8 @@ int main() {
     BOOST_TEST_TRAIT_SAME(decltype(traits::metadata(none)), null_type&);
     BOOST_TEST_TRAIT_SAME(decltype(traits::metadata(static_cast<None&>(none))),
                           null_type&);
-    BOOST_TEST_TRAIT_SAME(decltype(traits::metadata(static_cast<const None&>(none))),
-                          null_type&);
+    BOOST_TEST_TRAIT_SAME(
+        decltype(traits::metadata(static_cast<const None&>(none))), null_type&);
 
     Const c;
     BOOST_TEST_EQ(traits::metadata(c), 0);

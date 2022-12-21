@@ -7,20 +7,19 @@
     For more information, see http://www.boost.org
 */
 
-#include <iostream>
 #include <algorithm>
+#include <boost/utility/string_ref.hpp>
+#include <iostream>
 #include <string>
 
-#include <boost/utility/string_ref.hpp>
-
-#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES) || defined(BOOST_NO_CXX11_DELETED_FUNCTIONS)
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES) || \
+    defined(BOOST_NO_CXX11_DELETED_FUNCTIONS)
 #error "Unsupported test"
 #endif
 
 std::string makeatemp() { return "abc"; }
 
-int main()
-{
+int main() {
   boost::basic_string_ref<char> sv(makeatemp());
   return 0;
 }

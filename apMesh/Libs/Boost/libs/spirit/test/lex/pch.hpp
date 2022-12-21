@@ -6,12 +6,12 @@
 =============================================================================*/
 #ifdef BOOST_BUILD_PCH_ENABLED
 
+#include <boost/core/lightweight_test.hpp>
 #include <boost/spirit/include/lex.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/core/lightweight_test.hpp>
-#include <string>
 #include <iostream>
+#include <string>
 
 #endif

@@ -6,22 +6,20 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/config/warning_disable.hpp>
-#include <boost/spirit/home/x3.hpp>
-
 #include <boost/fusion/adapted/std_tuple.hpp>
-
+#include <boost/spirit/home/x3.hpp>
 #include <iostream>
-#include <tuple>
 #include <string>
+#include <tuple>
 
 //
 // X3 does not support more than one attribute anymore in the parse function,
-// this example show how to wrap multiple attributes into one leveraging std::tuple.
+// this example show how to wrap multiple attributes into one leveraging
+// std::tuple.
 //
 
-std::tuple<uint32_t, uint32_t, uint32_t> parse_message_prefix_revision(const std::string &s)
-{
-
+std::tuple<uint32_t, uint32_t, uint32_t> parse_message_prefix_revision(
+    const std::string &s) {
   namespace x3 = boost::spirit::x3;
 
   auto const uint_3_digits = x3::uint_parser<std::uint32_t, 10, 3, 3>{};
@@ -32,15 +30,13 @@ std::tuple<uint32_t, uint32_t, uint32_t> parse_message_prefix_revision(const std
 
   std::tuple<uint32_t, uint32_t, uint32_t> length_id_revision;
 
-  x3::parse(iter, end_iter,
-            uint_4_digits >> uint_4_digits >> uint_3_digits,
+  x3::parse(iter, end_iter, uint_4_digits >> uint_4_digits >> uint_3_digits,
             length_id_revision);
 
   return length_id_revision;
 }
 
-int main()
-{
+int main() {
   std::string s = "00200060001";
 
   std::cout << "parsing " << s << '\n';

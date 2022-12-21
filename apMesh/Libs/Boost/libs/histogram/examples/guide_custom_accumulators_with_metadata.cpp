@@ -17,7 +17,7 @@ int main() {
 
   // derive custom accumulator from one of the builtins
   struct accumulator_with_metadata : accumulators::count<> {
-    std::string meta; // custom meta data
+    std::string meta;  // custom meta data
 
     // arbitrary additional data and interface could be added here
   };
@@ -39,9 +39,10 @@ int main() {
     os << x.bin() << " value " << x->value() << " meta " << x->meta << "\n";
 
   std::cout << os.str() << std::flush;
-  assert(os.str() == "1 value 2 meta Foo\n"
-                     "2 value 1 meta \n"
-                     "3 value 0 meta Bar\n");
+  assert(os.str() ==
+         "1 value 2 meta Foo\n"
+         "2 value 1 meta \n"
+         "3 value 0 meta Bar\n");
 }
 
 //]

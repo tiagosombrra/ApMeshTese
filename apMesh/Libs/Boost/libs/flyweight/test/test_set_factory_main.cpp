@@ -9,10 +9,10 @@
  */
 
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_set_factory.hpp"
 
-int main()
-{
+int main() {
   test_set_factory();
   return boost::report_errors();
 }

@@ -12,27 +12,27 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static constexpr bool is_preferable = true;
 };
 
 template <int>
-struct object
-{
+struct object {
   template <int N>
-  constexpr object<N> prefer(prop<N>) const
-  {
+  constexpr object<N> prefer(prop<N>) const {
     return object<N>();
   }
 };
 
-int main()
-{
+int main() {
   static_assert(!boost::asio::can_prefer_v<object<1>, prop<2>>, "");
   static_assert(!boost::asio::can_prefer_v<object<1>, prop<2>, prop<3>>, "");
-  static_assert(!boost::asio::can_prefer_v<object<1>, prop<2>, prop<3>, prop<4>>, "");
+  static_assert(
+      !boost::asio::can_prefer_v<object<1>, prop<2>, prop<3>, prop<4>>, "");
   static_assert(!boost::asio::can_prefer_v<const object<1>, prop<2>>, "");
-  static_assert(!boost::asio::can_prefer_v<const object<1>, prop<2>, prop<3>>, "");
-  static_assert(!boost::asio::can_prefer_v<const object<1>, prop<2>, prop<3>, prop<4>>, "");
+  static_assert(!boost::asio::can_prefer_v<const object<1>, prop<2>, prop<3>>,
+                "");
+  static_assert(
+      !boost::asio::can_prefer_v<const object<1>, prop<2>, prop<3>, prop<4>>,
+      "");
 }

@@ -18,10 +18,11 @@
 
 // void lock();
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/recursive_mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
+
 #include "../../../timming.hpp"
 
 boost::recursive_timed_mutex m;
@@ -39,8 +40,7 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #if defined BOOST_THREAD_USES_CHRONO
   t0 = Clock::now();
   m.lock();
@@ -49,19 +49,18 @@ void f()
   m.unlock();
   m.unlock();
 #else
-  //time_point t0 = Clock::now();
+  // time_point t0 = Clock::now();
   m.lock();
-  //time_point t1 = Clock::now();
+  // time_point t1 = Clock::now();
   m.lock();
   m.unlock();
   m.unlock();
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
 #endif
 }
 
-int main()
-{
+int main() {
   m.lock();
   boost::thread t(f);
 #if defined BOOST_THREAD_USES_CHRONO
@@ -84,5 +83,3 @@ int main()
 
   return boost::report_errors();
 }
-
-

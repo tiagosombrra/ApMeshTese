@@ -5,15 +5,14 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 
-#define BOOST_TEST_MODULE timeout-error
+#define BOOST_TEST_MODULE timeout - error
 #include <boost/test/unit_test.hpp>
 #include <chrono>
 #include <thread>
 
 namespace utf = boost::unit_test;
 
-BOOST_AUTO_TEST_CASE(test_fail, * utf::timeout(1))
-{
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    BOOST_TEST(true);
+BOOST_AUTO_TEST_CASE(test_fail, *utf::timeout(1)) {
+  std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+  BOOST_TEST(true);
 }

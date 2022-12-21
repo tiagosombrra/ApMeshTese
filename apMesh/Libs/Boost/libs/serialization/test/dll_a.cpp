@@ -11,39 +11,30 @@
 // used in testing distribution of serialization code in DLLS
 
 #define A_EXPORT
+#include "A.cpp"
 #include "A.hpp"
 #include "A.ipp"
-#include "A.cpp"
 
 // instantiate code for text archives
 
-#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 
-template
-A_DLL_DECL void A::serialize(
-    boost::archive::text_oarchive &ar,
-    const unsigned int /* file_version */
+template A_DLL_DECL void A::serialize(boost::archive::text_oarchive &ar,
+                                      const unsigned int /* file_version */
 );
-template
-A_DLL_DECL void A::serialize(
-    boost::archive::text_iarchive &ar,
-    const unsigned int /* file_version */
+template A_DLL_DECL void A::serialize(boost::archive::text_iarchive &ar,
+                                      const unsigned int /* file_version */
 );
 
 // instantiate code for polymorphic archives
 
-#include <boost/archive/polymorphic_oarchive.hpp>
 #include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
 
-template
-A_DLL_DECL void A::serialize(
-    boost::archive::polymorphic_oarchive &,
-    const unsigned int /* file_version */
+template A_DLL_DECL void A::serialize(boost::archive::polymorphic_oarchive &,
+                                      const unsigned int /* file_version */
 );
-template
-A_DLL_DECL void A::serialize(
-    boost::archive::polymorphic_iarchive &,
-    const unsigned int /* file_version */
+template A_DLL_DECL void A::serialize(boost::archive::polymorphic_iarchive &,
+                                      const unsigned int /* file_version */
 );
-

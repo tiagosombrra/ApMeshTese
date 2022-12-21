@@ -6,8 +6,7 @@
 
 #include <boost/contract/core/config.hpp>
 // For shared (default) and static lib only.
-#ifndef BOOST_CONTRACT_HEADER_ONLY // This is not an #include guard.
-    #define BOOST_CONTRACT_SOURCE
-    #include <boost/contract/detail/inlined.hpp>
-#endif // Else (header-only), make sure nothing is compiled here.
-
+#ifndef BOOST_CONTRACT_HEADER_ONLY  // This is not an #include guard.
+#define BOOST_CONTRACT_SOURCE
+#include <boost/contract/detail/inlined.hpp>
+#endif  // Else (header-only), make sure nothing is compiled here.

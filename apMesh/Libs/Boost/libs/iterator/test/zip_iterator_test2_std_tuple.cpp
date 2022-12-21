@@ -1,11 +1,12 @@
 #include <boost/config.hpp>
 
-#if !defined(BOOST_NO_CXX11_HDR_TUPLE) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if !defined(BOOST_NO_CXX11_HDR_TUPLE) && \
+    !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
-#include <tuple>
 #include <boost/fusion/adapted/std_tuple.hpp>
+#include <tuple>
 
-#define ZI_TUPLE      std::tuple
+#define ZI_TUPLE std::tuple
 #define ZI_MAKE_TUPLE std::make_tuple
 #define ZI_TUPLE_GET(n) std::get<n>
 
@@ -13,9 +14,6 @@
 
 #else
 
-int main()
- {
- return 0;
- }
+int main() { return 0; }
 
 #endif

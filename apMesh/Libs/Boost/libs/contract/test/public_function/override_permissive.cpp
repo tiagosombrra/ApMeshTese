@@ -7,7 +7,6 @@
 // Test no error if permissive even when override f does not actually override.
 
 #ifndef BOOST_CONTRACT_PERMISSIVE
-    #error "build must define PERMISSIVE"
+#error "build must define PERMISSIVE"
 #endif
 #include "override.hpp"
-

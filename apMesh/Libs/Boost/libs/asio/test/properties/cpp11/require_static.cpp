@@ -12,39 +12,33 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static constexpr bool is_requirable = true;
 };
 
 template <int>
-struct object
-{
-};
+struct object {};
 
 namespace boost {
 namespace asio {
 
-template<int N, int M>
-struct is_applicable_property<object<N>, prop<M> >
-{
+template <int N, int M>
+struct is_applicable_property<object<N>, prop<M> > {
   static constexpr bool value = true;
 };
 
 namespace traits {
 
-template<int N>
-struct static_require<object<N>, prop<N> >
-{
+template <int N>
+struct static_require<object<N>, prop<N> > {
   static constexpr bool is_valid = true;
 };
 
-} // namespace traits
-} // namespace asio
-} // namespace boost
+}  // namespace traits
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   object<1> o1 = {};
   object<1> o2 = boost::asio::require(o1, prop<1>());
   object<1> o3 = boost::asio::require(o1, prop<1>(), prop<1>());
@@ -62,8 +56,10 @@ int main()
   (void)o8;
 
   constexpr object<1> o9 = boost::asio::require(object<1>(), prop<1>());
-  constexpr object<1> o10 = boost::asio::require(object<1>(), prop<1>(), prop<1>());
-  constexpr object<1> o11 = boost::asio::require(object<1>(), prop<1>(), prop<1>(), prop<1>());
+  constexpr object<1> o10 =
+      boost::asio::require(object<1>(), prop<1>(), prop<1>());
+  constexpr object<1> o11 =
+      boost::asio::require(object<1>(), prop<1>(), prop<1>(), prop<1>());
   (void)o9;
   (void)o10;
   (void)o11;

@@ -20,68 +20,64 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
 boost::mutex m0;
 boost::mutex m1;
 
-int main()
-{
+int main() {
   {
-      typedef int T;
-      boost::promise<T> p;
-      boost::future<T> f0 = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      boost::future<T> f;
-      f = boost::move(f0);
-      BOOST_TEST(!f0.valid());
-      BOOST_TEST(f.valid());
+    typedef int T;
+    boost::promise<T> p;
+    boost::future<T> f0 = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    boost::future<T> f;
+    f = boost::move(f0);
+    BOOST_TEST(!f0.valid());
+    BOOST_TEST(f.valid());
   }
   {
-      typedef int T;
-      boost::future<T> f0;
-      boost::future<T> f;
-      f = boost::move(f0);
-      BOOST_TEST(!f0.valid());
-      BOOST_TEST(!f.valid());
+    typedef int T;
+    boost::future<T> f0;
+    boost::future<T> f;
+    f = boost::move(f0);
+    BOOST_TEST(!f0.valid());
+    BOOST_TEST(!f.valid());
   }
   {
-      typedef int& T;
-      boost::promise<T> p;
-      boost::future<T> f0 = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      boost::future<T> f;
-      f = boost::move(f0);
-      BOOST_TEST(!f0.valid());
-      BOOST_TEST(f.valid());
+    typedef int& T;
+    boost::promise<T> p;
+    boost::future<T> f0 = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    boost::future<T> f;
+    f = boost::move(f0);
+    BOOST_TEST(!f0.valid());
+    BOOST_TEST(f.valid());
   }
   {
-      typedef int& T;
-      boost::future<T> f0;
-      boost::future<T> f;
-      f = boost::move(f0);
-      BOOST_TEST(!f0.valid());
-      BOOST_TEST(!f.valid());
+    typedef int& T;
+    boost::future<T> f0;
+    boost::future<T> f;
+    f = boost::move(f0);
+    BOOST_TEST(!f0.valid());
+    BOOST_TEST(!f.valid());
   }
   {
-      typedef void T;
-      boost::promise<T> p;
-      boost::future<T> f0 = BOOST_THREAD_MAKE_RV_REF(p.get_future());
-      boost::future<T> f;
-      f = boost::move(f0);
-      BOOST_TEST(!f0.valid());
-      BOOST_TEST(f.valid());
+    typedef void T;
+    boost::promise<T> p;
+    boost::future<T> f0 = BOOST_THREAD_MAKE_RV_REF(p.get_future());
+    boost::future<T> f;
+    f = boost::move(f0);
+    BOOST_TEST(!f0.valid());
+    BOOST_TEST(f.valid());
   }
   {
-      typedef void T;
-      boost::future<T> f0;
-      boost::future<T> f;
-      f = boost::move(f0);
-      BOOST_TEST(!f0.valid());
-      BOOST_TEST(!f.valid());
+    typedef void T;
+    boost::future<T> f0;
+    boost::future<T> f;
+    f = boost::move(f0);
+    BOOST_TEST(!f0.valid());
+    BOOST_TEST(!f.valid());
   }
-
 
   return boost::report_errors();
-
 }
-

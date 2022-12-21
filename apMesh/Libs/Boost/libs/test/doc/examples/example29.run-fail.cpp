@@ -11,14 +11,15 @@
 #include <boost/test/tools/output_test_stream.hpp>
 using boost::test_tools::output_test_stream;
 
-BOOST_AUTO_TEST_CASE( test )
-{
-  output_test_stream output( "pattern_file", !boost::unit_test::runtime_config::save_pattern() );
-  int i=2;
+BOOST_AUTO_TEST_CASE(test) {
+  output_test_stream output("pattern_file",
+                            !boost::unit_test::runtime_config::save_pattern());
+  int i = 2;
   output << "i=" << i;
-  BOOST_TEST( output.match_pattern() );
+  BOOST_TEST(output.match_pattern());
 
   output << "\nFile: " << __FILE__ << " Line:YYY";
-  BOOST_TEST( output.match_pattern() ); /*< This line generates the error Line:YYY != Line:XXX >*/
+  BOOST_TEST(output.match_pattern()); /*< This line generates the error Line:YYY
+                                         != Line:XXX >*/
 }
 //]

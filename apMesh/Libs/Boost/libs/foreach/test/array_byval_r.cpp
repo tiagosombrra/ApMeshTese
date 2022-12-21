@@ -8,11 +8,12 @@
    25 August 2005 : Initial version.
 */
 
-#include <boost/test/minimal.hpp>
 #include <boost/foreach.hpp>
+#include <boost/test/minimal.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// define the container types, used by utility.hpp to generate the helper functions
+// define the container types, used by utility.hpp to generate the helper
+// functions
 typedef int foreach_container_type[5];
 typedef int const foreach_const_container_type[5];
 typedef int foreach_value_type;
@@ -24,22 +25,21 @@ typedef int const &foreach_const_reference_type;
 ///////////////////////////////////////////////////////////////////////////////
 // define some containers
 //
-int my_array[5] = { 1,2,3,4,5 };
+int my_array[5] = {1, 2, 3, 4, 5};
 int const (&my_const_array)[5] = my_array;
 
 ///////////////////////////////////////////////////////////////////////////////
 // test_main
-//   
-int test_main( int, char*[] )
-{
-    boost::mpl::false_ *p = BOOST_FOREACH_IS_LIGHTWEIGHT_PROXY(my_array);
-    (void)p;
+//
+int test_main(int, char *[]) {
+  boost::mpl::false_ *p = BOOST_FOREACH_IS_LIGHTWEIGHT_PROXY(my_array);
+  (void)p;
 
-    // non-const containers by value
-    BOOST_CHECK(sequence_equal_byval_n_r(my_array, "\5\4\3\2\1"));
+  // non-const containers by value
+  BOOST_CHECK(sequence_equal_byval_n_r(my_array, "\5\4\3\2\1"));
 
-    // const containers by value
-    BOOST_CHECK(sequence_equal_byval_c_r(my_const_array, "\5\4\3\2\1"));
+  // const containers by value
+  BOOST_CHECK(sequence_equal_byval_c_r(my_const_array, "\5\4\3\2\1"));
 
-    return 0;
+  return 0;
 }

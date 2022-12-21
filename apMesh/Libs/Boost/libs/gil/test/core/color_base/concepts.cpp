@@ -12,43 +12,37 @@
 #if !defined(BOOST_GIL_USE_CONCEPT_CHECK) && !defined(__clang__)
 #error Compile with BOOST_GIL_USE_CONCEPT_CHECK defined
 #endif
-#include <boost/gil/concepts.hpp>
-#include <boost/gil/color_base.hpp>
-#include <boost/gil/typedefs.hpp>
-
 #include <boost/concept_check.hpp>
+#include <boost/gil/color_base.hpp>
+#include <boost/gil/concepts.hpp>
+#include <boost/gil/typedefs.hpp>
 
 namespace gil = boost::gil;
 using boost::function_requires;
 
-int main()
-{
-    function_requires<gil::ColorBaseConcept
-        <
-            gil::detail::homogeneous_color_base<std::uint8_t, gil::gray_layout_t, 1>
-        >>();
+int main() {
+  function_requires<gil::ColorBaseConcept<gil::detail::homogeneous_color_base<
+      std::uint8_t, gil::gray_layout_t, 1>>>();
 
-    function_requires<gil::HomogeneousColorBaseConcept
-        <
-            gil::detail::homogeneous_color_base<std::uint8_t, gil::gray_layout_t, 1>
-        >>();
+  function_requires<
+      gil::HomogeneousColorBaseConcept<gil::detail::homogeneous_color_base<
+          std::uint8_t, gil::gray_layout_t, 1>>>();
 
-    function_requires<gil::HomogeneousColorBaseValueConcept
-        <
-            gil::detail::homogeneous_color_base<std::uint8_t, gil::gray_layout_t, 1>
-        >>();
+  function_requires<
+      gil::HomogeneousColorBaseValueConcept<gil::detail::homogeneous_color_base<
+          std::uint8_t, gil::gray_layout_t, 1>>>();
 
-    // FIXME: https://github.com/boostorg/gil/issues/271
-    //function_requires
-    //<
-    //    gil::ColorBaseConcept
-    //    <
-    //        gil::detail::homogeneous_color_base<std::uint8_t, gil::rgb_layout_t, 3>
-    //    >
-    //>();
+  // FIXME: https://github.com/boostorg/gil/issues/271
+  // function_requires
+  //<
+  //    gil::ColorBaseConcept
+  //    <
+  //        gil::detail::homogeneous_color_base<std::uint8_t, gil::rgb_layout_t,
+  //        3>
+  //    >
+  //>();
 
-    function_requires<gil::ColorBaseConcept<gil::gray8_pixel_t>>();
-    function_requires<gil::ColorBaseConcept<gil::rgb8_pixel_t>>();
-    function_requires<gil::ColorBaseConcept<gil::bgr8_pixel_t>>();
-
+  function_requires<gil::ColorBaseConcept<gil::gray8_pixel_t>>();
+  function_requires<gil::ColorBaseConcept<gil::rgb8_pixel_t>>();
+  function_requires<gil::ColorBaseConcept<gil::bgr8_pixel_t>>();
 }

@@ -8,22 +8,18 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 
+#include <boost/core/lightweight_test.hpp>
 #include <boost/utility/base_from_member.hpp>
 
-#include <boost/core/lightweight_test.hpp>
-
-struct foo : boost::base_from_member<int&>
-{
-    explicit foo(int& ref) : boost::base_from_member<int&>(ref)
-    {
-        BOOST_TEST(&member == &ref);
-    }
+struct foo : boost::base_from_member<int&> {
+  explicit foo(int& ref) : boost::base_from_member<int&>(ref) {
+    BOOST_TEST(&member == &ref);
+  }
 };
 
-int main()
-{
-    int i = 0;
-    foo f(i);
+int main() {
+  int i = 0;
+  foo f(i);
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

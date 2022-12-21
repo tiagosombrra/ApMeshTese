@@ -12,7 +12,9 @@
 #include <boost/random/independent_bits.hpp>
 #include <boost/random/linear_congruential.hpp>
 
-typedef boost::random::independent_bits_engine<boost::random::minstd_rand0, 31, boost::uint32_t> independent_bits31;
+typedef boost::random::independent_bits_engine<boost::random::minstd_rand0, 31,
+                                               boost::uint32_t>
+    independent_bits31;
 #define BOOST_RANDOM_URNG independent_bits31
 
 #define BOOST_RANDOM_SEED_WORDS 1
@@ -21,6 +23,7 @@ typedef boost::random::independent_bits_engine<boost::random::minstd_rand0, 31, 
 #define BOOST_RANDOM_SEED_SEQ_VALIDATION_VALUE 364481529U
 #define BOOST_RANDOM_ITERATOR_VALIDATION_VALUE 1399154219U
 
-#define BOOST_RANDOM_GENERATE_VALUES { 0xC1A63AF0U, 0xD66C0614U, 0xADE076B1U, 0xC1DAE13FU }
+#define BOOST_RANDOM_GENERATE_VALUES \
+  { 0xC1A63AF0U, 0xD66C0614U, 0xADE076B1U, 0xC1DAE13FU }
 
 #include "test_generator.ipp"

@@ -10,50 +10,47 @@
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_what.hpp>
 
-namespace spirit_test
-{
-    template <typename Char, typename Parser, typename Lexer>
-    inline bool test_parser(Char const* in, Parser const& p, Lexer& lex, 
-        bool full_match = true)
-    {
-        // we don't care about the result of the "what" function.
-        // we only care that all parsers have it:
-        boost::spirit::qi::what(p);
+namespace spirit_test {
+template <typename Char, typename Parser, typename Lexer>
+inline bool test_parser(Char const* in, Parser const& p, Lexer& lex,
+                        bool full_match = true) {
+  // we don't care about the result of the "what" function.
+  // we only care that all parsers have it:
+  boost::spirit::qi::what(p);
 
-        std::string str (in);
-        std::string::iterator it_in = str.begin();
-        std::string::iterator end_in = str.end();
+  std::string str(in);
+  std::string::iterator it_in = str.begin();
+  std::string::iterator end_in = str.end();
 
-        typedef typename Lexer::iterator_type iterator_type;
+  typedef typename Lexer::iterator_type iterator_type;
 
-        iterator_type iter = lex.begin(it_in, end_in);
-        iterator_type end = lex.end();
+  iterator_type iter = lex.begin(it_in, end_in);
+  iterator_type end = lex.end();
 
-        return boost::spirit::qi::parse(iter, end, p)
-            && (!full_match || (iter == end));
-    }
-
-    template <typename Char, typename Parser, typename Lexer, typename Skipper>
-    inline bool test_parser(Char const* in, Parser const& p, Lexer& lex,
-          Skipper const& s, bool full_match = true)
-    {
-        // we don't care about the result of the "what" function.
-        // we only care that all parsers have it:
-        boost::spirit::qi::what(p);
-
-        std::string str (in);
-        std::string::iterator it_in = str.begin();
-        std::string::iterator end_in = str.end();
-
-        typedef typename Lexer::iterator_type iterator_type;
-
-        iterator_type iter = lex.begin(it_in, end_in);
-        iterator_type end = lex.end();
-
-        return boost::spirit::qi::phrase_parse(iter, end, p, s)
-            && (!full_match || (iter == end));
-    }
-
+  return boost::spirit::qi::parse(iter, end, p) &&
+         (!full_match || (iter == end));
 }
+
+template <typename Char, typename Parser, typename Lexer, typename Skipper>
+inline bool test_parser(Char const* in, Parser const& p, Lexer& lex,
+                        Skipper const& s, bool full_match = true) {
+  // we don't care about the result of the "what" function.
+  // we only care that all parsers have it:
+  boost::spirit::qi::what(p);
+
+  std::string str(in);
+  std::string::iterator it_in = str.begin();
+  std::string::iterator end_in = str.end();
+
+  typedef typename Lexer::iterator_type iterator_type;
+
+  iterator_type iter = lex.begin(it_in, end_in);
+  iterator_type end = lex.end();
+
+  return boost::spirit::qi::phrase_parse(iter, end, p, s) &&
+         (!full_match || (iter == end));
+}
+
+}  // namespace spirit_test
 
 #endif

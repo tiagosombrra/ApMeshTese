@@ -24,8 +24,8 @@ typedef std::ifstream test_istream;
 // since this archive class isn't compiled into the
 // boost serialization library, include this here
 // so that things get instantiated
-#include "../example/portable_binary_oarchive.cpp"
 #include "../example/portable_binary_iarchive.cpp"
+#include "../example/portable_binary_oarchive.cpp"
 
 // and stream open flags
 #define TEST_STREAM_FLAGS std::ios::binary

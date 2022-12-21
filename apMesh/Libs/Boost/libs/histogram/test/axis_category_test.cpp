@@ -13,6 +13,7 @@
 #include <sstream>
 #include <string>
 #include <type_traits>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 #include "utility_axis.hpp"
@@ -22,9 +23,11 @@ int main() {
   using namespace boost::histogram;
 
   BOOST_TEST(std::is_nothrow_move_constructible<axis::category<int>>::value);
-  BOOST_TEST(std::is_nothrow_move_constructible<axis::category<std::string>>::value);
+  BOOST_TEST(
+      std::is_nothrow_move_constructible<axis::category<std::string>>::value);
   BOOST_TEST(std::is_nothrow_move_assignable<axis::category<int>>::value);
-  BOOST_TEST(std::is_nothrow_move_assignable<axis::category<std::string>>::value);
+  BOOST_TEST(
+      std::is_nothrow_move_assignable<axis::category<std::string>>::value);
 
   // bad ctor
   {
@@ -39,16 +42,20 @@ int main() {
 
     BOOST_TEST_TRAIT_SAME(axis::traits::value_type<axis::category<std::string>>,
                           std::string);
-    BOOST_TEST_TRAIT_SAME(decltype(std::declval<axis::category<std::string>>().value(0)),
-                          const std::string&);
+    BOOST_TEST_TRAIT_SAME(
+        decltype(std::declval<axis::category<std::string>>().value(0)),
+        const std::string&);
     BOOST_TEST_TRAIT_SAME(axis::traits::value_type<axis::category<const char*>>,
                           const char*);
-    BOOST_TEST_TRAIT_SAME(decltype(std::declval<axis::category<const char*>>().value(0)),
-                          const char*);
+    BOOST_TEST_TRAIT_SAME(
+        decltype(std::declval<axis::category<const char*>>().value(0)),
+        const char*);
     BOOST_TEST_TRAIT_SAME(axis::traits::value_type<axis::category<Foo>>, Foo);
-    BOOST_TEST_TRAIT_SAME(decltype(std::declval<axis::category<Foo>>().value(0)), Foo);
+    BOOST_TEST_TRAIT_SAME(
+        decltype(std::declval<axis::category<Foo>>().value(0)), Foo);
     BOOST_TEST_TRAIT_SAME(axis::traits::value_type<axis::category<int>>, int);
-    BOOST_TEST_TRAIT_SAME(decltype(std::declval<axis::category<int>>().value(0)), int);
+    BOOST_TEST_TRAIT_SAME(
+        decltype(std::declval<axis::category<int>>().value(0)), int);
   }
 
   // empty axis::category
@@ -68,9 +75,11 @@ int main() {
 
     axis::category<std::string> a({A, B, C}, "foo");
     BOOST_TEST_EQ(a.metadata(), "foo");
-    BOOST_TEST_EQ(static_cast<const axis::category<std::string>&>(a).metadata(), "foo");
+    BOOST_TEST_EQ(static_cast<const axis::category<std::string>&>(a).metadata(),
+                  "foo");
     a.metadata() = "bar";
-    BOOST_TEST_EQ(static_cast<const axis::category<std::string>&>(a).metadata(), "bar");
+    BOOST_TEST_EQ(static_cast<const axis::category<std::string>&>(a).metadata(),
+                  "bar");
     BOOST_TEST_EQ(a.size(), 3);
     BOOST_TEST_EQ(a.index(A), 0);
     BOOST_TEST_EQ(a.index(B), 1);

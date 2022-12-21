@@ -17,11 +17,10 @@
 
 // condition_variable(const condition_variable&) = delete;
 
-#include <boost/thread/condition_variable.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/condition_variable.hpp>
 
-int main()
-{
+int main() {
   boost::condition_variable cv0;
   return boost::report_errors();
 }

@@ -21,21 +21,18 @@ void run() {}
 #else
 
 namespace {
-   struct Foo { };
+struct Foo {};
 
-   struct Visitor {
-      void operator()(Foo const&) const { }
-   };
-}
+struct Visitor {
+  void operator()(Foo const&) const {}
+};
+}  // namespace
 
 void run() {
-   boost::variant<Foo> v = Foo();
-   boost::apply_visitor(Visitor(), v);
+  boost::variant<Foo> v = Foo();
+  boost::apply_visitor(Visitor(), v);
 }
 
 #endif
 
-int main() {
-   run();
-}
-
+int main() { run(); }

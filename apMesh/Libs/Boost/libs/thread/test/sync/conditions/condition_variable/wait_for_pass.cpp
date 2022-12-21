@@ -17,12 +17,13 @@
 
 // condition_variable(const condition_variable&) = delete;
 
-#include <iostream>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include <cassert>
+#include <iostream>
+
 #include "../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
@@ -43,8 +44,7 @@ typedef boost::chrono::nanoseconds ns;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
   try {
     boost::unique_lock<boost::mutex> lk(mut);
     assert(test2 == 0);
@@ -52,65 +52,59 @@ void f()
     cv.notify_one();
     Clock::time_point t0 = Clock::now();
     Clock::time_point t = t0 + milliseconds(250);
-    while (test2 == 0 && cv.wait_for(lk, t - Clock::now()) == boost::cv_status::no_timeout) {}
+    while (test2 == 0 &&
+           cv.wait_for(lk, t - Clock::now()) == boost::cv_status::no_timeout) {
+    }
     Clock::time_point t1 = Clock::now();
-    if (runs == 0)
-    {
+    if (runs == 0) {
       assert(t1 - t0 < max_diff);
       assert(test2 != 0);
-    }
-    else
-    {
+    } else {
       nanoseconds d = t1 - t0 - milliseconds(250);
       std::cout << "diff= " << d.count() << std::endl;
       std::cout << "max_diff= " << max_diff.count() << std::endl;
-      assert( d < max_diff);
+      assert(d < max_diff);
       assert(test2 == 0);
     }
     ++runs;
-  } catch(...) {
+  } catch (...) {
     std::cout << "ERROR exception" << __LINE__ << std::endl;
     assert(false);
   }
 }
 
-int main()
-{
-  try
-  {
+int main() {
+  try {
     boost::unique_lock<boost::mutex> lk(mut);
     boost::thread t(f);
     BOOST_TEST(test1 == 0);
-    while (test1 == 0)
-      cv.wait(lk);
+    while (test1 == 0) cv.wait(lk);
     BOOST_TEST(test1 != 0);
     test2 = 1;
     lk.unlock();
     cv.notify_one();
     t.join();
-  } catch(...) {
-      std::cout << "ERROR exception" << __LINE__ << std::endl;
-      BOOST_TEST(false);
+  } catch (...) {
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
+    BOOST_TEST(false);
   }
   test1 = 0;
   test2 = 0;
-  try
-  {
+  try {
     boost::unique_lock<boost::mutex> lk(mut);
     boost::thread t(f);
     BOOST_TEST(test1 == 0);
-    while (test1 == 0)
-      cv.wait(lk);
+    while (test1 == 0) cv.wait(lk);
     BOOST_TEST(test1 != 0);
     lk.unlock();
     t.join();
-  } catch(...) {
-      BOOST_TEST(false);
-      std::cout << "ERROR exception" << __LINE__ << std::endl;
+  } catch (...) {
+    BOOST_TEST(false);
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
   }
   return boost::report_errors();
 }
 #else
-#error "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
+#error \
+    "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
 #endif
-

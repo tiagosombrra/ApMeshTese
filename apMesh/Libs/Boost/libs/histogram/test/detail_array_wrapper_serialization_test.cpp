@@ -12,6 +12,7 @@
 #include <boost/histogram/detail/array_wrapper.hpp>
 #include <sstream>
 #include <vector>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 

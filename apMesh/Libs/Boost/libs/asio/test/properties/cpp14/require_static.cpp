@@ -12,21 +12,19 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
-  template <typename> static constexpr bool is_applicable_property_v = true;
+struct prop {
+  template <typename>
+  static constexpr bool is_applicable_property_v = true;
   static constexpr bool is_requirable = true;
-  template <typename> static constexpr bool static_query_v = true;
+  template <typename>
+  static constexpr bool static_query_v = true;
   static constexpr bool value() { return true; }
 };
 
 template <int>
-struct object
-{
-};
+struct object {};
 
-int main()
-{
+int main() {
   object<1> o1 = {};
   object<1> o2 = boost::asio::require(o1, prop<1>());
   object<1> o3 = boost::asio::require(o1, prop<1>(), prop<1>());
@@ -44,8 +42,10 @@ int main()
   (void)o8;
 
   constexpr object<1> o9 = boost::asio::require(object<1>(), prop<1>());
-  constexpr object<1> o10 = boost::asio::require(object<1>(), prop<1>(), prop<1>());
-  constexpr object<1> o11 = boost::asio::require(object<1>(), prop<1>(), prop<1>(), prop<1>());
+  constexpr object<1> o10 =
+      boost::asio::require(object<1>(), prop<1>(), prop<1>());
+  constexpr object<1> o11 =
+      boost::asio::require(object<1>(), prop<1>(), prop<1>(), prop<1>());
   (void)o9;
   (void)o10;
   (void)o11;

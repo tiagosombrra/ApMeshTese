@@ -12,17 +12,10 @@
 #define BOOST_TEST_MODULE test_clashing_names_suites_ok
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE( dummy_suite )
-BOOST_AUTO_TEST_CASE( ts1 )
-{
-    BOOST_CHECK(true);
-}
+BOOST_AUTO_TEST_SUITE(dummy_suite)
+BOOST_AUTO_TEST_CASE(ts1) { BOOST_CHECK(true); }
 BOOST_AUTO_TEST_SUITE_END()
 
-
-BOOST_AUTO_TEST_SUITE( dummy_suite )
-BOOST_AUTO_TEST_CASE( ts2 )
-{
-    BOOST_CHECK(true);
-}
+BOOST_AUTO_TEST_SUITE(dummy_suite)
+BOOST_AUTO_TEST_CASE(ts2) { BOOST_CHECK(true); }
 BOOST_AUTO_TEST_SUITE_END()

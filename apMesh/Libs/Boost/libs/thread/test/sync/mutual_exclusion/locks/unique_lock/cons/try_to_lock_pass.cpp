@@ -18,13 +18,12 @@
 
 // unique_lock(mutex_type& m, try_to_lock_t);
 
-
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
-#include "../../../../../timming.hpp"
 
+#include "../../../../../timming.hpp"
 
 boost::mutex m;
 
@@ -41,8 +40,7 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #if defined BOOST_THREAD_USES_CHRONO
   t0 = Clock::now();
   {
@@ -57,42 +55,39 @@ void f()
     boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
     BOOST_TEST(lk.owns_lock() == false);
   }
-  for (;;)
-  {
+  for (;;) {
     boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
     if (lk.owns_lock()) {
       t1 = Clock::now();
       break;
     }
   }
-  //m.unlock();
+  // m.unlock();
 #else
-//  time_point t0 = Clock::now();
-//  {
-//    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
-//    BOOST_TEST(lk.owns_lock() == false);
-//  }
-//  {
-//    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
-//    BOOST_TEST(lk.owns_lock() == false);
-//  }
-//  {
-//    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
-//    BOOST_TEST(lk.owns_lock() == false);
-//  }
-  for (;;)
-  {
+  //  time_point t0 = Clock::now();
+  //  {
+  //    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
+  //    BOOST_TEST(lk.owns_lock() == false);
+  //  }
+  //  {
+  //    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
+  //    BOOST_TEST(lk.owns_lock() == false);
+  //  }
+  //  {
+  //    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
+  //    BOOST_TEST(lk.owns_lock() == false);
+  //  }
+  for (;;) {
     boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
     if (lk.owns_lock()) break;
   }
-  //time_point t1 = Clock::now();
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
+  // time_point t1 = Clock::now();
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
 #endif
 }
 
-int main()
-{
+int main() {
   m.lock();
   boost::thread t(f);
 #if defined BOOST_THREAD_USES_CHRONO
@@ -117,4 +112,3 @@ int main()
 
   return boost::report_errors();
 }
-

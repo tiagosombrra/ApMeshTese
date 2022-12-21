@@ -19,6 +19,7 @@
 #include <ostream>
 #include <type_traits>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
@@ -75,9 +76,10 @@ void run_1d_tests(mp_list<Tag, Coverage>) {
 
 template <class Tag, class Coverage>
 void run_3d_tests(mp_list<Tag, Coverage>) {
-  auto h = make_s(Tag(), std::vector<int>(), axis::integer<>(0, 2),
-                  axis::integer<int, axis::null_type, axis::option::none_t>(0, 3),
-                  axis::integer<int, axis::null_type, axis::option::overflow_t>(0, 4));
+  auto h = make_s(
+      Tag(), std::vector<int>(), axis::integer<>(0, 2),
+      axis::integer<int, axis::null_type, axis::option::none_t>(0, 3),
+      axis::integer<int, axis::null_type, axis::option::overflow_t>(0, 4));
 
   for (int i = -1; i < 3; ++i)
     for (int j = -1; j < 4; ++j)
@@ -157,9 +159,10 @@ void run_stdlib_tests(mp_list<Tag, Coverage>) {
 }
 
 int main() {
-  mp_for_each<mp_product<mp_list, mp_list<static_tag, dynamic_tag>,
-                         mp_list<std::integral_constant<coverage, coverage::inner>,
-                                 std::integral_constant<coverage, coverage::all>>>>(
+  mp_for_each<
+      mp_product<mp_list, mp_list<static_tag, dynamic_tag>,
+                 mp_list<std::integral_constant<coverage, coverage::inner>,
+                         std::integral_constant<coverage, coverage::all>>>>(
       [](auto&& x) {
         run_1d_tests(x);
         run_3d_tests(x);

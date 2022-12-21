@@ -9,16 +9,14 @@
 #define BOOST_TEST_MODULE example82
 #include <boost/test/included/unit_test.hpp>
 
-struct Processor
-{
+struct Processor {
   int level;
   void optimization_level(int l) { level = l; }
   bool op1(int) { return level < 2; }
   bool op2(int, int) { return level < 1; }
 };
 
-void test_operations(Processor& processor, int limit)
-{
+void test_operations(Processor& processor, int limit) {
   for (int i = 0; i < limit; ++i) {
     BOOST_TEST_CONTEXT("With parameter i = " << i) {
       BOOST_TEST(processor.op1(i));
@@ -30,10 +28,9 @@ void test_operations(Processor& processor, int limit)
   }
 }
 
-BOOST_AUTO_TEST_CASE(test1)
-{
+BOOST_AUTO_TEST_CASE(test1) {
   Processor processor;
-  
+
   for (int level = 0; level < 3; ++level) {
     BOOST_TEST_CONTEXT("With optimization level " << level) {
       processor.optimization_level(level);

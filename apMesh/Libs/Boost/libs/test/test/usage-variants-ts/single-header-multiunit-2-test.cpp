@@ -5,7 +5,7 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 
-//  Description : header-only usage variant with multiple translation units test 
+//  Description : header-only usage variant with multiple translation units test
 // ***************************************************************************
 
 // this test requires that the linking has not been manipulated
@@ -26,10 +26,9 @@
 #error BOOST_TEST_NO_LIB/BOOST_ALL_NO_LIB defined (post boost inclusion)!!
 #endif
 
-BOOST_AUTO_TEST_CASE( test2 )
-{
-    int i = 1;
-    BOOST_CHECK( i*i == 1 );
+BOOST_AUTO_TEST_CASE(test2) {
+  int i = 1;
+  BOOST_CHECK(i * i == 1);
 }
 
 //____________________________________________________________________________//

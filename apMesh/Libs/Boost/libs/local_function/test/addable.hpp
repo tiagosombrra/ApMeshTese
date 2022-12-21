@@ -10,17 +10,16 @@
 
 #include <boost/concept_check.hpp>
 
-template<typename T>
-struct Addable { // User-defined concept.
-    BOOST_CONCEPT_USAGE(Addable) {
-        return_type(x + y); // Check addition `T operator+(T x, T y)`.
-    }
+template <typename T>
+struct Addable {  // User-defined concept.
+  BOOST_CONCEPT_USAGE(Addable) {
+    return_type(x + y);  // Check addition `T operator+(T x, T y)`.
+  }
 
-private:
-    void return_type(T) {} // Implementation (required for some linkers).
-    static T const& x;
-    static T const& y;
+ private:
+  void return_type(T) {}  // Implementation (required for some linkers).
+  static T const& x;
+  static T const& y;
 };
 
-#endif // #include guard
-
+#endif  // #include guard

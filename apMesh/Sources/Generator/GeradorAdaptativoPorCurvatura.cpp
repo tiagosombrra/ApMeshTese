@@ -9,7 +9,7 @@ GeradorAdaptativoPorCurvatura::GeradorAdaptativoPorCurvatura() {}
 int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer,
                                            MPI_Status status)
 #else
-int GeradorAdaptativoPorCurvatura::execute(int argc, char *argv[], Timer *timer)
+int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 #endif  // USE_MPI
 {
   Geometria* geo = new Geometria;
@@ -473,7 +473,7 @@ void GeradorAdaptativoPorCurvatura::generator(double listOfPatches[],
                                               Timer* timer, int idrange,
                                               int sizeRank, int sizeThread)
 #else
-void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer,
+void GeradorAdaptativoPorCurvatura::generator(Modelo& modelo, Timer* timer,
                                               int idrange, int sizeRank,
                                               int sizeThread)
 #endif
@@ -483,7 +483,7 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo &modelo, Timer *timer,
   Geometria* geo = unpakGeometry(listOfPatches, sizeOfListPatches);
 #elif USE_OPENMP
   this->comm = new ApMeshCommunicator(true);
-  Geometria *geo = modelo.getGeometria();
+  Geometria* geo = modelo.getGeometria();
 #else
   this->comm = new Parallel::TMCommunicator(false);
   Geometria* geo = modelo.getGeometria();
@@ -856,7 +856,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha* malha, Timer* timer,
 
       // Calcula o erro relativo para cada nó e soma a Nj
       //#pragma omp parallel for num_threads(nThreads) firstprivate(Ns)
-      //reduction(+ :Nj)
+      // reduction(+ :Nj)
       for (unsigned int j = 0; j < Nv; ++j) {
 #if USE_MPI
         timer->endTimerParallel(RANK_MPI, omp_get_thread_num(),
@@ -1037,7 +1037,7 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
     //
     //        sizeThread = 1;
     //#pragma omp parallel num_threads(sizeThread) shared(geo, sizeCurvas,
-    //sizePatch, malha, novosPontos)
+    // sizePatch, malha, novosPontos)
     //        {
     //            Int id = comm->threadId();
     //            //           this->idManagers[id] =
@@ -1183,7 +1183,8 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(
       p->id = idManager->next(0);
 
       //			cout << "ponto " << p->id << " " <<  p->x << " "
-      //<< p->y << " " << p->z << endl; 			cout << "====" << endl;
+      //<< p->y << " " << p->z << endl; 			cout << "===="
+      //<< endl;
 
       if (v == 0 and c1)  // p está na curva 1 (c1 = NULL)
         c1->inserePonto(p);
@@ -1274,7 +1275,8 @@ double GeradorAdaptativoPorCurvatura::erroGlobal(Malha* malha, Timer* timer,
 #if USE_MPI
       timer->endTimerParallel(RANK_MPI, omp_get_thread_num(),
                               7);  // calculo do erro global
-      timer->initTimerParallel(RANK_MPI, omp_get_thread_num(), 6);  // MediaGauss
+      timer->initTimerParallel(RANK_MPI, omp_get_thread_num(),
+                               6);  // MediaGauss
 #else
       timer->endTimerParallel(0, omp_get_thread_num(),
                               7);  // calculo do erro global
@@ -2021,8 +2023,8 @@ void GeradorAdaptativoPorCurvatura::generatorInitialMesh(
   }
 #else
   for (int i = 0; i < sizePatch; ++i) {
-    CoonsPatch *patch = static_cast<CoonsPatch *>(geo->getPatch(i));
-    SubMalha *sub = this->malhaInicial(static_cast<CoonsPatch *>(patch),
+    CoonsPatch* patch = static_cast<CoonsPatch*>(geo->getPatch(i));
+    SubMalha* sub = this->malhaInicial(static_cast<CoonsPatch*>(patch),
                                        this->idManagers[0]);
     malha->insereSubMalha(sub, i);
   }

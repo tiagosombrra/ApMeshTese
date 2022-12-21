@@ -18,16 +18,14 @@
 
 // shared_lock(shared_lock const&) = delete;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/shared_mutex.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
-int main()
-{
+int main() {
   boost::shared_lock<boost::shared_mutex> ul;
   BOOST_TEST(!ul.owns_lock());
   BOOST_TEST(ul.mutex() == 0);
 
   return boost::report_errors();
 }
-

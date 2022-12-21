@@ -8,6 +8,5 @@
 =============================================================================*/
 
 #define BOOST_TYPEOF_EMULATION
-#include <boost/spirit/include/classic_typeof.hpp>
 #include <boost/spirit/include/classic_error_handling.hpp>
-
+#include <boost/spirit/include/classic_typeof.hpp>

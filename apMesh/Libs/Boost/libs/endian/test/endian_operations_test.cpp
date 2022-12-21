@@ -1,4 +1,5 @@
-//  endian_operations_test.cpp  --------------------------------------------------------//
+//  endian_operations_test.cpp
+//  --------------------------------------------------------//
 
 //  Copyright Beman Dawes 2008
 
@@ -17,19 +18,19 @@
 #include <boost/endian/detail/disable_warnings.hpp>
 
 #ifdef _MSC_VER
-#  pragma warning( disable : 4242 )  // conversion ..., possible loss of data
-#  pragma warning( disable : 4244 )  // conversion ..., possible loss of data
-#  pragma warning( disable : 4018 )  // signed/unsigned mismatch
-#  pragma warning( disable : 4365 )  // signed/unsigned mismatch
-#  pragma warning( disable : 4389 )  // signed/unsigned mismatch
+#pragma warning(disable : 4242)  // conversion ..., possible loss of data
+#pragma warning(disable : 4244)  // conversion ..., possible loss of data
+#pragma warning(disable : 4018)  // signed/unsigned mismatch
+#pragma warning(disable : 4365)  // signed/unsigned mismatch
+#pragma warning(disable : 4389)  // signed/unsigned mismatch
 #elif defined(__GNUC__)
-#  pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wconversion"
 #endif
 
-#include <boost/endian/arithmetic.hpp>
-#include <boost/type_traits/is_signed.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/endian/arithmetic.hpp>
+#include <boost/type_traits/is_signed.hpp>
 #include <cassert>
 #include <iostream>
 #include <sstream>
@@ -37,111 +38,126 @@
 namespace be = boost::endian;
 
 template <class T>
-struct value_type
-{
+struct value_type {
   typedef typename T::value_type type;
 };
 
-template<> struct value_type<char>  { typedef char type; };
-template<> struct value_type<unsigned char>  { typedef unsigned char type; };
-template<> struct value_type<signed char>  { typedef signed char type; };
-template<> struct value_type<short>  { typedef short type; };
-template<> struct value_type<unsigned short>  { typedef unsigned short type; };
-template<> struct value_type<int>  { typedef int type; };
-template<> struct value_type<unsigned int>  { typedef unsigned int type; };
-template<> struct value_type<long>  { typedef long type; };
-template<> struct value_type<unsigned long>  { typedef unsigned long type; };
-template<> struct value_type<long long>  { typedef long long type; };
-template<> struct value_type<unsigned long long>  { typedef unsigned long long type; };
+template <>
+struct value_type<char> {
+  typedef char type;
+};
+template <>
+struct value_type<unsigned char> {
+  typedef unsigned char type;
+};
+template <>
+struct value_type<signed char> {
+  typedef signed char type;
+};
+template <>
+struct value_type<short> {
+  typedef short type;
+};
+template <>
+struct value_type<unsigned short> {
+  typedef unsigned short type;
+};
+template <>
+struct value_type<int> {
+  typedef int type;
+};
+template <>
+struct value_type<unsigned int> {
+  typedef unsigned int type;
+};
+template <>
+struct value_type<long> {
+  typedef long type;
+};
+template <>
+struct value_type<unsigned long> {
+  typedef unsigned long type;
+};
+template <>
+struct value_type<long long> {
+  typedef long long type;
+};
+template <>
+struct value_type<unsigned long long> {
+  typedef unsigned long long type;
+};
 
-template <class T1,  class T2>
-struct default_construct
-{
-  static void test()
-  {
+template <class T1, class T2>
+struct default_construct {
+  static void test() {
     T1 o1;
-    o1 = 1;         // quiet warnings
-    if (o1) return; // quiet warnings
+    o1 = 1;          // quiet warnings
+    if (o1) return;  // quiet warnings
   }
 };
 
-template <class T1,  class T2>
-struct construct
-{
-  static void test()
-  {
+template <class T1, class T2>
+struct construct {
+  static void test() {
     T2 o2(1);
     T1 o1(static_cast<T1>(o2));
     ++o1;  // quiet gcc unused variable warning
   }
 };
 
-template <class T1,  class T2>
-struct initialize
-{
-  static void test()
-  {
+template <class T1, class T2>
+struct initialize {
+  static void test() {
     T1 o2(2);
     T1 o1 = o2;
     ++o1;  // quiet gcc unused variable warning
   }
 };
 
-template <class T1,  class T2>
-struct assign
-{
-  static void test()
-  {
+template <class T1, class T2>
+struct assign {
+  static void test() {
     T2 o2;
     o2 = 1;
     T1 o1;
     o1 = o2;
-    if (o1) return; // quiet warnings
+    if (o1) return;  // quiet warnings
   }
 };
 
-template <class T1,  class T2, bool SameSignedness>
-struct do_relational
-{
-  static void test()
-  {
+template <class T1, class T2, bool SameSignedness>
+struct do_relational {
+  static void test() {
     T1 o1(1);
     T2 o2(2);
-    BOOST_TEST( !(o1 == o2) );
-    BOOST_TEST( o1 != o2 );
-    BOOST_TEST( o1 < o2 );
-    BOOST_TEST( o1 <= o2 );
-    BOOST_TEST( !(o1 > o2) );
-    BOOST_TEST( !(o1 >= o2 ) );
+    BOOST_TEST(!(o1 == o2));
+    BOOST_TEST(o1 != o2);
+    BOOST_TEST(o1 < o2);
+    BOOST_TEST(o1 <= o2);
+    BOOST_TEST(!(o1 > o2));
+    BOOST_TEST(!(o1 >= o2));
   }
 };
 
-template <class T1,  class T2>
-struct do_relational<T1, T2, false>
-{
-  static void test()
-  {
+template <class T1, class T2>
+struct do_relational<T1, T2, false> {
+  static void test() {}
+};
+
+template <class T1, class T2>
+struct relational {
+  static void test() {
+    do_relational<
+        T1, T2,
+        boost::is_signed<typename value_type<T1>::type>::value ==
+            boost::is_signed<typename value_type<T2>::type>::value>::test();
+    //   do_relational<T1, T2, true>::test();
   }
 };
 
-template <class T1,  class T2>
-struct relational
-{
-  static void test()
-  {
-    do_relational<T1, T2,
-      boost::is_signed<typename value_type<T1>::type>::value
-        == boost::is_signed<typename value_type<T2>::type>::value
-                 >::test();
- //   do_relational<T1, T2, true>::test();
-  }
-};
-
-template <class T1,  class T2>
-struct op_plus
-{
-  static void test()
-  {
+template <class T1, class T2>
+struct op_plus {
+  static void test() {
     T1 o1(1);
     T2 o2(2);
     T1 o3;
@@ -152,15 +168,13 @@ struct op_plus
 
     o1 += o2;
 
-    if (o3) return; // quiet warnings
+    if (o3) return;  // quiet warnings
   }
 };
 
-template <class T1,  class T2>
-struct op_star
-{
-  static void test()
-  {
+template <class T1, class T2>
+struct op_star {
+  static void test() {
     T1 o1(1);
     T2 o2(2);
     T1 o3;
@@ -169,13 +183,12 @@ struct op_star
 
     o1 *= o2;
 
-    if (o3) return; // quiet warnings
+    if (o3) return;  // quiet warnings
   }
 };
 
-template <template<class,  class> class Test,  class T1>
-void op_test_aux()
-{
+template <template <class, class> class Test, class T1>
+void op_test_aux() {
   Test<T1, char>::test();
   Test<T1, unsigned char>::test();
   Test<T1, signed char>::test();
@@ -251,9 +264,8 @@ void op_test_aux()
 #endif
 }
 
-template <template<class,  class> class Test>
-void op_test()
-{
+template <template <class, class> class Test>
+void op_test() {
   op_test_aux<Test, char>();
   op_test_aux<Test, unsigned char>();
   op_test_aux<Test, signed char>();
@@ -323,10 +335,10 @@ void op_test()
 #endif
 }
 
-//  test_inserter_and_extractor  -----------------------------------------------------//
+//  test_inserter_and_extractor
+//  -----------------------------------------------------//
 
-void test_inserter_and_extractor()
-{
+void test_inserter_and_extractor() {
   std::cout << "test inserter and extractor..." << std::endl;
 
   be::big_uint64_t bu64(0x010203040506070ULL);
@@ -358,15 +370,14 @@ void test_inserter_and_extractor()
   BOOST_TEST_EQ(lu64z, lu64);
 
   std::cout << "test inserter and extractor complete" << std::endl;
-
 }
 
 void f_big_int32_ut(be::big_int32_t) {}
 
-//  main  ------------------------------------------------------------------------------//
+//  main
+//  ------------------------------------------------------------------------------//
 
-int cpp_main(int, char * [])
-{
+int cpp_main(int, char*[]) {
   //  make sure some simple things work
 
   be::big_int32_t o1(1);
@@ -375,9 +386,9 @@ int cpp_main(int, char * [])
   be::big_int64_t o4(1);
 
   std::clog << "set up test values\n";
-  be::big_int32_t      big(12345);
-  be::little_uint16_t  little_u(10);
-  be::big_int64_t      result;
+  be::big_int32_t big(12345);
+  be::little_uint16_t little_u(10);
+  be::big_int64_t result;
 
   // this is the use case that is so irritating that it caused the endian
   // constructors to be made non-explicit
@@ -456,10 +467,10 @@ int cpp_main(int, char * [])
   be::little_uint32_t u3 = u1 + 5;
   u3 = u1 + 5u;
 
-  if (u1 == 5)
-    {}
-  if (u1 == 5u)
-    {}
+  if (u1 == 5) {
+  }
+  if (u1 == 5u) {
+  }
 
   u1 += 5;
   u1 += 5u;
@@ -489,15 +500,11 @@ int cpp_main(int, char * [])
   return boost::report_errors();
 }
 
-int main( int argc, char* argv[] )
-{
-    try
-    {
-        return cpp_main( argc, argv );
-    }
-    catch( std::exception const & x )
-    {
-        BOOST_ERROR( x.what() );
-        return boost::report_errors();
-    }
+int main(int argc, char* argv[]) {
+  try {
+    return cpp_main(argc, argv);
+  } catch (std::exception const& x) {
+    BOOST_ERROR(x.what());
+    return boost::report_errors();
+  }
 }

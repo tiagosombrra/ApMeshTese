@@ -11,13 +11,13 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
 #include <boost/asio/ip/address_v4.hpp>
+#include <sstream>
 
 #include "../unit_test.hpp"
-#include <sstream>
 
 //------------------------------------------------------------------------------
 
@@ -28,19 +28,17 @@
 
 namespace ip_address_v4_compile {
 
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  try
-  {
+  try {
     boost::system::error_code ec;
 
     // address_v4 constructors.
 
     ip::address_v4 addr1;
-    const ip::address_v4::bytes_type const_bytes_value = { { 127, 0, 0, 1 } };
+    const ip::address_v4::bytes_type const_bytes_value = {{127, 0, 0, 1}};
     ip::address_v4 addr2(const_bytes_value);
     const unsigned long const_ulong_value = 0x7F000001;
     ip::address_v4 addr3(const_ulong_value);
@@ -62,7 +60,7 @@ void test()
 
     b = addr1.is_class_c();
     (void)b;
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     b = addr1.is_multicast();
     (void)b;
@@ -76,12 +74,12 @@ void test()
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
     unsigned long ulong_value = addr1.to_ulong();
     (void)ulong_value;
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     std::string string_value = addr1.to_string();
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
     string_value = addr1.to_string(ec);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // address_v4 static functions.
 
@@ -90,7 +88,7 @@ void test()
     addr1 = ip::address_v4::from_string("127.0.0.1", ec);
     addr1 = ip::address_v4::from_string(string_value);
     addr1 = ip::address_v4::from_string(string_value, ec);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     addr1 = ip::address_v4::any();
 
@@ -102,7 +100,7 @@ void test()
     addr1 = ip::address_v4::broadcast(addr2, addr3);
 
     addr1 = ip::address_v4::netmask(addr2);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // address_v4 comparisons.
 
@@ -133,14 +131,14 @@ void test()
     addr1 = ip::make_address_v4(string_value);
     addr1 = ip::make_address_v4(string_value, ec);
 #if defined(BOOST_ASIO_HAS_STRING_VIEW)
-# if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
+#if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
     std::string_view string_view_value("127.0.0.1");
-# elif defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
+#elif defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
     std::experimental::string_view string_view_value("127.0.0.1");
-# endif // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
+#endif  // defined(BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW)
     addr1 = ip::make_address_v4(string_view_value);
     addr1 = ip::make_address_v4(string_view_value, ec);
-#endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+#endif  // defined(BOOST_ASIO_HAS_STRING_VIEW)
 
     // address_v4 I/O.
 
@@ -150,19 +148,17 @@ void test()
 #if !defined(BOOST_NO_STD_WSTREAMBUF)
     std::wostringstream wos;
     wos << addr1;
-#endif // !defined(BOOST_NO_STD_WSTREAMBUF)
+#endif  // !defined(BOOST_NO_STD_WSTREAMBUF)
 
 #if defined(BOOST_ASIO_HAS_STD_HASH)
     std::size_t hash1 = std::hash<ip::address_v4>()(addr1);
     (void)hash1;
-#endif // defined(BOOST_ASIO_HAS_STD_HASH)
-  }
-  catch (std::exception&)
-  {
+#endif  // defined(BOOST_ASIO_HAS_STD_HASH)
+  } catch (std::exception&) {
   }
 }
 
-} // namespace ip_address_v4_compile
+}  // namespace ip_address_v4_compile
 
 //------------------------------------------------------------------------------
 
@@ -173,8 +169,7 @@ void test()
 
 namespace ip_address_v4_runtime {
 
-void test()
-{
+void test() {
   using boost::asio::ip::address_v4;
 
   address_v4 a1;
@@ -185,9 +180,9 @@ void test()
   BOOST_ASIO_CHECK(a1.to_uint() == 0);
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   BOOST_ASIO_CHECK(a1.to_ulong() == 0);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
-  address_v4::bytes_type b1 = {{ 1, 2, 3, 4 }};
+  address_v4::bytes_type b1 = {{1, 2, 3, 4}};
   address_v4 a2(b1);
   BOOST_ASIO_CHECK(a2.to_bytes()[0] == 1);
   BOOST_ASIO_CHECK(a2.to_bytes()[1] == 2);
@@ -202,7 +197,7 @@ void test()
   BOOST_ASIO_CHECK(((a2.to_ulong() >> 16) & 0xFF) == b1[1]);
   BOOST_ASIO_CHECK(((a2.to_ulong() >> 8) & 0xFF) == b1[2]);
   BOOST_ASIO_CHECK((a2.to_ulong() & 0xFF) == b1[3]);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
   address_v4 a3(0x01020304);
   BOOST_ASIO_CHECK(a3.to_bytes()[0] == 1);
@@ -212,7 +207,7 @@ void test()
   BOOST_ASIO_CHECK(a3.to_uint() == 0x01020304);
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   BOOST_ASIO_CHECK(a3.to_ulong() == 0x01020304);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
   BOOST_ASIO_CHECK(address_v4(0x7F000001).is_loopback());
   BOOST_ASIO_CHECK(address_v4(0x7F000002).is_loopback());
@@ -256,7 +251,7 @@ void test()
   BOOST_ASIO_CHECK(!address_v4(0xEFFFFFFF).is_class_c());
   BOOST_ASIO_CHECK(!address_v4(0xF0000000).is_class_c());
   BOOST_ASIO_CHECK(!address_v4(0xFFFFFFFF).is_class_c());
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
   BOOST_ASIO_CHECK(!address_v4(0x01000000).is_multicast());
   BOOST_ASIO_CHECK(!address_v4(0x7F000000).is_multicast());
@@ -277,7 +272,7 @@ void test()
   BOOST_ASIO_CHECK(a4.to_uint() == 0);
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   BOOST_ASIO_CHECK(a4.to_ulong() == 0);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
   address_v4 a5 = address_v4::loopback();
   BOOST_ASIO_CHECK(a5.to_bytes()[0] == 0x7F);
@@ -287,7 +282,7 @@ void test()
   BOOST_ASIO_CHECK(a5.to_uint() == 0x7F000001);
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   BOOST_ASIO_CHECK(a5.to_ulong() == 0x7F000001);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
   address_v4 a6 = address_v4::broadcast();
   BOOST_ASIO_CHECK(a6.to_bytes()[0] == 0xFF);
@@ -297,7 +292,7 @@ void test()
   BOOST_ASIO_CHECK(a6.to_uint() == 0xFFFFFFFF);
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   BOOST_ASIO_CHECK(a6.to_ulong() == 0xFFFFFFFF);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   address_v4 class_a_net(0xFF000000);
@@ -314,16 +309,13 @@ void test()
   BOOST_ASIO_CHECK(address_v4::netmask(address_v4(0xEFFFFFFF)) == other_net);
   BOOST_ASIO_CHECK(address_v4::netmask(address_v4(0xF0000000)) == other_net);
   BOOST_ASIO_CHECK(address_v4::netmask(address_v4(0xFFFFFFFF)) == other_net);
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+#endif  // !defined(BOOST_ASIO_NO_DEPRECATED)
 }
 
-} // namespace ip_address_v4_runtime
+}  // namespace ip_address_v4_runtime
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "ip/address_v4",
-  BOOST_ASIO_TEST_CASE(ip_address_v4_compile::test)
-  BOOST_ASIO_TEST_CASE(ip_address_v4_runtime::test)
-)
+BOOST_ASIO_TEST_SUITE("ip/address_v4",
+                      BOOST_ASIO_TEST_CASE(ip_address_v4_compile::test)
+                          BOOST_ASIO_TEST_CASE(ip_address_v4_runtime::test))

@@ -10,14 +10,8 @@
 
 BOOST_AUTO_TEST_SUITE(some_suite)
 
-BOOST_AUTO_TEST_CASE(case1)
-{
-  BOOST_TEST(false);
-}
+BOOST_AUTO_TEST_CASE(case1) { BOOST_TEST(false); }
 
 BOOST_AUTO_TEST_SUITE_END();
 
-BOOST_AUTO_TEST_CASE(case2)
-{
-  BOOST_TEST(true);
-}
+BOOST_AUTO_TEST_CASE(case2) { BOOST_TEST(true); }

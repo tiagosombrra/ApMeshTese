@@ -11,13 +11,13 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/signal_set.hpp>
 
 #include "archetypes/async_result.hpp"
-#include <boost/asio/io_context.hpp>
 #include "unit_test.hpp"
 
 //------------------------------------------------------------------------------
@@ -29,16 +29,12 @@
 
 namespace signal_set_compile {
 
-void signal_handler(const boost::system::error_code&, int)
-{
-}
+void signal_handler(const boost::system::error_code&, int) {}
 
-void test()
-{
+void test() {
   using namespace boost::asio;
 
-  try
-  {
+  try {
     io_context ioc;
     const io_context::executor_type ioc_ex = ioc.get_executor();
     archetypes::lazy_handler lazy;
@@ -78,18 +74,13 @@ void test()
     set1.async_wait(&signal_handler);
     int i = set1.async_wait(lazy);
     (void)i;
-  }
-  catch (std::exception&)
-  {
+  } catch (std::exception&) {
   }
 }
 
-} // namespace signal_set_compile
+}  // namespace signal_set_compile
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "signal_set",
-  BOOST_ASIO_TEST_CASE(signal_set_compile::test)
-)
+BOOST_ASIO_TEST_SUITE("signal_set",
+                      BOOST_ASIO_TEST_CASE(signal_set_compile::test))

@@ -21,19 +21,17 @@
 // You should have received a copy of the GNU Lesser General Public
 // License and a copy of the GNU General Public License along with
 // Eigen. If not, see <http://www.gnu.org/licenses/>.
-#include "sparse_solver.h"
-#include <Eigen/SparseLU>
 #include <Eigen/MetisSupport>
+#include <Eigen/SparseLU>
 #include <unsupported/Eigen/SparseExtra>
 
-template<typename T> void test_metis_T()
-{
+#include "sparse_solver.h"
+
+template <typename T>
+void test_metis_T() {
   SparseLU<SparseMatrix<T, ColMajor>, MetisOrdering<int> > sparselu_metis;
-  
-  check_sparse_square_solving(sparselu_metis); 
+
+  check_sparse_square_solving(sparselu_metis);
 }
 
-void test_metis_support()
-{
-  CALL_SUBTEST_1(test_metis_T<double>());
-}
+void test_metis_support() { CALL_SUBTEST_1(test_metis_T<double>()); }

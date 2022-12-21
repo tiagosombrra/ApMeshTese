@@ -5,83 +5,67 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if __cplusplus < 201103L
-int main()
-{
-  return 0;
-}
+int main() { return 0; }
 #else
 
 #define BOOST_THREAD_VERSION 3
 
-#include <iostream>
 #include <boost/thread/scoped_thread.hpp>
-#include <thread>
 #include <cassert>
+#include <iostream>
+#include <thread>
 
-void do_something(int& i)
-{
-  ++i;
-}
-void f(int, int)
-{
-}
+void do_something(int& i) { ++i; }
+void f(int, int) {}
 
-struct func
-{
+struct func {
   int& i;
 
-  func(int& i_) :
-    i(i_)
-  {
-  }
+  func(int& i_) : i(i_) {}
 
-  void operator()()
-  {
-    for (unsigned j = 0; j < 1000000; ++j)
-    {
+  void operator()() {
+    for (unsigned j = 0; j < 1000000; ++j) {
       do_something(i);
     }
   }
 };
 
-void do_something_in_current_thread()
-{
-}
+void do_something_in_current_thread() {}
 
-using strict_scoped_thread = boost::strict_scoped_thread<boost::join_if_joinable, std::thread>;
-using scoped_thread = boost::scoped_thread<boost::join_if_joinable, std::thread>;
+using strict_scoped_thread =
+    boost::strict_scoped_thread<boost::join_if_joinable, std::thread>;
+using scoped_thread =
+    boost::scoped_thread<boost::join_if_joinable, std::thread>;
 
-int main()
-{
+int main() {
   {
-    int some_local_state=0;
-    strict_scoped_thread t( (std::thread(func(some_local_state))));
+    int some_local_state = 0;
+    strict_scoped_thread t((std::thread(func(some_local_state))));
 
     do_something_in_current_thread();
   }
   {
-    int some_local_state=0;
-    std::thread t(( func(some_local_state) ));
-    strict_scoped_thread g( (boost::move(t)) );
+    int some_local_state = 0;
+    std::thread t((func(some_local_state)));
+    strict_scoped_thread g((boost::move(t)));
 
     do_something_in_current_thread();
   }
   {
-    int some_local_state=0;
-    std::thread t(( func(some_local_state) ));
-    strict_scoped_thread g( (std::move(t)) );
+    int some_local_state = 0;
+    std::thread t((func(some_local_state)));
+    strict_scoped_thread g((std::move(t)));
 
     do_something_in_current_thread();
   }
   {
-    int some_local_state=1;
-    scoped_thread t( (std::thread(func(some_local_state))));
+    int some_local_state = 1;
+    scoped_thread t((std::thread(func(some_local_state))));
 
     if (t.joinable()) {
       t.join();
-      assert( ! t.joinable() );
-    }
-    else
+      assert(!t.joinable());
+    } else
       do_something_in_current_thread();
   }
 #if 0
@@ -103,7 +87,7 @@ int main()
   }
 #endif
   {
-    scoped_thread g( &f, 1, 2 );
+    scoped_thread g(&f, 1, 2);
     do_something_in_current_thread();
   }
   return 0;

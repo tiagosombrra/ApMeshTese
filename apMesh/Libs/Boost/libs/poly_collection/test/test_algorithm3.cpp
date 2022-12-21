@@ -11,10 +11,8 @@
 #include "function_types.hpp"
 #include "test_algorithm_impl.hpp"
 
-void test_algorithm3()
-{
-  test_algorithm<
-    function_types::collection,jammed_auto_increment,function_types::to_int,
-    function_types::t1,function_types::t2,function_types::t3,
-    function_types::t4,function_types::t5>();
+void test_algorithm3() {
+  test_algorithm<function_types::collection, jammed_auto_increment,
+                 function_types::to_int, function_types::t1, function_types::t2,
+                 function_types::t3, function_types::t4, function_types::t5>();
 }

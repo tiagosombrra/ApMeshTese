@@ -11,11 +11,10 @@
 // clang-format on
 
 void foo(boost::unordered_set<int>& x1, boost::unordered_map<int, int>& x2,
-  boost::unordered_multiset<int>& x3, boost::unordered_multimap<int, int>& x4)
-{
+         boost::unordered_multiset<int>& x3,
+         boost::unordered_multimap<int, int>& x4) {
 #if BOOST_WORKAROUND(BOOST_CODEGEARC, BOOST_TESTED_AT(0x0613))
-  struct dummy
-  {
+  struct dummy {
     boost::unordered_set<int> x1;
     boost::unordered_map<int, int> x2;
     boost::unordered_multiset<int> x3;

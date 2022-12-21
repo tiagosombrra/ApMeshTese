@@ -8,15 +8,13 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/detail/lightweight_test.hpp> // BOOST_TEST
-
+#include <boost/detail/lightweight_test.hpp>  // BOOST_TEST
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/with_lock_guard.hpp>
 
 class Foo {
  public:
-  explicit Foo(int a) : a_(a) {
-  }
+  explicit Foo(int a) : a_(a) {}
 
   Foo(BOOST_RV_REF(Foo) foo) : a_(foo.a_) {
     BOOST_ASSERT(&foo != this);
@@ -30,9 +28,7 @@ class Foo {
     return *this;
   }
 
-  int get() const {
-    return a_;
-  }
+  int get() const { return a_; }
 
  private:
   BOOST_MOVABLE_BUT_NOT_COPYABLE(Foo)
@@ -53,31 +49,25 @@ void test_movable() {
   Foo foo_1(3);
   Foo foo_2(767);
 
-  bool res = boost::with_lock_guard(
-      m, &func_with_2_arg<Foo, Foo>, boost::move(foo_1), boost::move(foo_2)
-  );
+  bool res = boost::with_lock_guard(m, &func_with_2_arg<Foo, Foo>,
+                                    boost::move(foo_1), boost::move(foo_2));
   BOOST_TEST(!res);
 }
 
 #if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-void test_real_movable() {
-  std::cout << "c++11 move emulated" << std::endl;
-}
+void test_real_movable() { std::cout << "c++11 move emulated" << std::endl; }
 #else
 // test real one
 class Boo {
  public:
-  Boo(int a) : a_(a) {
-  }
+  Boo(int a) : a_(a) {}
 
   Boo(Boo&& boo) : a_(boo.a_) {
     BOOST_ASSERT(&boo != this);
     boo.a_ = 0;
   }
 
-  int get() const {
-    return a_;
-  }
+  int get() const { return a_; }
 
   BOOST_DELETED_FUNCTION(Boo(Boo&))
   BOOST_DELETED_FUNCTION(Boo& operator=(Boo&))
@@ -97,9 +87,8 @@ void test_real_movable() {
 
   Boo boo_3(13);
 
-  boost::with_lock_guard(
-      m, func_with_3_arg, Boo(11), Boo(12), boost::move(boo_3)
-  );
+  boost::with_lock_guard(m, func_with_3_arg, Boo(11), Boo(12),
+                         boost::move(boo_3));
 }
 #endif
 

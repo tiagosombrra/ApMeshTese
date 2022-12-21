@@ -25,7 +25,7 @@ template <class T>
 struct icast_identity {
   typedef T type;
 };
-} // namespace detail
+}  // namespace detail
 
 template <class T>
 inline T implicit_cast(typename detail::icast_identity<T>::type x) {
@@ -223,7 +223,7 @@ void const_nonconst_iterator_test(Iterator i, ConstIterator j) {
   ignore_unused(k);
 }
 
-} // namespace histogram
-} // namespace boost
+}  // namespace histogram
+}  // namespace boost
 
-#endif // BOOST_HISTOGRAM_TEST_ITERATOR_TESTS_HPP
+#endif  // BOOST_HISTOGRAM_TEST_ITERATOR_TESTS_HPP

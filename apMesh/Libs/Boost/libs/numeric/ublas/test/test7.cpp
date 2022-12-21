@@ -10,22 +10,20 @@
 //  GeNeSys mbH & Co. KG in producing this work.
 //
 
-#include <iostream>
+#include "test7.hpp"
 
 #include <boost/numeric/interval.hpp>
 #include <boost/numeric/interval/io.hpp>
-
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <iostream>
 
-#include "test7.hpp"
+// this testcase requires fix of task #2473
 
-// this testcase requires fix of task #2473 
-
-int main () {
-    test_vector ();
-    test_matrix_vector ();
-    test_matrix ();
-    return 0;
+int main() {
+  test_vector();
+  test_matrix_vector();
+  test_matrix();
+  return 0;
 }

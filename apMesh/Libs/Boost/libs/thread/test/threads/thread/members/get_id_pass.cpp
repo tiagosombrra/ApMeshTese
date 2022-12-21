@@ -17,39 +17,29 @@
 
 // id get_id() const;
 
-#include <boost/thread/thread_only.hpp>
-#include <new>
-#include <cstdlib>
-#include <cassert>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <cassert>
+#include <cstdlib>
+#include <new>
 
-class G
-{
+class G {
   int alive_;
-public:
+
+ public:
   static int n_alive;
   static bool op_run;
 
-  G() :
-    alive_(1)
-  {
-    ++n_alive;
-  }
-  G(const G& g) :
-    alive_(g.alive_)
-  {
-    ++n_alive;
-  }
-  ~G()
-  {
+  G() : alive_(1) { ++n_alive; }
+  G(const G& g) : alive_(g.alive_) { ++n_alive; }
+  ~G() {
     alive_ = 0;
     --n_alive;
   }
 
-  void operator()()
-  {
+  void operator()() {
     BOOST_TEST(alive_ == 1);
-    //BOOST_TEST(n_alive == 1);
+    // BOOST_TEST(n_alive == 1);
     op_run = true;
   }
 };
@@ -57,11 +47,10 @@ public:
 int G::n_alive = 0;
 bool G::op_run = false;
 
-int main()
-{
+int main() {
   {
-    boost::thread t0( (G()));
-    //boost::thread::id id0 = t0.get_id();
+    boost::thread t0((G()));
+    // boost::thread::id id0 = t0.get_id();
     boost::thread t1;
     boost::thread::id id1 = t1.get_id();
     BOOST_TEST(t0.get_id() != id1);
@@ -70,4 +59,3 @@ int main()
   }
   return boost::report_errors();
 }
-

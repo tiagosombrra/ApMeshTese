@@ -6,20 +6,15 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 #define BOOST_TEST_MODULE basic_smoke_test2
-#include <boost/test/included/unit_test.hpp>
 #include <boost/mpl/list.hpp>
-
+#include <boost/test/included/unit_test.hpp>
 #include <iostream>
 
-
 // trac 12531
-namespace ns
-{
-    struct X {};
-}
+namespace ns {
+struct X {};
+}  // namespace ns
 
 typedef boost::mpl::list<ns::X> test_types;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test, T, test_types)
-{
-}
+BOOST_AUTO_TEST_CASE_TEMPLATE(test, T, test_types) {}

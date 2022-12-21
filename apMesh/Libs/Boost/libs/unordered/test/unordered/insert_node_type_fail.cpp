@@ -6,8 +6,7 @@
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
 
-int main()
-{
+int main() {
 #if defined(UNORDERED_TEST_MAP)
   typedef boost::unordered_map<int, int> container;
   container x;

@@ -9,10 +9,10 @@
  */
 
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_basic.hpp"
 
-int main()
-{
+int main() {
   test_basic();
   return boost::report_errors();
 }

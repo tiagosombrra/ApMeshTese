@@ -11,17 +11,13 @@
 #include <boost/asio/query.hpp>
 #include <cassert>
 
-struct prop
-{
-};
+struct prop {};
 
-struct object
-{
+struct object {
   friend constexpr int query(const object&, prop) { return 123; }
 };
 
-int main()
-{
+int main() {
   static_assert(!boost::asio::can_query<object, prop>::value, "");
   static_assert(!boost::asio::can_query<const object, prop>::value, "");
 }

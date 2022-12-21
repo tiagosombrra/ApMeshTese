@@ -9,12 +9,12 @@
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
 
-void foo( int value ) {
-  BOOST_TEST_CHECKPOINT("Inside foo with value '" << value << "' (should not be there)");
+void foo(int value) {
+  BOOST_TEST_CHECKPOINT("Inside foo with value '" << value
+                                                  << "' (should not be there)");
 }
 
-BOOST_AUTO_TEST_CASE( test_case )
-{
+BOOST_AUTO_TEST_CASE(test_case) {
   int* p = 0;
 
   BOOST_TEST_PASSPOINT();
@@ -24,6 +24,6 @@ BOOST_AUTO_TEST_CASE( test_case )
   ++p;
 
   BOOST_TEST_PASSPOINT();
-  foo( *p );
+  foo(*p);
 }
 //]

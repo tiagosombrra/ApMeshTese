@@ -10,6 +10,8 @@ using namespace boost::histogram;
 
 int main() {
   // circular integer axis cannot have entries in underflow or overflow bins
-  (void)axis::integer<int, boost::use_default,
-                      decltype(axis::option::circular | axis::option::overflow)>(1, 2);
+  (void)
+      axis::integer<int, boost::use_default,
+                    decltype(axis::option::circular | axis::option::overflow)>(
+          1, 2);
 }

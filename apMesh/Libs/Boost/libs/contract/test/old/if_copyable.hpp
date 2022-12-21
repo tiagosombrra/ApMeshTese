@@ -9,37 +9,39 @@
 
 // Test old values of non-copyable types.
 
-#define BOOST_CONTRACT_TEST_IF_COPYABLE_TYPE(class_) \
-    public: \
-        explicit class_(int value) : value_(value) {} \
-        \
-        friend class_& operator++(class_& me) { ++me.value_; return me; } \
-        \
-        friend bool operator>(class_ const& left, class_ const& right) { \
-            return left.value_ > right.value_; \
-        } \
-        \
-        friend bool operator==(class_ const& left, class_ const& right) { \
-            return left.value_ == right.value_; \
-        } \
-        \
-        friend class_ operator+(class_ const& left, class_ const& right) { \
-            return class_(left.value_ + right.value_); \
-        } \
-        \
-    private: \
-        int value_;
+#define BOOST_CONTRACT_TEST_IF_COPYABLE_TYPE(class_)                 \
+ public:                                                             \
+  explicit class_(int value) : value_(value) {}                      \
+                                                                     \
+  friend class_& operator++(class_& me) {                            \
+    ++me.value_;                                                     \
+    return me;                                                       \
+  }                                                                  \
+                                                                     \
+  friend bool operator>(class_ const& left, class_ const& right) {   \
+    return left.value_ > right.value_;                               \
+  }                                                                  \
+                                                                     \
+  friend bool operator==(class_ const& left, class_ const& right) {  \
+    return left.value_ == right.value_;                              \
+  }                                                                  \
+                                                                     \
+  friend class_ operator+(class_ const& left, class_ const& right) { \
+    return class_(left.value_ + right.value_);                       \
+  }                                                                  \
+                                                                     \
+ private:                                                            \
+  int value_;
 
-struct cp { // Copyable type.
-    BOOST_CONTRACT_TEST_IF_COPYABLE_TYPE(cp)
+struct cp {  // Copyable type.
+  BOOST_CONTRACT_TEST_IF_COPYABLE_TYPE(cp)
 };
 
 struct ncp {
-    BOOST_CONTRACT_TEST_IF_COPYABLE_TYPE(ncp)
+  BOOST_CONTRACT_TEST_IF_COPYABLE_TYPE(ncp)
 
-private: // Non (publicly) copyable type.
-    ncp(ncp const& other) : value_(other.value_) {}
+ private:  // Non (publicly) copyable type.
+  ncp(ncp const& other) : value_(other.value_) {}
 };
 
-#endif // #include guard
-
+#endif  // #include guard

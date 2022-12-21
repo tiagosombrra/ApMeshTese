@@ -6,10 +6,10 @@
 #include <boost/pfr/detail/fields_count.hpp>
 
 struct some_struct {
-    int i;
-    int j;
+  int i;
+  int j;
 };
 
 int main() {
-    static_assert(boost::pfr::detail::fields_count<const some_struct>() == 2, "");
+  static_assert(boost::pfr::detail::fields_count<const some_struct>() == 2, "");
 }

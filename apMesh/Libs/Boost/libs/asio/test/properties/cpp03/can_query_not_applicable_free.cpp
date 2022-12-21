@@ -11,12 +11,9 @@
 #include <boost/asio/query.hpp>
 #include <cassert>
 
-struct prop
-{
-};
+struct prop {};
 
-struct object
-{
+struct object {
   friend int query(const object&, prop) { return 123; }
 };
 
@@ -24,20 +21,18 @@ namespace boost {
 namespace asio {
 namespace traits {
 
-template<>
-struct query_free<object, prop>
-{
+template <>
+struct query_free<object, prop> {
   static const bool is_valid = true;
   static const bool is_noexcept = true;
   typedef int result_type;
 };
 
-} // namespace traits
-} // namespace asio
-} // namespace boost
+}  // namespace traits
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   assert((!boost::asio::can_query<object, prop>::value));
   assert((!boost::asio::can_query<const object, prop>::value));
 }

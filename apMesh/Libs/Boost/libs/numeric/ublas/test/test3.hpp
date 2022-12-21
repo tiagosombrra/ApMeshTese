@@ -13,15 +13,13 @@
 #ifndef TEST3_H
 #define TEST3_H
 
-#include <iostream>
-
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/vector_proxy.hpp>
-#include <boost/numeric/ublas/vector_sparse.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/matrix_proxy.hpp>
 #include <boost/numeric/ublas/matrix_sparse.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/vector_proxy.hpp>
 #include <boost/numeric/ublas/vector_sparse.hpp>
+#include <iostream>
 #ifdef USE_GENERALIZED_VECTOR_OF_VECTOR
 #include <boost/numeric/ublas/vector_of_vector.hpp>
 #endif
@@ -31,8 +29,8 @@ namespace ublas = boost::numeric::ublas;
 
 #include "common/init.hpp"
 
-void test_vector ();
-void test_matrix_vector ();
-void test_matrix ();
+void test_vector();
+void test_matrix_vector();
+void test_matrix();
 
 #endif

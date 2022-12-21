@@ -18,11 +18,12 @@
 
 // void lock();
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_types.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
+
 #include "../../../../../timming.hpp"
 
 boost::shared_mutex m;
@@ -40,67 +41,57 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #if defined BOOST_THREAD_USES_CHRONO
-  boost::shared_lock < boost::shared_mutex > lk(m, boost::defer_lock);
+  boost::shared_lock<boost::shared_mutex> lk(m, boost::defer_lock);
   t0 = Clock::now();
   lk.lock();
   t1 = Clock::now();
   BOOST_TEST(lk.owns_lock() == true);
-  try
-  {
+  try {
     lk.lock();
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::resource_deadlock_would_occur);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::resource_deadlock_would_occur);
   }
   lk.unlock();
   lk.release();
-  try
-  {
+  try {
     lk.lock();
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::operation_not_permitted);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::operation_not_permitted);
   }
 #else
-  boost::shared_lock < boost::shared_mutex > lk(m, boost::defer_lock);
-  //time_point t0 = Clock::now();
+  boost::shared_lock<boost::shared_mutex> lk(m, boost::defer_lock);
+  // time_point t0 = Clock::now();
   lk.lock();
-  //time_point t1 = Clock::now();
+  // time_point t1 = Clock::now();
   BOOST_TEST(lk.owns_lock() == true);
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
-  try
-  {
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
+  try {
     lk.lock();
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::resource_deadlock_would_occur);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::resource_deadlock_would_occur);
   }
   lk.unlock();
   lk.release();
-  try
-  {
+  try {
     lk.lock();
     BOOST_TEST(false);
-  }
-  catch (boost::system::system_error& e)
-  {
-    BOOST_TEST(e.code().value() == boost::system::errc::operation_not_permitted);
+  } catch (boost::system::system_error& e) {
+    BOOST_TEST(e.code().value() ==
+               boost::system::errc::operation_not_permitted);
   }
 #endif
 }
 
-int main()
-{
+int main() {
   m.lock();
   boost::thread t(f);
 #if defined BOOST_THREAD_USES_CHRONO
@@ -123,4 +114,3 @@ int main()
 
   return boost::report_errors();
 }
-

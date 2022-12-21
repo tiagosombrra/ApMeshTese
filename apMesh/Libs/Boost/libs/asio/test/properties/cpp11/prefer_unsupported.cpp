@@ -12,30 +12,25 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
+struct prop {
   static constexpr bool is_preferable = true;
 };
 
 template <int>
-struct object
-{
-};
+struct object {};
 
 namespace boost {
 namespace asio {
 
-template<int N, int M>
-struct is_applicable_property<object<N>, prop<M> >
-{
+template <int N, int M>
+struct is_applicable_property<object<N>, prop<M> > {
   static constexpr bool value = true;
 };
 
-} // namespace asio
-} // namespace boost
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   object<1> o1 = {};
   object<1> o2 = boost::asio::prefer(o1, prop<2>());
   object<1> o3 = boost::asio::prefer(o1, prop<2>(), prop<3>());
@@ -53,8 +48,10 @@ int main()
   (void)o8;
 
   constexpr object<1> o9 = boost::asio::prefer(object<1>(), prop<2>());
-  constexpr object<1> o10 = boost::asio::prefer(object<1>(), prop<2>(), prop<3>());
-  constexpr object<1> o11 = boost::asio::prefer(object<1>(), prop<2>(), prop<3>(), prop<4>());
+  constexpr object<1> o10 =
+      boost::asio::prefer(object<1>(), prop<2>(), prop<3>());
+  constexpr object<1> o11 =
+      boost::asio::prefer(object<1>(), prop<2>(), prop<3>(), prop<4>());
   (void)o9;
   (void)o10;
   (void)o11;

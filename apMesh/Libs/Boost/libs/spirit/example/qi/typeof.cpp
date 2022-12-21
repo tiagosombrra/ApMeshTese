@@ -15,51 +15,44 @@
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
 
-int
-main()
-{
-    using boost::spirit::ascii::space;
-    using boost::spirit::ascii::char_;
-    using boost::spirit::qi::parse;
-    typedef std::string::const_iterator iterator_type;
+int main() {
+  using boost::spirit::ascii::char_;
+  using boost::spirit::ascii::space;
+  using boost::spirit::qi::parse;
+  typedef std::string::const_iterator iterator_type;
 
 ///////////////////////////////////////////////////////////////////////////////
 // this works for non-c++11 compilers
 #ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 
-    BOOST_SPIRIT_AUTO(qi, comment, "/*" >> *(char_ - "*/") >> "*/");
+  BOOST_SPIRIT_AUTO(qi, comment, "/*" >> *(char_ - "*/") >> "*/");
 
 ///////////////////////////////////////////////////////////////////////////////
 // but this is better for c++11 compilers with auto
 #else
 
-    using boost::spirit::qi::copy;
+  using boost::spirit::qi::copy;
 
-    auto comment = copy("/*" >> *(char_ - "*/") >> "*/");
+  auto comment = copy("/*" >> *(char_ - "*/") >> "*/");
 
 #endif
 
-    std::string str = "/*This is a comment*/";
-    std::string::const_iterator iter = str.begin();
-    std::string::const_iterator end = str.end();
-    bool r = parse(iter, end, comment);
+  std::string str = "/*This is a comment*/";
+  std::string::const_iterator iter = str.begin();
+  std::string::const_iterator end = str.end();
+  bool r = parse(iter, end, comment);
 
-    if (r && iter == end)
-    {
-        std::cout << "-------------------------\n";
-        std::cout << "Parsing succeeded\n";
-        std::cout << "-------------------------\n";
-    }
-    else
-    {
-        std::string rest(iter, end);
-        std::cout << "-------------------------\n";
-        std::cout << "Parsing failed\n";
-        std::cout << "stopped at: \": " << rest << "\"\n";
-        std::cout << "-------------------------\n";
-    }
+  if (r && iter == end) {
+    std::cout << "-------------------------\n";
+    std::cout << "Parsing succeeded\n";
+    std::cout << "-------------------------\n";
+  } else {
+    std::string rest(iter, end);
+    std::cout << "-------------------------\n";
+    std::cout << "Parsing failed\n";
+    std::cout << "stopped at: \": " << rest << "\"\n";
+    std::cout << "-------------------------\n";
+  }
 
-    return 0;
+  return 0;
 }
-
-

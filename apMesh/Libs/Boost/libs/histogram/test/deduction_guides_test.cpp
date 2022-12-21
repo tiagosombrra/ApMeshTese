@@ -16,6 +16,7 @@
 #include <tuple>
 #include <type_traits>
 #include <vector>
+
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
 
@@ -31,10 +32,12 @@ int main() {
     using axis::regular;
     BOOST_TEST_TRAIT_SAME(decltype(regular(1, 0.0, 1.0)),
                           regular<double, tr::id, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(regular(1, 0, 1)), regular<double, tr::id, null_type>);
+    BOOST_TEST_TRAIT_SAME(decltype(regular(1, 0, 1)),
+                          regular<double, tr::id, null_type>);
     BOOST_TEST_TRAIT_SAME(decltype(regular(1, 0.0f, 1.0f)),
                           regular<float, tr::id, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(regular(1, 0, 1, 0)), regular<double, tr::id, int>);
+    BOOST_TEST_TRAIT_SAME(decltype(regular(1, 0, 1, 0)),
+                          regular<double, tr::id, int>);
     BOOST_TEST_TRAIT_SAME(decltype(regular(1, 0.0f, 1.0f, "x")),
                           regular<float, tr::id, std::string>);
     BOOST_TEST_TRAIT_SAME(decltype(regular(tr::sqrt(), 1, 0, 1)),
@@ -49,20 +52,27 @@ int main() {
     using axis::integer;
     BOOST_TEST_TRAIT_SAME(decltype(integer(1, 2)), integer<int, null_type>);
     BOOST_TEST_TRAIT_SAME(decltype(integer(1l, 2l)), integer<int, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(integer(1.0, 2.0)), integer<double, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(integer(1.0f, 2.0f)), integer<float, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(integer(1, 2, "foo")), integer<int, std::string>);
+    BOOST_TEST_TRAIT_SAME(decltype(integer(1.0, 2.0)),
+                          integer<double, null_type>);
+    BOOST_TEST_TRAIT_SAME(decltype(integer(1.0f, 2.0f)),
+                          integer<float, null_type>);
+    BOOST_TEST_TRAIT_SAME(decltype(integer(1, 2, "foo")),
+                          integer<int, std::string>);
     BOOST_TEST_TRAIT_SAME(decltype(integer(1, 2, 0)), integer<int, int>);
   }
 
   {
     using axis::variable;
-    BOOST_TEST_TRAIT_SAME(decltype(variable{-1.0f, 1.0f}), variable<float, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(variable{-1, 0, 1, 2}), variable<double, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(variable{-1.0, 1.0}), variable<double, null_type>);
+    BOOST_TEST_TRAIT_SAME(decltype(variable{-1.0f, 1.0f}),
+                          variable<float, null_type>);
+    BOOST_TEST_TRAIT_SAME(decltype(variable{-1, 0, 1, 2}),
+                          variable<double, null_type>);
+    BOOST_TEST_TRAIT_SAME(decltype(variable{-1.0, 1.0}),
+                          variable<double, null_type>);
     BOOST_TEST_TRAIT_SAME(decltype(variable({-1, 0, 1}, "foo")),
                           variable<double, std::string>);
-    BOOST_TEST_TRAIT_SAME(decltype(variable({-1, 1}, 0)), variable<double, int>);
+    BOOST_TEST_TRAIT_SAME(decltype(variable({-1, 1}, 0)),
+                          variable<double, int>);
 
     BOOST_TEST_TRAIT_SAME(decltype(variable(std::vector<int>{{-1, 1}})),
                           variable<double, null_type>);
@@ -77,8 +87,10 @@ int main() {
   {
     using axis::category;
     BOOST_TEST_TRAIT_SAME(decltype(category{1, 2}), category<int, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(category{"x", "y"}), category<std::string, null_type>);
-    BOOST_TEST_TRAIT_SAME(decltype(category({1, 2}, "foo")), category<int, std::string>);
+    BOOST_TEST_TRAIT_SAME(decltype(category{"x", "y"}),
+                          category<std::string, null_type>);
+    BOOST_TEST_TRAIT_SAME(decltype(category({1, 2}, "foo")),
+                          category<int, std::string>);
     BOOST_TEST_TRAIT_SAME(decltype(category({1, 2}, 0)), category<int, int>);
   }
 
@@ -90,9 +102,10 @@ int main() {
 
   {
     auto h = histogram(axis::regular(3, -1, 1), axis::integer(0, 4));
-    BOOST_TEST_TRAIT_SAME(decltype(h),
-                          histogram<std::tuple<axis::regular<double, tr::id, null_type>,
-                                               axis::integer<int, null_type>>>);
+    BOOST_TEST_TRAIT_SAME(
+        decltype(h),
+        histogram<std::tuple<axis::regular<double, tr::id, null_type>,
+                             axis::integer<int, null_type>>>);
     BOOST_TEST_EQ(h.axis(0), axis::regular(3, -1, 1));
     BOOST_TEST_EQ(h.axis(1), axis::integer(0, 4));
   }
@@ -100,10 +113,11 @@ int main() {
   {
     auto h = histogram(std::tuple(axis::regular(3, -1, 1), axis::integer(0, 4)),
                        weight_storage());
-    BOOST_TEST_TRAIT_SAME(decltype(h),
-                          histogram<std::tuple<axis::regular<double, tr::id, null_type>,
-                                               axis::integer<int, null_type>>,
-                                    weight_storage>);
+    BOOST_TEST_TRAIT_SAME(
+        decltype(h),
+        histogram<std::tuple<axis::regular<double, tr::id, null_type>,
+                             axis::integer<int, null_type>>,
+                  weight_storage>);
     BOOST_TEST_EQ(h.axis(0), axis::regular(3, -1, 1));
     BOOST_TEST_EQ(h.axis(1), axis::integer(0, 4));
   }
@@ -114,7 +128,8 @@ int main() {
     auto axes = {a0, a1};
     auto h = histogram(axes);
     BOOST_TEST_TRAIT_SAME(
-        decltype(h), histogram<std::vector<axis::regular<double, tr::id, null_type>>>);
+        decltype(h),
+        histogram<std::vector<axis::regular<double, tr::id, null_type>>>);
     BOOST_TEST_EQ(h.rank(), 2);
     BOOST_TEST_EQ(h.axis(0), a0);
     BOOST_TEST_EQ(h.axis(1), a1);
@@ -127,7 +142,8 @@ int main() {
     auto h = histogram(axes, weight_storage());
     BOOST_TEST_TRAIT_SAME(
         decltype(h),
-        histogram<std::vector<axis::regular<double, tr::id, null_type>>, weight_storage>);
+        histogram<std::vector<axis::regular<double, tr::id, null_type>>,
+                  weight_storage>);
     BOOST_TEST_EQ(h.rank(), 2);
     BOOST_TEST_EQ(h.axis(0), a0);
     BOOST_TEST_EQ(h.axis(1), a1);
@@ -139,7 +155,8 @@ int main() {
     auto axes = std::vector<decltype(a0)>{{a0, a1}};
     auto h = histogram(axes);
     BOOST_TEST_TRAIT_SAME(
-        decltype(h), histogram<std::vector<axis::regular<double, tr::id, null_type>>>);
+        decltype(h),
+        histogram<std::vector<axis::regular<double, tr::id, null_type>>>);
     BOOST_TEST_EQ(h.rank(), 2);
     BOOST_TEST_EQ(h.axis(0), a0);
     BOOST_TEST_EQ(h.axis(1), a1);

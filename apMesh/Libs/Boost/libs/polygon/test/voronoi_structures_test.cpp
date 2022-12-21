@@ -23,8 +23,7 @@ typedef ordered_queue<int, std::greater<int> > ordered_queue_type;
 typedef beach_line_node_key<int> node_key_type;
 typedef beach_line_node_data<int, int> node_data_type;
 
-void point_2d_test1()
-{
+void point_2d_test1() {
   point_type p(1, 2);
   BOOST_TEST_EQ(1, p.x());
   BOOST_TEST_EQ(2, p.y());
@@ -34,8 +33,7 @@ void point_2d_test1()
   BOOST_TEST_EQ(4, p.y());
 }
 
-void site_event_test1()
-{
+void site_event_test1() {
   site_type s(1, 2);
   s.sorted_index(1);
   s.initial_index(2);
@@ -52,8 +50,7 @@ void site_event_test1()
   BOOST_TEST_EQ(SOURCE_CATEGORY_SEGMENT_START_POINT, s.source_category());
 }
 
-void site_event_test2()
-{
+void site_event_test2() {
   site_type s(1, 2, 3, 4);
   s.sorted_index(1);
   s.initial_index(2);
@@ -76,8 +73,7 @@ void site_event_test2()
   BOOST_TEST_EQ(SOURCE_CATEGORY_INITIAL_SEGMENT, s.source_category());
 }
 
-void circle_event_test()
-{
+void circle_event_test() {
   circle_type c(0, 1, 2);
   BOOST_TEST_EQ(0, c.x());
   BOOST_TEST_EQ(1, c.y());
@@ -95,23 +91,18 @@ void circle_event_test()
   BOOST_TEST(!c.is_active());
 }
 
-void ordered_queue_test()
-{
+void ordered_queue_test() {
   ordered_queue_type q;
   BOOST_TEST(q.empty());
   std::vector<int*> vi;
-  for (int i = 0; i < 20; ++i)
-    vi.push_back(&q.push(i));
-  for (int i = 0; i < 20; ++i)
-    *vi[i] <<= 1;
+  for (int i = 0; i < 20; ++i) vi.push_back(&q.push(i));
+  for (int i = 0; i < 20; ++i) *vi[i] <<= 1;
   BOOST_TEST(!q.empty());
-  for (int i = 0; i < 20; ++i, q.pop())
-    BOOST_TEST_EQ(i << 1, q.top());
+  for (int i = 0; i < 20; ++i, q.pop()) BOOST_TEST_EQ(i << 1, q.top());
   BOOST_TEST(q.empty());
 }
 
-void beach_line_node_key_test()
-{
+void beach_line_node_key_test() {
   node_key_type key(1);
   BOOST_TEST_EQ(1, key.left_site());
   BOOST_TEST_EQ(1, key.right_site());
@@ -123,8 +114,7 @@ void beach_line_node_key_test()
   BOOST_TEST_EQ(3, key.right_site());
 }
 
-void beach_line_node_data_test()
-{
+void beach_line_node_data_test() {
   node_data_type node_data(NULL);
   BOOST_TEST(node_data.edge() == NULL);
   BOOST_TEST(node_data.circle_event() == NULL);
@@ -137,14 +127,13 @@ void beach_line_node_data_test()
   BOOST_TEST(node_data.circle_event() == &data);
 }
 
-int main()
-{
-    point_2d_test1();
-    site_event_test1();
-    site_event_test2();
-    circle_event_test();
-    ordered_queue_test();
-    beach_line_node_key_test();
-    beach_line_node_data_test();
-    return boost::report_errors();
+int main() {
+  point_2d_test1();
+  site_event_test1();
+  site_event_test2();
+  circle_event_test();
+  ordered_queue_test();
+  beach_line_node_key_test();
+  beach_line_node_data_test();
+  return boost::report_errors();
 }

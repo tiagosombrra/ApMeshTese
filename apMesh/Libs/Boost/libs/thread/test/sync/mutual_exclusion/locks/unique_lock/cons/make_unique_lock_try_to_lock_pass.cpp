@@ -10,11 +10,11 @@
 
 #define BOOST_THREAD_VERSION 4
 
-
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_factories.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../../../timming.hpp"
 
 boost::mutex m;
@@ -32,17 +32,16 @@ time_point t1;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
 #if defined BOOST_THREAD_USES_CHRONO
   {
     t0 = Clock::now();
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
-  auto
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+    auto
 #else
-  boost::unique_lock<boost::mutex>
+    boost::unique_lock<boost::mutex>
 #endif
-    lk = boost::make_unique_lock(m, boost::try_to_lock);
+        lk = boost::make_unique_lock(m, boost::try_to_lock);
     BOOST_TEST(lk.owns_lock() == false);
     t1 = Clock::now();
     ns d = t1 - t0;
@@ -50,12 +49,12 @@ void f()
   }
   {
     t0 = Clock::now();
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
-  auto
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+    auto
 #else
-  boost::unique_lock<boost::mutex>
+    boost::unique_lock<boost::mutex>
 #endif
-    lk = boost::make_unique_lock(m, boost::try_to_lock);
+        lk = boost::make_unique_lock(m, boost::try_to_lock);
     BOOST_TEST(lk.owns_lock() == false);
     t1 = Clock::now();
     ns d = t1 - t0;
@@ -63,12 +62,12 @@ void f()
   }
   {
     t0 = Clock::now();
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
-  auto
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+    auto
 #else
-  boost::unique_lock<boost::mutex>
+    boost::unique_lock<boost::mutex>
 #endif
-    lk = boost::make_unique_lock(m, boost::try_to_lock);
+        lk = boost::make_unique_lock(m, boost::try_to_lock);
     BOOST_TEST(lk.owns_lock() == false);
     t1 = Clock::now();
     ns d = t1 - t0;
@@ -76,14 +75,13 @@ void f()
   }
   {
     t0 = Clock::now();
-    for (;;)
-    {
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+    for (;;) {
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
       auto
 #else
       boost::unique_lock<boost::mutex>
 #endif
-      lk = boost::make_unique_lock(m, boost::try_to_lock);
+          lk = boost::make_unique_lock(m, boost::try_to_lock);
       if (lk.owns_lock()) {
         t1 = Clock::now();
         break;
@@ -91,37 +89,35 @@ void f()
     }
   }
 #else
-//  time_point t0 = Clock::now();
-//  {
-//    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
-//    BOOST_TEST(lk.owns_lock() == false);
-//  }
-//  {
-//    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
-//    BOOST_TEST(lk.owns_lock() == false);
-//  }
-//  {
-//    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
-//    BOOST_TEST(lk.owns_lock() == false);
-//  }
-  for (;;)
-  {
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
-  auto
+  //  time_point t0 = Clock::now();
+  //  {
+  //    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
+  //    BOOST_TEST(lk.owns_lock() == false);
+  //  }
+  //  {
+  //    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
+  //    BOOST_TEST(lk.owns_lock() == false);
+  //  }
+  //  {
+  //    boost::unique_lock<boost::mutex> lk(m, boost::try_to_lock);
+  //    BOOST_TEST(lk.owns_lock() == false);
+  //  }
+  for (;;) {
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
+    auto
 #else
-  boost::unique_lock<boost::mutex>
+    boost::unique_lock<boost::mutex>
 #endif
-    lk = boost::make_unique_lock(m, boost::try_to_lock);
+        lk = boost::make_unique_lock(m, boost::try_to_lock);
     if (lk.owns_lock()) break;
   }
-  //time_point t1 = Clock::now();
-  //ns d = t1 - t0 - ms(250);
-  //BOOST_TEST(d < max_diff);
+  // time_point t1 = Clock::now();
+  // ns d = t1 - t0 - ms(250);
+  // BOOST_TEST(d < max_diff);
 #endif
 }
 
-int main()
-{
+int main() {
   m.lock();
   boost::thread t(f);
 #if defined BOOST_THREAD_USES_CHRONO

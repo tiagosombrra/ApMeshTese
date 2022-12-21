@@ -23,10 +23,12 @@ BOOST_SPIRIT_INSTANTIATE(skipper2_type, char const*, x3::unused_type)
 const auto grammar_def = *x3::lit('=');
 BOOST_SPIRIT_DEFINE(grammar)
 BOOST_SPIRIT_INSTANTIATE(grammar_type, char const*, x3::unused_type)
-BOOST_SPIRIT_INSTANTIATE(grammar_type, char const*, x3::phrase_parse_context<skipper_type>::type)
-BOOST_SPIRIT_INSTANTIATE(grammar_type, char const*, x3::phrase_parse_context<skipper2_type>::type)
+BOOST_SPIRIT_INSTANTIATE(grammar_type, char const*,
+                         x3::phrase_parse_context<skipper_type>::type)
+BOOST_SPIRIT_INSTANTIATE(grammar_type, char const*,
+                         x3::phrase_parse_context<skipper2_type>::type)
 
-}
+}  // namespace unused_attr
 
 namespace used_attr {
 
@@ -37,6 +39,7 @@ BOOST_SPIRIT_INSTANTIATE(skipper_type, char const*, x3::unused_type)
 const auto grammar_def = x3::int_;
 BOOST_SPIRIT_DEFINE(grammar)
 BOOST_SPIRIT_INSTANTIATE(grammar_type, char const*, x3::unused_type)
-BOOST_SPIRIT_INSTANTIATE(grammar_type, char const*, x3::phrase_parse_context<skipper_type>::type)
+BOOST_SPIRIT_INSTANTIATE(grammar_type, char const*,
+                         x3::phrase_parse_context<skipper_type>::type)
 
-}
+}  // namespace used_attr

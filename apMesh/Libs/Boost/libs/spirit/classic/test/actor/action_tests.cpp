@@ -8,19 +8,17 @@
 =============================================================================*/
 #include "action_tests.hpp"
 
-int
-main()
-{
-    assign_action_test();
-    assign_key_action_test();
-    clear_action_test();
-    decrement_action_test();
-    erase_action_test();
-    increment_action_test();
-    insert_key_action_test();
-    push_front_action_test();
-    push_back_action_test();
-    swap_action_test();
+int main() {
+  assign_action_test();
+  assign_key_action_test();
+  clear_action_test();
+  decrement_action_test();
+  erase_action_test();
+  increment_action_test();
+  insert_key_action_test();
+  push_front_action_test();
+  push_back_action_test();
+  swap_action_test();
 
-    return boost::report_errors();
+  return boost::report_errors();
 }

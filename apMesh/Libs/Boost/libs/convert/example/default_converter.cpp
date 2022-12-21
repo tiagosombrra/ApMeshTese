@@ -13,27 +13,23 @@ struct boost::cnv::by_default : boost::cnv::cstream {};
 //]
 #endif
 //[default_converter_declaration_formatted
-struct boost::cnv::by_default : boost::cnv::cstream 
-{ 
-    by_default() { (*this)(std::uppercase)(std::hex); }
+struct boost::cnv::by_default : boost::cnv::cstream {
+  by_default() { (*this)(std::uppercase)(std::hex); }
 };
 //]
 
-int
-main(int, char const* [])
-{
-    //[default_converter_example1
-    // No explicit converter provided. boost::cnv::by_default is used.
-    int         i = boost::convert<int>("F").value_or(-1);
-    std::string s = boost::convert<std::string>(255).value_or("bad");
+int main(int, char const*[]) {
+  //[default_converter_example1
+  // No explicit converter provided. boost::cnv::by_default is used.
+  int i = boost::convert<int>("F").value_or(-1);
+  std::string s = boost::convert<std::string>(255).value_or("bad");
 
-    // 'i' and 's' are converted using boost::cnv::cstream
-    // with std::uppercase and std::hex formatting applied.
+  // 'i' and 's' are converted using boost::cnv::cstream
+  // with std::uppercase and std::hex formatting applied.
 
-    BOOST_TEST(i == 15);   // 15(10) = F(16)
-    BOOST_TEST(s == "FF"); // 255(10) = FF(16)
-    //]
+  BOOST_TEST(i == 15);    // 15(10) = F(16)
+  BOOST_TEST(s == "FF");  // 255(10) = FF(16)
+  //]
 
-    return boost::report_errors();
+  return boost::report_errors();
 }
-

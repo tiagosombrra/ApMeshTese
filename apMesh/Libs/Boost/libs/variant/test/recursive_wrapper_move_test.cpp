@@ -14,12 +14,11 @@
 // GCC 6 crashed, trying to determine is boost::recursive_wrapper<Node>
 // is_noexcept_move_constructible
 
+#include <boost/array.hpp>
+#include <boost/variant.hpp>
 #include <string>
 
-#include <boost/variant.hpp>
-#include <boost/array.hpp>
-
-struct Leaf { };
+struct Leaf {};
 struct Node;
 
 typedef boost::variant<Leaf, boost::recursive_wrapper<Node>> TreeBase;
@@ -28,25 +27,25 @@ struct Tree : TreeBase {
   using TreeBase::TreeBase;
 
   template <typename Iter>
-  static Tree Create(Iter /*first*/, Iter /*last*/) { return Leaf{}; }
+  static Tree Create(Iter /*first*/, Iter /*last*/) {
+    return Leaf{};
+  }
 };
 
 struct Node {
   Tree left, right;
 };
 
-
 // Test from https://svn.boost.org/trac/boost/ticket/7120
-template<class Node>
+template <class Node>
 struct node1_type;
 
 struct var_type;
 
-using var_base = boost::variant<int,
-  boost::recursive_wrapper<node1_type<var_type>>
->;
+using var_base =
+    boost::variant<int, boost::recursive_wrapper<node1_type<var_type>>>;
 
-template<class Node>
+template <class Node>
 struct node1_type {
   boost::array<Node, 1> children;
 };
@@ -58,20 +57,18 @@ struct var_type : var_base {
 void run() {
   std::string input{"abracadabra"};
   const Tree root = Tree::Create(input.begin(), input.end());
-  (void)root; // prevents unused variable warning
+  (void)root;  // prevents unused variable warning
 
   var_type v1 = 1;
   (void)v1;
 }
 
-#else // #!ifdef __cpp_inheriting_constructors
+#else  // #!ifdef __cpp_inheriting_constructors
 // if compiler does not support inheriting constructors - does nothing
 void run() {}
 #endif
 
-int main()
-{
-    run();
-    return boost::report_errors();
+int main() {
+  run();
+  return boost::report_errors();
 }
-

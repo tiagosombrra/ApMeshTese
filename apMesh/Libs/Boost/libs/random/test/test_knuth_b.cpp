@@ -9,8 +9,8 @@
  *
  */
 
-#include <boost/random/shuffle_order.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/random/shuffle_order.hpp>
 
 #define BOOST_RANDOM_URNG boost::random::knuth_b
 
@@ -21,6 +21,7 @@
 #define BOOST_RANDOM_SEED_SEQ_VALIDATION_VALUE 202352021U
 #define BOOST_RANDOM_ITERATOR_VALIDATION_VALUE 1692601883U
 
-#define BOOST_RANDOM_GENERATE_VALUES { 0x5D189C63U, 0xD0544F0EU, 0x15B0E78FU, 0xD814D654U }
+#define BOOST_RANDOM_GENERATE_VALUES \
+  { 0x5D189C63U, 0xD0544F0EU, 0x15B0E78FU, 0xD814D654U }
 
 #include "test_generator.ipp"

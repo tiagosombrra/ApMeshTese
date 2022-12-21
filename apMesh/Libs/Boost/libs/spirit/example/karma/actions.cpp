@@ -6,11 +6,10 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/karma.hpp>
-#include <boost/lambda/lambda.hpp>
 #include <boost/bind/bind.hpp>
-
+#include <boost/config/warning_disable.hpp>
+#include <boost/lambda/lambda.hpp>
+#include <boost/spirit/include/karma.hpp>
 #include <iostream>
 #include <sstream>
 
@@ -23,111 +22,97 @@
 using boost::spirit::unused_type;
 
 //[karma_tutorial_semantic_action_functions
-namespace client
-{
-    namespace karma = boost::spirit::karma;
+namespace client {
+namespace karma = boost::spirit::karma;
 
-    // A plain function
-    void read_function(int& i)
-    {
-        i = 42;
-    }
+// A plain function
+void read_function(int& i) { i = 42; }
 
-    // A member function
-    struct reader
-    {
-        void print(int& i) const
-        {
-            i = 42;
-        }
-    };
+// A member function
+struct reader {
+  void print(int& i) const { i = 42; }
+};
 
-    // A function object
-    struct read_action
-    {
-        void operator()(int& i, unused_type, unused_type) const
-        {
-            i = 42;
-        }
-    };
-}
+// A function object
+struct read_action {
+  void operator()(int& i, unused_type, unused_type) const { i = 42; }
+};
+}  // namespace client
 //]
 
 ///////////////////////////////////////////////////////////////////////////////
-int main()
-{
-    using boost::spirit::karma::int_;
-    using boost::spirit::karma::generate;
-    using client::read_function;
-    using client::reader;
-    using client::read_action;
+int main() {
+  using boost::spirit::karma::generate;
+  using boost::spirit::karma::int_;
+  using client::read_action;
+  using client::read_function;
+  using client::reader;
 
-    { // example using plain functions
-        using namespace boost::spirit;
+  {  // example using plain functions
+    using namespace boost::spirit;
 
-        std::string generated;
-        std::back_insert_iterator<std::string> outiter(generated);
+    std::string generated;
+    std::back_insert_iterator<std::string> outiter(generated);
 
-        //[karma_tutorial_attach_actions1
-        generate(outiter, '{' << int_[&read_function] << '}');
-        //]
+    //[karma_tutorial_attach_actions1
+    generate(outiter, '{' << int_[&read_function] << '}');
+    //]
 
-        std::cout << "Simple function: " << generated << std::endl;
-    }
+    std::cout << "Simple function: " << generated << std::endl;
+  }
 
-    { // example using simple function object
-        using namespace boost::spirit;
+  {  // example using simple function object
+    using namespace boost::spirit;
 
-        std::string generated;
-        std::back_insert_iterator<std::string> outiter(generated);
+    std::string generated;
+    std::back_insert_iterator<std::string> outiter(generated);
 
-        //[karma_tutorial_attach_actions2
-        generate(outiter, '{' << int_[read_action()] << '}');
-        //]
+    //[karma_tutorial_attach_actions2
+    generate(outiter, '{' << int_[read_action()] << '}');
+    //]
 
-        std::cout << "Simple function object: " << generated << std::endl;
-    }
+    std::cout << "Simple function object: " << generated << std::endl;
+  }
 
-    { // example using plain function with boost.bind
-        using namespace boost::placeholders;
-        std::string generated;
-        std::back_insert_iterator<std::string> outiter(generated);
+  {  // example using plain function with boost.bind
+    using namespace boost::placeholders;
+    std::string generated;
+    std::back_insert_iterator<std::string> outiter(generated);
 
-        //[karma_tutorial_attach_actions3
-        generate(outiter, '{' << int_[boost::bind(&read_function, _1)] << '}');
-        //]
+    //[karma_tutorial_attach_actions3
+    generate(outiter, '{' << int_[boost::bind(&read_function, _1)] << '}');
+    //]
 
-        std::cout << "Simple function with Boost.Bind: " << generated << std::endl;
-    }
+    std::cout << "Simple function with Boost.Bind: " << generated << std::endl;
+  }
 
-    { // example using member function with boost.bind
-        using namespace boost::placeholders;
-        std::string generated;
-        std::back_insert_iterator<std::string> outiter(generated);
+  {  // example using member function with boost.bind
+    using namespace boost::placeholders;
+    std::string generated;
+    std::back_insert_iterator<std::string> outiter(generated);
 
-        //[karma_tutorial_attach_actions4
-        reader r;
-        generate(outiter, '{' << int_[boost::bind(&reader::print, &r, _1)] << '}');
-        //]
+    //[karma_tutorial_attach_actions4
+    reader r;
+    generate(outiter, '{' << int_[boost::bind(&reader::print, &r, _1)] << '}');
+    //]
 
-        std::cout << "Member function: " << generated << std::endl;
-    }
+    std::cout << "Member function: " << generated << std::endl;
+  }
 
-    { // example using boost.lambda
-        namespace lambda = boost::lambda;
-        using namespace boost::spirit;
+  {  // example using boost.lambda
+    namespace lambda = boost::lambda;
+    using namespace boost::spirit;
 
-        std::string generated;
-        std::back_insert_iterator<std::string> outiter(generated);
+    std::string generated;
+    std::back_insert_iterator<std::string> outiter(generated);
 
-        //[karma_tutorial_attach_actions5
-        std::stringstream strm("42");
-        generate(outiter, '{' << int_[strm >> lambda::_1] << '}');
-        //]
+    //[karma_tutorial_attach_actions5
+    std::stringstream strm("42");
+    generate(outiter, '{' << int_[strm >> lambda::_1] << '}');
+    //]
 
-        std::cout << "Boost.Lambda: " << generated << std::endl;
-    }
+    std::cout << "Boost.Lambda: " << generated << std::endl;
+  }
 
-    return 0;
+  return 0;
 }
-

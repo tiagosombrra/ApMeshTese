@@ -31,112 +31,99 @@
 //
 // -----------------------------------------------------------------------//
 
-
 #include "boost/config.hpp"
 
-#if  defined (__STL_CONFIG_H) && !defined (__STL_USE_NEW_IOSTREAMS)
-  // for pre 3.0 versions of libstdc++
-# define BOOST_OLD_IOSTREAMS
+#if defined(__STL_CONFIG_H) && !defined(__STL_USE_NEW_IOSTREAMS)
+// for pre 3.0 versions of libstdc++
+#define BOOST_OLD_IOSTREAMS
 #endif
 // ------------------------------------------------- //
 
-#include <typeinfo>
 #include <iostream>
+#include <typeinfo>
 #if !defined(BOOST_OLD_IOSTREAMS)
-# include <ostream>
+#include <ostream>
 #endif
 
-
 #include "boost/cstdlib.hpp"
-#include "boost/version.hpp"
-#include "boost/timer/timer.hpp"
 #include "boost/dynamic_bitset.hpp"
-
+#include "boost/timer/timer.hpp"
+#include "boost/version.hpp"
 
 namespace {
 
-    // the m_ prefixes, below, are mainly to avoid problems with g++:
-    // see http://gcc.gnu.org/ml/gcc-bugs/1999-03n/msg00884.html
-    //
-    class boost_version {
-        int m_major;
-        int m_minor;
-        int m_subminor;
+// the m_ prefixes, below, are mainly to avoid problems with g++:
+// see http://gcc.gnu.org/ml/gcc-bugs/1999-03n/msg00884.html
+//
+class boost_version {
+  int m_major;
+  int m_minor;
+  int m_subminor;
 
-    public:
-        boost_version(unsigned long v = BOOST_VERSION):
-          m_major(v / 100000), m_minor(v / 100 % 1000), m_subminor(v % 100) {}
+ public:
+  boost_version(unsigned long v = BOOST_VERSION)
+      : m_major(v / 100000), m_minor(v / 100 % 1000), m_subminor(v % 100) {}
 
-        friend std::ostream & operator<<(std::ostream &, const boost_version &);
-    };
+  friend std::ostream& operator<<(std::ostream&, const boost_version&);
+};
 
-
-    // give up using basic_ostream, to avoid headaches with old libraries
-     std::ostream& operator<<(std::ostream& os, const boost_version & v) {
-        return os << v.m_major << '.' << v.m_minor << '.' << v.m_subminor;
-     }
-
+// give up using basic_ostream, to avoid headaches with old libraries
+std::ostream& operator<<(std::ostream& os, const boost_version& v) {
+  return os << v.m_major << '.' << v.m_minor << '.' << v.m_subminor;
 }
 
+}  // namespace
 
-void prologue()
-{
-    std::cout << '\n';
-    std::cout << "Compiler: " << BOOST_COMPILER << '\n';
-    std::cout << "Std lib : " << BOOST_STDLIB << '\n';
-    std::cout << "Boost v.: " << boost_version() << '\n';
+void prologue() {
+  std::cout << '\n';
+  std::cout << "Compiler: " << BOOST_COMPILER << '\n';
+  std::cout << "Std lib : " << BOOST_STDLIB << '\n';
+  std::cout << "Boost v.: " << boost_version() << '\n';
 
-    std::cout << '\n';
+  std::cout << '\n';
 }
-
-
 
 template <typename T>
-void timing_test(T* = 0) // dummy parameter to workaround VC6
+void timing_test(T* = 0)  // dummy parameter to workaround VC6
 {
 #ifndef BOOST_NO_STRESS_TEST
-    const unsigned long num = 30 * 100000;
+  const unsigned long num = 30 * 100000;
 #else
-    const unsigned long num = 30 * 1000;
+  const unsigned long num = 30 * 1000;
 #endif
 
+  // This variable is printed at the end of the test,
+  // to prevent the optimizer from removing the call to
+  // count() in the loop below.
+  typename boost::dynamic_bitset<T>::size_type dummy = 0;
 
-    // This variable is printed at the end of the test,
-    // to prevent the optimizer from removing the call to
-    // count() in the loop below.
-    typename boost::dynamic_bitset<T>::size_type dummy = 0;
+  std::cout << "\nTimings for dynamic_bitset<" << typeid(T).name() << ">  ["
+            << num << " iterations]\n";
+  std::cout << "--------------------------------------------------\n";
 
-    std::cout << "\nTimings for dynamic_bitset<" << typeid(T).name()
-              << ">  [" << num << " iterations]\n";
-    std::cout << "--------------------------------------------------\n";
+  {
+    boost::timer::auto_cpu_timer time;
 
-    {
-        boost::timer::auto_cpu_timer time;
-
-        const typename boost::dynamic_bitset<T>::size_type sz = 5000;
-        for (unsigned long i = 0; i < num; ++i) {
-            boost::dynamic_bitset<T> bs(sz, i);
-            dummy += bs.count();
-        }
+    const typename boost::dynamic_bitset<T>::size_type sz = 5000;
+    for (unsigned long i = 0; i < num; ++i) {
+      boost::dynamic_bitset<T> bs(sz, i);
+      dummy += bs.count();
     }
+  }
 
-    std::cout << "(total count: " << dummy << ")\n\n";
+  std::cout << "(total count: " << dummy << ")\n\n";
 }
 
+int main() {
+  prologue();
 
+  timing_test<unsigned char>();
+  timing_test<unsigned short>();
+  timing_test<unsigned int>();
+  timing_test<unsigned long>();
+#ifdef BOOST_HAS_LONG_LONG
+  timing_test< ::boost::ulong_long_type>();
+#endif
 
-int main()
-{
-    prologue();
-
-    timing_test<unsigned char>();
-    timing_test<unsigned short>();
-    timing_test<unsigned int>();
-    timing_test<unsigned long>();
-# ifdef BOOST_HAS_LONG_LONG
-    timing_test< ::boost::ulong_long_type>();
-# endif
-
-    return boost::exit_success;
+  return boost::exit_success;
 }
-

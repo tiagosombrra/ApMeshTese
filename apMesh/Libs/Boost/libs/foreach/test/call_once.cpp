@@ -8,33 +8,29 @@
   25 August 2005 : Initial version.
 */
 
-#include <vector>
-#include <boost/test/minimal.hpp>
 #include <boost/foreach.hpp>
+#include <boost/test/minimal.hpp>
+#include <vector>
 
 // counter
 int counter = 0;
 
-std::vector<int> my_vector(4,4);
+std::vector<int> my_vector(4, 4);
 
-std::vector<int> const &get_vector()
-{
-    ++counter;
-    return my_vector;
+std::vector<int> const &get_vector() {
+  ++counter;
+  return my_vector;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // test_main
-//   
-int test_main( int, char*[] )
-{
-    BOOST_FOREACH(int i, get_vector())
-    {
-        ((void)i); // no-op
-    }
+//
+int test_main(int, char *[]) {
+  BOOST_FOREACH (int i, get_vector()) {
+    ((void)i);  // no-op
+  }
 
-    BOOST_CHECK(1 == counter);
+  BOOST_CHECK(1 == counter);
 
-    return 0;
+  return 0;
 }

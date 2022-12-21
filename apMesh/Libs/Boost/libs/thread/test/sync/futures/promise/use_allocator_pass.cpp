@@ -20,28 +20,30 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/thread/future.hpp>
 
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS
 #include "../test_allocator.hpp"
 
-int main()
-{
-
-  BOOST_STATIC_ASSERT_MSG((boost::csbl::uses_allocator<boost::promise<int>, test_allocator<int> >::value), "");
-  BOOST_STATIC_ASSERT_MSG((boost::csbl::uses_allocator<boost::promise<int&>, test_allocator<int&> >::value), "");
-  BOOST_STATIC_ASSERT_MSG((boost::csbl::uses_allocator<boost::promise<void>, test_allocator<void> >::value), "");
+int main() {
+  BOOST_STATIC_ASSERT_MSG(
+      (boost::csbl::uses_allocator<boost::promise<int>,
+                                   test_allocator<int> >::value),
+      "");
+  BOOST_STATIC_ASSERT_MSG(
+      (boost::csbl::uses_allocator<boost::promise<int&>,
+                                   test_allocator<int&> >::value),
+      "");
+  BOOST_STATIC_ASSERT_MSG(
+      (boost::csbl::uses_allocator<boost::promise<void>,
+                                   test_allocator<void> >::value),
+      "");
 
   return boost::report_errors();
 }
 
 #else
-int main()
-{
-  return boost::report_errors();
-}
+int main() { return boost::report_errors(); }
 #endif
-
-

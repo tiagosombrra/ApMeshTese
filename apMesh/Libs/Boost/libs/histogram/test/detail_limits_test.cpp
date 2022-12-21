@@ -11,7 +11,6 @@
 using namespace boost::histogram::detail;
 
 int main() {
-
   BOOST_TEST_EQ(lowest<int>(), (std::numeric_limits<int>::min)());
   BOOST_TEST_EQ(lowest<float>(), -std::numeric_limits<float>::infinity());
   BOOST_TEST_EQ(lowest<double>(), -std::numeric_limits<double>::infinity());

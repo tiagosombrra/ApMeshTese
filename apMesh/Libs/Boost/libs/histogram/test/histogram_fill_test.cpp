@@ -25,23 +25,26 @@
 #include <tuple>
 #include <utility>
 #include <vector>
+
 #include "throw_exception.hpp"
 #include "utility_histogram.hpp"
 
 using namespace boost::histogram;
 using namespace boost::histogram::algorithm;
-using namespace boost::histogram::literals; // to get _c suffix
+using namespace boost::histogram::literals;  // to get _c suffix
 using boost::variant2::variant;
 
-constexpr auto ndata = 1 << 16; // should be larger than index buffer in fill_n
+constexpr auto ndata = 1 << 16;  // should be larger than index buffer in fill_n
 
 using in = axis::integer<int, axis::null_type>;
 using in0 = axis::integer<int, axis::null_type, axis::option::none_t>;
-using ing = axis::integer<double, axis::null_type,
-                          decltype(axis::option::growth | axis::option::underflow |
-                                   axis::option::overflow)>;
+using ing =
+    axis::integer<double, axis::null_type,
+                  decltype(axis::option::growth | axis::option::underflow |
+                           axis::option::overflow)>;
 using cs = axis::category<std::string, axis::null_type>;
-using csg = axis::category<std::string, axis::null_type, axis::option::growth_t>;
+using csg =
+    axis::category<std::string, axis::null_type, axis::option::growth_t>;
 
 struct axis2d {
   auto size() const { return axis::index_type{2}; }
@@ -62,7 +65,6 @@ struct axis2d {
 template <class Tag>
 void run_tests(const std::vector<int>& x, const std::vector<int>& y,
                const std::vector<double>& w) {
-
   // 1D simple A
   {
     auto h = make(Tag(), in{1, 3});
@@ -166,7 +168,8 @@ void run_tests(const std::vector<int>& x, const std::vector<int>& y,
     BOOST_TEST_THROWS(h.fill(x), std::invalid_argument);
 
     // not rectangular
-    std::array<std::vector<int>, 2> bad = {{std::vector<int>(1), std::vector<int>(2)}};
+    std::array<std::vector<int>, 2> bad = {
+        {std::vector<int>(1), std::vector<int>(2)}};
     (void)bad;
     BOOST_TEST_THROWS(h2.fill(bad), std::invalid_argument);
   }
@@ -277,13 +280,15 @@ void run_tests(const std::vector<int>& x, const std::vector<int>& y,
     h("foo", 1);
     h("foo", 2);
 
-    using V = variant<std::string, std::vector<std::string>, int, std::vector<int>>;
+    using V =
+        variant<std::string, std::vector<std::string>, int, std::vector<int>>;
     const auto xy = {V("foo"), V(std::vector<int>{1, 2})};
     h2.fill(xy);
 
     BOOST_TEST_EQ(h, h2);
 
-    const auto bad = {V(std::vector<std::string>(1, "foo")), V(std::vector<int>{1, 2})};
+    const auto bad = {V(std::vector<std::string>(1, "foo")),
+                      V(std::vector<int>{1, 2})};
     (void)bad;
     BOOST_TEST_THROWS(h.fill(bad), std::invalid_argument);
   }

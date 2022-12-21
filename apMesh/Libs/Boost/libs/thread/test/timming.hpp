@@ -6,10 +6,10 @@
 #ifndef BOOST_THREAD_TEST_TIMMING_HPP
 #define BOOST_THREAD_TEST_TIMMING_HPP
 
-#include <boost/thread/detail/config.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/detail/config.hpp>
 
-#if ! defined BOOST_THREAD_TEST_TIME_MS
+#if !defined BOOST_THREAD_TEST_TIME_MS
 #ifdef __linux__
 #define BOOST_THREAD_TEST_TIME_MS 75
 #else
@@ -18,7 +18,7 @@
 #endif
 #endif
 
-#if ! defined BOOST_THREAD_TEST_TIME_WARNING
+#if !defined BOOST_THREAD_TEST_TIME_WARNING
 #define BOOST_THREAD_TEST_IT(A, B) BOOST_TEST_LT((A).count(), (B).count())
 #else
 #define BOOST_THREAD_TEST_IT(A, B) BOOST_TEST_LT((A).count(), (B).count())

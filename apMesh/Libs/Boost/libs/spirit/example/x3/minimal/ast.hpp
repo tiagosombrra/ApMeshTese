@@ -8,24 +8,23 @@
 #define BOOST_SPIRIT_X3_MINIMAL_AST_HPP
 
 #include <boost/fusion/include/io.hpp>
-
 #include <iostream>
 #include <string>
 
-namespace client { namespace ast
-{
-    ///////////////////////////////////////////////////////////////////////////
-    //  Our employee AST struct
-    ///////////////////////////////////////////////////////////////////////////
-    struct employee
-    {
-        int age;
-        std::string forename;
-        std::string surname;
-        double salary;
-    };
+namespace client {
+namespace ast {
+///////////////////////////////////////////////////////////////////////////
+//  Our employee AST struct
+///////////////////////////////////////////////////////////////////////////
+struct employee {
+  int age;
+  std::string forename;
+  std::string surname;
+  double salary;
+};
 
-    using boost::fusion::operator<<;
-}}
+using boost::fusion::operator<<;
+}  // namespace ast
+}  // namespace client
 
 #endif

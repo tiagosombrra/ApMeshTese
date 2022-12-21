@@ -13,18 +13,13 @@
 #include <iostream>
 namespace utf = boost::unit_test;
 
-BOOST_AUTO_TEST_CASE(test1)
-{
-  BOOST_TEST(false);
-}
+BOOST_AUTO_TEST_CASE(test1) { BOOST_TEST(false); }
 
-void make_use_of(char**)
-{
+void make_use_of(char**) {
   std::cout << "Using custom entry point..." << std::endl;
 }
 
-int main(int argc, char* argv[], char* envp[])
-{
+int main(int argc, char* argv[], char* envp[]) {
   make_use_of(envp);
   return utf::unit_test_main(init_unit_test, argc, argv);
 }

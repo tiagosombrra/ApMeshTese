@@ -15,19 +15,17 @@
 //____________________________________________________________________________//
 
 struct MyConfig {
-    MyConfig() { std::cout << "global setup part1\n"; }
-    ~MyConfig() { std::cout << "global teardown part1\n"; }
+  MyConfig() { std::cout << "global setup part1\n"; }
+  ~MyConfig() { std::cout << "global teardown part1\n"; }
 };
 
-// structure MyConfig is used as a global fixture - it's invoked pre and post any testing is performed
-BOOST_TEST_GLOBAL_FIXTURE( MyConfig );
+// structure MyConfig is used as a global fixture - it's invoked pre and post
+// any testing is performed
+BOOST_TEST_GLOBAL_FIXTURE(MyConfig);
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( my_test1 )
-{
-    BOOST_CHECK( true );
-}
+BOOST_AUTO_TEST_CASE(my_test1) { BOOST_CHECK(true); }
 
 //____________________________________________________________________________//
 

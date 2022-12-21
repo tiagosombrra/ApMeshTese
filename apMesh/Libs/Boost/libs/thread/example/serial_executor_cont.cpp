@@ -4,7 +4,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config.hpp>
-#if ! defined  BOOST_NO_CXX11_DECLTYPE
+#if !defined BOOST_NO_CXX11_DECLTYPE
 #define BOOST_RESULT_OF_USE_DECLTYPE
 #endif
 
@@ -14,46 +14,41 @@
 #define BOOST_THREAD_USES_LOG_THREAD_ID
 #define BOOST_THREAD_QUEUE_DEPRECATE_OLD
 
+#include <boost/assert.hpp>
 #include <boost/thread/caller_context.hpp>
+#include <boost/thread/executor.hpp>
 #include <boost/thread/executors/basic_thread_pool.hpp>
-#include <boost/thread/executors/serial_executor_cont.hpp>
 #include <boost/thread/executors/executor.hpp>
 #include <boost/thread/executors/executor_adaptor.hpp>
-#include <boost/thread/executor.hpp>
+#include <boost/thread/executors/serial_executor_cont.hpp>
 #include <boost/thread/future.hpp>
-#include <boost/assert.hpp>
-#include <string>
 #include <iostream>
+#include <string>
 
-void p1()
-{
+void p1() {
   std::cout << BOOST_CONTEXTOF << std::endl;
   boost::this_thread::sleep_for(boost::chrono::milliseconds(30));
   std::cout << BOOST_CONTEXTOF << std::endl;
 }
 
-void p2()
-{
+void p2() {
   std::cout << BOOST_CONTEXTOF << std::endl;
   boost::this_thread::sleep_for(boost::chrono::milliseconds(10));
   std::cout << BOOST_CONTEXTOF << std::endl;
 }
 
-int f1()
-{
+int f1() {
   // std::cout << BOOST_CONTEXTOF << std::endl;
   boost::this_thread::sleep_for(boost::chrono::seconds(1));
   return 1;
 }
-int f2(int i)
-{
+int f2(int i) {
   // std::cout << BOOST_CONTEXTOF << std::endl;
   boost::this_thread::sleep_for(boost::chrono::seconds(2));
   return i + 1;
 }
 
-void submit_some(boost::serial_executor_cont& tp)
-{
+void submit_some(boost::serial_executor_cont& tp) {
   std::cout << BOOST_CONTEXTOF << std::endl;
   for (int i = 0; i < 3; ++i) {
     std::cout << BOOST_CONTEXTOF << std::endl;
@@ -64,23 +59,15 @@ void submit_some(boost::serial_executor_cont& tp)
     tp.submit(&p1);
   }
   std::cout << BOOST_CONTEXTOF << std::endl;
-
 }
 
+void at_th_entry(boost::basic_thread_pool&) {}
 
-void at_th_entry(boost::basic_thread_pool& )
-{
-
-}
-
-int test_executor_adaptor()
-{
+int test_executor_adaptor() {
   // std::cout << BOOST_CONTEXTOF << std::endl;
   {
-    try
-    {
-
-#if ! defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    try {
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
       // std::cout << BOOST_CONTEXTOF << std::endl;
       {
         boost::basic_thread_pool ea1(4);
@@ -90,14 +77,10 @@ int test_executor_adaptor()
       }
 #endif
       // std::cout << BOOST_CONTEXTOF << std::endl;
-    }
-    catch (std::exception& ex)
-    {
+    } catch (std::exception& ex) {
       std::cout << "ERROR= " << ex.what() << "" << std::endl;
       return 1;
-    }
-    catch (...)
-    {
+    } catch (...) {
       std::cout << " ERROR= exception thrown" << std::endl;
       return 2;
     }
@@ -106,8 +89,4 @@ int test_executor_adaptor()
   return 0;
 }
 
-
-int main()
-{
-  return test_executor_adaptor();
-}
+int main() { return test_executor_adaptor(); }

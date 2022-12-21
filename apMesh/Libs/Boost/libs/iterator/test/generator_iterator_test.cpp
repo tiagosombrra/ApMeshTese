@@ -6,58 +6,47 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 
-#include <boost/generator_iterator.hpp>
-#include <boost/core/lightweight_test.hpp>
 #include <algorithm>
+#include <boost/core/lightweight_test.hpp>
+#include <boost/generator_iterator.hpp>
 
-class X
-{
-private:
+class X {
+ private:
+  int v;
 
-    int v;
+ public:
+  typedef int result_type;
 
-public:
+  X() : v(0) {}
 
-    typedef int result_type;
-
-    X(): v( 0 )
-    {
-    }
-
-    int operator()()
-    {
-        return ++v;
-    }
+  int operator()() { return ++v; }
 };
 
-template<class InputIterator, class Size, class OutputIterator> OutputIterator copy_n( InputIterator first, Size n, OutputIterator result )
-{
-    while( n-- > 0 )
-    {
-        *result++ = *first++;
-    }
+template <class InputIterator, class Size, class OutputIterator>
+OutputIterator copy_n(InputIterator first, Size n, OutputIterator result) {
+  while (n-- > 0) {
+    *result++ = *first++;
+  }
 
-    return result;
+  return result;
 }
 
-void copy_test()
-{
-    X x;
-    boost::generator_iterator<X> in( &x );
+void copy_test() {
+  X x;
+  boost::generator_iterator<X> in(&x);
 
-    int const N = 4;
-    int v[ N ] = { 0 };
+  int const N = 4;
+  int v[N] = {0};
 
-    ::copy_n( in, 4, v );
+  ::copy_n(in, 4, v);
 
-    BOOST_TEST_EQ( v[0], 1 );
-    BOOST_TEST_EQ( v[1], 2 );
-    BOOST_TEST_EQ( v[2], 3 );
-    BOOST_TEST_EQ( v[3], 4 );
+  BOOST_TEST_EQ(v[0], 1);
+  BOOST_TEST_EQ(v[1], 2);
+  BOOST_TEST_EQ(v[2], 3);
+  BOOST_TEST_EQ(v[3], 4);
 }
 
-int main()
-{
-    copy_test();
-    return boost::report_errors();
+int main() {
+  copy_test();
+  return boost::report_errors();
 }

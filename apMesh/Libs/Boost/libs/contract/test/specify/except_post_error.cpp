@@ -6,18 +6,17 @@
 
 // Test post after except error (same if not free func).
 
-#include <boost/contract/function.hpp>
 #include <boost/contract/check.hpp>
+#include <boost/contract/function.hpp>
 
 void f() {
-    boost::contract::check c = boost::contract::function()
-        .except([] {})
-        .postcondition([] {}) // Error (post after except).
-    ;
+  boost::contract::check c =
+      boost::contract::function().except([] {}).postcondition(
+          [] {})  // Error (post after except).
+      ;
 }
 
 int main() {
-    f();
-    return 0;
+  f();
+  return 0;
 }
-

@@ -11,15 +11,11 @@
 #include <sstream>
 #include <vector>
 
-void f()
-{
+void f() {
   std::stringstream iss;
   boost::archive::binary_iarchive ar(iss);
   std::vector<int> out;
   ar >> out;
 }
 
-int
-main(int /*argc*/, char * /*argv*/[]){
-  return 0;
-}
+int main(int /*argc*/, char* /*argv*/[]) { return 0; }

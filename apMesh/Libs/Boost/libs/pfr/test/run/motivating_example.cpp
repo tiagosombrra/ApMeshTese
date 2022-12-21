@@ -5,18 +5,19 @@
 
 // requires: C++14
 #include <iostream>
+
 #include "boost/pfr.hpp"
 
-struct my_struct { // no ostream operator defined!
-    int i;
-    char c;
-    double d;
+struct my_struct {  // no ostream operator defined!
+  int i;
+  char c;
+  double d;
 };
 
 int main() {
-    my_struct s{100, 'H', 3.141593};
-    std::cout << "my_struct has "
-        << boost::pfr::tuple_size<my_struct>::value // Outputs: 3
-        << " fields: "
-        << boost::pfr::io(s); // Outputs: {100, 'H', 3.141593}
+  my_struct s{100, 'H', 3.141593};
+  std::cout << "my_struct has "
+            << boost::pfr::tuple_size<my_struct>::value  // Outputs: 3
+            << " fields: "
+            << boost::pfr::io(s);  // Outputs: {100, 'H', 3.141593}
 }

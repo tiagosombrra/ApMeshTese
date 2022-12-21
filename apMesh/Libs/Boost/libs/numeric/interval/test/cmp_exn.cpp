@@ -8,35 +8,33 @@
  * copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#include <boost/numeric/interval/interval.hpp>
 #include <boost/numeric/interval/checking.hpp>
 #include <boost/numeric/interval/compare.hpp>
-#include <boost/numeric/interval/policies.hpp>
 #include <boost/numeric/interval/compare/tribool.hpp>
+#include <boost/numeric/interval/interval.hpp>
+#include <boost/numeric/interval/policies.hpp>
 #include <boost/test/test_tools.hpp>
 
-struct my_checking
-{
-  static int nan()          { return -1; }
+struct my_checking {
+  static int nan() { return -1; }
   static bool is_nan(int x) { return x < 0; }
-  static int empty_lower()  { return -1; }
-  static int empty_upper()  { return -1; }
+  static int empty_lower() { return -1; }
+  static int empty_upper() { return -1; }
   static bool is_empty(int l, int u) { return l == -1 && u == -1; }
 };
 
 struct empty_class {};
 
-typedef boost::numeric::interval_lib::policies< empty_class, my_checking >
-  my_policies;
+typedef boost::numeric::interval_lib::policies<empty_class, my_checking>
+    my_policies;
 
 typedef boost::numeric::interval<int, my_policies> I;
 
 #define BOOST_C_EXN(e) \
   BOOST_CHECK_THROW(e, boost::numeric::interval_lib::comparison_error)
 
-static void test_cer()
-{
-  I const a(I::empty()), b(1,2);
+static void test_cer() {
+  I const a(I::empty()), b(1, 2);
   int const c = 0, d = my_checking::nan();
   using namespace boost::numeric::interval_lib::compare::certain;
 
@@ -67,9 +65,8 @@ static void test_cer()
   BOOST_C_EXN(b != d);
 }
 
-static void test_def()
-{
-  I const a(I::empty()), b(1,2);
+static void test_def() {
+  I const a(I::empty()), b(1, 2);
   int const c = 0, d = my_checking::nan();
 
   BOOST_C_EXN(a < b);
@@ -99,9 +96,8 @@ static void test_def()
   BOOST_C_EXN(b != d);
 }
 
-static void test_lex()
-{
-  I const a(I::empty()), b(1,2);
+static void test_lex() {
+  I const a(I::empty()), b(1, 2);
   int const c = 0, d = my_checking::nan();
   using namespace boost::numeric::interval_lib::compare::lexicographic;
 
@@ -132,9 +128,8 @@ static void test_lex()
   BOOST_C_EXN(b != d);
 }
 
-static void test_pos()
-{
-  I const a(I::empty()), b(1,2);
+static void test_pos() {
+  I const a(I::empty()), b(1, 2);
   int const c = 0, d = my_checking::nan();
   using namespace boost::numeric::interval_lib::compare::possible;
 
@@ -165,9 +160,8 @@ static void test_pos()
   BOOST_C_EXN(b != d);
 }
 
-static void test_set()
-{
-  I const a(I::empty()), b(1,2);
+static void test_set() {
+  I const a(I::empty()), b(1, 2);
   int const c = 0;
   using namespace boost::numeric::interval_lib::compare::set;
 
@@ -185,9 +179,8 @@ static void test_set()
   BOOST_C_EXN(b != c);
 }
 
-static void test_tri()
-{
-  I const a(I::empty()), b(1,2);
+static void test_tri() {
+  I const a(I::empty()), b(1, 2);
   int const c = 0, d = my_checking::nan();
   using namespace boost::numeric::interval_lib::compare::tribool;
 

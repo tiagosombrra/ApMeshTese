@@ -8,17 +8,16 @@
 
 //[introduction_comments
 void inc(int& x)
-    // Precondition:    x < std::numeric_limit<int>::max()
-    // Postcondition:   x == oldof(x) + 1
+// Precondition:    x < std::numeric_limit<int>::max()
+// Postcondition:   x == oldof(x) + 1
 {
-    ++x; // Function body.
+  ++x;  // Function body.
 }
 //]
 
 int main() {
-    int x = 10;
-    inc(x);
-    assert(x == 11);
-    return 0;
+  int x = 10;
+  inc(x);
+  assert(x == 11);
+  return 0;
 }
-

@@ -9,10 +9,9 @@
 #include <boost/thread/thread_only.hpp>
 #include <boost/thread/xtime.hpp>
 
-int main()
-{
-    boost::xtime xt;
-    boost::xtime_get(&xt, boost::TIME_UTC_);
-    xt.sec += 1;
-    boost::thread::sleep(xt); // Sleep for 1 second
+int main() {
+  boost::xtime xt;
+  boost::xtime_get(&xt, boost::TIME_UTC_);
+  xt.sec += 1;
+  boost::thread::sleep(xt);  // Sleep for 1 second
 }

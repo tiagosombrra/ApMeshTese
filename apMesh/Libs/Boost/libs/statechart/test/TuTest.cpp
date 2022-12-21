@@ -4,32 +4,20 @@
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
 
-
-
 #include "TuTest.hpp"
 
-#include <boost/statechart/simple_state.hpp>
 #include <boost/statechart/in_state_reaction.hpp>
-
+#include <boost/statechart/simple_state.hpp>
 #include <stdexcept>
 
+struct Initial : sc::simple_state<Initial, TuTest> {
+  void Whatever(const EvX&) {}
 
-
-struct Initial : sc::simple_state< Initial, TuTest >
-{
-  void Whatever( const EvX & ) {}
-
-  typedef sc::in_state_reaction< EvX, Initial, &Initial::Whatever > reactions;
+  typedef sc::in_state_reaction<EvX, Initial, &Initial::Whatever> reactions;
 };
 
+void TuTest::initiate() { sc::state_machine<TuTest, Initial>::initiate(); }
 
-
-void TuTest::initiate()
-{
-  sc::state_machine< TuTest, Initial >::initiate();
-}
-
-void TuTest::unconsumed_event( const sc::event_base & )
-{
-  throw std::runtime_error( "Event was not consumed!" );
+void TuTest::unconsumed_event(const sc::event_base&) {
+  throw std::runtime_error("Event was not consumed!");
 }

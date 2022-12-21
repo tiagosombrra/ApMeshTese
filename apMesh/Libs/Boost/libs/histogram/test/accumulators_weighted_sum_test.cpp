@@ -10,6 +10,7 @@
 #include <boost/histogram/accumulators/weighted_sum.hpp>
 #include <boost/histogram/weight.hpp>
 #include <sstream>
+
 #include "throw_exception.hpp"
 #include "utility_str.hpp"
 

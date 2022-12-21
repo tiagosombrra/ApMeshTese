@@ -17,7 +17,6 @@
 
 // packaged_task& operator=(packaged_task&) = delete;
 
-
 #define BOOST_THREAD_VERSION 4
 #if BOOST_THREAD_VERSION == 4
 #define BOOST_THREAD_DETAIL_SIGNATURE double()
@@ -25,31 +24,27 @@
 #define BOOST_THREAD_DETAIL_SIGNATURE double
 #endif
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-class A
-{
-    long data_;
+class A {
+  long data_;
 
-public:
-    explicit A(long i) : data_(i) {}
+ public:
+  explicit A(long i) : data_(i) {}
 
-    long operator()() const {return data_;}
-    long operator()(long i, long j) const {return data_ + i + j;}
+  long operator()() const { return data_; }
+  long operator()(long i, long j) const { return data_ + i + j; }
 };
 
-
-int main()
-{
+int main() {
   {
-      boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p0(A(5));
-      boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p;
-      p = p0;
+    boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p0(A(5));
+    boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE> p;
+    p = p0;
   }
 
   return boost::report_errors();
 }
 
 #include "../../../remove_error_code_unused_warning.hpp"
-

@@ -6,10 +6,10 @@
 =============================================================================*/
 #ifdef BOOST_BUILD_PCH_ENABLED
 
-#include <boost/spirit/include/classic.hpp>
 #include <boost/core/lightweight_test.hpp>
-#include <vector>
-#include <string>
+#include <boost/spirit/include/classic.hpp>
 #include <iostream>
+#include <string>
+#include <vector>
 
 #endif

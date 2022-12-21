@@ -19,11 +19,11 @@
 
 #define BOOST_THREAD_VERSION 4
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/lock_guard.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
 #include "../../../../timming.hpp"
 
 #ifdef BOOST_THREAD_USES_CHRONO
@@ -38,24 +38,28 @@ time_point t1;
 
 boost::mutex m;
 
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && ! defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && ! defined BOOST_THREAD_NO_MAKE_LOCK_GUARD && defined BOOST_THREAD_USES_CHRONO
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && \
+    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
+    !defined BOOST_THREAD_NO_MAKE_LOCK_GUARD &&   \
+    defined BOOST_THREAD_USES_CHRONO
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
   t0 = Clock::now();
   {
-    const auto&& lg = boost::make_lock_guard(m); (void)lg;
+    const auto&& lg = boost::make_lock_guard(m);
+    (void)lg;
     t1 = Clock::now();
   }
 }
 #endif
 
-int main()
-{
-
-#if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && ! defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && ! defined BOOST_THREAD_NO_MAKE_LOCK_GUARD && defined BOOST_THREAD_USES_CHRONO
+int main() {
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && \
+    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
+    !defined BOOST_THREAD_NO_MAKE_LOCK_GUARD &&   \
+    defined BOOST_THREAD_USES_CHRONO
   {
     m.lock();
     boost::thread t(f);

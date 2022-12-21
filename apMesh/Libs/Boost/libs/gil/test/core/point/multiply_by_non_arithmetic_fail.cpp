@@ -6,18 +6,16 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 #include <boost/gil/point.hpp>
-
 #include <type_traits>
 
 namespace gil = boost::gil;
 
 struct FakeMatrix {};
 
-int main()
-{
-    gil::point<int> p1{2, 4};
+int main() {
+  gil::point<int> p1{2, 4};
 
-    FakeMatrix m1;
-    auto r1 = p1 * m1;
-    auto r2 = m1 * p1;
+  FakeMatrix m1;
+  auto r1 = p1 * m1;
+  auto r2 = m1 * p1;
 }

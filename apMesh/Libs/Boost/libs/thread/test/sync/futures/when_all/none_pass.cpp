@@ -18,18 +18,16 @@
 
 #include <boost/config.hpp>
 
-#if ! defined  BOOST_NO_CXX11_DECLTYPE
+#if !defined BOOST_NO_CXX11_DECLTYPE
 #define BOOST_RESULT_OF_USE_DECLTYPE
 #endif
 
-
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-int main()
-{
+int main() {
 #if defined BOOST_THREAD_PROVIDES_FUTURE_WHEN_ALL_WHEN_ANY
 
   {
@@ -41,4 +39,3 @@ int main()
 
   return boost::report_errors();
 }
-

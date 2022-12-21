@@ -26,8 +26,7 @@ void CHECK_RECT_EQUAL(const rectangle_type& r1, const rectangle_type& r2) {
   CHECK_INTERVAL_EQUAL(vertical(r1), vertical(r2));
 }
 
-void rectangle_concept_test1()
-{
+void rectangle_concept_test1() {
   typedef rectangle_data<int> rectangle_type;
 
   rectangle_type rectangle1 = construct<rectangle_type>(-1, -1, 1, 1);
@@ -38,8 +37,7 @@ void rectangle_concept_test1()
   CHECK_RECT_EQUAL(construct<rectangle_type>(-1, -1, 1, 1), rectangle1);
 }
 
-int main()
-{
-    rectangle_concept_test1();
-    return boost::report_errors();
+int main() {
+  rectangle_concept_test1();
+  return boost::report_errors();
 }

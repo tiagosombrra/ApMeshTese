@@ -7,14 +7,14 @@
  */
 
 #include "test_algorithm.hpp"
+
 #include "test_algorithm1.hpp"
 #include "test_algorithm2.hpp"
 #include "test_algorithm3.hpp"
 
 /* test split in chunks to avoid problems with compilation object sizes */
 
-void test_algorithm()
-{
+void test_algorithm() {
   test_algorithm1();
   test_algorithm2();
   test_algorithm3();

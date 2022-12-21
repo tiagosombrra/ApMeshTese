@@ -4,10 +4,10 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <cstring>
 #include <windows.h>
+
+#include <cstring>
+
 #include "dbgeng.h"
 
-int main() {
-    ::CoInitializeEx(0, COINIT_MULTITHREADED);
-}
+int main() { ::CoInitializeEx(0, COINIT_MULTITHREADED); }

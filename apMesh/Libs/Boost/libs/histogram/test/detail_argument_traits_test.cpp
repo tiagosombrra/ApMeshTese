@@ -49,7 +49,8 @@ int main() {
   using E3 = dtl::argument_traits_holder<2, 1, 0, -1, std::tuple<>>;
   BOOST_TEST_TRAIT_SAME(T3, E3);
 
-  using T4 = dtl::argument_traits<decltype(weight(0)), int, int, decltype(sample(0))>;
+  using T4 =
+      dtl::argument_traits<decltype(weight(0)), int, int, decltype(sample(0))>;
   using E4 = dtl::argument_traits_holder<2, 1, 0, 3, std::tuple<int>>;
   BOOST_TEST_TRAIT_SAME(T4, E4);
 

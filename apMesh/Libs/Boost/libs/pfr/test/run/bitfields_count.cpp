@@ -6,16 +6,12 @@
 #include <boost/pfr/tuple_size.hpp>
 
 struct bf {
-    unsigned int i1: 1;
-    unsigned int i2: 1;
-    unsigned int i3: 1;
-    unsigned int i4: 1;
-    unsigned int i5: 1;
-    unsigned int i6: 1;
+  unsigned int i1 : 1;
+  unsigned int i2 : 1;
+  unsigned int i3 : 1;
+  unsigned int i4 : 1;
+  unsigned int i5 : 1;
+  unsigned int i6 : 1;
 };
 
-int main() {
-    static_assert(boost::pfr::tuple_size<bf>::value == 6, "");
-}
-
-
+int main() { static_assert(boost::pfr::tuple_size<bf>::value == 6, ""); }

@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/extreme_value.hpp>
 #include <boost/random/extreme_value_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/extreme_value.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::extreme_value_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME extreme_value

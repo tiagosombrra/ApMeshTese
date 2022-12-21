@@ -19,7 +19,8 @@ struct dummy_storage : std::array<ValueType, 10> {
 
   static constexpr bool has_threading_support = false;
   static constexpr bool scaleable =
-      Scaleable && boost::histogram::detail::has_operator_rmul<ValueType, double>::value;
+      Scaleable &&
+      boost::histogram::detail::has_operator_rmul<ValueType, double>::value;
 
   std::size_t size_ = 0;
 

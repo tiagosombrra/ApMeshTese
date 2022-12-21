@@ -12,13 +12,13 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/serial_port.hpp>
 
 #include "archetypes/async_result.hpp"
-#include <boost/asio/io_context.hpp>
 #include "unit_test.hpp"
 
 //------------------------------------------------------------------------------
@@ -30,35 +30,33 @@
 
 namespace serial_port_compile {
 
-struct write_some_handler
-{
+struct write_some_handler {
   write_some_handler() {}
   void operator()(const boost::system::error_code&, std::size_t) {}
 #if defined(BOOST_ASIO_HAS_MOVE)
   write_some_handler(write_some_handler&&) {}
-private:
+
+ private:
   write_some_handler(const write_some_handler&);
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 };
 
-struct read_some_handler
-{
+struct read_some_handler {
   read_some_handler() {}
   void operator()(const boost::system::error_code&, std::size_t) {}
 #if defined(BOOST_ASIO_HAS_MOVE)
   read_some_handler(read_some_handler&&) {}
-private:
+
+ private:
   read_some_handler(const read_some_handler&);
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 };
 
-void test()
-{
+void test() {
 #if defined(BOOST_ASIO_HAS_SERIAL_PORT)
   using namespace boost::asio;
 
-  try
-  {
+  try {
     io_context ioc;
     const io_context::executor_type ioc_ex = ioc.get_executor();
     char mutable_char_buffer[128] = "";
@@ -85,14 +83,14 @@ void test()
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     serial_port port7(std::move(port6));
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_serial_port operators.
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     port1 = serial_port(ioc);
     port1 = std::move(port2);
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
@@ -155,19 +153,14 @@ void test()
     port1.async_read_some(buffer(mutable_char_buffer), read_some_handler());
     int i3 = port1.async_read_some(buffer(mutable_char_buffer), lazy);
     (void)i3;
+  } catch (std::exception&) {
   }
-  catch (std::exception&)
-  {
-  }
-#endif // defined(BOOST_ASIO_HAS_SERIAL_PORT)
+#endif  // defined(BOOST_ASIO_HAS_SERIAL_PORT)
 }
 
-} // namespace serial_port_compile
+}  // namespace serial_port_compile
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "serial_port",
-  BOOST_ASIO_TEST_CASE(serial_port_compile::test)
-)
+BOOST_ASIO_TEST_SUITE("serial_port",
+                      BOOST_ASIO_TEST_CASE(serial_port_compile::test))

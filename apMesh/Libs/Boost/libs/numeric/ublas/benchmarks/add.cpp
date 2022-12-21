@@ -6,10 +6,11 @@
 // Boost Software License, Version 1.0.
 // (Consult LICENSE or http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/program_options.hpp>
 #include "add.hpp"
+
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/program_options.hpp>
 #include <complex>
 #include <string>
 
@@ -18,34 +19,32 @@ namespace ublas = boost::numeric::ublas;
 namespace bm = boost::numeric::ublas::benchmark;
 
 template <typename T>
-void benchmark(std::string const &type)
-{
+void benchmark(std::string const &type) {
   using vector = ublas::vector<T>;
-  bm::add<vector(vector, vector)> a("add(vector<" + type + ">, vector<" + type + ">)");
-  a.run(std::vector<long>({1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096}));
+  bm::add<vector(vector, vector)> a("add(vector<" + type + ">, vector<" + type +
+                                    ">)");
+  a.run(std::vector<long>(
+      {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096}));
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   po::variables_map vm;
-  try
-  {
-    po::options_description desc("Vector-vector addition\n"
-                                 "Allowed options");
+  try {
+    po::options_description desc(
+        "Vector-vector addition\n"
+        "Allowed options");
     desc.add_options()("help,h", "produce help message");
-    desc.add_options()("type,t", po::value<std::string>(), "select value-type (float, double, fcomplex, dcomplex)");
+    desc.add_options()("type,t", po::value<std::string>(),
+                       "select value-type (float, double, fcomplex, dcomplex)");
 
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
 
-    if (vm.count("help"))
-    {
+    if (vm.count("help")) {
       std::cout << desc << std::endl;
       return 0;
     }
-  }
-  catch(std::exception &e)
-  {
+  } catch (std::exception &e) {
     std::cerr << "error: " << e.what() << std::endl;
     return 1;
   }
@@ -59,5 +58,6 @@ int main(int argc, char **argv)
   else if (type == "dcomplex")
     benchmark<std::complex<double>>("std::complex<double>");
   else
-    std::cerr << "unsupported value-type \"" << vm["type"].as<std::string>() << '\"' << std::endl;
+    std::cerr << "unsupported value-type \"" << vm["type"].as<std::string>()
+              << '\"' << std::endl;
 }

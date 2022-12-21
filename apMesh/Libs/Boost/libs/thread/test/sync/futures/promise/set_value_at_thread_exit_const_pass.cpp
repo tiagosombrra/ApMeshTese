@@ -20,10 +20,11 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
 void func(boost::promise<int> p)
 #else
 boost::promise<int> p;
@@ -34,10 +35,10 @@ void func()
   p.set_value_at_thread_exit(i);
 }
 
-int main()
-{
+int main() {
   {
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
     boost::promise<int> p;
     boost::future<int> f = p.get_future();
     boost::thread(func, boost::move(p)).detach();
@@ -45,17 +46,15 @@ int main()
     boost::future<int> f = p.get_future();
     boost::thread(func).detach();
 #endif
-    try
-    {
+    try {
       BOOST_TEST(f.get() == 5);
-    }
-    catch (...)
-    {
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
   {
-#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && \
+    defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
 #else
     boost::promise<int> p2;
     boost::future<int> f = p2.get_future();
@@ -66,4 +65,3 @@ int main()
   }
   return boost::report_errors();
 }
-

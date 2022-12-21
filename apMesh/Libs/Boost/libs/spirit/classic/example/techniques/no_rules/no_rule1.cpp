@@ -11,41 +11,31 @@
 // *** chapter "Techniques" of the Spirit documentation
 // *** for information regarding this snippet
 
-#include <iostream>
-#include <boost/spirit/include/classic_core.hpp>
 #include <boost/assert.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <iostream>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-    struct skip_grammar : grammar<skip_grammar>
-    {
-        template <typename ScannerT>
-        struct definition
-        {
-            definition(skip_grammar const& /*self*/)
-            {
-                skip
-                    =   space_p
-                    |   "//" >> *(anychar_p - '\n') >> '\n'
-                    |   "/*" >> *(anychar_p - "*/") >> "*/"
-                    ;
-            }
+struct skip_grammar : grammar<skip_grammar> {
+  template <typename ScannerT>
+  struct definition {
+    definition(skip_grammar const& /*self*/) {
+      skip = space_p | "//" >> *(anychar_p - '\n') >> '\n' |
+             "/*" >> *(anychar_p - "*/") >> "*/";
+    }
 
-            rule<ScannerT> skip;
+    rule<ScannerT> skip;
 
-            rule<ScannerT> const&
-            start() const { return skip; }
-        };
-    };
+    rule<ScannerT> const& start() const { return skip; }
+  };
+};
 
-int
-main()
-{
-    skip_grammar g;
-    bool success = parse(
-        "/*this is a comment*/\n//this is a c++ comment\n\n",
-        *g).full;
-    BOOST_ASSERT(success);
-    std::cout << "SUCCESS!!!\n";
-    return 0;
+int main() {
+  skip_grammar g;
+  bool success =
+      parse("/*this is a comment*/\n//this is a c++ comment\n\n", *g).full;
+  BOOST_ASSERT(success);
+  std::cout << "SUCCESS!!!\n";
+  return 0;
 }

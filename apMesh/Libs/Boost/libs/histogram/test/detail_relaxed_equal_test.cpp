@@ -7,6 +7,7 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/histogram/detail/relaxed_equal.hpp>
+
 #include "std_ostream.hpp"
 
 using namespace boost::histogram::detail;
@@ -16,7 +17,7 @@ int main() {
   } a, b;
 
   struct Stateful {
-    int state; // has state
+    int state;  // has state
   } c, d;
 
   struct HasEqual {

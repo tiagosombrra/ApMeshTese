@@ -11,13 +11,13 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
-#include <boost/asio/ssl/stream.hpp>
-
 #include <boost/asio.hpp>
 #include <boost/asio/ssl.hpp>
+#include <boost/asio/ssl/stream.hpp>
+
 #include "../archetypes/async_result.hpp"
 #include "../unit_test.hpp"
 
@@ -30,38 +30,24 @@
 
 namespace ssl_stream_compile {
 
-bool verify_callback(bool, boost::asio::ssl::verify_context&)
-{
-  return false;
+bool verify_callback(bool, boost::asio::ssl::verify_context&) { return false; }
+
+void handshake_handler(const boost::system::error_code&) {}
+
+void buffered_handshake_handler(const boost::system::error_code&, std::size_t) {
 }
 
-void handshake_handler(const boost::system::error_code&)
-{
-}
+void shutdown_handler(const boost::system::error_code&) {}
 
-void buffered_handshake_handler(const boost::system::error_code&, std::size_t)
-{
-}
+void write_some_handler(const boost::system::error_code&, std::size_t) {}
 
-void shutdown_handler(const boost::system::error_code&)
-{
-}
+void read_some_handler(const boost::system::error_code&, std::size_t) {}
 
-void write_some_handler(const boost::system::error_code&, std::size_t)
-{
-}
-
-void read_some_handler(const boost::system::error_code&, std::size_t)
-{
-}
-
-void test()
-{
+void test() {
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  try
-  {
+  try {
     io_context ioc;
     char mutable_char_buffer[128] = "";
     const char const_char_buffer[128] = "";
@@ -76,10 +62,10 @@ void test()
     ssl::stream<ip::tcp::socket&> stream2(socket1, context);
 
 #if defined(BOOST_ASIO_HAS_MOVE)
-    ssl::stream<ip::tcp::socket> stream3
-      = ssl::stream<ip::tcp::socket>(ioc, context);
+    ssl::stream<ip::tcp::socket> stream3 =
+        ssl::stream<ip::tcp::socket>(ioc, context);
     ssl::stream<ip::tcp::socket> stream4(std::move(stream3));
-#endif // defined(BOOST_ASIO_HAS_MOVE)
+#endif  // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
@@ -91,13 +77,13 @@ void test()
     SSL* ssl1 = stream1.native_handle();
     (void)ssl1;
 
-    ssl::stream<ip::tcp::socket>::lowest_layer_type& lowest_layer
-      = stream1.lowest_layer();
+    ssl::stream<ip::tcp::socket>::lowest_layer_type& lowest_layer =
+        stream1.lowest_layer();
     (void)lowest_layer;
 
     const ssl::stream<ip::tcp::socket>& stream5 = stream1;
-    const ssl::stream<ip::tcp::socket>::lowest_layer_type& lowest_layer2
-      = stream5.lowest_layer();
+    const ssl::stream<ip::tcp::socket>::lowest_layer_type& lowest_layer2 =
+        stream5.lowest_layer();
     (void)lowest_layer2;
 
     stream1.set_verify_mode(ssl::verify_none);
@@ -118,14 +104,12 @@ void test()
     stream1.handshake(ssl::stream_base::server, buffer(mutable_char_buffer));
     stream1.handshake(ssl::stream_base::client, buffer(const_char_buffer));
     stream1.handshake(ssl::stream_base::server, buffer(const_char_buffer));
-    stream1.handshake(ssl::stream_base::client,
-        buffer(mutable_char_buffer), ec);
-    stream1.handshake(ssl::stream_base::server,
-        buffer(mutable_char_buffer), ec);
-    stream1.handshake(ssl::stream_base::client,
-        buffer(const_char_buffer), ec);
-    stream1.handshake(ssl::stream_base::server,
-        buffer(const_char_buffer), ec);
+    stream1.handshake(ssl::stream_base::client, buffer(mutable_char_buffer),
+                      ec);
+    stream1.handshake(ssl::stream_base::server, buffer(mutable_char_buffer),
+                      ec);
+    stream1.handshake(ssl::stream_base::client, buffer(const_char_buffer), ec);
+    stream1.handshake(ssl::stream_base::server, buffer(const_char_buffer), ec);
 
     stream1.async_handshake(ssl::stream_base::client, handshake_handler);
     stream1.async_handshake(ssl::stream_base::server, handshake_handler);
@@ -135,24 +119,26 @@ void test()
     (void)i2;
 
     stream1.async_handshake(ssl::stream_base::client,
-        buffer(mutable_char_buffer), buffered_handshake_handler);
+                            buffer(mutable_char_buffer),
+                            buffered_handshake_handler);
     stream1.async_handshake(ssl::stream_base::server,
-        buffer(mutable_char_buffer), buffered_handshake_handler);
-    stream1.async_handshake(ssl::stream_base::client,
-        buffer(const_char_buffer), buffered_handshake_handler);
-    stream1.async_handshake(ssl::stream_base::server,
-        buffer(const_char_buffer), buffered_handshake_handler);
+                            buffer(mutable_char_buffer),
+                            buffered_handshake_handler);
+    stream1.async_handshake(ssl::stream_base::client, buffer(const_char_buffer),
+                            buffered_handshake_handler);
+    stream1.async_handshake(ssl::stream_base::server, buffer(const_char_buffer),
+                            buffered_handshake_handler);
     int i3 = stream1.async_handshake(ssl::stream_base::client,
-        buffer(mutable_char_buffer), lazy);
+                                     buffer(mutable_char_buffer), lazy);
     (void)i3;
     int i4 = stream1.async_handshake(ssl::stream_base::server,
-        buffer(mutable_char_buffer), lazy);
+                                     buffer(mutable_char_buffer), lazy);
     (void)i4;
     int i5 = stream1.async_handshake(ssl::stream_base::client,
-        buffer(const_char_buffer), lazy);
+                                     buffer(const_char_buffer), lazy);
     (void)i5;
     int i6 = stream1.async_handshake(ssl::stream_base::server,
-        buffer(const_char_buffer), lazy);
+                                     buffer(const_char_buffer), lazy);
     (void)i6;
 
     stream1.shutdown();
@@ -180,18 +166,13 @@ void test()
     stream1.async_read_some(buffer(mutable_char_buffer), read_some_handler);
     int i10 = stream1.async_read_some(buffer(mutable_char_buffer), lazy);
     (void)i10;
-  }
-  catch (std::exception&)
-  {
+  } catch (std::exception&) {
   }
 }
 
-} // namespace ssl_stream_compile
+}  // namespace ssl_stream_compile
 
 //------------------------------------------------------------------------------
 
-BOOST_ASIO_TEST_SUITE
-(
-  "ssl/stream",
-  BOOST_ASIO_TEST_CASE(ssl_stream_compile::test)
-)
+BOOST_ASIO_TEST_SUITE("ssl/stream",
+                      BOOST_ASIO_TEST_CASE(ssl_stream_compile::test))

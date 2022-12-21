@@ -20,32 +20,24 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
+#include <boost/config.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/config.hpp>
+#include <boost/thread/future.hpp>
 
 #ifdef BOOST_MSVC
-# pragma warning(disable: 4702) // unreachable code
+#pragma warning(disable : 4702)  // unreachable code
 #endif
 
-struct A
-{
-  A()
-  {
-  }
-  A(const A&)
-  {
-    throw 10;
-  }
+struct A {
+  A() {}
+  A(const A&) { throw 10; }
 #if !defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS)
-  A& operator= (const A&) = default;
+  A& operator=(const A&) = default;
 #endif
 };
 
-int main()
-{
-
+int main() {
   {
     typedef int T;
     T i = 3;
@@ -55,17 +47,14 @@ int main()
     ++i;
     BOOST_TEST(f.get() == 3);
     --i;
-    try
-    {
+    try {
       p.set_value(i);
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
-    }
-    catch (...)
-    {
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(
+                     boost::future_errc::promise_already_satisfied));
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
@@ -79,17 +68,14 @@ int main()
     ++i;
     BOOST_TEST(f.get() == 3);
     --i;
-    try
-    {
+    try {
       p.set_value(i);
       BOOST_TEST(false);
-    }
-    catch (const boost::future_error& e)
-    {
-      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
-    }
-    catch (...)
-    {
+    } catch (const boost::future_error& e) {
+      BOOST_TEST(e.code() ==
+                 boost::system::make_error_code(
+                     boost::future_errc::promise_already_satisfied));
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
@@ -98,21 +84,15 @@ int main()
     T i;
     boost::promise<T> p;
     boost::future<T> f = p.get_future();
-    try
-    {
+    try {
       p.set_value(i);
       BOOST_TEST(false);
-    }
-    catch (int j)
-    {
+    } catch (int j) {
       BOOST_TEST(j == 10);
-    }
-    catch (...)
-    {
+    } catch (...) {
       BOOST_TEST(false);
     }
   }
 
   return boost::report_errors();
 }
-

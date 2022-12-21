@@ -11,16 +11,15 @@
 // Disable autolinking for unit tests.
 #if !defined(BOOST_ALL_NO_LIB)
 #define BOOST_ALL_NO_LIB 1
-#endif // !defined(BOOST_ALL_NO_LIB)
+#endif  // !defined(BOOST_ALL_NO_LIB)
 
 // Test that header file is self-contained.
 #include <boost/asio/error.hpp>
-
 #include <sstream>
+
 #include "unit_test.hpp"
 
-void test_error_code(const boost::system::error_code& code)
-{
+void test_error_code(const boost::system::error_code& code) {
   boost::system::error_code error(code);
   BOOST_ASIO_CHECK(code == error);
 
@@ -41,8 +40,7 @@ void test_error_code(const boost::system::error_code& code)
   BOOST_ASIO_CHECK(!os.str().empty());
 }
 
-void error_test()
-{
+void error_test() {
   test_error_code(boost::asio::error::access_denied);
   test_error_code(boost::asio::error::address_family_not_supported);
   test_error_code(boost::asio::error::address_in_use);
@@ -82,8 +80,4 @@ void error_test()
   test_error_code(boost::asio::error::would_block);
 }
 
-BOOST_ASIO_TEST_SUITE
-(
-  "error",
-  BOOST_ASIO_TEST_CASE(error_test)
-)
+BOOST_ASIO_TEST_SUITE("error", BOOST_ASIO_TEST_CASE(error_test))

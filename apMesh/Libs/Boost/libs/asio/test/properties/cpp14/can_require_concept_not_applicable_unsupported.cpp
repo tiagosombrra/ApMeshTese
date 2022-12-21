@@ -12,17 +12,13 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
-};
+struct prop {};
 
 template <int>
-struct object
-{
-};
+struct object {};
 
-int main()
-{
+int main() {
   static_assert(!boost::asio::can_require_concept_v<object<1>, prop<2>>, "");
-  static_assert(!boost::asio::can_require_concept_v<const object<1>, prop<2>>, "");
+  static_assert(!boost::asio::can_require_concept_v<const object<1>, prop<2>>,
+                "");
 }

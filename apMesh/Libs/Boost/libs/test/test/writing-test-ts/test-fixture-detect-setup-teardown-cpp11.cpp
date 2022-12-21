@@ -9,60 +9,57 @@
 // the ability of the framework to detect new fixture signatures.
 
 #define BOOST_TEST_MODULE test_fixture_detect_setup_teardown_cpp11
-#include <boost/test/unit_test.hpp>
-#include <iostream>
-#include <boost/test/unit_test_suite.hpp>
 #include <boost/test/framework.hpp>
+#include <boost/test/unit_test.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <iostream>
 
 using namespace boost::unit_test;
 
 class fixture_without {
-public:
-    fixture_without() {}
-    ~fixture_without() {}
+ public:
+  fixture_without() {}
+  ~fixture_without() {}
 };
 
 class fixture_with {
-public:
-    fixture_with() {}
-    void setup() {}
-    void teardown() {}
-    ~fixture_with() {}
+ public:
+  fixture_with() {}
+  void setup() {}
+  void teardown() {}
+  ~fixture_with() {}
 };
 
 class fixture_with_child : public fixture_with {
-public:
-    fixture_with_child() {}
-    ~fixture_with_child() {}
+ public:
+  fixture_with_child() {}
+  ~fixture_with_child() {}
 };
 
-BOOST_AUTO_TEST_CASE( fixture_setup_teardown_detect )
-{
-    BOOST_CHECK(!impl_fixture::has_setup<fixture_without>::value);
-    BOOST_CHECK(!impl_fixture::has_setup<fixture_without>::value);
+BOOST_AUTO_TEST_CASE(fixture_setup_teardown_detect) {
+  BOOST_CHECK(!impl_fixture::has_setup<fixture_without>::value);
+  BOOST_CHECK(!impl_fixture::has_setup<fixture_without>::value);
 
-    fixture_without obj;
-    setup_conditional(obj);
-    teardown_conditional(obj);
+  fixture_without obj;
+  setup_conditional(obj);
+  teardown_conditional(obj);
 }
 
-BOOST_AUTO_TEST_CASE( fixture_setup_teardown_detect_both )
-{
-    BOOST_CHECK(impl_fixture::has_setup<fixture_with>::value);
-    BOOST_CHECK(impl_fixture::has_setup<fixture_with>::value);
+BOOST_AUTO_TEST_CASE(fixture_setup_teardown_detect_both) {
+  BOOST_CHECK(impl_fixture::has_setup<fixture_with>::value);
+  BOOST_CHECK(impl_fixture::has_setup<fixture_with>::value);
 
-    fixture_with obj;
-    setup_conditional(obj);
-    teardown_conditional(obj);
+  fixture_with obj;
+  setup_conditional(obj);
+  teardown_conditional(obj);
 }
 
-BOOST_AUTO_TEST_CASE( fixture_setup_teardown_detect_both_from_child )
-{
-    // should detect this with the C++11/declspec approach
-    BOOST_CHECK(impl_fixture::has_setup<fixture_with_child>::value);
-    BOOST_CHECK(impl_fixture::has_setup<fixture_with_child>::value);
+BOOST_AUTO_TEST_CASE(fixture_setup_teardown_detect_both_from_child) {
+  // should detect this with the C++11/declspec approach
+  BOOST_CHECK(impl_fixture::has_setup<fixture_with_child>::value);
+  BOOST_CHECK(impl_fixture::has_setup<fixture_with_child>::value);
 
-    fixture_with_child obj;
-    setup_conditional(obj);
-    teardown_conditional(obj);
+  fixture_with_child obj;
+  setup_conditional(obj);
+  teardown_conditional(obj);
 }

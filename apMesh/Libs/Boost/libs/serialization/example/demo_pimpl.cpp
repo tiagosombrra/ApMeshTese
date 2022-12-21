@@ -8,27 +8,24 @@
 
 // should pass compilation and execution
 
-#include <sstream>
-
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#include <sstream>
 
 #include "demo_pimpl_A.hpp"
 
-int main(int argc, char* argv[])
-{
-    std::stringstream ss;
+int main(int argc, char* argv[]) {
+  std::stringstream ss;
 
-    const A a;
-    {
-        boost::archive::text_oarchive oa(ss);
-        oa << a;
-    }
-    A a1;
-    {
-        boost::archive::text_iarchive ia(ss);
-        ia >> a1;
-    }
-    return 0;
+  const A a;
+  {
+    boost::archive::text_oarchive oa(ss);
+    oa << a;
+  }
+  A a1;
+  {
+    boost::archive::text_iarchive ia(ss);
+    ia >> a1;
+  }
+  return 0;
 }
-

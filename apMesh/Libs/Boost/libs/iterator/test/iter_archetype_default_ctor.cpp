@@ -6,14 +6,11 @@
 //
 #include <boost/iterator/iterator_archetypes.hpp>
 
-
-int main()
-{
+int main() {
   typedef boost::iterator_archetype<
-      int
-    , boost::iterator_archetypes::readable_iterator_t
-    , boost::single_pass_traversal_tag
-    > iter;
+      int, boost::iterator_archetypes::readable_iterator_t,
+      boost::single_pass_traversal_tag>
+      iter;
 
   // single_pass_traversal iterators are not required to be
   // default constructible

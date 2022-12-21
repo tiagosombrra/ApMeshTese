@@ -17,27 +17,27 @@
 
 // condition_variable_any(const condition_variable_any&) = delete;
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
 #include "../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
 typedef boost::chrono::milliseconds ms;
 typedef boost::chrono::nanoseconds ns;
-struct Clock
-{
+struct Clock {
   typedef boost::chrono::milliseconds duration;
   typedef duration::rep rep;
   typedef duration::period period;
   typedef boost::chrono::time_point<Clock> time_point;
   static const bool is_steady = true;
 
-  static time_point now()
-  {
+  static time_point now() {
     using namespace boost::chrono;
-    return time_point(duration_cast<duration> (steady_clock::now().time_since_epoch()));
+    return time_point(
+        duration_cast<duration>(steady_clock::now().time_since_epoch()));
   }
 };
 
@@ -55,39 +55,34 @@ int runs = 0;
 
 const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
-void f()
-{
+void f() {
   L1 lk(m0);
   BOOST_TEST(test2 == 0);
   test1 = 1;
   cv.notify_one();
   Clock::time_point t0 = Clock::now();
   Clock::time_point t = t0 + Clock::duration(250);
-  while (test2 == 0 && cv.wait_until(lk, t) == boost::cv_status::no_timeout) {}
-  Clock::time_point t1 = Clock::now();
-  if (runs == 0)
-  {
-      ns d = t1 - t0;
-      BOOST_THREAD_TEST_IT(d, ns(max_diff));
-      BOOST_TEST(test2 != 0);
+  while (test2 == 0 && cv.wait_until(lk, t) == boost::cv_status::no_timeout) {
   }
-  else
-  {
-      ns d = t1 - t0 - ms(250);
-      BOOST_THREAD_TEST_IT(d, ns(max_diff));
-      BOOST_TEST(test2 == 0);
+  Clock::time_point t1 = Clock::now();
+  if (runs == 0) {
+    ns d = t1 - t0;
+    BOOST_THREAD_TEST_IT(d, ns(max_diff));
+    BOOST_TEST(test2 != 0);
+  } else {
+    ns d = t1 - t0 - ms(250);
+    BOOST_THREAD_TEST_IT(d, ns(max_diff));
+    BOOST_TEST(test2 == 0);
   }
   ++runs;
 }
 
-int main()
-{
+int main() {
   {
     L1 lk(m0);
     boost::thread t(f);
     BOOST_TEST(test1 == 0);
-    while (test1 == 0)
-      cv.wait(lk);
+    while (test1 == 0) cv.wait(lk);
     BOOST_TEST(test1 != 0);
     test2 = 1;
     lk.unlock();
@@ -100,8 +95,7 @@ int main()
     L1 lk(m0);
     boost::thread t(f);
     BOOST_TEST(test1 == 0);
-    while (test1 == 0)
-      cv.wait(lk);
+    while (test1 == 0) cv.wait(lk);
     BOOST_TEST(test1 != 0);
     lk.unlock();
     t.join();
@@ -111,5 +105,6 @@ int main()
 }
 
 #else
-#error "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
+#error \
+    "Test not applicable: BOOST_THREAD_USES_CHRONO not defined for this platform as not supported"
 #endif

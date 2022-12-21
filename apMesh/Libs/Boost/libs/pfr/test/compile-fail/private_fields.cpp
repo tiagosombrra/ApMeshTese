@@ -6,25 +6,23 @@
 #include <boost/pfr/tuple_size.hpp>
 
 #ifdef __clang__
-#   pragma clang diagnostic ignored "-Wunused-private-field"
+#pragma clang diagnostic ignored "-Wunused-private-field"
 #endif
 
-
 class test_with_private {
-private:
-    int i;
-    char c;
+ private:
+  int i;
+  char c;
 
-public:
-    double d;
-    float f;
+ public:
+  double d;
+  float f;
 };
 
 int main() {
 #ifndef __cpp_lib_is_aggregate
-#   error No known way to detect private fields.
+#error No known way to detect private fields.
 #endif
 
-    return boost::pfr::tuple_size<test_with_private>::value;
+  return boost::pfr::tuple_size<test_with_private>::value;
 }
-

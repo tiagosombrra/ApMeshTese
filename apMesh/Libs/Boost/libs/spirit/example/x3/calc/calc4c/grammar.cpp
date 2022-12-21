@@ -19,50 +19,29 @@
 
 #include "grammar.hpp"
 
-namespace client
-{
-    ///////////////////////////////////////////////////////////////////////////////
-    //  The calculator grammar
-    ///////////////////////////////////////////////////////////////////////////////
-    namespace calculator_grammar
-    {
-        using x3::uint_;
-        using x3::char_;
+namespace client {
+///////////////////////////////////////////////////////////////////////////////
+//  The calculator grammar
+///////////////////////////////////////////////////////////////////////////////
+namespace calculator_grammar {
+using x3::char_;
+using x3::uint_;
 
-        x3::rule<class expression, ast::program> const expression("expression");
-        x3::rule<class term, ast::program> const term("term");
-        x3::rule<class factor, ast::operand> const factor("factor");
+x3::rule<class expression, ast::program> const expression("expression");
+x3::rule<class term, ast::program> const term("term");
+x3::rule<class factor, ast::operand> const factor("factor");
 
-        auto const expression_def =
-            term
-            >> *(   (char_('+') >> term)
-                |   (char_('-') >> term)
-                )
-            ;
+auto const expression_def = term >>
+                            *((char_('+') >> term) | (char_('-') >> term));
 
-        auto const term_def =
-            factor
-            >> *(   (char_('*') >> factor)
-                |   (char_('/') >> factor)
-                )
-            ;
+auto const term_def = factor >>
+                      *((char_('*') >> factor) | (char_('/') >> factor));
 
-        auto const factor_def =
-                uint_
-            |   '(' >> expression >> ')'
-            |   (char_('-') >> factor)
-            |   (char_('+') >> factor)
-            ;
+auto const factor_def = uint_ | '(' >> expression >> ')' |
+                        (char_('-') >> factor) | (char_('+') >> factor);
 
-        BOOST_SPIRIT_DEFINE(
-            expression
-          , term
-          , factor
-        );
+BOOST_SPIRIT_DEFINE(expression, term, factor);
 
-        parser_type calculator()
-        {
-            return expression;
-        }
-    }
-}
+parser_type calculator() { return expression; }
+}  // namespace calculator_grammar
+}  // namespace client

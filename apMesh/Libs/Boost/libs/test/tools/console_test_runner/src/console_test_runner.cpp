@@ -16,7 +16,7 @@
 #include <boost/test/utils/named_params.hpp>
 #include <boost/test/utils/runtime/cla/parser.hpp>
 
-namespace rt  = boost::runtime;
+namespace rt = boost::runtime;
 namespace cla = boost::runtime::cla;
 
 // STL
@@ -28,102 +28,76 @@ namespace cla = boost::runtime::cla;
 
 namespace dyn_lib {
 
-#if defined(BOOST_WINDOWS) && !defined(BOOST_DISABLE_WIN32) // WIN32 API
+#if defined(BOOST_WINDOWS) && !defined(BOOST_DISABLE_WIN32)  // WIN32 API
 
 #include <windows.h>
 
 typedef HINSTANCE handle;
 
-inline handle
-open( std::string const& file_name )
-{
-    return LoadLibrary( file_name.c_str() );
+inline handle open(std::string const& file_name) {
+  return LoadLibrary(file_name.c_str());
 }
 
 //_________________________________________________________________//
 
-template<typename TargType>
-inline TargType
-locate_symbol( handle h, std::string const& symbol )
-{
-    return reinterpret_cast<TargType>( GetProcAddress( h, symbol.c_str() ) );
+template <typename TargType>
+inline TargType locate_symbol(handle h, std::string const& symbol) {
+  return reinterpret_cast<TargType>(GetProcAddress(h, symbol.c_str()));
 }
 
 //_________________________________________________________________//
 
-inline void
-close( handle h )
-{
-    if( h )
-        FreeLibrary( h );
+inline void close(handle h) {
+  if (h) FreeLibrary(h);
 }
 
 //_________________________________________________________________//
 
-inline std::string
-error()
-{
-    LPTSTR msg = NULL;
+inline std::string error() {
+  LPTSTR msg = NULL;
 
-    FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-                   NULL,
-                   GetLastError(),
-                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                   (LPTSTR)&msg,
-                   0, NULL );
+  FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+                NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                (LPTSTR)&msg, 0, NULL);
 
-    std::string res( msg );
+  std::string res(msg);
 
-    if( msg )
-        LocalFree( msg );
+  if (msg) LocalFree(msg);
 
-    return res;
+  return res;
 }
 
 //_________________________________________________________________//
 
-#elif defined(BOOST_HAS_UNISTD_H) // POSIX API
+#elif defined(BOOST_HAS_UNISTD_H)  // POSIX API
 
 #include <dlfcn.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-
+#include <sys/stat.h>
+#include <sys/types.h>
 
 typedef void* handle;
 
-inline handle
-open( std::string const& file_name )
-{
-    return dlopen( file_name.c_str(), RTLD_LOCAL | RTLD_LAZY );
+inline handle open(std::string const& file_name) {
+  return dlopen(file_name.c_str(), RTLD_LOCAL | RTLD_LAZY);
 }
 
 //_________________________________________________________________//
 
-template<typename TargType>
-inline TargType
-locate_symbol( handle h, std::string const& symbol )
-{
-    return reinterpret_cast<TargType>( dlsym( h, symbol.c_str() ) );
+template <typename TargType>
+inline TargType locate_symbol(handle h, std::string const& symbol) {
+  return reinterpret_cast<TargType>(dlsym(h, symbol.c_str()));
 }
 
 //_________________________________________________________________//
 
-inline void
-close( handle h )
-{
-    if( h )
-        dlclose( h );
+inline void close(handle h) {
+  if (h) dlclose(h);
 }
 
 //_________________________________________________________________//
 
-inline std::string
-error()
-{
-    return dlerror();
-}
+inline std::string error() { return dlerror(); }
 
 //_________________________________________________________________//
 
@@ -133,73 +107,72 @@ error()
 
 #endif
 
-} // namespace dyn_lib
+}  // namespace dyn_lib
 
 //____________________________________________________________________________//
 
 static std::string test_lib_name;
-static std::string init_func_name( "init_unit_test" );
+static std::string init_func_name("init_unit_test");
 
 dyn_lib::handle test_lib_handle;
 
-bool load_test_lib()
-{
-    typedef bool (*init_func_ptr)();
-    init_func_ptr init_func;
+bool load_test_lib() {
+  typedef bool (*init_func_ptr)();
+  init_func_ptr init_func;
 
-    test_lib_handle = dyn_lib::open( test_lib_name );
-    if( !test_lib_handle )
-        throw std::logic_error( std::string("Fail to load test library: ")
-                                    .append( dyn_lib::error() ) );
+  test_lib_handle = dyn_lib::open(test_lib_name);
+  if (!test_lib_handle)
+    throw std::logic_error(
+        std::string("Fail to load test library: ").append(dyn_lib::error()));
 
-    init_func =  dyn_lib::locate_symbol<init_func_ptr>( test_lib_handle, init_func_name );
+  init_func =
+      dyn_lib::locate_symbol<init_func_ptr>(test_lib_handle, init_func_name);
 
-    if( !init_func )
-        throw std::logic_error( std::string("Can't locate test initilization function ")
-                                    .append( init_func_name )
-                                    .append( ": " )
-                                    .append( dyn_lib::error() ) );
+  if (!init_func)
+    throw std::logic_error(
+        std::string("Can't locate test initilization function ")
+            .append(init_func_name)
+            .append(": ")
+            .append(dyn_lib::error()));
 
-    return (*init_func)();
+  return (*init_func)();
 }
 
 //____________________________________________________________________________//
 
-int main( int argc, char* argv[] )
-{
-    try {
+int main(int argc, char* argv[]) {
+  try {
+    rt::parameters_store store;
 
-        rt::parameters_store store;
+    rt::parameter<rt::cstring, rt::REQUIRED_PARAM> p_test("test");
+    p_test.add_cla_id("--", "test", " ");
+    store.add(p_test);
 
-        rt::parameter<rt::cstring, rt::REQUIRED_PARAM> p_test( "test" );
-        p_test.add_cla_id( "--", "test", " " );
-        store.add( p_test );
+    rt::parameter<rt::cstring> p_init("init");
+    p_init.add_cla_id("--", "init", " ");
+    store.add(p_init);
 
-        rt::parameter<rt::cstring> p_init( "init" );
-        p_init.add_cla_id( "--", "init", " " );
-        store.add( p_init );
+    rt::cla::parser P(store);
 
-        rt::cla::parser P( store );
+    rt::arguments_store args_store;
 
-        rt::arguments_store args_store;
+    P.parse(argc, argv, args_store);
 
-        P.parse( argc, argv, args_store );
+    test_lib_name = args_store.get<std::string>("test");
+    if (args_store.has("init"))
+      init_func_name = args_store.get<std::string>("init");
 
-        test_lib_name = args_store.get<std::string>( "test" );
-        if( args_store.has("init") )
-            init_func_name = args_store.get<std::string>( "init" );
+    int res = ::boost::unit_test::unit_test_main(&load_test_lib, argc, argv);
 
-        int res = ::boost::unit_test::unit_test_main( &load_test_lib, argc, argv );
+    ::boost::unit_test::framework::clear();
+    dyn_lib::close(test_lib_handle);
 
-        ::boost::unit_test::framework::clear();
-        dyn_lib::close( test_lib_handle );
-
-        return res;
-    }
-    catch( rt::param_error const& ex ) {
-        std::cout << "Fail to parse command line arguments: " << ex.msg << std::endl;
-        return -1;
-    }
+    return res;
+  } catch (rt::param_error const& ex) {
+    std::cout << "Fail to parse command line arguments: " << ex.msg
+              << std::endl;
+    return -1;
+  }
 }
 
 //____________________________________________________________________________//

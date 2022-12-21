@@ -7,30 +7,28 @@
 
 // note: this is a compile only test.
 
-#include <boost/config.hpp> // BOOST_STATIC_CONST
+#include <boost/config.hpp>  // BOOST_STATIC_CONST
+#include <boost/serialization/static_warning.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_polymorphic.hpp>
-
-#include <boost/serialization/static_warning.hpp>
 
 typedef char a1[2];
 typedef char a2[3];
 
 class polymorphic {
-    virtual ~polymorphic();
+  virtual ~polymorphic();
 };
 
-class non_polymorphic {
-};
+class non_polymorphic {};
 
-template<class T>
-int f(){
-    BOOST_STATIC_WARNING(T::value);
-    return 0;
+template <class T>
+int f() {
+  BOOST_STATIC_WARNING(T::value);
+  return 0;
 }
 
 struct A {
-    BOOST_STATIC_CONSTANT(bool, value = false);
+  BOOST_STATIC_CONSTANT(bool, value = false);
 };
 
 /////////////////////////////////////////////////////////////////////////
@@ -40,24 +38,24 @@ struct A {
 BOOST_STATIC_WARNING(true);
 
 // the following should show 5 warning message
-int x = f<A>();  // Warn
-int y = f<boost::is_polymorphic<non_polymorphic> >(); // Warn.
+int x = f<A>();                                        // Warn
+int y = f<boost::is_polymorphic<non_polymorphic> >();  // Warn.
 int z = f<boost::is_polymorphic<polymorphic> >();
 
-BOOST_STATIC_WARNING(sizeof(a1) == sizeof(a2)); // Warn.
-BOOST_STATIC_WARNING(sizeof(a1) != sizeof(a1)); // Warn.
-BOOST_STATIC_WARNING(! boost::is_polymorphic<polymorphic>::value); // Warn.
-BOOST_STATIC_WARNING(boost::is_polymorphic<non_polymorphic>::value); // Warn.
+BOOST_STATIC_WARNING(sizeof(a1) == sizeof(a2));                       // Warn.
+BOOST_STATIC_WARNING(sizeof(a1) != sizeof(a1));                       // Warn.
+BOOST_STATIC_WARNING(!boost::is_polymorphic<polymorphic>::value);     // Warn.
+BOOST_STATIC_WARNING(boost::is_polymorphic<non_polymorphic>::value);  // Warn.
 
-int main(int /* argc */, char * /* argv */[]){
-    // should show NO warning message
-    BOOST_STATIC_WARNING(true);
+int main(int /* argc */, char* /* argv */[]) {
+  // should show NO warning message
+  BOOST_STATIC_WARNING(true);
 
-    // the following should show 5 warning message
-    f<A>();
-    BOOST_STATIC_WARNING(sizeof(a1) == sizeof(a2)); // Warn.
-    BOOST_STATIC_WARNING(sizeof(a1) != sizeof(a1)); // Warn.
-    BOOST_STATIC_WARNING(! boost::is_polymorphic<polymorphic>::value); // Warn.
-    BOOST_STATIC_WARNING(boost::is_polymorphic<non_polymorphic>::value); // Warn.
-    return 0;
+  // the following should show 5 warning message
+  f<A>();
+  BOOST_STATIC_WARNING(sizeof(a1) == sizeof(a2));                       // Warn.
+  BOOST_STATIC_WARNING(sizeof(a1) != sizeof(a1));                       // Warn.
+  BOOST_STATIC_WARNING(!boost::is_polymorphic<polymorphic>::value);     // Warn.
+  BOOST_STATIC_WARNING(boost::is_polymorphic<non_polymorphic>::value);  // Warn.
+  return 0;
 }

@@ -8,34 +8,34 @@
  * copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
+#include <boost/config.hpp>
 #include <boost/numeric/interval.hpp>
 #include <boost/test/test_tools.hpp>
-#include <boost/config.hpp>
+
 #include "bugs.hpp"
 
 /* All the following tests should be BOOST_CHECK; however, if a test fails,
    the probability is high that hundreds of other tests will fail, so it is
    replaced by BOOST_REQUIRE to avoid flooding the logs. */
 
-template<class T, class F>
+template <class T, class F>
 void test_unary() {
   typedef typename F::I I;
-  for(I a(-10., -9.91); a.lower() <= 10.; a += 0.3) {
+  for (I a(-10., -9.91); a.lower() <= 10.; a += 0.3) {
     if (!F::validate(a)) continue;
     I rI = F::f_I(a);
-    T rT1 = F::f_T(a.lower()), rT2 = F::f_T(a.upper()),
-      rT3 = F::f_T(median(a));
+    T rT1 = F::f_T(a.lower()), rT2 = F::f_T(a.upper()), rT3 = F::f_T(median(a));
     BOOST_REQUIRE(in(rT1, rI));
     BOOST_REQUIRE(in(rT2, rI));
     BOOST_REQUIRE(in(rT3, rI));
   }
 }
 
-template<class T, class F>
+template <class T, class F>
 void test_binary() {
   typedef typename F::I I;
-  for(I a(-10., -9.91); a.lower() <= 10.; a += 0.3) {
-    for(I b(-10., -9.91); b.lower() <= 10.; b += 0.3) {
+  for (I a(-10., -9.91); a.lower() <= 10.; a += 0.3) {
+    for (I b(-10., -9.91); b.lower() <= 10.; b += 0.3) {
       if (!F::validate(a, b)) continue;
       T al = a.lower(), au = a.upper(), bl = b.lower(), bu = b.upper();
       I rII = F::f_II(a, b);
@@ -59,12 +59,12 @@ void test_binary() {
   }
 }
 
-#define new_unary_bunch(name, op, val) \
-  template<class T> \
-  struct name { \
-    typedef boost::numeric::interval<T> I; \
-    static I f_I(const I& a) { return op(a); } \
-    static T f_T(const T& a) { return op(a); } \
+#define new_unary_bunch(name, op, val)               \
+  template <class T>                                 \
+  struct name {                                      \
+    typedef boost::numeric::interval<T> I;           \
+    static I f_I(const I& a) { return op(a); }       \
+    static T f_T(const T& a) { return op(a); }       \
     static bool validate(const I& a) { return val; } \
   }
 
@@ -78,23 +78,28 @@ new_unary_bunch(bunch_neg, -, true);
 new_unary_bunch(bunch_sqrt, sqrt, a.lower() >= 0.);
 new_unary_bunch(bunch_abs, abs, true);
 
-template<class T>
+template <class T>
 void test_all_unaries() {
-  BOOST_TEST_CHECKPOINT("pos");  test_unary<T, bunch_pos<T> >();
-  BOOST_TEST_CHECKPOINT("neg");  test_unary<T, bunch_neg<T> >();
-  BOOST_TEST_CHECKPOINT("sqrt"); test_unary<T, bunch_sqrt<T> >();
-  BOOST_TEST_CHECKPOINT("abs");  test_unary<T, bunch_abs<T> >();
+  BOOST_TEST_CHECKPOINT("pos");
+  test_unary<T, bunch_pos<T> >();
+  BOOST_TEST_CHECKPOINT("neg");
+  test_unary<T, bunch_neg<T> >();
+  BOOST_TEST_CHECKPOINT("sqrt");
+  test_unary<T, bunch_sqrt<T> >();
+  BOOST_TEST_CHECKPOINT("abs");
+  test_unary<T, bunch_abs<T> >();
 }
 
-#define new_binary_bunch(name, op, val) \
-  template<class T> \
-  struct bunch_##name { \
-    typedef boost::numeric::interval<T> I; \
-    static I f_II(const I& a, const I& b) { return a op b; } \
-    static I f_IT(const I& a, const T& b) { return a op b; } \
-    static I f_TI(const T& a, const I& b) { return a op b; } \
-    static I f_TT(const T& a, const T& b) \
-    { return boost::numeric::interval_lib::name<I>(a,b); } \
+#define new_binary_bunch(name, op, val)                          \
+  template <class T>                                             \
+  struct bunch_##name {                                          \
+    typedef boost::numeric::interval<T> I;                       \
+    static I f_II(const I& a, const I& b) { return a op b; }     \
+    static I f_IT(const I& a, const T& b) { return a op b; }     \
+    static I f_TI(const T& a, const I& b) { return a op b; }     \
+    static I f_TT(const T& a, const T& b) {                      \
+      return boost::numeric::interval_lib::name<I>(a, b);        \
+    }                                                            \
     static bool validate(const I& a, const I& b) { return val; } \
   }
 
@@ -103,26 +108,30 @@ new_binary_bunch(sub, -, true);
 new_binary_bunch(mul, *, true);
 new_binary_bunch(div, /, !zero_in(b));
 
-template<class T>
+template <class T>
 void test_all_binaries() {
-  BOOST_TEST_CHECKPOINT("add"); test_binary<T, bunch_add<T> >();
-  BOOST_TEST_CHECKPOINT("sub"); test_binary<T, bunch_sub<T> >();
-  BOOST_TEST_CHECKPOINT("mul"); test_binary<T, bunch_mul<T> >();
-  BOOST_TEST_CHECKPOINT("div"); test_binary<T, bunch_div<T> >();
+  BOOST_TEST_CHECKPOINT("add");
+  test_binary<T, bunch_add<T> >();
+  BOOST_TEST_CHECKPOINT("sub");
+  test_binary<T, bunch_sub<T> >();
+  BOOST_TEST_CHECKPOINT("mul");
+  test_binary<T, bunch_mul<T> >();
+  BOOST_TEST_CHECKPOINT("div");
+  test_binary<T, bunch_div<T> >();
 }
 
-int test_main(int, char *[]) {
+int test_main(int, char*[]) {
   BOOST_TEST_CHECKPOINT("float tests");
-  test_all_unaries<float> ();
-  test_all_binaries<float> ();
+  test_all_unaries<float>();
+  test_all_binaries<float>();
   BOOST_TEST_CHECKPOINT("double tests");
   test_all_unaries<double>();
   test_all_binaries<double>();
-  //BOOST_TEST_CHECKPOINT("long double tests");
-  //test_all_unaries<long double>();
-  //test_all_binaries<long double>();
-# ifdef BOOST_BORLANDC
+  // BOOST_TEST_CHECKPOINT("long double tests");
+  // test_all_unaries<long double>();
+  // test_all_binaries<long double>();
+#ifdef BOOST_BORLANDC
   ::detail::ignore_warnings();
-# endif
+#endif
   return 0;
 }

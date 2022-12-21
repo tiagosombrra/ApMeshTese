@@ -11,20 +11,15 @@
 
 // We use our own string_len function instead of std::strlen
 // to avoid the namespace confusion on different compilers. Some
-// have it in namespace std. Some have it in global namespace. 
+// have it in namespace std. Some have it in global namespace.
 // Some have it in both.
-namespace test_impl
-{
-    template <typename Char>
-    inline unsigned int
-    string_length(Char const* str)
-    {
-        unsigned int len = 0;
-        while (*str++)
-            ++len;
-        return len;
-    }
+namespace test_impl {
+template <typename Char>
+inline unsigned int string_length(Char const* str) {
+  unsigned int len = 0;
+  while (*str++) ++len;
+  return len;
 }
+}  // namespace test_impl
 
 #endif
-

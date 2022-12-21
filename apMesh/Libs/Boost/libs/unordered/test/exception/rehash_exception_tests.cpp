@@ -3,37 +3,33 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "./containers.hpp"
+#include <string>
 
 #include "../helpers/invariants.hpp"
 #include "../helpers/random_values.hpp"
 #include "../helpers/strong.hpp"
 #include "../helpers/tracker.hpp"
-#include <string>
+#include "./containers.hpp"
 
 test::seed_t initialize_seed(3298597);
 
-template <class T> struct rehash_test_base : public test::exception_base
-{
+template <class T>
+struct rehash_test_base : public test::exception_base {
   test::random_values<T> values;
   unsigned int n;
   rehash_test_base(unsigned int count = 100, unsigned int n_ = 0)
-      : values(count, test::limited_range), n(n_)
-  {
-  }
+      : values(count, test::limited_range), n(n_) {}
 
   typedef T data_type;
   typedef test::strong<T> strong_type;
 
-  data_type init() const
-  {
+  data_type init() const {
     T x(values.begin(), values.end(), n);
     return x;
   }
 
-  void check BOOST_PREVENT_MACRO_SUBSTITUTION(
-    T const& x, strong_type const& strong) const
-  {
+  void check BOOST_PREVENT_MACRO_SUBSTITUTION(T const& x,
+                                              strong_type const& strong) const {
     std::string scope(test::scope);
 
     if (scope.find("hash::operator()") == std::string::npos &&
@@ -45,11 +41,10 @@ template <class T> struct rehash_test_base : public test::exception_base
   }
 };
 
-template <class T> struct rehash_test0 : rehash_test_base<T>
-{
+template <class T>
+struct rehash_test0 : rehash_test_base<T> {
   rehash_test0() : rehash_test_base<T>(0) {}
-  void run(T& x) const
-  {
+  void run(T& x) const {
     x.rehash(0);
 
     DISABLE_EXCEPTIONS;
@@ -58,11 +53,10 @@ template <class T> struct rehash_test0 : rehash_test_base<T>
   }
 };
 
-template <class T> struct rehash_test1 : rehash_test_base<T>
-{
+template <class T>
+struct rehash_test1 : rehash_test_base<T> {
   rehash_test1() : rehash_test_base<T>(0) {}
-  void run(T& x) const
-  {
+  void run(T& x) const {
     x.rehash(200);
 
     DISABLE_EXCEPTIONS;
@@ -71,11 +65,10 @@ template <class T> struct rehash_test1 : rehash_test_base<T>
   }
 };
 
-template <class T> struct rehash_test2 : rehash_test_base<T>
-{
+template <class T>
+struct rehash_test2 : rehash_test_base<T> {
   rehash_test2() : rehash_test_base<T>(0, 200) {}
-  void run(T& x) const
-  {
+  void run(T& x) const {
     x.rehash(0);
 
     DISABLE_EXCEPTIONS;
@@ -84,11 +77,10 @@ template <class T> struct rehash_test2 : rehash_test_base<T>
   }
 };
 
-template <class T> struct rehash_test3 : rehash_test_base<T>
-{
+template <class T>
+struct rehash_test3 : rehash_test_base<T> {
   rehash_test3() : rehash_test_base<T>(10, 0) {}
-  void run(T& x) const
-  {
+  void run(T& x) const {
     x.rehash(200);
 
     DISABLE_EXCEPTIONS;
@@ -97,11 +89,10 @@ template <class T> struct rehash_test3 : rehash_test_base<T>
   }
 };
 
-template <class T> struct rehash_test4 : rehash_test_base<T>
-{
+template <class T>
+struct rehash_test4 : rehash_test_base<T> {
   rehash_test4() : rehash_test_base<T>(10, 200) {}
-  void run(T& x) const
-  {
+  void run(T& x) const {
     x.rehash(0);
 
     DISABLE_EXCEPTIONS;
@@ -110,11 +101,10 @@ template <class T> struct rehash_test4 : rehash_test_base<T>
   }
 };
 
-template <class T> struct rehash_test5 : rehash_test_base<T>
-{
+template <class T>
+struct rehash_test5 : rehash_test_base<T> {
   rehash_test5() : rehash_test_base<T>(200, 10) {}
-  void run(T& x) const
-  {
+  void run(T& x) const {
     x.rehash(0);
 
     DISABLE_EXCEPTIONS;

@@ -11,6 +11,7 @@
 #include <sstream>
 #include <type_traits>
 #include <vector>
+
 #include "is_close.hpp"
 #include "std_ostream.hpp"
 #include "throw_exception.hpp"
@@ -28,13 +29,17 @@ int main() {
 
   // bad_ctors
   {
-    BOOST_TEST_THROWS(axis::variable<>(std::vector<double>{}), std::invalid_argument);
+    BOOST_TEST_THROWS(axis::variable<>(std::vector<double>{}),
+                      std::invalid_argument);
     BOOST_TEST_THROWS(axis::variable<>({1.0}), std::invalid_argument);
     BOOST_TEST_THROWS(axis::variable<>({1.0, 1.0}), std::invalid_argument);
     BOOST_TEST_THROWS(axis::variable<>({1.0, -1.0}), std::invalid_argument);
-    BOOST_TEST_THROWS((axis::variable<>{{1.0, 2.0, nan}}), std::invalid_argument);
-    BOOST_TEST_THROWS((axis::variable<>{{1.0, nan, 2.0}}), std::invalid_argument);
-    BOOST_TEST_THROWS((axis::variable<>{{nan, 1.0, 2.0}}), std::invalid_argument);
+    BOOST_TEST_THROWS((axis::variable<>{{1.0, 2.0, nan}}),
+                      std::invalid_argument);
+    BOOST_TEST_THROWS((axis::variable<>{{1.0, nan, 2.0}}),
+                      std::invalid_argument);
+    BOOST_TEST_THROWS((axis::variable<>{{nan, 1.0, 2.0}}),
+                      std::invalid_argument);
     BOOST_TEST_THROWS((axis::variable<>{{inf, inf}}), std::invalid_argument);
   }
 
@@ -62,8 +67,9 @@ int main() {
     BOOST_TEST_EQ(a.index(inf), 2);
     BOOST_TEST_EQ(a.index(nan), 2);
 
-    BOOST_TEST_EQ(str(a),
-                  "variable(-1, 0, 1, metadata=\"bar\", options=underflow | overflow)");
+    BOOST_TEST_EQ(
+        str(a),
+        "variable(-1, 0, 1, metadata=\"bar\", options=underflow | overflow)");
 
     axis::variable<> b;
     BOOST_TEST_NE(a, b);
@@ -99,12 +105,14 @@ int main() {
     BOOST_TEST_EQ(a.value(3), inf);
     BOOST_TEST_EQ(a.value(4), inf);
 
-    BOOST_TEST_EQ(str(a), "variable(-inf, 1, 2, inf, options=underflow | overflow)");
+    BOOST_TEST_EQ(str(a),
+                  "variable(-inf, 1, 2, inf, options=underflow | overflow)");
   }
 
   // axis::variable circular
   {
-    axis::variable<double, axis::null_type, axis::option::circular_t> a{-1, 1, 2};
+    axis::variable<double, axis::null_type, axis::option::circular_t> a{-1, 1,
+                                                                        2};
     BOOST_TEST_EQ(a.value(-2), -4);
     BOOST_TEST_EQ(a.value(-1), -2);
     BOOST_TEST_EQ(a.value(0), -1);
@@ -112,14 +120,14 @@ int main() {
     BOOST_TEST_EQ(a.value(2), 2);
     BOOST_TEST_EQ(a.value(3), 4);
     BOOST_TEST_EQ(a.value(4), 5);
-    BOOST_TEST_EQ(a.index(-3), 0); // -3 + 3 = 0
-    BOOST_TEST_EQ(a.index(-2), 1); // -2 + 3 = 1
+    BOOST_TEST_EQ(a.index(-3), 0);  // -3 + 3 = 0
+    BOOST_TEST_EQ(a.index(-2), 1);  // -2 + 3 = 1
     BOOST_TEST_EQ(a.index(-1), 0);
     BOOST_TEST_EQ(a.index(0), 0);
     BOOST_TEST_EQ(a.index(1), 1);
     BOOST_TEST_EQ(a.index(2), 0);
-    BOOST_TEST_EQ(a.index(3), 0); // 3 - 3 = 0
-    BOOST_TEST_EQ(a.index(4), 1); // 4 - 3 = 1
+    BOOST_TEST_EQ(a.index(3), 0);  // 3 - 3 = 0
+    BOOST_TEST_EQ(a.index(4), 1);  // 4 - 3 = 1
   }
 
   // axis::regular with growth
@@ -153,7 +161,9 @@ int main() {
   {
     test_axis_iterator(axis::variable<>{1, 2, 3}, 0, 2);
     test_axis_iterator(
-        axis::variable<double, axis::null_type, axis::option::circular_t>{1, 2, 3}, 0, 2);
+        axis::variable<double, axis::null_type, axis::option::circular_t>{1, 2,
+                                                                          3},
+        0, 2);
   }
 
   // shrink and rebin

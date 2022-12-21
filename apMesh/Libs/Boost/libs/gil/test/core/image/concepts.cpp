@@ -12,19 +12,16 @@
 #if !defined(BOOST_GIL_USE_CONCEPT_CHECK) && !defined(__clang__)
 #error Compile with BOOST_GIL_USE_CONCEPT_CHECK defined
 #endif
-#include <boost/gil.hpp>
-
-#include <boost/concept_check.hpp>
-
 #include <array>
+#include <boost/concept_check.hpp>
+#include <boost/gil.hpp>
 
 namespace gil = boost::gil;
 using boost::function_requires;
 
-int main()
-{
-    function_requires<gil::ImageConcept<gil::gray8_image_t>>();
-    function_requires<gil::ImageConcept<gil::rgb8_image_t>>();
+int main() {
+  function_requires<gil::ImageConcept<gil::gray8_image_t>>();
+  function_requires<gil::ImageConcept<gil::rgb8_image_t>>();
 
-    return 0;
+  return 0;
 }

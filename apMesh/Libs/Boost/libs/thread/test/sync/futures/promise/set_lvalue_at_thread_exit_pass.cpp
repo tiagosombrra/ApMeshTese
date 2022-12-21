@@ -20,30 +20,27 @@
 
 #define BOOST_THREAD_VERSION 4
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 #include <memory>
 
 int i = 0;
 
-//void func(boost::promise<int&> p)
+// void func(boost::promise<int&> p)
 boost::promise<int&> p;
-void func()
-{
+void func() {
   p.set_value_at_thread_exit(i);
   i = 4;
 }
 
-int main()
-{
+int main() {
   {
-    //boost::promise<int&> p;
+    // boost::promise<int&> p;
     boost::future<int&> f = p.get_future();
-    //boost::thread(func, boost::move(p)).detach();
+    // boost::thread(func, boost::move(p)).detach();
     boost::thread(func).detach();
     int r = f.get();
     BOOST_TEST(r == 4);
   }
   return boost::report_errors();
 }
-

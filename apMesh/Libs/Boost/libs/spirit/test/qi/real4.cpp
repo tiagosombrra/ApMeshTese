@@ -10,66 +10,64 @@
 
 #include "real.hpp"
 
-int
-main()
-{
-    using spirit_test::test;
-    using spirit_test::test_attr;
-    
-    ///////////////////////////////////////////////////////////////////////////
-    //  Custom data type
-    ///////////////////////////////////////////////////////////////////////////
+int main() {
+  using spirit_test::test;
+  using spirit_test::test_attr;
+
+  ///////////////////////////////////////////////////////////////////////////
+  //  Custom data type
+  ///////////////////////////////////////////////////////////////////////////
 #ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
-    {
-        using boost::math::concepts::real_concept;
-        using boost::spirit::qi::real_parser;
-        using boost::spirit::qi::real_policies;
-        using boost::spirit::qi::parse;
+  {
+    using boost::math::concepts::real_concept;
+    using boost::spirit::qi::parse;
+    using boost::spirit::qi::real_parser;
+    using boost::spirit::qi::real_policies;
 
-        real_parser<real_concept, real_policies<real_concept> > custom_real;
-        real_concept d;
+    real_parser<real_concept, real_policies<real_concept> > custom_real;
+    real_concept d;
 
-        BOOST_TEST(test("-1234", custom_real));
-        BOOST_TEST(test_attr("-1234", custom_real, d) && compare(d, -1234));
+    BOOST_TEST(test("-1234", custom_real));
+    BOOST_TEST(test_attr("-1234", custom_real, d) && compare(d, -1234));
 
-        BOOST_TEST(test("-1.2e3", custom_real));
-        BOOST_TEST(test_attr("-1.2e3", custom_real, d) && compare(d, -1.2e3));
+    BOOST_TEST(test("-1.2e3", custom_real));
+    BOOST_TEST(test_attr("-1.2e3", custom_real, d) && compare(d, -1.2e3));
 
-        BOOST_TEST(test("+1.2e3", custom_real));
-        BOOST_TEST(test_attr("+1.2e3", custom_real, d) && compare(d, 1.2e3));
+    BOOST_TEST(test("+1.2e3", custom_real));
+    BOOST_TEST(test_attr("+1.2e3", custom_real, d) && compare(d, 1.2e3));
 
-        BOOST_TEST(test("-0.1", custom_real));
-        BOOST_TEST(test_attr("-0.1", custom_real, d) && compare(d, -0.1));
+    BOOST_TEST(test("-0.1", custom_real));
+    BOOST_TEST(test_attr("-0.1", custom_real, d) && compare(d, -0.1));
 
-        BOOST_TEST(test("-1.2e-3", custom_real));
-        BOOST_TEST(test_attr("-1.2e-3", custom_real, d) && compare(d, -1.2e-3));
+    BOOST_TEST(test("-1.2e-3", custom_real));
+    BOOST_TEST(test_attr("-1.2e-3", custom_real, d) && compare(d, -1.2e-3));
 
-        BOOST_TEST(test("-1.e2", custom_real));
-        BOOST_TEST(test_attr("-1.e2", custom_real, d) && compare(d, -1.e2));
+    BOOST_TEST(test("-1.e2", custom_real));
+    BOOST_TEST(test_attr("-1.e2", custom_real, d) && compare(d, -1.e2));
 
-        BOOST_TEST(test("-.2e3", custom_real));
-        BOOST_TEST(test_attr("-.2e3", custom_real, d) && compare(d, -.2e3));
+    BOOST_TEST(test("-.2e3", custom_real));
+    BOOST_TEST(test_attr("-.2e3", custom_real, d) && compare(d, -.2e3));
 
-        BOOST_TEST(test("-2e3", custom_real));
-        BOOST_TEST(test_attr("-2e3", custom_real, d) && compare(d, -2e3));
+    BOOST_TEST(test("-2e3", custom_real));
+    BOOST_TEST(test_attr("-2e3", custom_real, d) && compare(d, -2e3));
 
-        BOOST_TEST(!test("-e3", custom_real));
-        BOOST_TEST(!test_attr("-e3", custom_real, d));
+    BOOST_TEST(!test("-e3", custom_real));
+    BOOST_TEST(!test_attr("-e3", custom_real, d));
 
-        BOOST_TEST(!test("-1.2e", custom_real));
-        BOOST_TEST(!test_attr("-1.2e", custom_real, d));
-    }
+    BOOST_TEST(!test("-1.2e", custom_real));
+    BOOST_TEST(!test_attr("-1.2e", custom_real, d));
+  }
 #endif
-    
-    ///////////////////////////////////////////////////////////////////////////
-    //  custom real tests
-    ///////////////////////////////////////////////////////////////////////////
-    {
-        using boost::spirit::qi::double_;
-        custom_real n;
 
-        BOOST_TEST(test_attr("-123456e6", double_, n));
-    }
+  ///////////////////////////////////////////////////////////////////////////
+  //  custom real tests
+  ///////////////////////////////////////////////////////////////////////////
+  {
+    using boost::spirit::qi::double_;
+    custom_real n;
 
-    return boost::report_errors();
+    BOOST_TEST(test_attr("-123456e6", double_, n));
+  }
+
+  return boost::report_errors();
 }

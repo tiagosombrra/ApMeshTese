@@ -20,26 +20,22 @@
 
 #define BOOST_THREAD_VERSION 3
 
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-int main()
-{
-
+int main() {
   {
-      boost::future<int> f;
-      BOOST_TEST(!f.valid());
+    boost::future<int> f;
+    BOOST_TEST(!f.valid());
   }
   {
-      boost::future<int&> f;
-      BOOST_TEST(!f.valid());
+    boost::future<int&> f;
+    BOOST_TEST(!f.valid());
   }
   {
-      boost::future<void> f;
-      BOOST_TEST(!f.valid());
+    boost::future<void> f;
+    BOOST_TEST(!f.valid());
   }
-
 
   return boost::report_errors();
 }
-

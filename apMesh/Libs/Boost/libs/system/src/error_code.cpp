@@ -16,16 +16,12 @@
 
 #include <boost/system/config.hpp>
 
-namespace boost
-{
+namespace boost {
 
-namespace system
-{
+namespace system {
 
-BOOST_SYSTEM_DECL void dummy_exported_function()
-{
-}
+BOOST_SYSTEM_DECL void dummy_exported_function() {}
 
-} // namespace system
+}  // namespace system
 
-} // namespace boost
+}  // namespace boost

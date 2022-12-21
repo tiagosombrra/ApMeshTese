@@ -12,16 +12,17 @@
 // Caution: this file contains Quickbook markup as well as code
 // and comments, don't change any of the special comment markups!
 
-#include <boost/sort/spreadsort/spreadsort.hpp>
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include <algorithm>
-#include <vector>
-#include <string>
+#include <boost/sort/spreadsort/spreadsort.hpp>
 #include <fstream>
-#include <iostream>
 #include <functional>
+#include <iostream>
+#include <string>
+#include <vector>
 using namespace boost::sort::spreadsort;
 
 #define DATA_TYPE int
@@ -32,9 +33,9 @@ struct negrightshift {
   }
 };
 
-//Pass in an argument to test std::sort
-int main(int argc, const char ** argv) {
-  size_t uCount,uSize=sizeof(DATA_TYPE);
+// Pass in an argument to test std::sort
+int main(int argc, const char **argv) {
+  size_t uCount, uSize = sizeof(DATA_TYPE);
   bool stdSort = false;
   unsigned loopCount = 1;
   for (int u = 1; u < argc; ++u) {
@@ -50,40 +51,42 @@ int main(int argc, const char ** argv) {
   }
   double total = 0.0;
   std::vector<DATA_TYPE> array;
-  input.seekg (0, std::ios_base::end);
-    size_t length = input.tellg();
-  uCount = length/uSize;
-  //Run multiple loops, if requested
+  input.seekg(0, std::ios_base::end);
+  size_t length = input.tellg();
+  uCount = length / uSize;
+  // Run multiple loops, if requested
   for (unsigned u = 0; u < loopCount; ++u) {
-    input.seekg (0, std::ios_base::beg);
-    //Conversion to a vector
+    input.seekg(0, std::ios_base::beg);
+    // Conversion to a vector
     array.resize(uCount);
     unsigned v = 0;
     while (input.good() && v < uCount)
-      input.read(reinterpret_cast<char *>(&(array[v++])), uSize );
-    if (v < uCount)
-      array.resize(v);
+      input.read(reinterpret_cast<char *>(&(array[v++])), uSize);
+    if (v < uCount) array.resize(v);
     clock_t start, end;
     double elapsed;
     start = clock();
     if (stdSort)
 
-//[reverse_int_1
+      //[reverse_int_1
       std::sort(array.begin(), array.end(), std::greater<DATA_TYPE>());
-//] [/reverse_int_1]
+    //] [/reverse_int_1]
     else
-//[reverse_int_2
-      integer_sort(array.begin(), array.end(), negrightshift(), std::greater<DATA_TYPE>());
-//] [/reverse_int_2]
+      //[reverse_int_2
+      integer_sort(array.begin(), array.end(), negrightshift(),
+                   std::greater<DATA_TYPE>());
+    //] [/reverse_int_2]
     end = clock();
-    elapsed = static_cast<double>(end - start) ;
+    elapsed = static_cast<double>(end - start);
     std::ofstream ofile;
     if (stdSort)
       ofile.open("standard_sort_out.txt", std::ios_base::out |
-                 std::ios_base::binary | std::ios_base::trunc);
+                                              std::ios_base::binary |
+                                              std::ios_base::trunc);
     else
       ofile.open("boost_sort_out.txt", std::ios_base::out |
-                 std::ios_base::binary | std::ios_base::trunc);
+                                           std::ios_base::binary |
+                                           std::ios_base::trunc);
     if (ofile.good()) {
       for (unsigned v = 0; v < array.size(); ++v) {
         ofile.write(reinterpret_cast<char *>(&(array[v])), sizeof(array[v]));

@@ -9,9 +9,9 @@
  *
  */
 
+#include <boost/math/distributions/chi_squared.hpp>
 #include <boost/random/chi_squared_distribution.hpp>
 #include <boost/random/uniform_real.hpp>
-#include <boost/math/distributions/chi_squared.hpp>
 
 #define BOOST_RANDOM_DISTRIBUTION boost::random::chi_squared_distribution<>
 #define BOOST_RANDOM_DISTRIBUTION_NAME chi_squared

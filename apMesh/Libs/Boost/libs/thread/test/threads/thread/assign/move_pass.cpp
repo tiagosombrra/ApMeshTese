@@ -20,46 +20,35 @@
 
 #define BOOST_THREAD_PROVIDES_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE
 
-#include <boost/thread/thread_only.hpp>
-#include <new>
-#include <cstdlib>
-#include <cassert>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/thread_only.hpp>
+#include <cassert>
+#include <cstdlib>
+#include <new>
 
-class G
-{
+class G {
   int alive_;
-public:
+
+ public:
   static int n_alive;
   static bool op_run;
 
-  G() :
-    alive_(1)
-  {
-    ++n_alive;
-  }
-  G(const G& g) :
-    alive_(g.alive_)
-  {
-    ++n_alive;
-  }
-  ~G()
-  {
+  G() : alive_(1) { ++n_alive; }
+  G(const G& g) : alive_(g.alive_) { ++n_alive; }
+  ~G() {
     alive_ = 0;
     --n_alive;
   }
 
-  void operator()()
-  {
+  void operator()() {
     BOOST_TEST(alive_ == 1);
-    //BOOST_TEST(n_alive == 1);
+    // BOOST_TEST(n_alive == 1);
     op_run = true;
   }
 
-  void operator()(int i, double j)
-  {
+  void operator()(int i, double j) {
     BOOST_TEST(alive_ == 1);
-    //BOOST_TEST(n_alive == 1);
+    // BOOST_TEST(n_alive == 1);
     BOOST_TEST(i == 5);
     BOOST_TEST(j == 5.5);
     op_run = true;
@@ -69,13 +58,9 @@ public:
 int G::n_alive = 0;
 bool G::op_run = false;
 
-void f1()
-{
-  std::exit(boost::report_errors());
-}
+void f1() { std::exit(boost::report_errors()); }
 
-int main()
-{
+int main() {
   std::set_terminate(f1);
   {
     BOOST_TEST(G::n_alive == 0);
@@ -98,4 +83,3 @@ int main()
   }
   return boost::report_errors();
 }
-

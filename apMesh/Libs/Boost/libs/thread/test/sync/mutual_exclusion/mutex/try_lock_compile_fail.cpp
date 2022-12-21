@@ -7,11 +7,10 @@
 
 // class mutex;
 
-#include <boost/thread/mutex.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/mutex.hpp>
 
-void fail()
-{
+void fail() {
   boost::mutex m0;
   if (!m0.try_lock()) {
     m0.unlock();

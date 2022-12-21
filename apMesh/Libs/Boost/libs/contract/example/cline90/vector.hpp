@@ -11,91 +11,78 @@
 #include <boost/contract.hpp>
 
 // NOTE: Incomplete contract assertions, addressing only `size`.
-template<typename T>
+template <typename T>
 class vector
-    #define BASES private boost::contract::constructor_precondition<vector<T> >
-    : BASES
-{
-    friend class boost::contract::access;
+#define BASES \
+ private      \
+  boost::contract::constructor_precondition<vector<T> >
+    : BASES {
+  friend class boost::contract::access;
 
-    typedef BOOST_CONTRACT_BASE_TYPES(BASES) base_types;
-    #undef BASES
+  typedef BOOST_CONTRACT_BASE_TYPES(BASES) base_types;
+#undef BASES
 
-    void invariant() const {
-        BOOST_CONTRACT_ASSERT(size() >= 0);
-    }
+  void invariant() const { BOOST_CONTRACT_ASSERT(size() >= 0); }
 
-public:
-    explicit vector(int count = 10) :
-        boost::contract::constructor_precondition<vector>([&] {
-            BOOST_CONTRACT_ASSERT(count >= 0);
-        }),
+ public:
+  explicit vector(int count = 10)
+      : boost::contract::constructor_precondition<vector>(
+            [&] { BOOST_CONTRACT_ASSERT(count >= 0); }),
         data_(new T[count]),
-        size_(count)
-    {
-        boost::contract::check c = boost::contract::constructor(this)
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(size() == count);
-            })
-        ;
+        size_(count) {
+    boost::contract::check c = boost::contract::constructor(this).postcondition(
+        [&] { BOOST_CONTRACT_ASSERT(size() == count); });
 
-        for(int i = 0; i < size_; ++i) data_[i] = T();
-    }
+    for (int i = 0; i < size_; ++i) data_[i] = T();
+  }
 
-    virtual ~vector() {
-        boost::contract::check c = boost::contract::destructor(this);
-        delete[] data_;
-    }
+  virtual ~vector() {
+    boost::contract::check c = boost::contract::destructor(this);
+    delete[] data_;
+  }
 
-    int size() const {
-        boost::contract::check c = boost::contract::public_function(this);
-        return size_; // Non-negative result already checked by invariant.
-    }
+  int size() const {
+    boost::contract::check c = boost::contract::public_function(this);
+    return size_;  // Non-negative result already checked by invariant.
+  }
 
-    void resize(int count) {
-        boost::contract::check c = boost::contract::public_function(this)
-            .precondition([&] {
-                BOOST_CONTRACT_ASSERT(count >= 0);
-            })
-            .postcondition([&] {
-                BOOST_CONTRACT_ASSERT(size() == count);
-            })
-        ;
+  void resize(int count) {
+    boost::contract::check c =
+        boost::contract::public_function(this)
+            .precondition([&] { BOOST_CONTRACT_ASSERT(count >= 0); })
+            .postcondition([&] { BOOST_CONTRACT_ASSERT(size() == count); });
 
-        T* slice = new T[count];
-        for(int i = 0; i < count && i < size_; ++i) slice[i] = data_[i];
-        delete[] data_;
-        data_ = slice;
-        size_ = count;
-    }
+    T* slice = new T[count];
+    for (int i = 0; i < count && i < size_; ++i) slice[i] = data_[i];
+    delete[] data_;
+    data_ = slice;
+    size_ = count;
+  }
 
-    T& operator[](int index) {
-        boost::contract::check c = boost::contract::public_function(this)
-            .precondition([&] {
-                BOOST_CONTRACT_ASSERT(index >= 0);
-                BOOST_CONTRACT_ASSERT(index < size());
-            })
-        ;
+  T& operator[](int index) {
+    boost::contract::check c =
+        boost::contract::public_function(this).precondition([&] {
+          BOOST_CONTRACT_ASSERT(index >= 0);
+          BOOST_CONTRACT_ASSERT(index < size());
+        });
 
-        return data_[index];
-    }
-    
-    T const& operator[](int index) const {
-        boost::contract::check c = boost::contract::public_function(this)
-            .precondition([&] {
-                BOOST_CONTRACT_ASSERT(index >= 0);
-                BOOST_CONTRACT_ASSERT(index < size());
-            })
-        ;
+    return data_[index];
+  }
 
-        return data_[index];
-    }
+  T const& operator[](int index) const {
+    boost::contract::check c =
+        boost::contract::public_function(this).precondition([&] {
+          BOOST_CONTRACT_ASSERT(index >= 0);
+          BOOST_CONTRACT_ASSERT(index < size());
+        });
 
-private:
-    T* data_;
-    int size_;
+    return data_[index];
+  }
+
+ private:
+  T* data_;
+  int size_;
 };
 
-#endif // #include guard
+#endif  // #include guard
 //]
-

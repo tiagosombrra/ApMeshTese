@@ -29,7 +29,8 @@ std::ostream& operator<<(std::ostream& os, const TotallyOrdered& t) {
   return os;
 }
 
-struct PartiallyOrdered : partially_ordered<PartiallyOrdered, PartiallyOrdered, void> {
+struct PartiallyOrdered
+    : partially_ordered<PartiallyOrdered, PartiallyOrdered, void> {
   PartiallyOrdered(double i) : x(i) {}
 
   bool operator<(const PartiallyOrdered& o) const noexcept { return x < o.x; }
@@ -63,7 +64,8 @@ void test_nan(std::true_type) {
   //   BOOST_TEST(nan != nan);
   // Probably related:
   // https://developercommunity.visualstudio.com/content/problem/445462/nan-nan-is-constant-folded-to-true-but-should-prob.html
-  // The tests below don't fail probably because constant-folding doesn't happen.
+  // The tests below don't fail probably because constant-folding doesn't
+  // happen.
 
   BOOST_TEST_NOT(T(1.0) < T(nan));
   BOOST_TEST_NOT(T(1.0) > T(nan));

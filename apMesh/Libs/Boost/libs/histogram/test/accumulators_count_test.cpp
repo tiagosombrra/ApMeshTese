@@ -7,6 +7,7 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/histogram/accumulators/count.hpp>
 #include <boost/histogram/accumulators/ostream.hpp>
+
 #include "throw_exception.hpp"
 #include "utility_str.hpp"
 

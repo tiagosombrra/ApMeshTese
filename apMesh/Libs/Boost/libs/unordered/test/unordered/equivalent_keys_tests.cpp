@@ -10,16 +10,16 @@
 #include "../helpers/postfix.hpp"
 // clang-format on
 
-#include "../helpers/test.hpp"
 #include <algorithm>
 #include <map>
-#include "../helpers/list.hpp"
-#include "../helpers/tracker.hpp"
+
 #include "../helpers/invariants.hpp"
+#include "../helpers/list.hpp"
+#include "../helpers/test.hpp"
+#include "../helpers/tracker.hpp"
 
 template <class Container, class Iterator>
-void test_equal_insertion(Iterator begin, Iterator end)
-{
+void test_equal_insertion(Iterator begin, Iterator end) {
   typedef test::ordered<Container> tracker;
 
   Container x1;
@@ -35,7 +35,7 @@ void test_equal_insertion(Iterator begin, Iterator end)
   test::check_equivalent_keys(x1);
 }
 
-UNORDERED_AUTO_TEST (set_tests) {
+UNORDERED_AUTO_TEST(set_tests) {
   int values[][5] = {{1}, {54, 23}, {-13, 65}, {77, 77}, {986, 25, 986}};
 
   typedef boost::unordered_set<int> set;
@@ -54,7 +54,7 @@ UNORDERED_AUTO_TEST (set_tests) {
   test_equal_insertion<multiset>(values[4], values[4] + 3);
 }
 
-UNORDERED_AUTO_TEST (map_tests) {
+UNORDERED_AUTO_TEST(map_tests) {
   typedef test::list<std::pair<int const, int> > values_type;
   values_type v[5];
   v[0].push_back(std::pair<int const, int>(1, 1));
@@ -66,12 +66,12 @@ UNORDERED_AUTO_TEST (map_tests) {
   v[2].push_back(std::pair<int const, int>(432, 24));
 
   for (int i = 0; i < 5; ++i)
-    test_equal_insertion<boost::unordered_map<int, int> >(
-      v[i].begin(), v[i].end());
+    test_equal_insertion<boost::unordered_map<int, int> >(v[i].begin(),
+                                                          v[i].end());
 
   for (int i2 = 0; i2 < 5; ++i2)
-    test_equal_insertion<boost::unordered_multimap<int, int> >(
-      v[i2].begin(), v[i2].end());
+    test_equal_insertion<boost::unordered_multimap<int, int> >(v[i2].begin(),
+                                                               v[i2].end());
 }
 
 RUN_TESTS()

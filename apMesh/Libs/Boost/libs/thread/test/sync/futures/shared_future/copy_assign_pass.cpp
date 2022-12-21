@@ -18,13 +18,11 @@
 
 // shared_future& operator=(const shared_future&);
 
-
 #define BOOST_THREAD_VERSION 3
-#include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/thread/future.hpp>
 
-int main()
-{
+int main() {
   {
     typedef int T;
     boost::promise<T> p;
@@ -33,7 +31,6 @@ int main()
     f = f0;
     BOOST_TEST(f0.valid());
     BOOST_TEST(f.valid());
-
   }
   {
     typedef int T;
@@ -82,4 +79,3 @@ int main()
 }
 
 //#include "../../../remove_error_code_unused_warning.hpp"
-

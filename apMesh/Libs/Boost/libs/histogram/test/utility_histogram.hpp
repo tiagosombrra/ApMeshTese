@@ -54,7 +54,7 @@ auto make_s(dynamic_tag, S&& s, const Axes&... axes) {
   return make_histogram_with(s, make_axis_vector(axes...));
 }
 
-} // namespace histogram
-} // namespace boost
+}  // namespace histogram
+}  // namespace boost
 
 #endif

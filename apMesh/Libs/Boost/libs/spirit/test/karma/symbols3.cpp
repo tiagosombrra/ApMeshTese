@@ -1,139 +1,118 @@
 //  Copyright (c) 2001-2011 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
-#include <boost/spirit/include/karma_auxiliary.hpp>
-#include <boost/spirit/include/karma_char.hpp>
-#include <boost/spirit/include/karma_string.hpp>
-#include <boost/spirit/include/karma_operator.hpp>
-#include <boost/spirit/include/karma_directive.hpp>
-#include <boost/spirit/include/karma_generate.hpp>
-#include <boost/spirit/include/karma_nonterminal.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
+#include <boost/spirit/include/karma_auxiliary.hpp>
+#include <boost/spirit/include/karma_char.hpp>
+#include <boost/spirit/include/karma_directive.hpp>
+#include <boost/spirit/include/karma_generate.hpp>
+#include <boost/spirit/include/karma_nonterminal.hpp>
+#include <boost/spirit/include/karma_operator.hpp>
+#include <boost/spirit/include/karma_string.hpp>
 
 #include "test.hpp"
 
 namespace fusion = boost::fusion;
 
 template <typename T>
-inline std::vector<T> 
-make_vector(T const& t1, T const& t2)
-{
-    std::vector<T> v;
-    v.push_back(t1);
-    v.push_back(t2);
-    return v;
+inline std::vector<T> make_vector(T const& t1, T const& t2) {
+  std::vector<T> v;
+  v.push_back(t1);
+  v.push_back(t2);
+  return v;
 }
 
-int main()
-{
-    using spirit_test::test;
-    using boost::spirit::karma::symbols;
+int main() {
+  using boost::spirit::karma::symbols;
+  using spirit_test::test;
 
-    { // more advanced
-        using boost::spirit::karma::rule;
-        using boost::spirit::karma::lit;
-        using boost::spirit::karma::char_;
+  {  // more advanced
+    using boost::spirit::karma::char_;
+    using boost::spirit::karma::lit;
+    using boost::spirit::karma::rule;
 
-        typedef spirit_test::output_iterator<char>::type output_iterator_type;
+    typedef spirit_test::output_iterator<char>::type output_iterator_type;
 
-        symbols<char, rule<output_iterator_type, char()> > sym;
-        rule<output_iterator_type, char()> r1 = char_;
-        
-        sym.add
-            ('j', r1.alias())
-            ('h', r1.alias())
-            ('t', r1.alias())
-            ('k', r1.alias())
-        ;
+    symbols<char, rule<output_iterator_type, char()> > sym;
+    rule<output_iterator_type, char()> r1 = char_;
 
-        BOOST_TEST_TRAIT_TRUE((
-            boost::spirit::traits::is_generator<
-                symbols<char, rule<output_iterator_type, char()> > >));
+    sym.add('j', r1.alias())('h', r1.alias())('t', r1.alias())('k', r1.alias());
 
-        BOOST_TEST((test("J", sym, make_vector('j', 'J'))));
-        BOOST_TEST((test("H", sym, make_vector('h', 'H'))));
-        BOOST_TEST((test("T", sym, make_vector('t', 'T'))));
-        BOOST_TEST((test("K", sym, make_vector('k', 'K'))));
-        BOOST_TEST((!test("", sym, 'x')));
+    BOOST_TEST_TRAIT_TRUE(
+        (boost::spirit::traits::is_generator<
+            symbols<char, rule<output_iterator_type, char()> > >));
 
-        // test copy
-        symbols<char, rule<output_iterator_type, char()> > sym2;
-        sym2 = sym;
-        BOOST_TEST((test("J", sym2, make_vector('j', 'J'))));
-        BOOST_TEST((test("H", sym2, make_vector('h', 'H'))));
-        BOOST_TEST((test("T", sym2, make_vector('t', 'T'))));
-        BOOST_TEST((test("K", sym2, make_vector('k', 'K'))));
-        BOOST_TEST((!test("", sym2, 'x')));
+    BOOST_TEST((test("J", sym, make_vector('j', 'J'))));
+    BOOST_TEST((test("H", sym, make_vector('h', 'H'))));
+    BOOST_TEST((test("T", sym, make_vector('t', 'T'))));
+    BOOST_TEST((test("K", sym, make_vector('k', 'K'))));
+    BOOST_TEST((!test("", sym, 'x')));
 
-        // make sure it plays well with other generators
-        BOOST_TEST((test("Jyo", sym << "yo", make_vector('j', 'J'))));
+    // test copy
+    symbols<char, rule<output_iterator_type, char()> > sym2;
+    sym2 = sym;
+    BOOST_TEST((test("J", sym2, make_vector('j', 'J'))));
+    BOOST_TEST((test("H", sym2, make_vector('h', 'H'))));
+    BOOST_TEST((test("T", sym2, make_vector('t', 'T'))));
+    BOOST_TEST((test("K", sym2, make_vector('k', 'K'))));
+    BOOST_TEST((!test("", sym2, 'x')));
 
-        sym.remove
-            ('j')
-            ('h')
-        ;
+    // make sure it plays well with other generators
+    BOOST_TEST((test("Jyo", sym << "yo", make_vector('j', 'J'))));
 
-        BOOST_TEST((!test("", sym, 'j')));
-        BOOST_TEST((!test("", sym, 'h')));
-    }
+    sym.remove('j')('h');
 
-    { // basics
-        symbols<std::string> sym;
+    BOOST_TEST((!test("", sym, 'j')));
+    BOOST_TEST((!test("", sym, 'h')));
+  }
 
-        sym.add
-            ("Joel")
-            ("Hartmut")
-            ("Tom")
-            ("Kim")
-        ;
+  {  // basics
+    symbols<std::string> sym;
 
-        BOOST_TEST_TRAIT_TRUE((
-            boost::spirit::traits::is_generator<
-                symbols<char, std::string> >));
+    sym.add("Joel")("Hartmut")("Tom")("Kim");
 
-        BOOST_TEST((test("Joel", sym, "Joel")));
-        BOOST_TEST((test("Hartmut", sym, "Hartmut")));
-        BOOST_TEST((test("Tom", sym, "Tom")));
-        BOOST_TEST((test("Kim", sym, "Kim")));
-        BOOST_TEST((!test("", sym, "X")));
+    BOOST_TEST_TRAIT_TRUE(
+        (boost::spirit::traits::is_generator<symbols<char, std::string> >));
 
-        // test copy
-        symbols<std::string> sym2;
-        sym2 = sym;
-        BOOST_TEST((test("Joel", sym2, "Joel")));
-        BOOST_TEST((test("Hartmut", sym2, "Hartmut")));
-        BOOST_TEST((test("Tom", sym2, "Tom")));
-        BOOST_TEST((test("Kim", sym2, "Kim")));
-        BOOST_TEST((!test("", sym2, "X")));
+    BOOST_TEST((test("Joel", sym, "Joel")));
+    BOOST_TEST((test("Hartmut", sym, "Hartmut")));
+    BOOST_TEST((test("Tom", sym, "Tom")));
+    BOOST_TEST((test("Kim", sym, "Kim")));
+    BOOST_TEST((!test("", sym, "X")));
 
-        // make sure it plays well with other generators
-        BOOST_TEST((test("Joelyo", sym << "yo", "Joel")));
+    // test copy
+    symbols<std::string> sym2;
+    sym2 = sym;
+    BOOST_TEST((test("Joel", sym2, "Joel")));
+    BOOST_TEST((test("Hartmut", sym2, "Hartmut")));
+    BOOST_TEST((test("Tom", sym2, "Tom")));
+    BOOST_TEST((test("Kim", sym2, "Kim")));
+    BOOST_TEST((!test("", sym2, "X")));
 
-        sym.remove
-            ("Joel")
-            ("Hartmut")
-        ;
+    // make sure it plays well with other generators
+    BOOST_TEST((test("Joelyo", sym << "yo", "Joel")));
 
-        BOOST_TEST((!test("", sym, "Joel")));
-        BOOST_TEST((!test("", sym, "Hartmut")));
-    }
+    sym.remove("Joel")("Hartmut");
 
-    { // name
-        symbols <std::string> sym("test1"), sym2;
-        BOOST_TEST(sym.name() == "test1");
+    BOOST_TEST((!test("", sym, "Joel")));
+    BOOST_TEST((!test("", sym, "Hartmut")));
+  }
 
-        sym.name("test");
-        BOOST_TEST(sym.name() == "test");
-        sym2 = sym;
-        BOOST_TEST(sym2.name() == "test");
+  {  // name
+    symbols<std::string> sym("test1"), sym2;
+    BOOST_TEST(sym.name() == "test1");
 
-        symbols <std::string> sym3(sym);
-        BOOST_TEST(sym3.name() == "test");
-    }
+    sym.name("test");
+    BOOST_TEST(sym.name() == "test");
+    sym2 = sym;
+    BOOST_TEST(sym2.name() == "test");
 
-    return boost::report_errors();
+    symbols<std::string> sym3(sym);
+    BOOST_TEST(sym3.name() == "test");
+  }
+
+  return boost::report_errors();
 }

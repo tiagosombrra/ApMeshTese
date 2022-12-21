@@ -12,29 +12,23 @@
 #include <cassert>
 
 template <int>
-struct prop
-{
-};
+struct prop {};
 
 template <int>
-struct object
-{
-};
+struct object {};
 
 namespace boost {
 namespace asio {
 
-template<int N, int M>
-struct is_applicable_property<object<N>, prop<M> >
-{
+template <int N, int M>
+struct is_applicable_property<object<N>, prop<M> > {
   static const bool value = true;
 };
 
-} // namespace asio
-} // namespace boost
+}  // namespace asio
+}  // namespace boost
 
-int main()
-{
+int main() {
   assert((!boost::asio::can_require_concept<object<1>, prop<2> >::value));
   assert((!boost::asio::can_require_concept<const object<1>, prop<2> >::value));
 }

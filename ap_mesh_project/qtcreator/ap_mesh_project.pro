@@ -1,0 +1,156 @@
+CONFIG += c++11 console
+CONFIG -= app_bundle
+QMAKE_CXXFLAGS += -O3 -fopenmp     #-g  -pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
+QMAKE_LFLAGS += -O3 -fopenmp       #-g  -pg   -std=gnu++0x#-march=native #-m64 #-mavx
+
+# MPI Settings
+QMAKE_CXX = mpicxx
+QMAKE_CXX_RELEASE = $$QMAKE_CXX
+QMAKE_CXX_DEBUG = $$QMAKE_CXX
+QMAKE_LINK = $$QMAKE_CXX
+QMAKE_CC = mpicc
+
+QMAKE_CFLAGS += $$system(mpicc --showme:compile)
+QMAKE_LFLAGS += $$system(mpicxx --showme:link)
+QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+
+DEFINES += QT_DEPRECATED_WARNINGS
+
+# You can also make your code fail to compile if it uses deprecated APIs.
+# In order to do so, uncomment the following line.
+# You can also select to disable deprecated APIs only up to a certain version of Qt.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+SOURCES += \
+    ../src/adapter/AdaptadorPorCurvatura.cpp \
+    ../src/crab_mesh/aft/AdvancingFront.cpp \
+    ../src/crab_mesh/aft/Boundary.cpp \
+    ../src/crab_mesh/aft/Quadtree.cpp \
+    ../src/crab_mesh/aft/QuadtreeCell.cpp \
+    ../src/crab_mesh/aft/Shape.cpp \
+    ../src/crab_mesh/numerical/BisectionEquationRoot.cpp \
+    ../src/crab_mesh/numerical/Function.cpp \
+    ../src/crab_mesh/performer/IdManager.cpp \
+    ../src/crab_mesh/performer/RangedIdManager.cpp \
+    ../src/curvature/Adjacente.cpp \
+    ../src/curvature/Curvatura.cpp \
+    ../src/curvature/CurvaturaAnalitica.cpp \
+    ../src/curvature/CurvaturaDiscreta.cpp \
+    ../src/data/curve/CurvParamBezier.cpp \
+    ../src/data/curve/CurvParamHermite.cpp \
+    ../src/data/curve/Curva.cpp \
+    ../src/data/curve/CurvaParametrica.cpp \
+    ../src/data/Definitions.cpp \
+    ../src/data/Edge.cpp \
+    ../src/data/Elemento.cpp \
+    ../src/data/Face.cpp \
+    ../src/data/Geometria.cpp \
+    ../src/data/mesh/Malha.cpp \
+    ../src/data/mesh/SubMalha.cpp \
+    ../src/data/Modelo.cpp \
+    ../src/data/Noh.cpp \
+    ../src/data/patch/BezierPatch.cpp \
+    ../src/data/patch/CoonsPatch.cpp \
+    ../src/data/patch/HermitePatch.cpp \
+    ../src/data/patch/Patch.cpp \
+    ../src/data/Ponto.cpp \
+    ../src/data/tree/BinTree.cpp \
+    ../src/data/Triangulo.cpp \
+    ../src/data/Vertex.cpp \
+    ../src/data/Vertice.cpp \
+    ../src/data/Vetor.cpp \
+    ../src/estimate/ChargeEstimateProcess.cpp \
+    ../src/generator/Gerador.cpp \
+    ../src/generator/GeradorAdaptativo.cpp \
+    ../src/generator/GeradorAdaptativoPorCurvatura.cpp \
+    ../src/input_output/Arquivo.cpp \
+    ../src/input_output/Modelos3d.cpp \
+    ../src/input_output/PatchBezierReader.cpp \
+    ../src/input_output/ReaderPatches.cpp \
+    ../src/input_output/WriteOBJFile.cpp \
+    ../src/parallel/ApMeshCommunicator.cpp \
+    ../src/parallel/Communicator.cpp \
+    ../src/parallel/MPICommunicator.cpp \
+    ../src/parallel/MPIMessage.cpp \
+    ../src/parallel/Message.cpp \
+    ../src/parallel/NoCommunicator.cpp \
+    ../src/parallel/NoThreadManager.cpp \
+    ../src/parallel/OMPThreadManager.cpp \
+    ../src/parallel/ParallelMeshGenerator.cpp \
+    ../src/parallel/TMCommunicator.cpp \
+    ../src/parallel/ThreadManager.cpp \
+    ../src/parallel/Transferable.cpp \
+    ../src/timer/Timer.cpp \
+    ../src/main.cpp
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    ../include/adapter/AdaptadorPorCurvatura.h \
+    ../include/crab_mesh/aft/AdvancingFront.h \
+    ../include/crab_mesh/aft/Boundary.h \
+    ../include/crab_mesh/aft/Quadtree.h \
+    ../include/crab_mesh/aft/QuadtreeCell.h \
+    ../include/crab_mesh/aft/Shape.h \
+    ../include/crab_mesh/numerical/BisectionEquationRoot.h \
+    ../include/crab_mesh/numerical/EquationRoot.h \
+    ../include/crab_mesh/numerical/EquationRootFunction.h \
+    ../include/crab_mesh/numerical/Function.h \
+    ../include/crab_mesh/numerical/MultiVariableFunction.h \
+    ../include/crab_mesh/performer/Definitions.h \
+    ../include/crab_mesh/performer/IdManager.h \
+    ../include/crab_mesh/performer/RangedIdManager.h \
+    ../include/curvature/Adjacente.h \
+    ../include/curvature/Curvatura.h \
+    ../include/curvature/CurvaturaAnalitica.h \
+    ../include/curvature/CurvaturaDiscreta.h \
+    ../include/data/curve/CurvParamBezier.h \
+    ../include/data/curve/CurvParamHermite.h \
+    ../include/data/curve/Curva.h \
+    ../include/data/curve/CurvaParametrica.h \
+    ../include/data/Definitions.h \
+    ../include/data/Edge.h \
+    ../include/data/Elemento.h \
+    ../include/data/Face.h \
+    ../include/data/Geometria.h \
+    ../include/data/Mesh/Malha.h \
+    ../include/data/Mesh/SubMalha.h \
+    ../include/data/Modelo.h \
+    ../include/data/Noh.h \
+    ../include/data/Patch/BezierPatch.h \
+    ../include/data/Patch/CoonsPatch.h \
+    ../include/data/Patch/HermitePatch.h \
+    ../include/data/Patch/Patch.h \
+    ../include/data/Ponto.h \
+    ../include/data/Tree/BinTree.h \
+    ../include/data/Triangulo.h \
+    ../include/data/Vertex.h \
+    ../include/data/Vertice.h \
+    ../include/data/Vetor.h \
+    ../include/estimate/ChargeEstimateProcess.h \
+    ../include/generator/Gerador.h \
+    ../include/generator/GeradorAdaptativo.h \
+    ../include/generator/GeradorAdaptativoPorCurvatura.h \
+    ../include/input_output/Arquivo.h \
+    ../include/input_output/Modelos3d.h \
+    ../include/input_output/PatchBezierReader.h \
+    ../include/input_output/ReaderPatches.h \
+    ../include/input_output/WriteOBJFIle.h \
+    ../include/parallel/ApMeshCommunicator.h \
+    ../include/parallel/Communicator.h \
+    ../include/parallel/Definitions.h \
+    ../include/parallel/MPICommunicator.h \
+    ../include/parallel/MPIMessage.h \
+    ../include/parallel/Message.h \
+    ../include/parallel/NoCommunicator.h \
+    ../include/parallel/NoThreadManager.h \
+    ../include/parallel/OMPThreadManager.h \
+    ../include/parallel/ParallelMeshGenerator.h \
+    ../include/parallel/TMCommunicator.h \
+    ../include/parallel/ThreadManager.h \
+    ../include/parallel/Transferable.h \
+    ../include/timer/Timer.h

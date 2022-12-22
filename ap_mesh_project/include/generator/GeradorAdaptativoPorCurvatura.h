@@ -23,8 +23,8 @@ This source code is under GNU General Public License v3 */
 
 #include "../adapter/adapter.h"
 #include "../crab_mesh/performer/ranged_id_manager.h"
-#include "../curvature/CurvaturaAnalitica.h"
-#include "../curvature/CurvaturaDiscreta.h"
+#include "../curvature/curvature_analytical.h"
+#include "../curvature/curvature_discrete.h"
 #include "../data/Definitions.h"
 #include "../data/Noh.h"
 #include "../data/Triangulo.h"

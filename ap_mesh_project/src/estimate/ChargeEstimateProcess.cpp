@@ -295,46 +295,46 @@ double ChargeEstimateProcess::calculateKaMedioPatch(BezierPatch* patch,
       Ponto ponto_dd = patch->parametrizar(0.75, 0.75);
       ponto_d = &ponto_dd;
 
-      CurvaturaAnalitica kaa(*(static_cast<Noh*>(ponto_a)),
-                             *(static_cast<CoonsPatch*>(patch)));
-      CurvaturaAnalitica kab(*(static_cast<Noh*>(ponto_b)),
-                             *(static_cast<CoonsPatch*>(patch)));
-      CurvaturaAnalitica kac(*(static_cast<Noh*>(ponto_c)),
-                             *(static_cast<CoonsPatch*>(patch)));
-      CurvaturaAnalitica kad(*(static_cast<Noh*>(ponto_d)),
-                             *(static_cast<CoonsPatch*>(patch)));
+      CurvatureAnalytical kaa(*(static_cast<Noh*>(ponto_a)),
+                              *(static_cast<CoonsPatch*>(patch)));
+      CurvatureAnalytical kab(*(static_cast<Noh*>(ponto_b)),
+                              *(static_cast<CoonsPatch*>(patch)));
+      CurvatureAnalytical kac(*(static_cast<Noh*>(ponto_c)),
+                              *(static_cast<CoonsPatch*>(patch)));
+      CurvatureAnalytical kad(*(static_cast<Noh*>(ponto_d)),
+                              *(static_cast<CoonsPatch*>(patch)));
 
-      double ka_ponto_a = kaa.gauss();
+      double ka_ponto_a = kaa.CalculateGaussCurvature();
       // if (fabs(ka_ponto_a) < 0, 0001) {
       if (fabs(ka_ponto_a) < 0.0001) {
-        ka_ponto_a = kaa.media();
+        ka_ponto_a = kaa.CalculateMeanCurvature();
       }
 
       arrayKAM[i] = fabs(ka_ponto_a);
       i++;
 
-      double kb_ponto_b = kab.gauss();
+      double kb_ponto_b = kab.CalculateGaussCurvature();
       // if (fabs(kb_ponto_b) < 0, 0001) {
       if (fabs(kb_ponto_b) < 0.0001) {
-        kb_ponto_b = kab.media();
+        kb_ponto_b = kab.CalculateMeanCurvature();
       }
 
       arrayKAM[i] = fabs(kb_ponto_b);
       i++;
 
-      double kc_ponto_c = kac.gauss();
+      double kc_ponto_c = kac.CalculateGaussCurvature();
       // if (fabs(kc_ponto_c) < 0, 0001) {
       if (fabs(kc_ponto_c) < 0.0001) {
-        kc_ponto_c = kac.media();
+        kc_ponto_c = kac.CalculateMeanCurvature();
       }
 
       arrayKAM[i] = fabs(kc_ponto_c);
       i++;
 
-      double kd_ponto_d = kad.gauss();
+      double kd_ponto_d = kad.CalculateGaussCurvature();
       // if (fabs(kd_ponto_d) < 0, 0001) {
       if (fabs(kd_ponto_d) < 0.0001) {
-        kd_ponto_d = kad.media();
+        kd_ponto_d = kad.CalculateMeanCurvature();
       }
 
       arrayKAM[i] = fabs(kd_ponto_d);
@@ -361,57 +361,57 @@ double ChargeEstimateProcess::calculateKaMedioPatch(BezierPatch* patch,
         Ponto ponto_ii = patch->parametrizar(1.0, 1.0);
         ponto_i = &ponto_ii;
 
-        CurvaturaAnalitica kae(*(static_cast<Noh*>(ponto_e)),
-                               *(static_cast<CoonsPatch*>(patch)));
-        CurvaturaAnalitica kaf(*(static_cast<Noh*>(ponto_f)),
-                               *(static_cast<CoonsPatch*>(patch)));
-        CurvaturaAnalitica kag(*(static_cast<Noh*>(ponto_g)),
-                               *(static_cast<CoonsPatch*>(patch)));
-        CurvaturaAnalitica kah(*(static_cast<Noh*>(ponto_h)),
-                               *(static_cast<CoonsPatch*>(patch)));
-        CurvaturaAnalitica kai(*(static_cast<Noh*>(ponto_i)),
-                               *(static_cast<CoonsPatch*>(patch)));
+        CurvatureAnalytical kae(*(static_cast<Noh*>(ponto_e)),
+                                *(static_cast<CoonsPatch*>(patch)));
+        CurvatureAnalytical kaf(*(static_cast<Noh*>(ponto_f)),
+                                *(static_cast<CoonsPatch*>(patch)));
+        CurvatureAnalytical kag(*(static_cast<Noh*>(ponto_g)),
+                                *(static_cast<CoonsPatch*>(patch)));
+        CurvatureAnalytical kah(*(static_cast<Noh*>(ponto_h)),
+                                *(static_cast<CoonsPatch*>(patch)));
+        CurvatureAnalytical kai(*(static_cast<Noh*>(ponto_i)),
+                                *(static_cast<CoonsPatch*>(patch)));
 
-        double ke_ponto_e = kae.gauss();
+        double ke_ponto_e = kae.CalculateGaussCurvature();
         // if (fabs(ke_ponto_e) < 0, 0001) {
         if (fabs(ke_ponto_e) < 0.0001) {
-          ke_ponto_e = kae.media();
+          ke_ponto_e = kae.CalculateMeanCurvature();
         }
 
         arrayKAM[i] = fabs(ke_ponto_e);
         i++;
 
-        double kf_ponto_f = kaf.gauss();
+        double kf_ponto_f = kaf.CalculateGaussCurvature();
         // if (fabs(kf_ponto_f) < 0, 0001) {
         if (fabs(kf_ponto_f) < 0.0001) {
-          kf_ponto_f = kaf.media();
+          kf_ponto_f = kaf.CalculateMeanCurvature();
         }
 
         arrayKAM[i] = fabs(kf_ponto_f);
         i++;
 
-        double kg_ponto_g = kag.gauss();
+        double kg_ponto_g = kag.CalculateGaussCurvature();
         // if (fabs(kg_ponto_g) < 0, 0001) {
         if (fabs(kg_ponto_g) < 0.0001) {
-          kg_ponto_g = kag.media();
+          kg_ponto_g = kag.CalculateMeanCurvature();
         }
 
         arrayKAM[i] = fabs(kg_ponto_g);
         i++;
 
-        double kh_ponto_h = kah.gauss();
+        double kh_ponto_h = kah.CalculateGaussCurvature();
         // if (fabs(kh_ponto_h) < 0, 0001) {
         if (fabs(kh_ponto_h) < 0.0001) {
-          kh_ponto_h = kah.media();
+          kh_ponto_h = kah.CalculateMeanCurvature();
         }
 
         arrayKAM[i] = fabs(kh_ponto_h);
         i++;
 
-        double ki_ponto_i = kai.gauss();
+        double ki_ponto_i = kai.CalculateGaussCurvature();
         // if (fabs(ki_ponto_i) < 0, 0001) {
         if (fabs(ki_ponto_i) < 0.0001) {
-          ki_ponto_i = kai.media();
+          ki_ponto_i = kai.CalculateMeanCurvature();
         }
 
         arrayKAM[i] = fabs(ki_ponto_i);
@@ -450,90 +450,90 @@ double ChargeEstimateProcess::calculateKaMedioPatch(BezierPatch* patch,
           Ponto ponto_rr = patch->parametrizar(0.875, 0.875);
           ponto_r = &ponto_rr;
 
-          CurvaturaAnalitica kaj(*(static_cast<Noh*>(ponto_j)),
-                                 *(static_cast<CoonsPatch*>(patch)));
-          CurvaturaAnalitica kal(*(static_cast<Noh*>(ponto_l)),
-                                 *(static_cast<CoonsPatch*>(patch)));
-          CurvaturaAnalitica kam(*(static_cast<Noh*>(ponto_m)),
-                                 *(static_cast<CoonsPatch*>(patch)));
-          CurvaturaAnalitica kan(*(static_cast<Noh*>(ponto_n)),
-                                 *(static_cast<CoonsPatch*>(patch)));
-          CurvaturaAnalitica kao(*(static_cast<Noh*>(ponto_o)),
-                                 *(static_cast<CoonsPatch*>(patch)));
-          CurvaturaAnalitica kap(*(static_cast<Noh*>(ponto_p)),
-                                 *(static_cast<CoonsPatch*>(patch)));
-          CurvaturaAnalitica kaq(*(static_cast<Noh*>(ponto_q)),
-                                 *(static_cast<CoonsPatch*>(patch)));
-          CurvaturaAnalitica kar(*(static_cast<Noh*>(ponto_r)),
-                                 *(static_cast<CoonsPatch*>(patch)));
+          CurvatureAnalytical kaj(*(static_cast<Noh*>(ponto_j)),
+                                  *(static_cast<CoonsPatch*>(patch)));
+          CurvatureAnalytical kal(*(static_cast<Noh*>(ponto_l)),
+                                  *(static_cast<CoonsPatch*>(patch)));
+          CurvatureAnalytical kam(*(static_cast<Noh*>(ponto_m)),
+                                  *(static_cast<CoonsPatch*>(patch)));
+          CurvatureAnalytical kan(*(static_cast<Noh*>(ponto_n)),
+                                  *(static_cast<CoonsPatch*>(patch)));
+          CurvatureAnalytical kao(*(static_cast<Noh*>(ponto_o)),
+                                  *(static_cast<CoonsPatch*>(patch)));
+          CurvatureAnalytical kap(*(static_cast<Noh*>(ponto_p)),
+                                  *(static_cast<CoonsPatch*>(patch)));
+          CurvatureAnalytical kaq(*(static_cast<Noh*>(ponto_q)),
+                                  *(static_cast<CoonsPatch*>(patch)));
+          CurvatureAnalytical kar(*(static_cast<Noh*>(ponto_r)),
+                                  *(static_cast<CoonsPatch*>(patch)));
 
-          double kj_ponto_j = kaj.gauss();
+          double kj_ponto_j = kaj.CalculateGaussCurvature();
           // if (fabs(kj_ponto_j) < 0, 0001) {
           if (fabs(kj_ponto_j) < 0.0001) {
-            kj_ponto_j = kaj.media();
+            kj_ponto_j = kaj.CalculateMeanCurvature();
           }
 
           arrayKAM[i] = fabs(kj_ponto_j);
           i++;
 
-          double kl_ponto_l = kal.gauss();
+          double kl_ponto_l = kal.CalculateGaussCurvature();
           // if (fabs(kl_ponto_l) < 0, 0001) {
           if (fabs(kl_ponto_l) < 0.0001) {
-            kl_ponto_l = kal.media();
+            kl_ponto_l = kal.CalculateMeanCurvature();
           }
 
           arrayKAM[i] = fabs(kl_ponto_l);
           i++;
 
-          double km_ponto_m = kam.gauss();
+          double km_ponto_m = kam.CalculateGaussCurvature();
           // if (fabs(km_ponto_m) < 0, 0001) {
           if (fabs(km_ponto_m) < 0.0001) {
-            km_ponto_m = kam.media();
+            km_ponto_m = kam.CalculateMeanCurvature();
           }
 
           arrayKAM[i] = fabs(km_ponto_m);
           i++;
 
-          double kn_ponto_n = kan.gauss();
+          double kn_ponto_n = kan.CalculateGaussCurvature();
           // if (fabs(kn_ponto_n) < 0, 0001) {
           if (fabs(kn_ponto_n) < 0.0001) {
-            kn_ponto_n = kan.media();
+            kn_ponto_n = kan.CalculateMeanCurvature();
           }
 
           arrayKAM[i] = fabs(kn_ponto_n);
           i++;
 
-          double ko_ponto_o = kao.gauss();
+          double ko_ponto_o = kao.CalculateGaussCurvature();
           // if (fabs(ko_ponto_o) < 0, 0001) {
           if (fabs(ko_ponto_o) < 0.0001) {
-            ko_ponto_o = kao.media();
+            ko_ponto_o = kao.CalculateMeanCurvature();
           }
 
           arrayKAM[i] = fabs(ko_ponto_o);
           i++;
 
-          double kp_ponto_p = kap.gauss();
+          double kp_ponto_p = kap.CalculateGaussCurvature();
           // if (fabs(kp_ponto_p) < 0, 0001) {
           if (fabs(kp_ponto_p) < 0.0001) {
-            kp_ponto_p = kap.media();
+            kp_ponto_p = kap.CalculateMeanCurvature();
           }
 
           arrayKAM[i] = fabs(kp_ponto_p);
           i++;
 
-          double kq_ponto_q = kaq.gauss();
+          double kq_ponto_q = kaq.CalculateGaussCurvature();
           // if (fabs(kq_ponto_q) < 0, 0001) {
           if (fabs(kq_ponto_q) < 0.0001) {
-            kq_ponto_q = kaq.media();
+            kq_ponto_q = kaq.CalculateMeanCurvature();
           }
 
           arrayKAM[i] = fabs(kq_ponto_q);
           i++;
 
-          double kr_ponto_r = kar.gauss();
+          double kr_ponto_r = kar.CalculateGaussCurvature();
           // if (fabs(kr_ponto_r) < 0, 0001) {
           if (fabs(kr_ponto_r) < 0.0001) {
-            kr_ponto_r = kar.media();
+            kr_ponto_r = kar.CalculateMeanCurvature();
           }
 
           arrayKAM[i] = fabs(kr_ponto_r);
@@ -572,90 +572,90 @@ double ChargeEstimateProcess::calculateKaMedioPatch(BezierPatch* patch,
             Ponto ponto_zz = patch->parametrizar(0.75, 1.0);
             ponto_z = &ponto_zz;
 
-            CurvaturaAnalitica kas(*(static_cast<Noh*>(ponto_s)),
-                                   *(static_cast<CoonsPatch*>(patch)));
-            CurvaturaAnalitica kat(*(static_cast<Noh*>(ponto_t)),
-                                   *(static_cast<CoonsPatch*>(patch)));
-            CurvaturaAnalitica kau(*(static_cast<Noh*>(ponto_u)),
-                                   *(static_cast<CoonsPatch*>(patch)));
-            CurvaturaAnalitica kav(*(static_cast<Noh*>(ponto_v)),
-                                   *(static_cast<CoonsPatch*>(patch)));
-            CurvaturaAnalitica kaw(*(static_cast<Noh*>(ponto_w)),
-                                   *(static_cast<CoonsPatch*>(patch)));
-            CurvaturaAnalitica kax(*(static_cast<Noh*>(ponto_x)),
-                                   *(static_cast<CoonsPatch*>(patch)));
-            CurvaturaAnalitica kay(*(static_cast<Noh*>(ponto_y)),
-                                   *(static_cast<CoonsPatch*>(patch)));
-            CurvaturaAnalitica kaz(*(static_cast<Noh*>(ponto_z)),
-                                   *(static_cast<CoonsPatch*>(patch)));
+            CurvatureAnalytical kas(*(static_cast<Noh*>(ponto_s)),
+                                    *(static_cast<CoonsPatch*>(patch)));
+            CurvatureAnalytical kat(*(static_cast<Noh*>(ponto_t)),
+                                    *(static_cast<CoonsPatch*>(patch)));
+            CurvatureAnalytical kau(*(static_cast<Noh*>(ponto_u)),
+                                    *(static_cast<CoonsPatch*>(patch)));
+            CurvatureAnalytical kav(*(static_cast<Noh*>(ponto_v)),
+                                    *(static_cast<CoonsPatch*>(patch)));
+            CurvatureAnalytical kaw(*(static_cast<Noh*>(ponto_w)),
+                                    *(static_cast<CoonsPatch*>(patch)));
+            CurvatureAnalytical kax(*(static_cast<Noh*>(ponto_x)),
+                                    *(static_cast<CoonsPatch*>(patch)));
+            CurvatureAnalytical kay(*(static_cast<Noh*>(ponto_y)),
+                                    *(static_cast<CoonsPatch*>(patch)));
+            CurvatureAnalytical kaz(*(static_cast<Noh*>(ponto_z)),
+                                    *(static_cast<CoonsPatch*>(patch)));
 
-            double ks_ponto_s = kas.gauss();
+            double ks_ponto_s = kas.CalculateGaussCurvature();
             // if (fabs(ks_ponto_s) < 0, 0001) {
             if (fabs(ks_ponto_s) < 0.0001) {
-              ks_ponto_s = kas.media();
+              ks_ponto_s = kas.CalculateMeanCurvature();
             }
 
             arrayKAM[i] = fabs(ks_ponto_s);
             i++;
 
-            double kt_ponto_t = kat.gauss();
+            double kt_ponto_t = kat.CalculateGaussCurvature();
             // if (fabs(kt_ponto_t) < 0, 0001) {
             if (fabs(kt_ponto_t) < 0.0001) {
-              kt_ponto_t = kat.media();
+              kt_ponto_t = kat.CalculateMeanCurvature();
             }
 
             arrayKAM[i] = fabs(kt_ponto_t);
             i++;
 
-            double ku_ponto_u = kau.gauss();
+            double ku_ponto_u = kau.CalculateGaussCurvature();
             // if (fabs(ku_ponto_u) < 0, 0001) {
             if (fabs(ku_ponto_u) < 0.0001) {
-              ku_ponto_u = kau.media();
+              ku_ponto_u = kau.CalculateMeanCurvature();
             }
 
             arrayKAM[i] = fabs(ku_ponto_u);
             i++;
 
-            double kv_ponto_v = kav.gauss();
+            double kv_ponto_v = kav.CalculateGaussCurvature();
             // if (fabs(kv_ponto_v) < 0, 0001) {
             if (fabs(kv_ponto_v) < 0.0001) {
-              kv_ponto_v = kav.media();
+              kv_ponto_v = kav.CalculateMeanCurvature();
             }
 
             arrayKAM[i] = fabs(kv_ponto_v);
             i++;
 
-            double kw_ponto_w = kaw.gauss();
+            double kw_ponto_w = kaw.CalculateGaussCurvature();
             // if (fabs(kw_ponto_w) < 0, 0001) {
             if (fabs(kw_ponto_w) < 0.0001) {
-              kw_ponto_w = kaw.media();
+              kw_ponto_w = kaw.CalculateMeanCurvature();
             }
 
             arrayKAM[i] = fabs(kw_ponto_w);
             i++;
 
-            double kx_ponto_x = kax.gauss();
+            double kx_ponto_x = kax.CalculateGaussCurvature();
             // if (fabs(kx_ponto_x) < 0, 0001) {
             if (fabs(kx_ponto_x) < 0.0001) {
-              kx_ponto_x = kax.media();
+              kx_ponto_x = kax.CalculateMeanCurvature();
             }
 
             arrayKAM[i] = fabs(kx_ponto_x);
             i++;
 
-            double ky_ponto_y = kay.gauss();
+            double ky_ponto_y = kay.CalculateGaussCurvature();
             // if (fabs(ky_ponto_y) < 0, 0001) {
             if (fabs(ky_ponto_y) < 0.0001) {
-              ky_ponto_y = kay.media();
+              ky_ponto_y = kay.CalculateMeanCurvature();
             }
 
             arrayKAM[i] = fabs(ky_ponto_y);
             i++;
 
-            double kz_ponto_z = kaz.gauss();
+            double kz_ponto_z = kaz.CalculateGaussCurvature();
             // if (fabs(kz_ponto_z) < 0, 0001) {
             if (fabs(kz_ponto_z) < 0.0001) {
-              kz_ponto_z = kaz.media();
+              kz_ponto_z = kaz.CalculateMeanCurvature();
             }
 
             arrayKAM[i] = fabs(kz_ponto_z);

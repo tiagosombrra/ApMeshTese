@@ -870,13 +870,13 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha* malha, Timer* timer,
 
         Ponto* n = sub->getNoh(j);
         Patch* p = sub->getPatch();
-        CurvaturaAnalitica ka(*(static_cast<Noh*>(n)),
-                              *(static_cast<CoonsPatch*>(p)));
-        CurvaturaDiscreta kd(*(static_cast<Noh*>(n)));
-        double Ga = ka.gauss();
-        double Gd = kd.gauss();
-        double Ha = ka.media();
-        double Hd = kd.media();
+        CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
+                               *(static_cast<CoonsPatch*>(p)));
+        CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
+        double Ga = ka.CalculateGaussCurvature();
+        double Gd = kd.CalculateGaussCurvature();
+        double Ha = ka.CalculateMeanCurvature();
+        double Hd = kd.CalculateMeanCurvature();
 
         // tratamento para erro -nan
         if (std::isnan(Gd)) {
@@ -1282,13 +1282,13 @@ double GeradorAdaptativoPorCurvatura::erroGlobal(Malha* malha, Timer* timer,
 
       Ponto* n = sub->getNoh(j);
       Patch* p = sub->getPatch();
-      CurvaturaAnalitica ka(*(static_cast<Noh*>(n)),
-                            *(static_cast<CoonsPatch*>(p)));
-      CurvaturaDiscreta kd(*(static_cast<Noh*>(n)));
-      double Ga = ka.gauss();
-      double Gd = kd.gauss();
-      double Ha = ka.media();
-      double Hd = kd.media();
+      CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
+                             *(static_cast<CoonsPatch*>(p)));
+      CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
+      double Ga = ka.CalculateGaussCurvature();
+      double Gd = kd.CalculateGaussCurvature();
+      double Ha = ka.CalculateMeanCurvature();
+      double Hd = kd.CalculateMeanCurvature();
       // atualiza as curvaturas do nó ( para que não sejam recalculadas na
       // adaptação das curvas e do domínio )
       ((Noh*)n)->Ga = Ga;
@@ -1460,13 +1460,13 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(Malha* malha) {
     for (unsigned int j = 0; j < Nv; ++j) {
       Ponto* n = sub->getNoh(j);
       Patch* p = sub->getPatch();
-      CurvaturaAnalitica ka(*(static_cast<Noh*>(n)),
-                            *(static_cast<CoonsPatch*>(p)));
-      CurvaturaDiscreta kd(*(static_cast<Noh*>(n)));
-      double Ga = ka.gauss();
-      double Gd = kd.gauss();
-      double Ha = ka.media();
-      double Hd = kd.media();
+      CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
+                             *(static_cast<CoonsPatch*>(p)));
+      CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
+      double Ga = ka.CalculateGaussCurvature();
+      double Gd = kd.CalculateGaussCurvature();
+      double Ha = ka.CalculateMeanCurvature();
+      double Hd = kd.CalculateMeanCurvature();
       // atualiza as curvaturas do nó ( para que não sejam recalculadas na
       // adaptação das curvas e do domínio )
       ((Noh*)n)->Ga = Ga;

@@ -162,14 +162,14 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
         *(*point_current), *(*point_next));
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
-    CurvaturaAnalitica ka_p0(midpoint,
-                             *(static_cast<CoonsPatch *>(curve->getPatch(0))));
-    ka_midpoint = ka_p0.gauss();
+    CurvatureAnalytical ka_p0(midpoint,
+                              *(static_cast<CoonsPatch *>(curve->getPatch(0))));
+    ka_midpoint = ka_p0.CalculateGaussCurvature();
 
     if (curve->getNumDePatches() == 1) {
       // testamos se ka é ZERO!
       if (fabs(ka_midpoint) < TOLERANCIA) {
-        ka_midpoint = ka_p0.media();
+        ka_midpoint = ka_p0.CalculateMeanCurvature();
         kd_average = ((static_cast<Noh *>((*point_current)))->Hd +
                       (static_cast<Noh *>((*point_next))->Hd)) /
                      2.0;
@@ -179,18 +179,18 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
                      2.0;
       }
     } else {
-      double Ha = ka_p0.media();
+      double Ha = ka_p0.CalculateMeanCurvature();
 
       for (unsigned int i = 1; i < curve->getNumDePatches(); i++) {
-        CurvaturaAnalitica ka_pi(
+        CurvatureAnalytical ka_pi(
             midpoint, *(static_cast<CoonsPatch *>(curve->getPatch(i))));
-        double Ga_pi = ka_pi.gauss();
+        double Ga_pi = ka_pi.CalculateGaussCurvature();
 
         ka_midpoint = (fabs(ka_midpoint) > fabs(Ga_pi)) ? ka_midpoint : Ga_pi;
 
         // testamos se ka é ZERO!
         if (fabs(ka_midpoint) < TOLERANCIA) {
-          double Ha_pi = ka_pi.media();
+          double Ha_pi = ka_pi.CalculateMeanCurvature();
 
           ka_midpoint = (Ha > Ha_pi) ? Ha : Ha_pi;
           kd_average = ((static_cast<Noh *>((*point_current)))->Hd +
@@ -640,21 +640,21 @@ list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
         static_cast<CurvaParametrica *>(curve)->encontrar_t(midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
-    CurvaturaAnalitica ka_p0(midpoint,
-                             *(static_cast<CoonsPatch *>(curve->getPatch(0))));
+    CurvatureAnalytical ka_p0(midpoint,
+                              *(static_cast<CoonsPatch *>(curve->getPatch(0))));
 
     for (unsigned int i = 0; i < curve->getNumDePatches(); i++) {
-      CurvaturaAnalitica ka_p1(
+      CurvatureAnalytical ka_p1(
           midpoint, *(static_cast<CoonsPatch *>(curve->getPatch(i))));
-      double Ga_p0 = ka_p0.gauss();
-      double Ga_p1 = ka_p1.gauss();
+      double Ga_p0 = ka_p0.CalculateGaussCurvature();
+      double Ga_p1 = ka_p1.CalculateGaussCurvature();
 
       ka_midpoint = (fabs(Ga_p0) > fabs(Ga_p1)) ? Ga_p0 : Ga_p1;
 
       // testamos se ka é ZERO!
       if (fabs(ka_midpoint) < TOLERANCIA) {
-        double Ha_p0 = ka_p0.media();
-        double Ha_p1 = ka_p1.media();
+        double Ha_p0 = ka_p0.CalculateMeanCurvature();
+        double Ha_p1 = ka_p1.CalculateMeanCurvature();
 
         ka_midpoint = (Ha_p0 > Ha_p1) ? Ha_p0 : Ha_p1;
         kd_average = (static_cast<Noh *>((*point_current))->Hd +
@@ -735,26 +735,6 @@ list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
   list_new_points.push_back(new_noh2);
 
   return list_new_points;
-}
-
-double Adapter::CalculateNewSize(const double ka, const double kd,
-                                 const double factor_disc,
-                                 const double length_old) {
-  // Cenário 1 : ka está muito próxima a kd
-  if (((ka - TOLERANCIA_CURVATURA) < kd) and
-      (kd < (ka + TOLERANCIA_CURVATURA))) {
-    // está próximo ao plano, desrefine
-    if (fabs(ka) < TOLERANCIA_CURVATURA) {
-      return length_old * factor_disc;
-    } else {
-      // a discretização reflete bem a superfície, não faça nada!
-      return length_old;
-    }
-  }
-  // Outros cenários : refine
-  else {
-    return length_old / factor_disc;
-  }
 }
 
 // Usa a QuadTree. Gera uma nova malha e atualiza a malha do patch. A malha
@@ -975,6 +955,26 @@ else
   }
 
   return sub_mesh_new;
+}
+
+double Adapter::CalculateNewSize(const double ka, const double kd,
+                                 const double factor_disc,
+                                 const double length_old) {
+  // Cenário 1 : ka está muito próxima a kd
+  if (((ka - TOLERANCIA_CURVATURA) < kd) and
+      (kd < (ka + TOLERANCIA_CURVATURA))) {
+    // está próximo ao plano, desrefine
+    if (fabs(ka) < TOLERANCIA_CURVATURA) {
+      return length_old * factor_disc;
+    } else {
+      // a discretização reflete bem a superfície, não faça nada!
+      return length_old;
+    }
+  }
+  // Outros cenários : refine
+  else {
+    return length_old / factor_disc;
+  }
 }
 
 // #pragma omp parallel for num_threads(NUM_THREADS) firstprivate(atual,proxi)

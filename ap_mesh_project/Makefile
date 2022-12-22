@@ -10,10 +10,9 @@ src/crab_mesh/numerical/bisection_equation_root.cpp \
 src/crab_mesh/numerical/function.cpp \
 src/crab_mesh/performer/id_manager.cpp \
 src/crab_mesh/performer/ranged_id_manager.cpp \
-src/curvature/Adjacente.cpp \
-src/curvature/Curvatura.cpp \
-src/curvature/CurvaturaAnalitica.cpp \
-src/curvature/CurvaturaDiscreta.cpp \
+src/curvature/adjacent.cpp \
+src/curvature/curvature_analytical.cpp \
+src/curvature/curvature_discrete.cpp \
 src/data/curve/Curva.cpp \
 src/data/curve/CurvaParametrica.cpp \
 src/data/curve/CurvParamBezier.cpp \

@@ -32,10 +32,10 @@ include/crab_mesh/numerical/multi_variable_function.h
 include/crab_mesh/performer/definitions.h 
 include/crab_mesh/performer/id_manager.h
 include/crab_mesh/performer/ranged_id_manager.h
-include/curvature/Adjacente.h
-include/curvature/Curvatura.h
-include/curvature/CurvaturaAnalitica.h
-include/curvature/CurvaturaDiscreta.h
+include/curvature/adjacent.h
+include/curvature/curvature.h
+include/curvature/curvature_analytical.h
+include/curvature/curvature_discrete.h
 include/data/curve/Curva.h
 include/data/curve/CurvaParametrica.h
 include/data/curve/CurvParamBezier.h
@@ -93,9 +93,9 @@ src/crab_mesh/numerical/bisection_equation_root.cpp
 src/crab_mesh/numerical/function.cpp
 src/crab_mesh/performer/id_manager.cpp
 src/crab_mesh/performer/ranged_id_manager.cpp
-src/curvature/Adjacente.cpp
-src/curvature/CurvaturaAnalitica.cpp
-src/curvature/CurvaturaDiscreta.cpp
+src/curvature/adjacent.cpp
+src/curvature/curvature_analytical.cpp
+src/curvature/curvature_discrete.cpp
 src/data/curve/Curva.cpp
 src/data/curve/CurvaParametrica.cpp
 src/data/curve/CurvParamBezier.cpp

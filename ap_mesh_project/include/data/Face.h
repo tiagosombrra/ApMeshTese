@@ -1,7 +1,7 @@
 #ifndef _FACE_H_
 #define _FACE_H_
 
-#include "../crab_mesh/aft/Shape.h"
+#include "../crab_mesh/aft/shape.h"
 #include "../data/Definitions.h"
 #include "Edge.h"
 #include "Vertex.h"
@@ -13,9 +13,9 @@ namespace Par2DJMesh {
 namespace Basics {
 class Face : public Shape {
  private:
-  //#if USE_OPENGL
-  //    bool highlighted;
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     bool highlighted;
+  // #endif //#if USE_OPENGL
 
   Vertex *v[3];
   Vertex *mid;
@@ -68,14 +68,14 @@ class Face : public Shape {
 
   string getText();
 
-  //#if USE_OPENGL
-  //    void highlight();
-  //    void unhighlight();
+  // #if USE_OPENGL
+  //     void highlight();
+  //     void unhighlight();
 
   //    void draw();
-  //#endif //#if USE_OPENGL
+  // #endif //#if USE_OPENGL
 };
 }  // namespace Basics
 }  // namespace Par2DJMesh
 
-#endif  //#ifndef _FACE_H_
+#endif  // #ifndef _FACE_H_

@@ -1,11 +1,11 @@
-#include "../include/data/curve/CurvParamBezier.h"
-#include "../include/data/curve/CurvParamHermite.h"
 #include "../include/data/Definitions.h"
 #include "../include/data/Modelo.h"
-#include "../include/data/patch/BezierPatch.h"
-#include "../include/data/patch/HermitePatch.h"
 #include "../include/data/Vertice.h"
 #include "../include/data/Vetor.h"
+#include "../include/data/curve/CurvParamBezier.h"
+#include "../include/data/curve/CurvParamHermite.h"
+#include "../include/data/patch/BezierPatch.h"
+#include "../include/data/patch/HermitePatch.h"
 #include "../include/generator/GeradorAdaptativoPorCurvatura.h"
 #include "../include/input_output/Modelos3d.h"
 #include "../include/input_output/PatchBezierReader.h"
@@ -14,7 +14,7 @@
 
 #if USE_MPI
 int RANK_MPI, SIZE_MPI;
-#endif  //#if USE_OPENMPI
+#endif  // #if USE_OPENMPI
 int PASSOS = 2;
 double TRIANGLE_MEDIO = 0.0;
 double TOLERANCIA_ESTIMATIVE = 1.0;
@@ -42,7 +42,8 @@ std::string WRITE_MESH;
 // argv[1] = "n° de process"
 // argv[2] = "n° threads",
 // argv[3] = "entrada",       OBS: Projects-> Comands line arguments ->
-// ../../apMesh/Entrada/mountain_289_patches.bp argv[4] = "WRITE_MESH" (m)
+// ../../apMesh/Entrada/mountain_289_patches.bp
+// argv[4] = "WRITE_MESH" (m)
 // argv[5] = "nameModel"
 
 int main(int argc, char **argv) {

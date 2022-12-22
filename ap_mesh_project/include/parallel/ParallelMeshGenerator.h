@@ -1,7 +1,7 @@
 #ifndef PARALLELMESHGENERATOR_H
 #define PARALLELMESHGENERATOR_H
 
-#include "../crab_mesh/performer/RangedIdManager.h"
+#include "../crab_mesh/performer/ranged_id_manager.h"
 #include "TMCommunicator.h"
 
 using namespace Data;

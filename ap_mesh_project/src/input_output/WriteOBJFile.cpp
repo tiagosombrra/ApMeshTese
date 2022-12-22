@@ -6,7 +6,7 @@
 //  Copyright © 2015 TMeshSurf. All rights reserved.
 //
 
-#include "../../include/input_output/WriteOBJFIle.h"
+#include "../../include/input_output/WriteOBJFile.h"
 
 WriteOBJFIle::WriteOBJFIle() {}
 

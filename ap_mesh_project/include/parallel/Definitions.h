@@ -1,7 +1,7 @@
 #ifndef _PARALLEL_DEFINITIONS_H_
 #define _PARALLEL_DEFINITIONS_H_
 
-#include "../crab_mesh/performer/Definitions.h"
+#include "../crab_mesh/performer/definitions.h"
 
 namespace Parallel {
 using Data::Int;
@@ -28,12 +28,12 @@ class Lock;
 #if USE_MPI
 class MPICommunicator;
 class MPIMessage;
-#endif  //#if USE_MPI
+#endif  // #if USE_MPI
 
 #if USE_OPENMP
 class OMPThreadManager;
 class OMPLock;
-#endif  //#if USE_OPENMP
+#endif  // #if USE_OPENMP
 
 /// ThreadManager and Communicator
 class TMCommunicator;
@@ -79,9 +79,9 @@ typedef std::vector<Task *> TaskVector;
 
 #if USE_C__11
 typedef std::unordered_map<Int, TaskVector> TaskVectorHashMap;
-#endif  //#if USE_C__11
+#endif  // #if USE_C__11
 
 typedef std::map<Int, TaskVector> TaskVectorMap;
 }  // namespace Parallel
 
-#endif  //#ifndef _PARALLEL_DEFINITIONS_H_
+#endif  // #ifndef _PARALLEL_DEFINITIONS_H_

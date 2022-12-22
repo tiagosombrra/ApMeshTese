@@ -21,15 +21,15 @@ This source code is under GNU General Public License v3 */
 #include <sstream>
 #include <string>
 
-#include "../adapter/AdaptadorPorCurvatura.h"
-#include "../crab_mesh/performer/RangedIdManager.h"
+#include "../adapter/adapter.h"
+#include "../crab_mesh/performer/ranged_id_manager.h"
 #include "../curvature/CurvaturaAnalitica.h"
 #include "../curvature/CurvaturaDiscreta.h"
 #include "../data/Definitions.h"
 #include "../data/Noh.h"
+#include "../data/Triangulo.h"
 #include "../data/patch/BezierPatch.h"
 #include "../data/patch/CoonsPatch.h"
-#include "../data/Triangulo.h"
 #include "../estimate/ChargeEstimateProcess.h"
 #include "../input_output/Modelos3d.h"
 #include "../input_output/ReaderPatches.h"
@@ -117,7 +117,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
   void adaptCurveOmp(Geometria *geo);
   void adaptDomainOmp(Geometria *geo, Malha *malha, Timer *timer,
                       int sizeThread, int sizePatch);
-#endif  //#USE_OPENMP
+#endif  // #USE_OPENMP
 
 #if USE_MPI
   Modelo modelo;
@@ -142,5 +142,6 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
   MeshVector saveMesh;
   ErroMeshVector saveErroMesh;
   vector<double> erroPasso;
+  Adapter adapter;
 };
 #endif

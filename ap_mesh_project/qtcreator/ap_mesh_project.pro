@@ -23,24 +23,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ../src/adapter/AdaptadorPorCurvatura.cpp \
-    ../src/crab_mesh/aft/AdvancingFront.cpp \
-    ../src/crab_mesh/aft/Boundary.cpp \
-    ../src/crab_mesh/aft/Quadtree.cpp \
-    ../src/crab_mesh/aft/QuadtreeCell.cpp \
-    ../src/crab_mesh/aft/Shape.cpp \
-    ../src/crab_mesh/numerical/BisectionEquationRoot.cpp \
-    ../src/crab_mesh/numerical/Function.cpp \
-    ../src/crab_mesh/performer/IdManager.cpp \
-    ../src/crab_mesh/performer/RangedIdManager.cpp \
+    ../src/adapter/adapter.cpp \
+    ../src/crab_mesh/aft/advancing_front.cpp \
+    ../src/crab_mesh/aft/boundary.cpp \
+    ../src/crab_mesh/aft/quadtree.cpp \
+    ../src/crab_mesh/aft/quadtree_cell.cpp \
+    ../src/crab_mesh/aft/shape.cpp \
+    ../src/crab_mesh/numerical/bisection_equation_root.cpp \
+    ../src/crab_mesh/numerical/function.cpp \
+    ../src/crab_mesh/performer/id_manager.cpp \
+    ../src/crab_mesh/performer/ranged_id_manager.cpp \
     ../src/curvature/Adjacente.cpp \
     ../src/curvature/Curvatura.cpp \
     ../src/curvature/CurvaturaAnalitica.cpp \
     ../src/curvature/CurvaturaDiscreta.cpp \
-    ../src/data/curve/CurvParamBezier.cpp \
-    ../src/data/curve/CurvParamHermite.cpp \
     ../src/data/curve/Curva.cpp \
     ../src/data/curve/CurvaParametrica.cpp \
+    ../src/data/curve/CurvParamBezier.cpp \
+    ../src/data/curve/CurvParamHermite.cpp \
     ../src/data/Definitions.cpp \
     ../src/data/Edge.cpp \
     ../src/data/Elemento.cpp \
@@ -71,15 +71,15 @@ SOURCES += \
     ../src/input_output/WriteOBJFile.cpp \
     ../src/parallel/ApMeshCommunicator.cpp \
     ../src/parallel/Communicator.cpp \
+    ../src/parallel/Message.cpp \
     ../src/parallel/MPICommunicator.cpp \
     ../src/parallel/MPIMessage.cpp \
-    ../src/parallel/Message.cpp \
     ../src/parallel/NoCommunicator.cpp \
     ../src/parallel/NoThreadManager.cpp \
     ../src/parallel/OMPThreadManager.cpp \
     ../src/parallel/ParallelMeshGenerator.cpp \
-    ../src/parallel/TMCommunicator.cpp \
     ../src/parallel/ThreadManager.cpp \
+    ../src/parallel/TMCommunicator.cpp \
     ../src/parallel/Transferable.cpp \
     ../src/timer/Timer.cpp \
     ../src/main.cpp
@@ -90,28 +90,28 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    ../include/adapter/AdaptadorPorCurvatura.h \
-    ../include/crab_mesh/aft/AdvancingFront.h \
-    ../include/crab_mesh/aft/Boundary.h \
-    ../include/crab_mesh/aft/Quadtree.h \
-    ../include/crab_mesh/aft/QuadtreeCell.h \
-    ../include/crab_mesh/aft/Shape.h \
-    ../include/crab_mesh/numerical/BisectionEquationRoot.h \
-    ../include/crab_mesh/numerical/EquationRoot.h \
-    ../include/crab_mesh/numerical/EquationRootFunction.h \
-    ../include/crab_mesh/numerical/Function.h \
-    ../include/crab_mesh/numerical/MultiVariableFunction.h \
-    ../include/crab_mesh/performer/Definitions.h \
-    ../include/crab_mesh/performer/IdManager.h \
-    ../include/crab_mesh/performer/RangedIdManager.h \
+    ../include/adapter/adapter.h \
+    ../include/crab_mesh/aft/advancing_front.h \
+    ../include/crab_mesh/aft/boundary.h \
+    ../include/crab_mesh/aft/quadtree.h \
+    ../include/crab_mesh/aft/quadtree_cell.h \
+    ../include/crab_mesh/aft/shape.h \
+    ../include/crab_mesh/numerical/bisection_equation_root.h \
+    ../include/crab_mesh/numerical/equation_root.h \
+    ../include/crab_mesh/numerical/equation_root_function.h \
+    ../include/crab_mesh/numerical/function.h \
+    ../include/crab_mesh/numerical/multi_variable_function.h \
+    ../include/crab_mesh/performer/definitions.h \
+    ../include/crab_mesh/performer/id_manager.h \
+    ../include/crab_mesh/performer/ranged_id_manager.h \
     ../include/curvature/Adjacente.h \
     ../include/curvature/Curvatura.h \
     ../include/curvature/CurvaturaAnalitica.h \
     ../include/curvature/CurvaturaDiscreta.h \
-    ../include/data/curve/CurvParamBezier.h \
-    ../include/data/curve/CurvParamHermite.h \
     ../include/data/curve/Curva.h \
     ../include/data/curve/CurvaParametrica.h \
+    ../include/data/curve/CurvParamBezier.h \
+    ../include/data/curve/CurvParamHermite.h \
     ../include/data/Definitions.h \
     ../include/data/Edge.h \
     ../include/data/Elemento.h \
@@ -143,14 +143,14 @@ HEADERS += \
     ../include/parallel/ApMeshCommunicator.h \
     ../include/parallel/Communicator.h \
     ../include/parallel/Definitions.h \
+    ../include/parallel/Message.h \
     ../include/parallel/MPICommunicator.h \
     ../include/parallel/MPIMessage.h \
-    ../include/parallel/Message.h \
     ../include/parallel/NoCommunicator.h \
     ../include/parallel/NoThreadManager.h \
     ../include/parallel/OMPThreadManager.h \
     ../include/parallel/ParallelMeshGenerator.h \
-    ../include/parallel/TMCommunicator.h \
     ../include/parallel/ThreadManager.h \
+    ../include/parallel/TMCommunicator.h \
     ../include/parallel/Transferable.h \
     ../include/timer/Timer.h

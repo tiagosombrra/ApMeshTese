@@ -564,11 +564,11 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo& modelo, Timer* timer,
 #if USE_PRINT_RESULTS
   cout << "*************** ERRO " << this->passo << " rank " << RANK_MPI
        << " = " << this->erro << endl;
-#endif  //#if USE_PRINT_RESULTS
+#endif  // #if USE_PRINT_RESULTS
 #else
 #if USE_PRINT_RESULTS
   cout << "*************** ERRO " << this->passo << " = " << this->erro << endl;
-#endif  //#if USE_PRINT_RESULTS
+#endif  // #if USE_PRINT_RESULTS
 #endif  // USE_MPI
 
   if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
@@ -582,12 +582,12 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo& modelo, Timer* timer,
     if (this->erro < EPSYLON) {
       break;
     }
-    //#if USE_MPI
-    //        timer->initTimerParallel(RANK_MPI,0,9); // SendRecv
-    //        MPI_Allreduce(&this->erro, &this->erro, 1, MPI_DOUBLE, MPI_SUM,
-    //        MPI_COMM_WORLD); timer->endTimerParallel(RANK_MPI,0,9); //
-    //        SendRecv this->erro = this->erro / sizeRank;
-    //#endif //USE_MPI
+    // #if USE_MPI
+    //         timer->initTimerParallel(RANK_MPI,0,9); // SendRecv
+    //         MPI_Allreduce(&this->erro, &this->erro, 1, MPI_DOUBLE, MPI_SUM,
+    //         MPI_COMM_WORLD); timer->endTimerParallel(RANK_MPI,0,9); //
+    //         SendRecv this->erro = this->erro / sizeRank;
+    // #endif //USE_MPI
 
     this->passo++;
 
@@ -659,12 +659,12 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo& modelo, Timer* timer,
 #if USE_PRINT_RESULTS
     cout << "*************** ERRO " << this->passo << " rank " << RANK_MPI
          << " = " << this->erro << endl;
-#endif  //#if USE_PRINT_RESULTS
+#endif  // #if USE_PRINT_RESULTS
 #else
 #if USE_PRINT_RESULTS
     cout << "*************** ERRO " << this->passo << " = " << this->erro
          << endl;
-#endif  //#if USE_PRINT_RESULTS
+#endif  // #if USE_PRINT_RESULTS
 #endif  // USE_MPI
 
     if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
@@ -674,7 +674,7 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo& modelo, Timer* timer,
 
 #if USE_MPI
   timer->endTimerParallel(RANK_MPI, 0, 10);  // Full
-#endif #endif                                // USE_MPI
+#endif                                       // USE_MPI
 
   // Escreve o(s) arquivo(s) com suas respectivas malhas em cada passo
 #if USE_MPI
@@ -723,11 +723,11 @@ void GeradorAdaptativoPorCurvatura::adaptCurve(Geometria* geo) {
   map<Ponto*, Ponto*> mapaPontos;
 
   for (unsigned int i = 0; i < geo->getNumDeCurvas(); ++i) {
-    novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva(
-        geo->getCurva(i), mapaPontos, this->idManagers[0], 1);
+    novosPontos[i] = adapter.AdaptCurveByCurve(geo->getCurva(i), mapaPontos,
+                                               this->idManagers[0], 1);
     geo->getCurva(i)->setPontos(novosPontos[i]);
-    novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie(
-        geo->getCurva(i), mapaPontos, this->idManagers[0], 1);
+    novosPontos[i] = adapter.AdaptCurveBySurface(geo->getCurva(i), mapaPontos,
+                                                 this->idManagers[0], 1);
     geo->getCurva(i)->setPontos(novosPontos[i]);
   }
 }
@@ -735,8 +735,7 @@ void GeradorAdaptativoPorCurvatura::adaptCurve(Geometria* geo) {
 void GeradorAdaptativoPorCurvatura::adaptDomain(Geometria* geo, Malha* malha) {
   for (unsigned int i = 0; i < geo->getNumDePatches(); ++i) {
     CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
-    SubMalha* sub =
-        AdaptadorPorCurvatura::adaptaDominio(p, this->idManagers[0], 1);
+    SubMalha* sub = adapter.AdaptDomain(p, this->idManagers[0], 1);
     sub->setPatch(p);
     malha->insereSubMalha(sub, i);
     geo->getPatch(i)->setMalha(malha->getSubMalha(i));
@@ -855,7 +854,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha* malha, Timer* timer,
       double Njs = 0.0;
 
       // Calcula o erro relativo para cada nó e soma a Nj
-      //#pragma omp parallel for num_threads(nThreads) firstprivate(Ns)
+      // #pragma omp parallel for num_threads(nThreads) firstprivate(Ns)
       // reduction(+ :Nj)
       for (unsigned int j = 0; j < Nv; ++j) {
 #if USE_MPI
@@ -959,7 +958,7 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
   Int rank = 0;
   nProcesses = this->comm->numProcesses();
   rank = this->comm->rank();
-#endif  //#if USE_MPI
+#endif  // #if USE_MPI
 
   Geometria* geo = modelo.getGeometria();
   int sizePatch = geo->getNumDePatches();
@@ -1008,11 +1007,11 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
 
 #if USE_PRINT_ERRO
   cout << "ERRO  " << this->passo << " = " << this->erro << endl;
-#endif  //#if USE_PRINT_ERRO
+#endif  // #if USE_PRINT_ERRO
 
 #if USE_SAVE_MESH
   escreveMalha(malha, passo);
-#endif  //#USE_SAVE_MESH
+#endif  // #USE_SAVE_MESH
 
   this->erro = 1.0;
 
@@ -1036,7 +1035,7 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
 
     //
     //        sizeThread = 1;
-    //#pragma omp parallel num_threads(sizeThread) shared(geo, sizeCurvas,
+    // #pragma omp parallel num_threads(sizeThread) shared(geo, sizeCurvas,
     // sizePatch, malha, novosPontos)
     //        {
     //            Int id = comm->threadId();
@@ -1044,7 +1043,7 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
     //            this->makeIdManagerOmp(comm, id);
 
     //            // 4.2. Adapta as curvas pela curvatura da curva
-    //#pragma omp for firstprivate(ptr_aux)
+    // #pragma omp for firstprivate(ptr_aux)
     //            for (int i = 0; i < sizeCurvas; ++i )
     //            {
     //                novosPontos[i] =
@@ -1066,11 +1065,11 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
     timer->initTimerParallel(0, 0, 3);  // adpt. das curvas
 
     for (int i = 0; i < sizeCurvas; ++i) {
-      novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaByCurva(
-          geo->getCurva(i), mapaPontos, this->idManagers[0], 1);
+      novosPontos[i] = adapter.AdaptCurveByCurve(geo->getCurva(i), mapaPontos,
+                                                 this->idManagers[0], 1);
       geo->getCurva(i)->setPontos(novosPontos[i]);
-      novosPontos[i] = AdaptadorPorCurvatura::adaptaCurvaBySuperficie(
-          geo->getCurva(i), mapaPontos, this->idManagers[0], 1);
+      novosPontos[i] = adapter.AdaptCurveBySurface(geo->getCurva(i), mapaPontos,
+                                                   this->idManagers[0], 1);
       geo->getCurva(i)->setPontos(novosPontos[i]);
       // ((CurvaParametrica*)geo->getCurva(i))->ordenaLista ( );
     }
@@ -1088,8 +1087,7 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
 #pragma omp for
       for (int i = 0; i < sizePatch; ++i) {
         CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
-        SubMalha* sub =
-            AdaptadorPorCurvatura::adaptaDominioOmp(p, this->idManagers[id], 1);
+        SubMalha* sub = adapter.AdaptDomainOmp(p, this->idManagers[id], 1);
         sub->setPatch(p);
         malha->insereSubMalha(sub, i);
         geo->getPatch(i)->setMalha(malha->getSubMalha(i));
@@ -1112,14 +1110,14 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
 
 #if USE_SAVE_MESH
     escreveMalha(malha, passo);
-#endif  //#USE_SAVE_MESH
+#endif  // #USE_SAVE_MESH
 
     // 4.7. Calcula o erro global para a malha
     this->erro = this->erroGlobalOmp(malha, timer, 0, sizeThread);
 
 #if USE_PRINT_ERRO
     cout << "ERRO  " << this->passo << " = " << this->erro << endl;
-#endif  //#if USE_PRINT_COMENT
+#endif  // #if USE_PRINT_COMENT
   }
 
   return 0;
@@ -1142,8 +1140,7 @@ void GeradorAdaptativoPorCurvatura::adaptDomainOmp(Geometria* geo, Malha* malha,
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
       CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
-      SubMalha* sub =
-          AdaptadorPorCurvatura::adaptaDominioOmp(p, this->idManagers[id], 1);
+      SubMalha* sub = adapter.AdaptDomainOmp(p, this->idManagers[id], 1);
       sub->setPatch(p);
       malha->insereSubMalha(sub, i);
       geo->getPatch(i)->setMalha(malha->getSubMalha(i));

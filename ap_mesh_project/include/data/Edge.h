@@ -1,10 +1,10 @@
 #ifndef _EDGE_H_
 #define _EDGE_H_
 
-#include "../crab_mesh/aft/QuadtreeCell.h"
-#include "../crab_mesh/aft/Shape.h"
-#include "../data/curve/CurvaParametrica.h"
+#include "../crab_mesh/aft/quadtree_cell.h"
+#include "../crab_mesh/aft/shape.h"
 #include "../data/Definitions.h"
+#include "../data/curve/CurvaParametrica.h"
 #include "Vertex.h"
 
 using namespace Par2DJMesh;
@@ -30,9 +30,9 @@ class Edge : public Shape {
   double ymin;
   double ymax;
 
-  //#if USE_OPENGL
-  //    double width;
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     double width;
+  // #endif //#if USE_OPENGL
 
   // Daniel Siqueira
   // ponteiro para a curva
@@ -55,9 +55,9 @@ class Edge : public Shape {
   void setInBoundary(bool inBoundary);
   bool isInBoundary();
 
-  //#if USE_OPENGL
-  //    void setWidth(double width);
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     void setWidth(double width);
+  // #endif //#if USE_OPENGL
 
   void setFree(bool free);
   bool isFree();
@@ -106,17 +106,17 @@ class Edge : public Shape {
 
   string getText();
 
-  //#if USE_OPENGL
-  //    void highlight();
-  //    void highlight(bool highlightCell);
-  //    void unhighlight();
-  //    void unhighlight(bool highlightCell);
+  // #if USE_OPENGL
+  //     void highlight();
+  //     void highlight(bool highlightCell);
+  //     void unhighlight();
+  //     void unhighlight(bool highlightCell);
 
   //    void draw();
   //    void drawNormal();
-  //#endif //#if USE_OPENGL
+  // #endif //#if USE_OPENGL
 };
 }  // namespace Basics
 }  // namespace Par2DJMesh
 
-#endif  //#ifndef _EDGE_H_
+#endif  // #ifndef _EDGE_H_

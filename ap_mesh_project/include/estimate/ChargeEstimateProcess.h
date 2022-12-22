@@ -4,17 +4,17 @@
 #include <algorithm>
 #include <map>
 
-#include "../adapter/AdaptadorPorCurvatura.h"
-#include "../data/curve/CurvParamBezier.h"
-#include "../data/curve/Curva.h"
+#include "../adapter/adapter.h"
 #include "../data/Geometria.h"
-#include "../data/mesh/Malha.h"
-#include "../data/patch/BezierPatch.h"
 #include "../data/Ponto.h"
 #include "../data/Vertice.h"
+#include "../data/curve/CurvParamBezier.h"
+#include "../data/curve/Curva.h"
+#include "../data/mesh/Malha.h"
+#include "../data/patch/BezierPatch.h"
 #include "../generator/GeradorAdaptativoPorCurvatura.h"
 #include "../input_output/PatchBezierReader.h"
-#include "../input_output/WriteOBJFIle.h"
+#include "../input_output/WriteOBJFile.h"
 #include "../timer/Timer.h"
 
 extern double TIME_READ_FILE;

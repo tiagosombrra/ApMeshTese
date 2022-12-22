@@ -1,7 +1,7 @@
 #ifndef _VERTEX_H_
 #define _VERTEX_H_
 
-#include "../crab_mesh/aft/Shape.h"
+#include "../crab_mesh/aft/shape.h"
 #include "../data/Definitions.h"
 #include "Edge.h"
 
@@ -17,14 +17,14 @@ class Vertex : public Shape {
 
   EdgeSet adjacentEdges;
 
-  //#if USE_OPENGL
-  //    double size;
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     double size;
+  // #endif //#if USE_OPENGL
 
-  //#if DEBUG_MODE
-  // public:
-  //    double h;
-  //#endif //#if DEBUG_MODE
+  // #if DEBUG_MODE
+  //  public:
+  //     double h;
+  // #endif //#if DEBUG_MODE
 
  public:
   Vertex(double x = 0.0, double y = 0.0, long int id = 0);
@@ -37,9 +37,9 @@ class Vertex : public Shape {
   double getY();
   void getPosition(double *x, double *y);
 
-  //#if USE_OPENGL
-  //    void setSize(double size);
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     void setSize(double size);
+  // #endif //#if USE_OPENGL
 
   void addAdjacentEdge(Edge *e);
   void removeAdjacentEdge(Edge *e);
@@ -77,17 +77,17 @@ class Vertex : public Shape {
 
   string getText();
 
-  //#if USE_OPENGL
-  //    void highlight();
-  //    void unhighlight();
+  // #if USE_OPENGL
+  //     void highlight();
+  //     void unhighlight();
 
   //    void draw();
-  //#if DEBUG_MODE
+  // #if DEBUG_MODE
   //    void drawCircle();
-  //#endif //#if DEBUG_MODE
-  //#endif //#if USE_OPENGL
+  // #endif //#if DEBUG_MODE
+  // #endif //#if USE_OPENGL
 };
 }  // namespace Basics
 }  // namespace Par2DJMesh
 
-#endif  //#ifndef _VERTEX_H_
+#endif  // #ifndef _VERTEX_H_

@@ -15,8 +15,8 @@ This source code is under GNU General Public License v3 */
 #include <iostream>
 #include <list>
 
-#include "../../crab_mesh/numerical/BisectionEquationRoot.h"
-#include "../../crab_mesh/numerical/EquationRootFunction.h"
+#include "../../crab_mesh/numerical/bisection_equation_root.h"
+#include "../../crab_mesh/numerical/equation_root_function.h"
 #include "../../data/Definitions.h"
 #include "../Vertice.h"
 #include "../Vetor.h"

@@ -5,125 +5,125 @@
 
 #ifndef TRUE
 #define TRUE 1
-#endif  //#ifndef TRUE
+#endif  // #ifndef TRUE
 
 #ifndef FALSE
 #define FALSE 0
-#endif  //#ifndef FALSE
+#endif  // #ifndef FALSE
 
 #ifndef TRACING_ENABLED
 #define TRACING_ENABLED TRUE
-#endif  //#ifndef TRUE
+#endif  // #ifndef TRUE
 
 #ifndef USE_MPI
-#define USE_MPI FALSE
+#define USE_MPI TRUE
 #define RANK_ROOT 0
-#endif  //#ifndef USE_MPI
+#endif  // #ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP FALSE
+#define USE_OPENMP TRUE
 #define THREAD_ROOT 0
-#endif  //#ifndef USE_OPENMP
+#endif  // #ifndef USE_OPENMP
 
 #ifndef USE_PRINT_RESULTS
 #define USE_PRINT_RESULTS FALSE
-#endif  //#ifndef USE_PRINT_RESULTS
+#endif  // #ifndef USE_PRINT_RESULTS
 
 #ifndef USE_PRINT_COMENT
 #define USE_PRINT_COMENT FALSE
-#endif  //#ifndef USE_PRINT_COMENT
+#endif  // #ifndef USE_PRINT_COMENT
 
 #ifndef USE_PRINT_ESTIMATE
 #define USE_PRINT_ESTIMATE FALSE
-#endif  //#ifndef USE_PRINT_ESTIMATE
+#endif  // #ifndef USE_PRINT_ESTIMATE
 
 #ifndef USE_PRINT_ERRO
 #define USE_PRINT_ERRO TRUE
-#endif  //#ifndef USE_PRINT_ERRO
+#endif  // #ifndef USE_PRINT_ERRO
 
 #ifndef USE_PRINT_TIME
 #define USE_PRINT_TIME TRUE
-#endif  //#ifndef USE_PRINT_TIME
+#endif  // #ifndef USE_PRINT_TIME
 
 #ifndef USE_WRITE_MESH
 #define USE_WRITE_MESH FALSE
-#endif  //#ifndef USE_WRITE_MESH
+#endif  // #ifndef USE_WRITE_MESH
 
 #ifndef USE_SAVE_MESH
 #define USE_SAVE_MESH FALSE
-#endif  //#ifndef USE_SAVE_MESH
+#endif  // #ifndef USE_SAVE_MESH
 
 #ifndef USE_SAVE_ERRO_MESH
 #define USE_SAVE_ERRO_MESH FALSE
-#endif  //#ifndef USE_SAVE_ERRO_MESH
+#endif  // #ifndef USE_SAVE_ERRO_MESH
 
 #ifndef USE_GUI
 #define USE_GUI FALSE
-#endif  //#ifndef USE_GUI
+#endif  // #ifndef USE_GUI
 
 #ifndef USE_TIME_MEASUREMENTS
 #define USE_TIME_MEASUREMENTS FALSE
-#endif  //#ifndef USE_TIME_MEASUREMENTS
+#endif  // #ifndef USE_TIME_MEASUREMENTS
 
 #ifndef USE_MTOOLS
 #define USE_MTOOLS TRUE
-#endif  //#ifndef USE_MTOOLS
+#endif  // #ifndef USE_MTOOLS
 
 #ifndef USE_ONLY_MTOOLS
 #define USE_ONLY_MTOOLS 0
-#endif  //#ifndef USE_ONLY_MTOOLS
+#endif  // #ifndef USE_ONLY_MTOOLS
 
 #ifndef USE_C__11
 #define USE_C__11 TRUE
-#endif  //#ifndef USE_C__11
+#endif  // #ifndef USE_C__11
 
 #ifndef USE_OLD_MPI
 #define USE_OLD_MPI FALSE
-#endif  //#ifndef USE_OLD_MPI
+#endif  // #ifndef USE_OLD_MPI
 
 #ifndef USE_TINYXML
 #define USE_TINYXML TRUE
-#endif  //#ifndef USE_TINYXML
+#endif  // #ifndef USE_TINYXML
 
 #ifndef USE_SPLINES
 #define USE_SPLINES FALSE
-#endif  //#ifndef USE_SPLINES
+#endif  // #ifndef USE_SPLINES
 
 #ifndef USE_NUMERICAL
 #define USE_NUMERICAL FALSE
-#endif  //#ifndef USE_NUMERICAL
+#endif  // #ifndef USE_NUMERICAL
 
 #ifndef USE_TECGRAF
 #define USE_TECGRAF FALSE
-#endif  //#ifndef USE_TECGRAF
+#endif  // #ifndef USE_TECGRAF
 
 #ifndef USE_TECGRAF_MSH
 #define USE_TECGRAF_MSH ((USE_TECGRAF) && (TRUE))
-#endif  //#ifndef USE_TECGRAF_MSH
+#endif  // #ifndef USE_TECGRAF_MSH
 
 #ifndef USE_TECGRAF_MSH_2D
 #define USE_TECGRAF_MSH_2D ((USE_TECGRAF_MSH) && (TRUE))
-#endif  //#ifndef USE_TECGRAF_MSH_2D
+#endif  // #ifndef USE_TECGRAF_MSH_2D
 
 #ifndef USE_TECGRAF_MSH_3D
 #define USE_TECGRAF_MSH_3D ((USE_TECGRAF_MSH) && (TRUE))
-#endif  //#ifndef USE_TECGRAF_MSH_3D
+#endif  // #ifndef USE_TECGRAF_MSH_3D
 
 #ifndef USE_TECGRAF_MSH_SURF
 #define USE_TECGRAF_MSH_SURF ((USE_TECGRAF_MSH) && (TRUE))
-#endif  //#ifndef USE_TECGRAF_MSH_2SURF
+#endif  // #ifndef USE_TECGRAF_MSH_2SURF
 
 #ifndef USE_WORKER_FILE_LOADER
 #define USE_WORKER_FILE_LOADER TRUE
-#endif  //#ifndef USE_WORKER_FILE_LOADER
+#endif  // #ifndef USE_WORKER_FILE_LOADER
 
 #ifndef USE_OPENCV
 #define USE_OPENCV TRUE
-#endif  //#ifndef USE_OPENCV
+#endif  // #ifndef USE_OPENCV
 
 #ifndef USE_EXPRTK
 #define USE_EXPRTK ((USE_NUMERICAL) && (FALSE))
-#endif  //#ifndef USE_EXPRTK
+#endif  // #ifndef USE_EXPRTK
 
 /// End global defines
 
@@ -135,7 +135,7 @@
 #define TAG_PASSO 2
 #define USE_SERIAL false
 #define TAG_TIME 3
-#endif  //#if USE_MPI
+#endif  // #if USE_MPI
 
 #include <sys/time.h>
 
@@ -178,7 +178,7 @@
 #include <tuple>
 #include <unordered_map>
 #include <unordered_set>
-#endif  //#if USE_C__11
+#endif  // #if USE_C__11
 
 #include <cfloat>
 #include <climits>
@@ -188,13 +188,13 @@ extern "C" {
 #else
 #define true TRUE
 #define false FALSE
-#endif  //#if __cplusplus
+#endif  // #if __cplusplus
 
 #if USE_GUI
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-#endif  //#if USE_GUI
+#endif  // #if USE_GUI
 
 #define USE_SCREENSHOT ((USE_GUI) && (FALSE))
 
@@ -227,7 +227,7 @@ extern "C" {
 #define USE_FAST_SUM ((USE_EXACT) && (FALSE))
 #define USE_LINEAR_SUM ((USE_EXACT) && (!USE_FAST_SUM) && (TRUE))
 
-//#define USE_TIME_MEASUREMENTS TRUE
+// #define USE_TIME_MEASUREMENTS TRUE
 #define USE_TIMING TRUE
 
 #define USE_BUFFER FALSE
@@ -255,10 +255,10 @@ typedef unsigned int UInt;
 #if USE_LONG_LONG_INT
 typedef signed long long int LInt;
 typedef unsigned long long int ULInt;
-#else   //#if USE_LONG_LONG_INT
+#else   // #if USE_LONG_LONG_INT
 typedef signed long int LInt;
 typedef unsigned long int ULInt;
-#endif  //#if USE_LONG_LONG_INT
+#endif  // #if USE_LONG_LONG_INT
 
 #if USE_DOUBLE
 typedef double Real;
@@ -266,13 +266,13 @@ typedef long double LReal;
 
 #define REAL_MAX DBL_MAX
 #define REAL_MIN DBL_MIN
-#else  //#if USE_DOUBLE
+#else  // #if USE_DOUBLE
 typedef float Real;
 typedef double LReal;
 
 #define REAL_MAX FLT_MAX
 #define REAL_MIN FLT_MIN
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 
 // streams
 class OStream;
@@ -285,12 +285,12 @@ class State;
 class Drawable;
 class Colorable;
 class ListDisplayable;
-#endif  //#if USE_GUI
+#endif  // #if USE_GUI
 
-//#if USE_POOL
-// classes for Data::Poolable library
-//  code based on book Modern C++ Design: Generic Programming and Design
-//  Patterns Applied, by Andrei Alexandrescu, Addison-Wesley Pub Co, 2001
+// #if USE_POOL
+//  classes for Data::Poolable library
+//   code based on book Modern C++ Design: Generic Programming and Design
+//   Patterns Applied, by Andrei Alexandrescu, Addison-Wesley Pub Co, 2001
 template <typename T>
 class Chunk;
 template <typename T>
@@ -298,7 +298,7 @@ class Pool;
 // has openmp code, which should be only on namespace Parallel
 template <typename T>
 class Poolable;
-//#endif //#if USE_POOL
+// #endif //#if USE_POOL
 
 // classes for Data::Math library
 
@@ -307,7 +307,7 @@ template <typename T>
 class Exact;
 template <typename T>
 class ExactFraction;
-#endif  //#if USE_EXACT
+#endif  // #if USE_EXACT
 
 // classes for Data::Math::Geometry library
 class Vector;
@@ -318,7 +318,7 @@ class Vector3D;
 class EVector;
 class EVector2D;
 class EVector3D;
-#endif  //#if USE_EXACT
+#endif  // #if USE_EXACT
 
 class Point;
 class Point2D;
@@ -328,7 +328,7 @@ class Point3D;
 class EPoint;
 class EPoint2D;
 class EPoint3D;
-#endif  //#if USE_EXACT
+#endif  // #if USE_EXACT
 
 // base class for all Data::Math::Geometry classes, except Point and Vector
 class GeometricShape;
@@ -385,19 +385,19 @@ class BoxSearchTree;
 #if USE_EXPERIMENTAL_5
 class BoxSearchTree2D;
 class BoxSearchTree3D;
-#endif  //#if USE_EXPERIMENTAL_5
+#endif  // #if USE_EXPERIMENTAL_5
 #if USE_EXPERIMENTAL_5
 class VertexBoxSearchTree2D;
 class VertexBoxSearchTree3D;
 #else
 class VertexBoxSearchTree;
-#endif  //#if USE_EXPERIMENTAL_5
+#endif  // #if USE_EXPERIMENTAL_5
 #if USE_EXPERIMENTAL_5
 class FrontElementBoxSearchTree2D;
 class FrontElementBoxSearchTree3D;
 #else
 class FrontElementBoxSearchTree;
-#endif  //#if USE_EXPERIMENTAL_5
+#endif  // #if USE_EXPERIMENTAL_5
 class BSPTree;
 class AlternatingDigitalTree;
 class VertexADTree;
@@ -412,19 +412,19 @@ class BoxSearchTreeCell;
 #if USE_EXPERIMENTAL_5
 class BoxSearchTreeCell2D;
 class BoxSearchTreeCell3D;
-#endif  //#if USE_EXPERIMENTAL_5
+#endif  // #if USE_EXPERIMENTAL_5
 #if USE_EXPERIMENTAL_5
 class VertexBoxSearchTreeCell2D;
 class VertexBoxSearchTreeCell3D;
 #else
 class VertexBoxSearchTreeCell;
-#endif  //#if USE_EXPERIMENTAL_5
+#endif  // #if USE_EXPERIMENTAL_5
 #if USE_EXPERIMENTAL_5
 class FrontElementBoxSearchTreeCell2D;
 class FrontElementBoxSearchTreeCell3D;
 #else
 class FrontElementBoxSearchTreeCell;
-#endif  //#if USE_EXPERIMENTAL_5
+#endif  // #if USE_EXPERIMENTAL_5
 class BSPTreeCell;
 class AlternatingDigitalTreeCell;
 class VertexADTreeCell;
@@ -436,7 +436,7 @@ class AbstractMesh;
 class Boundary;
 #if USE_SET
 class AbstractFront;
-#endif  //#if USE_SET
+#endif  // #if USE_SET
 class Front;
 class Mesh;
 
@@ -458,7 +458,7 @@ typedef std::set<GraphNode *> GraphNodeSet;
 #if USE_SET
 // typedef std::multiset<FrontElement *, Front> FrontElementMultiSet;
 typedef std::multiset<FrontElement *, AbstractFront> FrontElementMultiSet;
-#endif  //#if USE_SET
+#endif  // #if USE_SET
 
 #if USE_C__11
 typedef std::unordered_set<ULInt> ULIntHash;
@@ -474,8 +474,8 @@ typedef std::unordered_set<GraphNode *> GraphNodeHash;
 // typedef std::unordered_multiset<FrontElement *, Front> FrontElementMultiHash;
 typedef std::unordered_multiset<FrontElement *, AbstractFront>
     FrontElementMultiHash;
-#endif  //#if USE_SET
-#endif  //#if USE_C__11
+#endif  // #if USE_SET
+#endif  // #if USE_C__11
 
 typedef std::list<Int> IntList;
 typedef std::list<UInt> UIntList;
@@ -486,11 +486,11 @@ typedef std::list<Point2D> Point2DObjList;
 typedef std::list<Point3D> Point3DObjList;
 #else
 typedef std::list<Point> PointObjList;
-#endif  //#if USE_EXPERIMENTAL_3
+#endif  // #if USE_EXPERIMENTAL_3
 typedef std::list<Point *> PointList;
 #if USE_GUI
 typedef std::list<Drawable *> DrawableList;
-#endif  //#if USE_GUI
+#endif  // #if USE_GUI
 typedef std::list<Edge *> EdgeList;
 typedef std::list<Box *> BoxList;
 typedef std::list<Polygon *> PolygonList;
@@ -512,7 +512,7 @@ typedef std::vector<Point2D> Point2DObjVector;
 typedef std::vector<Point3D> Point3DObjVector;
 #else
 typedef std::vector<Point> PointObjVector;
-#endif  //#if USE_EXPERIMENTAL_3
+#endif  // #if USE_EXPERIMENTAL_3
 typedef std::vector<Point *> PointVector;
 typedef std::vector<PointVector> PointMatrix;
 typedef std::vector<Vector *> VectorVector;
@@ -535,7 +535,7 @@ typedef std::map<ULInt, enum Data::Position> PositionMap;
 typedef std::map<ULInt, GraphNode *> GraphNodeMap;
 #if USE_GUI
 typedef std::multimap<GLuint, Drawable *> DrawableMultiMap;
-#endif  //#if USE_GUI
+#endif  // #if USE_GUI
 
 #if USE_C__11
 typedef std::unordered_map<ULInt, UShort> UShortHashMap;
@@ -549,7 +549,7 @@ typedef std::unordered_map<ULInt, FrontElement *> FrontElementHashMap;
 typedef std::unordered_map<ULInt, Element *> ElementHashMap;
 typedef std::unordered_map<ULInt, enum Data::Position> PositionHashMap;
 typedef std::unordered_map<ULInt, GraphNode *> GraphNodeHashMap;
-#endif  //#if USE_C__11
+#endif  // #if USE_C__11
 
 #if USE_C__11
 typedef std::tuple<Real, Real> R2Tuple;
@@ -583,7 +583,7 @@ struct ElementTuple {
   FrontElementList *fes;
   Element *e;
 };
-#endif  //#if USE_C__11
+#endif  // #if USE_C__11
 
 // functions
 // initialize global stuff
@@ -603,13 +603,13 @@ template <typename Type>
 Type convert(const std::string &s) noexcept(false);
 #else
 Type convert(const std::string &s) throw(std::ios_base::failure);
-#endif  //#if USE_C__11
+#endif  // #if USE_C__11
 template <typename Type>
 std::string convert(Type t);
 
 #if USE_TIMING
 Real time();
-#endif  //#if USE_TIMING
+#endif  // #if USE_TIMING
 std::string time(Real seconds);
 std::string time(UInt seconds);
 std::string time(Real hours, Real mins, Real secs);
@@ -623,7 +623,7 @@ void trim(std::string &s);
 std::string ltrim(const std::string &s);
 std::string rtrim(const std::string &s);
 std::string trim(const std::string &s);
-#endif  //#if defined(__linux__)
+#endif  // #if defined(__linux__)
 
 std::string position(enum Position pos);
 
@@ -636,7 +636,7 @@ Real getTolerance();
 #if USE_BUFFER
 void setBuffer(const std::string &buffer);
 const std::string &getBuffer();
-#endif  //#if USE_BUFFER
+#endif  // #if USE_BUFFER
 
 #if USE_GUI
 void setStepByStep(bool stepByStep);
@@ -666,7 +666,7 @@ void glTextId(Real x, Real y, ULInt id);
 void glTextId(Real x, Real y, Real z, ULInt id);
 
 void pallete(Int index, Real &r, Real &g, Real &b);
-#endif  //#if USE_GUI
+#endif  // #if USE_GUI
 }  // namespace Data
 
 template <typename Type>
@@ -674,7 +674,7 @@ template <typename Type>
 Type Data::convert(const std::string &s) noexcept(false)
 #else
 Type Data::convert(const std::string &s) throw(std::ios_base::failure)
-#endif  //#if USE_C__11
+#endif  // #if USE_C__11
 {
   Type value = static_cast<Type>(0);
 
@@ -713,9 +713,9 @@ std::string Data::convert(Type value) {
   return str.str();
 }
 
-//#include "Data/OStream.h"
+// #include "Data/OStream.h"
 
-#endif  //#if __cplusplus
+#endif  // #if __cplusplus
 
 using namespace std;
 using namespace Eigen;
@@ -836,7 +836,8 @@ static string methodNotices[] = {
     "Local back-tracking failed", "Error"};
 
 enum  // lados de busca dos vizinhos da celula da quadtree
-{ QUAD_BOTTOM = 0,
+{
+  QUAD_BOTTOM = 0,
   QUAD_B = QUAD_BOTTOM,
   QUAD_DOWN = QUAD_BOTTOM,
   QUAD_D = QUAD_BOTTOM,
@@ -850,10 +851,12 @@ enum  // lados de busca dos vizinhos da celula da quadtree
   QUAD_U = QUAD_TOP,
 
   QUAD_LEFT,
-  QUAD_L = QUAD_LEFT };
+  QUAD_L = QUAD_LEFT
+};
 
 enum  // posicoes dos filhos de uma celula
-{ QUAD_BOTTOM_LEFT = 0,
+{
+  QUAD_BOTTOM_LEFT = 0,
   QUAD_LEFT_BOTTOM = QUAD_BOTTOM_LEFT,
   QUAD_BL = QUAD_BOTTOM_LEFT,
   QUAD_LB = QUAD_BOTTOM_LEFT,
@@ -871,12 +874,15 @@ enum  // posicoes dos filhos de uma celula
   QUAD_TOP_LEFT,
   QUAD_LEFT_TOP = QUAD_TOP_LEFT,
   QUAD_TL = QUAD_TOP_LEFT,
-  QUAD_LT = QUAD_TOP_LEFT };
+  QUAD_LT = QUAD_TOP_LEFT
+};
 
 enum  // posicoes dos vertices do meio da quadrtree
-{ QUAD_MID = QUAD_LEFT + 1,
-  QUAD_M = QUAD_MID };
+{
+  QUAD_MID = QUAD_LEFT + 1,
+  QUAD_M = QUAD_MID
+};
 }  // namespace AFT
 }  // namespace Par2DJMesh
 
-#endif  //#ifndef _DATA_DEFINITIONS_H_
+#endif  // #ifndef _DATA_DEFINITIONS_H_

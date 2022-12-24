@@ -1,3 +1,6 @@
+ap_mesh_project/.vscode/*
+ap_mesh_project/.cache/*
+ap_mesh_project/build/*
 *.pos
 *.o
-*.txt
+*.user

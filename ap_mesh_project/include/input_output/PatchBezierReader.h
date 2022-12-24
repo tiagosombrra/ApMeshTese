@@ -6,14 +6,14 @@
 #include <list>
 #include <sstream>
 
+#include "../data/Ponto.h"
 #include "../data/patch/BezierPatch.h"
 #include "../data/patch/HermitePatch.h"
-#include "../data/Ponto.h"
-//#include "../../Libs/Boost/boost/filesystem.hpp"
-//#include "../../Libs/Boost/boost/filesystem/fstream.hpp"
-//#include "../../Libs/Boost/boost/archive/text_iarchive.hpp"
+// #include "../../Libs/Boost/boost/filesystem.hpp"
+// #include "../../Libs/Boost/boost/filesystem/fstream.hpp"
+// #include "../../Libs/Boost/boost/archive/text_iarchive.hpp"
 
-extern std::string entrada;
+extern std::string INPUT_MODEL;
 extern int RANK_MPI;
 
 class PatchBezierReader {

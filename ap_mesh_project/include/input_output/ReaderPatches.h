@@ -7,11 +7,11 @@
 #include <sstream>
 
 #include "../data/Modelo.h"
+#include "../data/Ponto.h"
 #include "../data/patch/BezierPatch.h"
 #include "../data/patch/HermitePatch.h"
-#include "../data/Ponto.h"
 
-extern std::string entrada;
+extern std::string INPUT_MODEL;
 
 class ReaderPatches {
  public:

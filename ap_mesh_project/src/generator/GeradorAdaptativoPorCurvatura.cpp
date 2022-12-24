@@ -218,10 +218,10 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 
 #if USE_MPI
 std::list<BezierPatch*> GeradorAdaptativoPorCurvatura::estimateChargeofPatches(
-    Geometria* geometria, Timer* timer, string entrada) {
+    Geometria* geometria, Timer* timer, string INPUT_MODEL) {
   ChargeEstimateProcess* cep = new ChargeEstimateProcess();
   std::list<BezierPatch*> listBezierPt =
-      cep->chargeEstimateProcess(geometria, timer, entrada);
+      cep->chargeEstimateProcess(geometria, timer, INPUT_MODEL);
   delete cep;
 
   return listBezierPt;
@@ -725,10 +725,10 @@ void GeradorAdaptativoPorCurvatura::adaptCurve(Geometria* geo) {
   for (unsigned int i = 0; i < geo->getNumDeCurvas(); ++i) {
     novosPontos[i] = adapter.AdaptCurveByCurve(geo->getCurva(i), mapaPontos,
                                                this->idManagers[0], 1);
-    geo->getCurva(i)->setPontos(novosPontos[i]);
+    geo->getCurva(i)->SetPoints(novosPontos[i]);
     novosPontos[i] = adapter.AdaptCurveBySurface(geo->getCurva(i), mapaPontos,
                                                  this->idManagers[0], 1);
-    geo->getCurva(i)->setPontos(novosPontos[i]);
+    geo->getCurva(i)->SetPoints(novosPontos[i]);
   }
 }
 
@@ -751,10 +751,14 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
   Curva* c4 = patch->getCurva(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
-  if (c1->getNumDePontos()) c1 = NULL;  // c1 já foi trabalhada no patch vizinho
-  if (c2->getNumDePontos()) c2 = NULL;  // c2 já foi trabalhada no patch vizinho
-  if (c3->getNumDePontos()) c3 = NULL;  // c3 já foi trabalhada no patch vizinho
-  if (c4->getNumDePontos()) c4 = NULL;  // c4 já foi trabalhada no patch vizinho
+  if (c1->GetNumBerPoints())
+    c1 = NULL;  // c1 já foi trabalhada no patch vizinho
+  if (c2->GetNumBerPoints())
+    c2 = NULL;  // c2 já foi trabalhada no patch vizinho
+  if (c3->GetNumBerPoints())
+    c3 = NULL;  // c3 já foi trabalhada no patch vizinho
+  if (c4->GetNumBerPoints())
+    c4 = NULL;  // c4 já foi trabalhada no patch vizinho
 
   SubMalha* sub = new SubMalha;
 
@@ -768,14 +772,14 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
       p->id = idManager->next(0);
 
       if (v == 0 and c1)  // p está na curva 1 (c1 = NULL)
-        c1->inserePonto(p);
+        c1->InsertPoint(p);
       else if (v == 1 and c3)  // p está na curva 3
-        c3->inserePonto(p);
+        c3->InsertPoint(p);
 
       if (u == 0 and c4)  // p está na curva 4
-        c4->inserePonto(p);
+        c4->InsertPoint(p);
       else if (u == 1 and c2)  // p está na curva 2
-        c2->inserePonto(p);
+        c2->InsertPoint(p);
 
       sub->insereNoh(static_cast<Noh*>(p));
     }
@@ -1067,10 +1071,10 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
     for (int i = 0; i < sizeCurvas; ++i) {
       novosPontos[i] = adapter.AdaptCurveByCurve(geo->getCurva(i), mapaPontos,
                                                  this->idManagers[0], 1);
-      geo->getCurva(i)->setPontos(novosPontos[i]);
+      geo->getCurva(i)->SetPoints(novosPontos[i]);
       novosPontos[i] = adapter.AdaptCurveBySurface(geo->getCurva(i), mapaPontos,
                                                    this->idManagers[0], 1);
-      geo->getCurva(i)->setPontos(novosPontos[i]);
+      geo->getCurva(i)->SetPoints(novosPontos[i]);
       // ((CurvaParametrica*)geo->getCurva(i))->ordenaLista ( );
     }
 
@@ -1163,10 +1167,14 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(
   Curva* c4 = patch->getCurva(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
-  if (c1->getNumDePontos()) c1 = NULL;  // c1 já foi trabalhada no patch vizinho
-  if (c2->getNumDePontos()) c2 = NULL;  // c2 já foi trabalhada no patch vizinho
-  if (c3->getNumDePontos()) c3 = NULL;  // c3 já foi trabalhada no patch vizinho
-  if (c4->getNumDePontos()) c4 = NULL;  // c4 já foi trabalhada no patch vizinho
+  if (c1->GetNumBerPoints())
+    c1 = NULL;  // c1 já foi trabalhada no patch vizinho
+  if (c2->GetNumBerPoints())
+    c2 = NULL;  // c2 já foi trabalhada no patch vizinho
+  if (c3->GetNumBerPoints())
+    c3 = NULL;  // c3 já foi trabalhada no patch vizinho
+  if (c4->GetNumBerPoints())
+    c4 = NULL;  // c4 já foi trabalhada no patch vizinho
 
   SubMalha* sub = new SubMalha;
 
@@ -1184,14 +1192,14 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(
       //<< endl;
 
       if (v == 0 and c1)  // p está na curva 1 (c1 = NULL)
-        c1->inserePonto(p);
+        c1->InsertPoint(p);
       else if (v == 1 and c3)  // p está na curva 3
-        c3->inserePonto(p);
+        c3->InsertPoint(p);
 
       if (u == 0 and c4)  // p está na curva 4
-        c4->inserePonto(p);
+        c4->InsertPoint(p);
       else if (u == 1 and c2)  // p está na curva 2
-        c2->inserePonto(p);
+        c2->InsertPoint(p);
 
       sub->insereNoh(static_cast<Noh*>(p));
     }
@@ -1443,7 +1451,7 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(Malha* malha) {
   nome << passo;
   nome << "erro";
   nome << passo;
-  nome << ".txt";
+  nome << ".log";
 
   ofstream arquivo(nome.str().c_str());
 
@@ -1625,16 +1633,16 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo,
                                                  int rank) {
   stringstream nome;
   if (rank == -1) {
-    nome << nameModel;
+    nome << NAME_MODEL;
     nome << "_passo_";
     nome << passo;
     nome << "_malha_";
     nome << passo;
     nome << ".pos";
   } else {
-    nome << nameModel;
+    nome << NAME_MODEL;
     nome << "_n.process_";
-    nome << numberProcess;
+    nome << NUMBER_PROCESS;
     nome << "_passo_";
     nome << passo;
     nome << "_malha_";
@@ -1741,16 +1749,16 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo,
   // cout<< "INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
   stringstream nameFile;
 
-  nameFile << nameModel;
+  nameFile << NAME_MODEL;
   nameFile << "_n.process_";
-  nameFile << numberProcess;
+  nameFile << NUMBER_PROCESS;
   nameFile << "_passo_";
   nameFile << passo;
   nameFile << "_qualite_";
   nameFile << passo;
   nameFile << "_rank_";
   nameFile << rank;
-  nameFile << ".txt";
+  nameFile << ".log";
 
   ofstream file(nameFile.str().c_str());
 
@@ -1844,16 +1852,16 @@ void GeradorAdaptativoPorCurvatura::writeQualityMesh(Malha* malha, int passo,
   // cout<< "INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
   stringstream nameFile;
 
-  nameFile << nameModel;
+  nameFile << NAME_MODEL;
   nameFile << "_n.process_";
-  nameFile << numberProcess;
+  nameFile << NUMBER_PROCESS;
   nameFile << "_passo_";
   nameFile << passo;
   nameFile << "_qualite_";
   nameFile << passo;
   nameFile << "_rank_";
   nameFile << rank;
-  nameFile << ".txt";
+  nameFile << ".log";
 
   ofstream file(nameFile.str().c_str());
 
@@ -1952,7 +1960,7 @@ void escreveElementos(int passo, SubMalha* sub, int i) {
   nome << passo;
   nome << "submalha-";
   nome << i;
-  nome << ".txt";
+  nome << ".log";
 
   ofstream arq(nome.str().c_str());
 
@@ -2041,6 +2049,6 @@ void GeradorAdaptativoPorCurvatura::printElments(Malha* malha, int passo,
     Nt += sub->getNumDeElementos();
   }
 
-  cout << "#elementos_" << nameModel << "_n.process_" << numberProcess
+  cout << "#elementos_" << NAME_MODEL << "_n.process_" << NUMBER_PROCESS
        << "_passo_" << passo << "_rank_" << rank << " = " << Nt << endl;
 }

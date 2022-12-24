@@ -19,8 +19,8 @@ double CurvaParametrica::calcularTamanho(const Ponto& p1, const Ponto& p2) {
   double t1 = encontrar_t(p1);  // parâmetro do ponto p1
   double t2 = encontrar_t(p2);  // parâmetro do ponto p2
 
-  //#pragma omp critical
-  //    cout<<"t1 "<<t1<<" t2 "<<t2<<endl;
+  // #pragma omp critical
+  //     cout<<"t1 "<<t1<<" t2 "<<t2<<endl;
 
   if (t1 < t2) return comprimento(t1, t2);
   if (t1 > t2) return comprimento(t2, t1);
@@ -34,7 +34,7 @@ double CurvaParametrica::calcularTamanho(const Ponto& p) {
 }
 
 // calcula comprimento total "L" da curva
-void CurvaParametrica::calcular_L() { this->L = comprimento(0.0, 1.0); }
+void CurvaParametrica::calcular_L() { this->length_ = comprimento(0.0, 1.0); }
 
 double CurvaParametrica::calcularCurvatura(double) { return -1; }
 
@@ -577,14 +577,14 @@ Ponto CurvaParametrica::pontoMedio(const Ponto& p1, const Ponto& p2) {
 
 vector<CurvaParametrica*> ptr_aux;
 #if USE_OPENMP
-//#pragma omp threadprivate (ptr_aux)
+// #pragma omp threadprivate (ptr_aux)
 #endif  // USE_OPENMP
 
 bool compara(Ponto* a, Ponto* b) {
   double t_a, t_b;
 
-  //#pragma omp critical
-  //   cout<<&ptr_aux<<" "<<omp_get_thread_num()<<endl;
+  // #pragma omp critical
+  //    cout<<&ptr_aux<<" "<<omp_get_thread_num()<<endl;
 
 #if USE_OPENMP
   t_a = ptr_aux[omp_get_thread_num()]->encontrar_t(*a);
@@ -609,7 +609,7 @@ void CurvaParametrica::ordenaLista() {
   ptr_aux[0] = this;
 #endif  // USE_OPENMP
 
-  this->pontos.sort(compara);
+  this->points_.sort(compara);
 }
 
 void CurvaParametrica::atualizarParametros(list<double> novaLista) {

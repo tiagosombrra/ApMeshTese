@@ -80,8 +80,8 @@ Geometria::Geometria(Geometria *antiga) {
 
   for (vector<Curva *>::iterator it = antiga->curvas.begin();
        it != antiga->curvas.end(); ++it) {
-    for (unsigned int i = 0; i < (*it)->getNumDePatches(); i++) {
-      mapaCurvas[(*it)]->inserePatch(mapaPatches[(*it)->getPatch(i)]);
+    for (unsigned int i = 0; i < (*it)->GetNumBerPatches(); i++) {
+      mapaCurvas[(*it)]->InsertPatch(mapaPatches[(*it)->GetPatch(i)]);
     }
   }
 }

@@ -1,35 +1,34 @@
-/* Classe que define uma curva
-MDCC-UFC: Mestrado e Doutorado em Ciências da Computação
-Universidade Federal do Ceará
-Implementação da tese de Mestrado
-Título: Geração Adaptativa de Malhas de Superfície com Controle de Curvatura
-Autor: Daniel Márcio Batista de Siqueira
-contato: siqueira@lia.ufc.br
-Orientador: Creto Augusto Vidal
-Co-Orientador: Joaquim Bento Cavalcante
-This source code is under GNU General Public License v3 */
-
-#ifndef Curva_h
-#define Curva_h
+#ifndef DATA_CURVE_CURVE_ADAPTIVE_H
+#define DATA_CURVE_CURVE_ADAPTIVE_H
 
 #include <list>
 #include <vector>
-using namespace std;
 
 #include "../Noh.h"
-#include "../patch/Patch.h"
 #include "../Triangulo.h"
+#include "../patch/Patch.h"
 
 class Curva {
- protected:
-  unsigned long Id;        // identificador da curva
-  double L;                // comprimento total da curva
-  list<Ponto*> pontos;     // será usada na discretização
-  vector<Patch*> patches;  // uma curva só com um patch é de borda
-
  public:
-  void setId(short i);
-  double get_L() { return this->L; }
+  Curva();
+  Curva(Curva*);
+  virtual ~Curva();
+
+  void SetId(unsigned int id);
+  double GetLength();
+  void InsertPoint(Ponto* point);
+  unsigned int GetNumBerPoints() const;
+  // retorna o i-ésimo ponto
+  Ponto* GetPoint(const unsigned int position);
+  // troca a lista de pontos
+  void SetPoints(list<Ponto*> new_points);
+  list<Ponto*>& GetPoints();
+  void InsertPatch(Patch* patch);
+  unsigned int GetNumBerPatches() const;
+  // retorna o i-ésimo patch
+  Patch* GetPatch(const unsigned int position);
+  // verifica se uma curva é de borda
+  bool CheckIsOnBorder();
 
   // calcula o comprimento de curva de p1 a p2
   virtual double calcularTamanho(const Ponto&, const Ponto&);
@@ -40,18 +39,14 @@ class Curva {
   // calcula a curvatuta da curva
   virtual double calcularCurvatura(double);
 
-  void inserePonto(Ponto* p);
-  unsigned int getNumDePontos() const;
-  Ponto* getPonto(const unsigned int i);   // retorna o i-ésimo ponto
-  void setPontos(list<Ponto*> novaLista);  // troca a lista de pontos
-  void inserePatch(Patch* p);
-  unsigned int getNumDePatches() const;
-  Patch* getPatch(const unsigned int i);  // retorna o i-ésimo patch
-  bool estaNaBorda();                     // verifica se uma curva é de borda
-  list<Ponto*>& getPontos() { return this->pontos; }
-
-  Curva();
-  Curva(Curva*);
-  virtual ~Curva();
+ protected:
+  // identificador da curva
+  unsigned long id_;
+  // comprimento total da curva
+  double length_;
+  // será usada na discretização
+  list<Ponto*> points_;
+  // uma curva só com um patch é de borda
+  vector<Patch*> patches_;
 };
-#endif
+#endif  // DATA_CURVE_CURVE_ADAPTIVE_H

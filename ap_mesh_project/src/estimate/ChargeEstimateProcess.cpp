@@ -12,7 +12,7 @@ static bool sortByNt(const BezierPatch* lhs, const BezierPatch* rhs) {
 // retonar uma lista de patch de bezier ordenados de acordo com sua estimativa
 // de carga em ordem decrescente.
 std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(
-    Geometria* geo, Timer* timer, std::string entrada) {
+    Geometria* geo, Timer* timer, std::string INPUT_MODEL) {
   std::list<BezierPatch*> listBezierPt;
   std::list<BezierPatch*> listBezierPtOrder;
 
@@ -20,7 +20,7 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(
   timer->endTimerParallel(0, 0, 10);  // Full
   timer->initTimerParallel(0, 0, 5);  // Leitura arquivo
 
-  listBezierPt = pt->loaderBPFile(entrada);
+  listBezierPt = pt->loaderBPFile(INPUT_MODEL);
 
   timer->endTimerParallel(0, 0, 5);  // Leitura arquivo
   TIME_READ_FILE = timer->timerParallel[0][0][5];
@@ -816,10 +816,14 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
   Curva* c4 = patch->getCurva(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
-  if (c1->getNumDePontos()) c1 = NULL;  // c1 já foi trabalhada no patch vizinho
-  if (c2->getNumDePontos()) c2 = NULL;  // c2 já foi trabalhada no patch vizinho
-  if (c3->getNumDePontos()) c3 = NULL;  // c3 já foi trabalhada no patch vizinho
-  if (c4->getNumDePontos()) c4 = NULL;  // c4 já foi trabalhada no patch vizinho
+  if (c1->GetNumBerPoints())
+    c1 = NULL;  // c1 já foi trabalhada no patch vizinho
+  if (c2->GetNumBerPoints())
+    c2 = NULL;  // c2 já foi trabalhada no patch vizinho
+  if (c3->GetNumBerPoints())
+    c3 = NULL;  // c3 já foi trabalhada no patch vizinho
+  if (c4->GetNumBerPoints())
+    c4 = NULL;  // c4 já foi trabalhada no patch vizinho
 
   SubMalha* sub = new SubMalha;
 
@@ -830,14 +834,14 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
 
       // cout << "u = " << u << " v = " << v << endl;
       if (v == 0 and c1)  // p está na curva 1
-        c1->inserePonto(p);
+        c1->InsertPoint(p);
       else if (v == 1 and c3)  // p está na curva 3
-        c3->inserePonto(p);
+        c3->InsertPoint(p);
 
       if (u == 0 and c4)  // p está na curva 4
-        c4->inserePonto(p);
+        c4->InsertPoint(p);
       else if (u == 1 and c2)  // p está na curva 2
-        c2->inserePonto(p);
+        c2->InsertPoint(p);
 
       sub->insereNoh(static_cast<Noh*>(p));
       total_1++;

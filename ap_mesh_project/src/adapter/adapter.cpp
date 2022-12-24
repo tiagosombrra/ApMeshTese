@@ -16,7 +16,7 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(Curva *curve,
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->getPontos();
+  list<Ponto *> points = curve->GetPoints();
   list<Ponto *>::iterator point_current = points.begin();
   list<Ponto *>::iterator point_next = points.begin();
   ++point_next;
@@ -68,7 +68,7 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(Curva *curve,
         CalculateNewSize(ka_midpoint, kd_average, factor_disc, length_old);
 
     // 1.2.5. Calcule o tamanho paramétrico
-    lenght_par = lenght_new / curve->get_L();
+    lenght_par = lenght_new / curve->GetLength();
 
     bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
                         static_cast<CurvaParametrica *>(curve));
@@ -125,7 +125,7 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->getPontos();
+  list<Ponto *> points = curve->GetPoints();
   list<Ponto *>::iterator point_current = points.begin();
   list<Ponto *>::iterator point_next = points.begin();
   ++point_next;
@@ -163,10 +163,10 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
     CurvatureAnalytical ka_p0(midpoint,
-                              *(static_cast<CoonsPatch *>(curve->getPatch(0))));
+                              *(static_cast<CoonsPatch *>(curve->GetPatch(0))));
     ka_midpoint = ka_p0.CalculateGaussCurvature();
 
-    if (curve->getNumDePatches() == 1) {
+    if (curve->GetNumBerPatches() == 1) {
       // testamos se ka é ZERO!
       if (fabs(ka_midpoint) < TOLERANCIA) {
         ka_midpoint = ka_p0.CalculateMeanCurvature();
@@ -181,9 +181,9 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
     } else {
       double Ha = ka_p0.CalculateMeanCurvature();
 
-      for (unsigned int i = 1; i < curve->getNumDePatches(); i++) {
+      for (unsigned int i = 1; i < curve->GetNumBerPatches(); i++) {
         CurvatureAnalytical ka_pi(
-            midpoint, *(static_cast<CoonsPatch *>(curve->getPatch(i))));
+            midpoint, *(static_cast<CoonsPatch *>(curve->GetPatch(i))));
         double Ga_pi = ka_pi.CalculateGaussCurvature();
 
         ka_midpoint = (fabs(ka_midpoint) > fabs(Ga_pi)) ? ka_midpoint : Ga_pi;
@@ -209,7 +209,7 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
         CalculateNewSize(ka_midpoint, kd_average, factor_disc, length_old);
 
     // 1.2.5. Calcule o tamanho paramétrico
-    lenght_par = lenght_new / curve->get_L();
+    lenght_par = lenght_new / curve->GetLength();
 
     // 1.2.6. Encontre o parâmetro do ponto médio
     midpoint_segment =
@@ -291,7 +291,7 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
           vertex = avanco.getBoundary()->addVertex(
               1.0, *param_iterator, static_cast<CurvaParametrica *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->getPonto(parameter));
+        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -305,7 +305,7 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
       --last_parameter;
 
       int parameter =
-          static_cast<CurvaParametrica *>(curve)->getNumDePontos() - 1;
+          static_cast<CurvaParametrica *>(curve)->GetNumBerPoints() - 1;
 
       for (list<double>::reverse_iterator param_iterator =
                (static_cast<CurvaParametrica *>(curve))->parametros.rbegin();
@@ -319,7 +319,7 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
           vertex = avanco.getBoundary()->addVertex(
               0.0, *param_iterator, static_cast<CurvaParametrica *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->getPonto(parameter));
+        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -479,7 +479,7 @@ list<Ponto *> Adapter::AdaptCurveByCurve(Curva *curve,
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->getPontos();
+  list<Ponto *> points = curve->GetPoints();
   list<Ponto *>::iterator point_current = points.begin();
   list<Ponto *>::iterator point_next = points.begin();
   ++point_next;
@@ -530,7 +530,7 @@ list<Ponto *> Adapter::AdaptCurveByCurve(Curva *curve,
         CalculateNewSize(ka_midpoint, kd_average, factor_disc, length_old);
 
     // 1.2.5. Calcule o tamanho paramétrico
-    lenght_par = lenght_new / curve->get_L();
+    lenght_par = lenght_new / curve->GetLength();
 
     bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
                         static_cast<CurvaParametrica *>(curve));
@@ -599,7 +599,7 @@ list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->getPontos();
+  list<Ponto *> points = curve->GetPoints();
   list<Ponto *>::iterator point_current = points.begin();
   list<Ponto *>::iterator point_next = points.begin();
   ++point_next;
@@ -641,11 +641,11 @@ list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
     CurvatureAnalytical ka_p0(midpoint,
-                              *(static_cast<CoonsPatch *>(curve->getPatch(0))));
+                              *(static_cast<CoonsPatch *>(curve->GetPatch(0))));
 
-    for (unsigned int i = 0; i < curve->getNumDePatches(); i++) {
+    for (unsigned int i = 0; i < curve->GetNumBerPatches(); i++) {
       CurvatureAnalytical ka_p1(
-          midpoint, *(static_cast<CoonsPatch *>(curve->getPatch(i))));
+          midpoint, *(static_cast<CoonsPatch *>(curve->GetPatch(i))));
       double Ga_p0 = ka_p0.CalculateGaussCurvature();
       double Ga_p1 = ka_p1.CalculateGaussCurvature();
 
@@ -672,7 +672,7 @@ list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
         CalculateNewSize(ka_midpoint, kd_average, factor_disc, length_old);
 
     // 1.2.5. Calcule o tamanho paramétrico
-    lenght_par = lenght_new / curve->get_L();
+    lenght_par = lenght_new / curve->GetLength();
 
     // 1.2.6. Encontre o parâmetro do ponto médio
     midpoint_segment =
@@ -775,7 +775,7 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
           vertex = avanco.getBoundary()->addVertex(
               1.0, *param_iterator, static_cast<CurvaParametrica *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->getPonto(parameter));
+        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -789,7 +789,7 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
       --last_parameter;
 
       int parameter =
-          static_cast<CurvaParametrica *>(curve)->getNumDePontos() - 1;
+          static_cast<CurvaParametrica *>(curve)->GetNumBerPoints() - 1;
 
       for (list<double>::reverse_iterator param_iterator =
                (static_cast<CurvaParametrica *>(curve))->parametros.rbegin();
@@ -803,7 +803,7 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
           vertex = avanco.getBoundary()->addVertex(
               0.0, *param_iterator, static_cast<CurvaParametrica *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->getPonto(parameter));
+        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 

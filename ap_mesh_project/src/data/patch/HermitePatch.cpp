@@ -108,7 +108,7 @@ void HermitePatch::mostraMatrizes() {
 // encontra o parâmetro t de um dado ponto p na curva
 // tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
 //{
-//#pragma omp critical
+// #pragma omp critical
 //     cout<< p.id << " (" << p.x << ", " << p.y << ", " << p.z << ")" << endl;
 
 //    unsigned int iMax = 0;
@@ -221,9 +221,9 @@ void HermitePatch::mostraMatrizes() {
 
 //        if ( ++iMax > 50000 )
 //        {
-//#if USE_PRINT_COMENT
+// #if USE_PRINT_COMENT
 //            cout << "iMax alcançado!" << endl;
-//#endif //#if USE_PRINT_COMENT
+// #endif //#if USE_PRINT_COMENT
 //            break;
 //        }
 
@@ -385,7 +385,7 @@ tuple<double, double> HermitePatch::find_u_v(const Ponto& p) {
     if (++iMax > 50000) {
 #if USE_PRINT_COMENT
       cout << "iMax alcançado!" << endl;
-#endif  //#if USE_PRINT_COMENT
+#endif  // #if USE_PRINT_COMENT
       break;
     }
 
@@ -740,10 +740,10 @@ HermitePatch::HermitePatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
 
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurvParamHermite*>(C1)->inserePatch(this);
-  static_cast<CurvParamHermite*>(C2)->inserePatch(this);
-  static_cast<CurvParamHermite*>(C3)->inserePatch(this);
-  static_cast<CurvParamHermite*>(C4)->inserePatch(this);
+  static_cast<CurvParamHermite*>(C1)->InsertPatch(this);
+  static_cast<CurvParamHermite*>(C2)->InsertPatch(this);
+  static_cast<CurvParamHermite*>(C3)->InsertPatch(this);
+  static_cast<CurvParamHermite*>(C4)->InsertPatch(this);
 
   // 3. Seta os atributos de acordo com as curvas
   //

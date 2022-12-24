@@ -33,21 +33,21 @@ double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
 double TIME_READ_FILE = 0.0;
 
-std::set<Ponto *> listAllPointsModel;
-std::set<SubMalha *> listAllSubMalhaModel;
-std::string nameModel;
-std::string entrada;
-std::string numberProcess;
+std::set<Ponto *> LIST_ALL_POINTS_MODEL;
+std::set<SubMalha *> LIST_ALL_SUB_MESH_MODEL;
+std::string NAME_MODEL;
+std::string INPUT_MODEL;
+std::string NUMBER_PROCESS;
 std::string WRITE_MESH;
 std::string USE_TEMPLATE;
 
 // argv[0] = "executavel: ./apmesh",
 // argv[1] = "n° de process"
 // argv[2] = "n° threads",
-// argv[3] = "entrada",       OBS: Projects-> Comands line arguments ->
-// ../../apMesh/Entrada/mountain_289_patches.bp
+// argv[3] = "INPUT_MODEL",       OBS: Projects-> Comands line arguments ->
+// ../../apMesh/INPUT_MODEL/mountain_289_patches.bp
 // argv[4] = "WRITE_MESH" (m)
-// argv[5] = "nameModel"
+// argv[5] = "NAME_MODEL"
 // argv[6] = "USE_TEMPLATE" -> y or n
 
 int main(int argc, char **argv) {
@@ -76,7 +76,10 @@ int main(int argc, char **argv) {
   WRITE_MESH = argv[4];
 
   // nome do modelo para escrita da malha de saída
-  nameModel = argv[5];
+  NAME_MODEL = argv[5];
+
+  // habilita e desabilita a geração por templates
+  USE_TEMPLATE = argv[6];
 
   // contador do tempo de inicialização em segundos em todos os processos
 #if USE_MPI

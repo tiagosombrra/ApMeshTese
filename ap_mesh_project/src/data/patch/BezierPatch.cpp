@@ -141,9 +141,9 @@ tuple<double, double> BezierPatch::encontrar_u_v(const Ponto& p) {
   // cout << "encontrar_u_v (" << p.id << "), usando Jacobi!";
 
   do {
-    //#pragma omp critical
-    //        cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread:
-    //        "<<omp_get_thread_num()<<endl;
+    // #pragma omp critical
+    //         cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread:
+    //         "<<omp_get_thread_num()<<endl;
 
     Vetor Tu = -(this->Qu(u_i, v_i));
     Vetor Tv = -(this->Qv(u_i, v_i));
@@ -151,7 +151,7 @@ tuple<double, double> BezierPatch::encontrar_u_v(const Ponto& p) {
     p_i = this->parametrizar(u_i, v_i);  // palpite inicial
 
     //        if (std::isnan(p_i.x)) {
-    //#pragma omp critical
+    // #pragma omp critical
     //            {
     //                cout<<"-nan pi"<<endl;
     //                cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread:
@@ -222,7 +222,7 @@ tuple<double, double> BezierPatch::encontrar_u_v(const Ponto& p) {
     delta_v = A(1, 2);
 
     //        if (std::isnan(delta_u) || std::isnan(delta_v)){
-    //#pragma omp critical
+    // #pragma omp critical
     //            {
     //                cout<<"-nan delta_u e delta_v"<<endl;
     //                cout<<"delta_u: "<<delta_u<<" delta_v: "<<delta_v<<"
@@ -241,7 +241,7 @@ tuple<double, double> BezierPatch::encontrar_u_v(const Ponto& p) {
     if (++iMax > 50000) {
 #if USE_PRINT_COMENT
       cout << "iMax alcançado!" << endl;
-#endif  //#if USE_PRINT_COMENT
+#endif  // #if USE_PRINT_COMENT
 
       break;
     }
@@ -610,10 +610,10 @@ BezierPatch::BezierPatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
   //
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurvParamBezier*>(C1)->inserePatch(this);
-  static_cast<CurvParamBezier*>(C2)->inserePatch(this);
-  static_cast<CurvParamBezier*>(C3)->inserePatch(this);
-  static_cast<CurvParamBezier*>(C4)->inserePatch(this);
+  static_cast<CurvParamBezier*>(C1)->InsertPatch(this);
+  static_cast<CurvParamBezier*>(C2)->InsertPatch(this);
+  static_cast<CurvParamBezier*>(C3)->InsertPatch(this);
+  static_cast<CurvParamBezier*>(C4)->InsertPatch(this);
   //
   // 3. Seta os atributos de acordo com as curvas
   //

@@ -157,8 +157,8 @@ void Arquivo::lerArquivoPara() {
   bool leiaPatches = false;                    // pode ler uma linha de patch
   string fimDosPatches = "FIM_DE_PATCHS_HERMITES";  // fim do bloco de patches
 
-  while (entrada.good()) {
-    getline(entrada, linha);  // pega uma linha do arquivo
+  while (INPUT_MODEL.good()) {
+    getline(INPUT_MODEL, linha);  // pega uma linha do arquivo
 
     if (linha == inicioDasCurvas)  // começa a definição das curvas no arquivo
     {
@@ -190,11 +190,11 @@ void Arquivo::lerArquivoPara() {
 }
 
 Arquivo::Arquivo(const char* nome) {
-  this->entrada.open(nome);
-  if (this->entrada.fail())
+  this->INPUT_MODEL.open(nome);
+  if (this->INPUT_MODEL.fail())
     cout << "não abriu o arquivo em disco!" << endl;
   else
     this->nome = nome;
 }
 
-Arquivo::~Arquivo() { this->entrada.close(); }
+Arquivo::~Arquivo() { this->INPUT_MODEL.close(); }

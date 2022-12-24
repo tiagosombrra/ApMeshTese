@@ -4,3 +4,5 @@ ap_mesh_project/build/*
 *.pos
 *.o
 *.user
+*.log
+ap_mesh

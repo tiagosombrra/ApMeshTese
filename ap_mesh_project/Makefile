@@ -75,6 +75,11 @@ CXXFLAGS_EXTRA = -O3 -W -Wall
 CXXFLAGS      = -std=c++17 $(CXXFLAGS_EXTRA)
 CXXFLAGS_OMP  = -fopenmp  $(CXXFLAGS) 
 
+SUBDIR_ROOTS := src
+DIRS := . $(shell find $(SUBDIR_ROOTS) -type d)
+GARBAGE_PATTERNS := *.o
+GARBAGE := $(foreach DIR,$(DIRS),$(addprefix $(DIR)/,$(GARBAGE_PATTERNS)))
+
 $(PROGRAMA): $(OBJETOS)
 	@echo "gerando o executavel..."
 	$(MPICXX) $(INCPATH) $(CXXFLAGS_OMP) $(LIBPATH) $(OBJETOS) -o $@
@@ -84,7 +89,7 @@ $(PROGRAMA): $(OBJETOS)
 	$(MPICXX) $(INCPATH) -c $(CXXFLAGS_OMP) $< -o $@
 
 clean:
-	rm -rfv *.o src/*.o src/adapter/*.o src/crab_mesh/aft/*.o  src/crab_mesh/numerical/*.o src/crab_mesh/performer/*.o src/curvature/*.o src/data/*.o src/data/curve/*.o src/data/mesh/*.o src/data/patch/*.o src/data/tree/*.o src/Estimate/*.o src/generator/*.o src/input_output/*.o src/parallel/*.o src/timer/*.o $(PROGRAMA)
+	rm -rfv $(GARBAGE) $(PROGRAMA)
 
 exec: 
 	./$(PROGRAMA)

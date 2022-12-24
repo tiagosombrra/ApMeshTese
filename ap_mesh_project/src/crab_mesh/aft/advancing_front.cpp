@@ -1163,12 +1163,12 @@ bool AdvancingFront::execute(const FaceList &oldmesh) {
   cout << "refinou a quadtree" << endl;
 #endif  // #if USE_PRINT_COMENT
 
-  status = quadtree->makeTemplateBasedMesh();
-
-  // cout << methodNotices[status] << endl;
-
-  if (status != QUAD_MAKE_TEMPLATE_BASED_MESH_DONE) {
-    return false;
+  if (USE_TEMPLATE == std::string("y")) {
+    status = quadtree->makeTemplateBasedMesh();
+    // cout << methodNotices[status] << endl;
+    if (status != QUAD_MAKE_TEMPLATE_BASED_MESH_DONE) {
+      return false;
+    }
   }
 
 #if USE_PRINT_COMENT

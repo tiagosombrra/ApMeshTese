@@ -1,3 +1,5 @@
+#include <string>
+
 #include "../include/data/Definitions.h"
 #include "../include/data/Modelo.h"
 #include "../include/data/Vertice.h"
@@ -15,7 +17,7 @@
 #if USE_MPI
 int RANK_MPI, SIZE_MPI;
 #endif  // #if USE_OPENMPI
-int PASSOS = 2;
+int PASSOS = 4;
 double TRIANGLE_MEDIO = 0.0;
 double TOLERANCIA_ESTIMATIVE = 1.0;
 double DELTA = 0.0001;
@@ -37,6 +39,7 @@ std::string nameModel;
 std::string entrada;
 std::string numberProcess;
 std::string WRITE_MESH;
+std::string USE_TEMPLATE;
 
 // argv[0] = "executavel: ./apmesh",
 // argv[1] = "n° de process"
@@ -45,6 +48,7 @@ std::string WRITE_MESH;
 // ../../apMesh/Entrada/mountain_289_patches.bp
 // argv[4] = "WRITE_MESH" (m)
 // argv[5] = "nameModel"
+// argv[6] = "USE_TEMPLATE" -> y or n
 
 int main(int argc, char **argv) {
 #if USE_MPI
@@ -54,6 +58,12 @@ int main(int argc, char **argv) {
   MPI_Status status;
 
 #endif
+
+  if (argc < 7) {
+    cout << "Erro!!! Number of parameters is incorrect (" << argc
+         << ") , correct number is 7." << endl;
+    return -1;
+  }
 
   // contador do tempo para carregar a malha na memória
   // (sizeRank, sizeThread, sizeType)

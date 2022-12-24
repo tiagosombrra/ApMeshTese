@@ -13,7 +13,9 @@
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;
 using namespace Par2DJMesh::Basics;
+
 extern double TOLERANCIA_AFT;
+extern std::string USE_TEMPLATE;
 
 namespace Par2DJMesh {
 namespace AFT {

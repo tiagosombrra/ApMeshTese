@@ -24,10 +24,14 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   Ponto* p123 = new Vertice(-2.00000, -0.50000, 0.00000);
   Ponto* p133 = new Vertice(-2.00000, -1.00000, 0.00000);
 
-  CurveAdaptive* patch1_c1 = new CurvParamBezier(*p100, *p110, *p120, *p130);
-  CurveAdaptive* patch1_c2 = new CurvParamBezier(*p130, *p131, *p132, *p133);
-  CurveAdaptive* patch1_c3 = new CurvParamBezier(*p103, *p113, *p123, *p133);
-  CurveAdaptive* patch1_c4 = new CurvParamBezier(*p100, *p101, *p102, *p103);
+  CurveAdaptive* patch1_c1 =
+      new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
+  CurveAdaptive* patch1_c2 =
+      new CurveAdaptiveParametricBezier(*p130, *p131, *p132, *p133);
+  CurveAdaptive* patch1_c3 =
+      new CurveAdaptiveParametricBezier(*p103, *p113, *p123, *p133);
+  CurveAdaptive* patch1_c4 =
+      new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
   Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
@@ -61,9 +65,12 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   Ponto* p233 = new Vertice(0.00000, -1.00000, 2.00000);
 
   // Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
-  CurveAdaptive* patch2_c2 = new CurvParamBezier(*p230, *p231, *p232, *p233);
-  CurveAdaptive* patch2_c3 = new CurvParamBezier(*p203, *p213, *p223, *p233);
-  CurveAdaptive* patch2_c4 = new CurvParamBezier(*p200, *p201, *p202, *p203);
+  CurveAdaptive* patch2_c2 =
+      new CurveAdaptiveParametricBezier(*p230, *p231, *p232, *p233);
+  CurveAdaptive* patch2_c3 =
+      new CurveAdaptiveParametricBezier(*p203, *p213, *p223, *p233);
+  CurveAdaptive* patch2_c4 =
+      new CurveAdaptiveParametricBezier(*p200, *p201, *p202, *p203);
 
   Patch* patch2 = new BezierPatch(patch1_c1, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
@@ -97,9 +104,12 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   Ponto* p333 = new Vertice(2.00000, -1.00000, 0.00000);
 
   // Curva* patch3_c1 = new CurvParamBezier ( *p300, *p310, *p320, *p330 );
-  CurveAdaptive* patch3_c2 = new CurvParamBezier(*p330, *p331, *p332, *p333);
-  CurveAdaptive* patch3_c3 = new CurvParamBezier(*p303, *p313, *p323, *p333);
-  CurveAdaptive* patch3_c4 = new CurvParamBezier(*p300, *p301, *p302, *p303);
+  CurveAdaptive* patch3_c2 =
+      new CurveAdaptiveParametricBezier(*p330, *p331, *p332, *p333);
+  CurveAdaptive* patch3_c3 =
+      new CurveAdaptiveParametricBezier(*p303, *p313, *p323, *p333);
+  CurveAdaptive* patch3_c4 =
+      new CurveAdaptiveParametricBezier(*p300, *p301, *p302, *p303);
 
   Patch* patch3 = new BezierPatch(patch1_c1, patch3_c2, patch3_c3, patch3_c4,
                                   *p311, *p321, *p312, *p322);
@@ -133,9 +143,12 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   Ponto* p433 = new Vertice(-2.00000, -1.00000, 1.00000);
 
   // Curva* patch4_c1 = new CurvParamBezier ( *p400, *p410, *p420, *p430 );
-  CurveAdaptive* patch4_c2 = new CurvParamBezier(*p430, *p431, *p432, *p433);
-  CurveAdaptive* patch4_c3 = new CurvParamBezier(*p403, *p413, *p423, *p433);
-  CurveAdaptive* patch4_c4 = new CurvParamBezier(*p400, *p401, *p402, *p403);
+  CurveAdaptive* patch4_c2 =
+      new CurveAdaptiveParametricBezier(*p430, *p431, *p432, *p433);
+  CurveAdaptive* patch4_c3 =
+      new CurveAdaptiveParametricBezier(*p403, *p413, *p423, *p433);
+  CurveAdaptive* patch4_c4 =
+      new CurveAdaptiveParametricBezier(*p400, *p401, *p402, *p403);
 
   Patch* patch4 = new BezierPatch(patch1_c1, patch4_c2, patch4_c3, patch4_c4,
                                   *p411, *p421, *p412, *p422);
@@ -170,9 +183,12 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   Ponto* p533 = new Vertice(2.00000, -1.00000, 0.76172);
 
   // Curva* patch5_c1 = new CurvParamBezier ( *p500, *p510, *p520, *p530 );
-  CurveAdaptive* patch5_c2 = new CurvParamBezier(*p530, *p531, *p532, *p533);
-  CurveAdaptive* patch5_c3 = new CurvParamBezier(*p503, *p513, *p523, *p533);
-  CurveAdaptive* patch5_c4 = new CurvParamBezier(*p500, *p501, *p502, *p503);
+  CurveAdaptive* patch5_c2 =
+      new CurveAdaptiveParametricBezier(*p530, *p531, *p532, *p533);
+  CurveAdaptive* patch5_c3 =
+      new CurveAdaptiveParametricBezier(*p503, *p513, *p523, *p533);
+  CurveAdaptive* patch5_c4 =
+      new CurveAdaptiveParametricBezier(*p500, *p501, *p502, *p503);
 
   Patch* patch5 = new BezierPatch(patch1_c1, patch5_c2, patch5_c3, patch5_c4,
                                   *p511, *p521, *p512, *p522);
@@ -213,10 +229,14 @@ Geometria* Modelos3d::modelTresPatches(Geometria* geo) {
   Ponto* p123 = new Vertice(-1.7191, -0.50000, 1.00000);
   Ponto* p133 = new Vertice(-1.00000, -1.00000, 1.00000);
 
-  CurveAdaptive* patch1_c1 = new CurvParamBezier(*p100, *p110, *p120, *p130);
-  CurveAdaptive* patch1_c2 = new CurvParamBezier(*p130, *p131, *p132, *p133);
-  CurveAdaptive* patch1_c3 = new CurvParamBezier(*p103, *p113, *p123, *p133);
-  CurveAdaptive* patch1_c4 = new CurvParamBezier(*p100, *p101, *p102, *p103);
+  CurveAdaptive* patch1_c1 =
+      new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
+  CurveAdaptive* patch1_c2 =
+      new CurveAdaptiveParametricBezier(*p130, *p131, *p132, *p133);
+  CurveAdaptive* patch1_c3 =
+      new CurveAdaptiveParametricBezier(*p103, *p113, *p123, *p133);
+  CurveAdaptive* patch1_c4 =
+      new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
   Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
@@ -249,9 +269,12 @@ Geometria* Modelos3d::modelTresPatches(Geometria* geo) {
   Ponto* p233 = new Vertice(1.00000, -1.00000, 1.00000);
 
   // Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
-  CurveAdaptive* patch2_c2 = new CurvParamBezier(*p230, *p231, *p232, *p233);
-  CurveAdaptive* patch2_c3 = new CurvParamBezier(*p203, *p213, *p223, *p233);
-  CurveAdaptive* patch2_c4 = new CurvParamBezier(*p200, *p201, *p202, *p203);
+  CurveAdaptive* patch2_c2 =
+      new CurveAdaptiveParametricBezier(*p230, *p231, *p232, *p233);
+  CurveAdaptive* patch2_c3 =
+      new CurveAdaptiveParametricBezier(*p203, *p213, *p223, *p233);
+  CurveAdaptive* patch2_c4 =
+      new CurveAdaptiveParametricBezier(*p200, *p201, *p202, *p203);
 
   Patch* patch2 = new BezierPatch(patch1_c3, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
@@ -285,9 +308,12 @@ Geometria* Modelos3d::modelTresPatches(Geometria* geo) {
   Ponto* p333 = new Vertice(1.0956, -0.87825, -0.51823);
 
   // Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
-  CurveAdaptive* patch3_c2 = new CurvParamBezier(*p330, *p331, *p332, *p333);
-  CurveAdaptive* patch3_c3 = new CurvParamBezier(*p303, *p313, *p323, *p333);
-  CurveAdaptive* patch3_c4 = new CurvParamBezier(*p300, *p301, *p302, *p303);
+  CurveAdaptive* patch3_c2 =
+      new CurveAdaptiveParametricBezier(*p330, *p331, *p332, *p333);
+  CurveAdaptive* patch3_c3 =
+      new CurveAdaptiveParametricBezier(*p303, *p313, *p323, *p333);
+  CurveAdaptive* patch3_c4 =
+      new CurveAdaptiveParametricBezier(*p300, *p301, *p302, *p303);
 
   Patch* patch3 = new BezierPatch(patch1_c3, patch3_c2, patch3_c3, patch3_c4,
                                   *p311, *p321, *p312, *p322);
@@ -329,10 +355,14 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva1(Geometria* geo) {
   Ponto* p123 = new Vertice(-1.7191, -0.50000, 1.00000);
   Ponto* p133 = new Vertice(-1.00000, -1.00000, 1.00000);
 
-  CurveAdaptive* patch1_c1 = new CurvParamBezier(*p100, *p110, *p120, *p130);
-  CurveAdaptive* patch1_c2 = new CurvParamBezier(*p130, *p131, *p132, *p133);
-  CurveAdaptive* patch1_c3 = new CurvParamBezier(*p103, *p113, *p123, *p133);
-  CurveAdaptive* patch1_c4 = new CurvParamBezier(*p100, *p101, *p102, *p103);
+  CurveAdaptive* patch1_c1 =
+      new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
+  CurveAdaptive* patch1_c2 =
+      new CurveAdaptiveParametricBezier(*p130, *p131, *p132, *p133);
+  CurveAdaptive* patch1_c3 =
+      new CurveAdaptiveParametricBezier(*p103, *p113, *p123, *p133);
+  CurveAdaptive* patch1_c4 =
+      new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
   Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
@@ -365,9 +395,12 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva1(Geometria* geo) {
   Ponto* p233 = new Vertice(1.00000, -1.00000, 1.00000);
 
   // Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
-  CurveAdaptive* patch2_c2 = new CurvParamBezier(*p230, *p231, *p232, *p233);
-  CurveAdaptive* patch2_c3 = new CurvParamBezier(*p203, *p213, *p223, *p233);
-  CurveAdaptive* patch2_c4 = new CurvParamBezier(*p200, *p201, *p202, *p203);
+  CurveAdaptive* patch2_c2 =
+      new CurveAdaptiveParametricBezier(*p230, *p231, *p232, *p233);
+  CurveAdaptive* patch2_c3 =
+      new CurveAdaptiveParametricBezier(*p203, *p213, *p223, *p233);
+  CurveAdaptive* patch2_c4 =
+      new CurveAdaptiveParametricBezier(*p200, *p201, *p202, *p203);
 
   Patch* patch2 = new BezierPatch(patch1_c3, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
@@ -410,10 +443,14 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva(Geometria* geo) {
   Ponto* p123 = new Vertice(2.0, 12.0, 0.0);
   Ponto* p133 = new Vertice(6.0, 12.0, 0.0);
 
-  CurveAdaptive* patch1_c1 = new CurvParamBezier(*p100, *p110, *p120, *p130);
-  CurveAdaptive* patch1_c2 = new CurvParamBezier(*p130, *p131, *p132, *p133);
-  CurveAdaptive* patch1_c3 = new CurvParamBezier(*p103, *p113, *p123, *p133);
-  CurveAdaptive* patch1_c4 = new CurvParamBezier(*p100, *p101, *p102, *p103);
+  CurveAdaptive* patch1_c1 =
+      new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
+  CurveAdaptive* patch1_c2 =
+      new CurveAdaptiveParametricBezier(*p130, *p131, *p132, *p133);
+  CurveAdaptive* patch1_c3 =
+      new CurveAdaptiveParametricBezier(*p103, *p113, *p123, *p133);
+  CurveAdaptive* patch1_c4 =
+      new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
   Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
@@ -446,11 +483,14 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva(Geometria* geo) {
   // Ponto* p223 = p120;//new Vertice ( -1.50000,-0.84000, 2.40000 );
   Ponto* p233 = p130;  // new Vertice ( -1.50000, 0.00000, 2.40000 );
 
-  CurveAdaptive* patch2_c1 = new CurvParamBezier(*p200, *p210, *p220, *p230);
-  CurveAdaptive* patch2_c2 = new CurvParamBezier(*p230, *p231, *p232, *p233);
+  CurveAdaptive* patch2_c1 =
+      new CurveAdaptiveParametricBezier(*p200, *p210, *p220, *p230);
+  CurveAdaptive* patch2_c2 =
+      new CurveAdaptiveParametricBezier(*p230, *p231, *p232, *p233);
   CurveAdaptive* patch2_c3 =
       patch1_c1;  // new CurvParamBezier ( *p133, *p213, *p223, *p233 );
-  CurveAdaptive* patch2_c4 = new CurvParamBezier(*p200, *p201, *p202, *p203);
+  CurveAdaptive* patch2_c4 =
+      new CurveAdaptiveParametricBezier(*p200, *p201, *p202, *p203);
 
   Patch* patch2 = new BezierPatch(patch2_c1, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
@@ -490,10 +530,14 @@ Geometria* Modelos3d::modelCurvaBezier(Geometria* geo) {
   Ponto* p23 = new Vertice(-1.0, 0.5, 0.0);
   Ponto* p33 = new Vertice(-1.0, 1.0, 0.0);
 
-  CurveAdaptive* patch1_c1 = new CurvParamBezier(*p00, *p10, *p20, *p30);
-  CurveAdaptive* patch1_c2 = new CurvParamBezier(*p30, *p31, *p32, *p33);
-  CurveAdaptive* patch1_c3 = new CurvParamBezier(*p03, *p13, *p23, *p33);
-  CurveAdaptive* patch1_c4 = new CurvParamBezier(*p00, *p01, *p02, *p03);
+  CurveAdaptive* patch1_c1 =
+      new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
+  CurveAdaptive* patch1_c2 =
+      new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
+  CurveAdaptive* patch1_c3 =
+      new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
+  CurveAdaptive* patch1_c4 =
+      new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
 
   Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p11, *p21, *p12, *p22);
@@ -1474,10 +1518,14 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p123 = new Vertice(0.84000, -1.50000, 2.40000);
   Ponto* p133 = new Vertice(0.00000, -1.50000, 2.40000);
 
-  CurveAdaptive* patch1_c1 = new CurvParamBezier(*p100, *p110, *p120, *p130);
-  CurveAdaptive* patch1_c2 = new CurvParamBezier(*p130, *p131, *p132, *p133);
-  CurveAdaptive* patch1_c3 = new CurvParamBezier(*p103, *p113, *p123, *p133);
-  CurveAdaptive* patch1_c4 = new CurvParamBezier(*p100, *p101, *p102, *p103);
+  CurveAdaptive* patch1_c1 =
+      new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
+  CurveAdaptive* patch1_c2 =
+      new CurveAdaptiveParametricBezier(*p130, *p131, *p132, *p133);
+  CurveAdaptive* patch1_c3 =
+      new CurveAdaptiveParametricBezier(*p103, *p113, *p123, *p133);
+  CurveAdaptive* patch1_c4 =
+      new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
   Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
@@ -1515,10 +1563,12 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p223 = new Vertice(-1.50000, -0.84000, 2.40000);
   Ponto* p233 = new Vertice(-1.50000, 0.00000, 2.40000);
 
-  CurveAdaptive* patch2_c1 = new CurvParamBezier(
+  CurveAdaptive* patch2_c1 = new CurveAdaptiveParametricBezier(
       *p130, *p210, *p220, *p230);  //( *p200, *p210, *p220, *p230 );
-  CurveAdaptive* patch2_c2 = new CurvParamBezier(*p230, *p231, *p232, *p233);
-  CurveAdaptive* patch2_c3 = new CurvParamBezier(*p133, *p213, *p223, *p233);
+  CurveAdaptive* patch2_c2 =
+      new CurveAdaptiveParametricBezier(*p230, *p231, *p232, *p233);
+  CurveAdaptive* patch2_c3 =
+      new CurveAdaptiveParametricBezier(*p133, *p213, *p223, *p233);
   // Curva* patch2_c4 = patch1_c2; //new CurvParamBezier ( *p130, *p131, *p132,
   // *p133 ); //( *p200, *p201, *p202, *p203 );
 
@@ -1557,9 +1607,12 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p323 = new Vertice(-0.84000, 1.50000, 2.40000);
   Ponto* p333 = new Vertice(0.00000, 1.50000, 2.40000);
 
-  CurveAdaptive* patch3_c1 = new CurvParamBezier(*p230, *p310, *p320, *p330);
-  CurveAdaptive* patch3_c2 = new CurvParamBezier(*p330, *p331, *p332, *p333);
-  CurveAdaptive* patch3_c3 = new CurvParamBezier(*p233, *p313, *p323, *p333);
+  CurveAdaptive* patch3_c1 =
+      new CurveAdaptiveParametricBezier(*p230, *p310, *p320, *p330);
+  CurveAdaptive* patch3_c2 =
+      new CurveAdaptiveParametricBezier(*p330, *p331, *p332, *p333);
+  CurveAdaptive* patch3_c3 =
+      new CurveAdaptiveParametricBezier(*p233, *p313, *p323, *p333);
   //		Curva* patch3_c4 = new CurvParamBezier ( *p230, *p231, *p232,
   //*p233
   //);
@@ -1595,11 +1648,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p423 = new Vertice(1.50000, 0.84000, 2.40000);
   // Ponto* p433 = p103; //new Vertice ( 1.50000, 0.00000, 2.40000 );
 
-  CurveAdaptive* patch4_c1 = new CurvParamBezier(
+  CurveAdaptive* patch4_c1 = new CurveAdaptiveParametricBezier(
       *p330, *p410, *p420, *p100);  // ( *p400, *p410, *p420, *p430 );
   // Curva* patch4_c2 = new CurvParamBezier ( *p100, *p101, *p102, *p103 ); // (
   // *p430, *p431, *p432, *p433 );
-  CurveAdaptive* patch4_c3 = new CurvParamBezier(
+  CurveAdaptive* patch4_c3 = new CurveAdaptiveParametricBezier(
       *p333, *p413, *p423, *p103);  // ( *p403, *p413, *p423, *p433 );
   // Curva* patch4_c4 = new CurvParamBezier ( *p330, *p331, *p332, *p333 ); // (
   // *p400, *p401, *p402, *p403 );
@@ -1638,11 +1691,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
 
   // Curva* patch5_c1 = patch1_c3; //new CurvParamBezier ( *p103, *p113, *p123,
   // *p133 ); // ( *p500, *p510, *p520, *p530 );
-  CurveAdaptive* patch5_c2 = new CurvParamBezier(
+  CurveAdaptive* patch5_c2 = new CurveAdaptiveParametricBezier(
       *p133, *p531, *p532, *p533);  // ( *p530, *p531, *p532, *p533 );
-  CurveAdaptive* patch5_c3 = new CurvParamBezier(
+  CurveAdaptive* patch5_c3 = new CurveAdaptiveParametricBezier(
       *p503, *p513, *p523, *p533);  // ( *p503, *p513, *p523, *p533 );
-  CurveAdaptive* patch5_c4 = new CurvParamBezier(
+  CurveAdaptive* patch5_c4 = new CurveAdaptiveParametricBezier(
       *p103, *p501, *p502, *p503);  // ( *p500, *p501, *p502, *p503 );
 
   Patch* patch5 = new BezierPatch(patch1_c3, patch5_c2, patch5_c3, patch5_c4,
@@ -1686,9 +1739,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch6_c1 = new CurvParamBezier ( *p133, *p213, *p223,
   //*p233
   //); // ( *p600, *p610, *p620, *p630 );
-  CurveAdaptive* patch6_c2 = new CurvParamBezier(
+  CurveAdaptive* patch6_c2 = new CurveAdaptiveParametricBezier(
       *p233, *p631, *p632, *p633);  // ( *p630, *p631, *p632, *p633 );
-  CurveAdaptive* patch6_c3 = new CurvParamBezier(
+  CurveAdaptive* patch6_c3 = new CurveAdaptiveParametricBezier(
       *p533, *p613, *p623, *p633);  // ( *p603, *p613, *p623, *p633 );
   //		Curva* patch6_c4 = new CurvParamBezier ( *p133, *p531, *p532,
   //*p533
@@ -1729,8 +1782,10 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch7_c1 = new CurvParamBezier ( *p233, *p313, *p323,
   //*p333
   //);
-  CurveAdaptive* patch7_c2 = new CurvParamBezier(*p333, *p731, *p732, *p733);
-  CurveAdaptive* patch7_c3 = new CurvParamBezier(*p633, *p713, *p723, *p733);
+  CurveAdaptive* patch7_c2 =
+      new CurveAdaptiveParametricBezier(*p333, *p731, *p732, *p733);
+  CurveAdaptive* patch7_c3 =
+      new CurveAdaptiveParametricBezier(*p633, *p713, *p723, *p733);
   //		Curva* patch7_c4 = new CurvParamBezier ( *p233, *p631, *p632,
   //*p633
   //);
@@ -1777,7 +1832,8 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p103
   //); 		Curva* patch8_c2 = new CurvParamBezier ( *p103, *p501, *p502,
   //*p503 );
-  CurveAdaptive* patch8_c3 = new CurvParamBezier(*p733, *p813, *p823, *p503);
+  CurveAdaptive* patch8_c3 =
+      new CurveAdaptiveParametricBezier(*p733, *p813, *p823, *p503);
   //		Curva* patch8_c4 = new CurvParamBezier ( *p333, *p731, *p732,
   //*p733
   //);
@@ -1817,9 +1873,12 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch9_c1 = new CurvParamBezier ( *p503, *p513, *p523,
   //*p533
   //);
-  CurveAdaptive* patch9_c2 = new CurvParamBezier(*p533, *p931, *p932, *p933);
-  CurveAdaptive* patch9_c3 = new CurvParamBezier(*p903, *p913, *p923, *p933);
-  CurveAdaptive* patch9_c4 = new CurvParamBezier(*p503, *p901, *p902, *p903);
+  CurveAdaptive* patch9_c2 =
+      new CurveAdaptiveParametricBezier(*p533, *p931, *p932, *p933);
+  CurveAdaptive* patch9_c3 =
+      new CurveAdaptiveParametricBezier(*p903, *p913, *p923, *p933);
+  CurveAdaptive* patch9_c4 =
+      new CurveAdaptiveParametricBezier(*p503, *p901, *p902, *p903);
 
   Patch* patch9 = new BezierPatch(patch5_c3, patch9_c2, patch9_c3, patch9_c4,
                                   *p911, *p921, *p912, *p922);
@@ -1859,9 +1918,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p633
   //);
   CurveAdaptive* patch10_c2 =
-      new CurvParamBezier(*p633, *p1031, *p1032, *p1033);
+      new CurveAdaptiveParametricBezier(*p633, *p1031, *p1032, *p1033);
   CurveAdaptive* patch10_c3 =
-      new CurvParamBezier(*p933, *p1013, *p1023, *p1033);
+      new CurveAdaptiveParametricBezier(*p933, *p1013, *p1023, *p1033);
   //		Curva* patch10_c4 = new CurvParamBezier ( *p533, *p931, *p932,
   //*p933
   //);
@@ -1904,9 +1963,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p733
   //);
   CurveAdaptive* patch11_c2 =
-      new CurvParamBezier(*p733, *p1131, *p1132, *p1133);
+      new CurveAdaptiveParametricBezier(*p733, *p1131, *p1132, *p1133);
   CurveAdaptive* patch11_c3 =
-      new CurvParamBezier(*p1033, *p1113, *p1123, *p1133);
+      new CurveAdaptiveParametricBezier(*p1033, *p1113, *p1123, *p1133);
   //		Curva* patch11_c4 = new CurvParamBezier ( *p633, *p1031, *p1032,
   //*p1033 );
 
@@ -1950,7 +2009,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //); 		Curva* patch12_c2 = new CurvParamBezier ( *p503, *p901, *p902,
   //*p903 );
   CurveAdaptive* patch12_c3 =
-      new CurvParamBezier(*p1133, *p1213, *p1223, *p903);
+      new CurveAdaptiveParametricBezier(*p1133, *p1213, *p1223, *p903);
   //		Curva* patch12_c4 = new CurvParamBezier ( *p733, *p1131, *p1132,
   //*p1133 );
 
@@ -1986,13 +2045,13 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p1333 = new Vertice(-3.00000, 0.00000, 1.80000);
 
   CurveAdaptive* patch13_c1 =
-      new CurvParamBezier(*p1300, *p1310, *p1320, *p1330);
+      new CurveAdaptiveParametricBezier(*p1300, *p1310, *p1320, *p1330);
   CurveAdaptive* patch13_c2 =
-      new CurvParamBezier(*p1330, *p1331, *p1332, *p1333);
+      new CurveAdaptiveParametricBezier(*p1330, *p1331, *p1332, *p1333);
   CurveAdaptive* patch13_c3 =
-      new CurvParamBezier(*p1303, *p1313, *p1323, *p1333);
+      new CurveAdaptiveParametricBezier(*p1303, *p1313, *p1323, *p1333);
   CurveAdaptive* patch13_c4 =
-      new CurvParamBezier(*p1300, *p1301, *p1302, *p1303);
+      new CurveAdaptiveParametricBezier(*p1300, *p1301, *p1302, *p1303);
 
   Patch* patch13 = new BezierPatch(patch13_c1, patch13_c2, patch13_c3,
                                    patch13_c4, *p1311, *p1321, *p1312, *p1322);
@@ -2034,11 +2093,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   CurveAdaptive* patch14_c1 =
-      new CurvParamBezier(*p1330, *p1410, *p1420, *p1300);
+      new CurveAdaptiveParametricBezier(*p1330, *p1410, *p1420, *p1300);
   //		Curva* patch14_c2 = new CurvParamBezier ( *p1300, *p1301,
   //*p1302, *p1303 );
   CurveAdaptive* patch14_c3 =
-      new CurvParamBezier(*p1333, *p1413, *p1423, *p1303);
+      new CurveAdaptiveParametricBezier(*p1333, *p1413, *p1423, *p1303);
   //		Curva* patch14_c4 = new CurvParamBezier ( *p1330, *p1331,
   //*p1332, *p1333 );
 
@@ -2078,11 +2137,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch15_c1 = new CurvParamBezier ( *p1303, *p1313,
   //*p1323, *p1333 );
   CurveAdaptive* patch15_c2 =
-      new CurvParamBezier(*p1333, *p1531, *p1532, *p1533);
+      new CurveAdaptiveParametricBezier(*p1333, *p1531, *p1532, *p1533);
   CurveAdaptive* patch15_c3 =
-      new CurvParamBezier(*p633, *p1513, *p1523, *p1533);
+      new CurveAdaptiveParametricBezier(*p633, *p1513, *p1523, *p1533);
   CurveAdaptive* patch15_c4 =
-      new CurvParamBezier(*p1303, *p1501, *p1502, *p633);
+      new CurveAdaptiveParametricBezier(*p1303, *p1501, *p1502, *p633);
 
   Patch* patch15 = new BezierPatch(patch13_c3, patch15_c2, patch15_c3,
                                    patch15_c4, *p1511, *p1521, *p1512, *p1522);
@@ -2127,7 +2186,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p1303 ); 		Curva* patch16_c2 = new CurvParamBezier ( *p1303,
   //*p1501, *p1502, *p633 );
   CurveAdaptive* patch16_c3 =
-      new CurvParamBezier(*p1533, *p1613, *p1623, *p633);
+      new CurveAdaptiveParametricBezier(*p1533, *p1613, *p1623, *p633);
   //		Curva* patch16_c4 = new CurvParamBezier ( *p1333, *p1531,
   //*p1532, *p1533 );
 
@@ -2163,13 +2222,13 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p1733 = new Vertice(3.30000, 0.00000, 2.40000);
 
   CurveAdaptive* patch17_c1 =
-      new CurvParamBezier(*p1700, *p1710, *p1720, *p1730);
+      new CurveAdaptiveParametricBezier(*p1700, *p1710, *p1720, *p1730);
   CurveAdaptive* patch17_c2 =
-      new CurvParamBezier(*p1730, *p1731, *p1732, *p1733);
+      new CurveAdaptiveParametricBezier(*p1730, *p1731, *p1732, *p1733);
   CurveAdaptive* patch17_c3 =
-      new CurvParamBezier(*p1703, *p1713, *p1723, *p1733);
+      new CurveAdaptiveParametricBezier(*p1703, *p1713, *p1723, *p1733);
   CurveAdaptive* patch17_c4 =
-      new CurvParamBezier(*p1700, *p1701, *p1702, *p1703);
+      new CurveAdaptiveParametricBezier(*p1700, *p1701, *p1702, *p1703);
 
   Patch* patch17 = new BezierPatch(patch17_c1, patch17_c2, patch17_c3,
                                    patch17_c4, *p1711, *p1721, *p1712, *p1722);
@@ -2211,11 +2270,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   CurveAdaptive* patch18_c1 =
-      new CurvParamBezier(*p1730, *p1810, *p1820, *p1700);
+      new CurveAdaptiveParametricBezier(*p1730, *p1810, *p1820, *p1700);
   //		Curva* patch18_c2 = new CurvParamBezier ( *p1700, *p1701,
   //*p1702, *p1703 );
   CurveAdaptive* patch18_c3 =
-      new CurvParamBezier(*p1733, *p1813, *p1823, *p1703);
+      new CurveAdaptiveParametricBezier(*p1733, *p1813, *p1823, *p1703);
   //		Curva* patch18_c4 = new CurvParamBezier ( *p1730, *p1731,
   //*p1732, *p1733 );
 
@@ -2255,11 +2314,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch19_c1 = new CurvParamBezier ( *p1703, *p1713,
   //*p1723, *p1733 );
   CurveAdaptive* patch19_c2 =
-      new CurvParamBezier(*p1733, *p1931, *p1932, *p1933);
+      new CurveAdaptiveParametricBezier(*p1733, *p1931, *p1932, *p1933);
   CurveAdaptive* patch19_c3 =
-      new CurvParamBezier(*p1903, *p1913, *p1933, *p1933);
+      new CurveAdaptiveParametricBezier(*p1903, *p1913, *p1933, *p1933);
   CurveAdaptive* patch19_c4 =
-      new CurvParamBezier(*p1703, *p1901, *p1902, *p1903);
+      new CurveAdaptiveParametricBezier(*p1703, *p1901, *p1902, *p1903);
 
   Patch* patch19 = new BezierPatch(patch17_c3, patch19_c2, patch19_c3,
                                    patch19_c4, *p1911, *p1921, *p1912, *p1922);
@@ -2300,11 +2359,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   CurveAdaptive* patch20_c1 =
-      new CurvParamBezier(*p1733, *p2010, *p2020, *p1703);
+      new CurveAdaptiveParametricBezier(*p1733, *p2010, *p2020, *p1703);
   //		Curva* patch20_c2 = new CurvParamBezier ( *p1703, *p1901,
   //*p1902, *p1903 );
   CurveAdaptive* patch20_c3 =
-      new CurvParamBezier(*p1933, *p1933, *p2023, *p1903);
+      new CurveAdaptiveParametricBezier(*p1933, *p1933, *p2023, *p1903);
   //		Curva* patch20_c4 = new CurvParamBezier ( *p1733, *p1931,
   //*p1932, *p1933 );
 
@@ -2341,13 +2400,13 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2133 = new Vertice(0.00000, -0.20000, 2.70000);
 
   CurveAdaptive* patch21_c1 =
-      new CurvParamBezier(*p2100, *p2110, *p2120, *p2130);
+      new CurveAdaptiveParametricBezier(*p2100, *p2110, *p2120, *p2130);
   CurveAdaptive* patch21_c2 =
-      new CurvParamBezier(*p2130, *p2131, *p2102, *p2133);
+      new CurveAdaptiveParametricBezier(*p2130, *p2131, *p2102, *p2133);
   CurveAdaptive* patch21_c3 =
-      new CurvParamBezier(*p2103, *p2113, *p2123, *p2133);
+      new CurveAdaptiveParametricBezier(*p2103, *p2113, *p2123, *p2133);
   CurveAdaptive* patch21_c4 =
-      new CurvParamBezier(*p2100, *p2101, *p2102, *p2103);
+      new CurveAdaptiveParametricBezier(*p2100, *p2101, *p2102, *p2103);
 
   Patch* patch21 = new BezierPatch(patch21_c1, patch21_c2, patch21_c3,
                                    patch21_c4, *p2111, *p2121, *p2102, *p2102);
@@ -2385,11 +2444,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2233 = new Vertice(-0.20000, 0.00000, 2.70000);
 
   CurveAdaptive* patch22_c1 =
-      new CurvParamBezier(*p2130, *p2210, *p2220, *p2230);
+      new CurveAdaptiveParametricBezier(*p2130, *p2210, *p2220, *p2230);
   CurveAdaptive* patch22_c2 =
-      new CurvParamBezier(*p2230, *p2231, *p2102, *p2233);
+      new CurveAdaptiveParametricBezier(*p2230, *p2231, *p2102, *p2233);
   CurveAdaptive* patch22_c3 =
-      new CurvParamBezier(*p2133, *p2213, *p2223, *p2233);
+      new CurveAdaptiveParametricBezier(*p2133, *p2213, *p2223, *p2233);
   //		Curva* patch22_c4 = new CurvParamBezier ( *p2130, *p2131,
   //*p2102, *p2133 );
 
@@ -2426,11 +2485,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   Ponto* p2333 = new Vertice(0.00000, 0.20000, 2.70000);
 
   CurveAdaptive* patch23_c1 =
-      new CurvParamBezier(*p2230, *p2310, *p2320, *p2330);
+      new CurveAdaptiveParametricBezier(*p2230, *p2310, *p2320, *p2330);
   CurveAdaptive* patch23_c2 =
-      new CurvParamBezier(*p2330, *p2331, *p2102, *p2333);
+      new CurveAdaptiveParametricBezier(*p2330, *p2331, *p2102, *p2333);
   CurveAdaptive* patch23_c3 =
-      new CurvParamBezier(*p2233, *p2313, *p2323, *p2333);
+      new CurveAdaptiveParametricBezier(*p2233, *p2313, *p2323, *p2333);
   //		Curva* patch23_c4 = new CurvParamBezier ( *p2230, *p2231,
   //*p2102, *p2233 );
 
@@ -2468,11 +2527,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   CurveAdaptive* patch24_c1 =
-      new CurvParamBezier(*p2330, *p2410, *p2420, *p2100);
+      new CurveAdaptiveParametricBezier(*p2330, *p2410, *p2420, *p2100);
   CurveAdaptive* patch24_c2 =
-      new CurvParamBezier(*p2100, *p2431, *p2102, *p2103);
+      new CurveAdaptiveParametricBezier(*p2100, *p2431, *p2102, *p2103);
   CurveAdaptive* patch24_c3 =
-      new CurvParamBezier(*p2333, *p2413, *p2423, *p2103);
+      new CurveAdaptiveParametricBezier(*p2333, *p2413, *p2423, *p2103);
   //		Curva* patch24_c4 = new CurvParamBezier ( *p2330, *p2331,
   //*p2102, *p2333 );
 
@@ -2511,11 +2570,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch25_c1 = new CurvParamBezier ( *p2103, *p2113,
   //*p2123, *p2133 );
   CurveAdaptive* patch25_c2 =
-      new CurvParamBezier(*p2133, *p2531, *p2532, *p2533);
+      new CurveAdaptiveParametricBezier(*p2133, *p2531, *p2532, *p2533);
   CurveAdaptive* patch25_c3 =
-      new CurvParamBezier(*p2503, *p2513, *p2523, *p2533);
+      new CurveAdaptiveParametricBezier(*p2503, *p2513, *p2523, *p2533);
   CurveAdaptive* patch25_c4 =
-      new CurvParamBezier(*p2103, *p2501, *p2502, *p2503);
+      new CurveAdaptiveParametricBezier(*p2103, *p2501, *p2502, *p2503);
 
   Patch* patch25 = new BezierPatch(patch21_c3, patch25_c2, patch25_c3,
                                    patch25_c4, *p2511, *p2521, *p2512, *p2522);
@@ -2552,9 +2611,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch26_c1 = new CurvParamBezier ( *p2133, *p2213,
   //*p2223, *p2233 );
   CurveAdaptive* patch26_c2 =
-      new CurvParamBezier(*p2233, *p2631, *p2632, *p2633);
+      new CurveAdaptiveParametricBezier(*p2233, *p2631, *p2632, *p2633);
   CurveAdaptive* patch26_c3 =
-      new CurvParamBezier(*p2533, *p2613, *p2623, *p2633);
+      new CurveAdaptiveParametricBezier(*p2533, *p2613, *p2623, *p2633);
   //		Curva* patch26_c4 = new CurvParamBezier ( *p2133, *p2531,
   //*p2532, *p2533 );
 
@@ -2592,9 +2651,9 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch27_c1 = new CurvParamBezier ( *p2233, *p2313,
   //*p2323, *p2333 );
   CurveAdaptive* patch27_c2 =
-      new CurvParamBezier(*p2333, *p2731, *p2732, *p2733);
+      new CurveAdaptiveParametricBezier(*p2333, *p2731, *p2732, *p2733);
   CurveAdaptive* patch27_c3 =
-      new CurvParamBezier(*p2633, *p2713, *p2723, *p2733);
+      new CurveAdaptiveParametricBezier(*p2633, *p2713, *p2723, *p2733);
   //		Curva* patch27_c4 = new CurvParamBezier ( *p2233, *p2631,
   //*p2632, *p2633 );
 
@@ -2635,7 +2694,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p2103 ); 		Curva* patch28_c2 = new CurvParamBezier ( *p2103,
   //*p2501, *p2502, *p2503 );
   CurveAdaptive* patch28_c3 =
-      new CurvParamBezier(*p2733, *p2813, *p2823, *p2503);
+      new CurveAdaptiveParametricBezier(*p2733, *p2813, *p2823, *p2503);
   //		Curva* patch28_c4 = new CurvParamBezier ( *p2333, *p2731,
   //*p2732, *p2733 );
 
@@ -2672,13 +2731,13 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   CurveAdaptive* patch29_c1 =
-      new CurvParamBezier(*p2900, *p2910, *p2920, *p2930);
+      new CurveAdaptiveParametricBezier(*p2900, *p2910, *p2920, *p2930);
   CurveAdaptive* patch29_c2 =
-      new CurvParamBezier(*p2930, *p2931, *p2932, *p1133);
+      new CurveAdaptiveParametricBezier(*p2930, *p2931, *p2932, *p1133);
   CurveAdaptive* patch29_c3 =
-      new CurvParamBezier(*p903, *p1223, *p1213, *p1133);
+      new CurveAdaptiveParametricBezier(*p903, *p1223, *p1213, *p1133);
   CurveAdaptive* patch29_c4 =
-      new CurvParamBezier(*p2900, *p2901, *p2902, *p903);
+      new CurveAdaptiveParametricBezier(*p2900, *p2901, *p2902, *p903);
 
   Patch* patch29 = new BezierPatch(patch29_c1, patch29_c2, patch29_c3,
                                    patch29_c4, *p2911, *p2921, *p2912, *p2922);
@@ -2713,11 +2772,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   // );
 
   CurveAdaptive* patch30_c1 =
-      new CurvParamBezier(*p2930, *p3010, *p3020, *p3030);
+      new CurveAdaptiveParametricBezier(*p2930, *p3010, *p3020, *p3030);
   CurveAdaptive* patch30_c2 =
-      new CurvParamBezier(*p3030, *p3031, *p3032, *p1033);
+      new CurveAdaptiveParametricBezier(*p3030, *p3031, *p3032, *p1033);
   CurveAdaptive* patch30_c3 =
-      new CurvParamBezier(*p1133, *p1123, *p1113, *p1033);
+      new CurveAdaptiveParametricBezier(*p1133, *p1123, *p1113, *p1033);
   //		Curva* patch30_c4 = new CurvParamBezier ( *p2930, *p2931,
   //*p2932, *p1133 );
 
@@ -2754,11 +2813,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //);
 
   CurveAdaptive* patch31_c1 =
-      new CurvParamBezier(*p3030, *p3110, *p3120, *p3130);
+      new CurveAdaptiveParametricBezier(*p3030, *p3110, *p3120, *p3130);
   CurveAdaptive* patch31_c2 =
-      new CurvParamBezier(*p3130, *p3131, *p3132, *p933);
+      new CurveAdaptiveParametricBezier(*p3130, *p3131, *p3132, *p933);
   CurveAdaptive* patch31_c3 =
-      new CurvParamBezier(*p1033, *p1023, *p1013, *p933);
+      new CurveAdaptiveParametricBezier(*p1033, *p1023, *p1013, *p933);
   //		Curva* patch31_c4 = new CurvParamBezier ( *p3030, *p3031,
   //*p3032, *p1033 );
 
@@ -2794,10 +2853,11 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Ponto* p903 = p903; //new Vertice ( 1.50000, 0.00000, 0.15000 );
 
   CurveAdaptive* patch32_c1 =
-      new CurvParamBezier(*p3130, *p3210, *p3220, *p2900);
+      new CurveAdaptiveParametricBezier(*p3130, *p3210, *p3220, *p2900);
   //		Curva* patch32_c2 = new CurvParamBezier ( *p2900, *p2901,
   //*p2902, *p903 );
-  CurveAdaptive* patch32_c3 = new CurvParamBezier(*p933, *p923, *p913, *p903);
+  CurveAdaptive* patch32_c3 =
+      new CurveAdaptiveParametricBezier(*p933, *p923, *p913, *p903);
   //		Curva* patch32_c4 = new CurvParamBezier ( *p3130, *p3131,
   //*p3132, *p933 );
 

@@ -747,10 +747,10 @@ HermitePatch::HermitePatch(CurveAdaptive* C1, CurveAdaptive* C2,
 
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->Pt00 = static_cast<CurvParamHermite*>(C1)->point_0_;
-  this->Pt01 = static_cast<CurvParamHermite*>(C3)->point_0_;
-  this->Pt10 = static_cast<CurvParamHermite*>(C1)->point_1_;
-  this->Pt11 = static_cast<CurvParamHermite*>(C3)->point_1_;
+  this->Pt00 = static_cast<CurvParamHermite*>(C1)->point0_;
+  this->Pt01 = static_cast<CurvParamHermite*>(C3)->point0_;
+  this->Pt10 = static_cast<CurvParamHermite*>(C1)->point1_;
+  this->Pt11 = static_cast<CurvParamHermite*>(C3)->point1_;
 
   this->Qv00 = static_cast<CurvParamHermite*>(C4)->DP0;
   this->Qv01 = static_cast<CurvParamHermite*>(C4)->DP1;

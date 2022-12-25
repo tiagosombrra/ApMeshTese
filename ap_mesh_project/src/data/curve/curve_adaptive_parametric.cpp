@@ -29,7 +29,7 @@ CurveAdaptiveParametric::CurveAdaptiveParametric() {
 }
 
 CurveAdaptiveParametric::CurveAdaptiveParametric(Ponto point0, Ponto point1)
-    : point_0_(point0), point_1_(point1) {
+    : point0_(point0), point1_(point1) {
   mat_geo_gx_.setZero(4, 1);
   mat_geo_gy_.setZero(4, 1);
   mat_geo_gz_.setZero(4, 1);
@@ -40,8 +40,8 @@ CurveAdaptiveParametric::CurveAdaptiveParametric(Ponto point0, Ponto point1)
 CurveAdaptiveParametric::CurveAdaptiveParametric(
     CurveAdaptiveParametric* curve_adaptive_parametric)
     : CurveAdaptive(curve_adaptive_parametric) {
-  this->point_0_ = curve_adaptive_parametric->point_0_;
-  this->point_1_ = curve_adaptive_parametric->point_1_;
+  this->point0_ = curve_adaptive_parametric->point0_;
+  this->point1_ = curve_adaptive_parametric->point1_;
   this->mat_geo_gx_ = curve_adaptive_parametric->mat_geo_gx_;
   this->mat_geo_gy_ = curve_adaptive_parametric->mat_geo_gy_;
   this->mat_geo_gz_ = curve_adaptive_parametric->mat_geo_gz_;
@@ -390,23 +390,23 @@ void CurveAdaptiveParametric::SetMatParameters(Matrix1x4& mat_parameters) {
   this->mat_parameters_ = mat_parameters;
 }
 
-Ponto CurveAdaptiveParametric::GetPoint0() const { return this->point_0_; }
+Ponto CurveAdaptiveParametric::GetPoint0() const { return this->point0_; }
 
 void CurveAdaptiveParametric::SetPoint0(const Ponto& point0) {
-  this->point_0_ = point0;
+  this->point0_ = point0;
 }
 
-Ponto CurveAdaptiveParametric::GetPoint1() const { return this->point_1_; }
+Ponto CurveAdaptiveParametric::GetPoint1() const { return this->point1_; }
 
 void CurveAdaptiveParametric::SetPoint1(const Ponto& point1) {
-  this->point_1_ = point1;
+  this->point1_ = point1;
   CalculateLengthCurve();
 }
 
 void CurveAdaptiveParametric::SetPoint0Point1(const Ponto& point0,
                                               const Ponto& point1) {
-  this->point_0_ = point0;
-  this->point_1_ = point1;
+  this->point0_ = point0;
+  this->point1_ = point1;
 }
 
 // faz as multiplicações necessárias para 'parametriar ( t )' e 'Qt ( t )'

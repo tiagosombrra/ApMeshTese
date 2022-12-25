@@ -1,25 +1,7 @@
-/* Classe que define uma curva paramétrica de Bezier
-MDCC-UFC: Mestrado e Doutorado em Ciências da Computação
-Universidade Federal do Ceará
-Implementação da dissertação de Mestrado
-Título: Geração Adaptativa de Malhas de Superfície com Controle de Curvatura
-Autor: Daniel Márcio Batista de Siqueira
-contato: siqueira@lia.ufc.br
-Orientador: Creto Augusto Vidal
-Co-Orientador: Joaquim Bento Cavalcante
-This source code is under GNU General Public License v3 */
+#include "../../../include/data/curve/curve_adaptive_parametric_bezier.h"
 
-#include "../../../include/data/curve/CurvParamBezier.h"
-
-Ponto CurvParamBezier::getP2() const { return this->P2; }
-
-Ponto CurvParamBezier::getP3() const { return this->P3; }
-
-void CurvParamBezier::setP2(const Ponto &p) { this->P2 = p; }
-
-void CurvParamBezier::setP3(const Ponto &p) { this->P3 = p; }
-
-CurvParamBezier::CurvParamBezier() : CurveAdaptiveParametric() {
+CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier()
+    : CurveAdaptiveParametric() {
   // 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Bezier
   //
   //    M->setElement( 0, 0,-1 ); M->setElement( 0, 1, 3 ); M->setElement( 0,
@@ -54,30 +36,30 @@ CurvParamBezier::CurvParamBezier() : CurveAdaptiveParametric() {
   //    Gx->setElement( 2, 0, P2.x );
   //    Gx->setElement( 3, 0, P3.x );
 
-  mat_geo_gx_(0, 0) = point_0_.x;
-  mat_geo_gx_(1, 0) = point_1_.x;
-  mat_geo_gx_(2, 0) = P2.x;
-  mat_geo_gx_(3, 0) = P3.x;
+  mat_geo_gx_(0, 0) = point0_.x;
+  mat_geo_gx_(1, 0) = point1_.x;
+  mat_geo_gx_(2, 0) = point2_.x;
+  mat_geo_gx_(3, 0) = point3_.x;
 
   //    Gy->setElement( 0, 0, point_0_.y );
   //    Gy->setElement( 1, 0, point_1_.y );
   //    Gy->setElement( 2, 0, P2.y );
   //    Gy->setElement( 3, 0, P3.y );
 
-  mat_geo_gy_(0, 0) = point_0_.y;
-  mat_geo_gy_(1, 0) = point_1_.y;
-  mat_geo_gy_(2, 0) = P2.y;
-  mat_geo_gy_(3, 0) = P3.y;
+  mat_geo_gy_(0, 0) = point0_.y;
+  mat_geo_gy_(1, 0) = point1_.y;
+  mat_geo_gy_(2, 0) = point2_.y;
+  mat_geo_gy_(3, 0) = point3_.y;
 
   //    Gz->setElement( 0, 0, point_0_.z );
   //    Gz->setElement( 1, 0, point_1_.z );
   //    Gz->setElement( 2, 0, P2.z );
   //    Gz->setElement( 3, 0, P3.z );
 
-  mat_geo_gz_(0, 0) = point_0_.z;
-  mat_geo_gz_(1, 0) = point_1_.z;
-  mat_geo_gz_(2, 0) = P2.z;
-  mat_geo_gz_(3, 0) = P3.z;
+  mat_geo_gz_(0, 0) = point0_.z;
+  mat_geo_gz_(1, 0) = point1_.z;
+  mat_geo_gz_(2, 0) = point2_.z;
+  mat_geo_gz_(3, 0) = point3_.z;
 
   Matrix4x1 m;
   m = this->GetMatBase() * this->GetMatGeoGx();
@@ -98,8 +80,13 @@ CurvParamBezier::CurvParamBezier() : CurveAdaptiveParametric() {
   // inicial e final e os vetores tangentes inicial e final !!!
 }
 
-CurvParamBezier::CurvParamBezier(Ponto p0, Ponto p1, Ponto p2, Ponto p3)
-    : CurveAdaptiveParametric(p0, p1), P2(p2), P3(p3) {
+CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier(Ponto point0,
+                                                             Ponto point1,
+                                                             Ponto point2,
+                                                             Ponto point3)
+    : CurveAdaptiveParametric(point0, point1),
+      point2_(point2),
+      point3_(point3) {
   // 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Bezier
 
   //    M->setElement( 0, 0,-1 ); M->setElement( 0, 1, 3 ); M->setElement( 0,
@@ -134,43 +121,43 @@ CurvParamBezier::CurvParamBezier(Ponto p0, Ponto p1, Ponto p2, Ponto p3)
   //    Gx->setElement( 2, 0, P2.x );
   //    Gx->setElement( 3, 0, P3.x );
 
-  mat_geo_gx_(0, 0) = point_0_.x;
-  mat_geo_gx_(1, 0) = point_1_.x;
-  mat_geo_gx_(2, 0) = P2.x;
-  mat_geo_gx_(3, 0) = P3.x;
+  mat_geo_gx_(0, 0) = point0_.x;
+  mat_geo_gx_(1, 0) = point1_.x;
+  mat_geo_gx_(2, 0) = point2.x;
+  mat_geo_gx_(3, 0) = point3.x;
 
   //    Gy->setElement( 0, 0, point_0_.y );
   //    Gy->setElement( 1, 0, point_1_.y );
   //    Gy->setElement( 2, 0, P2.y );
   //    Gy->setElement( 3, 0, P3.y );
 
-  mat_geo_gy_(0, 0) = point_0_.y;
-  mat_geo_gy_(1, 0) = point_1_.y;
-  mat_geo_gy_(2, 0) = P2.y;
-  mat_geo_gy_(3, 0) = P3.y;
+  mat_geo_gy_(0, 0) = point0_.y;
+  mat_geo_gy_(1, 0) = point1_.y;
+  mat_geo_gy_(2, 0) = point2.y;
+  mat_geo_gy_(3, 0) = point3.y;
 
   //    Gz->setElement( 0, 0, point_0_.z );
   //    Gz->setElement( 1, 0, point_1_.z );
   //    Gz->setElement( 2, 0, P2.z );
   //    Gz->setElement( 3, 0, P3.z );
 
-  mat_geo_gz_(0, 0) = point_0_.z;
-  mat_geo_gz_(1, 0) = point_1_.z;
-  mat_geo_gz_(2, 0) = P2.z;
-  mat_geo_gz_(3, 0) = P3.z;
+  mat_geo_gz_(0, 0) = point0_.z;
+  mat_geo_gz_(1, 0) = point1_.z;
+  mat_geo_gz_(2, 0) = point2.z;
+  mat_geo_gz_(3, 0) = point3.z;
 
-  Matrix4x1 m;
-  m = this->GetMatBase() * this->GetMatGeoGx();
+  Matrix4x1 mat_geo;
+  mat_geo = this->GetMatBase() * this->GetMatGeoGx();
   // delete &this->Gx;
-  this->SetMatGeoGx(m);
+  this->SetMatGeoGx(mat_geo);
 
-  m = this->GetMatBase() * this->GetMatGeoGy();
+  mat_geo = this->GetMatBase() * this->GetMatGeoGy();
   // delete &this->Gx;
-  this->SetMatGeoGy(m);
+  this->SetMatGeoGy(mat_geo);
 
-  m = this->GetMatBase() * this->GetMatGeoGz();
+  mat_geo = this->GetMatBase() * this->GetMatGeoGz();
   // delete &this->Gx;
-  this->SetMatGeoGz(m);
+  this->SetMatGeoGz(mat_geo);
 
   // 3. Calcula o comprimento da curva
   //
@@ -179,39 +166,52 @@ CurvParamBezier::CurvParamBezier(Ponto p0, Ponto p1, Ponto p2, Ponto p3)
   ///////////////
 }
 
-CurvParamBezier::CurvParamBezier(CurvParamBezier *antiga)
-    : CurveAdaptiveParametric(antiga) {
-  this->P2 = antiga->P2;
-  this->P3 = antiga->P3;
+CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier(
+    CurveAdaptiveParametricBezier *curve_adaptive_parametric_bezier)
+    : CurveAdaptiveParametric(curve_adaptive_parametric_bezier) {
+  this->point2_ = curve_adaptive_parametric_bezier->point2_;
+  this->point3_ = curve_adaptive_parametric_bezier->point3_;
 }
 
-double CurvParamBezier::CalculateCurvature(double t) {
+CurveAdaptiveParametricBezier::~CurveAdaptiveParametricBezier() {}
+
+double CurveAdaptiveParametricBezier::CalculateCurvature(double t) {
   // B'(t)= 3(1-t)²(point_1_-point_0_)+6t(1-t)(P2-point_1_)+3t²(P3-P2)
-  double v0 = 3 * pow((1 - t), 2) * (point_1_.x - point_0_.x) +
-              6 * t * (1 - t) * (P2.x - point_1_.x) +
-              3 * pow(t, 2) * (P3.x - P2.x);
-  double v1 = 3 * pow((1 - t), 2) * (point_1_.y - point_0_.y) +
-              6 * t * (1 - t) * (P2.y - point_1_.y) +
-              3 * pow(t, 2) * (P3.y - P2.y);
-  double v2 = 3 * pow((1 - t), 2) * (point_1_.z - point_0_.z) +
-              6 * t * (1 - t) * (P2.z - point_1_.z) +
-              3 * pow(t, 2) * (P3.z - P2.z);
+  double v0 = 3 * pow((1 - t), 2) * (point1_.x - point0_.x) +
+              6 * t * (1 - t) * (point2_.x - point1_.x) +
+              3 * pow(t, 2) * (point3_.x - point2_.x);
+  double v1 = 3 * pow((1 - t), 2) * (point1_.y - point0_.y) +
+              6 * t * (1 - t) * (point2_.y - point1_.y) +
+              3 * pow(t, 2) * (point3_.y - point2_.y);
+  double v2 = 3 * pow((1 - t), 2) * (point1_.z - point0_.z) +
+              6 * t * (1 - t) * (point2_.z - point1_.z) +
+              3 * pow(t, 2) * (point3_.z - point2_.z);
 
   // B''(t)= 6(1-t)(P2-2P1+point_0_)+6t(P3-2P2+point_1_)
-  double v00 = 6 * (1 - t) * (P2.x - 2 * point_1_.x + point_0_.x) +
-               6 * t * (P3.x - 2 * P2.x + point_1_.x);
-  double v10 = 6 * (1 - t) * (P2.y - 2 * point_1_.y + point_0_.y) +
-               6 * t * (P3.y - 2 * P2.y + point_1_.y);
-  double v20 = 6 * (1 - t) * (P2.z - 2 * point_1_.z + point_0_.z) +
-               6 * t * (P3.z - 2 * P2.z + point_1_.z);
+  double v00 = 6 * (1 - t) * (point2_.x - 2 * point1_.x + point0_.x) +
+               6 * t * (point3_.x - 2 * point2_.x + point1_.x);
+  double v10 = 6 * (1 - t) * (point2_.y - 2 * point1_.y + point0_.y) +
+               6 * t * (point3_.y - 2 * point2_.y + point1_.y);
+  double v20 = 6 * (1 - t) * (point2_.z - 2 * point1_.z + point0_.z) +
+               6 * t * (point3_.z - 2 * point2_.z + point1_.z);
 
-  Vetor d1Vetor(v0, v1, v2);
-  Vetor d2Vetor(v00, v10, v20);
+  Vetor vector_d1(v0, v1, v2);
+  Vetor vector_d2(v00, v10, v20);
 
-  double k =
-      ((d1Vetor.operator*(d2Vetor)).modulo()) / (pow(d1Vetor.modulo(), 3));
+  double k = ((vector_d1.operator*(vector_d2)).modulo()) /
+             (pow(vector_d1.modulo(), 3));
 
   return k;
 }
 
-CurvParamBezier::~CurvParamBezier() {}
+Ponto CurveAdaptiveParametricBezier::GetPoint2() const { return this->point2_; }
+
+Ponto CurveAdaptiveParametricBezier::GetPoint3() const { return this->point3_; }
+
+void CurveAdaptiveParametricBezier::SetPoint2(const Ponto &p) {
+  this->point2_ = p;
+}
+
+void CurveAdaptiveParametricBezier::SetPoint3(const Ponto &p) {
+  this->point3_ = p;
+}

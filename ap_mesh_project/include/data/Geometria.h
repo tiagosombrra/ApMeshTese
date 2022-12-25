@@ -15,8 +15,8 @@ This source code is under GNU General Public License v3 */
 #include <map>
 #include <vector>
 
-#include "../data/curve/CurvParamBezier.h"
 #include "../data/curve/curve_adaptive.h"
+#include "../data/curve/curve_adaptive_parametric_bezier.h"
 #include "../data/patch/HermitePatch.h"
 using namespace std;
 
@@ -33,7 +33,8 @@ class Geometria {
   void inserePatch(Patch* p, int pos);
   unsigned int getNumDePatches() const;
   Patch* getPatch(const unsigned int i);  // retorna o i-ésimo patch
-  CurvParamBezier* verifyCurveGeometria(Ponto*, Ponto*, Ponto*, Ponto*);
+  CurveAdaptiveParametricBezier* verifyCurveGeometria(Ponto*, Ponto*, Ponto*,
+                                                      Ponto*);
   Geometria();
   Geometria(Geometria*);
   ~Geometria();

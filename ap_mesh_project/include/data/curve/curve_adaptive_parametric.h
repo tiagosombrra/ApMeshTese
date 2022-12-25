@@ -82,9 +82,9 @@ class CurveAdaptiveParametric : public CurveAdaptive {
   double CalculateMidpointBisection(double t1, double t2);
 
   // ponto inicial
-  Ponto point_0_;
+  Ponto point0_;
   // ponto final
-  Ponto point_1_;
+  Ponto point1_;
   // matrizes geométricas
   Matrix4x1 mat_geo_gx_;
   Matrix4x1 mat_geo_gy_;

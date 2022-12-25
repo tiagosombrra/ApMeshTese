@@ -15,7 +15,7 @@ src/curvature/curvature_analytical.cpp \
 src/curvature/curvature_discrete.cpp \
 src/data/curve/curve_adaptive.cpp \
 src/data/curve/curve_adaptive_parametric.cpp \
-src/data/curve/CurvParamBezier.cpp \
+src/data/curve/curve_adaptive_parametric_bezier.cpp \
 src/data/curve/CurvParamHermite.cpp \
 src/data/Definitions.cpp \
 src/data/Edge.cpp \

@@ -38,7 +38,7 @@ include/curvature/curvature_analytical.h
 include/curvature/curvature_discrete.h
 include/data/curve/curve_adaptive.h
 include/data/curve/curve_adaptive_parametric.h
-include/data/curve/CurvParamBezier.h
+include/data/curve/curve_adaptive_parametric_bezier.h
 include/data/curve/CurvParamHermite.h
 include/data/Definitions.h
 include/data/Edge.h
@@ -98,7 +98,7 @@ src/curvature/curvature_analytical.cpp
 src/curvature/curvature_discrete.cpp
 src/data/curve/curve_adaptive.cpp
 src/data/curve/curve_adaptive_parametric.cpp
-src/data/curve/CurvParamBezier.cpp
+src/data/curve/curve_adaptive_parametric_bezier.cpp
 src/data/curve/CurvParamHermite.cpp
 src/data/Definitions.cpp
 src/data/Edge.cpp

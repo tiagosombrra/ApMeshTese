@@ -12,7 +12,7 @@ This source code is under GNU General Public License v3 */
 #ifndef BezierPatch_h
 #define BezierPatch_h
 
-#include "../../data/curve/CurvParamBezier.h"
+#include "../../data/curve/curve_adaptive_parametric_bezier.h"
 #include "CoonsPatch.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para

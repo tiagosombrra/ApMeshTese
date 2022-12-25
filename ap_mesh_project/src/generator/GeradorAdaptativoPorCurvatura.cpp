@@ -237,40 +237,48 @@ std::vector<CurveAdaptive*> GeradorAdaptativoPorCurvatura::createVectorOfCurves(
     if (curves.size() > 0) {
       if (verifyCurve((*it)->getPt00(), (*it)->getPt10(), (*it)->getPt20(),
                       (*it)->getPt30(), curves)) {
-        curva = new CurvParamBezier((*it)->getPt00(), (*it)->getPt10(),
-                                    (*it)->getPt20(), (*it)->getPt30());
+        curva = new CurveAdaptiveParametricBezier(
+            (*it)->getPt00(), (*it)->getPt10(), (*it)->getPt20(),
+            (*it)->getPt30());
         curves.push_back(curva);
       }
       if (verifyCurve((*it)->getPt30(), (*it)->getPt31(), (*it)->getPt32(),
                       (*it)->getPt33(), curves)) {
-        curva = new CurvParamBezier((*it)->getPt30(), (*it)->getPt31(),
-                                    (*it)->getPt32(), (*it)->getPt33());
+        curva = new CurveAdaptiveParametricBezier(
+            (*it)->getPt30(), (*it)->getPt31(), (*it)->getPt32(),
+            (*it)->getPt33());
         curves.push_back(curva);
       }
       if (verifyCurve((*it)->getPt03(), (*it)->getPt13(), (*it)->getPt23(),
                       (*it)->getPt33(), curves)) {
-        curva = new CurvParamBezier((*it)->getPt03(), (*it)->getPt13(),
-                                    (*it)->getPt23(), (*it)->getPt33());
+        curva = new CurveAdaptiveParametricBezier(
+            (*it)->getPt03(), (*it)->getPt13(), (*it)->getPt23(),
+            (*it)->getPt33());
         curves.push_back(curva);
       }
       if (verifyCurve((*it)->getPt00(), (*it)->getPt01(), (*it)->getPt02(),
                       (*it)->getPt03(), curves)) {
-        curva = new CurvParamBezier((*it)->getPt00(), (*it)->getPt01(),
-                                    (*it)->getPt02(), (*it)->getPt03());
+        curva = new CurveAdaptiveParametricBezier(
+            (*it)->getPt00(), (*it)->getPt01(), (*it)->getPt02(),
+            (*it)->getPt03());
         curves.push_back(curva);
       }
     } else if (curves.size() == 0) {
-      curva = new CurvParamBezier((*it)->getPt00(), (*it)->getPt10(),
-                                  (*it)->getPt20(), (*it)->getPt30());
+      curva =
+          new CurveAdaptiveParametricBezier((*it)->getPt00(), (*it)->getPt10(),
+                                            (*it)->getPt20(), (*it)->getPt30());
       curves.push_back(curva);
-      curva = new CurvParamBezier((*it)->getPt30(), (*it)->getPt31(),
-                                  (*it)->getPt32(), (*it)->getPt33());
+      curva =
+          new CurveAdaptiveParametricBezier((*it)->getPt30(), (*it)->getPt31(),
+                                            (*it)->getPt32(), (*it)->getPt33());
       curves.push_back(curva);
-      curva = new CurvParamBezier((*it)->getPt03(), (*it)->getPt13(),
-                                  (*it)->getPt23(), (*it)->getPt33());
+      curva =
+          new CurveAdaptiveParametricBezier((*it)->getPt03(), (*it)->getPt13(),
+                                            (*it)->getPt23(), (*it)->getPt33());
       curves.push_back(curva);
-      curva = new CurvParamBezier((*it)->getPt00(), (*it)->getPt01(),
-                                  (*it)->getPt02(), (*it)->getPt03());
+      curva =
+          new CurveAdaptiveParametricBezier((*it)->getPt00(), (*it)->getPt01(),
+                                            (*it)->getPt02(), (*it)->getPt03());
       curves.push_back(curva);
     }
   }
@@ -325,10 +333,14 @@ bool GeradorAdaptativoPorCurvatura::verifyCurve(
     std::vector<CurveAdaptive*> curves) {
   for (vector<CurveAdaptive*>::iterator it = curves.begin(); it != curves.end();
        it++) {
-    if (static_cast<CurvParamBezier*>(*it)->GetPoint0().operator==(p0) and
-        static_cast<CurvParamBezier*>(*it)->GetPoint1().operator==(p1) and
-        static_cast<CurvParamBezier*>(*it)->getP2().operator==(p2) and
-        static_cast<CurvParamBezier*>(*it)->getP3().operator==(p3)) {
+    if (static_cast<CurveAdaptiveParametricBezier*>(*it)->GetPoint0().
+        operator==(p0) and
+        static_cast<CurveAdaptiveParametricBezier*>(*it)->GetPoint1().
+        operator==(p1) and
+        static_cast<CurveAdaptiveParametricBezier*>(*it)->GetPoint2().
+        operator==(p2) and
+        static_cast<CurveAdaptiveParametricBezier*>(*it)->GetPoint3().
+        operator==(p3)) {
       return false;
     }
   }
@@ -423,34 +435,34 @@ Geometria* GeradorAdaptativoPorCurvatura::unpakGeometry(double listOfPatches[],
     p33 = new Vertice(listOfPatches[i + 45], listOfPatches[i + 46],
                       listOfPatches[i + 47]);
 
-    patch_c1 = new CurvParamBezier(*p00, *p10, *p20, *p30);
-    patch_c2 = new CurvParamBezier(*p30, *p31, *p32, *p33);
-    patch_c3 = new CurvParamBezier(*p03, *p13, *p23, *p33);
-    patch_c4 = new CurvParamBezier(*p00, *p01, *p02, *p03);
+    patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
+    patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
+    patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
+    patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
 
     if (geo->verifyCurveGeometria(p00, p10, p20, p30) == NULL) {
-      patch_c1 = new CurvParamBezier(*p00, *p10, *p20, *p30);
+      patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
       geo->insereCurva(patch_c1);
     } else {
       patch_c1 = geo->verifyCurveGeometria(p00, p10, p20, p30);
     }
 
     if (geo->verifyCurveGeometria(p30, p31, p32, p33) == NULL) {
-      patch_c2 = new CurvParamBezier(*p30, *p31, *p32, *p33);
+      patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
       geo->insereCurva(patch_c2);
     } else {
       patch_c2 = geo->verifyCurveGeometria(p30, p31, p32, p33);
     }
 
     if (geo->verifyCurveGeometria(p03, p13, p23, p33) == NULL) {
-      patch_c3 = new CurvParamBezier(*p03, *p13, *p23, *p33);
+      patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
       geo->insereCurva(patch_c3);
     } else {
       patch_c3 = geo->verifyCurveGeometria(p03, p13, p23, p33);
     }
 
     if (geo->verifyCurveGeometria(p00, p01, p02, p03) == NULL) {
-      patch_c4 = new CurvParamBezier(*p00, *p01, *p02, *p03);
+      patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
       geo->insereCurva(patch_c4);
     } else {
       patch_c4 = geo->verifyCurveGeometria(p00, p01, p02, p03);

@@ -141,9 +141,9 @@ tuple<double, double> BezierPatch::encontrar_u_v(const Ponto& p) {
   // cout << "encontrar_u_v (" << p.id << "), usando Jacobi!";
 
   do {
-    //#pragma omp critical
-    //        cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread:
-    //        "<<omp_get_thread_num()<<endl;
+    // #pragma omp critical
+    //         cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread:
+    //         "<<omp_get_thread_num()<<endl;
 
     Vetor Tu = -(this->Qu(u_i, v_i));
     Vetor Tv = -(this->Qv(u_i, v_i));
@@ -151,7 +151,7 @@ tuple<double, double> BezierPatch::encontrar_u_v(const Ponto& p) {
     p_i = this->parametrizar(u_i, v_i);  // palpite inicial
 
     //        if (std::isnan(p_i.x)) {
-    //#pragma omp critical
+    // #pragma omp critical
     //            {
     //                cout<<"-nan pi"<<endl;
     //                cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread:
@@ -222,7 +222,7 @@ tuple<double, double> BezierPatch::encontrar_u_v(const Ponto& p) {
     delta_v = A(1, 2);
 
     //        if (std::isnan(delta_u) || std::isnan(delta_v)){
-    //#pragma omp critical
+    // #pragma omp critical
     //            {
     //                cout<<"-nan delta_u e delta_v"<<endl;
     //                cout<<"delta_u: "<<delta_u<<" delta_v: "<<delta_v<<"
@@ -241,7 +241,7 @@ tuple<double, double> BezierPatch::encontrar_u_v(const Ponto& p) {
     if (++iMax > 50000) {
 #if USE_PRINT_COMENT
       cout << "iMax alcançado!" << endl;
-#endif  //#if USE_PRINT_COMENT
+#endif  // #if USE_PRINT_COMENT
 
       break;
     }
@@ -589,10 +589,10 @@ Vetor BezierPatch::Qvv(const Ponto& p) {
 //		C3
 //	C4		C2
 //		C1
-BezierPatch::BezierPatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
-                         Ponto Pt_11, Ponto Pt_21, Ponto Pt_12, Ponto Pt_22,
-                         bool sinal_c1, bool sinal_c2, bool sinal_c3,
-                         bool sinal_c4)
+BezierPatch::BezierPatch(CurveAdaptive* C1, CurveAdaptive* C2,
+                         CurveAdaptive* C3, CurveAdaptive* C4, Ponto Pt_11,
+                         Ponto Pt_21, Ponto Pt_12, Ponto Pt_22, bool sinal_c1,
+                         bool sinal_c2, bool sinal_c3, bool sinal_c4)
     : CoonsPatch() {
   this->sinal_c1 = sinal_c1;
   this->sinal_c2 = sinal_c2;
@@ -610,28 +610,28 @@ BezierPatch::BezierPatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
   //
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurvParamBezier*>(C1)->inserePatch(this);
-  static_cast<CurvParamBezier*>(C2)->inserePatch(this);
-  static_cast<CurvParamBezier*>(C3)->inserePatch(this);
-  static_cast<CurvParamBezier*>(C4)->inserePatch(this);
+  static_cast<CurveAdaptiveParametricBezier*>(C1)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricBezier*>(C2)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricBezier*>(C3)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricBezier*>(C4)->InsertPatch(this);
   //
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->Pt00 = static_cast<CurvParamBezier*>(C1)->P0;
-  this->Pt10 = static_cast<CurvParamBezier*>(C1)->P1;
-  this->Pt20 = static_cast<CurvParamBezier*>(C1)->P2;
+  this->Pt00 = static_cast<CurveAdaptiveParametricBezier*>(C1)->GetPoint0();
+  this->Pt10 = static_cast<CurveAdaptiveParametricBezier*>(C1)->GetPoint1();
+  this->Pt20 = static_cast<CurveAdaptiveParametricBezier*>(C1)->GetPoint2();
 
-  this->Pt30 = static_cast<CurvParamBezier*>(C2)->P0;
-  this->Pt31 = static_cast<CurvParamBezier*>(C2)->P1;
-  this->Pt32 = static_cast<CurvParamBezier*>(C2)->P2;
+  this->Pt30 = static_cast<CurveAdaptiveParametricBezier*>(C2)->GetPoint0();
+  this->Pt31 = static_cast<CurveAdaptiveParametricBezier*>(C2)->GetPoint1();
+  this->Pt32 = static_cast<CurveAdaptiveParametricBezier*>(C2)->GetPoint2();
 
-  this->Pt13 = static_cast<CurvParamBezier*>(C3)->P1;
-  this->Pt23 = static_cast<CurvParamBezier*>(C3)->P2;
-  this->Pt33 = static_cast<CurvParamBezier*>(C3)->P3;
+  this->Pt13 = static_cast<CurveAdaptiveParametricBezier*>(C3)->GetPoint1();
+  this->Pt23 = static_cast<CurveAdaptiveParametricBezier*>(C3)->GetPoint2();
+  this->Pt33 = static_cast<CurveAdaptiveParametricBezier*>(C3)->GetPoint3();
 
-  this->Pt01 = static_cast<CurvParamBezier*>(C4)->P1;
-  this->Pt02 = static_cast<CurvParamBezier*>(C4)->P2;
-  this->Pt03 = static_cast<CurvParamBezier*>(C4)->P3;
+  this->Pt01 = static_cast<CurveAdaptiveParametricBezier*>(C4)->GetPoint1();
+  this->Pt02 = static_cast<CurveAdaptiveParametricBezier*>(C4)->GetPoint2();
+  this->Pt03 = static_cast<CurveAdaptiveParametricBezier*>(C4)->GetPoint3();
 
   this->Pt11 = Pt_11;
   this->Pt21 = Pt_21;
@@ -755,10 +755,14 @@ BezierPatch ::BezierPatch(Ponto Pt_00, Ponto Pt_01, Ponto Pt_02, Ponto Pt_03,
 
   // 1. Inclui as curvas na lista de curvas de CoonsPatch
   //
-  this->curvas.push_back(new CurvParamBezier(Pt00, Pt10, Pt20, Pt30));
-  this->curvas.push_back(new CurvParamBezier(Pt30, Pt31, Pt32, Pt33));
-  this->curvas.push_back(new CurvParamBezier(Pt03, Pt13, Pt23, Pt33));
-  this->curvas.push_back(new CurvParamBezier(Pt00, Pt01, Pt02, Pt03));
+  this->curvas.push_back(
+      new CurveAdaptiveParametricBezier(Pt00, Pt10, Pt20, Pt30));
+  this->curvas.push_back(
+      new CurveAdaptiveParametricBezier(Pt30, Pt31, Pt32, Pt33));
+  this->curvas.push_back(
+      new CurveAdaptiveParametricBezier(Pt03, Pt13, Pt23, Pt33));
+  this->curvas.push_back(
+      new CurveAdaptiveParametricBezier(Pt00, Pt01, Pt02, Pt03));
   //
   // 2. Aloca espaço para as matrizes
   //

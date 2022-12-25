@@ -13,13 +13,13 @@ Edge::Edge(Vertex *v1, Vertex *v2, long int id) : Shape(id) {
   setFree(true);
   setInBoundary(false);
   setCurva(NULL);
-  //#if USE_OPENGL
-  //    setWidth(1.0);
-  //    //figura
-  //    //setColor(1.0, 1.0, 1.0);
-  //    setColor(0.0, 0.0, 0.0);
-  //    //endfigura
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     setWidth(1.0);
+  //     //figura
+  //     //setColor(1.0, 1.0, 1.0);
+  //     setColor(0.0, 0.0, 0.0);
+  //     //endfigura
+  // #endif //#if USE_OPENGL
 }
 
 Edge::~Edge() {
@@ -103,12 +103,12 @@ void Edge::setInBoundary(bool inBoundary) { this->inBoundary = inBoundary; }
 
 bool Edge::isInBoundary() { return inBoundary; }
 
-//#if USE_OPENGL
-// void Edge::setWidth(double width)
+// #if USE_OPENGL
+//  void Edge::setWidth(double width)
 //{
-//    this->width = width;
-//}
-//#endif //#if USE_OPENGL
+//     this->width = width;
+// }
+// #endif //#if USE_OPENGL
 
 void Edge::setFree(bool free) { this->free = free; }
 
@@ -516,7 +516,7 @@ bool Edge::matches(Vertex *v1, Vertex *v2) {
   return ((this->v[0] == v1) && (this->v[1] == v2));
 }
 
-void Edge::setCurva(CurvaParametrica *c) { this->c = c; }
+void Edge::setCurva(CurveAdaptiveParametric *c) { this->c = c; }
 
 void Edge::setLen(double len) { this->len = len; }
 
@@ -539,38 +539,42 @@ void Edge::makeParamMid() {
     // curva 1
     // Ponto p = c->pontoMedio(v[0]->getX(), v[1]->getX());
 
-    t = c->pontoMedio(v[0]->getX(), v[1]->getX());
+    t = c->CalculateMidparameterByParamters(v[0]->getX(), v[1]->getX());
 
     mid = new Vertex(t, 0.0);
 
-    len = c->comprimento(v[0]->getX(), v[1]->getX()) / c->get_L();
+    len = c->CalculateParametricLength(v[0]->getX(), v[1]->getX()) /
+          c->GetLength();
   } else if ((v[0]->getX() == 1.0) && (v[0]->getY() < 1.0)) {
     // curva 2
     // Ponto p = c->pontoMedio(v[0]->getY(), v[1]->getY());
 
-    t = c->pontoMedio(v[0]->getY(), v[1]->getY());
+    t = c->CalculateMidparameterByParamters(v[0]->getY(), v[1]->getY());
 
     mid = new Vertex(1.0, t);
 
-    len = c->comprimento(v[0]->getY(), v[1]->getY()) / c->get_L();
+    len = c->CalculateParametricLength(v[0]->getY(), v[1]->getY()) /
+          c->GetLength();
   } else if ((v[0]->getY() == 1.0) && (v[0]->getX() > 0.0)) {
     // curva 3
     // Ponto p = c->pontoMedio(v[0]->getX(), v[1]->getX());
 
-    t = c->pontoMedio(v[1]->getX(), v[0]->getX());
+    t = c->CalculateMidparameterByParamters(v[1]->getX(), v[0]->getX());
 
     mid = new Vertex(t, 1.0);
 
-    len = c->comprimento(v[1]->getX(), v[0]->getX()) / c->get_L();
+    len = c->CalculateParametricLength(v[1]->getX(), v[0]->getX()) /
+          c->GetLength();
   } else if ((v[0]->getX() == 0.0) && (v[0]->getY() > 0.0)) {
     // curva 4
     // Ponto p = c->pontoMedio(v[0]->getY(), v[1]->getY());
 
-    t = c->pontoMedio(v[1]->getY(), v[0]->getY());
+    t = c->CalculateMidparameterByParamters(v[1]->getY(), v[0]->getY());
 
     mid = new Vertex(0.0, t);
 
-    len = c->comprimento(v[1]->getY(), v[0]->getY()) / c->get_L();
+    len = c->CalculateParametricLength(v[1]->getY(), v[0]->getY()) /
+          c->GetLength();
   } else {
     mid = makeMid();
 
@@ -588,11 +592,11 @@ string Edge::getText() {
   return s;
 }
 
-//#if USE_OPENGL
-// void Edge::highlight()
+// #if USE_OPENGL
+//  void Edge::highlight()
 //{
-//    highlight(true);
-//}
+//     highlight(true);
+// }
 
 // void Edge::highlight(bool highlightCell)
 //{
@@ -648,4 +652,4 @@ string Edge::getText() {
 
 //    delete normal;
 //}
-//#endif //#if USE_OPENGL
+// #endif //#if USE_OPENGL

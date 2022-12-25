@@ -13,10 +13,10 @@
 #include <fstream>
 #include <sstream>
 
-#include "../data/mesh/Malha.h"
 #include "../data/Triangulo.h"
+#include "../data/mesh/Malha.h"
 
-extern std::string nameModel;
+extern std::string NAME_MODEL;
 
 class WriteOBJFIle {
  public:

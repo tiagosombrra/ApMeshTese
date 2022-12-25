@@ -12,7 +12,7 @@ This source code is under GNU General Public License v3 */
 #ifndef BezierPatch_h
 #define BezierPatch_h
 
-#include "../../data/curve/CurvParamBezier.h"
+#include "../../data/curve/curve_adaptive_parametric_bezier.h"
 #include "CoonsPatch.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
@@ -129,9 +129,10 @@ class BezierPatch : public CoonsPatch {
   //		C3
   //	C4		C2
   //		C1
-  BezierPatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4, Ponto Pt_11,
-              Ponto Pt_21, Ponto Pt_12, Ponto Pt_22, bool sinal_c1 = true,
-              bool sinal_c2 = true, bool sinal_c3 = true, bool sinal_c4 = true);
+  BezierPatch(CurveAdaptive* C1, CurveAdaptive* C2, CurveAdaptive* C3,
+              CurveAdaptive* C4, Ponto Pt_11, Ponto Pt_21, Ponto Pt_12,
+              Ponto Pt_22, bool sinal_c1 = true, bool sinal_c2 = true,
+              bool sinal_c3 = true, bool sinal_c4 = true);
 
   BezierPatch(Ponto Pt_00, Ponto Pt_01, Ponto Pt_02, Ponto Pt_03, Ponto Pt_10,
               Ponto Pt_11, Ponto Pt_12, Ponto Pt_13, Ponto Pt_20, Ponto Pt_21,

@@ -150,10 +150,10 @@ Geometria* ReaderPatches::readerPatches(Geometria* geo, string fileName) {
   Ponto* p31;
   Ponto* p32;
   Ponto* p33;
-  Curva* patch_c1;
-  Curva* patch_c2;
-  Curva* patch_c3;
-  Curva* patch_c4;
+  CurveAdaptive* patch_c1;
+  CurveAdaptive* patch_c2;
+  CurveAdaptive* patch_c3;
+  CurveAdaptive* patch_c4;
 
   for (std::list<BezierPatch*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {
@@ -210,28 +210,28 @@ Geometria* ReaderPatches::readerPatches(Geometria* geo, string fileName) {
     p33->setId((*it)->getPt33().id);
 
     if (geo->verifyCurveGeometria(p00, p10, p20, p30) == NULL) {
-      patch_c1 = new CurvParamBezier(*p00, *p10, *p20, *p30);
+      patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
       geo->insereCurva(patch_c1);
     } else {
       patch_c1 = geo->verifyCurveGeometria(p00, p10, p20, p30);
     }
 
     if (geo->verifyCurveGeometria(p30, p31, p32, p33) == NULL) {
-      patch_c2 = new CurvParamBezier(*p30, *p31, *p32, *p33);
+      patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
       geo->insereCurva(patch_c2);
     } else {
       patch_c2 = geo->verifyCurveGeometria(p30, p31, p32, p33);
     }
 
     if (geo->verifyCurveGeometria(p03, p13, p23, p33) == NULL) {
-      patch_c3 = new CurvParamBezier(*p03, *p13, *p23, *p33);
+      patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
       geo->insereCurva(patch_c3);
     } else {
       patch_c3 = geo->verifyCurveGeometria(p03, p13, p23, p33);
     }
 
     if (geo->verifyCurveGeometria(p00, p01, p02, p03) == NULL) {
-      patch_c4 = new CurvParamBezier(*p00, *p01, *p02, *p03);
+      patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
       geo->insereCurva(patch_c4);
     } else {
       patch_c4 = geo->verifyCurveGeometria(p00, p01, p02, p03);

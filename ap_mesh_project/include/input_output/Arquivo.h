@@ -25,7 +25,7 @@ using namespace std;
 
 class Arquivo {
   string nome;
-  ifstream entrada;
+  ifstream INPUT_MODEL;
   list<string> curvas;
   list<string> patches;
 

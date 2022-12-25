@@ -16,7 +16,7 @@ This source code is under GNU General Public License v3 */
 #include <list>
 #include <tuple>
 
-#include "../curve/CurvaParametrica.h"
+#include "../curve/curve_adaptive_parametric.h"
 
 using namespace std;
 
@@ -34,11 +34,12 @@ struct BinTree {
   bool folha();      // diz se uma célula é folha
   bool raiz();       // diz se uma célula é a raiz
   double get_tam();  // retorna o tamanho da célula
-  bool restringir(CurvaParametrica* curv);
-  void subdividir(CurvaParametrica* curv);
-  void subdividir(double t, double t_par,
-                  CurvaParametrica* curv);  // subdivide uma célula e define
-                                            // suas duas células filhas
+  bool restringir(CurveAdaptiveParametric* curv);
+  void subdividir(CurveAdaptiveParametric* curv);
+  void subdividir(
+      double t, double t_par,
+      CurveAdaptiveParametric* curv);  // subdivide uma célula e define
+                                       // suas duas células filhas
   BinTree* localiza(double t);  // retorna uma célula que contém ti <= t <=tf
   void percorre(BinTree* pt, list<double>& lista);
   list<double> rediscretizacao();  // retorna as coordenadas das folhas

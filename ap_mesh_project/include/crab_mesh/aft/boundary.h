@@ -4,7 +4,7 @@
 #include "../../data/Definitions.h"
 #include "../../data/Edge.h"
 #include "../../data/Vertex.h"
-#include "../../data/curve/CurvaParametrica.h"
+#include "../../data/curve/curve_adaptive_parametric.h"
 #include "quadtree.h"
 #include "quadtree_cell.h"
 #include "shape.h"
@@ -41,9 +41,9 @@ class Boundary : public Shape {
   long int getLastVertexId();
   long int getLastEdgeId();
 
-  Vertex *addVertex(double x, double y, CurvaParametrica *c);
+  Vertex *addVertex(double x, double y, CurveAdaptiveParametric *c);
   Vertex *addVertex(long int id, double x, double y);
-  bool close(CurvaParametrica *c);
+  bool close(CurveAdaptiveParametric *c);
 
   Edge *getEdge(long int id);
   Vertex *getVertex(long int id);

@@ -44,7 +44,7 @@ extern double TOLERANCIA;
 extern double TOLERANCIA_CURVATURA;
 extern int NUM_THREADS;
 extern double DISCRETIZACAO_CURVA;
-extern vector<CurvaParametrica *> ptr_aux;
+extern vector<CurveAdaptiveParametric *> ptr_aux;
 extern int PASSOS;
 extern std::string WRITE_MESH;
 extern int RANK_MPI;
@@ -63,13 +63,13 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
   int execute(int argc, char *argv[], Timer *timer, MPI_Status status);
   std::list<BezierPatch *> estimateChargeofPatches(Geometria *geometria,
                                                    Timer *timer,
-                                                   std::string entrada);
-  std::vector<Curva *> createVectorOfCurves(
+                                                   std::string INPUT_MODEL);
+  std::vector<CurveAdaptive *> createVectorOfCurves(
       std::list<BezierPatch *> listBezierPt);
   std::list<BezierPatch *> orderPatchesDistribProcess(
       std::list<BezierPatch *> listPatches);
   bool verifyCurve(Ponto p0, Ponto p1, Ponto p2, Ponto p3,
-                   std::vector<Curva *> curves);
+                   std::vector<CurveAdaptive *> curves);
   void calculateEstimateProcessElements(int sizeProcess,
                                         std::list<BezierPatch *> listBezierPt);
   std::list<BezierPatch *>::iterator getIteratorListPatches(

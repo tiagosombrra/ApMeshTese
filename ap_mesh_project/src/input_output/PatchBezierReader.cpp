@@ -10,8 +10,8 @@ std::list<HermitePatch*> PatchBezierReader::loaderBPFileHermite() {
       "/Users/tiagosombra/Dropbox/tiago/ufc/MestradoTiago/GitHub/TMeshSurf/"
       "apMesh/Modelos/blend/18_mountain.bp";
 #else
-  string filename = entrada;  //"../../entrada/mountain.bp"
-#endif  //#ifdef __APPLE__
+  string filename = INPUT_MODEL;  //"../../INPUT_MODEL/mountain.bp"
+#endif  // #ifdef __APPLE__
 
   patchHermite = new HermitePatch();
 
@@ -240,8 +240,8 @@ std::list<BezierPatch*> PatchBezierReader::loaderOBJFile() {
       "/Users/tiagosombra/Dropbox/tiago/ufc/MestradoTiago/GitHub/TMeshSurf/"
       "genBezierPatches/projeto/linux/saida/patch_estimativa_2.bp";
 #else
-  string filename = "../../entrada/uteapot.obj";
-#endif  //#ifdef __APPLE__
+  string filename = "../../INPUT_MODEL/uteapot.obj";
+#endif  // #ifdef __APPLE__
 
   patch = new BezierPatch();
 
@@ -372,16 +372,16 @@ std::list<BezierPatch*> PatchBezierReader::parsePatchesBezier() {
   dialog.close();
 
 #else
-  // setar manuamente a localização do arquivo de entrada gerado pelo
+  // setar manuamente a localização do arquivo de INPUT_MODEL gerado pelo
   // genMesh(.pt / .patches)
 
 #ifdef __APPLE__
-  string filename = "../../entrada/four_patches.pt";
+  string filename = "../../INPUT_MODEL/four_patches.pt";
 #else
-  string filename = "../../entrada/cone1.pt";
-#endif  //#ifdef __APPLE__
+  string filename = "../../INPUT_MODEL/cone1.pt";
+#endif  // #ifdef __APPLE__
 
-#endif  //#if USE_INTERFACEQT
+#endif  // #if USE_INTERFACEQT
 
 #if USE_INTERFACEQT
   if (!filename.isNull()) {
@@ -391,7 +391,7 @@ std::list<BezierPatch*> PatchBezierReader::parsePatchesBezier() {
   if (!filename.empty()) {
     std::ifstream fin(filename);
 
-#endif  //#if USE_INTERFACEQT
+#endif  // #if USE_INTERFACEQT
 
     int count_points = 0;
     long id_point = 0;
@@ -527,7 +527,7 @@ std::list<BezierPatch*> PatchBezierReader::parsePatchesBezier() {
 
 #if USE_INTERFACEQT
   delete wid;
-#endif  //#if USE_INTERFACEQT
+#endif  // #if USE_INTERFACEQT
   return patches;
 }
 
@@ -538,8 +538,8 @@ std::list<BezierPatch*> PatchBezierReader::LoaderRibFile() {
       "TMeshSurf_Aux/reunioes/objs/"
       "four_patches.pt";
 #else
-  string filename = "../entrada/uteapot.rib";
-#endif  //#ifdef __APPLE__
+  string filename = "../INPUT_MODEL/uteapot.rib";
+#endif  // #ifdef __APPLE__
 
   std::vector<double> v;
 

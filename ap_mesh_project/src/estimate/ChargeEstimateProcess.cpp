@@ -12,7 +12,7 @@ static bool sortByNt(const BezierPatch* lhs, const BezierPatch* rhs) {
 // retonar uma lista de patch de bezier ordenados de acordo com sua estimativa
 // de carga em ordem decrescente.
 std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(
-    Geometria* geo, Timer* timer, std::string entrada) {
+    Geometria* geo, Timer* timer, std::string INPUT_MODEL) {
   std::list<BezierPatch*> listBezierPt;
   std::list<BezierPatch*> listBezierPtOrder;
 
@@ -20,7 +20,7 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(
   timer->endTimerParallel(0, 0, 10);  // Full
   timer->initTimerParallel(0, 0, 5);  // Leitura arquivo
 
-  listBezierPt = pt->loaderBPFile(entrada);
+  listBezierPt = pt->loaderBPFile(INPUT_MODEL);
 
   timer->endTimerParallel(0, 0, 5);  // Leitura arquivo
   TIME_READ_FILE = timer->timerParallel[0][0][5];
@@ -48,10 +48,10 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(
   Ponto* p32;
   Ponto* p33;
 
-  Curva* patch_c1;
-  Curva* patch_c2;
-  Curva* patch_c3;
-  Curva* patch_c4;
+  CurveAdaptive* patch_c1;
+  CurveAdaptive* patch_c2;
+  CurveAdaptive* patch_c3;
+  CurveAdaptive* patch_c4;
 
   double areaMenor = 1000;
   double areaMaior = 0;
@@ -104,28 +104,28 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(
         new Vertice((*it)->getPt33().x, (*it)->getPt33().y, (*it)->getPt33().z);
 
     if (geo->verifyCurveGeometria(p00, p10, p20, p30) == NULL) {
-      patch_c1 = new CurvParamBezier(*p00, *p10, *p20, *p30);
+      patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
       geo->insereCurva(patch_c1);
     } else {
       patch_c1 = geo->verifyCurveGeometria(p00, p10, p20, p30);
     }
 
     if (geo->verifyCurveGeometria(p30, p31, p32, p33) == NULL) {
-      patch_c2 = new CurvParamBezier(*p30, *p31, *p32, *p33);
+      patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
       geo->insereCurva(patch_c2);
     } else {
       patch_c2 = geo->verifyCurveGeometria(p30, p31, p32, p33);
     }
 
     if (geo->verifyCurveGeometria(p03, p13, p23, p33) == NULL) {
-      patch_c3 = new CurvParamBezier(*p03, *p13, *p23, *p33);
+      patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
       geo->insereCurva(patch_c3);
     } else {
       patch_c3 = geo->verifyCurveGeometria(p03, p13, p23, p33);
     }
 
     if (geo->verifyCurveGeometria(p00, p01, p02, p03) == NULL) {
-      patch_c4 = new CurvParamBezier(*p00, *p01, *p02, *p03);
+      patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
       geo->insereCurva(patch_c4);
     } else {
       patch_c4 = geo->verifyCurveGeometria(p00, p01, p02, p03);
@@ -810,16 +810,20 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
   int total_1 = 0;
   int total_2 = 0;
 
-  Curva* c1 = patch->getCurva(0);
-  Curva* c2 = patch->getCurva(1);
-  Curva* c3 = patch->getCurva(2);
-  Curva* c4 = patch->getCurva(3);
+  CurveAdaptive* c1 = patch->getCurva(0);
+  CurveAdaptive* c2 = patch->getCurva(1);
+  CurveAdaptive* c3 = patch->getCurva(2);
+  CurveAdaptive* c4 = patch->getCurva(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
-  if (c1->getNumDePontos()) c1 = NULL;  // c1 já foi trabalhada no patch vizinho
-  if (c2->getNumDePontos()) c2 = NULL;  // c2 já foi trabalhada no patch vizinho
-  if (c3->getNumDePontos()) c3 = NULL;  // c3 já foi trabalhada no patch vizinho
-  if (c4->getNumDePontos()) c4 = NULL;  // c4 já foi trabalhada no patch vizinho
+  if (c1->GetNumBerPoints())
+    c1 = NULL;  // c1 já foi trabalhada no patch vizinho
+  if (c2->GetNumBerPoints())
+    c2 = NULL;  // c2 já foi trabalhada no patch vizinho
+  if (c3->GetNumBerPoints())
+    c3 = NULL;  // c3 já foi trabalhada no patch vizinho
+  if (c4->GetNumBerPoints())
+    c4 = NULL;  // c4 já foi trabalhada no patch vizinho
 
   SubMalha* sub = new SubMalha;
 
@@ -830,14 +834,14 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
 
       // cout << "u = " << u << " v = " << v << endl;
       if (v == 0 and c1)  // p está na curva 1
-        c1->inserePonto(p);
+        c1->InsertPoint(p);
       else if (v == 1 and c3)  // p está na curva 3
-        c3->inserePonto(p);
+        c3->InsertPoint(p);
 
       if (u == 0 and c4)  // p está na curva 4
-        c4->inserePonto(p);
+        c4->InsertPoint(p);
       else if (u == 1 and c2)  // p está na curva 2
-        c2->inserePonto(p);
+        c2->InsertPoint(p);
 
       sub->insereNoh(static_cast<Noh*>(p));
       total_1++;

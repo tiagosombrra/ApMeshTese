@@ -12,8 +12,8 @@
 
 using namespace std;
 extern double TIME_READ_FILE;
-extern std::string nameModel;
-extern std::string numberProcess;
+extern std::string NAME_MODEL;
+extern std::string NUMBER_PROCESS;
 
 //[0]= Inicialização
 //[1]= Estimativa de carga

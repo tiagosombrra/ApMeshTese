@@ -8,8 +8,8 @@
 #include "../data/Geometria.h"
 #include "../data/Ponto.h"
 #include "../data/Vertice.h"
-#include "../data/curve/CurvParamBezier.h"
-#include "../data/curve/Curva.h"
+#include "../data/curve/curve_adaptive.h"
+#include "../data/curve/curve_adaptive_parametric_bezier.h"
 #include "../data/mesh/Malha.h"
 #include "../data/patch/BezierPatch.h"
 #include "../generator/GeradorAdaptativoPorCurvatura.h"
@@ -25,7 +25,7 @@ class ChargeEstimateProcess {
  public:
   ChargeEstimateProcess();
   std::list<BezierPatch *> chargeEstimateProcess(Geometria *, Timer *timer,
-                                                 string entrada);
+                                                 string INPUT_MODEL);
   std::vector<Ponto> interpolateControlPointsCurve(Ponto p0, Ponto p1, Ponto p2,
                                                    Ponto p3, double u,
                                                    double v);

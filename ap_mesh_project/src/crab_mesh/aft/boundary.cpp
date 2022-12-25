@@ -57,7 +57,7 @@ long int Boundary::getLastVertexId() { return lastVertexId; }
 
 long int Boundary::getLastEdgeId() { return lastEdgeId; }
 
-Vertex *Boundary::addVertex(double x, double y, CurvaParametrica *c) {
+Vertex *Boundary::addVertex(double x, double y, CurveAdaptiveParametric *c) {
   Vertex *v = NULL;
 
   v = new Vertex(x, y, ++lastVertexId);
@@ -113,7 +113,7 @@ Vertex *Boundary::addVertex(long int id, double x, double y) {
   return v;
 }
 
-bool Boundary::close(CurvaParametrica *c) {
+bool Boundary::close(CurveAdaptiveParametric *c) {
   Edge *e = new Edge(boundary.back(), first, ++lastEdgeId);
 
   e->setCurva(c);

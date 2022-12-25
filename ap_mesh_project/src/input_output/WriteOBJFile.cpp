@@ -13,7 +13,7 @@ WriteOBJFIle::WriteOBJFIle() {}
 void WriteOBJFIle::writeCurvaturePatches(
     std::vector<double> vecCurvaturePatches, double maxValue) {
   stringstream nameFile;
-  nameFile << nameModel + "_analise_curvature_patches.txt";
+  nameFile << NAME_MODEL + "_analise_curvature_patches.log";
 
   ofstream file(nameFile.str().c_str());
 

@@ -1,11 +1,11 @@
 #ifndef MODELOS3D_H
 #define MODELOS3D_H
 
-#include "../data/curve/CurvParamBezier.h"
-#include "../data/curve/CurvParamHermite.h"
 #include "../data/Geometria.h"
-#include "../data/patch/BezierPatch.h"
 #include "../data/Vertice.h"
+#include "../data/curve/curve_adaptive_parametric_bezier.h"
+#include "../data/curve/curve_adaptive_parametric_hermite.h"
+#include "../data/patch/BezierPatch.h"
 
 class Modelos3d {
  public:

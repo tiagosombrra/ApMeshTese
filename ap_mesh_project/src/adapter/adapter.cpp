@@ -10,20 +10,20 @@ extern double DISCRETIZACAO_CURVA;
 extern double DISCRETIZACAO_INTER;
 
 #if USE_OPENMP
-list<Ponto *> Adapter::AdaptCurveByCurveOmp(Curva *curve,
+list<Ponto *> Adapter::AdaptCurveByCurveOmp(CurveAdaptive *curve,
                                             Performer::IdManager *id_manager,
                                             double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->getPontos();
+  list<Ponto *> points = curve->GetPoints();
   list<Ponto *>::iterator point_current = points.begin();
   list<Ponto *>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
   Ponto midpoint;
 
-  static_cast<CurvaParametrica *>(curve)->ordenaLista();
+  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -46,45 +46,48 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(Curva *curve,
     double kd_average = 0;
 
     // 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
-    length_old = curve->calcularTamanho(*(*point_current), *(*point_next));
+    length_old =
+        curve->CalculateLengthPoints(*(*point_current), *(*point_next));
 
     // 1.2.2. Calcule o ponto médio do segmento
-    midpoint = static_cast<CurvaParametrica *>(curve)->pontoMedio(
-        *(*point_current), *(*point_next));
+    midpoint =
+        static_cast<CurveAdaptiveParametric *>(curve)
+            ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
     midpoint.id = id_manager->next(0);
 
     // 1.2.2.1 Encontre o parâmetro do ponto médio
     midpoint_segment =
-        static_cast<CurvaParametrica *>(curve)->encontrar_t(midpoint);
+        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+            midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
-    ka_midpoint = curve->calcularCurvatura(midpoint_segment);
+    ka_midpoint = curve->CalculateCurvature(midpoint_segment);
 
     kd_average =
-        (curve->calcularCurvatura(0) + curve->calcularCurvatura(1)) / 2.0;
+        (curve->CalculateCurvature(0) + curve->CalculateCurvature(1)) / 2.0;
 
     // 1.2.4. O novo tamanho é calculado de acordo com os cenários
     lenght_new =
         CalculateNewSize(ka_midpoint, kd_average, factor_disc, length_old);
 
     // 1.2.5. Calcule o tamanho paramétrico
-    lenght_par = lenght_new / curve->get_L();
+    lenght_par = lenght_new / curve->GetLength();
 
     bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
-                        static_cast<CurvaParametrica *>(curve));
+                        static_cast<CurveAdaptiveParametric *>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.restringir(static_cast<CurvaParametrica *>(curve))) {
+  while (bin_tree.restringir(static_cast<CurveAdaptiveParametric *>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.rediscretizacao();
-  (static_cast<CurvaParametrica *>(curve))->atualizarParametros(parameters);
+  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
   list<Ponto *> list_new_points;
 
@@ -98,8 +101,9 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(Curva *curve,
 
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    Noh *point_intermediate = new Noh((static_cast<CurvaParametrica *>(curve))
-                                          ->parametrizar((*param_iterator)));
+    Noh *point_intermediate =
+        new Noh((static_cast<CurveAdaptiveParametric *>(curve))
+                    ->FindPointByParameter((*param_iterator)));
     point_intermediate->id = id_manager->next(0);
     list_new_points.push_back(point_intermediate);
   }
@@ -111,28 +115,28 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(Curva *curve,
   //    for (list<double>::iterator it = ++parametros.begin();
   //         it != --parametros.end(); it++)
   //    {
-  //        Noh *n = new Noh(((CurvaParametrica *)c)->parametrizar((*it)));
-  //        n->id = idManager->next(0);
+  //        Noh *n = new Noh(((CurveAdaptiveParametric
+  //        *)c)->parametrizar((*it))); n->id = idManager->next(0);
   //        c->inserePonto(n);
   //    }
 
   //    return c;
 }
 
-list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
+list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
                                               Performer::IdManager *id_manager,
                                               double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->getPontos();
+  list<Ponto *> points = curve->GetPoints();
   list<Ponto *>::iterator point_current = points.begin();
   list<Ponto *>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
   Ponto midpoint;
 
-  static_cast<CurvaParametrica *>(curve)->ordenaLista();
+  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -155,18 +159,20 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
     double kd_average = 0;
 
     // 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
-    length_old = curve->calcularTamanho(*(*point_current), *(*point_next));
+    length_old =
+        curve->CalculateLengthPoints(*(*point_current), *(*point_next));
 
     // 1.2.2. Calcule o ponto médio do segmento
-    midpoint = static_cast<CurvaParametrica *>(curve)->pontoMedio(
-        *(*point_current), *(*point_next));
+    midpoint =
+        static_cast<CurveAdaptiveParametric *>(curve)
+            ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
     CurvatureAnalytical ka_p0(midpoint,
-                              *(static_cast<CoonsPatch *>(curve->getPatch(0))));
+                              *(static_cast<CoonsPatch *>(curve->GetPatch(0))));
     ka_midpoint = ka_p0.CalculateGaussCurvature();
 
-    if (curve->getNumDePatches() == 1) {
+    if (curve->GetNumBerPatches() == 1) {
       // testamos se ka é ZERO!
       if (fabs(ka_midpoint) < TOLERANCIA) {
         ka_midpoint = ka_p0.CalculateMeanCurvature();
@@ -181,9 +187,9 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
     } else {
       double Ha = ka_p0.CalculateMeanCurvature();
 
-      for (unsigned int i = 1; i < curve->getNumDePatches(); i++) {
+      for (unsigned int i = 1; i < curve->GetNumBerPatches(); i++) {
         CurvatureAnalytical ka_pi(
-            midpoint, *(static_cast<CoonsPatch *>(curve->getPatch(i))));
+            midpoint, *(static_cast<CoonsPatch *>(curve->GetPatch(i))));
         double Ga_pi = ka_pi.CalculateGaussCurvature();
 
         ka_midpoint = (fabs(ka_midpoint) > fabs(Ga_pi)) ? ka_midpoint : Ga_pi;
@@ -209,27 +215,28 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
         CalculateNewSize(ka_midpoint, kd_average, factor_disc, length_old);
 
     // 1.2.5. Calcule o tamanho paramétrico
-    lenght_par = lenght_new / curve->get_L();
+    lenght_par = lenght_new / curve->GetLength();
 
     // 1.2.6. Encontre o parâmetro do ponto médio
     midpoint_segment =
-        static_cast<CurvaParametrica *>(curve)->encontrar_t(midpoint);
+        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+            midpoint);
 
     bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
-                        static_cast<CurvaParametrica *>(curve));
+                        static_cast<CurveAdaptiveParametric *>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.restringir(static_cast<CurvaParametrica *>(curve))) {
+  while (bin_tree.restringir(static_cast<CurveAdaptiveParametric *>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.rediscretizacao();
-  (static_cast<CurvaParametrica *>(curve))->atualizarParametros(parameters);
+  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
   list<Ponto *> list_new_points;
 
@@ -239,8 +246,8 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(Curva *curve,
 
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    Noh *n = new Noh((static_cast<CurvaParametrica *>(curve))
-                         ->parametrizar((*param_iterator)));
+    Noh *n = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
+                         ->FindPointByParameter((*param_iterator)));
     n->id = id_manager->next(0);
     list_new_points.push_back(n);
   }
@@ -265,33 +272,35 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
 
   // 1. Para cada curva do patch
   for (unsigned int i = 0; i < coons_patch->getNumDeCurvas(); ++i) {
-    Curva *curve = coons_patch->getCurva(i);
-    //((CurvaParametrica*)c)->ordenaLista ( );
+    CurveAdaptive *curve = coons_patch->getCurva(i);
+    //((CurveAdaptiveParametric*)c)->ordenaLista ( );
     // #pragma omp critical
     //        {
-    //            ((CurvaParametrica*)c)->ordenaLista ( );
+    //            ((CurveAdaptiveParametric*)c)->ordenaLista ( );
     //        }
 
     if (i == 0 or i == 1) {
       list<double>::iterator last_parameter =
-          static_cast<CurvaParametrica *>(curve)->parametros.end();
+          static_cast<CurveAdaptiveParametric *>(curve)->parameters_.end();
       --last_parameter;
 
       int parameter = 0;
 
-      for (auto param_iterator =
-               static_cast<CurvaParametrica *>(curve)->parametros.begin();
+      for (auto param_iterator = static_cast<CurveAdaptiveParametric *>(curve)
+                                     ->parameters_.begin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
 
         if (i == 0)
           vertex = avanco.getBoundary()->addVertex(
-              *param_iterator, 0.0, static_cast<CurvaParametrica *>(curve));
+              *param_iterator, 0.0,
+              static_cast<CurveAdaptiveParametric *>(curve));
         else if (i == 1)
           vertex = avanco.getBoundary()->addVertex(
-              1.0, *param_iterator, static_cast<CurvaParametrica *>(curve));
+              1.0, *param_iterator,
+              static_cast<CurveAdaptiveParametric *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->getPonto(parameter));
+        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -301,25 +310,28 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
       }
     } else if (i == 2 or i == 3) {
       list<double>::reverse_iterator last_parameter =
-          static_cast<CurvaParametrica *>(curve)->parametros.rend();
+          static_cast<CurveAdaptiveParametric *>(curve)->parameters_.rend();
       --last_parameter;
 
       int parameter =
-          static_cast<CurvaParametrica *>(curve)->getNumDePontos() - 1;
+          static_cast<CurveAdaptiveParametric *>(curve)->GetNumBerPoints() - 1;
 
       for (list<double>::reverse_iterator param_iterator =
-               (static_cast<CurvaParametrica *>(curve))->parametros.rbegin();
+               (static_cast<CurveAdaptiveParametric *>(curve))
+                   ->parameters_.rbegin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
 
         if (i == 2)
           vertex = avanco.getBoundary()->addVertex(
-              *param_iterator, 1.0, static_cast<CurvaParametrica *>(curve));
+              *param_iterator, 1.0,
+              static_cast<CurveAdaptiveParametric *>(curve));
         else if (i == 3)
           vertex = avanco.getBoundary()->addVertex(
-              0.0, *param_iterator, static_cast<CurvaParametrica *>(curve));
+              0.0, *param_iterator,
+              static_cast<CurveAdaptiveParametric *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->getPonto(parameter));
+        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -330,7 +342,7 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
     }
   }
 
-  avanco.getBoundary()->close(static_cast<CurvaParametrica *>(
+  avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
       coons_patch->getCurva(coons_patch->getNumDeCurvas() - 1)));
   // essa é a malha anterior!
   SubMalha *sub_mesh_old = coons_patch->getMalha();
@@ -472,21 +484,21 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
 }
 #endif  // #USE_OPENMP
 
-list<Ponto *> Adapter::AdaptCurveByCurve(Curva *curve,
+list<Ponto *> Adapter::AdaptCurveByCurve(CurveAdaptive *curve,
                                          map<Ponto *, Ponto *> &map_points,
                                          Performer::IdManager *id_manager,
                                          double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->getPontos();
+  list<Ponto *> points = curve->GetPoints();
   list<Ponto *>::iterator point_current = points.begin();
   list<Ponto *>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
   Ponto midpoint;
 
-  static_cast<CurvaParametrica *>(curve)->ordenaLista();
+  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -509,44 +521,47 @@ list<Ponto *> Adapter::AdaptCurveByCurve(Curva *curve,
     double kd_average = 0;
 
     // 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
-    length_old = curve->calcularTamanho(*(*point_current), *(*point_next));
+    length_old =
+        curve->CalculateLengthPoints(*(*point_current), *(*point_next));
 
     // 1.2.2. Calcule o ponto médio do segmento
-    midpoint = static_cast<CurvaParametrica *>(curve)->pontoMedio(
-        *(*point_current), *(*point_next));
+    midpoint =
+        static_cast<CurveAdaptiveParametric *>(curve)
+            ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
 
     // 1.2.2.1 Encontre o parâmetro do ponto médio
     midpoint_segment =
-        static_cast<CurvaParametrica *>(curve)->encontrar_t(midpoint);
+        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+            midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
-    ka_midpoint = curve->calcularCurvatura(midpoint_segment);
+    ka_midpoint = curve->CalculateCurvature(midpoint_segment);
 
     kd_average =
-        (curve->calcularCurvatura(0) + curve->calcularCurvatura(1)) / 2.0;
+        (curve->CalculateCurvature(0) + curve->CalculateCurvature(1)) / 2.0;
 
     // 1.2.4. O novo tamanho é calculado de acordo com os cenários
     lenght_new =
         CalculateNewSize(ka_midpoint, kd_average, factor_disc, length_old);
 
     // 1.2.5. Calcule o tamanho paramétrico
-    lenght_par = lenght_new / curve->get_L();
+    lenght_par = lenght_new / curve->GetLength();
 
     bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
-                        static_cast<CurvaParametrica *>(curve));
+                        static_cast<CurveAdaptiveParametric *>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.restringir(static_cast<CurvaParametrica *>(curve))) {
+  while (bin_tree.restringir(static_cast<CurveAdaptiveParametric *>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.rediscretizacao();
-  (static_cast<CurvaParametrica *>(curve))->atualizarParametros(parameters);
+  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
   list<Ponto *> list_new_points;
 
@@ -580,8 +595,8 @@ list<Ponto *> Adapter::AdaptCurveByCurve(Curva *curve,
 
   for (list<double>::iterator param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    Noh *noh = new Noh((static_cast<CurvaParametrica *>(curve))
-                           ->parametrizar((*param_iterator)));
+    Noh *noh = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
+                           ->FindPointByParameter((*param_iterator)));
     noh->id = id_manager->next(0);
     list_new_points.push_back(noh);
   }
@@ -592,21 +607,21 @@ list<Ponto *> Adapter::AdaptCurveByCurve(Curva *curve,
   return list_new_points;
 }
 
-list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
+list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
                                            map<Ponto *, Ponto *> &map_points,
                                            Performer::IdManager *id_manager,
                                            double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->getPontos();
+  list<Ponto *> points = curve->GetPoints();
   list<Ponto *>::iterator point_current = points.begin();
   list<Ponto *>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
   Ponto midpoint;
 
-  static_cast<CurvaParametrica *>(curve)->ordenaLista();
+  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -629,23 +644,26 @@ list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
     double kd_average = 0;
 
     // 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
-    length_old = curve->calcularTamanho(*(*point_current), *(*point_next));
+    length_old =
+        curve->CalculateLengthPoints(*(*point_current), *(*point_next));
 
     // 1.2.2. Calcule o ponto médio do segmento
-    midpoint = static_cast<CurvaParametrica *>(curve)->pontoMedio(
-        *(*point_current), *(*point_next));
+    midpoint =
+        static_cast<CurveAdaptiveParametric *>(curve)
+            ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
 
     // Teste para curvatura com a curva
     midpoint_segment =
-        static_cast<CurvaParametrica *>(curve)->encontrar_t(midpoint);
+        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+            midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
     CurvatureAnalytical ka_p0(midpoint,
-                              *(static_cast<CoonsPatch *>(curve->getPatch(0))));
+                              *(static_cast<CoonsPatch *>(curve->GetPatch(0))));
 
-    for (unsigned int i = 0; i < curve->getNumDePatches(); i++) {
+    for (unsigned int i = 0; i < curve->GetNumBerPatches(); i++) {
       CurvatureAnalytical ka_p1(
-          midpoint, *(static_cast<CoonsPatch *>(curve->getPatch(i))));
+          midpoint, *(static_cast<CoonsPatch *>(curve->GetPatch(i))));
       double Ga_p0 = ka_p0.CalculateGaussCurvature();
       double Ga_p1 = ka_p1.CalculateGaussCurvature();
 
@@ -672,27 +690,28 @@ list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
         CalculateNewSize(ka_midpoint, kd_average, factor_disc, length_old);
 
     // 1.2.5. Calcule o tamanho paramétrico
-    lenght_par = lenght_new / curve->get_L();
+    lenght_par = lenght_new / curve->GetLength();
 
     // 1.2.6. Encontre o parâmetro do ponto médio
     midpoint_segment =
-        static_cast<CurvaParametrica *>(curve)->encontrar_t(midpoint);
+        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+            midpoint);
 
     bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
-                        static_cast<CurvaParametrica *>(curve));
+                        static_cast<CurveAdaptiveParametric *>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.restringir(static_cast<CurvaParametrica *>(curve))) {
+  while (bin_tree.restringir(static_cast<CurveAdaptiveParametric *>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.rediscretizacao();
-  (static_cast<CurvaParametrica *>(curve))->atualizarParametros(parameters);
+  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
   list<Ponto *> list_new_points;
 
@@ -725,8 +744,8 @@ list<Ponto *> Adapter::AdaptCurveBySurface(Curva *curve,
 
   for (list<double>::iterator param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    Noh *noh = new Noh((static_cast<CurvaParametrica *>(curve))
-                           ->parametrizar((*param_iterator)));
+    Noh *noh = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
+                           ->FindPointByParameter((*param_iterator)));
     noh->id = id_manager->next(0);
     list_new_points.push_back(noh);
   }
@@ -753,29 +772,31 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
 
   // 1. Para cada curva do patch
   for (unsigned int i = 0; i < coons_patch->getNumDeCurvas(); ++i) {
-    Curva *curve = coons_patch->getCurva(i);
-    (static_cast<CurvaParametrica *>(curve))->ordenaLista();
+    CurveAdaptive *curve = coons_patch->getCurva(i);
+    (static_cast<CurveAdaptiveParametric *>(curve))->SortPointsByParameters();
 
     if (i == 0 or i == 1) {
       list<double>::iterator last_parameter =
-          (static_cast<CurvaParametrica *>(curve))->parametros.end();
+          (static_cast<CurveAdaptiveParametric *>(curve))->parameters_.end();
       --last_parameter;
 
       int parameter = 0;
 
-      for (auto param_iterator =
-               (static_cast<CurvaParametrica *>(curve))->parametros.begin();
+      for (auto param_iterator = (static_cast<CurveAdaptiveParametric *>(curve))
+                                     ->parameters_.begin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
 
         if (i == 0)
           vertex = avanco.getBoundary()->addVertex(
-              *param_iterator, 0.0, static_cast<CurvaParametrica *>(curve));
+              *param_iterator, 0.0,
+              static_cast<CurveAdaptiveParametric *>(curve));
         else if (i == 1)
           vertex = avanco.getBoundary()->addVertex(
-              1.0, *param_iterator, static_cast<CurvaParametrica *>(curve));
+              1.0, *param_iterator,
+              static_cast<CurveAdaptiveParametric *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->getPonto(parameter));
+        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -785,25 +806,28 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
       }
     } else if (i == 2 or i == 3) {
       list<double>::reverse_iterator last_parameter =
-          (static_cast<CurvaParametrica *>(curve))->parametros.rend();
+          (static_cast<CurveAdaptiveParametric *>(curve))->parameters_.rend();
       --last_parameter;
 
       int parameter =
-          static_cast<CurvaParametrica *>(curve)->getNumDePontos() - 1;
+          static_cast<CurveAdaptiveParametric *>(curve)->GetNumBerPoints() - 1;
 
       for (list<double>::reverse_iterator param_iterator =
-               (static_cast<CurvaParametrica *>(curve))->parametros.rbegin();
+               (static_cast<CurveAdaptiveParametric *>(curve))
+                   ->parameters_.rbegin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
 
         if (i == 2)
           vertex = avanco.getBoundary()->addVertex(
-              *param_iterator, 1.0, static_cast<CurvaParametrica *>(curve));
+              *param_iterator, 1.0,
+              static_cast<CurveAdaptiveParametric *>(curve));
         else if (i == 3)
           vertex = avanco.getBoundary()->addVertex(
-              0.0, *param_iterator, static_cast<CurvaParametrica *>(curve));
+              0.0, *param_iterator,
+              static_cast<CurveAdaptiveParametric *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->getPonto(parameter));
+        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -814,7 +838,7 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
     }
   }
 
-  avanco.getBoundary()->close(static_cast<CurvaParametrica *>(
+  avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
       coons_patch->getCurva(coons_patch->getNumDeCurvas() - 1)));
 
   SubMalha *sub_mesh_old = coons_patch->getMalha();  // essa é a malha anterior!
@@ -983,24 +1007,25 @@ double Adapter::CalculateNewSize(const double ka, const double kd,
 //     for (int i = 0; i < pontos.size(); ++i)
 //     {
 //         // 1.2.1. Calcule o comprimento do segmento e guarde em h_velho
-//         h_velho = c->calcularTamanho ( *(*atual), *(*proxi) );
+//         h_velho = c->CalculateLengthPoint ( *(*atual), *(*proxi) );
 
 //        // cout << "tamanho do segmento de curva"<<h_velho<< endl;
 
 //        //cout << "calculou novo tamanho" << endl;
 
 //        // 1.2.2. Calcule o ponto médio do segmento
-//        C_seg = static_cast < CurvaParametrica* > ( c )->pontoMedio (
+//        C_seg = static_cast < CurveAdaptiveParametric* > ( c )->pontoMedio (
 //        *(*atual), *(*proxi) );
 
 //        // 1.2.2.1 Encontre o parâmetro do ponto médio
-//        t = static_cast < CurvaParametrica* > ( c )->encontrar_t ( C_seg );
+//        t = static_cast < CurveAdaptiveParametric* > ( c )->encontrar_t (
+//        C_seg );
 
 //        // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
 
-//        ka = c->calcularCurvatura(t);
+//        ka = c->CalculateCurvature(t);
 
-//        kd = (c->calcularCurvatura(0) + c->calcularCurvatura(1)) / 2.0;
+//        kd = (c->CalculateCurvature(0) + c->CalculateCurvature(1)) / 2.0;
 
 //        // 1.2.4. O novo tamanho é calculado de acordo com os cenários
 //        h_novo = novoTamanho ( ka, kd, f, h_velho );
@@ -1010,7 +1035,7 @@ double Adapter::CalculateNewSize(const double ka, const double kd,
 //        // 1.2.5. Calcule o tamanho paramétrico
 //        h_par = h_novo / c->get_L ( );
 
-//        bt.subdividir( t, h_par*fator_dis, (CurvaParametrica*)c );
+//        bt.subdividir( t, h_par*fator_dis, (CurveAdaptiveParametric*)c );
 
 //        ++proxi;
 //        ++atual;

@@ -108,7 +108,7 @@ void HermitePatch::mostraMatrizes() {
 // encontra o parâmetro t de um dado ponto p na curva
 // tuple < double, double > HermitePatch::encontrar_u_v ( const Ponto& p )
 //{
-//#pragma omp critical
+// #pragma omp critical
 //     cout<< p.id << " (" << p.x << ", " << p.y << ", " << p.z << ")" << endl;
 
 //    unsigned int iMax = 0;
@@ -221,9 +221,9 @@ void HermitePatch::mostraMatrizes() {
 
 //        if ( ++iMax > 50000 )
 //        {
-//#if USE_PRINT_COMENT
+// #if USE_PRINT_COMENT
 //            cout << "iMax alcançado!" << endl;
-//#endif //#if USE_PRINT_COMENT
+// #endif //#if USE_PRINT_COMENT
 //            break;
 //        }
 
@@ -385,7 +385,7 @@ tuple<double, double> HermitePatch::find_u_v(const Ponto& p) {
     if (++iMax > 50000) {
 #if USE_PRINT_COMENT
       cout << "iMax alcançado!" << endl;
-#endif  //#if USE_PRINT_COMENT
+#endif  // #if USE_PRINT_COMENT
       break;
     }
 
@@ -716,10 +716,10 @@ Vetor HermitePatch::Qvv(const Ponto& p) {
 //		C3
 //	C4		C2
 //		C1
-HermitePatch::HermitePatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
-                           Vetor TW_00, Vetor TW_10, Vetor TW_01, Vetor TW_11,
-                           bool sinal_c1, bool sinal_c2, bool sinal_c3,
-                           bool sinal_c4)
+HermitePatch::HermitePatch(CurveAdaptive* C1, CurveAdaptive* C2,
+                           CurveAdaptive* C3, CurveAdaptive* C4, Vetor TW_00,
+                           Vetor TW_10, Vetor TW_01, Vetor TW_11, bool sinal_c1,
+                           bool sinal_c2, bool sinal_c3, bool sinal_c4)
     : CoonsPatch() {
   this->sinal_c1 = sinal_c1;
   this->sinal_c2 = sinal_c2;
@@ -740,27 +740,27 @@ HermitePatch::HermitePatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
 
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurvParamHermite*>(C1)->inserePatch(this);
-  static_cast<CurvParamHermite*>(C2)->inserePatch(this);
-  static_cast<CurvParamHermite*>(C3)->inserePatch(this);
-  static_cast<CurvParamHermite*>(C4)->inserePatch(this);
+  static_cast<CurveAdaptiveParametricHermite*>(C1)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricHermite*>(C2)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricHermite*>(C3)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricHermite*>(C4)->InsertPatch(this);
 
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->Pt00 = static_cast<CurvParamHermite*>(C1)->P0;
-  this->Pt01 = static_cast<CurvParamHermite*>(C3)->P0;
-  this->Pt10 = static_cast<CurvParamHermite*>(C1)->P1;
-  this->Pt11 = static_cast<CurvParamHermite*>(C3)->P1;
+  this->Pt00 = static_cast<CurveAdaptiveParametricHermite*>(C1)->GetPoint0();
+  this->Pt01 = static_cast<CurveAdaptiveParametricHermite*>(C3)->GetPoint0();
+  this->Pt10 = static_cast<CurveAdaptiveParametricHermite*>(C1)->GetPoint1();
+  this->Pt11 = static_cast<CurveAdaptiveParametricHermite*>(C3)->GetPoint1();
 
-  this->Qv00 = static_cast<CurvParamHermite*>(C4)->DP0;
-  this->Qv01 = static_cast<CurvParamHermite*>(C4)->DP1;
-  this->Qv10 = static_cast<CurvParamHermite*>(C2)->DP0;
-  this->Qv11 = static_cast<CurvParamHermite*>(C2)->DP1;
+  this->Qv00 = static_cast<CurveAdaptiveParametricHermite*>(C4)->GetVector0();
+  this->Qv01 = static_cast<CurveAdaptiveParametricHermite*>(C4)->GetVector1();
+  this->Qv10 = static_cast<CurveAdaptiveParametricHermite*>(C2)->GetVector0();
+  this->Qv11 = static_cast<CurveAdaptiveParametricHermite*>(C2)->GetVector1();
 
-  this->Qu00 = static_cast<CurvParamHermite*>(C1)->DP0;
-  this->Qu01 = static_cast<CurvParamHermite*>(C3)->DP0;
-  this->Qu10 = static_cast<CurvParamHermite*>(C1)->DP1;
-  this->Qu11 = static_cast<CurvParamHermite*>(C3)->DP1;
+  this->Qu00 = static_cast<CurveAdaptiveParametricHermite*>(C1)->GetVector0();
+  this->Qu01 = static_cast<CurveAdaptiveParametricHermite*>(C3)->GetVector0();
+  this->Qu10 = static_cast<CurveAdaptiveParametricHermite*>(C1)->GetVector1();
+  this->Qu11 = static_cast<CurveAdaptiveParametricHermite*>(C3)->GetVector1();
 
   this->Tw00 = TW_00;
   this->Tw01 = TW_01;

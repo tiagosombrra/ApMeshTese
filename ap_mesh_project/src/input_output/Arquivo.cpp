@@ -13,7 +13,7 @@ This source code is under GNU General Public License v3 */
 
 // ler as linhas que definem as curvas
 void Arquivo::lerCurvas(const string leitura) {
-  // "P" de P1 ou P2, os pontos inicial e final da curva
+  // "P" de point_1_ ou P2, os pontos inicial e final da curva
   // "D" de DP1 ou DP2, as derivadas nos pontos inicial e final
   if (leitura[0] == 'P' or leitura[0] == 'D') this->curvas.push_back(leitura);
 }
@@ -157,8 +157,8 @@ void Arquivo::lerArquivoPara() {
   bool leiaPatches = false;                    // pode ler uma linha de patch
   string fimDosPatches = "FIM_DE_PATCHS_HERMITES";  // fim do bloco de patches
 
-  while (entrada.good()) {
-    getline(entrada, linha);  // pega uma linha do arquivo
+  while (INPUT_MODEL.good()) {
+    getline(INPUT_MODEL, linha);  // pega uma linha do arquivo
 
     if (linha == inicioDasCurvas)  // começa a definição das curvas no arquivo
     {
@@ -190,11 +190,11 @@ void Arquivo::lerArquivoPara() {
 }
 
 Arquivo::Arquivo(const char* nome) {
-  this->entrada.open(nome);
-  if (this->entrada.fail())
+  this->INPUT_MODEL.open(nome);
+  if (this->INPUT_MODEL.fail())
     cout << "não abriu o arquivo em disco!" << endl;
   else
     this->nome = nome;
 }
 
-Arquivo::~Arquivo() { this->entrada.close(); }
+Arquivo::~Arquivo() { this->INPUT_MODEL.close(); }

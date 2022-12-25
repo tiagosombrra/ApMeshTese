@@ -14,7 +14,7 @@
 #include "../data/Edge.h"
 #include "../data/Face.h"
 #include "../data/Vertex.h"
-#include "../data/curve/CurvaParametrica.h"
+#include "../data/curve/curve_adaptive_parametric.h"
 #include "../data/mesh/SubMalha.h"
 #include "../data/patch/CoonsPatch.h"
 #include "../data/tree/BinTree.h"
@@ -23,10 +23,10 @@
 class Adapter {
  public:
 #if USE_OPENMP
-  list<Ponto*> AdaptCurveByCurveOmp(Curva* curve,
+  list<Ponto*> AdaptCurveByCurveOmp(CurveAdaptive* curve,
                                     Performer::IdManager* id_manager,
                                     double factor_disc_global = 1.0);
-  list<Ponto*> AdaptCurveBySurfaceOmp(Curva* curve,
+  list<Ponto*> AdaptCurveBySurfaceOmp(CurveAdaptive* curve,
                                       Performer::IdManager* id_manager,
                                       double factor_disc_global = 1.0);
   SubMalha* AdaptDomainOmp(CoonsPatch* coons_patch,
@@ -34,10 +34,11 @@ class Adapter {
                            double factor_disc_global = 1.0);
 #endif  // #USE_OPENMP
 
-  list<Ponto*> AdaptCurveByCurve(Curva* curve, map<Ponto*, Ponto*>& map_points,
+  list<Ponto*> AdaptCurveByCurve(CurveAdaptive* curve,
+                                 map<Ponto*, Ponto*>& map_points,
                                  Performer::IdManager* id_manager,
                                  double factor_disc_global = 1.0);
-  list<Ponto*> AdaptCurveBySurface(Curva* curve,
+  list<Ponto*> AdaptCurveBySurface(CurveAdaptive* curve,
                                    map<Ponto*, Ponto*>& map_points,
                                    Performer::IdManager* id_manager,
                                    double factor_disc_global = 1.0);

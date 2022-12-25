@@ -12,7 +12,7 @@ This source code is under GNU General Public License v3 */
 #ifndef HermitePatch_h
 #define HermitePatch_h
 
-#include "../../data/curve/CurvParamHermite.h"
+#include "../../data/curve/curve_adaptive_parametric_hermite.h"
 #include "CoonsPatch.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
@@ -113,10 +113,10 @@ class HermitePatch : public CoonsPatch {
   //		C3
   //	C4		C2
   //		C1
-  HermitePatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4, Vetor TW_00,
-               Vetor TW_10, Vetor TW_01, Vetor TW_11, bool sinal_c1 = true,
-               bool sinal_c2 = true, bool sinal_c3 = true,
-               bool sinal_c4 = true);
+  HermitePatch(CurveAdaptive* C1, CurveAdaptive* C2, CurveAdaptive* C3,
+               CurveAdaptive* C4, Vetor TW_00, Vetor TW_10, Vetor TW_01,
+               Vetor TW_11, bool sinal_c1 = true, bool sinal_c2 = true,
+               bool sinal_c3 = true, bool sinal_c4 = true);
 
   /*	HermitePatch (  Ponto Pt_00, Ponto Pt_01, Vetor Qv_00, Vetor Qv_01,
                               Ponto Pt_10, Ponto Pt_11, Vetor Qv_10, Vetor

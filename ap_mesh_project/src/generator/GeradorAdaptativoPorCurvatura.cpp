@@ -227,10 +227,10 @@ std::list<BezierPatch*> GeradorAdaptativoPorCurvatura::estimateChargeofPatches(
   return listBezierPt;
 }
 
-std::vector<Curva*> GeradorAdaptativoPorCurvatura::createVectorOfCurves(
+std::vector<CurveAdaptive*> GeradorAdaptativoPorCurvatura::createVectorOfCurves(
     std::list<BezierPatch*> listBezierPt) {
-  Curva* curva;
-  std::vector<Curva*> curves;
+  CurveAdaptive* curva;
+  std::vector<CurveAdaptive*> curves;
 
   for (std::list<BezierPatch*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {
@@ -320,12 +320,13 @@ GeradorAdaptativoPorCurvatura::orderPatchesDistribProcess(
   }
 }
 
-bool GeradorAdaptativoPorCurvatura::verifyCurve(Ponto p0, Ponto p1, Ponto p2,
-                                                Ponto p3,
-                                                std::vector<Curva*> curves) {
-  for (vector<Curva*>::iterator it = curves.begin(); it != curves.end(); it++) {
-    if (static_cast<CurvParamBezier*>(*it)->getP0().operator==(p0) and
-        static_cast<CurvParamBezier*>(*it)->getP1().operator==(p1) and
+bool GeradorAdaptativoPorCurvatura::verifyCurve(
+    Ponto p0, Ponto p1, Ponto p2, Ponto p3,
+    std::vector<CurveAdaptive*> curves) {
+  for (vector<CurveAdaptive*>::iterator it = curves.begin(); it != curves.end();
+       it++) {
+    if (static_cast<CurvParamBezier*>(*it)->GetPoint0().operator==(p0) and
+        static_cast<CurvParamBezier*>(*it)->GetPoint1().operator==(p1) and
         static_cast<CurvParamBezier*>(*it)->getP2().operator==(p2) and
         static_cast<CurvParamBezier*>(*it)->getP3().operator==(p3)) {
       return false;
@@ -378,10 +379,10 @@ Geometria* GeradorAdaptativoPorCurvatura::unpakGeometry(double listOfPatches[],
   Ponto* p32;
   Ponto* p33;
 
-  Curva* patch_c1;
-  Curva* patch_c2;
-  Curva* patch_c3;
-  Curva* patch_c4;
+  CurveAdaptive* patch_c1;
+  CurveAdaptive* patch_c2;
+  CurveAdaptive* patch_c3;
+  CurveAdaptive* patch_c4;
 
   BezierPatch* bezierPatch;
 
@@ -745,10 +746,10 @@ void GeradorAdaptativoPorCurvatura::adaptDomain(Geometria* geo, Malha* malha) {
 #if USE_OPENMP
 SubMalha* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
     CoonsPatch* patch, Performer::IdManager* idManager) {
-  Curva* c1 = patch->getCurva(0);
-  Curva* c2 = patch->getCurva(1);
-  Curva* c3 = patch->getCurva(2);
-  Curva* c4 = patch->getCurva(3);
+  CurveAdaptive* c1 = patch->getCurva(0);
+  CurveAdaptive* c2 = patch->getCurva(1);
+  CurveAdaptive* c3 = patch->getCurva(2);
+  CurveAdaptive* c4 = patch->getCurva(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())
@@ -1161,10 +1162,10 @@ void GeradorAdaptativoPorCurvatura::adaptDomainOmp(Geometria* geo, Malha* malha,
 
 SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(
     CoonsPatch* patch, Performer::IdManager* idManager) {
-  Curva* c1 = patch->getCurva(0);
-  Curva* c2 = patch->getCurva(1);
-  Curva* c3 = patch->getCurva(2);
-  Curva* c4 = patch->getCurva(3);
+  CurveAdaptive* c1 = patch->getCurva(0);
+  CurveAdaptive* c2 = patch->getCurva(1);
+  CurveAdaptive* c3 = patch->getCurva(2);
+  CurveAdaptive* c4 = patch->getCurva(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())

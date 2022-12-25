@@ -11,9 +11,9 @@ This source code is under GNU General Public License v3 */
 
 #include "../../../include/data/patch/CoonsPatch.h"
 
-void CoonsPatch::insereCurva(Curva* c) { this->curvas.push_back(c); }
+void CoonsPatch::insereCurva(CurveAdaptive* c) { this->curvas.push_back(c); }
 
-Curva* CoonsPatch::getCurva(const unsigned int i) {
+CurveAdaptive* CoonsPatch::getCurva(const unsigned int i) {
   // adicionar excessão caso i > curvas.size();
   /*list <Curva*>::iterator it = this->curvas.begin();
 
@@ -28,7 +28,8 @@ CoonsPatch::CoonsPatch() {}
 
 CoonsPatch::CoonsPatch(CoonsPatch* antigo) : Patch(antigo) {}
 
-CoonsPatch::CoonsPatch(vector<Curva*> listaDeCurvas) : curvas(listaDeCurvas) {}
+CoonsPatch::CoonsPatch(vector<CurveAdaptive*> listaDeCurvas)
+    : curvas(listaDeCurvas) {}
 
 CoonsPatch::~CoonsPatch() {
   // 1. apaga a lista de curvas

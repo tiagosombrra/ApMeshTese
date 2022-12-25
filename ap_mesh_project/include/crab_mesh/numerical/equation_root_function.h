@@ -2,7 +2,7 @@
 #define _DATA_NUMERICAL_EQUATION_ROOT_FUNCTION_H_
 
 #include "../../data/Definitions.h"
-#include "../../data/curve/CurvaParametrica.h"
+#include "../../data/curve/curve_adaptive_parametric.h"
 #include "function.h"
 
 namespace Data {

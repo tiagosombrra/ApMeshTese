@@ -12,9 +12,9 @@ This source code is under GNU General Public License v3 */
 #ifndef CurvParamHermite_h
 #define CurvParamHermite_h
 
-#include "CurvaParametrica.h"
+#include "curve_adaptive_parametric.h"
 
-class CurvParamHermite : public CurvaParametrica {
+class CurvParamHermite : public CurveAdaptiveParametric {
   Vetor DP0;  // vetor tangente no ponto inicial
   Vetor DP1;  // vetor tangente no ponto final
 
@@ -31,7 +31,7 @@ class CurvParamHermite : public CurvaParametrica {
   // os valores indicados na observação do construtor default !!!
   CurvParamHermite(Ponto p0, Ponto p1, Vetor dp0, Vetor dp1);
   CurvParamHermite(CurvParamHermite*);
-  double calcularCurvatura(double t);
+  double CalculateCurvature(double t);
   ~CurvParamHermite();
 };
 #endif

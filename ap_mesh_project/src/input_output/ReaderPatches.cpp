@@ -150,10 +150,10 @@ Geometria* ReaderPatches::readerPatches(Geometria* geo, string fileName) {
   Ponto* p31;
   Ponto* p32;
   Ponto* p33;
-  Curva* patch_c1;
-  Curva* patch_c2;
-  Curva* patch_c3;
-  Curva* patch_c4;
+  CurveAdaptive* patch_c1;
+  CurveAdaptive* patch_c2;
+  CurveAdaptive* patch_c3;
+  CurveAdaptive* patch_c4;
 
   for (std::list<BezierPatch*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {

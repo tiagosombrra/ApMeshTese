@@ -16,19 +16,19 @@ This source code is under GNU General Public License v3 */
 #include <vector>
 
 #include "../data/curve/CurvParamBezier.h"
-#include "../data/curve/Curva.h"
+#include "../data/curve/curve_adaptive.h"
 #include "../data/patch/HermitePatch.h"
 using namespace std;
 
 class Geometria {
-  vector<Curva*> curvas;
+  vector<CurveAdaptive*> curvas;
   vector<Patch*> patches;
 
  public:
-  void insereCurva(Curva* c);
-  void insereCurva(Curva* c, int pos);
+  void insereCurva(CurveAdaptive* c);
+  void insereCurva(CurveAdaptive* c, int pos);
   unsigned int getNumDeCurvas() const;
-  Curva* getCurva(const unsigned int i);  // retorna a i-ésima curva
+  CurveAdaptive* getCurva(const unsigned int i);  // retorna a i-ésima curva
   void inserePatch(Patch* p);
   void inserePatch(Patch* p, int pos);
   unsigned int getNumDePatches() const;

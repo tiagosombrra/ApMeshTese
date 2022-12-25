@@ -4,7 +4,7 @@
 #include "../crab_mesh/aft/quadtree_cell.h"
 #include "../crab_mesh/aft/shape.h"
 #include "../data/Definitions.h"
-#include "../data/curve/CurvaParametrica.h"
+#include "../data/curve/curve_adaptive_parametric.h"
 #include "Vertex.h"
 
 using namespace Par2DJMesh;
@@ -36,7 +36,7 @@ class Edge : public Shape {
 
   // Daniel Siqueira
   // ponteiro para a curva
-  CurvaParametrica *c;
+  CurveAdaptiveParametric *c;
 
  public:
   Vertex *makeMid();
@@ -99,7 +99,7 @@ class Edge : public Shape {
   bool matches(Vertex *v1, Vertex *v2);
 
   // metodos do Daniel Siqueira
-  void setCurva(CurvaParametrica *);
+  void setCurva(CurveAdaptiveParametric *);
   void setLen(double len);
   double getLen();
   void makeParamMid();

@@ -20,7 +20,9 @@ int RANK_MPI, SIZE_MPI;
 int PASSOS = 4;
 double TRIANGLE_MEDIO = 0.0;
 double TOLERANCIA_ESTIMATIVE = 1.0;
+// distância entre um parâmetro e outro
 double DELTA = 0.0001;
+// distância máxima entre dois pontos
 double TOLERANCIA = 0.0001;
 double TOLERANCIA_CURVATURA = 0.0001;
 double TOLERANCIA_AFT = 0.0001;

@@ -716,10 +716,10 @@ Vetor HermitePatch::Qvv(const Ponto& p) {
 //		C3
 //	C4		C2
 //		C1
-HermitePatch::HermitePatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
-                           Vetor TW_00, Vetor TW_10, Vetor TW_01, Vetor TW_11,
-                           bool sinal_c1, bool sinal_c2, bool sinal_c3,
-                           bool sinal_c4)
+HermitePatch::HermitePatch(CurveAdaptive* C1, CurveAdaptive* C2,
+                           CurveAdaptive* C3, CurveAdaptive* C4, Vetor TW_00,
+                           Vetor TW_10, Vetor TW_01, Vetor TW_11, bool sinal_c1,
+                           bool sinal_c2, bool sinal_c3, bool sinal_c4)
     : CoonsPatch() {
   this->sinal_c1 = sinal_c1;
   this->sinal_c2 = sinal_c2;
@@ -747,10 +747,10 @@ HermitePatch::HermitePatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
 
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->Pt00 = static_cast<CurvParamHermite*>(C1)->P0;
-  this->Pt01 = static_cast<CurvParamHermite*>(C3)->P0;
-  this->Pt10 = static_cast<CurvParamHermite*>(C1)->P1;
-  this->Pt11 = static_cast<CurvParamHermite*>(C3)->P1;
+  this->Pt00 = static_cast<CurvParamHermite*>(C1)->point_0_;
+  this->Pt01 = static_cast<CurvParamHermite*>(C3)->point_0_;
+  this->Pt10 = static_cast<CurvParamHermite*>(C1)->point_1_;
+  this->Pt11 = static_cast<CurvParamHermite*>(C3)->point_1_;
 
   this->Qv00 = static_cast<CurvParamHermite*>(C4)->DP0;
   this->Qv01 = static_cast<CurvParamHermite*>(C4)->DP1;

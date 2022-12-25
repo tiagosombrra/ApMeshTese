@@ -589,10 +589,10 @@ Vetor BezierPatch::Qvv(const Ponto& p) {
 //		C3
 //	C4		C2
 //		C1
-BezierPatch::BezierPatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
-                         Ponto Pt_11, Ponto Pt_21, Ponto Pt_12, Ponto Pt_22,
-                         bool sinal_c1, bool sinal_c2, bool sinal_c3,
-                         bool sinal_c4)
+BezierPatch::BezierPatch(CurveAdaptive* C1, CurveAdaptive* C2,
+                         CurveAdaptive* C3, CurveAdaptive* C4, Ponto Pt_11,
+                         Ponto Pt_21, Ponto Pt_12, Ponto Pt_22, bool sinal_c1,
+                         bool sinal_c2, bool sinal_c3, bool sinal_c4)
     : CoonsPatch() {
   this->sinal_c1 = sinal_c1;
   this->sinal_c2 = sinal_c2;
@@ -617,19 +617,19 @@ BezierPatch::BezierPatch(Curva* C1, Curva* C2, Curva* C3, Curva* C4,
   //
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->Pt00 = static_cast<CurvParamBezier*>(C1)->P0;
-  this->Pt10 = static_cast<CurvParamBezier*>(C1)->P1;
+  this->Pt00 = static_cast<CurvParamBezier*>(C1)->point_0_;
+  this->Pt10 = static_cast<CurvParamBezier*>(C1)->point_1_;
   this->Pt20 = static_cast<CurvParamBezier*>(C1)->P2;
 
-  this->Pt30 = static_cast<CurvParamBezier*>(C2)->P0;
-  this->Pt31 = static_cast<CurvParamBezier*>(C2)->P1;
+  this->Pt30 = static_cast<CurvParamBezier*>(C2)->point_0_;
+  this->Pt31 = static_cast<CurvParamBezier*>(C2)->point_1_;
   this->Pt32 = static_cast<CurvParamBezier*>(C2)->P2;
 
-  this->Pt13 = static_cast<CurvParamBezier*>(C3)->P1;
+  this->Pt13 = static_cast<CurvParamBezier*>(C3)->point_1_;
   this->Pt23 = static_cast<CurvParamBezier*>(C3)->P2;
   this->Pt33 = static_cast<CurvParamBezier*>(C3)->P3;
 
-  this->Pt01 = static_cast<CurvParamBezier*>(C4)->P1;
+  this->Pt01 = static_cast<CurvParamBezier*>(C4)->point_1_;
   this->Pt02 = static_cast<CurvParamBezier*>(C4)->P2;
   this->Pt03 = static_cast<CurvParamBezier*>(C4)->P3;
 

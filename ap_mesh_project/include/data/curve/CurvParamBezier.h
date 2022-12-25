@@ -12,9 +12,9 @@ This source code is under GNU General Public License v3 */
 #ifndef CurvParamBezier_h
 #define CurvParamBezier_h
 
-#include "CurvaParametrica.h"
+#include "curve_adaptive_parametric.h"
 
-class CurvParamBezier : public CurvaParametrica {
+class CurvParamBezier : public CurveAdaptiveParametric {
   Ponto P2;  // vetor tangente no ponto inicial
   Ponto P3;  // vetor tangente no ponto final
 
@@ -36,7 +36,7 @@ class CurvParamBezier : public CurvaParametrica {
   CurvParamBezier(Ponto p0, Ponto p1, Ponto p2, Ponto p3);
   CurvParamBezier(CurvParamBezier *);
 
-  double calcularCurvatura(double t);
+  double CalculateCurvature(double t);
 
   ~CurvParamBezier();
 };

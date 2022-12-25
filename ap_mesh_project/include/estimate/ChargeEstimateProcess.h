@@ -9,7 +9,7 @@
 #include "../data/Ponto.h"
 #include "../data/Vertice.h"
 #include "../data/curve/CurvParamBezier.h"
-#include "../data/curve/Curva.h"
+#include "../data/curve/curve_adaptive.h"
 #include "../data/mesh/Malha.h"
 #include "../data/patch/BezierPatch.h"
 #include "../generator/GeradorAdaptativoPorCurvatura.h"

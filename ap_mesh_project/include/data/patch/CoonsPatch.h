@@ -17,21 +17,21 @@ This source code is under GNU General Public License v3 */
 #include <vector>
 
 #include "../../data/Definitions.h"
-#include "../curve/Curva.h"
 #include "../Ponto.h"
 #include "../Vetor.h"
+#include "../curve/curve_adaptive.h"
 #include "Patch.h"
 
 using namespace std;
 
 class CoonsPatch : public Patch {
  protected:
-  vector<Curva*> curvas;
+  vector<CurveAdaptive*> curvas;
 
  public:
-  void insereCurva(Curva* c);
+  void insereCurva(CurveAdaptive* c);
   unsigned int getNumDeCurvas() const { return (int)curvas.size(); }
-  Curva* getCurva(const unsigned int i);  // retorna a i-ésima curva
+  CurveAdaptive* getCurva(const unsigned int i);  // retorna a i-ésima curva
 
   // encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
   // ou a projeção desse ponto na superfície
@@ -59,7 +59,7 @@ class CoonsPatch : public Patch {
 
   CoonsPatch();
   CoonsPatch(CoonsPatch* antigo);
-  CoonsPatch(vector<Curva*> listaDeCurvas);
+  CoonsPatch(vector<CurveAdaptive*> listaDeCurvas);
   virtual ~CoonsPatch();
 };
 

@@ -8,11 +8,11 @@
 #include "../Triangulo.h"
 #include "../patch/Patch.h"
 
-class Curva {
+class CurveAdaptive {
  public:
-  Curva();
-  Curva(Curva*);
-  virtual ~Curva();
+  CurveAdaptive();
+  explicit CurveAdaptive(CurveAdaptive*);
+  virtual ~CurveAdaptive();
 
   void SetId(unsigned int id);
   double GetLength();
@@ -31,13 +31,13 @@ class Curva {
   bool CheckIsOnBorder();
 
   // calcula o comprimento de curva de p1 a p2
-  virtual double calcularTamanho(const Ponto&, const Ponto&);
+  virtual double CalculateLengthPoints(const Ponto&, const Ponto&);
   // calcula o comprimento de curva até p
-  virtual double calcularTamanho(const Ponto&);
+  virtual double CalculateLengthPoint(const Ponto&);
   // calcula o comprimento total "L" da curva
-  virtual void calcular_L();
+  virtual void CalculateLengthCurve();
   // calcula a curvatuta da curva
-  virtual double calcularCurvatura(double);
+  virtual double CalculateCurvature(double);
 
  protected:
   // identificador da curva

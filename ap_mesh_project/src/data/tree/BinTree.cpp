@@ -28,7 +28,7 @@ bool BinTree::raiz() {
 // retorna o tamanho da célula
 double BinTree::get_tam() { return (this->tf - this->ti); }
 
-bool BinTree::restringir(CurvaParametrica* curv) {
+bool BinTree::restringir(CurveAdaptiveParametric* curv) {
   if (!this->folha()) {
     return this->filhoEsq->restringir(curv);
   }
@@ -54,9 +54,9 @@ bool BinTree::restringir(CurvaParametrica* curv) {
   return this->vizinhoDir->restringir(curv);
 }
 
-void BinTree::subdividir(CurvaParametrica* curv) {
+void BinTree::subdividir(CurveAdaptiveParametric* curv) {
   double novo_t;  // t que divide a curva ao meio
-  novo_t = curv->pontoMedio(this->ti, this->tf);
+  novo_t = curv->CalculateMidparameterByParamters(this->ti, this->tf);
 
   BinTree* esq = new BinTree(this->ti, novo_t, this);
   this->filhoEsq = esq;
@@ -75,14 +75,15 @@ void BinTree::subdividir(CurvaParametrica* curv) {
 }
 
 // subdivide uma célula e define suas duas células filhas
-void BinTree::subdividir(double t, double t_par, CurvaParametrica* curv) {
+void BinTree::subdividir(double t, double t_par,
+                         CurveAdaptiveParametric* curv) {
   if (this->folha()) {
     if ((this->get_tam() - t_par) < TOLERANCIA) return;
 
     subdividir(curv);
   }
 
-  double meio = curv->pontoMedio(this->ti, this->tf);
+  double meio = curv->CalculateMidparameterByParamters(this->ti, this->tf);
 
   if (t <= meio + TOLERANCIA) this->filhoEsq->subdividir(t, t_par, curv);
 

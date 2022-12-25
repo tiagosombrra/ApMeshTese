@@ -48,10 +48,10 @@ std::list<BezierPatch*> ChargeEstimateProcess::chargeEstimateProcess(
   Ponto* p32;
   Ponto* p33;
 
-  Curva* patch_c1;
-  Curva* patch_c2;
-  Curva* patch_c3;
-  Curva* patch_c4;
+  CurveAdaptive* patch_c1;
+  CurveAdaptive* patch_c2;
+  CurveAdaptive* patch_c3;
+  CurveAdaptive* patch_c4;
 
   double areaMenor = 1000;
   double areaMaior = 0;
@@ -810,10 +810,10 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
   int total_1 = 0;
   int total_2 = 0;
 
-  Curva* c1 = patch->getCurva(0);
-  Curva* c2 = patch->getCurva(1);
-  Curva* c3 = patch->getCurva(2);
-  Curva* c4 = patch->getCurva(3);
+  CurveAdaptive* c1 = patch->getCurva(0);
+  CurveAdaptive* c2 = patch->getCurva(1);
+  CurveAdaptive* c3 = patch->getCurva(2);
+  CurveAdaptive* c4 = patch->getCurva(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())

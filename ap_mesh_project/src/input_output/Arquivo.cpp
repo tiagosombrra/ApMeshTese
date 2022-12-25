@@ -13,7 +13,7 @@ This source code is under GNU General Public License v3 */
 
 // ler as linhas que definem as curvas
 void Arquivo::lerCurvas(const string leitura) {
-  // "P" de P1 ou P2, os pontos inicial e final da curva
+  // "P" de point_1_ ou P2, os pontos inicial e final da curva
   // "D" de DP1 ou DP2, as derivadas nos pontos inicial e final
   if (leitura[0] == 'P' or leitura[0] == 'D') this->curvas.push_back(leitura);
 }

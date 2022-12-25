@@ -36,8 +36,8 @@ include/curvature/adjacent.h
 include/curvature/curvature.h
 include/curvature/curvature_analytical.h
 include/curvature/curvature_discrete.h
-include/data/curve/Curva.h
-include/data/curve/CurvaParametrica.h
+include/data/curve/curve_adaptive.h
+include/data/curve/curve_adaptive_parametric.h
 include/data/curve/CurvParamBezier.h
 include/data/curve/CurvParamHermite.h
 include/data/Definitions.h
@@ -96,8 +96,8 @@ src/crab_mesh/performer/ranged_id_manager.cpp
 src/curvature/adjacent.cpp
 src/curvature/curvature_analytical.cpp
 src/curvature/curvature_discrete.cpp
-src/data/curve/Curva.cpp
-src/data/curve/CurvaParametrica.cpp
+src/data/curve/curve_adaptive.cpp
+src/data/curve/curve_adaptive_parametric.cpp
 src/data/curve/CurvParamBezier.cpp
 src/data/curve/CurvParamHermite.cpp
 src/data/Definitions.cpp

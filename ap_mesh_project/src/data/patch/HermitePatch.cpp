@@ -740,27 +740,27 @@ HermitePatch::HermitePatch(CurveAdaptive* C1, CurveAdaptive* C2,
 
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurvParamHermite*>(C1)->InsertPatch(this);
-  static_cast<CurvParamHermite*>(C2)->InsertPatch(this);
-  static_cast<CurvParamHermite*>(C3)->InsertPatch(this);
-  static_cast<CurvParamHermite*>(C4)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricHermite*>(C1)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricHermite*>(C2)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricHermite*>(C3)->InsertPatch(this);
+  static_cast<CurveAdaptiveParametricHermite*>(C4)->InsertPatch(this);
 
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->Pt00 = static_cast<CurvParamHermite*>(C1)->point0_;
-  this->Pt01 = static_cast<CurvParamHermite*>(C3)->point0_;
-  this->Pt10 = static_cast<CurvParamHermite*>(C1)->point1_;
-  this->Pt11 = static_cast<CurvParamHermite*>(C3)->point1_;
+  this->Pt00 = static_cast<CurveAdaptiveParametricHermite*>(C1)->GetPoint0();
+  this->Pt01 = static_cast<CurveAdaptiveParametricHermite*>(C3)->GetPoint0();
+  this->Pt10 = static_cast<CurveAdaptiveParametricHermite*>(C1)->GetPoint1();
+  this->Pt11 = static_cast<CurveAdaptiveParametricHermite*>(C3)->GetPoint1();
 
-  this->Qv00 = static_cast<CurvParamHermite*>(C4)->DP0;
-  this->Qv01 = static_cast<CurvParamHermite*>(C4)->DP1;
-  this->Qv10 = static_cast<CurvParamHermite*>(C2)->DP0;
-  this->Qv11 = static_cast<CurvParamHermite*>(C2)->DP1;
+  this->Qv00 = static_cast<CurveAdaptiveParametricHermite*>(C4)->GetVector0();
+  this->Qv01 = static_cast<CurveAdaptiveParametricHermite*>(C4)->GetVector1();
+  this->Qv10 = static_cast<CurveAdaptiveParametricHermite*>(C2)->GetVector0();
+  this->Qv11 = static_cast<CurveAdaptiveParametricHermite*>(C2)->GetVector1();
 
-  this->Qu00 = static_cast<CurvParamHermite*>(C1)->DP0;
-  this->Qu01 = static_cast<CurvParamHermite*>(C3)->DP0;
-  this->Qu10 = static_cast<CurvParamHermite*>(C1)->DP1;
-  this->Qu11 = static_cast<CurvParamHermite*>(C3)->DP1;
+  this->Qu00 = static_cast<CurveAdaptiveParametricHermite*>(C1)->GetVector0();
+  this->Qu01 = static_cast<CurveAdaptiveParametricHermite*>(C3)->GetVector0();
+  this->Qu10 = static_cast<CurveAdaptiveParametricHermite*>(C1)->GetVector1();
+  this->Qu11 = static_cast<CurveAdaptiveParametricHermite*>(C3)->GetVector1();
 
   this->Tw00 = TW_00;
   this->Tw01 = TW_01;

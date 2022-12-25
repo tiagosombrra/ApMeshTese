@@ -39,7 +39,7 @@ include/curvature/curvature_discrete.h
 include/data/curve/curve_adaptive.h
 include/data/curve/curve_adaptive_parametric.h
 include/data/curve/curve_adaptive_parametric_bezier.h
-include/data/curve/CurvParamHermite.h
+include/data/curve/curve_adaptive_parametric_hermite.h
 include/data/Definitions.h
 include/data/Edge.h
 include/data/Elemento.h
@@ -99,7 +99,7 @@ src/curvature/curvature_discrete.cpp
 src/data/curve/curve_adaptive.cpp
 src/data/curve/curve_adaptive_parametric.cpp
 src/data/curve/curve_adaptive_parametric_bezier.cpp
-src/data/curve/CurvParamHermite.cpp
+src/data/curve/curve_adaptive_parametric_hermite.cpp
 src/data/Definitions.cpp
 src/data/Edge.cpp
 src/data/Elemento.cpp

@@ -12,7 +12,7 @@ This source code is under GNU General Public License v3 */
 #ifndef HermitePatch_h
 #define HermitePatch_h
 
-#include "../../data/curve/CurvParamHermite.h"
+#include "../../data/curve/curve_adaptive_parametric_hermite.h"
 #include "CoonsPatch.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para

@@ -583,14 +583,14 @@ Geometria* Modelos3d::modelParaboloide(Geometria* geo) {
   Vetor* patch1_tw01 = new Vetor(0.0, 0.0, 0.0);
   Vetor* patch1_tw11 = new Vetor(0.0, 0.0, 0.0);
 
-  CurveAdaptive* patch1_c1 = new CurvParamHermite(*patch1_p00, *patch1_p10,
-                                                  *patch1_Qu00, *patch1_Qu10);
-  CurveAdaptive* patch1_c2 = new CurvParamHermite(*patch1_p10, *patch1_p11,
-                                                  *patch1_Qv10, *patch1_Qv11);
-  CurveAdaptive* patch1_c3 = new CurvParamHermite(*patch1_p01, *patch1_p11,
-                                                  *patch1_Qu01, *patch1_Qu11);
-  CurveAdaptive* patch1_c4 = new CurvParamHermite(*patch1_p00, *patch1_p01,
-                                                  *patch1_Qv00, *patch1_Qv01);
+  CurveAdaptive* patch1_c1 = new CurveAdaptiveParametricHermite(
+      *patch1_p00, *patch1_p10, *patch1_Qu00, *patch1_Qu10);
+  CurveAdaptive* patch1_c2 = new CurveAdaptiveParametricHermite(
+      *patch1_p10, *patch1_p11, *patch1_Qv10, *patch1_Qv11);
+  CurveAdaptive* patch1_c3 = new CurveAdaptiveParametricHermite(
+      *patch1_p01, *patch1_p11, *patch1_Qu01, *patch1_Qu11);
+  CurveAdaptive* patch1_c4 = new CurveAdaptiveParametricHermite(
+      *patch1_p00, *patch1_p01, *patch1_Qv00, *patch1_Qv01);
 
   Patch* patch1 =
       new HermitePatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4, *patch1_tw00,
@@ -628,12 +628,18 @@ Geometria* Modelos3d::modelPneu(Geometria* geo) {
   Vetor* Qv01 = new Vetor(15.0, 0.0, -15.0);
   Vetor* Qv11 = new Vetor(-15.0, 0.0, -15.0);
 
-  CurveAdaptive* c1 = new CurvParamHermite(*p00, *p10, *Qu00, *Qu10);
-  CurveAdaptive* c2 = new CurvParamHermite(*p10, *p11, *Qv10, *Qv11);
-  CurveAdaptive* c3 = new CurvParamHermite(*p01, *p11, *Qu01, *Qu11);
-  CurveAdaptive* c4 = new CurvParamHermite(*p00, *p01, *Qv00, *Qv01);
-  CurveAdaptive* c5 = new CurvParamHermite(*p10, *p00, *Qu10, *Qu00);
-  CurveAdaptive* c6 = new CurvParamHermite(*p11, *p01, *Qu11, *Qu01);
+  CurveAdaptive* c1 =
+      new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
+  CurveAdaptive* c2 =
+      new CurveAdaptiveParametricHermite(*p10, *p11, *Qv10, *Qv11);
+  CurveAdaptive* c3 =
+      new CurveAdaptiveParametricHermite(*p01, *p11, *Qu01, *Qu11);
+  CurveAdaptive* c4 =
+      new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
+  CurveAdaptive* c5 =
+      new CurveAdaptiveParametricHermite(*p10, *p00, *Qu10, *Qu00);
+  CurveAdaptive* c6 =
+      new CurveAdaptiveParametricHermite(*p11, *p01, *Qu11, *Qu01);
 
   Vetor* tw_00 = new Vetor(0.0, 60.0, 0.0);
   Vetor* tw_10 = new Vetor(0.0, -60.0, 0.0);
@@ -687,10 +693,14 @@ Geometria* Modelos3d::modelLadoDescendente(Geometria* geo) {
   Vetor* tw01 = new Vetor(0.0, 0.0, 0.0);
   Vetor* tw11 = new Vetor(0.0, 0.0, 0.0);
 
-  CurveAdaptive* c1 = new CurvParamHermite(*p00, *p10, *Qu00, *Qu10);
-  CurveAdaptive* c2 = new CurvParamHermite(*p10, *p11, *Qv10, *Qv11);
-  CurveAdaptive* c3 = new CurvParamHermite(*p01, *p11, *Qu01, *Qu11);
-  CurveAdaptive* c4 = new CurvParamHermite(*p00, *p01, *Qv00, *Qv01);
+  CurveAdaptive* c1 =
+      new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
+  CurveAdaptive* c2 =
+      new CurveAdaptiveParametricHermite(*p10, *p11, *Qv10, *Qv11);
+  CurveAdaptive* c3 =
+      new CurveAdaptiveParametricHermite(*p01, *p11, *Qu01, *Qu11);
+  CurveAdaptive* c4 =
+      new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
   Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
   geo->inserePatch(patch1);
@@ -729,10 +739,14 @@ Geometria* Modelos3d::modelBaseCircular(Geometria* geo) {
   Vetor* tw01 = new Vetor(0.0, 0.0, -10.0);
   Vetor* tw11 = new Vetor(0.0, 0.0, 10.0);
 
-  CurveAdaptive* c1 = new CurvParamHermite(*p00, *p10, *Qu00, *Qu10);
-  CurveAdaptive* c2 = new CurvParamHermite(*p10, *p11, *Qv10, *Qv11);
-  CurveAdaptive* c3 = new CurvParamHermite(*p01, *p11, *Qu01, *Qu11);
-  CurveAdaptive* c4 = new CurvParamHermite(*p00, *p01, *Qv00, *Qv01);
+  CurveAdaptive* c1 =
+      new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
+  CurveAdaptive* c2 =
+      new CurveAdaptiveParametricHermite(*p10, *p11, *Qv10, *Qv11);
+  CurveAdaptive* c3 =
+      new CurveAdaptiveParametricHermite(*p01, *p11, *Qu01, *Qu11);
+  CurveAdaptive* c4 =
+      new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
 
   Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
@@ -771,10 +785,14 @@ Geometria* Modelos3d::modelBaseQuadrada(Geometria* geo) {
   Vetor* tw01 = new Vetor(0.0, -20.0, 0.0);
   Vetor* tw11 = new Vetor(0.0, 20.0, 0.0);
 
-  CurveAdaptive* c1 = new CurvParamHermite(*p00, *p10, *Qu00, *Qu10);
-  CurveAdaptive* c2 = new CurvParamHermite(*p10, *p11, *Qv10, *Qv11);
-  CurveAdaptive* c3 = new CurvParamHermite(*p01, *p11, *Qu01, *Qu11);
-  CurveAdaptive* c4 = new CurvParamHermite(*p00, *p01, *Qv00, *Qv01);
+  CurveAdaptive* c1 =
+      new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
+  CurveAdaptive* c2 =
+      new CurveAdaptiveParametricHermite(*p10, *p11, *Qv10, *Qv11);
+  CurveAdaptive* c3 =
+      new CurveAdaptiveParametricHermite(*p01, *p11, *Qu01, *Qu11);
+  CurveAdaptive* c4 =
+      new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
 
   Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
@@ -813,10 +831,14 @@ Geometria* Modelos3d::modelBordaCurva(Geometria* geo) {
   Vetor* tw01 = new Vetor(0.0, 0.0, 0.0);
   Vetor* tw11 = new Vetor(0.0, 0.0, 0.0);
 
-  CurveAdaptive* c1 = new CurvParamHermite(*p00, *p10, *Qu00, *Qu10);
-  CurveAdaptive* c2 = new CurvParamHermite(*p10, *p11, *Qv10, *Qv11);
-  CurveAdaptive* c3 = new CurvParamHermite(*p01, *p11, *Qu01, *Qu11);
-  CurveAdaptive* c4 = new CurvParamHermite(*p00, *p01, *Qv00, *Qv01);
+  CurveAdaptive* c1 =
+      new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
+  CurveAdaptive* c2 =
+      new CurveAdaptiveParametricHermite(*p10, *p11, *Qv10, *Qv11);
+  CurveAdaptive* c3 =
+      new CurveAdaptiveParametricHermite(*p01, *p11, *Qu01, *Qu11);
+  CurveAdaptive* c4 =
+      new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
 
   Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
@@ -865,14 +887,21 @@ Geometria* Modelos3d::modelDoisPatches(Geometria* geo) {
   Vetor* tw201 = new Vetor(0.0, -20.0, 0.0);
   Vetor* tw211 = new Vetor(0.0, 20.0, 0.0);
 
-  CurveAdaptive* c1 = new CurvParamHermite(*p100, *p110, *Qu00, *Qu10);
-  CurveAdaptive* c2 = new CurvParamHermite(*p110, *p111, *Qv10, *Qv11);
-  CurveAdaptive* c3 = new CurvParamHermite(*p101, *p111, *Qu01, *Qu11);
-  CurveAdaptive* c4 = new CurvParamHermite(*p100, *p101, *Qv00, *Qv01);
+  CurveAdaptive* c1 =
+      new CurveAdaptiveParametricHermite(*p100, *p110, *Qu00, *Qu10);
+  CurveAdaptive* c2 =
+      new CurveAdaptiveParametricHermite(*p110, *p111, *Qv10, *Qv11);
+  CurveAdaptive* c3 =
+      new CurveAdaptiveParametricHermite(*p101, *p111, *Qu01, *Qu11);
+  CurveAdaptive* c4 =
+      new CurveAdaptiveParametricHermite(*p100, *p101, *Qv00, *Qv01);
 
-  CurveAdaptive* c5 = new CurvParamHermite(*p200, *p210, *Qu00, *Qu10);
-  CurveAdaptive* c6 = new CurvParamHermite(*p210, *p211, *Qv10, *Qv11);
-  CurveAdaptive* c7 = new CurvParamHermite(*p201, *p211, *Qu01, *Qu11);
+  CurveAdaptive* c5 =
+      new CurveAdaptiveParametricHermite(*p200, *p210, *Qu00, *Qu10);
+  CurveAdaptive* c6 =
+      new CurveAdaptiveParametricHermite(*p210, *p211, *Qv10, *Qv11);
+  CurveAdaptive* c7 =
+      new CurveAdaptiveParametricHermite(*p201, *p211, *Qu01, *Qu11);
   // Curva* c8 = new CurvParamHermite ( *p200, *p201, *Qv00, *Qv01 );
 
   Patch* patch1 =
@@ -923,14 +952,14 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch1_tw01 = new Vetor(0.0, 10.0, 0.0);
   Vetor* patch1_tw11 = new Vetor(0.0, -10.0, 0.0);
 
-  CurveAdaptive* patch1_c1 = new CurvParamHermite(*patch1_p00, *patch1_p10,
-                                                  *patch1_Qu00, *patch1_Qu10);
-  CurveAdaptive* patch1_c2 = new CurvParamHermite(*patch1_p10, *patch1_p11,
-                                                  *patch1_Qv10, *patch1_Qv11);
-  CurveAdaptive* patch1_c3 = new CurvParamHermite(*patch1_p01, *patch1_p11,
-                                                  *patch1_Qu01, *patch1_Qu11);
-  CurveAdaptive* patch1_c4 = new CurvParamHermite(*patch1_p00, *patch1_p01,
-                                                  *patch1_Qv00, *patch1_Qv01);
+  CurveAdaptive* patch1_c1 = new CurveAdaptiveParametricHermite(
+      *patch1_p00, *patch1_p10, *patch1_Qu00, *patch1_Qu10);
+  CurveAdaptive* patch1_c2 = new CurveAdaptiveParametricHermite(
+      *patch1_p10, *patch1_p11, *patch1_Qv10, *patch1_Qv11);
+  CurveAdaptive* patch1_c3 = new CurveAdaptiveParametricHermite(
+      *patch1_p01, *patch1_p11, *patch1_Qu01, *patch1_Qu11);
+  CurveAdaptive* patch1_c4 = new CurveAdaptiveParametricHermite(
+      *patch1_p00, *patch1_p01, *patch1_Qv00, *patch1_Qv01);
 
   Patch* patch1 =
       new HermitePatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4, *patch1_tw00,
@@ -966,12 +995,12 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch2_tw01 = new Vetor(0.0, 10.0, 0.0);
   Vetor* patch2_tw11 = new Vetor(0.0, -10.0, 0.0);
 
-  CurveAdaptive* patch2_c1 = new CurvParamHermite(*patch2_p00, *patch2_p10,
-                                                  *patch2_Qu00, *patch2_Qu10);
-  CurveAdaptive* patch2_c2 = new CurvParamHermite(*patch2_p10, *patch2_p11,
-                                                  *patch2_Qv10, *patch2_Qv11);
-  CurveAdaptive* patch2_c3 = new CurvParamHermite(*patch2_p01, *patch2_p11,
-                                                  *patch2_Qu01, *patch2_Qu11);
+  CurveAdaptive* patch2_c1 = new CurveAdaptiveParametricHermite(
+      *patch2_p00, *patch2_p10, *patch2_Qu00, *patch2_Qu10);
+  CurveAdaptive* patch2_c2 = new CurveAdaptiveParametricHermite(
+      *patch2_p10, *patch2_p11, *patch2_Qv10, *patch2_Qv11);
+  CurveAdaptive* patch2_c3 = new CurveAdaptiveParametricHermite(
+      *patch2_p01, *patch2_p11, *patch2_Qu01, *patch2_Qu11);
   CurveAdaptive* patch2_c4 = patch1_c2;
 
   Patch* patch2 =
@@ -1018,12 +1047,12 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch3_tw11 =
       new Vetor(patch1_tw11->x, patch1_tw11->y, patch1_tw11->z);
 
-  CurveAdaptive* patch3_c1 = new CurvParamHermite(*patch3_p00, *patch3_p10,
-                                                  *patch3_Qu00, *patch3_Qu10);
-  CurveAdaptive* patch3_c2 = new CurvParamHermite(*patch3_p10, *patch3_p11,
-                                                  *patch3_Qv10, *patch3_Qv11);
-  CurveAdaptive* patch3_c3 = new CurvParamHermite(*patch3_p01, *patch3_p11,
-                                                  *patch3_Qu01, *patch3_Qu11);
+  CurveAdaptive* patch3_c1 = new CurveAdaptiveParametricHermite(
+      *patch3_p00, *patch3_p10, *patch3_Qu00, *patch3_Qu10);
+  CurveAdaptive* patch3_c2 = new CurveAdaptiveParametricHermite(
+      *patch3_p10, *patch3_p11, *patch3_Qv10, *patch3_Qv11);
+  CurveAdaptive* patch3_c3 = new CurveAdaptiveParametricHermite(
+      *patch3_p01, *patch3_p11, *patch3_Qu01, *patch3_Qu11);
   CurveAdaptive* patch3_c4 = patch2_c2;
 
   Patch* patch3 =
@@ -1059,12 +1088,12 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch4_tw11 = new Vetor(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch4_c1 = patch1_c3;
-  CurveAdaptive* patch4_c2 = new CurvParamHermite(*patch4_p10, *patch4_p11,
-                                                  *patch4_Qv10, *patch4_Qv11);
-  CurveAdaptive* patch4_c3 = new CurvParamHermite(*patch4_p01, *patch4_p11,
-                                                  *patch4_Qu01, *patch4_Qu11);
-  CurveAdaptive* patch4_c4 = new CurvParamHermite(*patch4_p00, *patch4_p01,
-                                                  *patch4_Qv00, *patch4_Qv01);
+  CurveAdaptive* patch4_c2 = new CurveAdaptiveParametricHermite(
+      *patch4_p10, *patch4_p11, *patch4_Qv10, *patch4_Qv11);
+  CurveAdaptive* patch4_c3 = new CurveAdaptiveParametricHermite(
+      *patch4_p01, *patch4_p11, *patch4_Qu01, *patch4_Qu11);
+  CurveAdaptive* patch4_c4 = new CurveAdaptiveParametricHermite(
+      *patch4_p00, *patch4_p01, *patch4_Qv00, *patch4_Qv01);
 
   Patch* patch4 =
       new HermitePatch(patch4_c1, patch4_c2, patch4_c3, patch4_c4, *patch4_tw00,
@@ -1103,10 +1132,10 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch5_tw11 = new Vetor(0.0, 0.0, 5.0);
 
   CurveAdaptive* patch5_c1 = patch2_c3;
-  CurveAdaptive* patch5_c2 = new CurvParamHermite(*patch5_p10, *patch5_p11,
-                                                  *patch5_Qv10, *patch5_Qv11);
-  CurveAdaptive* patch5_c3 = new CurvParamHermite(*patch5_p01, *patch5_p11,
-                                                  *patch5_Qu01, *patch5_Qu11);
+  CurveAdaptive* patch5_c2 = new CurveAdaptiveParametricHermite(
+      *patch5_p10, *patch5_p11, *patch5_Qv10, *patch5_Qv11);
+  CurveAdaptive* patch5_c3 = new CurveAdaptiveParametricHermite(
+      *patch5_p01, *patch5_p11, *patch5_Qu01, *patch5_Qu11);
   CurveAdaptive* patch5_c4 = patch4_c2;
 
   Patch* patch5 =
@@ -1147,10 +1176,10 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch6_tw11 = new Vetor(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch6_c1 = patch3_c3;
-  CurveAdaptive* patch6_c2 = new CurvParamHermite(*patch6_p10, *patch6_p11,
-                                                  *patch6_Qv10, *patch6_Qv11);
-  CurveAdaptive* patch6_c3 = new CurvParamHermite(*patch6_p01, *patch6_p11,
-                                                  *patch6_Qu01, *patch6_Qu11);
+  CurveAdaptive* patch6_c2 = new CurveAdaptiveParametricHermite(
+      *patch6_p10, *patch6_p11, *patch6_Qv10, *patch6_Qv11);
+  CurveAdaptive* patch6_c3 = new CurveAdaptiveParametricHermite(
+      *patch6_p01, *patch6_p11, *patch6_Qu01, *patch6_Qu11);
   CurveAdaptive* patch6_c4 = patch5_c2;
 
   Patch* patch6 =
@@ -1188,12 +1217,12 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch8_tw11 = new Vetor(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch8_c1 = patch5_c3;
-  CurveAdaptive* patch8_c2 = new CurvParamHermite(*patch8_p10, *patch8_p11,
-                                                  *patch8_Qv10, *patch8_Qv11);
-  CurveAdaptive* patch8_c3 = new CurvParamHermite(*patch8_p01, *patch8_p11,
-                                                  *patch8_Qu01, *patch8_Qu11);
-  CurveAdaptive* patch8_c4 = new CurvParamHermite(*patch8_p00, *patch8_p01,
-                                                  *patch8_Qv00, *patch8_Qv01);
+  CurveAdaptive* patch8_c2 = new CurveAdaptiveParametricHermite(
+      *patch8_p10, *patch8_p11, *patch8_Qv10, *patch8_Qv11);
+  CurveAdaptive* patch8_c3 = new CurveAdaptiveParametricHermite(
+      *patch8_p01, *patch8_p11, *patch8_Qu01, *patch8_Qu11);
+  CurveAdaptive* patch8_c4 = new CurveAdaptiveParametricHermite(
+      *patch8_p00, *patch8_p01, *patch8_Qv00, *patch8_Qv01);
 
   Patch* patch8 =
       new HermitePatch(patch8_c1, patch8_c2, patch8_c3, patch8_c4, *patch8_tw00,
@@ -1231,11 +1260,11 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch10_tw11 = new Vetor(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch10_c1 = patch8_c3;
-  CurveAdaptive* patch10_c2 = new CurvParamHermite(
+  CurveAdaptive* patch10_c2 = new CurveAdaptiveParametricHermite(
       *patch10_p10, *patch10_p11, *patch10_Qv10, *patch10_Qv11);
-  CurveAdaptive* patch10_c3 = new CurvParamHermite(
+  CurveAdaptive* patch10_c3 = new CurveAdaptiveParametricHermite(
       *patch10_p01, *patch10_p11, *patch10_Qu01, *patch10_Qu11);
-  CurveAdaptive* patch10_c4 = new CurvParamHermite(
+  CurveAdaptive* patch10_c4 = new CurveAdaptiveParametricHermite(
       *patch10_p00, *patch10_p01, *patch10_Qv00, *patch10_Qv01);
 
   Patch* patch10 = new HermitePatch(patch10_c1, patch10_c2, patch10_c3,
@@ -1273,10 +1302,10 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
 
   CurveAdaptive* patch7_c1 = patch4_c3;
   CurveAdaptive* patch7_c2 = patch8_c4;
-  CurveAdaptive* patch7_c3 = new CurvParamHermite(*patch7_p01, *patch7_p11,
-                                                  *patch7_Qu01, *patch7_Qu11);
-  CurveAdaptive* patch7_c4 = new CurvParamHermite(*patch7_p00, *patch7_p01,
-                                                  *patch7_Qv00, *patch7_Qv01);
+  CurveAdaptive* patch7_c3 = new CurveAdaptiveParametricHermite(
+      *patch7_p01, *patch7_p11, *patch7_Qu01, *patch7_Qu11);
+  CurveAdaptive* patch7_c4 = new CurveAdaptiveParametricHermite(
+      *patch7_p00, *patch7_p01, *patch7_Qv00, *patch7_Qv01);
 
   Patch* patch7 =
       new HermitePatch(patch7_c1, patch7_c2, patch7_c3, patch7_c4, *patch7_tw00,
@@ -1313,8 +1342,8 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch9_tw11 = new Vetor(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch9_c1 = patch6_c3;
-  CurveAdaptive* patch9_c2 = new CurvParamHermite(*patch9_p10, *patch9_p11,
-                                                  *patch9_Qv10, *patch9_Qv11);
+  CurveAdaptive* patch9_c2 = new CurveAdaptiveParametricHermite(
+      *patch9_p10, *patch9_p11, *patch9_Qv10, *patch9_Qv11);
   CurveAdaptive* patch9_c3 = patch10_c2;
   CurveAdaptive* patch9_c4 = patch8_c2;
 
@@ -1352,9 +1381,9 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
 
   CurveAdaptive* patch11_c1 = patch1_c4;
   CurveAdaptive* patch11_c2 = patch4_c4;
-  CurveAdaptive* patch11_c3 = new CurvParamHermite(
+  CurveAdaptive* patch11_c3 = new CurveAdaptiveParametricHermite(
       *patch11_p01, *patch11_p11, *patch11_Qu01, *patch11_Qu11);
-  CurveAdaptive* patch11_c4 = new CurvParamHermite(
+  CurveAdaptive* patch11_c4 = new CurveAdaptiveParametricHermite(
       *patch11_p00, *patch11_p01, *patch11_Qv00, *patch11_Qv01);
 
   Patch* patch11 = new HermitePatch(patch11_c1, patch11_c2, patch11_c3,
@@ -1390,9 +1419,9 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch12_tw01 = new Vetor(0.0, 0.0, 0.0);
   Vetor* patch12_tw11 = new Vetor(0.0, 0.0, 0.0);
 
-  CurveAdaptive* patch12_c1 = new CurvParamHermite(
+  CurveAdaptive* patch12_c1 = new CurveAdaptiveParametricHermite(
       *patch12_p00, *patch12_p10, *patch12_Qu00, *patch12_Qu10);
-  CurveAdaptive* patch12_c2 = new CurvParamHermite(
+  CurveAdaptive* patch12_c2 = new CurveAdaptiveParametricHermite(
       *patch12_p10, *patch12_p11, *patch12_Qv10, *patch12_Qv11);
   CurveAdaptive* patch12_c3 = patch6_c2;
   CurveAdaptive* patch12_c4 = patch3_c2;
@@ -1431,9 +1460,9 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
 
   CurveAdaptive* patch13_c1 = patch11_c3;
   CurveAdaptive* patch13_c2 = patch7_c4;
-  CurveAdaptive* patch13_c3 = new CurvParamHermite(
+  CurveAdaptive* patch13_c3 = new CurveAdaptiveParametricHermite(
       *patch13_p01, *patch13_p11, *patch13_Qu01, *patch13_Qu11);
-  CurveAdaptive* patch13_c4 = new CurvParamHermite(
+  CurveAdaptive* patch13_c4 = new CurveAdaptiveParametricHermite(
       *patch13_p00, *patch13_p01, *patch13_Qv00, *patch13_Qv01);
 
   Patch* patch13 = new HermitePatch(patch13_c1, patch13_c2, patch13_c3,
@@ -1469,9 +1498,9 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   Vetor* patch14_tw01 = new Vetor(0.0, 0.0, 0.0);
   Vetor* patch14_tw11 = new Vetor(0.0, 0.0, 0.0);
 
-  CurveAdaptive* patch14_c1 = new CurvParamHermite(
+  CurveAdaptive* patch14_c1 = new CurveAdaptiveParametricHermite(
       *patch14_p00, *patch14_p10, *patch14_Qu00, *patch14_Qu10);
-  CurveAdaptive* patch14_c2 = new CurvParamHermite(
+  CurveAdaptive* patch14_c2 = new CurveAdaptiveParametricHermite(
       *patch14_p10, *patch14_p11, *patch14_Qv10, *patch14_Qv11);
   CurveAdaptive* patch14_c3 = patch9_c2;
   CurveAdaptive* patch14_c4 = patch12_c2;

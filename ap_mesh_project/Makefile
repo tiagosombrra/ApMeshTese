@@ -22,8 +22,8 @@ src/data/Edge.cpp \
 src/data/Elemento.cpp \
 src/data/Face.cpp \
 src/data/Geometria.cpp \
-src/data/mesh/Malha.cpp \
-src/data/mesh/SubMalha.cpp \
+src/data/mesh/mesh_adaptive.cpp \
+src/data/mesh/sub_mesh.cpp \
 src/data/Modelo.cpp \
 src/data/Noh.cpp \
 src/data/patch/BezierPatch.cpp \

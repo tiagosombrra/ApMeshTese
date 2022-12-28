@@ -74,7 +74,7 @@ void WriteOBJFIle::writeCurvaturePatches(
   file.close();
 }
 
-bool WriteOBJFIle::writeMeshOBJFile(Malha* malha, unsigned int passo,
+bool WriteOBJFIle::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
                                     int process) {
   stringstream nameFile;
   nameFile << "mesh_";
@@ -95,31 +95,31 @@ bool WriteOBJFIle::writeMeshOBJFile(Malha* malha, unsigned int passo,
   unsigned long int Nv, Nt;
   Nv = Nt = 0;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    Nv += sub->getNumDeNos();
-    Nt += sub->getNumDeElementos();
+    Nv += sub->GetNumberNos();
+    Nt += sub->GetNumberElements();
   }
 
   file << "# of vertices" << endl << Nv << endl << endl;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->getNumDeNos(); j++) {
-      Noh* n = sub->getNoh(j);
+    for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
+      Noh* n = sub->GetNoh(j);
       file << "v " << n->x << " " << n->y << " " << n->z << endl;
     }
   }
 
   file << "# of faces " << endl << Nt << endl;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->getNumDeElementos(); j++) {
-      Triangulo* t = (Triangulo*)sub->getElemento(j);
+    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
+      Triangulo* t = (Triangulo*)sub->GetElement(j);
       file << "f " << t->getN(1).id << " " << t->getN(2).id << " "
            << t->getN(3).id << endl;
     }

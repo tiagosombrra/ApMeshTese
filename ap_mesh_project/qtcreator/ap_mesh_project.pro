@@ -45,8 +45,8 @@ SOURCES += \
     ../src/data/Elemento.cpp \
     ../src/data/Face.cpp \
     ../src/data/Geometria.cpp \
-    ../src/data/mesh/Malha.cpp \
-    ../src/data/mesh/SubMalha.cpp \
+    ../src/data/mesh/mesh_adaptive.cpp \
+    ../src/data/mesh/sub_mesh.cpp \
     ../src/data/Modelo.cpp \
     ../src/data/Noh.cpp \
     ../src/data/patch/BezierPatch.cpp \
@@ -116,8 +116,8 @@ HEADERS += \
     ../include/data/Elemento.h \
     ../include/data/Face.h \
     ../include/data/Geometria.h \
-    ../include/data/Mesh/Malha.h \
-    ../include/data/Mesh/SubMalha.h \
+    ../include/data/Mesh/mesh_adaptive.h \
+    ../include/data/Mesh/sub_mesh.h \
     ../include/data/Modelo.h \
     ../include/data/Noh.h \
     ../include/data/Patch/BezierPatch.h \

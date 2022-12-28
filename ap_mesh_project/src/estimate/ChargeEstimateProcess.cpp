@@ -766,43 +766,43 @@ double ChargeEstimateProcess::calculateAreaTriangleMedioRad(
 double ChargeEstimateProcess::calculateAreaTriangleMedio(BezierPatch* patch,
                                                          Timer* timer,
                                                          int grau) {
-  Malha* malha = new Malha;
-  SubMalha* sub = malhaInicialEstimativa(patch, grau);
-  malha->insereSubMalha(sub);
+  MeshAdaptive* malha = new MeshAdaptive;
+  SubMesh* sub = malhaInicialEstimativa(patch, grau);
+  malha->InsertSubMeshAdaptive(sub);
   // delete sub;
 
   while (calculateErroEstimative(malha, timer, grau) && grau < 5) {
     ++grau;
     //        cout<<"grau: "<<grau<<endl;
     //        cout<<"sub: "<<sub<<endl;
-    SubMalha* sub1 = malhaInicialEstimativa(patch, grau);
-    malha->removeSubMalha();
-    malha->insereSubMalha(sub1);
+    SubMesh* sub1 = malhaInicialEstimativa(patch, grau);
+    malha->RemoveSubMeshAdaptive();
+    malha->InsertSubMeshAdaptive(sub1);
     // delete sub1;
   }
 
   // cout<<"menor_grau: "<<menor_grau<<endl;
 
-  SubMalha* sub2 = malhaInicialEstimativa(patch, menor_grau);
-  malha->removeSubMalha();
-  malha->insereSubMalha(sub2);
+  SubMesh* sub2 = malhaInicialEstimativa(patch, menor_grau);
+  malha->RemoveSubMeshAdaptive();
+  malha->InsertSubMeshAdaptive(sub2);
 
   static_cast<BezierPatch*>(patch)->setAreaTriangle(
-      malha->getSubMalha(0)->getElemento(0)->getArea());
+      malha->GetSubMeshAdaptiveByPosition(0)->GetElement(0)->getArea());
   // delete malha;
   return patch->getAreaTriangle();
 }
 
 long ChargeEstimateProcess::calculateNumbersTriangle(BezierPatch* patch,
                                                      int grau) {
-  SubMalha* sub = malhaInicialEstimativa(patch, grau);
+  SubMesh* sub = malhaInicialEstimativa(patch, grau);
 
-  return sub->getNumDeElementos();
+  return sub->GetNumberElements();
 }
 
 // grau tem que ser multiplo de grau == 2^n
-SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
-                                                        int grau) {
+SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
+                                                       int grau) {
   int idv = 1;
   int ide = 1;
   int salto = grau;
@@ -825,7 +825,7 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
   if (c4->GetNumBerPoints())
     c4 = NULL;  // c4 já foi trabalhada no patch vizinho
 
-  SubMalha* sub = new SubMalha;
+  SubMesh* sub = new SubMesh;
 
   for (double v = 0.0; v <= 1.0; v += 1.0 / grau) {
     for (double u = 0.0; u <= 1.0; u += 1.0 / grau) {
@@ -843,7 +843,7 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
       else if (u == 1 and c2)  // p está na curva 2
         c2->InsertPoint(p);
 
-      sub->insereNoh(static_cast<Noh*>(p));
+      sub->SetNoh(static_cast<Noh*>(p));
       total_1++;
     }
   }
@@ -854,7 +854,7 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
          u += 1.0 / grau) {
       //   cout << "u = " << u << " v = " << v << endl;
       Ponto* p = new Noh(patch->parametrizar(u, v));
-      sub->insereNoh(static_cast<Noh*>(p));
+      sub->SetNoh(static_cast<Noh*>(p));
       p->id = idv++;
     }
   }
@@ -868,58 +868,58 @@ SubMalha* ChargeEstimateProcess::malhaInicialEstimativa(CoonsPatch* patch,
       total_1 = total_1 - 1;
     }
 
-    Elemento* e1 = new Triangulo(sub->getNoh(i), sub->getNoh(i + 1),
-                                 sub->getNoh(i + total_1));
-    ((Triangulo*)e1)->p1 = patch->encontrar_u_v(*(sub->getNoh(i)));
-    ((Triangulo*)e1)->p2 = patch->encontrar_u_v(*(sub->getNoh(i + 1)));
-    ((Triangulo*)e1)->p3 = patch->encontrar_u_v(*(sub->getNoh(i + total_1)));
+    Elemento* e1 = new Triangulo(sub->GetNoh(i), sub->GetNoh(i + 1),
+                                 sub->GetNoh(i + total_1));
+    ((Triangulo*)e1)->p1 = patch->encontrar_u_v(*(sub->GetNoh(i)));
+    ((Triangulo*)e1)->p2 = patch->encontrar_u_v(*(sub->GetNoh(i + 1)));
+    ((Triangulo*)e1)->p3 = patch->encontrar_u_v(*(sub->GetNoh(i + total_1)));
     e1->setId(ide++);
-    sub->insereElemento(e1);
+    sub->SetElement(e1);
 
     Elemento* e2 =
-        new Triangulo(sub->getNoh(i + 1), sub->getNoh(i + comprimento + 1),
-                      sub->getNoh(i + total_1));
-    ((Triangulo*)e2)->p1 = patch->encontrar_u_v(*(sub->getNoh(i + 1)));
+        new Triangulo(sub->GetNoh(i + 1), sub->GetNoh(i + comprimento + 1),
+                      sub->GetNoh(i + total_1));
+    ((Triangulo*)e2)->p1 = patch->encontrar_u_v(*(sub->GetNoh(i + 1)));
     ((Triangulo*)e2)->p2 =
-        patch->encontrar_u_v(*(sub->getNoh(i + comprimento + 1)));
-    ((Triangulo*)e2)->p3 = patch->encontrar_u_v(*(sub->getNoh(i + total_1)));
+        patch->encontrar_u_v(*(sub->GetNoh(i + comprimento + 1)));
+    ((Triangulo*)e2)->p3 = patch->encontrar_u_v(*(sub->GetNoh(i + total_1)));
     e2->setId(ide++);
-    sub->insereElemento(e2);
+    sub->SetElement(e2);
 
     Elemento* e3 =
-        new Triangulo(sub->getNoh(i + comprimento + 1),
-                      sub->getNoh(i + comprimento), sub->getNoh(i + total_1));
+        new Triangulo(sub->GetNoh(i + comprimento + 1),
+                      sub->GetNoh(i + comprimento), sub->GetNoh(i + total_1));
     ((Triangulo*)e3)->p1 =
-        patch->encontrar_u_v(*(sub->getNoh(i + comprimento + 1)));
+        patch->encontrar_u_v(*(sub->GetNoh(i + comprimento + 1)));
     ((Triangulo*)e3)->p2 =
-        patch->encontrar_u_v(*(sub->getNoh(i + comprimento)));
-    ((Triangulo*)e3)->p3 = patch->encontrar_u_v(*(sub->getNoh(i + total_1)));
+        patch->encontrar_u_v(*(sub->GetNoh(i + comprimento)));
+    ((Triangulo*)e3)->p3 = patch->encontrar_u_v(*(sub->GetNoh(i + total_1)));
     e3->setId(ide++);
-    sub->insereElemento(e3);
+    sub->SetElement(e3);
 
-    Elemento* e4 = new Triangulo(sub->getNoh(i + comprimento), sub->getNoh(i),
-                                 sub->getNoh(i + total_1));
+    Elemento* e4 = new Triangulo(sub->GetNoh(i + comprimento), sub->GetNoh(i),
+                                 sub->GetNoh(i + total_1));
     ((Triangulo*)e4)->p1 =
-        patch->encontrar_u_v(*(sub->getNoh(i + comprimento)));
-    ((Triangulo*)e4)->p2 = patch->encontrar_u_v(*(sub->getNoh(i)));
-    ((Triangulo*)e4)->p3 = patch->encontrar_u_v(*(sub->getNoh(i + total_1)));
+        patch->encontrar_u_v(*(sub->GetNoh(i + comprimento)));
+    ((Triangulo*)e4)->p2 = patch->encontrar_u_v(*(sub->GetNoh(i)));
+    ((Triangulo*)e4)->p3 = patch->encontrar_u_v(*(sub->GetNoh(i + total_1)));
     e4->setId(ide++);
-    sub->insereElemento(e4);
+    sub->SetElement(e4);
     // cout<<"i "<<i<<endl;
   }
 
   // 5. define a submalha do patch
   patch->setMalha(sub);
-  sub->setPatch(patch);
+  sub->SetPatch(patch);
 
-  Malha* malha = new Malha;
-  malha->insereSubMalha(sub);
+  MeshAdaptive* malha = new MeshAdaptive;
+  malha->InsertSubMeshAdaptive(sub);
 
   return sub;
 }
 
-bool ChargeEstimateProcess::calculateErroEstimative(Malha* malha, Timer* timer,
-                                                    int grau) {
+bool ChargeEstimateProcess::calculateErroEstimative(MeshAdaptive* malha,
+                                                    Timer* timer, int grau) {
   GeradorAdaptativoPorCurvatura* ger = new GeradorAdaptativoPorCurvatura();
 #if USE_OPENMP
   double erro = ger->erroGlobalOmp(malha, timer);

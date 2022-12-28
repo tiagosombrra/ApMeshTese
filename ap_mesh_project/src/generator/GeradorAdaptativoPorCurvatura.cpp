@@ -504,8 +504,8 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo& modelo, Timer* timer,
 
   int sizePatch = geo->getNumDePatches();
 
-  Malha* malha = new Malha;
-  malha->resizeSubmalha(sizePatch);
+  MeshAdaptive* malha = new MeshAdaptive;
+  malha->ResizeSubMeshAdaptiveByPosition(sizePatch);
 
   this->idManager = NULL;
   this->idoffset = 0;
@@ -605,8 +605,8 @@ void GeradorAdaptativoPorCurvatura::generator(Modelo& modelo, Timer* timer,
     this->passo++;
 
     // Aloca uma nova malha
-    malha = new Malha;
-    malha->resizeSubmalha(geo->getNumDePatches());
+    malha = new MeshAdaptive;
+    malha->ResizeSubMeshAdaptiveByPosition(geo->getNumDePatches());
 #if USE_MPI
     timer->initTimerParallel(RANK_MPI, 0, 3);  // Adaptação da curva
 #else
@@ -745,18 +745,19 @@ void GeradorAdaptativoPorCurvatura::adaptCurve(Geometria* geo) {
   }
 }
 
-void GeradorAdaptativoPorCurvatura::adaptDomain(Geometria* geo, Malha* malha) {
+void GeradorAdaptativoPorCurvatura::adaptDomain(Geometria* geo,
+                                                MeshAdaptive* malha) {
   for (unsigned int i = 0; i < geo->getNumDePatches(); ++i) {
     CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
-    SubMalha* sub = adapter.AdaptDomain(p, this->idManagers[0], 1);
-    sub->setPatch(p);
-    malha->insereSubMalha(sub, i);
-    geo->getPatch(i)->setMalha(malha->getSubMalha(i));
+    SubMesh* sub = adapter.AdaptDomain(p, this->idManagers[0], 1);
+    sub->SetPatch(p);
+    malha->InsertSubMeshAdaptiveByPosition(sub, i);
+    geo->getPatch(i)->setMalha(malha->GetSubMeshAdaptiveByPosition(i));
   }
 }
 
 #if USE_OPENMP
-SubMalha* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
+SubMesh* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
     CoonsPatch* patch, Performer::IdManager* idManager) {
   CurveAdaptive* c1 = patch->getCurva(0);
   CurveAdaptive* c2 = patch->getCurva(1);
@@ -773,7 +774,7 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
   if (c4->GetNumBerPoints())
     c4 = NULL;  // c4 já foi trabalhada no patch vizinho
 
-  SubMalha* sub = new SubMalha;
+  SubMesh* sub = new SubMesh;
 
   //========================= Malha Grosseira
   //====================================
@@ -794,64 +795,65 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
       else if (u == 1 and c2)  // p está na curva 2
         c2->InsertPoint(p);
 
-      sub->insereNoh(static_cast<Noh*>(p));
+      sub->SetNoh(static_cast<Noh*>(p));
     }
   }
 
   Ponto* p = new Noh(patch->parametrizar(0.5, 0.5));
   p->id = idManager->next(0);
-  sub->insereNoh(static_cast<Noh*>(p));
+  sub->SetNoh(static_cast<Noh*>(p));
 
-  Elemento* e1 = new Triangulo(sub->getNoh(0), sub->getNoh(1), sub->getNoh(4));
+  Elemento* e1 = new Triangulo(sub->GetNoh(0), sub->GetNoh(1), sub->GetNoh(4));
   ((Triangulo*)e1)->p1 = make_tuple(0, 0);
   ((Triangulo*)e1)->p2 = make_tuple(1, 0);
   ((Triangulo*)e1)->p3 = make_tuple(0.5, 0.5);
   e1->setId(/*idManager->next(1)
              */
             idManager->next(1));
-  sub->insereElemento(e1);
+  sub->SetElement(e1);
 
-  Elemento* e2 = new Triangulo(sub->getNoh(1), sub->getNoh(3), sub->getNoh(4));
+  Elemento* e2 = new Triangulo(sub->GetNoh(1), sub->GetNoh(3), sub->GetNoh(4));
   ((Triangulo*)e2)->p1 = make_tuple(1, 0);
   ((Triangulo*)e2)->p2 = make_tuple(1, 1);
   ((Triangulo*)e2)->p3 = make_tuple(0.5, 0.5);
   e2->setId(/*idManager->next(1)
              */
             idManager->next(1));
-  sub->insereElemento(e2);
+  sub->SetElement(e2);
 
-  Elemento* e3 = new Triangulo(sub->getNoh(3), sub->getNoh(2), sub->getNoh(4));
+  Elemento* e3 = new Triangulo(sub->GetNoh(3), sub->GetNoh(2), sub->GetNoh(4));
   ((Triangulo*)e3)->p1 = make_tuple(1, 1);
   ((Triangulo*)e3)->p2 = make_tuple(0, 1);
   ((Triangulo*)e3)->p3 = make_tuple(0.5, 0.5);
   e3->setId(/*idManager->next(1)
              */
             idManager->next(1));
-  sub->insereElemento(e3);
+  sub->SetElement(e3);
 
-  Elemento* e4 = new Triangulo(sub->getNoh(2), sub->getNoh(0), sub->getNoh(4));
+  Elemento* e4 = new Triangulo(sub->GetNoh(2), sub->GetNoh(0), sub->GetNoh(4));
   ((Triangulo*)e4)->p1 = make_tuple(0, 1);
   ((Triangulo*)e4)->p2 = make_tuple(0, 0);
   ((Triangulo*)e4)->p3 = make_tuple(0.5, 0.5);
   e4->setId(/*idManager->next(1)
              */
             idManager->next(1));
-  sub->insereElemento(e4);
+  sub->SetElement(e4);
   //==============================================================================*/
 
   // 5. define a submalha do patch
   patch->setMalha(sub);
-  sub->setPatch(patch);
+  sub->SetPatch(patch);
 
   return sub;
 }
 
-double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha* malha, Timer* timer,
-                                                    int rank, int sizeThread) {
+double GeradorAdaptativoPorCurvatura::erroGlobalOmp(MeshAdaptive* malha,
+                                                    Timer* timer, int rank,
+                                                    int sizeThread) {
   unsigned int Ns = 0;  // número de submalhas
   double Nj = 0.0;      // erro global da malha
 
-  Ns = malha->getNumDeSubMalhas();
+  Ns = malha->GetNumberSubMeshesAdaptive();
 
   // Calcula o erro global de cada submalha (OMP)
 #pragma omp parallel num_threads(sizeThread) firstprivate(Ns) reduction(+ : Nj)
@@ -865,8 +867,8 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha* malha, Timer* timer,
 #endif  // USE_MPI
 #pragma omp for
     for (unsigned int i = 0; i < Ns; ++i) {
-      SubMalha* sub = malha->getSubMalha(i);
-      unsigned int Nv = sub->getNumDeNos();
+      SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+      unsigned int Nv = sub->GetNumberNos();
       double curvPower = 0.0;
       double Njs = 0.0;
 
@@ -885,8 +887,8 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(Malha* malha, Timer* timer,
         timer->initTimerParallel(0, omp_get_thread_num(), 6);  // MediaGauss
 #endif  // USE_MPI
 
-        Ponto* n = sub->getNoh(j);
-        Patch* p = sub->getPatch();
+        Ponto* n = sub->GetNoh(j);
+        Patch* p = sub->GetPatch();
         CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
                                *(static_cast<CoonsPatch*>(p)));
         CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
@@ -980,8 +982,8 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
   Geometria* geo = modelo.getGeometria();
   int sizePatch = geo->getNumDePatches();
 
-  Malha* malha = new Malha;
-  malha->resizeSubmalha(sizePatch);
+  MeshAdaptive* malha = new MeshAdaptive;
+  malha->ResizeSubMeshAdaptiveByPosition(sizePatch);
 
   this->passo = 0;
 
@@ -1008,9 +1010,9 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
       CoonsPatch* patch = static_cast<CoonsPatch*>(geo->getPatch(i));
-      SubMalha* sub = this->malhaInicialOmp(static_cast<CoonsPatch*>(patch),
-                                            this->idManagers[id]);
-      malha->insereSubMalha(sub, i);
+      SubMesh* sub = this->malhaInicialOmp(static_cast<CoonsPatch*>(patch),
+                                           this->idManagers[id]);
+      malha->InsertSubMeshAdaptiveByPosition(sub, i);
     }
 
     timer->endTimerParallel(0, id, 2);  // Malha inicial
@@ -1041,8 +1043,8 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
     this->passo++;
 
     // 4.1. Aloca uma nova malha
-    malha = new Malha;
-    malha->resizeSubmalha(sizePatch);
+    malha = new MeshAdaptive;
+    malha->ResizeSubMeshAdaptiveByPosition(sizePatch);
 
     list<Ponto*> novosPontos[geo->getNumDeCurvas()];
 
@@ -1104,10 +1106,10 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
 #pragma omp for
       for (int i = 0; i < sizePatch; ++i) {
         CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
-        SubMalha* sub = adapter.AdaptDomainOmp(p, this->idManagers[id], 1);
-        sub->setPatch(p);
-        malha->insereSubMalha(sub, i);
-        geo->getPatch(i)->setMalha(malha->getSubMalha(i));
+        SubMesh* sub = adapter.AdaptDomainOmp(p, this->idManagers[id], 1);
+        sub->SetPatch(p);
+        malha->InsertSubMeshAdaptiveByPosition(sub, i);
+        geo->getPatch(i)->setMalha(malha->GetSubMeshAdaptiveByPosition(i));
       }
 
       timer->endTimerParallel(0, id, 4);  // adpt. do domínio
@@ -1140,7 +1142,8 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
   return 0;
 }
 
-void GeradorAdaptativoPorCurvatura::adaptDomainOmp(Geometria* geo, Malha* malha,
+void GeradorAdaptativoPorCurvatura::adaptDomainOmp(Geometria* geo,
+                                                   MeshAdaptive* malha,
                                                    Timer* timer, int sizeThread,
                                                    int sizePatch) {
 #pragma omp parallel num_threads(sizeThread) shared(geo, sizePatch, malha)
@@ -1157,10 +1160,10 @@ void GeradorAdaptativoPorCurvatura::adaptDomainOmp(Geometria* geo, Malha* malha,
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
       CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
-      SubMalha* sub = adapter.AdaptDomainOmp(p, this->idManagers[id], 1);
-      sub->setPatch(p);
-      malha->insereSubMalha(sub, i);
-      geo->getPatch(i)->setMalha(malha->getSubMalha(i));
+      SubMesh* sub = adapter.AdaptDomainOmp(p, this->idManagers[id], 1);
+      sub->SetPatch(p);
+      malha->InsertSubMeshAdaptiveByPosition(sub, i);
+      geo->getPatch(i)->setMalha(malha->GetSubMeshAdaptiveByPosition(i));
     }
 #if USE_MPI
     timer->endTimerParallel(RANK_MPI, id, 4);  // Adaptação do domínio
@@ -1172,7 +1175,7 @@ void GeradorAdaptativoPorCurvatura::adaptDomainOmp(Geometria* geo, Malha* malha,
 
 #endif  // USE_OPENMP
 
-SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(
+SubMesh* GeradorAdaptativoPorCurvatura::malhaInicial(
     CoonsPatch* patch, Performer::IdManager* idManager) {
   CurveAdaptive* c1 = patch->getCurva(0);
   CurveAdaptive* c2 = patch->getCurva(1);
@@ -1189,7 +1192,7 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(
   if (c4->GetNumBerPoints())
     c4 = NULL;  // c4 já foi trabalhada no patch vizinho
 
-  SubMalha* sub = new SubMalha;
+  SubMesh* sub = new SubMesh;
 
   //========================= Malha Grosseira
   //====================================
@@ -1214,46 +1217,46 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(
       else if (u == 1 and c2)  // p está na curva 2
         c2->InsertPoint(p);
 
-      sub->insereNoh(static_cast<Noh*>(p));
+      sub->SetNoh(static_cast<Noh*>(p));
     }
   }
 
   Ponto* p = new Noh(patch->parametrizar(0.5, 0.5));
-  sub->insereNoh(static_cast<Noh*>(p));
+  sub->SetNoh(static_cast<Noh*>(p));
   p->id = idManager->next(0);
 
-  Elemento* e1 = new Triangulo(sub->getNoh(0), sub->getNoh(1), sub->getNoh(4));
+  Elemento* e1 = new Triangulo(sub->GetNoh(0), sub->GetNoh(1), sub->GetNoh(4));
   ((Triangulo*)e1)->p1 = make_tuple(0, 0);
   ((Triangulo*)e1)->p2 = make_tuple(1, 0);
   ((Triangulo*)e1)->p3 = make_tuple(0.5, 0.5);
   e1->setId(idManager->next(1));
-  sub->insereElemento(e1);
+  sub->SetElement(e1);
 
-  Elemento* e2 = new Triangulo(sub->getNoh(1), sub->getNoh(3), sub->getNoh(4));
+  Elemento* e2 = new Triangulo(sub->GetNoh(1), sub->GetNoh(3), sub->GetNoh(4));
   ((Triangulo*)e2)->p1 = make_tuple(1, 0);
   ((Triangulo*)e2)->p2 = make_tuple(1, 1);
   ((Triangulo*)e2)->p3 = make_tuple(0.5, 0.5);
   e2->setId(idManager->next(1));
-  sub->insereElemento(e2);
+  sub->SetElement(e2);
 
-  Elemento* e3 = new Triangulo(sub->getNoh(3), sub->getNoh(2), sub->getNoh(4));
+  Elemento* e3 = new Triangulo(sub->GetNoh(3), sub->GetNoh(2), sub->GetNoh(4));
   ((Triangulo*)e3)->p1 = make_tuple(1, 1);
   ((Triangulo*)e3)->p2 = make_tuple(0, 1);
   ((Triangulo*)e3)->p3 = make_tuple(0.5, 0.5);
   e3->setId(idManager->next(1));
-  sub->insereElemento(e3);
+  sub->SetElement(e3);
 
-  Elemento* e4 = new Triangulo(sub->getNoh(2), sub->getNoh(0), sub->getNoh(4));
+  Elemento* e4 = new Triangulo(sub->GetNoh(2), sub->GetNoh(0), sub->GetNoh(4));
   ((Triangulo*)e4)->p1 = make_tuple(0, 1);
   ((Triangulo*)e4)->p2 = make_tuple(0, 0);
   ((Triangulo*)e4)->p3 = make_tuple(0.5, 0.5);
   e4->setId(idManager->next(1));
-  sub->insereElemento(e4);
+  sub->SetElement(e4);
   //==============================================================================*/
 
   // 5. define a submalha do patch
   patch->setMalha(sub);
-  sub->setPatch(patch);
+  sub->SetPatch(patch);
 
   return sub;
 }
@@ -1262,16 +1265,17 @@ SubMalha* GeradorAdaptativoPorCurvatura::malhaInicial(
 // a lista de pontos da curva é preenchida durante a geração da malha inicial
 
 // calcula o erro global da malha
-double GeradorAdaptativoPorCurvatura::erroGlobal(Malha* malha, Timer* timer,
-                                                 int rank, int sizeThread) {
+double GeradorAdaptativoPorCurvatura::erroGlobal(MeshAdaptive* malha,
+                                                 Timer* timer, int rank,
+                                                 int sizeThread) {
   unsigned int Ns = 0;  // número de submalhas
   unsigned int Nv = 0;  // número de vértices
   double Njs = 0;       // erro global da submalha
   double curvPower = 0.0;
   double Nj = 0;  // erro global da malha
-  SubMalha* sub = 0;
+  SubMesh* sub = 0;
 
-  Ns = malha->getNumDeSubMalhas();
+  Ns = malha->GetNumberSubMeshesAdaptive();
 
 #if USE_MPI
   timer->initTimerParallel(RANK_MPI, omp_get_thread_num(),
@@ -1283,8 +1287,8 @@ double GeradorAdaptativoPorCurvatura::erroGlobal(Malha* malha, Timer* timer,
 
   // Calcula o erro global de cada submalha
   for (unsigned int i = 0; i < Ns; ++i) {
-    sub = malha->getSubMalha(i);
-    Nv = sub->getNumDeNos();
+    sub = malha->GetSubMeshAdaptiveByPosition(i);
+    Nv = sub->GetNumberNos();
     Njs = 0.0;
     curvPower = 0.0;
 
@@ -1301,8 +1305,8 @@ double GeradorAdaptativoPorCurvatura::erroGlobal(Malha* malha, Timer* timer,
       timer->initTimerParallel(0, omp_get_thread_num(), 6);  // MediaGauss
 #endif  // USE_MPI
 
-      Ponto* n = sub->getNoh(j);
-      Patch* p = sub->getPatch();
+      Ponto* n = sub->GetNoh(j);
+      Patch* p = sub->GetPatch();
       CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
                              *(static_cast<CoonsPatch*>(p)));
       CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
@@ -1448,16 +1452,16 @@ Performer::IdManager* GeradorAdaptativoPorCurvatura::makeIdManagerElementOmp(
   return manager;
 }
 
-void GeradorAdaptativoPorCurvatura::salvarErroMalha(Malha* malha) {
-  cout << "Salvando a Malha com " << malha->getNumDeSubMalhas() << " subMalhas"
-       << endl;
+void GeradorAdaptativoPorCurvatura::salvarErroMalha(MeshAdaptive* malha) {
+  cout << "Salvando a Malha com " << malha->GetNumberSubMeshesAdaptive()
+       << " subMalhas" << endl;
 
   unsigned int Ns = 0;  // número de submalhas
   unsigned int Nv = 0;  // número de vértices
   double Njs = 0;       // erro global da submalha
   double curvPower = 0.0;
   // double Nj = 0; // erro global da malha
-  SubMalha* sub = 0;
+  SubMesh* sub = 0;
 
   // Escreve arquivo com as curvaturas
   stringstream nome;
@@ -1468,19 +1472,19 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(Malha* malha) {
 
   ofstream arquivo(nome.str().c_str());
 
-  Ns = malha->getNumDeSubMalhas();
+  Ns = malha->GetNumberSubMeshesAdaptive();
 
   // Calcula o erro global de cada submalha
   for (unsigned int i = 0; i < Ns; ++i) {
-    sub = malha->getSubMalha(i);
-    Nv = sub->getNumDeNos();
+    sub = malha->GetSubMeshAdaptiveByPosition(i);
+    Nv = sub->GetNumberNos();
     Njs = 0.0;
     curvPower = 0.0;
 
     // Calcula o erro relativo para cada nó e soma a Nj
     for (unsigned int j = 0; j < Nv; ++j) {
-      Ponto* n = sub->getNoh(j);
-      Patch* p = sub->getPatch();
+      Ponto* n = sub->GetNoh(j);
+      Patch* p = sub->GetPatch();
       CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
                              *(static_cast<CoonsPatch*>(p)));
       CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
@@ -1549,7 +1553,8 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(Malha* malha) {
   cout << "Malha salva com sucesso!!!" << endl;
 }
 
-void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo) {
+void GeradorAdaptativoPorCurvatura::escreveMalha(MeshAdaptive* malha,
+                                                 int passo) {
   stringstream nome;
   nome << passo;
   nome << "malha";
@@ -1572,22 +1577,22 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo) {
   unsigned long int Nv, Nt;
   Nv = Nt = 0;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    Nv += sub->getNumDeNos();
-    Nt += sub->getNumDeElementos();
+    Nv += sub->GetNumberNos();
+    Nt += sub->GetNumberElements();
   }
 
   arq << "%NODE" << endl << Nv << endl << endl;
 
   arq << "%NODE.COORD" << endl << Nv << endl;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->getNumDeNos(); j++) {
-      Noh* n = sub->getNoh(j);
+    for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
+      Noh* n = sub->GetNoh(j);
 
       arq << n->id << " " << n->x << " " << n->y << " " << n->z << endl;
     }
@@ -1619,11 +1624,11 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo) {
 
   arq << "%ELEMENT.T3" << endl << Nt << endl;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->getNumDeElementos(); j++) {
-      Triangulo* t = (Triangulo*)sub->getElemento(j);
+    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
+      Triangulo* t = (Triangulo*)sub->GetElement(j);
 
       arq << t->getId() << " "
           << "1 1 1 " << t->getN(1).id << " " << t->getN(2).id << " "
@@ -1641,7 +1646,7 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo) {
   //  cout << "escreveu o arquivo para o passo " << passo << endl;
 }
 
-void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo,
+void GeradorAdaptativoPorCurvatura::escreveMalha(MeshAdaptive* malha, int passo,
                                                  vector<double> erroPasso,
                                                  int rank) {
   stringstream nome;
@@ -1673,11 +1678,11 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo,
   unsigned long int Nv, Nt;
   Nv = Nt = 0;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    Nv += sub->getNumDeNos();
-    Nt += sub->getNumDeElementos();
+    Nv += sub->GetNumberNos();
+    Nt += sub->GetNumberElements();
   }
 
   arq << "%HEADER.VERSION" << endl
@@ -1700,11 +1705,11 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo,
 
   arq << "%NODE.COORD" << endl << Nv << endl;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->getNumDeNos(); j++) {
-      Noh* n = sub->getNoh(j);
+    for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
+      Noh* n = sub->GetNoh(j);
 
       arq << n->id << " " << n->x << " " << n->y << " " << n->z << endl;
     }
@@ -1736,11 +1741,11 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo,
 
   arq << "%ELEMENT.T3" << endl << Nt << endl;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->getNumDeElementos(); j++) {
-      Triangulo* t = (Triangulo*)sub->getElemento(j);
+    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
+      Triangulo* t = (Triangulo*)sub->GetElement(j);
 
       arq << t->getId() << " "
           << "1 1 1 " << t->getN(1).id << " " << t->getN(2).id << " "
@@ -1788,11 +1793,11 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo,
   std::vector<double> vec_80_90;
   std::vector<double> vec_90_100;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->getNumDeElementos(); j++) {
-      Triangulo* t = (Triangulo*)sub->getElemento(j);
+    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
+      Triangulo* t = (Triangulo*)sub->GetElement(j);
 
       double value = t->quality();
 
@@ -1857,7 +1862,8 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(Malha* malha, int passo,
   // cout<< "END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
 }
 
-void GeradorAdaptativoPorCurvatura::writeQualityMesh(Malha* malha, int passo,
+void GeradorAdaptativoPorCurvatura::writeQualityMesh(MeshAdaptive* malha,
+                                                     int passo,
                                                      vector<double> erroPasso,
                                                      int rank) {
   // Análise dos Elementos da Malha Gerada
@@ -1891,11 +1897,11 @@ void GeradorAdaptativoPorCurvatura::writeQualityMesh(Malha* malha, int passo,
   std::vector<double> vec_80_90;
   std::vector<double> vec_90_100;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->getNumDeElementos(); j++) {
-      Triangulo* t = (Triangulo*)sub->getElemento(j);
+    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
+      Triangulo* t = (Triangulo*)sub->GetElement(j);
 
       double value = t->quality();
 
@@ -1960,15 +1966,16 @@ void GeradorAdaptativoPorCurvatura::writeQualityMesh(Malha* malha, int passo,
   // cout<< "END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
 }
 
-void GeradorAdaptativoPorCurvatura::salvaMalha(Malha* malha, int passo) {
+void GeradorAdaptativoPorCurvatura::salvaMalha(MeshAdaptive* malha, int passo) {
   saveMesh.push_back(make_pair(passo, malha));
 }
 
-void GeradorAdaptativoPorCurvatura::salvaErroMalha(Malha* malha, int passo) {
+void GeradorAdaptativoPorCurvatura::salvaErroMalha(MeshAdaptive* malha,
+                                                   int passo) {
   saveErroMesh.push_back(make_pair(passo, malha));
 }
 
-void escreveElementos(int passo, SubMalha* sub, int i) {
+void escreveElementos(int passo, SubMesh* sub, int i) {
   stringstream nome;
   nome << passo;
   nome << "submalha-";
@@ -1977,8 +1984,8 @@ void escreveElementos(int passo, SubMalha* sub, int i) {
 
   ofstream arq(nome.str().c_str());
 
-  for (unsigned int k = 0; k < sub->getNumDeElementos(); ++k) {
-    Elemento* elem = sub->getElemento(k);
+  for (unsigned int k = 0; k < sub->GetNumberElements(); ++k) {
+    Elemento* elem = sub->GetElement(k);
 
     Noh n1(elem->getN(1));
     Noh n2(elem->getN(2));
@@ -2008,8 +2015,11 @@ void escreveElementos(int passo, SubMalha* sub, int i) {
        << " para o passo " << passo << endl;
 }
 
-void GeradorAdaptativoPorCurvatura::generatorInitialMesh(
-    Geometria* geo, Malha* malha, Timer* timer, int sizeThread, int sizePatch) {
+void GeradorAdaptativoPorCurvatura::generatorInitialMesh(Geometria* geo,
+                                                         MeshAdaptive* malha,
+                                                         Timer* timer,
+                                                         int sizeThread,
+                                                         int sizePatch) {
 #if USE_OPENMP
 #pragma omp parallel num_threads(sizeThread) shared(malha, geo, sizePatch)
   {
@@ -2028,9 +2038,9 @@ void GeradorAdaptativoPorCurvatura::generatorInitialMesh(
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
       CoonsPatch* patch = static_cast<CoonsPatch*>(geo->getPatch(i));
-      SubMalha* sub = this->malhaInicialOmp(static_cast<CoonsPatch*>(patch),
-                                            this->idManagers[id]);
-      malha->insereSubMalha(sub, i);
+      SubMesh* sub = this->malhaInicialOmp(static_cast<CoonsPatch*>(patch),
+                                           this->idManagers[id]);
+      malha->InsertSubMeshAdaptiveByPosition(sub, i);
     }
 
 #if USE_MPI
@@ -2049,17 +2059,17 @@ void GeradorAdaptativoPorCurvatura::generatorInitialMesh(
 #endif  // USE_OPENMP
 }
 
-void GeradorAdaptativoPorCurvatura::printElments(Malha* malha, int passo,
+void GeradorAdaptativoPorCurvatura::printElments(MeshAdaptive* malha, int passo,
                                                  vector<double> erroPasso,
                                                  int rank) {
   unsigned long int Nv, Nt;
   Nv = Nt = 0;
 
-  for (unsigned int i = 0; i < malha->getNumDeSubMalhas(); i++) {
-    SubMalha* sub = malha->getSubMalha(i);
+  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
-    Nv += sub->getNumDeNos();
-    Nt += sub->getNumDeElementos();
+    Nv += sub->GetNumberNos();
+    Nt += sub->GetNumberElements();
   }
 
   cout << "#elementos_" << NAME_MODEL << "_n.process_" << NUMBER_PROCESS

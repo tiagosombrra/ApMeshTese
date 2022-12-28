@@ -36,7 +36,7 @@ double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
 double TIME_READ_FILE = 0.0;
 
 std::set<Ponto *> LIST_ALL_POINTS_MODEL;
-std::set<SubMalha *> LIST_ALL_SUB_MESH_MODEL;
+std::set<SubMesh *> LIST_ALL_SUB_MESH_MODEL;
 std::string NAME_MODEL;
 std::string INPUT_MODEL;
 std::string NUMBER_PROCESS;

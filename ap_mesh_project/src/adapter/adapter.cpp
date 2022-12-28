@@ -259,10 +259,10 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
   return list_new_points;
 }
 
-SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
-                                  Performer::IdManager *id_manager,
-                                  double factor_disc_global) {
-  SubMalha *sub_mesh_new = new SubMalha;
+SubMesh *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
+                                 Performer::IdManager *id_manager,
+                                 double factor_disc_global) {
+  SubMesh *sub_mesh_new = new SubMesh;
   // pow ( 2, exp ); // o fator de rediscretização
   double factor_disc = DISCRETIZACAO_INTER;
   // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
@@ -304,7 +304,7 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
 
         map[vertex] = noh;
 
-        sub_mesh_new->insereNoh(noh);
+        sub_mesh_new->SetNoh(noh);
 
         parameter++;
       }
@@ -335,7 +335,7 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
 
         map[vertex] = noh;
 
-        sub_mesh_new->insereNoh(noh);
+        sub_mesh_new->SetNoh(noh);
 
         parameter--;
       }
@@ -345,15 +345,15 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
   avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
       coons_patch->getCurva(coons_patch->getNumDeCurvas() - 1)));
   // essa é a malha anterior!
-  SubMalha *sub_mesh_old = coons_patch->getMalha();
+  SubMesh *sub_mesh_old = coons_patch->getMalha();
 
   // constroi a lista de triangulos antigos para o gerador de malha
   FaceList mesh_old;
   // área de todos os elementos
   double area_total = 0;
 
-  for (unsigned int i = 0; i < sub_mesh_old->getNumDeElementos(); ++i) {
-    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->getElemento(i));
+  for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
+    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
 
     /*Noh centro (	( tri->getN ( 1 ).x + tri->getN ( 2 ).x + tri->getN ( 3
 ).x ) / 3.0 , ( tri->getN ( 1 ).y + tri->getN ( 2 ).y + tri->getN ( 3 ).y  )
@@ -376,10 +376,10 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
 
   FaceList::iterator face_list_iterator = mesh_old.begin();
 
-  for (unsigned int i = 0; i < sub_mesh_old->getNumDeElementos(); ++i) {
+  for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
     double length_old = 0;
 
-    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->getElemento(i));
+    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
     Face *face = (*face_list_iterator);
 
     length_old = sqrt(tri->getArea() / area_total);
@@ -446,7 +446,7 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
     noh->id = /*id_noh++*/ id_manager->next(0);
 
     map[vertex] = noh;
-    sub_mesh_new->insereNoh(noh);
+    sub_mesh_new->SetNoh(noh);
   }
 
   // id_ele = 1;
@@ -469,7 +469,7 @@ SubMalha *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
     (static_cast<Triangulo *>(element))->p3 =
         make_tuple(face->getV3()->getX(), face->getV3()->getY());
 
-    sub_mesh_new->insereElemento(element);
+    sub_mesh_new->SetElement(element);
   }
 
   // apaga os triangulos da malha antiga
@@ -758,10 +758,10 @@ list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
 
 // Usa a QuadTree. Gera uma nova malha e atualiza a malha do patch. A malha
 // gerada deve ser inserida no modelo pelo Gerador Adaptativo
-SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
-                               Performer::IdManager *id_manager,
-                               double factor_disc_global) {
-  SubMalha *sub_mesh_new = new SubMalha;
+SubMesh *Adapter::AdaptDomain(CoonsPatch *coons_patch,
+                              Performer::IdManager *id_manager,
+                              double factor_disc_global) {
+  SubMesh *sub_mesh_new = new SubMesh;
   double factor_disc =
       DISCRETIZACAO_INTER;  // pow ( 2, exp ); // o fator de rediscretização
 
@@ -800,7 +800,7 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
 
         map[vertex] = noh;
 
-        sub_mesh_new->insereNoh(noh);
+        sub_mesh_new->SetNoh(noh);
 
         parameter++;
       }
@@ -831,7 +831,7 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
 
         map[vertex] = noh;
 
-        sub_mesh_new->insereNoh(noh);
+        sub_mesh_new->SetNoh(noh);
 
         parameter--;
       }
@@ -841,15 +841,15 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
   avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
       coons_patch->getCurva(coons_patch->getNumDeCurvas() - 1)));
 
-  SubMalha *sub_mesh_old = coons_patch->getMalha();  // essa é a malha anterior!
+  SubMesh *sub_mesh_old = coons_patch->getMalha();  // essa é a malha anterior!
 
   // constroi a lista de triangulos antigos para o gerador de malha
   FaceList mesh_old;
 
   double area_total = 0;  // área de todos os elementos
 
-  for (unsigned int i = 0; i < sub_mesh_old->getNumDeElementos(); ++i) {
-    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->getElemento(i));
+  for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
+    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
 
     /*Noh centro (	( tri->getN ( 1 ).x + tri->getN ( 2 ).x + tri->getN ( 3
 ).x ) / 3.0 , ( tri->getN ( 1 ).y + tri->getN ( 2 ).y + tri->getN ( 3 ).y  )
@@ -872,10 +872,10 @@ SubMalha *Adapter::AdaptDomain(CoonsPatch *coons_patch,
 
   FaceList::iterator face_list_iterator = mesh_old.begin();
 
-  for (unsigned int i = 0; i < sub_mesh_old->getNumDeElementos(); ++i) {
+  for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
     double length_old = 0;
 
-    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->getElemento(i));
+    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
     Face *face = (*face_list_iterator);
 
     length_old = sqrt(tri->getArea() / area_total);
@@ -944,7 +944,7 @@ else
     noh->id = id_manager->next(0);
 
     map[vertex] = noh;
-    sub_mesh_new->insereNoh(noh);
+    sub_mesh_new->SetNoh(noh);
   }
 
   // id_ele = 1;
@@ -967,7 +967,7 @@ else
     (static_cast<Triangulo *>(element))->p3 =
         make_tuple(face->getV3()->getX(), face->getV3()->getY());
 
-    sub_mesh_new->insereElemento(element);
+    sub_mesh_new->SetElement(element);
   }
 
   // apaga os triangulos da malha antiga

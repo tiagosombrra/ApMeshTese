@@ -10,7 +10,7 @@
 #include "../data/Vertice.h"
 #include "../data/curve/curve_adaptive.h"
 #include "../data/curve/curve_adaptive_parametric_bezier.h"
-#include "../data/mesh/Malha.h"
+#include "../data/mesh/mesh_adaptive.h"
 #include "../data/patch/BezierPatch.h"
 #include "../generator/GeradorAdaptativoPorCurvatura.h"
 #include "../input_output/PatchBezierReader.h"
@@ -34,8 +34,8 @@ class ChargeEstimateProcess {
   double calculateAreaTriangleMedioRad(BezierPatch *patch);
   double calculateAreaTriangleMedio(BezierPatch *patch, Timer *timer, int grau);
   long int calculateNumbersTriangle(BezierPatch *patch, int grau);
-  SubMalha *malhaInicialEstimativa(CoonsPatch *patch, int grau);
-  bool calculateErroEstimative(Malha *malha, Timer *timer, int grau);
+  SubMesh *malhaInicialEstimativa(CoonsPatch *patch, int grau);
+  bool calculateErroEstimative(MeshAdaptive *malha, Timer *timer, int grau);
   // double calculateAreaPatchSegmets(BezierPatch *patch, int segments);
   // double calculateSegmentMedio(BezierPatch *patch);
   ~ChargeEstimateProcess();

@@ -116,32 +116,32 @@ PatchHermite::PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
   //
   // Gx:
   // 2x2 superior esquerdo
-  mat_geo_gx_(0, 0) = this->pt00_.x;
-  mat_geo_gx_(0, 1) = this->pt01_.x;
-  mat_geo_gx_(1, 0) = this->pt10_.x;
-  mat_geo_gx_(1, 1) = this->pt11_.x;
+  mat_geo_gx_(0, 0) = this->pt00_.GetX();
+  mat_geo_gx_(0, 1) = this->pt01_.GetX();
+  mat_geo_gx_(1, 0) = this->pt10_.GetX();
+  mat_geo_gx_(1, 1) = this->pt11_.GetX();
   // 2x2 inferior esquerdo
-  mat_geo_gx_(2, 0) = this->qu00_.x;
-  mat_geo_gx_(2, 1) = this->qu01_.x;
-  mat_geo_gx_(3, 0) = this->qu10_.x;
-  mat_geo_gx_(3, 1) = this->qu11_.x;
+  mat_geo_gx_(2, 0) = this->qu00_.x_;
+  mat_geo_gx_(2, 1) = this->qu01_.x_;
+  mat_geo_gx_(3, 0) = this->qu10_.x_;
+  mat_geo_gx_(3, 1) = this->qu11_.x_;
   // 2x2 superior direito
-  mat_geo_gx_(0, 2) = this->qv00_.x;
-  mat_geo_gx_(0, 3) = this->qv01_.x;
-  mat_geo_gx_(1, 2) = this->qv10_.x;
-  mat_geo_gx_(1, 3) = this->qv11_.x;
+  mat_geo_gx_(0, 2) = this->qv00_.x_;
+  mat_geo_gx_(0, 3) = this->qv01_.x_;
+  mat_geo_gx_(1, 2) = this->qv10_.x_;
+  mat_geo_gx_(1, 3) = this->qv11_.x_;
   // 2x2 inferior direito
-  mat_geo_gx_(2, 2) = this->tw00_.x;
-  mat_geo_gx_(2, 3) = this->tw01_.x;
-  mat_geo_gx_(3, 2) = this->tw10_.x;
-  mat_geo_gx_(3, 3) = this->tw11_.x;
+  mat_geo_gx_(2, 2) = this->tw00_.x_;
+  mat_geo_gx_(2, 3) = this->tw01_.x_;
+  mat_geo_gx_(3, 2) = this->tw10_.x_;
+  mat_geo_gx_(3, 3) = this->tw11_.x_;
   //
   // Gy:
   // 2x2 superior esquerdo
-  mat_geo_gy_(0, 0) = this->pt00_.y;
-  mat_geo_gy_(0, 1) = this->pt01_.y;
-  mat_geo_gy_(1, 0) = this->pt10_.y;
-  mat_geo_gy_(1, 1) = this->pt11_.y;
+  mat_geo_gy_(0, 0) = this->pt00_.GetY();
+  mat_geo_gy_(0, 1) = this->pt01_.GetY();
+  mat_geo_gy_(1, 0) = this->pt10_.GetY();
+  mat_geo_gy_(1, 1) = this->pt11_.GetY();
   // 2x2 inferior esquerdo
   mat_geo_gy_(2, 0) = this->qu00_.y;
   mat_geo_gy_(2, 1) = this->qu01_.y;
@@ -160,10 +160,10 @@ PatchHermite::PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
   //
   // Gz:
   // 2x2 superior esquerdo
-  mat_geo_gz_(0, 0) = this->pt00_.z;
-  mat_geo_gz_(0, 1) = this->pt01_.z;
-  mat_geo_gz_(1, 0) = this->pt10_.z;
-  mat_geo_gz_(1, 1) = this->pt11_.z;
+  mat_geo_gz_(0, 0) = this->pt00_.GetZ();
+  mat_geo_gz_(0, 1) = this->pt01_.GetZ();
+  mat_geo_gz_(1, 0) = this->pt10_.GetZ();
+  mat_geo_gz_(1, 1) = this->pt11_.GetZ();
   // 2x2 inferior esquerdo
   mat_geo_gz_(2, 0) = this->qu00_.z;
   mat_geo_gz_(2, 1) = this->qu01_.z;
@@ -191,14 +191,15 @@ PatchHermite::PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
 
 // faz as multiplicações necessárias para 'Parameterize ( u, v )' e para as
 // derivadas parciais
-Ponto PatchHermite::CalculatePointUV() {
-  Ponto point;
+PointAdaptive PatchHermite::CalculatePointUV() {
+  PointAdaptive point;
   // point = ( U * ( H * ( G * ( Ht * V ) ) ) )
-  point.x = (this->GetU() * ((this->GetGx() * (this->GetV()))))(0, 0);
-  point.y = (this->GetU() * ((this->GetGy() * (this->GetV()))))(0, 0);
-  point.z = (this->GetU() * ((this->GetGz() * (this->GetV()))))(0, 0);
+  point.SetX((this->GetU() * ((this->GetGx() * (this->GetV()))))(0, 0));
+  point.SetY((this->GetU() * ((this->GetGy() * (this->GetV()))))(0, 0));
+  point.SetZ((this->GetU() * ((this->GetGz() * (this->GetV()))))(0, 0));
 
-  if (std::isnan(point.x) || std::isnan(point.y) || std::isnan(point.z)) {
+  if (std::isnan(point.GetX()) || std::isnan(point.GetY()) ||
+      std::isnan(point.GetZ())) {
     cout << "-nan CalculatePointUV Hermite" << endl;
   }
 
@@ -215,7 +216,7 @@ void PatchHermite::PrintAllMatrixPatchHermite() {
   cout << "Gz:\n" << mat_geo_gz_;
 }
 
-tuple<double, double> PatchHermite::FindUV(const Ponto& point) {
+tuple<double, double> PatchHermite::FindUV(const PointAdaptive& point) {
   unsigned int iMax = 0;
 
   // chute inicial
@@ -227,37 +228,37 @@ tuple<double, double> PatchHermite::FindUV(const Ponto& point) {
   double delta_v = 0.0;  // o quanto o parâmetro terá de percorrer
 
   // Método de Jacobi para resolução de sistema
-  Ponto point_i;
+  PointAdaptive point_i;
   // cout << "encontrar_u_v (" << p.id << "), usando Jacobi!";
 
   do {
     Vetor vector_tu = -(this->Qu(u_i, v_i));
     Vetor vector_tv = -(this->Qv(u_i, v_i));
 
-    if (std::isnan(vector_tu.x) || std::isnan(vector_tu.y) ||
-        std::isnan(vector_tu.z) || std::isnan(vector_tv.x) ||
+    if (std::isnan(vector_tu.x_) || std::isnan(vector_tu.y) ||
+        std::isnan(vector_tu.z) || std::isnan(vector_tv.x_) ||
         std::isnan(vector_tv.y) || std::isnan(vector_tv.z)) {
       cout << "-nan Tu e Tv" << endl;
     }
 
     point_i = this->Parameterize(u_i, v_i);  // palpite inicial
 
-    if (std::isnan(point_i.x) || std::isnan(point_i.y) ||
-        std::isnan(point_i.z)) {
+    if (std::isnan(point_i.GetX()) || std::isnan(point_i.GetY()) ||
+        std::isnan(point_i.GetZ())) {
       cout << "-nan p_i" << endl;
     }
 
     double A[3][3];
     // Matrix<double, 3,3> A;
-    A[0][0] = vector_tu.x;
-    A[0][1] = vector_tv.x;
-    A[0][2] = point_i.x - point.x;
+    A[0][0] = vector_tu.x_;
+    A[0][1] = vector_tv.x_;
+    A[0][2] = point_i.GetX() - point.GetX();
     A[1][0] = vector_tu.y;
     A[1][1] = vector_tv.y;
-    A[1][2] = point_i.y - point.y;
+    A[1][2] = point_i.GetY() - point.GetY();
     A[2][0] = vector_tu.z;
     A[2][1] = vector_tv.z;
-    A[2][2] = point_i.z - point.z;
+    A[2][2] = point_i.GetZ() - point.GetZ();
 
     int k = 0;
     double pivot = A[0][0];
@@ -265,10 +266,6 @@ tuple<double, double> PatchHermite::FindUV(const Ponto& point) {
     if (std::isnan(pivot)) {
       cout << "-nan pivo1" << endl;
     }
-
-    //        if (fabs(pivo) < TOLERANCIA) {
-    //            cout<<"pivo zero 1: "<<pivo<<endl;
-    //        }
 
     while ((fabs(pivot) < TOLERANCIA) and (k < 2)) {
       ++k;
@@ -286,8 +283,8 @@ tuple<double, double> PatchHermite::FindUV(const Ponto& point) {
     if (fabs(pivot) < TOLERANCIA) {
       cout << "Erro! Não é possível encontrar as coordenadas paramétricas no "
               "ponto p"
-           << point.id << " (" << point.x << ", " << point.y << ", " << point.z
-           << ")" << endl;
+           << point.GetId() << " (" << point.GetX() << ", " << point.GetY()
+           << ", " << point.GetZ() << ")" << endl;
 
       return make_tuple(-1.0, -1.0);
     }
@@ -381,7 +378,7 @@ tuple<double, double> PatchHermite::FindUV(const Ponto& point) {
 }
 
 // encontra as coordenadas 3D de um ponto p de parâmetros u, v
-Ponto PatchHermite::Parameterize(double u, double v) {
+PointAdaptive PatchHermite::Parameterize(double u, double v) {
   // cout << "Parameterize ( " << u << ", " << v << ")" << endl;
   // Parameterize:
   //
@@ -413,7 +410,7 @@ Vetor PatchHermite::Qu(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = 3 * u * u;
   this->mat_base_u_(0, 1) = 2 * u;
@@ -428,7 +425,7 @@ Vetor PatchHermite::Qu(double u, double v) {
   P = CalculatePointUV();
   Vetor V(P);
 
-  if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+  if (std::isnan(V.x_) || std::isnan(V.y) || std::isnan(V.z)) {
     cout << "-nan V1" << endl;
   }
 
@@ -445,7 +442,7 @@ Vetor PatchHermite::Qv(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = u * u * u;
   this->mat_base_u_(0, 1) = u * u;
@@ -459,7 +456,7 @@ Vetor PatchHermite::Qv(double u, double v) {
   P = CalculatePointUV();
   Vetor V(P);
 
-  if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+  if (std::isnan(V.x_) || std::isnan(V.y) || std::isnan(V.z)) {
     cout << "-nan V2" << endl;
   }
   return V;
@@ -475,7 +472,7 @@ Vetor PatchHermite::Quu(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = 6 * u;
   this->mat_base_u_(0, 1) = 2;
@@ -490,7 +487,7 @@ Vetor PatchHermite::Quu(double u, double v) {
   P = CalculatePointUV();
   Vetor V(P);
 
-  if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+  if (std::isnan(V.x_) || std::isnan(V.y) || std::isnan(V.z)) {
     cout << "-nan V3" << endl;
   }
 
@@ -507,7 +504,7 @@ Vetor PatchHermite::Quv(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = 3 * u * u;
   this->mat_base_u_(0, 1) = 2 * u;
@@ -522,7 +519,7 @@ Vetor PatchHermite::Quv(double u, double v) {
   P = CalculatePointUV();
   Vetor V(P);
 
-  if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+  if (std::isnan(V.x_) || std::isnan(V.y) || std::isnan(V.z)) {
     cout << "-nan V4" << endl;
   }
   return V;
@@ -541,7 +538,7 @@ Vetor PatchHermite::Qvv(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = u * u * u;
   this->mat_base_u_(0, 1) = u * u;
@@ -556,44 +553,44 @@ Vetor PatchHermite::Qvv(double u, double v) {
   P = CalculatePointUV();
   Vetor V(P);
 
-  if (std::isnan(V.x) || std::isnan(V.y) || std::isnan(V.z)) {
+  if (std::isnan(V.x_) || std::isnan(V.y) || std::isnan(V.z)) {
     cout << "-nan V4" << endl;
   }
   return V;
 }
 
 // calcula o vetor tangente na direção u para o ponto p
-Vetor PatchHermite::Qu(const Ponto& point) {
+Vetor PatchHermite::Qu(const PointAdaptive& point) {
   tuple<double, double> t = this->FindUV(point);
   return this->Qu(get<0>(t), get<1>(t));
 }
 
 // calcula o vetor tangente na direção v para o ponto p
-Vetor PatchHermite::Qv(const Ponto& point) {
+Vetor PatchHermite::Qv(const PointAdaptive& point) {
   tuple<double, double> t = this->FindUV(point);
   return this->Qv(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Quu para o ponto p
-Vetor PatchHermite::Quu(const Ponto& point) {
+Vetor PatchHermite::Quu(const PointAdaptive& point) {
   tuple<double, double> t = this->FindUV(point);
   return this->Quu(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Quv para o ponto p
-Vetor PatchHermite::Quv(const Ponto& point) {
+Vetor PatchHermite::Quv(const PointAdaptive& point) {
   tuple<double, double> t = this->FindUV(point);
   return this->Quv(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Qvu para o ponto p
-Vetor PatchHermite::Qvu(const Ponto& point) {
+Vetor PatchHermite::Qvu(const PointAdaptive& point) {
   tuple<double, double> t = this->FindUV(point);
   return this->Qvu(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Qvv para o ponto p
-Vetor PatchHermite::Qvv(const Ponto& point) {
+Vetor PatchHermite::Qvv(const PointAdaptive& point) {
   tuple<double, double> t = this->FindUV(point);
   return this->Qvv(get<0>(t), get<1>(t));
 }
@@ -610,13 +607,13 @@ Matrix4x1 PatchHermite::GetV() const { return this->mat_base_v_; }
 
 Matrix4x4 PatchHermite::GetH() const { return this->mat_base_; }
 
-Ponto PatchHermite::GetPt00() const { return this->pt00_; }
+PointAdaptive PatchHermite::GetPt00() const { return this->pt00_; }
 
-Ponto PatchHermite::GetPt01() const { return this->pt01_; }
+PointAdaptive PatchHermite::GetPt01() const { return this->pt01_; }
 
-Ponto PatchHermite::GetPt10() const { return this->pt10_; }
+PointAdaptive PatchHermite::GetPt10() const { return this->pt10_; }
 
-Ponto PatchHermite::GetPt11() const { return this->pt11_; }
+PointAdaptive PatchHermite::GetPt11() const { return this->pt11_; }
 
 Vetor PatchHermite::GetQu00() const { return this->qu00_; }
 

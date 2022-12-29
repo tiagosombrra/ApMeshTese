@@ -21,15 +21,15 @@ class PatchHermite : public PatchCoons {
                bool signal_curve4 = true);
   ~PatchHermite() = default;
 
-  Ponto CalculatePointUV();
+  PointAdaptive CalculatePointUV();
   void PrintAllMatrixPatchHermite();
   // encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
   // ou a projeção desse ponto na superfície
   // tuple<double, double> encontrar_u_v(const Ponto& p);
-  tuple<double, double> FindUV(const Ponto& point);
+  tuple<double, double> FindUV(const PointAdaptive& point);
 
   // encontra o ponto p na curva dado um parâmetro p
-  Ponto Parameterize(double u, double v);
+  PointAdaptive Parameterize(double u, double v);
 
   // calcula as derivadas parciais nas direçõe u e v
   Vetor Qu(double u, double v);
@@ -40,12 +40,12 @@ class PatchHermite : public PatchCoons {
   Vetor Qvv(double u, double v);
 
   // calcula as derivadas parciais de um ponto p
-  Vetor Qu(const Ponto& point);
-  Vetor Qv(const Ponto& point);
-  Vetor Quu(const Ponto& point);
-  Vetor Quv(const Ponto& point);
-  Vetor Qvu(const Ponto& point);
-  Vetor Qvv(const Ponto& point);
+  Vetor Qu(const PointAdaptive& point);
+  Vetor Qv(const PointAdaptive& point);
+  Vetor Quu(const PointAdaptive& point);
+  Vetor Quv(const PointAdaptive& point);
+  Vetor Qvu(const PointAdaptive& point);
+  Vetor Qvv(const PointAdaptive& point);
 
   Matrix1x4 GetU() const;
   Matrix4x4 GetGx() const;
@@ -54,10 +54,10 @@ class PatchHermite : public PatchCoons {
   Matrix4x1 GetV() const;
   Matrix4x4 GetH() const;
 
-  Ponto GetPt00() const;
-  Ponto GetPt01() const;
-  Ponto GetPt10() const;
-  Ponto GetPt11() const;
+  PointAdaptive GetPt00() const;
+  PointAdaptive GetPt01() const;
+  PointAdaptive GetPt10() const;
+  PointAdaptive GetPt11() const;
 
   Vetor GetQu00() const;
   Vetor GetQu01() const;
@@ -77,12 +77,12 @@ class PatchHermite : public PatchCoons {
  protected:
   Matrix4x4 StartHermiteMatrix();
 
-  Ponto pt00_;
-  Ponto pt01_;
+  PointAdaptive pt00_;
+  PointAdaptive pt01_;
   Vetor qv00_;
   Vetor qv01_;
-  Ponto pt10_;
-  Ponto pt11_;
+  PointAdaptive pt10_;
+  PointAdaptive pt11_;
   Vetor qv10_;
   Vetor qv11_;
   Vetor qu00_;

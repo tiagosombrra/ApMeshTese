@@ -16,9 +16,9 @@ curvaturas.
 #include "../crab_mesh/performer/ranged_id_manager.h"
 #include "../curvature/curvature_analytical.h"
 #include "../curvature/curvature_discrete.h"
-#include "../data/Noh.h"
 #include "../data/Triangulo.h"
 #include "../data/definitions.h"
+#include "../data/noh.h"
 #include "../data/patch/patch_bezier.h"
 #include "../data/patch/patch_coons.h"
 #include "../estimate/ChargeEstimateProcess.h"
@@ -59,8 +59,8 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
       std::list<PatchBezier *> listBezierPt);
   std::list<PatchBezier *> orderPatchesDistribProcess(
       std::list<PatchBezier *> listPatches);
-  bool verifyCurve(Ponto p0, Ponto p1, Ponto p2, Ponto p3,
-                   std::vector<CurveAdaptive *> curves);
+  bool verifyCurve(PointAdaptive p0, PointAdaptive p1, PointAdaptive p2,
+                   PointAdaptive p3, std::vector<CurveAdaptive *> curves);
   void calculateEstimateProcessElements(int sizeProcess,
                                         std::list<PatchBezier *> listBezierPt);
   std::list<PatchBezier *>::iterator getIteratorListPatches(
@@ -103,7 +103,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
                                    Performer::IdManager *idManager);
   virtual double erroGlobalOmp(MeshAdaptive *malha, Timer *timer, int rank = 0,
                                int sizeThread = 0);
-  int generatorOmp(Modelo &modelo, Timer *timer, int idrange = 0,
+  int generatorOmp(Model &modelo, Timer *timer, int idrange = 0,
                    int sizeRank = 1, int sizeThread = 1);
   void adaptCurveOmp(Geometry *geo);
   void adaptDomainOmp(Geometry *geo, MeshAdaptive *malha, Timer *timer,
@@ -111,7 +111,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
 #endif  // #USE_OPENMP
 
 #if USE_MPI
-  Modelo modelo;
+  Model modelo;
   Geometry *geo;
   PatchCoons *patch;
   MeshAdaptive *malha;

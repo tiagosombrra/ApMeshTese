@@ -31,22 +31,22 @@ std::list<PatchBezier*> ChargeEstimateProcess::chargeEstimateProcess(
 
   delete pt;
 
-  Ponto* p00;
-  Ponto* p01;
-  Ponto* p02;
-  Ponto* p03;
-  Ponto* p10;
-  Ponto* p11;
-  Ponto* p12;
-  Ponto* p13;
-  Ponto* p20;
-  Ponto* p21;
-  Ponto* p22;
-  Ponto* p23;
-  Ponto* p30;
-  Ponto* p31;
-  Ponto* p32;
-  Ponto* p33;
+  PointAdaptive* p00;
+  PointAdaptive* p01;
+  PointAdaptive* p02;
+  PointAdaptive* p03;
+  PointAdaptive* p10;
+  PointAdaptive* p11;
+  PointAdaptive* p12;
+  PointAdaptive* p13;
+  PointAdaptive* p20;
+  PointAdaptive* p21;
+  PointAdaptive* p22;
+  PointAdaptive* p23;
+  PointAdaptive* p30;
+  PointAdaptive* p31;
+  PointAdaptive* p32;
+  PointAdaptive* p33;
 
   CurveAdaptive* patch_c1;
   CurveAdaptive* patch_c2;
@@ -67,68 +67,68 @@ std::list<PatchBezier*> ChargeEstimateProcess::chargeEstimateProcess(
 
   for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {
-    p00 =
-        new Vertice((*it)->GetPt00().x, (*it)->GetPt00().y, (*it)->GetPt00().z);
-    p10 =
-        new Vertice((*it)->GetPt10().x, (*it)->GetPt10().y, (*it)->GetPt10().z);
-    p20 =
-        new Vertice((*it)->GetPt20().x, (*it)->GetPt20().y, (*it)->GetPt20().z);
-    p30 =
-        new Vertice((*it)->GetPt30().x, (*it)->GetPt30().y, (*it)->GetPt30().z);
+    p00 = new Vertice((*it)->GetPt00().GetX(), (*it)->GetPt00().GetY(),
+                      (*it)->GetPt00().GetZ());
+    p10 = new Vertice((*it)->GetPt10().GetX(), (*it)->GetPt10().GetY(),
+                      (*it)->GetPt10().GetZ());
+    p20 = new Vertice((*it)->GetPt20().GetX(), (*it)->GetPt20().GetY(),
+                      (*it)->GetPt20().GetZ());
+    p30 = new Vertice((*it)->GetPt30().GetX(), (*it)->GetPt30().GetY(),
+                      (*it)->GetPt30().GetZ());
 
-    p01 =
-        new Vertice((*it)->GetPt01().x, (*it)->GetPt01().y, (*it)->GetPt01().z);
-    p11 =
-        new Vertice((*it)->GetPt11().x, (*it)->GetPt11().y, (*it)->GetPt11().z);
-    p21 =
-        new Vertice((*it)->GetPt21().x, (*it)->GetPt21().y, (*it)->GetPt21().z);
-    p31 =
-        new Vertice((*it)->GetPt31().x, (*it)->GetPt31().y, (*it)->GetPt31().z);
+    p01 = new Vertice((*it)->GetPt01().GetX(), (*it)->GetPt01().GetY(),
+                      (*it)->GetPt01().GetZ());
+    p11 = new Vertice((*it)->GetPt11().GetX(), (*it)->GetPt11().GetY(),
+                      (*it)->GetPt11().GetZ());
+    p21 = new Vertice((*it)->GetPt21().GetX(), (*it)->GetPt21().GetY(),
+                      (*it)->GetPt21().GetZ());
+    p31 = new Vertice((*it)->GetPt31().GetX(), (*it)->GetPt31().GetY(),
+                      (*it)->GetPt31().GetZ());
 
-    p02 =
-        new Vertice((*it)->GetPt02().x, (*it)->GetPt02().y, (*it)->GetPt02().z);
-    p12 =
-        new Vertice((*it)->GetPt12().x, (*it)->GetPt12().y, (*it)->GetPt12().z);
-    p22 =
-        new Vertice((*it)->GetPt22().x, (*it)->GetPt22().y, (*it)->GetPt22().z);
-    p32 =
-        new Vertice((*it)->GetPt32().x, (*it)->GetPt32().y, (*it)->GetPt32().z);
+    p02 = new Vertice((*it)->GetPt02().GetX(), (*it)->GetPt02().GetY(),
+                      (*it)->GetPt02().GetZ());
+    p12 = new Vertice((*it)->GetPt12().GetX(), (*it)->GetPt12().GetY(),
+                      (*it)->GetPt12().GetZ());
+    p22 = new Vertice((*it)->GetPt22().GetX(), (*it)->GetPt22().GetY(),
+                      (*it)->GetPt22().GetZ());
+    p32 = new Vertice((*it)->GetPt32().GetX(), (*it)->GetPt32().GetY(),
+                      (*it)->GetPt32().GetZ());
 
-    p03 =
-        new Vertice((*it)->GetPt03().x, (*it)->GetPt03().y, (*it)->GetPt03().z);
-    p13 =
-        new Vertice((*it)->GetPt13().x, (*it)->GetPt13().y, (*it)->GetPt13().z);
-    p23 =
-        new Vertice((*it)->GetPt23().x, (*it)->GetPt23().y, (*it)->GetPt23().z);
-    p33 =
-        new Vertice((*it)->GetPt33().x, (*it)->GetPt33().y, (*it)->GetPt33().z);
+    p03 = new Vertice((*it)->GetPt03().GetX(), (*it)->GetPt03().GetY(),
+                      (*it)->GetPt03().GetZ());
+    p13 = new Vertice((*it)->GetPt13().GetX(), (*it)->GetPt13().GetY(),
+                      (*it)->GetPt13().GetZ());
+    p23 = new Vertice((*it)->GetPt23().GetX(), (*it)->GetPt23().GetY(),
+                      (*it)->GetPt23().GetZ());
+    p33 = new Vertice((*it)->GetPt33().GetX(), (*it)->GetPt33().GetY(),
+                      (*it)->GetPt33().GetZ());
 
-    if (geo->verifyCurveGeometria(p00, p10, p20, p30) == NULL) {
+    if (geo->VerifyCurveGeometry(p00, p10, p20, p30) == NULL) {
       patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
-      geo->insereCurva(patch_c1);
+      geo->InsertCurve(patch_c1);
     } else {
-      patch_c1 = geo->verifyCurveGeometria(p00, p10, p20, p30);
+      patch_c1 = geo->VerifyCurveGeometry(p00, p10, p20, p30);
     }
 
-    if (geo->verifyCurveGeometria(p30, p31, p32, p33) == NULL) {
+    if (geo->VerifyCurveGeometry(p30, p31, p32, p33) == NULL) {
       patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
-      geo->insereCurva(patch_c2);
+      geo->InsertCurve(patch_c2);
     } else {
-      patch_c2 = geo->verifyCurveGeometria(p30, p31, p32, p33);
+      patch_c2 = geo->VerifyCurveGeometry(p30, p31, p32, p33);
     }
 
-    if (geo->verifyCurveGeometria(p03, p13, p23, p33) == NULL) {
+    if (geo->VerifyCurveGeometry(p03, p13, p23, p33) == NULL) {
       patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
-      geo->insereCurva(patch_c3);
+      geo->InsertCurve(patch_c3);
     } else {
-      patch_c3 = geo->verifyCurveGeometria(p03, p13, p23, p33);
+      patch_c3 = geo->VerifyCurveGeometry(p03, p13, p23, p33);
     }
 
-    if (geo->verifyCurveGeometria(p00, p01, p02, p03) == NULL) {
+    if (geo->VerifyCurveGeometry(p00, p01, p02, p03) == NULL) {
       patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
-      geo->insereCurva(patch_c4);
+      geo->InsertCurve(patch_c4);
     } else {
-      patch_c4 = geo->verifyCurveGeometria(p00, p01, p02, p03);
+      patch_c4 = geo->VerifyCurveGeometry(p00, p01, p02, p03);
     }
 
     (*it) = new PatchBezier(patch_c1, patch_c2, patch_c3, patch_c4, *p11, *p21,
@@ -176,7 +176,7 @@ std::list<PatchBezier*> ChargeEstimateProcess::chargeEstimateProcess(
     //        (*it)->getAreaTriangle()); cout << "Quant. de triângulos do patch:
     //        " << (*it)->getNumberTriangle() << endl;
 
-    geo->inserePatch((*it));
+    geo->InsertPatch((*it));
 
     listBezierPtOrder.push_back((*it));
 
@@ -209,14 +209,15 @@ std::list<PatchBezier*> ChargeEstimateProcess::chargeEstimateProcess(
   return listBezierPtOrder;
 }
 
-std::vector<Ponto> ChargeEstimateProcess::interpolateControlPointsCurve(
-    Ponto p0, Ponto p1, Ponto p2, Ponto p3, double u, double v) {
+std::vector<PointAdaptive> ChargeEstimateProcess::interpolateControlPointsCurve(
+    PointAdaptive p0, PointAdaptive p1, PointAdaptive p2, PointAdaptive p3,
+    double u, double v) {
   double a = 0.0, b = 0.0, c = 0.0, d = 0.0, det = 0.0;
 
-  Ponto q1;
-  Ponto q2;
-  Ponto pc1;
-  Ponto pc2;
+  PointAdaptive q1;
+  PointAdaptive q2;
+  PointAdaptive pc1;
+  PointAdaptive pc2;
 
   if ((u <= 0.0) || (u >= 1.0) || (v <= 0.0) || (v >= 1.0) || (u >= v)) {
     std::cout << "erro u or v out of range" << std::endl;
@@ -233,31 +234,37 @@ std::vector<Ponto> ChargeEstimateProcess::interpolateControlPointsCurve(
     std::cout << "erro det == 0" << std::endl;
   }
 
-  q1.x = (p1.x - ((1 - u) * (1 - u) * (1 - u) * p0.x + u * u * u * p3.x));
-  q1.y = (p1.y - ((1 - u) * (1 - u) * (1 - u) * p0.y + u * u * u * p3.y));
-  q1.z = (p1.z - ((1 - u) * (1 - u) * (1 - u) * p0.z + u * u * u * p3.z));
+  q1.SetX((p1.GetX() -
+           ((1 - u) * (1 - u) * (1 - u) * p0.GetX() + u * u * u * p3.GetX())));
+  q1.SetY((p1.GetY() -
+           ((1 - u) * (1 - u) * (1 - u) * p0.GetY() + u * u * u * p3.GetY())));
+  q1.SetZ((p1.GetZ() -
+           ((1 - u) * (1 - u) * (1 - u) * p0.GetZ() + u * u * u * p3.GetZ())));
 
-  q2.x = (p2.x - ((1 - v) * (1 - v) * (1 - v) * p0.x + v * v * v * p3.x));
-  q2.y = (p2.y - ((1 - v) * (1 - v) * (1 - v) * p0.y + v * v * v * p3.y));
-  q2.z = (p2.z - ((1 - v) * (1 - v) * (1 - v) * p0.z + v * v * v * p3.z));
+  q2.SetX((p2.GetX() -
+           ((1 - v) * (1 - v) * (1 - v) * p0.GetX() + v * v * v * p3.GetX())));
+  q2.SetY((p2.GetY() -
+           ((1 - v) * (1 - v) * (1 - v) * p0.GetY() + v * v * v * p3.GetY())));
+  q2.SetZ((p2.GetZ() -
+           ((1 - v) * (1 - v) * (1 - v) * p0.GetZ() + v * v * v * p3.GetZ())));
 
-  pc1.x = (d * q1.x - b * q2.x);
-  pc1.y = (d * q1.y - b * q2.y);
-  pc1.z = (d * q1.z - b * q2.z);
+  pc1.SetX((d * q1.GetX() - b * q2.GetX()));
+  pc1.SetY((d * q1.GetY() - b * q2.GetY()));
+  pc1.SetZ((d * q1.GetZ() - b * q2.GetZ()));
 
-  pc1.x = (pc1.x / det);
-  pc1.y = (pc1.y / det);
-  pc1.z = (pc1.z / det);
+  pc1.SetX((pc1.GetX() / det));
+  pc1.SetY((pc1.GetY() / det));
+  pc1.SetZ((pc1.GetZ() / det));
 
-  pc2.x = ((-c) * q1.x + a * q2.x);
-  pc2.y = ((-c) * q1.y + a * q2.y);
-  pc2.z = ((-c) * q1.z + a * q2.z);
+  pc2.SetX(((-c) * q1.GetX() + a * q2.GetX()));
+  pc2.SetY(((-c) * q1.GetY() + a * q2.GetY()));
+  pc2.SetZ(((-c) * q1.GetZ() + a * q2.GetZ()));
 
-  pc2.x = (pc2.x / det);
-  pc2.y = (pc2.y / det);
-  pc2.z = (pc2.z / det);
+  pc2.SetX((pc2.GetX() / det));
+  pc2.SetY((pc2.GetY() / det));
+  pc2.SetZ((pc2.GetZ() / det));
 
-  std::vector<Ponto> list_pcs;
+  std::vector<PointAdaptive> list_pcs;
 
   list_pcs.push_back(pc1);
   list_pcs.push_back(pc2);
@@ -279,20 +286,20 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
 
   if (points <= 25) {
     if (points >= 4) {
-      Ponto* ponto_a = new Ponto();
-      Ponto ponto_aa = patch->Parameterize(0.25, 0.25);
+      PointAdaptive* ponto_a = new PointAdaptive();
+      PointAdaptive ponto_aa = patch->Parameterize(0.25, 0.25);
       ponto_a = &ponto_aa;
 
-      Ponto* ponto_b = new Ponto();
-      Ponto ponto_bb = patch->Parameterize(0.75, 0.25);
+      PointAdaptive* ponto_b = new PointAdaptive();
+      PointAdaptive ponto_bb = patch->Parameterize(0.75, 0.25);
       ponto_b = &ponto_bb;
 
-      Ponto* ponto_c = new Ponto();
-      Ponto ponto_cc = patch->Parameterize(0.25, 0.75);
+      PointAdaptive* ponto_c = new PointAdaptive();
+      PointAdaptive ponto_cc = patch->Parameterize(0.25, 0.75);
       ponto_c = &ponto_cc;
 
-      Ponto* ponto_d = new Ponto();
-      Ponto ponto_dd = patch->Parameterize(0.75, 0.75);
+      PointAdaptive* ponto_d = new PointAdaptive();
+      PointAdaptive ponto_dd = patch->Parameterize(0.75, 0.75);
       ponto_d = &ponto_dd;
 
       CurvatureAnalytical kaa(*(static_cast<Noh*>(ponto_a)),
@@ -341,24 +348,24 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
       i++;
 
       if (points >= 9) {
-        Ponto* ponto_e = new Ponto();
-        Ponto ponto_ee = patch->Parameterize(0.5, 0.5);
+        PointAdaptive* ponto_e = new PointAdaptive();
+        PointAdaptive ponto_ee = patch->Parameterize(0.5, 0.5);
         ponto_e = &ponto_ee;
 
-        Ponto* ponto_f = new Ponto();
-        Ponto ponto_ff = patch->Parameterize(0.0, 0.0);
+        PointAdaptive* ponto_f = new PointAdaptive();
+        PointAdaptive ponto_ff = patch->Parameterize(0.0, 0.0);
         ponto_f = &ponto_ff;
 
-        Ponto* ponto_g = new Ponto();
-        Ponto ponto_gg = patch->Parameterize(1.0, 0.0);
+        PointAdaptive* ponto_g = new PointAdaptive();
+        PointAdaptive ponto_gg = patch->Parameterize(1.0, 0.0);
         ponto_g = &ponto_gg;
 
-        Ponto* ponto_h = new Ponto();
-        Ponto ponto_hh = patch->Parameterize(0.0, 1.0);
+        PointAdaptive* ponto_h = new PointAdaptive();
+        PointAdaptive ponto_hh = patch->Parameterize(0.0, 1.0);
         ponto_h = &ponto_hh;
 
-        Ponto* ponto_i = new Ponto();
-        Ponto ponto_ii = patch->Parameterize(1.0, 1.0);
+        PointAdaptive* ponto_i = new PointAdaptive();
+        PointAdaptive ponto_ii = patch->Parameterize(1.0, 1.0);
         ponto_i = &ponto_ii;
 
         CurvatureAnalytical kae(*(static_cast<Noh*>(ponto_e)),
@@ -418,36 +425,36 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
         i++;
 
         if (points >= 17) {
-          Ponto* ponto_j = new Ponto();
-          Ponto ponto_jj = patch->Parameterize(0.125, 0.125);
+          PointAdaptive* ponto_j = new PointAdaptive();
+          PointAdaptive ponto_jj = patch->Parameterize(0.125, 0.125);
           ponto_j = &ponto_jj;
 
-          Ponto* ponto_l = new Ponto();
-          Ponto ponto_ll = patch->Parameterize(0.5, 0.125);
+          PointAdaptive* ponto_l = new PointAdaptive();
+          PointAdaptive ponto_ll = patch->Parameterize(0.5, 0.125);
           ponto_l = &ponto_ll;
 
-          Ponto* ponto_m = new Ponto();
-          Ponto ponto_mm = patch->Parameterize(0.875, 0.125);
+          PointAdaptive* ponto_m = new PointAdaptive();
+          PointAdaptive ponto_mm = patch->Parameterize(0.875, 0.125);
           ponto_m = &ponto_mm;
 
-          Ponto* ponto_n = new Ponto();
-          Ponto ponto_nn = patch->Parameterize(0.125, 0.5);
+          PointAdaptive* ponto_n = new PointAdaptive();
+          PointAdaptive ponto_nn = patch->Parameterize(0.125, 0.5);
           ponto_n = &ponto_nn;
 
-          Ponto* ponto_o = new Ponto();
-          Ponto ponto_oo = patch->Parameterize(0.875, 0.5);
+          PointAdaptive* ponto_o = new PointAdaptive();
+          PointAdaptive ponto_oo = patch->Parameterize(0.875, 0.5);
           ponto_o = &ponto_oo;
 
-          Ponto* ponto_p = new Ponto();
-          Ponto ponto_pp = patch->Parameterize(0.125, 0.875);
+          PointAdaptive* ponto_p = new PointAdaptive();
+          PointAdaptive ponto_pp = patch->Parameterize(0.125, 0.875);
           ponto_p = &ponto_pp;
 
-          Ponto* ponto_q = new Ponto();
-          Ponto ponto_qq = patch->Parameterize(0.5, 0.875);
+          PointAdaptive* ponto_q = new PointAdaptive();
+          PointAdaptive ponto_qq = patch->Parameterize(0.5, 0.875);
           ponto_q = &ponto_qq;
 
-          Ponto* ponto_r = new Ponto();
-          Ponto ponto_rr = patch->Parameterize(0.875, 0.875);
+          PointAdaptive* ponto_r = new PointAdaptive();
+          PointAdaptive ponto_rr = patch->Parameterize(0.875, 0.875);
           ponto_r = &ponto_rr;
 
           CurvatureAnalytical kaj(*(static_cast<Noh*>(ponto_j)),
@@ -540,36 +547,36 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
           i++;
 
           if (points == 25) {
-            Ponto* ponto_s = new Ponto();
-            Ponto ponto_ss = patch->Parameterize(0.25, 0.0);
+            PointAdaptive* ponto_s = new PointAdaptive();
+            PointAdaptive ponto_ss = patch->Parameterize(0.25, 0.0);
             ponto_s = &ponto_ss;
 
-            Ponto* ponto_t = new Ponto();
-            Ponto ponto_tt = patch->Parameterize(0.75, 0.0);
+            PointAdaptive* ponto_t = new PointAdaptive();
+            PointAdaptive ponto_tt = patch->Parameterize(0.75, 0.0);
             ponto_t = &ponto_tt;
 
-            Ponto* ponto_u = new Ponto();
-            Ponto ponto_uu = patch->Parameterize(0.0, 0.25);
+            PointAdaptive* ponto_u = new PointAdaptive();
+            PointAdaptive ponto_uu = patch->Parameterize(0.0, 0.25);
             ponto_u = &ponto_uu;
 
-            Ponto* ponto_v = new Ponto();
-            Ponto ponto_vv = patch->Parameterize(1.0, 0.25);
+            PointAdaptive* ponto_v = new PointAdaptive();
+            PointAdaptive ponto_vv = patch->Parameterize(1.0, 0.25);
             ponto_v = &ponto_vv;
 
-            Ponto* ponto_w = new Ponto();
-            Ponto ponto_ww = patch->Parameterize(0.0, 0.75);
+            PointAdaptive* ponto_w = new PointAdaptive();
+            PointAdaptive ponto_ww = patch->Parameterize(0.0, 0.75);
             ponto_w = &ponto_ww;
 
-            Ponto* ponto_x = new Ponto();
-            Ponto ponto_xx = patch->Parameterize(1.0, 0.75);
+            PointAdaptive* ponto_x = new PointAdaptive();
+            PointAdaptive ponto_xx = patch->Parameterize(1.0, 0.75);
             ponto_x = &ponto_xx;
 
-            Ponto* ponto_y = new Ponto();
-            Ponto ponto_yy = patch->Parameterize(0.25, 1.0);
+            PointAdaptive* ponto_y = new PointAdaptive();
+            PointAdaptive ponto_yy = patch->Parameterize(0.25, 1.0);
             ponto_y = &ponto_yy;
 
-            Ponto* ponto_z = new Ponto();
-            Ponto ponto_zz = patch->Parameterize(0.75, 1.0);
+            PointAdaptive* ponto_z = new PointAdaptive();
+            PointAdaptive ponto_zz = patch->Parameterize(0.75, 1.0);
             ponto_z = &ponto_zz;
 
             CurvatureAnalytical kas(*(static_cast<Noh*>(ponto_s)),
@@ -727,11 +734,11 @@ double ChargeEstimateProcess::calculateAreaPatch(PatchBezier* patch,
       Vetor Pu = patch->Qu(u, v);
       Vetor Pv = patch->Qv(u, v);
 
-      V.x = Pu.y * Pv.z - Pu.z * Pv.y;
-      V.y = Pu.z * Pv.x - Pu.x * Pv.z;
-      V.z = Pu.x * Pv.y - Pu.y * Pv.x;
+      V.x_ = Pu.y * Pv.z - Pu.z * Pv.y;
+      V.y = Pu.z * Pv.x_ - Pu.x_ * Pv.z;
+      V.z = Pu.x_ * Pv.y - Pu.y * Pv.x_;
 
-      I = I + 0.25 * ((sqrt(pow(V.x, 2) + pow(V.y, 2) + pow(V.z, 2))) *
+      I = I + 0.25 * ((sqrt(pow(V.x_, 2) + pow(V.y, 2) + pow(V.z, 2))) *
                       peso[i] * peso[j]);
     }
   }
@@ -829,8 +836,8 @@ SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
 
   for (double v = 0.0; v <= 1.0; v += 1.0 / grau) {
     for (double u = 0.0; u <= 1.0; u += 1.0 / grau) {
-      Ponto* p = new Noh(patch->Parameterize(u, v));
-      p->id = idv++;
+      PointAdaptive* p = new Noh(patch->Parameterize(u, v));
+      p->SetId(idv++);
 
       // cout << "u = " << u << " v = " << v << endl;
       if (v == 0 and c1)  // p está na curva 1
@@ -853,9 +860,9 @@ SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
     for (double u = 1.0 / (2.0 * grau); u <= 1.0 - (1.0 / (2.0 * grau));
          u += 1.0 / grau) {
       //   cout << "u = " << u << " v = " << v << endl;
-      Ponto* p = new Noh(patch->Parameterize(u, v));
+      PointAdaptive* p = new Noh(patch->Parameterize(u, v));
       sub->SetNoh(static_cast<Noh*>(p));
-      p->id = idv++;
+      p->SetId(idv++);
     }
   }
 

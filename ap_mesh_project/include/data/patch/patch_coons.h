@@ -5,9 +5,9 @@
 #include <vector>
 
 #include "../../data/definitions.h"
-#include "../Ponto.h"
 #include "../Vetor.h"
 #include "../curve/curve_adaptive.h"
+#include "../point_adaptive.h"
 #include "patch.h"
 
 class PatchCoons : public Patch {
@@ -22,10 +22,10 @@ class PatchCoons : public Patch {
   CurveAdaptive* GetCurve(const unsigned int position);
   // encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
   // ou a projeção desse ponto na superfície
-  virtual tuple<double, double> FindUV(const Ponto& p) = 0;
+  virtual tuple<double, double> FindUV(const PointAdaptive& p) = 0;
 
   // encontra o ponto p na curva dado um parâmetro p
-  virtual Ponto Parameterize(double u, double v) = 0;
+  virtual PointAdaptive Parameterize(double u, double v) = 0;
 
   // calcula as derivadas parciais nas direçõe u e v
   virtual Vetor Qu(double u, double v) = 0;
@@ -36,12 +36,12 @@ class PatchCoons : public Patch {
   virtual Vetor Qvv(double u, double v) = 0;
 
   // calcula as derivadas parciais de um ponto p
-  virtual Vetor Qu(const Ponto& point) = 0;
-  virtual Vetor Qv(const Ponto& point) = 0;
-  virtual Vetor Quu(const Ponto& point) = 0;
-  virtual Vetor Quv(const Ponto& point) = 0;
-  virtual Vetor Qvu(const Ponto& point) = 0;
-  virtual Vetor Qvv(const Ponto& point) = 0;
+  virtual Vetor Qu(const PointAdaptive& point) = 0;
+  virtual Vetor Qv(const PointAdaptive& point) = 0;
+  virtual Vetor Quu(const PointAdaptive& point) = 0;
+  virtual Vetor Quv(const PointAdaptive& point) = 0;
+  virtual Vetor Qvu(const PointAdaptive& point) = 0;
+  virtual Vetor Qvv(const PointAdaptive& point) = 0;
 
  protected:
   vector<CurveAdaptive*> curves_;

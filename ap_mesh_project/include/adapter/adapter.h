@@ -23,25 +23,23 @@
 class Adapter {
  public:
 #if USE_OPENMP
-  list<Ponto*> AdaptCurveByCurveOmp(CurveAdaptive* curve,
-                                    Performer::IdManager* id_manager,
-                                    double factor_disc_global = 1.0);
-  list<Ponto*> AdaptCurveBySurfaceOmp(CurveAdaptive* curve,
-                                      Performer::IdManager* id_manager,
-                                      double factor_disc_global = 1.0);
+  list<PointAdaptive*> AdaptCurveByCurveOmp(CurveAdaptive* curve,
+                                            Performer::IdManager* id_manager,
+                                            double factor_disc_global = 1.0);
+  list<PointAdaptive*> AdaptCurveBySurfaceOmp(CurveAdaptive* curve,
+                                              Performer::IdManager* id_manager,
+                                              double factor_disc_global = 1.0);
   SubMesh* AdaptDomainOmp(PatchCoons* coons_patch,
                           Performer::IdManager* id_manager,
                           double factor_disc_global = 1.0);
 #endif  // #USE_OPENMP
 
-  list<Ponto*> AdaptCurveByCurve(CurveAdaptive* curve,
-                                 map<Ponto*, Ponto*>& map_points,
-                                 Performer::IdManager* id_manager,
-                                 double factor_disc_global = 1.0);
-  list<Ponto*> AdaptCurveBySurface(CurveAdaptive* curve,
-                                   map<Ponto*, Ponto*>& map_points,
-                                   Performer::IdManager* id_manager,
-                                   double factor_disc_global = 1.0);
+  list<PointAdaptive*> AdaptCurveByCurve(
+      CurveAdaptive* curve, map<PointAdaptive*, PointAdaptive*>& map_points,
+      Performer::IdManager* id_manager, double factor_disc_global = 1.0);
+  list<PointAdaptive*> AdaptCurveBySurface(
+      CurveAdaptive* curve, map<PointAdaptive*, PointAdaptive*>& map_points,
+      Performer::IdManager* id_manager, double factor_disc_global = 1.0);
   SubMesh* AdaptDomain(PatchCoons* coons_patch,
                        Performer::IdManager* id_manager,
                        double factor_disc_global = 1.0);

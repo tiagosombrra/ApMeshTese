@@ -5,8 +5,8 @@
 
 #include <cmath>
 
-#include "../data/Modelo.h"
 #include "../data/mesh/sub_mesh.h"
+#include "../data/model.h"
 
 extern double TOLERANCIA;
 extern double EPSYLON;  // define a qualidade mínima da malha

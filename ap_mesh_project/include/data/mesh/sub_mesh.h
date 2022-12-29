@@ -4,9 +4,9 @@
 
 #include <vector>
 
-#include "../Noh.h"
 #include "../definitions.h"
 #include "../element_adaptive.h"
+#include "../noh.h"
 
 class Patch;
 

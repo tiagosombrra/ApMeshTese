@@ -8,9 +8,9 @@ using namespace std;
 
 #include <tuple>
 
-#include "Noh.h"
 #include "Vetor.h"
 #include "element_adaptive.h"
+#include "noh.h"
 
 class Triangulo : public ElementAdaptive {
   Noh* n1;

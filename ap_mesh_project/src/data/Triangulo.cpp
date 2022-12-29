@@ -9,9 +9,9 @@ Triangulo::Triangulo(Noh* v1, Noh* v2, Noh* v3) {
   this->n2 = v2;
   this->n3 = v3;
 
-  this->n1->insereElemento(this);
-  this->n2->insereElemento(this);
-  this->n3->insereElemento(this);
+  this->n1->InsertElement(this);
+  this->n2->InsertElement(this);
+  this->n3->InsertElement(this);
 
   this->angN1 = setAnguloN1();
   this->angN2 = setAnguloN2();
@@ -66,11 +66,11 @@ double Triangulo::setAnguloN3() {
 
 // retorna o ângulo do nó n
 double Triangulo::GetAngle(const Noh& n) {
-  if (this->n1->distanciaPara(n) <= TOLERANCIA) return this->angN1;
+  if (this->n1->CalculateDistance(n) <= TOLERANCIA) return this->angN1;
 
-  if (this->n2->distanciaPara(n) <= TOLERANCIA) return this->angN2;
+  if (this->n2->CalculateDistance(n) <= TOLERANCIA) return this->angN2;
 
-  if (this->n3->distanciaPara(n) <= TOLERANCIA) return this->angN3;
+  if (this->n3->CalculateDistance(n) <= TOLERANCIA) return this->angN3;
 
   return -1;  // erro
 }
@@ -98,9 +98,9 @@ void Triangulo::substituir(Noh* velho, Noh* novo) {
 }
 
 double Triangulo::quality() {
-  double a = n1->distanciaPara(static_cast<Ponto>(*n2));
-  double b = n2->distanciaPara(static_cast<Ponto>(*n3));
-  double c = n3->distanciaPara(static_cast<Ponto>(*n1));
+  double a = n1->CalculateDistance(static_cast<PointAdaptive>(*n2));
+  double b = n2->CalculateDistance(static_cast<PointAdaptive>(*n3));
+  double c = n3->CalculateDistance(static_cast<PointAdaptive>(*n1));
 
   // cout<<"a "<<a<<"b "<<b<<"c "<<c<<endl;
 

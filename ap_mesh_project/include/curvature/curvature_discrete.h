@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <list>
 
-#include "../data/Noh.h"
 #include "../data/element_adaptive.h"
+#include "../data/noh.h"
 #include "adjacent.h"
 #include "curvature.h"
 
@@ -21,7 +21,7 @@ class CurvatureDiscrete : public Curvature {
 
   Noh noh_;
   // lista dos elementos de 'm' incidentes em 'n'
-  list<ElementAdaptive*> list_elements_;
+  list<ElementAdaptive*> elements_;
   // área dos elementos incidentes em 'n'
   double a_;
   // assume M_PI ou 2 * M_PI

@@ -4,8 +4,8 @@
 #include <list>
 #include <vector>
 
-#include "../Noh.h"
 #include "../Triangulo.h"
+#include "../noh.h"
 #include "../patch/patch.h"
 
 class CurveAdaptive {
@@ -16,13 +16,13 @@ class CurveAdaptive {
 
   void SetId(unsigned int id);
   double GetLength();
-  void InsertPoint(Ponto* point);
+  void InsertPoint(PointAdaptive* point);
   unsigned int GetNumBerPoints() const;
   // retorna o i-ésimo ponto
-  Ponto* GetPoint(const unsigned int position);
+  PointAdaptive* GetPoint(const unsigned int position);
   // troca a lista de pontos
-  void SetPoints(list<Ponto*> new_points);
-  list<Ponto*>& GetPoints();
+  void SetPoints(list<PointAdaptive*> new_points);
+  list<PointAdaptive*>& GetPoints();
   void InsertPatch(Patch* patch);
   unsigned int GetNumBerPatches() const;
   // retorna o i-ésimo patch
@@ -31,9 +31,10 @@ class CurveAdaptive {
   bool CheckIsOnBorder();
 
   // calcula o comprimento de curva de p1 a p2
-  virtual double CalculateLengthPoints(const Ponto&, const Ponto&);
+  virtual double CalculateLengthPoints(const PointAdaptive&,
+                                       const PointAdaptive&);
   // calcula o comprimento de curva até p
-  virtual double CalculateLengthPoint(const Ponto&);
+  virtual double CalculateLengthPoint(const PointAdaptive&);
   // calcula o comprimento total "L" da curva
   virtual void CalculateLengthCurve();
   // calcula a curvatuta da curva
@@ -45,7 +46,7 @@ class CurveAdaptive {
   // comprimento total da curva
   double length_;
   // será usada na discretização
-  list<Ponto*> points_;
+  list<PointAdaptive*> points_;
   // uma curva só com um patch é de borda
   vector<Patch*> patches_;
 };

@@ -3,11 +3,11 @@
 #ifndef Vertice_h
 #define Vertice_h
 
-#include "Ponto.h"
+#include "point_adaptive.h"
 
-struct Vertice : public Ponto {
+struct Vertice : public PointAdaptive {
   Vertice();
   Vertice(double x, double y, double z);
-  Vertice(Ponto* p);
+  Vertice(PointAdaptive* p);
 };
 #endif

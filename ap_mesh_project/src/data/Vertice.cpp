@@ -4,10 +4,10 @@
 
 Vertice::Vertice() {}
 
-Vertice::Vertice(double x, double y, double z) : Ponto(x, y, z) {}
+Vertice::Vertice(double x, double y, double z) : PointAdaptive(x, y, z) {}
 
-Vertice::Vertice(Ponto *p) {
-  this->x = p->x;
-  this->y = p->y;
-  this->z = p->z;
+Vertice::Vertice(PointAdaptive *point) {
+  this->x_ = point->GetX();
+  this->y_ = point->GetY();
+  this->z_ = point->GetZ();
 }

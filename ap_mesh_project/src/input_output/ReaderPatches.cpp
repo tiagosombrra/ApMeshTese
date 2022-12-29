@@ -14,7 +14,7 @@ std::list<PatchBezier*> ReaderPatches::loaderBezierPatchFile(string fileName)
       while (fin) {
         std::string line;
         std::vector<double> v;
-        std::vector<Ponto> vectorControlPoints;
+        std::vector<PointAdaptive> vectorControlPoints;
         std::vector<long> p;
         long id_ponto = 0;
 
@@ -31,7 +31,7 @@ std::list<PatchBezier*> ReaderPatches::loaderBezierPatchFile(string fileName)
               v.push_back(n);
             }
 
-            Ponto ponto(v[0], v[1], v[2], id_ponto);
+            PointAdaptive ponto(v[0], v[1], v[2], id_ponto);
             id_ponto++;
             vectorControlPoints.push_back(ponto);
             v.erase(v.begin(), v.end());
@@ -116,16 +116,16 @@ std::list<PatchBezier*> ReaderPatches::loaderBezierPatchFile(string fileName)
   return patches;
 }
 
-Ponto ReaderPatches::getPointVectorControlPoints(
-    std::vector<Ponto> vectorPoints, unsigned long idPoint) {
-  for (std::vector<Ponto>::iterator it = vectorPoints.begin();
+PointAdaptive ReaderPatches::getPointVectorControlPoints(
+    std::vector<PointAdaptive> vectorPoints, unsigned long idPoint) {
+  for (std::vector<PointAdaptive>::iterator it = vectorPoints.begin();
        it != vectorPoints.end(); ++it) {
-    if ((*it).getId() == idPoint) {
+    if ((*it).GetId() == idPoint) {
       return (*it);
     }
   }
 
-  Ponto ponto;
+  PointAdaptive ponto;
   return ponto;
 }
 
@@ -134,22 +134,22 @@ Geometry* ReaderPatches::readerPatches(Geometry* geo, string fileName) {
   std::list<PatchBezier*> listBezierPt = pt->loaderBezierPatchFile(fileName);
   delete pt;
 
-  Ponto* p00;
-  Ponto* p01;
-  Ponto* p02;
-  Ponto* p03;
-  Ponto* p10;
-  Ponto* p11;
-  Ponto* p12;
-  Ponto* p13;
-  Ponto* p20;
-  Ponto* p21;
-  Ponto* p22;
-  Ponto* p23;
-  Ponto* p30;
-  Ponto* p31;
-  Ponto* p32;
-  Ponto* p33;
+  PointAdaptive* p00;
+  PointAdaptive* p01;
+  PointAdaptive* p02;
+  PointAdaptive* p03;
+  PointAdaptive* p10;
+  PointAdaptive* p11;
+  PointAdaptive* p12;
+  PointAdaptive* p13;
+  PointAdaptive* p20;
+  PointAdaptive* p21;
+  PointAdaptive* p22;
+  PointAdaptive* p23;
+  PointAdaptive* p30;
+  PointAdaptive* p31;
+  PointAdaptive* p32;
+  PointAdaptive* p33;
   CurveAdaptive* patch_c1;
   CurveAdaptive* patch_c2;
   CurveAdaptive* patch_c3;
@@ -157,90 +157,90 @@ Geometry* ReaderPatches::readerPatches(Geometry* geo, string fileName) {
 
   for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {
-    p00 =
-        new Vertice((*it)->GetPt00().x, (*it)->GetPt00().y, (*it)->GetPt00().z);
-    p00->setId((*it)->GetPt00().id);
-    p10 =
-        new Vertice((*it)->GetPt10().x, (*it)->GetPt10().y, (*it)->GetPt10().z);
-    p10->setId((*it)->GetPt10().id);
-    p20 =
-        new Vertice((*it)->GetPt20().x, (*it)->GetPt20().y, (*it)->GetPt20().z);
-    p20->setId((*it)->GetPt20().id);
-    p30 =
-        new Vertice((*it)->GetPt30().x, (*it)->GetPt30().y, (*it)->GetPt30().z);
-    p30->setId((*it)->GetPt30().id);
+    p00 = new Vertice((*it)->GetPt00().GetX(), (*it)->GetPt00().GetY(),
+                      (*it)->GetPt00().GetZ());
+    p00->SetId((*it)->GetPt00().GetId());
+    p10 = new Vertice((*it)->GetPt10().GetX(), (*it)->GetPt10().GetY(),
+                      (*it)->GetPt10().GetZ());
+    p10->SetId((*it)->GetPt10().GetId());
+    p20 = new Vertice((*it)->GetPt20().GetX(), (*it)->GetPt20().GetY(),
+                      (*it)->GetPt20().GetZ());
+    p20->SetId((*it)->GetPt20().GetId());
+    p30 = new Vertice((*it)->GetPt30().GetX(), (*it)->GetPt30().GetY(),
+                      (*it)->GetPt30().GetZ());
+    p30->SetId((*it)->GetPt30().GetId());
 
-    p01 =
-        new Vertice((*it)->GetPt01().x, (*it)->GetPt01().y, (*it)->GetPt01().z);
-    p01->setId((*it)->GetPt01().id);
-    p11 =
-        new Vertice((*it)->GetPt11().x, (*it)->GetPt11().y, (*it)->GetPt11().z);
-    p11->setId((*it)->GetPt11().id);
-    p21 =
-        new Vertice((*it)->GetPt21().x, (*it)->GetPt21().y, (*it)->GetPt21().z);
-    p21->setId((*it)->GetPt21().id);
-    p31 =
-        new Vertice((*it)->GetPt31().x, (*it)->GetPt31().y, (*it)->GetPt31().z);
-    p31->setId((*it)->GetPt31().id);
+    p01 = new Vertice((*it)->GetPt01().GetX(), (*it)->GetPt01().GetY(),
+                      (*it)->GetPt01().GetZ());
+    p01->SetId((*it)->GetPt01().GetId());
+    p11 = new Vertice((*it)->GetPt11().GetX(), (*it)->GetPt11().GetY(),
+                      (*it)->GetPt11().GetZ());
+    p11->SetId((*it)->GetPt11().GetId());
+    p21 = new Vertice((*it)->GetPt21().GetX(), (*it)->GetPt21().GetY(),
+                      (*it)->GetPt21().GetZ());
+    p21->SetId((*it)->GetPt21().GetId());
+    p31 = new Vertice((*it)->GetPt31().GetX(), (*it)->GetPt31().GetY(),
+                      (*it)->GetPt31().GetZ());
+    p31->SetId((*it)->GetPt31().GetId());
 
-    p02 =
-        new Vertice((*it)->GetPt02().x, (*it)->GetPt02().y, (*it)->GetPt02().z);
-    p02->setId((*it)->GetPt02().id);
-    p12 =
-        new Vertice((*it)->GetPt12().x, (*it)->GetPt12().y, (*it)->GetPt12().z);
-    p12->setId((*it)->GetPt12().id);
-    p22 =
-        new Vertice((*it)->GetPt22().x, (*it)->GetPt22().y, (*it)->GetPt22().z);
-    p22->setId((*it)->GetPt22().id);
-    p32 =
-        new Vertice((*it)->GetPt32().x, (*it)->GetPt32().y, (*it)->GetPt32().z);
-    p32->setId((*it)->GetPt32().id);
+    p02 = new Vertice((*it)->GetPt02().GetX(), (*it)->GetPt02().GetY(),
+                      (*it)->GetPt02().GetZ());
+    p02->SetId((*it)->GetPt02().GetId());
+    p12 = new Vertice((*it)->GetPt12().GetX(), (*it)->GetPt12().GetY(),
+                      (*it)->GetPt12().GetZ());
+    p12->SetId((*it)->GetPt12().GetId());
+    p22 = new Vertice((*it)->GetPt22().GetX(), (*it)->GetPt22().GetY(),
+                      (*it)->GetPt22().GetZ());
+    p22->SetId((*it)->GetPt22().GetId());
+    p32 = new Vertice((*it)->GetPt32().GetX(), (*it)->GetPt32().GetY(),
+                      (*it)->GetPt32().GetZ());
+    p32->SetId((*it)->GetPt32().GetId());
 
-    p03 =
-        new Vertice((*it)->GetPt03().x, (*it)->GetPt03().y, (*it)->GetPt03().z);
-    p03->setId((*it)->GetPt03().id);
-    p13 =
-        new Vertice((*it)->GetPt13().x, (*it)->GetPt13().y, (*it)->GetPt13().z);
-    p13->setId((*it)->GetPt13().id);
-    p23 =
-        new Vertice((*it)->GetPt23().x, (*it)->GetPt23().y, (*it)->GetPt23().z);
-    p23->setId((*it)->GetPt23().id);
-    p33 =
-        new Vertice((*it)->GetPt33().x, (*it)->GetPt33().y, (*it)->GetPt33().z);
-    p33->setId((*it)->GetPt33().id);
+    p03 = new Vertice((*it)->GetPt03().GetX(), (*it)->GetPt03().GetY(),
+                      (*it)->GetPt03().GetZ());
+    p03->SetId((*it)->GetPt03().GetId());
+    p13 = new Vertice((*it)->GetPt13().GetX(), (*it)->GetPt13().GetY(),
+                      (*it)->GetPt13().GetZ());
+    p13->SetId((*it)->GetPt13().GetId());
+    p23 = new Vertice((*it)->GetPt23().GetX(), (*it)->GetPt23().GetY(),
+                      (*it)->GetPt23().GetZ());
+    p23->SetId((*it)->GetPt23().GetId());
+    p33 = new Vertice((*it)->GetPt33().GetX(), (*it)->GetPt33().GetY(),
+                      (*it)->GetPt33().GetZ());
+    p33->SetId((*it)->GetPt33().GetId());
 
-    if (geo->verifyCurveGeometria(p00, p10, p20, p30) == NULL) {
+    if (geo->VerifyCurveGeometry(p00, p10, p20, p30) == NULL) {
       patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
-      geo->insereCurva(patch_c1);
+      geo->InsertCurve(patch_c1);
     } else {
-      patch_c1 = geo->verifyCurveGeometria(p00, p10, p20, p30);
+      patch_c1 = geo->VerifyCurveGeometry(p00, p10, p20, p30);
     }
 
-    if (geo->verifyCurveGeometria(p30, p31, p32, p33) == NULL) {
+    if (geo->VerifyCurveGeometry(p30, p31, p32, p33) == NULL) {
       patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
-      geo->insereCurva(patch_c2);
+      geo->InsertCurve(patch_c2);
     } else {
-      patch_c2 = geo->verifyCurveGeometria(p30, p31, p32, p33);
+      patch_c2 = geo->VerifyCurveGeometry(p30, p31, p32, p33);
     }
 
-    if (geo->verifyCurveGeometria(p03, p13, p23, p33) == NULL) {
+    if (geo->VerifyCurveGeometry(p03, p13, p23, p33) == NULL) {
       patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
-      geo->insereCurva(patch_c3);
+      geo->InsertCurve(patch_c3);
     } else {
-      patch_c3 = geo->verifyCurveGeometria(p03, p13, p23, p33);
+      patch_c3 = geo->VerifyCurveGeometry(p03, p13, p23, p33);
     }
 
-    if (geo->verifyCurveGeometria(p00, p01, p02, p03) == NULL) {
+    if (geo->VerifyCurveGeometry(p00, p01, p02, p03) == NULL) {
       patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
-      geo->insereCurva(patch_c4);
+      geo->InsertCurve(patch_c4);
     } else {
-      patch_c4 = geo->verifyCurveGeometria(p00, p01, p02, p03);
+      patch_c4 = geo->VerifyCurveGeometry(p00, p01, p02, p03);
     }
 
     (*it) = new PatchBezier(patch_c1, patch_c2, patch_c3, patch_c4, *p11, *p21,
                             *p12, *p22);
 
-    geo->inserePatch((*it));
+    geo->InsertPatch((*it));
   }
 
   return geo;

@@ -4,14 +4,14 @@
 #include <cmath>
 #include <tuple>
 
-#include "../data/Ponto.h"
 #include "../data/Vetor.h"
 #include "../data/patch/patch_coons.h"
+#include "../data/point_adaptive.h"
 #include "curvature.h"
 
 class CurvatureAnalytical : public Curvature {
  public:
-  CurvatureAnalytical(const Ponto& v, PatchCoons& p);
+  CurvatureAnalytical(const PointAdaptive& v, PatchCoons& p);
   double CalculateMeanCurvature() override;
   double CalculateGaussCurvature() override;
 

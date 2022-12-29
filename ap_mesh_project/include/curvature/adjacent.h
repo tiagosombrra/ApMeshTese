@@ -5,8 +5,8 @@
 #include <iostream>
 #include <list>
 
-#include "../data/Noh.h"
 #include "../data/Triangulo.h"
+#include "../data/noh.h"
 
 // OBS: Essa classe foi implementada para triâgulos !!!
 class Adjacent {

@@ -16,26 +16,29 @@ class PatchBezier : public PatchCoons {
   //	C4		C2
   //		C1
   PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
-              CurveAdaptive* curve3, CurveAdaptive* curve4, Ponto pt11,
-              Ponto pt21, Ponto pt12, Ponto pt22, bool signal_curve1 = true,
+              CurveAdaptive* curve3, CurveAdaptive* curve4, PointAdaptive pt11,
+              PointAdaptive pt21, PointAdaptive pt12, PointAdaptive pt22,
+              bool signal_curve1 = true, bool signal_curve2 = true,
+              bool signal_curve3 = true, bool signal_curve4 = true);
+
+  PatchBezier(PointAdaptive pt00, PointAdaptive pt01, PointAdaptive pt02,
+              PointAdaptive pt03, PointAdaptive pt10, PointAdaptive pt11,
+              PointAdaptive pt12, PointAdaptive pt13, PointAdaptive pt20,
+              PointAdaptive pt21, PointAdaptive pt22, PointAdaptive pt23,
+              PointAdaptive pt30, PointAdaptive pt31, PointAdaptive pt32,
+              PointAdaptive pt33, bool signal_curve1 = true,
               bool signal_curve2 = true, bool signal_curve3 = true,
               bool signal_curve4 = true);
-
-  PatchBezier(Ponto pt00, Ponto pt01, Ponto pt02, Ponto pt03, Ponto pt10,
-              Ponto pt11, Ponto pt12, Ponto pt13, Ponto pt20, Ponto pt21,
-              Ponto pt22, Ponto pt23, Ponto pt30, Ponto pt31, Ponto pt32,
-              Ponto pt33, bool signal_curve1 = true, bool signal_curve2 = true,
-              bool signal_curve3 = true, bool signal_curve4 = true);
   ~PatchBezier();
 
-  Ponto CalculatePointUV();
+  PointAdaptive CalculatePointUV();
   void PrintAllMatrixPatchBezier();
   // encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
   // ou a projeção desse ponto na superfície
   // tuple<double, double> encontrar_u_v(const Ponto& p);
-  tuple<double, double> FindUV(const Ponto& point);
+  tuple<double, double> FindUV(const PointAdaptive& point);
   // encontra o ponto p na curva dado um parâmetro p
-  Ponto Parameterize(double u, double v);
+  PointAdaptive Parameterize(double u, double v);
   // calcula as derivadas parciais nas direçõe u e v
   Vetor Qu(double u, double v);
   Vetor Qv(double u, double v);
@@ -45,12 +48,12 @@ class PatchBezier : public PatchCoons {
   Vetor Qvv(double u, double v);
 
   // calcula as derivadas parciais de um ponto p
-  Vetor Qu(const Ponto& point);
-  Vetor Qv(const Ponto& point);
-  Vetor Quu(const Ponto& point);
-  Vetor Quv(const Ponto& point);
-  Vetor Qvu(const Ponto& point);
-  Vetor Qvv(const Ponto& point);
+  Vetor Qu(const PointAdaptive& point);
+  Vetor Qv(const PointAdaptive& point);
+  Vetor Quu(const PointAdaptive& point);
+  Vetor Quv(const PointAdaptive& point);
+  Vetor Qvu(const PointAdaptive& point);
+  Vetor Qvv(const PointAdaptive& point);
 
   Matrix1x4 GetU() const;
   Matrix4x4 GetGx() const;
@@ -59,45 +62,45 @@ class PatchBezier : public PatchCoons {
   Matrix4x1 GetV() const;
   Matrix4x4 GetB() const;
 
-  Ponto GetPt00() const;
-  Ponto GetPt01() const;
-  Ponto GetPt02() const;
-  Ponto GetPt03() const;
+  PointAdaptive GetPt00() const;
+  PointAdaptive GetPt01() const;
+  PointAdaptive GetPt02() const;
+  PointAdaptive GetPt03() const;
 
-  Ponto GetPt10() const;
-  Ponto GetPt11() const;
-  Ponto GetPt12() const;
-  Ponto GetPt13() const;
+  PointAdaptive GetPt10() const;
+  PointAdaptive GetPt11() const;
+  PointAdaptive GetPt12() const;
+  PointAdaptive GetPt13() const;
 
-  Ponto GetPt20() const;
-  Ponto GetPt21() const;
-  Ponto GetPt22() const;
-  Ponto GetPt23() const;
+  PointAdaptive GetPt20() const;
+  PointAdaptive GetPt21() const;
+  PointAdaptive GetPt22() const;
+  PointAdaptive GetPt23() const;
 
-  Ponto GetPt30() const;
-  Ponto GetPt31() const;
-  Ponto GetPt32() const;
-  Ponto GetPt33() const;
+  PointAdaptive GetPt30() const;
+  PointAdaptive GetPt31() const;
+  PointAdaptive GetPt32() const;
+  PointAdaptive GetPt33() const;
 
-  void SetPt00(Ponto point);
-  void SetPt01(Ponto point);
-  void SetPt02(Ponto point);
-  void SetPt03(Ponto point);
+  void SetPt00(PointAdaptive point);
+  void SetPt01(PointAdaptive point);
+  void SetPt02(PointAdaptive point);
+  void SetPt03(PointAdaptive point);
 
-  void SetPt10(Ponto point);
-  void SetPt11(Ponto point);
-  void SetPt12(Ponto point);
-  void SetPt13(Ponto point);
+  void SetPt10(PointAdaptive point);
+  void SetPt11(PointAdaptive point);
+  void SetPt12(PointAdaptive point);
+  void SetPt13(PointAdaptive point);
 
-  void SetPt20(Ponto point);
-  void SetPt21(Ponto point);
-  void SetPt22(Ponto point);
-  void SetPt23(Ponto point);
+  void SetPt20(PointAdaptive point);
+  void SetPt21(PointAdaptive point);
+  void SetPt22(PointAdaptive point);
+  void SetPt23(PointAdaptive point);
 
-  void SetPt30(Ponto point);
-  void SetPt31(Ponto point);
-  void SetPt32(Ponto point);
-  void SetPt33(Ponto point);
+  void SetPt30(PointAdaptive point);
+  void SetPt31(PointAdaptive point);
+  void SetPt32(PointAdaptive point);
+  void SetPt33(PointAdaptive point);
 
   // gets and sets para estimativa de carga
   double getArea() const;
@@ -125,22 +128,22 @@ class PatchBezier : public PatchCoons {
   Matrix4x4 StartBezierMatrix();
 
   // Pontos de controle
-  Ponto pt03_;
-  Ponto pt13_;
-  Ponto pt23_;
-  Ponto pt33_;
-  Ponto pt02_;
-  Ponto pt12_;
-  Ponto pt22_;
-  Ponto pt32_;
-  Ponto pt01_;
-  Ponto pt11_;
-  Ponto pt21_;
-  Ponto pt31_;
-  Ponto pt00_;
-  Ponto pt10_;
-  Ponto pt20_;
-  Ponto pt30_;
+  PointAdaptive pt03_;
+  PointAdaptive pt13_;
+  PointAdaptive pt23_;
+  PointAdaptive pt33_;
+  PointAdaptive pt02_;
+  PointAdaptive pt12_;
+  PointAdaptive pt22_;
+  PointAdaptive pt32_;
+  PointAdaptive pt01_;
+  PointAdaptive pt11_;
+  PointAdaptive pt21_;
+  PointAdaptive pt31_;
+  PointAdaptive pt00_;
+  PointAdaptive pt10_;
+  PointAdaptive pt20_;
+  PointAdaptive pt30_;
 
   Matrix4x4 mat_geo_gx_;  // Matriz geométrica (x)
   Matrix4x4 mat_geo_gy_;  // Matriz geométrica (y)

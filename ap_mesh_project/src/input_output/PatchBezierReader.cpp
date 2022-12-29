@@ -22,7 +22,7 @@ std::list<PatchHermite*> PatchBezierReader::loaderBPFileHermite() {
       while (fin) {
         std::string line;
         std::vector<double> v;
-        std::vector<Ponto> vectorControlPoints;
+        std::vector<PointAdaptive> vectorControlPoints;
         std::vector<long> p;
         long id_ponto = 0;
 
@@ -39,7 +39,7 @@ std::list<PatchHermite*> PatchBezierReader::loaderBPFileHermite() {
               v.push_back(n);
             }
 
-            Ponto ponto(v[0], v[1], v[2], id_ponto);
+            PointAdaptive ponto(v[0], v[1], v[2], id_ponto);
             id_ponto++;
             vectorControlPoints.push_back(ponto);
             v.erase(v.begin(), v.end());
@@ -135,7 +135,7 @@ std::list<PatchBezier*> PatchBezierReader::loaderBPFile(std::string filename) {
       while (fin) {
         std::string line;
         std::vector<double> v;
-        std::vector<Ponto> vectorControlPoints;
+        std::vector<PointAdaptive> vectorControlPoints;
         std::vector<long> p;
         long id_ponto = 0;
 
@@ -149,7 +149,7 @@ std::list<PatchBezier*> PatchBezierReader::loaderBPFile(std::string filename) {
               v.push_back(n);
             }
 
-            Ponto ponto(v[0], v[1], v[2], id_ponto);
+            PointAdaptive ponto(v[0], v[1], v[2], id_ponto);
             id_ponto++;
             vectorControlPoints.push_back(ponto);
             v.erase(v.begin(), v.end());
@@ -252,7 +252,7 @@ std::list<PatchBezier*> PatchBezierReader::loaderOBJFile() {
       while (fin) {
         std::string line;
         std::vector<double> v;
-        std::vector<Ponto> vectorControlPoints;
+        std::vector<PointAdaptive> vectorControlPoints;
         std::vector<long> p;
         long id_Ponto = 0;
 
@@ -266,7 +266,7 @@ std::list<PatchBezier*> PatchBezierReader::loaderOBJFile() {
               v.push_back(n);
             }
 
-            Ponto ponto(v[0], v[1], v[2], id_Ponto);
+            PointAdaptive ponto(v[0], v[1], v[2], id_Ponto);
             id_Ponto++;
             vectorControlPoints.push_back(ponto);
             v.erase(v.begin(), v.end());
@@ -348,16 +348,16 @@ std::list<PatchBezier*> PatchBezierReader::orderVectorToListBezierPatches(
   return patches;
 }
 
-Ponto PatchBezierReader::getPointVectorControlPoints(
-    std::vector<Ponto> vectorPoints, unsigned long idPoint) {
-  for (std::vector<Ponto>::iterator it = vectorPoints.begin();
+PointAdaptive PatchBezierReader::getPointVectorControlPoints(
+    std::vector<PointAdaptive> vectorPoints, unsigned long idPoint) {
+  for (std::vector<PointAdaptive>::iterator it = vectorPoints.begin();
        it != vectorPoints.end(); ++it) {
-    if ((*it).getId() == idPoint) {
+    if ((*it).GetId() == idPoint) {
       return (*it);
     }
   }
 
-  Ponto ponto;
+  PointAdaptive ponto;
   return ponto;
 }
 
@@ -434,7 +434,7 @@ std::list<PatchBezier*> PatchBezierReader::parsePatchesBezier() {
             while (iss >> n) {
               v.push_back(n);
             }
-            Ponto point3D(v[0], v[1], v[2], id_point);
+            PointAdaptive point3D(v[0], v[1], v[2], id_point);
 
             id_point++;
 

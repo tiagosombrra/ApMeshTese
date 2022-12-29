@@ -10,18 +10,18 @@ extern double DISCRETIZACAO_CURVA;
 extern double DISCRETIZACAO_INTER;
 
 #if USE_OPENMP
-list<Ponto *> Adapter::AdaptCurveByCurveOmp(CurveAdaptive *curve,
-                                            Performer::IdManager *id_manager,
-                                            double factor_disc_global) {
+list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
+    CurveAdaptive *curve, Performer::IdManager *id_manager,
+    double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->GetPoints();
-  list<Ponto *>::iterator point_current = points.begin();
-  list<Ponto *>::iterator point_next = points.begin();
+  list<PointAdaptive *> points = curve->GetPoints();
+  list<PointAdaptive *>::iterator point_current = points.begin();
+  list<PointAdaptive *>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
-  Ponto midpoint;
+  PointAdaptive midpoint;
 
   static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
 
@@ -53,7 +53,7 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(CurveAdaptive *curve,
     midpoint =
         static_cast<CurveAdaptiveParametric *>(curve)
             ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
-    midpoint.id = id_manager->next(0);
+    midpoint.SetId(id_manager->next(0));
 
     // 1.2.2.1 Encontre o parâmetro do ponto médio
     midpoint_segment =
@@ -89,13 +89,13 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(CurveAdaptive *curve,
   parameters = bin_tree.Rediscretization();
   (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
-  list<Ponto *> list_new_points;
+  list<PointAdaptive *> list_new_points;
 
   Noh *point_front = static_cast<Noh *>(points.front());
-  point_front->id = id_manager->next(0);
+  point_front->SetId(id_manager->next(0));
 
   Noh *point_back = static_cast<Noh *>(points.back());
-  point_back->id = id_manager->next(0);
+  point_back->SetId(id_manager->next(0));
 
   list_new_points.push_front(point_front);
 
@@ -104,7 +104,7 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(CurveAdaptive *curve,
     Noh *point_intermediate =
         new Noh((static_cast<CurveAdaptiveParametric *>(curve))
                     ->FindPointByParameter((*param_iterator)));
-    point_intermediate->id = id_manager->next(0);
+    point_intermediate->SetId(id_manager->next(0));
     list_new_points.push_back(point_intermediate);
   }
 
@@ -123,18 +123,18 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(CurveAdaptive *curve,
   //    return c;
 }
 
-list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
-                                              Performer::IdManager *id_manager,
-                                              double factor_disc_global) {
+list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
+    CurveAdaptive *curve, Performer::IdManager *id_manager,
+    double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->GetPoints();
-  list<Ponto *>::iterator point_current = points.begin();
-  list<Ponto *>::iterator point_next = points.begin();
+  list<PointAdaptive *> points = curve->GetPoints();
+  list<PointAdaptive *>::iterator point_current = points.begin();
+  list<PointAdaptive *>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
-  Ponto midpoint;
+  PointAdaptive midpoint;
 
   static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
 
@@ -176,12 +176,12 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
       // testamos se ka é ZERO!
       if (fabs(ka_midpoint) < TOLERANCIA) {
         ka_midpoint = ka_p0.CalculateMeanCurvature();
-        kd_average = ((static_cast<Noh *>((*point_current)))->Hd +
-                      (static_cast<Noh *>((*point_next))->Hd)) /
+        kd_average = ((static_cast<Noh *>((*point_current)))->GetHd() +
+                      (static_cast<Noh *>((*point_next))->GetHd())) /
                      2.0;
       } else {
-        kd_average = ((static_cast<Noh *>((*point_current)))->Gd +
-                      (static_cast<Noh *>((*point_next)))->Gd) /
+        kd_average = ((static_cast<Noh *>((*point_current)))->GetGd() +
+                      (static_cast<Noh *>((*point_next)))->GetGd()) /
                      2.0;
       }
     } else {
@@ -199,12 +199,12 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
           double Ha_pi = ka_pi.CalculateMeanCurvature();
 
           ka_midpoint = (Ha > Ha_pi) ? Ha : Ha_pi;
-          kd_average = ((static_cast<Noh *>((*point_current)))->Hd +
-                        (static_cast<Noh *>((*point_next))->Hd)) /
+          kd_average = ((static_cast<Noh *>((*point_current)))->GetHd() +
+                        (static_cast<Noh *>((*point_next))->GetHd())) /
                        2.0;
         } else {
-          kd_average = ((static_cast<Noh *>((*point_current)))->Gd +
-                        (static_cast<Noh *>((*point_next)))->Gd) /
+          kd_average = ((static_cast<Noh *>((*point_current)))->GetGd() +
+                        (static_cast<Noh *>((*point_next)))->GetGd()) /
                        2.0;
         }
       }
@@ -238,22 +238,22 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
   parameters = bin_tree.Rediscretization();
   (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
-  list<Ponto *> list_new_points;
+  list<PointAdaptive *> list_new_points;
 
   Noh *point_front = static_cast<Noh *>(points.front());
-  point_front->id = id_manager->next(0);
+  point_front->SetId(id_manager->next(0));
   list_new_points.push_front(point_front);
 
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
     Noh *n = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
                          ->FindPointByParameter((*param_iterator)));
-    n->id = id_manager->next(0);
+    n->SetId(id_manager->next(0));
     list_new_points.push_back(n);
   }
 
   Noh *point_back = static_cast<Noh *>(points.back());
-  point_back->id = id_manager->next(0);
+  point_back->SetId(id_manager->next(0));
   list_new_points.push_back(point_back);
 
   return list_new_points;
@@ -392,14 +392,22 @@ tri->GetNoh
     double ka = 0.0;
     double kd = 0.0;
 
-    if (fabs(tri->GetNoh(1).Ga) >= TOLERANCIA and
-        fabs(tri->GetNoh(2).Ga) >= TOLERANCIA and
-        fabs(tri->GetNoh(3).Ga) >= TOLERANCIA) {
-      ka = (tri->GetNoh(1).Ga + tri->GetNoh(2).Ga + tri->GetNoh(3).Ga) / 3.0;
-      kd = (tri->GetNoh(1).Gd + tri->GetNoh(2).Gd + tri->GetNoh(3).Gd) / 3.0;
+    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCIA &&
+        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCIA &&
+        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCIA) {
+      ka = (tri->GetNoh(1).GetGa() + tri->GetNoh(2).GetGa() +
+            tri->GetNoh(3).GetGa()) /
+           3.0;
+      kd = (tri->GetNoh(1).GetGd() + tri->GetNoh(2).GetGd() +
+            tri->GetNoh(3).GetGd()) /
+           3.0;
     } else {
-      ka = (tri->GetNoh(1).Ha + tri->GetNoh(2).Ha + tri->GetNoh(3).Ha) / 3.0;
-      kd = (tri->GetNoh(1).Hd + tri->GetNoh(2).Hd + tri->GetNoh(3).Hd) / 3.0;
+      ka = (tri->GetNoh(1).GetHa() + tri->GetNoh(2).GetHa() +
+            tri->GetNoh(3).GetHa()) /
+           3.0;
+      kd = (tri->GetNoh(1).GetHd() + tri->GetNoh(2).GetHd() +
+            tri->GetNoh(3).GetHd()) /
+           3.0;
     }
 
     lenght_new = CalculateNewSize(ka, kd, factor_disc, length_old);
@@ -447,7 +455,7 @@ tri->GetNoh
     Noh *noh =
         new Noh(coons_patch->Parameterize(vertex->getX(), vertex->getY()));
 
-    noh->id = /*id_noh++*/ id_manager->next(0);
+    noh->SetId(id_manager->next(0));
 
     map[vertex] = noh;
     sub_mesh_new->SetNoh(noh);
@@ -489,19 +497,18 @@ tri->GetNoh
 }
 #endif  // #USE_OPENMP
 
-list<Ponto *> Adapter::AdaptCurveByCurve(CurveAdaptive *curve,
-                                         map<Ponto *, Ponto *> &map_points,
-                                         Performer::IdManager *id_manager,
-                                         double factor_disc_global) {
+list<PointAdaptive *> Adapter::AdaptCurveByCurve(
+    CurveAdaptive *curve, map<PointAdaptive *, PointAdaptive *> &map_points,
+    Performer::IdManager *id_manager, double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->GetPoints();
-  list<Ponto *>::iterator point_current = points.begin();
-  list<Ponto *>::iterator point_next = points.begin();
+  list<PointAdaptive *> points = curve->GetPoints();
+  list<PointAdaptive *>::iterator point_current = points.begin();
+  list<PointAdaptive *>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
-  Ponto midpoint;
+  PointAdaptive midpoint;
 
   static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
 
@@ -568,21 +575,22 @@ list<Ponto *> Adapter::AdaptCurveByCurve(CurveAdaptive *curve,
   parameters = bin_tree.Rediscretization();
   (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
-  list<Ponto *> list_new_points;
+  list<PointAdaptive *> list_new_points;
 
   Noh *point_front = static_cast<Noh *>(points.front());
-  point_front->id = id_manager->next(0);
+  point_front->SetId(id_manager->next(0));
 
   Noh *point_back = static_cast<Noh *>(points.back());
-  point_back->id = id_manager->next(0);
+  point_back->SetId(id_manager->next(0));
 
   Noh *new_noh1, *new_noh2;
 
-  map<Ponto *, Ponto *>::iterator point_iterator = map_points.find(point_front);
+  map<PointAdaptive *, PointAdaptive *>::iterator point_iterator =
+      map_points.find(point_front);
 
   if (point_iterator == map_points.end()) {
     new_noh1 = new Noh(*point_front);
-    new_noh1->id = id_manager->next(0);
+    new_noh1->SetId(id_manager->next(0));
     map_points[point_front] = new_noh1;
   } else {
     new_noh1 = static_cast<Noh *>(map_points[point_front]);
@@ -592,7 +600,7 @@ list<Ponto *> Adapter::AdaptCurveByCurve(CurveAdaptive *curve,
 
   if (point_iterator == map_points.end()) {
     new_noh2 = new Noh(*point_back);
-    new_noh2->id = id_manager->next(0);
+    new_noh2->SetId(id_manager->next(0));
     map_points[point_back] = new_noh2;
   } else {
     new_noh2 = static_cast<Noh *>(map_points[point_back]);
@@ -602,7 +610,7 @@ list<Ponto *> Adapter::AdaptCurveByCurve(CurveAdaptive *curve,
        param_iterator != --parameters.end(); param_iterator++) {
     Noh *noh = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
                            ->FindPointByParameter((*param_iterator)));
-    noh->id = id_manager->next(0);
+    noh->SetId(id_manager->next(0));
     list_new_points.push_back(noh);
   }
 
@@ -612,19 +620,18 @@ list<Ponto *> Adapter::AdaptCurveByCurve(CurveAdaptive *curve,
   return list_new_points;
 }
 
-list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
-                                           map<Ponto *, Ponto *> &map_points,
-                                           Performer::IdManager *id_manager,
-                                           double factor_disc_global) {
+list<PointAdaptive *> Adapter::AdaptCurveBySurface(
+    CurveAdaptive *curve, map<PointAdaptive *, PointAdaptive *> &map_points,
+    Performer::IdManager *id_manager, double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<Ponto *> points = curve->GetPoints();
-  list<Ponto *>::iterator point_current = points.begin();
-  list<Ponto *>::iterator point_next = points.begin();
+  list<PointAdaptive *> points = curve->GetPoints();
+  list<PointAdaptive *>::iterator point_current = points.begin();
+  list<PointAdaptive *>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
-  Ponto midpoint;
+  PointAdaptive midpoint;
 
   static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
 
@@ -680,12 +687,12 @@ list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
         double Ha_p1 = ka_p1.CalculateMeanCurvature();
 
         ka_midpoint = (Ha_p0 > Ha_p1) ? Ha_p0 : Ha_p1;
-        kd_average = (static_cast<Noh *>((*point_current))->Hd +
-                      static_cast<Noh *>((*point_next))->Hd) /
+        kd_average = (static_cast<Noh *>((*point_current))->GetHd() +
+                      static_cast<Noh *>((*point_next))->GetHd()) /
                      2.0;
       } else {
-        kd_average = (static_cast<Noh *>((*point_current))->Gd +
-                      static_cast<Noh *>((*point_next))->Gd) /
+        kd_average = (static_cast<Noh *>((*point_current))->GetGd() +
+                      static_cast<Noh *>((*point_next))->GetGd()) /
                      2.0;
       }
     }
@@ -718,20 +725,21 @@ list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
   parameters = bin_tree.Rediscretization();
   (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
-  list<Ponto *> list_new_points;
+  list<PointAdaptive *> list_new_points;
 
   Noh *point_front = static_cast<Noh *>(points.front());
-  point_front->id = id_manager->next(0);
+  point_front->SetId(id_manager->next(0));
   Noh *point_back = static_cast<Noh *>(points.back());
-  point_back->id = id_manager->next(0);
+  point_back->SetId(id_manager->next(0));
 
   Noh *new_noh1, *new_noh2;
 
-  map<Ponto *, Ponto *>::iterator point_iterator = map_points.find(point_front);
+  map<PointAdaptive *, PointAdaptive *>::iterator point_iterator =
+      map_points.find(point_front);
 
   if (point_iterator == map_points.end()) {
     new_noh1 = new Noh(*point_front);
-    new_noh1->id = id_manager->next(0);
+    new_noh1->SetId(id_manager->next(0));
     map_points[point_front] = new_noh1;
   } else {
     new_noh1 = static_cast<Noh *>(map_points[point_front]);
@@ -741,7 +749,7 @@ list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
 
   if (point_iterator == map_points.end()) {
     new_noh2 = new Noh(*point_back);
-    new_noh2->id = id_manager->next(0);
+    new_noh2->SetId(id_manager->next(0));
     map_points[point_back] = new_noh2;
   } else {
     new_noh2 = static_cast<Noh *>(map_points[point_back]);
@@ -751,7 +759,7 @@ list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
        param_iterator != --parameters.end(); param_iterator++) {
     Noh *noh = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
                            ->FindPointByParameter((*param_iterator)));
-    noh->id = id_manager->next(0);
+    noh->SetId(id_manager->next(0));
     list_new_points.push_back(noh);
   }
 
@@ -894,14 +902,22 @@ tri->GetNoh
     double ka = 0.0;
     double kd = 0.0;
 
-    if (fabs(tri->GetNoh(1).Ga) >= TOLERANCIA and
-        fabs(tri->GetNoh(2).Ga) >= TOLERANCIA and
-        fabs(tri->GetNoh(3).Ga) >= TOLERANCIA) {
-      ka = (tri->GetNoh(1).Ga + tri->GetNoh(2).Ga + tri->GetNoh(3).Ga) / 3.0;
-      kd = (tri->GetNoh(1).Gd + tri->GetNoh(2).Gd + tri->GetNoh(3).Gd) / 3.0;
+    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCIA &&
+        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCIA &&
+        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCIA) {
+      ka = (tri->GetNoh(1).GetGa() + tri->GetNoh(2).GetGa() +
+            tri->GetNoh(3).GetGa()) /
+           3.0;
+      kd = (tri->GetNoh(1).GetGd() + tri->GetNoh(2).GetGd() +
+            tri->GetNoh(3).GetGd()) /
+           3.0;
     } else {
-      ka = (tri->GetNoh(1).Ha + tri->GetNoh(2).Ha + tri->GetNoh(3).Ha) / 3.0;
-      kd = (tri->GetNoh(1).Hd + tri->GetNoh(2).Hd + tri->GetNoh(3).Hd) / 3.0;
+      ka = (tri->GetNoh(1).GetHa() + tri->GetNoh(2).GetHa() +
+            tri->GetNoh(3).GetHa()) /
+           3.0;
+      kd = (tri->GetNoh(1).GetHd() + tri->GetNoh(2).GetHd() +
+            tri->GetNoh(3).GetHd()) /
+           3.0;
     }
 
     lenght_new = CalculateNewSize(ka, kd, factor_disc, length_old);
@@ -951,7 +967,7 @@ else
     Noh *noh =
         new Noh(coons_patch->Parameterize(vertex->getX(), vertex->getY()));
 
-    noh->id = id_manager->next(0);
+    noh->SetId(id_manager->next(0));
 
     map[vertex] = noh;
     sub_mesh_new->SetNoh(noh);
@@ -996,7 +1012,7 @@ double Adapter::CalculateNewSize(const double ka, const double kd,
                                  const double factor_disc,
                                  const double length_old) {
   // Cenário 1 : ka está muito próxima a kd
-  if (((ka - TOLERANCIA_CURVATURA) < kd) and
+  if (((ka - TOLERANCIA_CURVATURA) < kd) &&
       (kd < (ka + TOLERANCIA_CURVATURA))) {
     // está próximo ao plano, desrefine
     if (fabs(ka) < TOLERANCIA_CURVATURA) {

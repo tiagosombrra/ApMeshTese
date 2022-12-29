@@ -5,13 +5,13 @@
 
 #include <cmath>
 
-#include "Ponto.h"
+#include "point_adaptive.h"
 
 struct Vetor {
   // unsigned short id;
 
   // coordenadas
-  double x;
+  double x_;
   double y;
   double z;
 
@@ -22,8 +22,8 @@ struct Vetor {
   Vetor operator^(const double d) const;   // produto por escalar
   Vetor operator*(const Vetor& v) const;   // produto vetorial
 
-  const Vetor& operator=(const Vetor& v);  // atribuição
-  const Vetor& operator=(const Ponto& p);  // atribuição
+  const Vetor& operator=(const Vetor& v);          // atribuição
+  const Vetor& operator=(const PointAdaptive& p);  // atribuição
 
   double modulo() const;
   double anguloCom(Vetor& v) const;  // ângulo entre dois vetores
@@ -32,7 +32,8 @@ struct Vetor {
   Vetor();
   Vetor(double c_x, double c_y, double c_z);
   Vetor(const Vetor& v);
-  Vetor(const Ponto& p);
-  Vetor(const Ponto& p, const Ponto& q);  // constrói um vetor entre dois pontos
+  Vetor(const PointAdaptive& p);
+  Vetor(const PointAdaptive& p,
+        const PointAdaptive& q);  // constrói um vetor entre dois pontos
 };
 #endif

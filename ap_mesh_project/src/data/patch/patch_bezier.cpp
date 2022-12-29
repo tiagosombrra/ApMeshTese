@@ -36,7 +36,8 @@ PatchBezier::PatchBezier(PatchBezier* patch_bezier) : PatchCoons(patch_bezier) {
 //		C1
 PatchBezier::PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
                          CurveAdaptive* curve3, CurveAdaptive* curve4,
-                         Ponto pt11, Ponto pt21, Ponto pt12, Ponto pt22,
+                         PointAdaptive pt11, PointAdaptive pt21,
+                         PointAdaptive pt12, PointAdaptive pt22,
                          bool signal_curve1, bool signal_curve2,
                          bool signal_curve3, bool signal_curve4)
     : PatchCoons() {
@@ -108,69 +109,69 @@ PatchBezier::PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
   //
   // Gx:
   // 2x2 superior esquerdo
-  mat_geo_gx_(0, 0) = this->pt00_.x;
-  mat_geo_gx_(0, 1) = this->pt01_.x;
-  mat_geo_gx_(1, 0) = this->pt10_.x;
-  mat_geo_gx_(1, 1) = this->pt11_.x;
+  mat_geo_gx_(0, 0) = this->pt00_.GetX();
+  mat_geo_gx_(0, 1) = this->pt01_.GetX();
+  mat_geo_gx_(1, 0) = this->pt10_.GetX();
+  mat_geo_gx_(1, 1) = this->pt11_.GetX();
   // 2x2 inferior esquerdo
-  mat_geo_gx_(2, 0) = this->pt20_.x;
-  mat_geo_gx_(2, 1) = this->pt21_.x;
-  mat_geo_gx_(3, 0) = this->pt30_.x;
-  mat_geo_gx_(3, 1) = this->pt31_.x;
+  mat_geo_gx_(2, 0) = this->pt20_.GetX();
+  mat_geo_gx_(2, 1) = this->pt21_.GetX();
+  mat_geo_gx_(3, 0) = this->pt30_.GetX();
+  mat_geo_gx_(3, 1) = this->pt31_.GetX();
   // 2x2 superior direito
-  mat_geo_gx_(0, 2) = this->pt02_.x;
-  mat_geo_gx_(0, 3) = this->pt03_.x;
-  mat_geo_gx_(1, 2) = this->pt12_.x;
-  mat_geo_gx_(1, 3) = this->pt13_.x;
+  mat_geo_gx_(0, 2) = this->pt02_.GetX();
+  mat_geo_gx_(0, 3) = this->pt03_.GetX();
+  mat_geo_gx_(1, 2) = this->pt12_.GetX();
+  mat_geo_gx_(1, 3) = this->pt13_.GetX();
   // 2x2 inferior direito
-  mat_geo_gx_(2, 2) = this->pt22_.x;
-  mat_geo_gx_(2, 3) = this->pt23_.x;
-  mat_geo_gx_(3, 2) = this->pt32_.x;
-  mat_geo_gx_(3, 3) = this->pt33_.x;
+  mat_geo_gx_(2, 2) = this->pt22_.GetX();
+  mat_geo_gx_(2, 3) = this->pt23_.GetX();
+  mat_geo_gx_(3, 2) = this->pt32_.GetX();
+  mat_geo_gx_(3, 3) = this->pt33_.GetX();
   //
   // Gy:
   // 2x2 superior esquerdo
-  this->mat_geo_gy_(0, 0) = this->pt00_.y;
-  mat_geo_gy_(0, 1) = this->pt01_.y;
-  mat_geo_gy_(1, 0) = this->pt10_.y;
-  mat_geo_gy_(1, 1) = this->pt11_.y;
+  this->mat_geo_gy_(0, 0) = this->pt00_.GetY();
+  mat_geo_gy_(0, 1) = this->pt01_.GetY();
+  mat_geo_gy_(1, 0) = this->pt10_.GetY();
+  mat_geo_gy_(1, 1) = this->pt11_.GetY();
   // 2x2 inferior esquerdo
-  mat_geo_gy_(2, 0) = this->pt20_.y;
-  mat_geo_gy_(2, 1) = this->pt21_.y;
-  mat_geo_gy_(3, 0) = this->pt30_.y;
-  mat_geo_gy_(3, 1) = this->pt31_.y;
+  mat_geo_gy_(2, 0) = this->pt20_.GetY();
+  mat_geo_gy_(2, 1) = this->pt21_.GetY();
+  mat_geo_gy_(3, 0) = this->pt30_.GetY();
+  mat_geo_gy_(3, 1) = this->pt31_.GetY();
   // 2x2 superior direito
-  mat_geo_gy_(0, 2) = this->pt02_.y;
-  mat_geo_gy_(0, 3) = this->pt03_.y;
-  mat_geo_gy_(1, 2) = this->pt12_.y;
-  mat_geo_gy_(1, 3) = this->pt13_.y;
+  mat_geo_gy_(0, 2) = this->pt02_.GetY();
+  mat_geo_gy_(0, 3) = this->pt03_.GetY();
+  mat_geo_gy_(1, 2) = this->pt12_.GetY();
+  mat_geo_gy_(1, 3) = this->pt13_.GetY();
   // 2x2 inferior direito
-  mat_geo_gy_(2, 2) = this->pt22_.y;
-  mat_geo_gy_(2, 3) = this->pt23_.y;
-  mat_geo_gy_(3, 2) = this->pt32_.y;
-  mat_geo_gy_(3, 3) = this->pt33_.y;
+  mat_geo_gy_(2, 2) = this->pt22_.GetY();
+  mat_geo_gy_(2, 3) = this->pt23_.GetY();
+  mat_geo_gy_(3, 2) = this->pt32_.GetY();
+  mat_geo_gy_(3, 3) = this->pt33_.GetY();
   //
   // Gz:
   // 2x2 superior esquerdo
-  mat_geo_gz_(0, 0) = this->pt00_.z;
-  mat_geo_gz_(0, 1) = this->pt01_.z;
-  mat_geo_gz_(1, 0) = this->pt10_.z;
-  mat_geo_gz_(1, 1) = this->pt11_.z;
+  mat_geo_gz_(0, 0) = this->pt00_.GetZ();
+  mat_geo_gz_(0, 1) = this->pt01_.GetZ();
+  mat_geo_gz_(1, 0) = this->pt10_.GetZ();
+  mat_geo_gz_(1, 1) = this->pt11_.GetZ();
   // 2x2 inferior esquerdo
-  mat_geo_gz_(2, 0) = this->pt20_.z;
-  mat_geo_gz_(2, 1) = this->pt21_.z;
-  mat_geo_gz_(3, 0) = this->pt30_.z;
-  mat_geo_gz_(3, 1) = this->pt31_.z;
+  mat_geo_gz_(2, 0) = this->pt20_.GetZ();
+  mat_geo_gz_(2, 1) = this->pt21_.GetZ();
+  mat_geo_gz_(3, 0) = this->pt30_.GetZ();
+  mat_geo_gz_(3, 1) = this->pt31_.GetZ();
   // 2x2 superior direito
-  mat_geo_gz_(0, 2) = this->pt02_.z;
-  mat_geo_gz_(0, 3) = this->pt03_.z;
-  mat_geo_gz_(1, 2) = this->pt12_.z;
-  mat_geo_gz_(1, 3) = this->pt13_.z;
+  mat_geo_gz_(0, 2) = this->pt02_.GetZ();
+  mat_geo_gz_(0, 3) = this->pt03_.GetZ();
+  mat_geo_gz_(1, 2) = this->pt12_.GetZ();
+  mat_geo_gz_(1, 3) = this->pt13_.GetZ();
   // 2x2 inferior direito
-  mat_geo_gz_(2, 2) = this->pt22_.z;
-  mat_geo_gz_(2, 3) = this->pt23_.z;
-  mat_geo_gz_(3, 2) = this->pt32_.z;
-  mat_geo_gz_(3, 3) = this->pt33_.z;
+  mat_geo_gz_(2, 2) = this->pt22_.GetZ();
+  mat_geo_gz_(2, 3) = this->pt23_.GetZ();
+  mat_geo_gz_(3, 2) = this->pt32_.GetZ();
+  mat_geo_gz_(3, 3) = this->pt33_.GetZ();
   //
   // 6.Preenche a Matriz de Bezier
   //
@@ -183,10 +184,14 @@ PatchBezier::PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
 
 // Esse patch acha que é isolado! As curvas que apontam para ele devem ser
 // definidas externamente.
-PatchBezier ::PatchBezier(Ponto pt00, Ponto pt01, Ponto pt02, Ponto pt03,
-                          Ponto pt10, Ponto pt11, Ponto pt12, Ponto pt13,
-                          Ponto pt20, Ponto pt21, Ponto pt22, Ponto pt23,
-                          Ponto pt30, Ponto pt31, Ponto pt32, Ponto pt33,
+PatchBezier ::PatchBezier(PointAdaptive pt00, PointAdaptive pt01,
+                          PointAdaptive pt02, PointAdaptive pt03,
+                          PointAdaptive pt10, PointAdaptive pt11,
+                          PointAdaptive pt12, PointAdaptive pt13,
+                          PointAdaptive pt20, PointAdaptive pt21,
+                          PointAdaptive pt22, PointAdaptive pt23,
+                          PointAdaptive pt30, PointAdaptive pt31,
+                          PointAdaptive pt32, PointAdaptive pt33,
                           bool signal_curve1, bool signal_curve2,
                           bool signal_curve3, bool signal_curve4)
     : PatchCoons(),
@@ -235,69 +240,69 @@ PatchBezier ::PatchBezier(Ponto pt00, Ponto pt01, Ponto pt02, Ponto pt03,
   // 3. Preenche as matrizes geométricas com G de Bezier
   //
   // 2x2 superior esquerdo
-  mat_geo_gx_(0, 0) = this->pt00_.x;
-  mat_geo_gx_(0, 1) = this->pt01_.x;
-  mat_geo_gx_(1, 0) = this->pt10_.x;
-  mat_geo_gx_(1, 1) = this->pt11_.x;
+  mat_geo_gx_(0, 0) = this->pt00_.GetX();
+  mat_geo_gx_(0, 1) = this->pt01_.GetX();
+  mat_geo_gx_(1, 0) = this->pt10_.GetX();
+  mat_geo_gx_(1, 1) = this->pt11_.GetX();
   // 2x2 inferior esquerdo
-  mat_geo_gx_(2, 0) = this->pt20_.x;
-  mat_geo_gx_(2, 1) = this->pt21_.x;
-  mat_geo_gx_(3, 0) = this->pt30_.x;
-  mat_geo_gx_(3, 1) = this->pt31_.x;
+  mat_geo_gx_(2, 0) = this->pt20_.GetX();
+  mat_geo_gx_(2, 1) = this->pt21_.GetX();
+  mat_geo_gx_(3, 0) = this->pt30_.GetX();
+  mat_geo_gx_(3, 1) = this->pt31_.GetX();
   // 2x2 superior direito
-  mat_geo_gx_(0, 2) = this->pt02_.x;
-  mat_geo_gx_(0, 3) = this->pt03_.x;
-  mat_geo_gx_(1, 2) = this->pt12_.x;
-  mat_geo_gx_(1, 3) = this->pt13_.x;
+  mat_geo_gx_(0, 2) = this->pt02_.GetX();
+  mat_geo_gx_(0, 3) = this->pt03_.GetX();
+  mat_geo_gx_(1, 2) = this->pt12_.GetX();
+  mat_geo_gx_(1, 3) = this->pt13_.GetX();
   // 2x2 inferior direito
-  mat_geo_gx_(2, 2) = this->pt22_.x;
-  mat_geo_gx_(2, 3) = this->pt23_.x;
-  mat_geo_gx_(3, 2) = this->pt32_.x;
-  mat_geo_gx_(3, 3) = this->pt33_.x;
+  mat_geo_gx_(2, 2) = this->pt22_.GetX();
+  mat_geo_gx_(2, 3) = this->pt23_.GetX();
+  mat_geo_gx_(3, 2) = this->pt32_.GetX();
+  mat_geo_gx_(3, 3) = this->pt33_.GetX();
   //
   // Gy:
   // 2x2 superior esquerdo
-  mat_geo_gy_(0, 0) = this->pt00_.y;
-  mat_geo_gy_(0, 1) = this->pt01_.y;
-  mat_geo_gy_(1, 0) = this->pt10_.y;
-  mat_geo_gy_(1, 1) = this->pt11_.y;
+  mat_geo_gy_(0, 0) = this->pt00_.GetY();
+  mat_geo_gy_(0, 1) = this->pt01_.GetY();
+  mat_geo_gy_(1, 0) = this->pt10_.GetY();
+  mat_geo_gy_(1, 1) = this->pt11_.GetY();
   // 2x2 inferior esquerdo
-  mat_geo_gy_(2, 0) = this->pt20_.y;
-  mat_geo_gy_(2, 1) = this->pt21_.y;
-  mat_geo_gy_(3, 0) = this->pt30_.y;
-  mat_geo_gy_(3, 1) = this->pt31_.y;
+  mat_geo_gy_(2, 0) = this->pt20_.GetY();
+  mat_geo_gy_(2, 1) = this->pt21_.GetY();
+  mat_geo_gy_(3, 0) = this->pt30_.GetY();
+  mat_geo_gy_(3, 1) = this->pt31_.GetY();
   // 2x2 superior direito
-  mat_geo_gy_(0, 2) = this->pt02_.y;
-  mat_geo_gy_(0, 3) = this->pt03_.y;
-  mat_geo_gy_(1, 2) = this->pt12_.y;
-  mat_geo_gy_(1, 3) = this->pt13_.y;
+  mat_geo_gy_(0, 2) = this->pt02_.GetY();
+  mat_geo_gy_(0, 3) = this->pt03_.GetY();
+  mat_geo_gy_(1, 2) = this->pt12_.GetY();
+  mat_geo_gy_(1, 3) = this->pt13_.GetY();
   // 2x2 inferior direito
-  mat_geo_gy_(2, 2) = this->pt22_.y;
-  mat_geo_gy_(2, 3) = this->pt23_.y;
-  mat_geo_gy_(3, 2) = this->pt32_.y;
-  mat_geo_gy_(3, 3) = this->pt33_.y;
+  mat_geo_gy_(2, 2) = this->pt22_.GetY();
+  mat_geo_gy_(2, 3) = this->pt23_.GetY();
+  mat_geo_gy_(3, 2) = this->pt32_.GetY();
+  mat_geo_gy_(3, 3) = this->pt33_.GetY();
   //
   // Gz:
   // 2x2 superior esquerdo
-  mat_geo_gz_(0, 0) = this->pt00_.z;
-  mat_geo_gz_(0, 1) = this->pt01_.z;
-  mat_geo_gz_(1, 0) = this->pt10_.z;
-  mat_geo_gz_(1, 1) = this->pt11_.z;
+  mat_geo_gz_(0, 0) = this->pt00_.GetZ();
+  mat_geo_gz_(0, 1) = this->pt01_.GetZ();
+  mat_geo_gz_(1, 0) = this->pt10_.GetZ();
+  mat_geo_gz_(1, 1) = this->pt11_.GetZ();
   // 2x2 inferior esquerdo
-  mat_geo_gz_(2, 0) = this->pt20_.z;
-  mat_geo_gz_(2, 1) = this->pt21_.z;
-  mat_geo_gz_(3, 0) = this->pt30_.z;
-  mat_geo_gz_(3, 1) = this->pt31_.z;
+  mat_geo_gz_(2, 0) = this->pt20_.GetZ();
+  mat_geo_gz_(2, 1) = this->pt21_.GetZ();
+  mat_geo_gz_(3, 0) = this->pt30_.GetZ();
+  mat_geo_gz_(3, 1) = this->pt31_.GetZ();
   // 2x2 superior direito
-  mat_geo_gz_(0, 2) = this->pt02_.z;
-  mat_geo_gz_(0, 3) = this->pt03_.z;
-  mat_geo_gz_(1, 2) = this->pt12_.z;
-  mat_geo_gz_(1, 3) = this->pt13_.z;
+  mat_geo_gz_(0, 2) = this->pt02_.GetZ();
+  mat_geo_gz_(0, 3) = this->pt03_.GetZ();
+  mat_geo_gz_(1, 2) = this->pt12_.GetZ();
+  mat_geo_gz_(1, 3) = this->pt13_.GetZ();
   // 2x2 inferior direito
-  mat_geo_gz_(2, 2) = this->pt22_.z;
-  mat_geo_gz_(2, 3) = this->pt23_.z;
-  mat_geo_gz_(3, 2) = this->pt32_.z;
-  mat_geo_gz_(3, 3) = this->pt33_.z;
+  mat_geo_gz_(2, 2) = this->pt22_.GetZ();
+  mat_geo_gz_(2, 3) = this->pt23_.GetZ();
+  mat_geo_gz_(3, 2) = this->pt32_.GetZ();
+  mat_geo_gz_(3, 3) = this->pt33_.GetZ();
   //
   // 6.Preenche a Matriz de Bezier
   //
@@ -313,13 +318,13 @@ PatchBezier::~PatchBezier() {
   delete &mat_base_u_;
 }
 
-Ponto PatchBezier::CalculatePointUV() {
-  Ponto point;
+PointAdaptive PatchBezier::CalculatePointUV() {
+  PointAdaptive point;
 
   // C = ( U * ( B * ( G * ( Bt * V ) ) ) )
-  point.x = (this->GetU() * ((this->GetGx() * (this->GetV()))))(0, 0);
-  point.y = (this->GetU() * ((this->GetGy() * (this->GetV()))))(0, 0);
-  point.z = (this->GetU() * ((this->GetGz() * (this->GetV()))))(0, 0);
+  point.SetX((this->GetU() * ((this->GetGx() * (this->GetV()))))(0, 0));
+  point.SetY((this->GetU() * ((this->GetGy() * (this->GetV()))))(0, 0));
+  point.SetZ((this->GetU() * ((this->GetGz() * (this->GetV()))))(0, 0));
 
   return point;
 }
@@ -334,7 +339,7 @@ void PatchBezier::PrintAllMatrixPatchBezier() {
 }
 
 // encontra o parâmetro t de um dado ponto p na curva
-tuple<double, double> PatchBezier::FindUV(const Ponto& p) {
+tuple<double, double> PatchBezier::FindUV(const PointAdaptive& p) {
   unsigned int iMax = 0;
 
   // chute inicial
@@ -346,7 +351,7 @@ tuple<double, double> PatchBezier::FindUV(const Ponto& p) {
   double delta_v = 0.0;  // o quanto o parâmetro terá de percorrer
 
   // Método de Jacobi para resolução de sistema
-  Ponto p_i;
+  PointAdaptive p_i;
   // cout << "FindUV (" << p.id << "), usando Jacobi!";
 
   do {
@@ -371,15 +376,15 @@ tuple<double, double> PatchBezier::FindUV(const Ponto& p) {
     //        }
 
     Matrix<double, 3, 3> matrix;
-    matrix(0, 0) = Tu.x;
-    matrix(0, 1) = Tv.x;
-    matrix(0, 2) = p_i.x - p.x;
+    matrix(0, 0) = Tu.x_;
+    matrix(0, 1) = Tv.x_;
+    matrix(0, 2) = p_i.GetX() - p.GetX();
     matrix(1, 0) = Tu.y;
     matrix(1, 1) = Tv.y;
-    matrix(1, 2) = p_i.y - p.y;
+    matrix(1, 2) = p_i.GetY() - p.GetY();
     matrix(2, 0) = Tu.z;
     matrix(2, 1) = Tv.z;
-    matrix(2, 2) = p_i.z - p.z;
+    matrix(2, 2) = p_i.GetZ() - p.GetZ();
 
     //        Vector3d b= {p.x, p.y, p.z};
     //        cout<<A.colPivHouseholderQr().solve(b)<<endl;
@@ -397,7 +402,8 @@ tuple<double, double> PatchBezier::FindUV(const Ponto& p) {
     if (fabs(pivot) < TOLERANCIA) {
       cout << "Erro! Não é possível encontrar as coordenadas paramétricas no "
               "ponto p"
-           << p.id << " (" << p.x << ", " << p.y << ", " << p.z << ")" << endl;
+           << p.GetId() << " (" << p.GetX() << ", " << p.GetY() << ", "
+           << p.GetZ() << ")" << endl;
 
       return make_tuple(-1.0, -1.0);
     }
@@ -478,7 +484,7 @@ tuple<double, double> PatchBezier::FindUV(const Ponto& p) {
 }
 
 // encontra as coordenadas 3D de um ponto p de parâmetros u, v
-Ponto PatchBezier::Parameterize(double u, double v) {
+PointAdaptive PatchBezier::Parameterize(double u, double v) {
   //	cout << "Parameterize ( " << u << ", " << v << ")" << endl;
   // Parameterize:
   //
@@ -510,7 +516,7 @@ Vetor PatchBezier::Qu(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = 3 * u * u;
   this->mat_base_u_(0, 1) = 2 * u;
@@ -538,7 +544,7 @@ Vetor PatchBezier::Qv(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = u * u * u;
   this->mat_base_u_(0, 1) = u * u;
@@ -566,7 +572,7 @@ Vetor PatchBezier::Quu(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = 6 * u;
   this->mat_base_u_(0, 1) = 2;
@@ -594,7 +600,7 @@ Vetor PatchBezier::Quv(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = 3 * u * u;
   this->mat_base_u_(0, 1) = 2 * u;
@@ -625,7 +631,7 @@ Vetor PatchBezier::Qvv(double u, double v) {
   //  -> ALTERA a matriz V !!!
   //
 
-  Ponto P;
+  PointAdaptive P;
 
   this->mat_base_u_(0, 0) = u * u * u;
   this->mat_base_u_(0, 1) = u * u;
@@ -644,37 +650,37 @@ Vetor PatchBezier::Qvv(double u, double v) {
 }
 
 // calcula o vetor tangente na direção u para o ponto p
-Vetor PatchBezier::Qu(const Ponto& p) {
+Vetor PatchBezier::Qu(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Qu(get<0>(t), get<1>(t));
 }
 
 // calcula o vetor tangente na direção v para o ponto p
-Vetor PatchBezier::Qv(const Ponto& p) {
+Vetor PatchBezier::Qv(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Qv(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Quu para o ponto p
-Vetor PatchBezier::Quu(const Ponto& p) {
+Vetor PatchBezier::Quu(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Quu(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Quv para o ponto p
-Vetor PatchBezier::Quv(const Ponto& p) {
+Vetor PatchBezier::Quv(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Quv(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Qvu para o ponto p
-Vetor PatchBezier::Qvu(const Ponto& p) {
+Vetor PatchBezier::Qvu(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Qvu(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Qvv para o ponto p
-Vetor PatchBezier::Qvv(const Ponto& p) {
+Vetor PatchBezier::Qvv(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Qvv(get<0>(t), get<1>(t));
 }
@@ -691,69 +697,69 @@ Matrix4x1 PatchBezier::GetV() const { return this->mat_base_v_; }
 
 Matrix4x4 PatchBezier::GetB() const { return this->mat_base_; }
 
-Ponto PatchBezier::GetPt00() const { return this->pt00_; }
+PointAdaptive PatchBezier::GetPt00() const { return this->pt00_; }
 
-Ponto PatchBezier::GetPt01() const { return this->pt01_; }
+PointAdaptive PatchBezier::GetPt01() const { return this->pt01_; }
 
-Ponto PatchBezier::GetPt02() const { return this->pt02_; }
+PointAdaptive PatchBezier::GetPt02() const { return this->pt02_; }
 
-Ponto PatchBezier::GetPt03() const { return this->pt03_; }
+PointAdaptive PatchBezier::GetPt03() const { return this->pt03_; }
 
-Ponto PatchBezier::GetPt10() const { return this->pt10_; }
+PointAdaptive PatchBezier::GetPt10() const { return this->pt10_; }
 
-Ponto PatchBezier::GetPt11() const { return this->pt11_; }
+PointAdaptive PatchBezier::GetPt11() const { return this->pt11_; }
 
-Ponto PatchBezier::GetPt12() const { return this->pt12_; }
+PointAdaptive PatchBezier::GetPt12() const { return this->pt12_; }
 
-Ponto PatchBezier::GetPt13() const { return this->pt13_; }
+PointAdaptive PatchBezier::GetPt13() const { return this->pt13_; }
 
-Ponto PatchBezier::GetPt20() const { return this->pt20_; }
+PointAdaptive PatchBezier::GetPt20() const { return this->pt20_; }
 
-Ponto PatchBezier::GetPt21() const { return this->pt21_; }
+PointAdaptive PatchBezier::GetPt21() const { return this->pt21_; }
 
-Ponto PatchBezier::GetPt22() const { return this->pt22_; }
+PointAdaptive PatchBezier::GetPt22() const { return this->pt22_; }
 
-Ponto PatchBezier::GetPt23() const { return this->pt23_; }
+PointAdaptive PatchBezier::GetPt23() const { return this->pt23_; }
 
-Ponto PatchBezier::GetPt30() const { return this->pt30_; }
+PointAdaptive PatchBezier::GetPt30() const { return this->pt30_; }
 
-Ponto PatchBezier::GetPt31() const { return this->pt31_; }
+PointAdaptive PatchBezier::GetPt31() const { return this->pt31_; }
 
-Ponto PatchBezier::GetPt32() const { return this->pt32_; }
+PointAdaptive PatchBezier::GetPt32() const { return this->pt32_; }
 
-Ponto PatchBezier::GetPt33() const { return this->pt33_; }
+PointAdaptive PatchBezier::GetPt33() const { return this->pt33_; }
 
-void PatchBezier::SetPt00(Ponto value) { pt00_ = value; }
+void PatchBezier::SetPt00(PointAdaptive value) { pt00_ = value; }
 
-void PatchBezier::SetPt01(Ponto value) { pt01_ = value; }
+void PatchBezier::SetPt01(PointAdaptive value) { pt01_ = value; }
 
-void PatchBezier::SetPt02(Ponto value) { pt02_ = value; }
+void PatchBezier::SetPt02(PointAdaptive value) { pt02_ = value; }
 
-void PatchBezier::SetPt03(Ponto value) { pt03_ = value; }
+void PatchBezier::SetPt03(PointAdaptive value) { pt03_ = value; }
 
-void PatchBezier::SetPt10(Ponto value) { pt10_ = value; }
+void PatchBezier::SetPt10(PointAdaptive value) { pt10_ = value; }
 
-void PatchBezier::SetPt11(Ponto value) { pt11_ = value; }
+void PatchBezier::SetPt11(PointAdaptive value) { pt11_ = value; }
 
-void PatchBezier::SetPt12(Ponto value) { pt12_ = value; }
+void PatchBezier::SetPt12(PointAdaptive value) { pt12_ = value; }
 
-void PatchBezier::SetPt13(Ponto value) { pt13_ = value; }
+void PatchBezier::SetPt13(PointAdaptive value) { pt13_ = value; }
 
-void PatchBezier::SetPt20(Ponto value) { pt20_ = value; }
+void PatchBezier::SetPt20(PointAdaptive value) { pt20_ = value; }
 
-void PatchBezier::SetPt21(Ponto value) { pt21_ = value; }
+void PatchBezier::SetPt21(PointAdaptive value) { pt21_ = value; }
 
-void PatchBezier::SetPt22(Ponto value) { pt22_ = value; }
+void PatchBezier::SetPt22(PointAdaptive value) { pt22_ = value; }
 
-void PatchBezier::SetPt23(Ponto value) { pt23_ = value; }
+void PatchBezier::SetPt23(PointAdaptive value) { pt23_ = value; }
 
-void PatchBezier::SetPt30(Ponto value) { pt30_ = value; }
+void PatchBezier::SetPt30(PointAdaptive value) { pt30_ = value; }
 
-void PatchBezier::SetPt31(Ponto value) { pt31_ = value; }
+void PatchBezier::SetPt31(PointAdaptive value) { pt31_ = value; }
 
-void PatchBezier::SetPt32(Ponto value) { pt32_ = value; }
+void PatchBezier::SetPt32(PointAdaptive value) { pt32_ = value; }
 
-void PatchBezier::SetPt33(Ponto value) { pt33_ = value; }
+void PatchBezier::SetPt33(PointAdaptive value) { pt33_ = value; }
 
 double PatchBezier::getNumberTriangle() const { return number_triangle_; }
 

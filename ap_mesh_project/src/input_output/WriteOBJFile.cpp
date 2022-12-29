@@ -109,7 +109,7 @@ bool WriteOBJFIle::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
 
     for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
       Noh* n = sub->GetNoh(j);
-      file << "v " << n->x << " " << n->y << " " << n->z << endl;
+      file << "v " << n->GetX() << " " << n->GetY() << " " << n->GetZ() << endl;
     }
   }
 
@@ -120,8 +120,8 @@ bool WriteOBJFIle::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
 
     for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
       Triangulo* t = (Triangulo*)sub->GetElement(j);
-      file << "f " << t->GetNoh(1).id << " " << t->GetNoh(2).id << " "
-           << t->GetNoh(3).id << endl;
+      file << "f " << t->GetNoh(1).GetId() << " " << t->GetNoh(2).GetId() << " "
+           << t->GetNoh(3).GetId() << endl;
     }
   }
 

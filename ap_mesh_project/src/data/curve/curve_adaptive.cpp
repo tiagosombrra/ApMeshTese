@@ -12,7 +12,7 @@ CurveAdaptive::CurveAdaptive(CurveAdaptive* curve) {
 CurveAdaptive::~CurveAdaptive() {
   // 1. apaga a lista de pontos
   while (!this->points_.empty()) {
-    Ponto* P = this->points_.back();
+    PointAdaptive* P = this->points_.back();
     this->points_.pop_back();
     delete P;
   }
@@ -26,14 +26,16 @@ void CurveAdaptive::SetId(unsigned int id) { this->id_ = id; }
 
 double CurveAdaptive::GetLength() { return this->length_; }
 
-void CurveAdaptive::InsertPoint(Ponto* p) { this->points_.push_back(p); }
+void CurveAdaptive::InsertPoint(PointAdaptive* p) {
+  this->points_.push_back(p);
+}
 
 unsigned int CurveAdaptive::GetNumBerPoints() const {
   return (int)points_.size();
 }
 
-Ponto* CurveAdaptive::GetPoint(const unsigned int position) {
-  list<Ponto*>::iterator it = this->points_.begin();
+PointAdaptive* CurveAdaptive::GetPoint(const unsigned int position) {
+  list<PointAdaptive*>::iterator it = this->points_.begin();
   advance(it, position);
 
   return *it;
@@ -43,11 +45,11 @@ void CurveAdaptive::InsertPatch(Patch* patch) {
   this->patches_.push_back(patch);
 }
 
-void CurveAdaptive::SetPoints(list<Ponto*> new_points) {
+void CurveAdaptive::SetPoints(list<PointAdaptive*> new_points) {
   this->points_ = new_points;
 }
 
-list<Ponto*>& CurveAdaptive::GetPoints() { return this->points_; }
+list<PointAdaptive*>& CurveAdaptive::GetPoints() { return this->points_; }
 
 unsigned int CurveAdaptive::GetNumBerPatches() const {
   return (int)patches_.size();
@@ -65,11 +67,12 @@ bool CurveAdaptive::CheckIsOnBorder() {
   return false;
 }
 
-double CurveAdaptive::CalculateLengthPoints(const Ponto&, const Ponto&) {
+double CurveAdaptive::CalculateLengthPoints(const PointAdaptive&,
+                                            const PointAdaptive&) {
   return -1;
 }
 
-double CurveAdaptive::CalculateLengthPoint(const Ponto&) { return -1; }
+double CurveAdaptive::CalculateLengthPoint(const PointAdaptive&) { return -1; }
 
 void CurveAdaptive::CalculateLengthCurve() {}
 

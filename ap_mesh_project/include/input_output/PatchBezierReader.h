@@ -6,9 +6,9 @@
 #include <list>
 #include <sstream>
 
-#include "../data/Ponto.h"
 #include "../data/patch/patch_bezier.h"
 #include "../data/patch/patch_hermite.h"
+#include "../data/point_adaptive.h"
 // #include "../../Libs/Boost/boost/filesystem.hpp"
 // #include "../../Libs/Boost/boost/filesystem/fstream.hpp"
 // #include "../../Libs/Boost/boost/archive/text_iarchive.hpp"
@@ -30,7 +30,8 @@ class PatchBezierReader {
   std::list<PatchHermite *> loaderBPFileHermite();
   std::list<PatchBezier *> loaderOBJFile();
   std::list<PatchBezier *> orderVectorToListBezierPatches(std::vector<double>);
-  Ponto getPointVectorControlPoints(std::vector<Ponto>, unsigned long);
+  PointAdaptive getPointVectorControlPoints(std::vector<PointAdaptive>,
+                                            unsigned long);
 
   ~PatchBezierReader();
 };

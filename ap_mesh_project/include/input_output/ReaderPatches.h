@@ -25,7 +25,7 @@ class ReaderPatches {
   std::list<PatchBezier *> loaderBezierPatchFile(string fileName);
   Ponto getPointVectorControlPoints(std::vector<Ponto>, unsigned long);
 
-  Geometria *readerPatches(Geometria *geo, string fileName);
+  Geometry *readerPatches(Geometry *geo, string fileName);
 };
 
 #endif  // READERPATCHES_H

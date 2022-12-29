@@ -1,15 +1,15 @@
-#include "../../include/data/Vertex.h"
+#include "../../../include/crab_mesh/aft/vertex.h"
 
 Vertex::Vertex(double x, double y, long int id) : Shape(id) {
   setPosition(x, y);
 
-  //#if USE_OPENGL
-  //    setSize(1.0);
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     setSize(1.0);
+  // #endif //#if USE_OPENGL
 
-  //#if DEBUG_MODE
-  //    h = 0.0;
-  //#endif //#if DEBUG_MODE
+  // #if DEBUG_MODE
+  //     h = 0.0;
+  // #endif //#if DEBUG_MODE
 }
 
 Vertex::~Vertex() { adjacentEdges.clear(); }
@@ -32,12 +32,12 @@ void Vertex::getPosition(double *x, double *y) {
   *y = this->y;
 }
 
-//#if USE_OPENGL
-// void Vertex::setSize(double size)
+// #if USE_OPENGL
+//  void Vertex::setSize(double size)
 //{
-//    this->size = size;
-//}
-//#endif //#if USE_OPENGL
+//     this->size = size;
+// }
+// #endif //#if USE_OPENGL
 
 void Vertex::addAdjacentEdge(Edge *e) { adjacentEdges.insert(e); }
 
@@ -122,7 +122,7 @@ double Vertex::surface(Vertex *v1, Vertex *v2) {
 
 double Vertex::orientedSurface(Vertex *v1, Vertex *v2) {
   //    if (!v1 || !v2) {
-  //#pragma omp critical
+  // #pragma omp critical
   //        cout<<"Orientação superfície: "<<(    x * v1->y - v1->x * y +
   //                                              v1->x * v2->y - v2->x * v1->y
   //                                              + v2->x * y - x *
@@ -130,7 +130,7 @@ double Vertex::orientedSurface(Vertex *v1, Vertex *v2) {
 
   //        return 1.0;
   //    }else{
-  //#pragma omp critical
+  // #pragma omp critical
   //        cout<<"Orientação superfície1: "<<(    x * v1->y - v1->x * y +
   //                                              v1->x * v2->y - v2->x * v1->y
   //                                              + v2->x * y - x *
@@ -156,10 +156,10 @@ bool Vertex::equals(double x, double y) {
 
 bool Vertex::matches(Vertex *v) { return ((x == v->x) && (y == v->y)); }
 
-//#if USE_OPENGL
-// void Vertex::highlight()
+// #if USE_OPENGL
+//  void Vertex::highlight()
 //{
-//    setSize(5.0);
+//     setSize(5.0);
 
 //    //debug
 //    for (EdgeSet::iterator iter = adjacentEdges.begin();
@@ -182,7 +182,7 @@ bool Vertex::matches(Vertex *v) { return ((x == v->x) && (y == v->y)); }
 //    }
 //    //endebug
 //}
-//#endif //#if USE_OPENGL
+// #endif //#if USE_OPENGL
 
 string Vertex::getText() {
   ostringstream stream;
@@ -194,10 +194,10 @@ string Vertex::getText() {
   return s;
 }
 
-//#if USE_OPENGL
-// void Vertex::draw()
+// #if USE_OPENGL
+//  void Vertex::draw()
 //{
-//    glPointSize(size);
+//     glPointSize(size);
 
 //    glColor3d(r, g, b);
 //    glBegin(GL_POINTS);
@@ -207,10 +207,10 @@ string Vertex::getText() {
 //    glPointSize(1.0);
 //}
 
-//#if DEBUG_MODE
-// void Vertex::drawCircle()
+// #if DEBUG_MODE
+//  void Vertex::drawCircle()
 //{
-//    int numLines = 40;
+//     int numLines = 40;
 
 //    double angle = 2.0*M_PI/(double)numLines;
 
@@ -223,6 +223,6 @@ string Vertex::getText() {
 //    }
 //    glEnd();
 //}
-//#endif //#if DEBUG_MODE
+// #endif //#if DEBUG_MODE
 
-//#endif //#if USE_OPENGL
+// #endif //#if USE_OPENGL

@@ -4,9 +4,9 @@
 
 #include <vector>
 
-#include "../Definitions.h"
-#include "../Elemento.h"
 #include "../Noh.h"
+#include "../definitions.h"
+#include "../element_adaptive.h"
 
 class Patch;
 
@@ -19,15 +19,15 @@ class SubMesh {
   void SetPatch(Patch* patch);
   Noh* GetNoh(const unsigned int position);
   void SetNoh(Noh* noh);
-  Elemento* GetElement(const unsigned int position);
-  void SetElement(Elemento* element);
+  ElementAdaptive* GetElement(const unsigned int position);
+  void SetElement(ElementAdaptive* element);
   unsigned int GetNumberNos() const;
   unsigned int GetNumberElements() const;
 
  protected:
   Patch* patch_;
   vector<Noh*> nos_;
-  vector<Elemento*> elements_;
+  vector<ElementAdaptive*> elements_;
 };
 
 #endif  // DATA_MESH_SUB_MESH_H

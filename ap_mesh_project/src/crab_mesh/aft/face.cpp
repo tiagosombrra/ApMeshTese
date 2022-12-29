@@ -1,4 +1,4 @@
-#include "../../include/data/Face.h"
+#include "../../../include/crab_mesh/aft/face.h"
 
 Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, long int id) : Shape(id) {
   mid = NULL;
@@ -7,11 +7,11 @@ Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, long int id) : Shape(id) {
 
   h = 0.0;
 
-  //#if USE_OPENGL
-  //    //setColor(0.0, 0.0, 0.0);
-  //    setColor(1.0, 0.0, 0.0);
-  //    highlighted = false;
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     //setColor(0.0, 0.0, 0.0);
+  //     setColor(1.0, 0.0, 0.0);
+  //     highlighted = false;
+  // #endif //#if USE_OPENGL
 }
 
 Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid, long int id)
@@ -26,11 +26,11 @@ Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid, long int id)
 
   h = 0.0;
 
-  //#if USE_OPENGL
-  //    //setColor(0.0, 0.0, 0.0);
-  //    setColor(1.0, 0.0, 0.0);
-  //    highlighted = false;
-  //#endif //#if USE_OPENGL
+  // #if USE_OPENGL
+  //     //setColor(0.0, 0.0, 0.0);
+  //     setColor(1.0, 0.0, 0.0);
+  //     highlighted = false;
+  // #endif //#if USE_OPENGL
 }
 
 Face::~Face() {
@@ -171,8 +171,8 @@ bool Face::out(Vertex *v) {
 
   l1 = l2 = l3 = 0.0;
 
-  //#pragma omp critical
-  //      cout<<v->getText()<<omp_get_thread_num()<<endl;
+  // #pragma omp critical
+  //       cout<<v->getText()<<omp_get_thread_num()<<endl;
 
   barycentricCoordinates(v, l1, l2, l3);
 
@@ -184,13 +184,13 @@ bool Face::out(Vertex *v) {
 void Face::barycentricCoordinates(Vertex *v, double &l1, double &l2,
                                   double &l3) {
   /*static*/ double s;
-  //#pragma omp critical
-  //    {
-  //        cout<<this->v[0]->getText()<<" thread:
-  //        "<<omp_get_thread_num()<<endl; cout<<this->v[1]->getText()<<"
-  //        thread: "<<omp_get_thread_num()<<endl;
-  //        cout<<this->v[2]->getText()<<" thread:
-  //        "<<omp_get_thread_num()<<endl;
+  // #pragma omp critical
+  //     {
+  //         cout<<this->v[0]->getText()<<" thread:
+  //         "<<omp_get_thread_num()<<endl; cout<<this->v[1]->getText()<<"
+  //         thread: "<<omp_get_thread_num()<<endl;
+  //         cout<<this->v[2]->getText()<<" thread:
+  //         "<<omp_get_thread_num()<<endl;
 
   //    }
   s = this->v[0]->orientedSurface(this->v[1], this->v[2]);
@@ -402,11 +402,11 @@ string Face::getText() {
   return s;
 }
 
-//#if USE_OPENGL
-// void Face::highlight()
+// #if USE_OPENGL
+//  void Face::highlight()
 //{
-//    highlighted = true;
-//}
+//     highlighted = true;
+// }
 
 // void Face::unhighlight()
 //{
@@ -432,4 +432,4 @@ string Face::getText() {
 //    glVertex2d(v[2]->getX(), v[2]->getY());
 //    glEnd();
 //}
-//#endif //#if USE_OPENGL
+// #endif //#if USE_OPENGL

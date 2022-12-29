@@ -129,7 +129,7 @@ Ponto ReaderPatches::getPointVectorControlPoints(
   return ponto;
 }
 
-Geometria* ReaderPatches::readerPatches(Geometria* geo, string fileName) {
+Geometry* ReaderPatches::readerPatches(Geometry* geo, string fileName) {
   ReaderPatches* pt = new ReaderPatches();
   std::list<PatchBezier*> listBezierPt = pt->loaderBezierPatchFile(fileName);
   delete pt;

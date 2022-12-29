@@ -40,9 +40,9 @@ SOURCES += \
     ../src/data/curve/curve_adaptive_parametric.cpp \
     ../src/data/curve/curve_adaptive_parametric_bezier.cpp \
     ../src/data/curve/curve_adaptive_parametric_hermite.cpp \
-    ../src/data/Definitions.cpp \
-    ../src/data/Edge.cpp \
-    ../src/data/Elemento.cpp \
+    ../src/data/definitions.cpp \
+    ../src/crab_mesh/aft/edge.cpp \
+    ../src/data/element_adaptive.cpp \
     ../src/data/Face.cpp \
     ../src/data/Geometria.cpp \
     ../src/data/mesh/mesh_adaptive.cpp \
@@ -111,9 +111,9 @@ HEADERS += \
     ../include/data/curve/curve_adaptive_parametric.h \
     ../include/data/curve/curve_adaptive_parametric_bezier.h \
     ../include/data/curve/curve_adaptive_parametric_hermite.h \
-    ../include/data/Definitions.h \
-    ../include/data/Edge.h \
-    ../include/data/Elemento.h \
+    ../include/data/definitions.h \
+    ../include/crab_mesh/aft/edge.h \
+    ../include/data/element_adaptive.h \
     ../include/data/Face.h \
     ../include/data/Geometria.h \
     ../include/data/mesh/mesh_adaptive.h \
@@ -141,7 +141,7 @@ HEADERS += \
     ../include/input_output/WriteOBJFIle.h \
     ../include/parallel/ApMeshCommunicator.h \
     ../include/parallel/Communicator.h \
-    ../include/parallel/Definitions.h \
+    ../include/parallel/definitions.h \
     ../include/parallel/Message.h \
     ../include/parallel/MPICommunicator.h \
     ../include/parallel/MPIMessage.h \

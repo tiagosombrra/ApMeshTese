@@ -17,14 +17,14 @@ Triangulo::Triangulo(Noh* v1, Noh* v2, Noh* v3) {
   this->angN2 = setAnguloN2();
   this->angN3 = setAnguloN3();
 
-  calcularNormal();
-  calcularArea();
+  CalculateNormal();
+  CalculateArea();
 }
 
 Triangulo::~Triangulo() {}
 
 // retorna o i-ésimo nó
-Noh Triangulo::getN(unsigned const int i) const {
+Noh Triangulo::GetNoh(unsigned const int i) const {
   if (i == 1)
     return *(this->n1);
   else if (i == 2)
@@ -32,7 +32,8 @@ Noh Triangulo::getN(unsigned const int i) const {
   else if (i == 3)
     return *(this->n3);
   else
-    cout << "Índice inválido para Noh Triangulo::getN ( " << i << " )!" << endl;
+    cout << "Índice inválido para Noh Triangulo::GetNoh ( " << i << " )!"
+         << endl;
 
   Noh* n = NULL;
 
@@ -64,7 +65,7 @@ double Triangulo::setAnguloN3() {
 }
 
 // retorna o ângulo do nó n
-double Triangulo::getAngulo(const Noh& n) {
+double Triangulo::GetAngle(const Noh& n) {
   if (this->n1->distanciaPara(n) <= TOLERANCIA) return this->angN1;
 
   if (this->n2->distanciaPara(n) <= TOLERANCIA) return this->angN2;
@@ -75,14 +76,16 @@ double Triangulo::getAngulo(const Noh& n) {
 }
 
 // calcula a área do triângulo
-void Triangulo::calcularArea() { this->area = 0.5 * (this->normal.modulo()); }
+void Triangulo::CalculateArea() {
+  this->area_ = 0.5 * (this->vector_normal_.modulo());
+}
 
 // calcula a normal do triângulo
-void Triangulo::calcularNormal() {
+void Triangulo::CalculateNormal() {
   Vetor vet_1(*(this->n1), *(this->n2));
   Vetor vet_2(*(this->n1), *(this->n3));
 
-  this->normal = vet_1 * vet_2;
+  this->vector_normal_ = vet_1 * vet_2;
 }
 
 void Triangulo::substituir(Noh* velho, Noh* novo) {

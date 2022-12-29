@@ -12,7 +12,7 @@ static bool sortByNt(const PatchBezier* lhs, const PatchBezier* rhs) {
 // retonar uma lista de patch de bezier ordenados de acordo com sua estimativa
 // de carga em ordem decrescente.
 std::list<PatchBezier*> ChargeEstimateProcess::chargeEstimateProcess(
-    Geometria* geo, Timer* timer, std::string INPUT_MODEL) {
+    Geometry* geo, Timer* timer, std::string INPUT_MODEL) {
   std::list<PatchBezier*> listBezierPt;
   std::list<PatchBezier*> listBezierPtOrder;
 
@@ -788,7 +788,7 @@ double ChargeEstimateProcess::calculateAreaTriangleMedio(PatchBezier* patch,
   malha->InsertSubMeshAdaptive(sub2);
 
   static_cast<PatchBezier*>(patch)->setAreaTriangle(
-      malha->GetSubMeshAdaptiveByPosition(0)->GetElement(0)->getArea());
+      malha->GetSubMeshAdaptiveByPosition(0)->GetElement(0)->GetArea());
   // delete malha;
   return patch->getAreaTriangle();
 }
@@ -868,38 +868,38 @@ SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
       total_1 = total_1 - 1;
     }
 
-    Elemento* e1 = new Triangulo(sub->GetNoh(i), sub->GetNoh(i + 1),
-                                 sub->GetNoh(i + total_1));
+    ElementAdaptive* e1 = new Triangulo(sub->GetNoh(i), sub->GetNoh(i + 1),
+                                        sub->GetNoh(i + total_1));
     ((Triangulo*)e1)->p1 = patch->FindUV(*(sub->GetNoh(i)));
     ((Triangulo*)e1)->p2 = patch->FindUV(*(sub->GetNoh(i + 1)));
     ((Triangulo*)e1)->p3 = patch->FindUV(*(sub->GetNoh(i + total_1)));
-    e1->setId(ide++);
+    e1->SetId(ide++);
     sub->SetElement(e1);
 
-    Elemento* e2 =
+    ElementAdaptive* e2 =
         new Triangulo(sub->GetNoh(i + 1), sub->GetNoh(i + comprimento + 1),
                       sub->GetNoh(i + total_1));
     ((Triangulo*)e2)->p1 = patch->FindUV(*(sub->GetNoh(i + 1)));
     ((Triangulo*)e2)->p2 = patch->FindUV(*(sub->GetNoh(i + comprimento + 1)));
     ((Triangulo*)e2)->p3 = patch->FindUV(*(sub->GetNoh(i + total_1)));
-    e2->setId(ide++);
+    e2->SetId(ide++);
     sub->SetElement(e2);
 
-    Elemento* e3 =
+    ElementAdaptive* e3 =
         new Triangulo(sub->GetNoh(i + comprimento + 1),
                       sub->GetNoh(i + comprimento), sub->GetNoh(i + total_1));
     ((Triangulo*)e3)->p1 = patch->FindUV(*(sub->GetNoh(i + comprimento + 1)));
     ((Triangulo*)e3)->p2 = patch->FindUV(*(sub->GetNoh(i + comprimento)));
     ((Triangulo*)e3)->p3 = patch->FindUV(*(sub->GetNoh(i + total_1)));
-    e3->setId(ide++);
+    e3->SetId(ide++);
     sub->SetElement(e3);
 
-    Elemento* e4 = new Triangulo(sub->GetNoh(i + comprimento), sub->GetNoh(i),
-                                 sub->GetNoh(i + total_1));
+    ElementAdaptive* e4 = new Triangulo(
+        sub->GetNoh(i + comprimento), sub->GetNoh(i), sub->GetNoh(i + total_1));
     ((Triangulo*)e4)->p1 = patch->FindUV(*(sub->GetNoh(i + comprimento)));
     ((Triangulo*)e4)->p2 = patch->FindUV(*(sub->GetNoh(i)));
     ((Triangulo*)e4)->p3 = patch->FindUV(*(sub->GetNoh(i + total_1)));
-    e4->setId(ide++);
+    e4->SetId(ide++);
     sub->SetElement(e4);
     // cout<<"i "<<i<<endl;
   }

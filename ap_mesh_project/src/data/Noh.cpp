@@ -2,12 +2,14 @@
  */
 #include "../../include/data/Noh.h"
 
-void Noh::insereElemento(Elemento* elem) { this->guarda_chuva.push_back(elem); }
+void Noh::insereElemento(ElementAdaptive* elem) {
+  this->guarda_chuva.push_back(elem);
+}
 
 unsigned int Noh::getNumDeElementos() const { return (int)guarda_chuva.size(); }
 
-Elemento* Noh::getElemento(const unsigned int i) {
-  list<Elemento*>::iterator it = this->guarda_chuva.begin();
+ElementAdaptive* Noh::getElemento(const unsigned int i) {
+  list<ElementAdaptive*>::iterator it = this->guarda_chuva.begin();
   advance(it, i);
 
   return *it;

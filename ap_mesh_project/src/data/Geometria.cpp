@@ -11,15 +11,13 @@ This source code is under GNU General Public License v3 */
 
 #include "../../include/data/Geometria.h"
 
-void Geometria::insereCurva(CurveAdaptive *c) { this->curvas.push_back(c); }
+void Geometry::insereCurva(CurveAdaptive *c) { this->curvas.push_back(c); }
 
-void Geometria::insereCurva(CurveAdaptive *c, int pos) {
-  this->curvas[pos] = c;
-}
+void Geometry::insereCurva(CurveAdaptive *c, int pos) { this->curvas[pos] = c; }
 
-unsigned int Geometria::getNumDeCurvas() const { return (int)curvas.size(); }
+unsigned int Geometry::getNumDeCurvas() const { return (int)curvas.size(); }
 
-CurveAdaptive *Geometria::getCurva(const unsigned int i) {
+CurveAdaptive *Geometry::getCurva(const unsigned int i) {
   // adicionar excessão caso i > curvas.size();
   /*list <Curva*>::iterator it = this->curvas.begin();
 
@@ -29,20 +27,20 @@ CurveAdaptive *Geometria::getCurva(const unsigned int i) {
   return (i < this->curvas.size()) ? this->curvas[i] : NULL;
 }
 
-void Geometria::inserePatch(Patch *p) { this->patches.push_back(p); }
+void Geometry::inserePatch(Patch *p) { this->patches.push_back(p); }
 
-void Geometria::inserePatch(Patch *p, int pos) { this->patches[pos] = p; }
+void Geometry::inserePatch(Patch *p, int pos) { this->patches[pos] = p; }
 
-unsigned int Geometria::getNumDePatches() const { return (int)patches.size(); }
+unsigned int Geometry::getNumDePatches() const { return (int)patches.size(); }
 
-Patch *Geometria::getPatch(const unsigned int i) {
+Patch *Geometry::getPatch(const unsigned int i) {
   return (i < this->patches.size()) ? this->patches[i] : NULL;
 }
 
-CurveAdaptiveParametricBezier *Geometria::verifyCurveGeometria(Ponto *p0,
-                                                               Ponto *p1,
-                                                               Ponto *p2,
-                                                               Ponto *p3) {
+CurveAdaptiveParametricBezier *Geometry::verifyCurveGeometria(Ponto *p0,
+                                                              Ponto *p1,
+                                                              Ponto *p2,
+                                                              Ponto *p3) {
   for (vector<CurveAdaptive *>::iterator it = this->curvas.begin();
        it != this->curvas.end(); it++) {
     if (static_cast<CurveAdaptiveParametricBezier *>(*it)->GetPoint0().
@@ -60,9 +58,9 @@ CurveAdaptiveParametricBezier *Geometria::verifyCurveGeometria(Ponto *p0,
   return NULL;
 }
 
-Geometria::Geometria() {}
+Geometry::Geometry() {}
 
-Geometria::Geometria(Geometria *antiga) {
+Geometry::Geometry(Geometry *antiga) {
   map<CurveAdaptive *, CurveAdaptive *> mapaCurvas;
   map<Patch *, Patch *> mapaPatches;
 
@@ -94,7 +92,7 @@ Geometria::Geometria(Geometria *antiga) {
   }
 }
 
-Geometria::~Geometria() {
+Geometry::~Geometry() {
   // 1. apaga a lista de curvas
   while (!this->curvas.empty()) {
     CurveAdaptive *C = this->curvas.back();

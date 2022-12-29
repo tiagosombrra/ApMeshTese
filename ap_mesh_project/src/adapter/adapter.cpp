@@ -355,9 +355,13 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
     Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
 
-    /*Noh centro (	( tri->getN ( 1 ).x + tri->getN ( 2 ).x + tri->getN ( 3
-).x ) / 3.0 , ( tri->getN ( 1 ).y + tri->getN ( 2 ).y + tri->getN ( 3 ).y  )
-/ 3.0 , ( tri->getN ( 1 ).z + tri->getN ( 2 ).z + tri->getN ( 3 ).z  ) / 3.0
+    /*Noh centro (	( tri->GetNoh ( 1 ).x + tri->GetNoh ( 2 ).x +
+tri->GetNoh
+(
+3
+).x ) / 3.0 , ( tri->GetNoh ( 1 ).y + tri->GetNoh ( 2 ).y + tri->GetNoh ( 3 ).y
+) / 3.0 , ( tri->GetNoh ( 1 ).z + tri->GetNoh ( 2 ).z + tri->GetNoh ( 3 ).z  )
+/ 3.0
 ); tuple < double, double > centro_par = patch->encontrar_u_v ( centro );*/
 
     Vertex *v1 = new Vertex(get<0>(tri->p1), get<1>(tri->p1));
@@ -368,8 +372,8 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
     // cout << "APC.cpp: u = " << get<0>( centro_par ) << " v = " << get<1>(
     // centro_par ) << endl;
 
-    Face *face = new Face(v1, v2, v3, tri->getId() /*, c*/);
-    area_total += tri->getArea();
+    Face *face = new Face(v1, v2, v3, tri->GetId() /*, c*/);
+    area_total += tri->GetArea();
 
     mesh_old.push_back(face);
   }
@@ -382,20 +386,20 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
     Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
     Face *face = (*face_list_iterator);
 
-    length_old = sqrt(tri->getArea() / area_total);
+    length_old = sqrt(tri->GetArea() / area_total);
 
     double lenght_new = 0.0;
     double ka = 0.0;
     double kd = 0.0;
 
-    if (fabs(tri->getN(1).Ga) >= TOLERANCIA and
-        fabs(tri->getN(2).Ga) >= TOLERANCIA and
-        fabs(tri->getN(3).Ga) >= TOLERANCIA) {
-      ka = (tri->getN(1).Ga + tri->getN(2).Ga + tri->getN(3).Ga) / 3.0;
-      kd = (tri->getN(1).Gd + tri->getN(2).Gd + tri->getN(3).Gd) / 3.0;
+    if (fabs(tri->GetNoh(1).Ga) >= TOLERANCIA and
+        fabs(tri->GetNoh(2).Ga) >= TOLERANCIA and
+        fabs(tri->GetNoh(3).Ga) >= TOLERANCIA) {
+      ka = (tri->GetNoh(1).Ga + tri->GetNoh(2).Ga + tri->GetNoh(3).Ga) / 3.0;
+      kd = (tri->GetNoh(1).Gd + tri->GetNoh(2).Gd + tri->GetNoh(3).Gd) / 3.0;
     } else {
-      ka = (tri->getN(1).Ha + tri->getN(2).Ha + tri->getN(3).Ha) / 3.0;
-      kd = (tri->getN(1).Hd + tri->getN(2).Hd + tri->getN(3).Hd) / 3.0;
+      ka = (tri->GetNoh(1).Ha + tri->GetNoh(2).Ha + tri->GetNoh(3).Ha) / 3.0;
+      kd = (tri->GetNoh(1).Hd + tri->GetNoh(2).Hd + tri->GetNoh(3).Hd) / 3.0;
     }
 
     lenght_new = CalculateNewSize(ka, kd, factor_disc, length_old);
@@ -456,11 +460,12 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
     Face *face = new_mesh.front();
     new_mesh.pop_front();
 
-    Elemento *element = new Triangulo(static_cast<Noh *>(map[face->getV1()]),
-                                      static_cast<Noh *>(map[face->getV2()]),
-                                      static_cast<Noh *>(map[face->getV3()]));
+    ElementAdaptive *element =
+        new Triangulo(static_cast<Noh *>(map[face->getV1()]),
+                      static_cast<Noh *>(map[face->getV2()]),
+                      static_cast<Noh *>(map[face->getV3()]));
 
-    element->setId(/*id_ele++*/ id_manager->next(1));
+    element->SetId(/*id_ele++*/ id_manager->next(1));
 
     (static_cast<Triangulo *>(element))->p1 =
         make_tuple(face->getV1()->getX(), face->getV1()->getY());
@@ -852,9 +857,13 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
     Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
 
-    /*Noh centro (	( tri->getN ( 1 ).x + tri->getN ( 2 ).x + tri->getN ( 3
-).x ) / 3.0 , ( tri->getN ( 1 ).y + tri->getN ( 2 ).y + tri->getN ( 3 ).y  )
-/ 3.0 , ( tri->getN ( 1 ).z + tri->getN ( 2 ).z + tri->getN ( 3 ).z  ) / 3.0
+    /*Noh centro (	( tri->GetNoh ( 1 ).x + tri->GetNoh ( 2 ).x +
+tri->GetNoh
+(
+3
+).x ) / 3.0 , ( tri->GetNoh ( 1 ).y + tri->GetNoh ( 2 ).y + tri->GetNoh ( 3 ).y
+) / 3.0 , ( tri->GetNoh ( 1 ).z + tri->GetNoh ( 2 ).z + tri->GetNoh ( 3 ).z  )
+/ 3.0
 ); tuple < double, double > centro_par = patch->encontrar_u_v ( centro );*/
 
     Vertex *v1 = new Vertex(get<0>(tri->p1), get<1>(tri->p1));
@@ -865,8 +874,8 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
     // cout << "APC.cpp: u = " << get<0>( centro_par ) << " v = " << get<1>(
     // centro_par ) << endl;
 
-    Face *face = new Face(v1, v2, v3, tri->getId() /*, c*/);
-    area_total += tri->getArea();
+    Face *face = new Face(v1, v2, v3, tri->GetId() /*, c*/);
+    area_total += tri->GetArea();
 
     mesh_old.push_back(face);
   }
@@ -879,20 +888,20 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
     Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
     Face *face = (*face_list_iterator);
 
-    length_old = sqrt(tri->getArea() / area_total);
+    length_old = sqrt(tri->GetArea() / area_total);
 
     double lenght_new = 0.0;
     double ka = 0.0;
     double kd = 0.0;
 
-    if (fabs(tri->getN(1).Ga) >= TOLERANCIA and
-        fabs(tri->getN(2).Ga) >= TOLERANCIA and
-        fabs(tri->getN(3).Ga) >= TOLERANCIA) {
-      ka = (tri->getN(1).Ga + tri->getN(2).Ga + tri->getN(3).Ga) / 3.0;
-      kd = (tri->getN(1).Gd + tri->getN(2).Gd + tri->getN(3).Gd) / 3.0;
+    if (fabs(tri->GetNoh(1).Ga) >= TOLERANCIA and
+        fabs(tri->GetNoh(2).Ga) >= TOLERANCIA and
+        fabs(tri->GetNoh(3).Ga) >= TOLERANCIA) {
+      ka = (tri->GetNoh(1).Ga + tri->GetNoh(2).Ga + tri->GetNoh(3).Ga) / 3.0;
+      kd = (tri->GetNoh(1).Gd + tri->GetNoh(2).Gd + tri->GetNoh(3).Gd) / 3.0;
     } else {
-      ka = (tri->getN(1).Ha + tri->getN(2).Ha + tri->getN(3).Ha) / 3.0;
-      kd = (tri->getN(1).Hd + tri->getN(2).Hd + tri->getN(3).Hd) / 3.0;
+      ka = (tri->GetNoh(1).Ha + tri->GetNoh(2).Ha + tri->GetNoh(3).Ha) / 3.0;
+      kd = (tri->GetNoh(1).Hd + tri->GetNoh(2).Hd + tri->GetNoh(3).Hd) / 3.0;
     }
 
     lenght_new = CalculateNewSize(ka, kd, factor_disc, length_old);
@@ -955,11 +964,12 @@ else
     Face *face = new_mesh.front();
     new_mesh.pop_front();
 
-    Elemento *element = new Triangulo(static_cast<Noh *>(map[face->getV1()]),
-                                      static_cast<Noh *>(map[face->getV2()]),
-                                      static_cast<Noh *>(map[face->getV3()]));
+    ElementAdaptive *element =
+        new Triangulo(static_cast<Noh *>(map[face->getV1()]),
+                      static_cast<Noh *>(map[face->getV2()]),
+                      static_cast<Noh *>(map[face->getV3()]));
 
-    element->setId(id_manager->next(1));
+    element->SetId(id_manager->next(1));
 
     (static_cast<Triangulo *>(element))->p1 =
         make_tuple(face->getV1()->getX(), face->getV1()->getY());

@@ -13,7 +13,7 @@ SubMesh::~SubMesh() {
 
   // 2. apaga a lista de elementos
   while (!this->elements_.empty()) {
-    Elemento* element = this->elements_.back();
+    ElementAdaptive* element = this->elements_.back();
     this->elements_.pop_back();
     delete element;
   }
@@ -35,7 +35,7 @@ Noh* SubMesh::GetNoh(const unsigned int position) {
 
 void SubMesh::SetNoh(Noh* noh) { this->nos_.push_back(noh); }
 
-Elemento* SubMesh::GetElement(const unsigned int i) {
+ElementAdaptive* SubMesh::GetElement(const unsigned int i) {
   // adicionar excessão caso i > elementos.size();
   /*list <Elemento*>::iterator it = this->elementos.begin();
 
@@ -45,7 +45,7 @@ Elemento* SubMesh::GetElement(const unsigned int i) {
   return (i < this->elements_.size()) ? this->elements_[i] : nullptr;
 }
 
-void SubMesh::SetElement(Elemento* element) {
+void SubMesh::SetElement(ElementAdaptive* element) {
   //    if (position > this->elementos.size()) {
   //        this->elementos.resize(position,NULL);
   //    }

@@ -40,10 +40,10 @@ include/data/curve/curve_adaptive.h
 include/data/curve/curve_adaptive_parametric.h
 include/data/curve/curve_adaptive_parametric_bezier.h
 include/data/curve/curve_adaptive_parametric_hermite.h
-include/data/Definitions.h
-include/data/Edge.h
-include/data/Elemento.h
-include/data/Face.h
+include/data/definitions.h
+include/crab_mesh/aft/edge.h
+include/data/element_adaptive.h
+include/crab_mesh/aft/face.h
 include/data/Geometria.h
 include/data/mesh/mesh_adaptive.h
 include/data/mesh/sub_mesh.h
@@ -56,7 +56,7 @@ include/data/patch/patch.h
 include/data/Ponto.h
 include/data/tree/bin_tree.h
 include/data/Triangulo.h
-include/data/Vertex.h
+include/crab_mesh/aft/vertex.h
 include/data/Vertice.h
 include/data/Vetor.h
 include/estimate/ChargeEstimateProcess.h
@@ -100,10 +100,10 @@ src/data/curve/curve_adaptive.cpp
 src/data/curve/curve_adaptive_parametric.cpp
 src/data/curve/curve_adaptive_parametric_bezier.cpp
 src/data/curve/curve_adaptive_parametric_hermite.cpp
-src/data/Definitions.cpp
-src/data/Edge.cpp
-src/data/Elemento.cpp
-src/data/Face.cpp
+src/data/definitions.cpp
+src/crab_mesh/aft/edge.cpp
+src/data/element_adaptive.cpp
+src/crab_mesh/aft/face.cpp
 src/data/Geometria.cpp
 src/data/mesh/mesh_adaptive.cpp
 src/data/mesh/sub_mesh.cpp
@@ -116,7 +116,7 @@ src/data/patch/patch.cpp
 src/data/Ponto.cpp
 src/data/tree/bin_tree.cpp
 src/data/Triangulo.cpp
-src/data/Vertex.cpp
+src/crab_mesh/aft/vertex.cpp
 src/data/Vertice.cpp
 src/data/Vetor.cpp
 src/estimate/ChargeEstimateProcess.cpp

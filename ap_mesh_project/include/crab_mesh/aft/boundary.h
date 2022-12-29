@@ -1,13 +1,13 @@
 #ifndef _BOUNDARY_H_
 #define _BOUNDARY_H_
 
-#include "../../data/Definitions.h"
-#include "../../data/Edge.h"
-#include "../../data/Vertex.h"
 #include "../../data/curve/curve_adaptive_parametric.h"
+#include "../../data/definitions.h"
+#include "edge.h"
 #include "quadtree.h"
 #include "quadtree_cell.h"
 #include "shape.h"
+#include "vertex.h"
 
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;

@@ -12,17 +12,17 @@
 using namespace std;
 
 class Modelo {
-  Geometria* geometria;
+  Geometry* geometria;
   vector<MeshAdaptive*> malhas;
 
  public:
-  void setGeometria(Geometria* g);
-  Geometria* getGeometria();
+  void setGeometria(Geometry* g);
+  Geometry* getGeometria();
   void insereMalha(MeshAdaptive* m);
   unsigned int getNumDeMalhas() const;
   MeshAdaptive* getMalha(const unsigned int i);  // retorna a i-ésima malha
   Modelo();
-  Modelo(Geometria*);
+  Modelo(Geometry*);
   ~Modelo();
 };
 

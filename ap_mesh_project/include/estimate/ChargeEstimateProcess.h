@@ -24,7 +24,7 @@ extern std::string WRITE_MESH;
 class ChargeEstimateProcess {
  public:
   ChargeEstimateProcess();
-  std::list<PatchBezier *> chargeEstimateProcess(Geometria *, Timer *timer,
+  std::list<PatchBezier *> chargeEstimateProcess(Geometry *, Timer *timer,
                                                  string INPUT_MODEL);
   std::vector<Ponto> interpolateControlPointsCurve(Ponto p0, Ponto p1, Ponto p2,
                                                    Ponto p3, double u,

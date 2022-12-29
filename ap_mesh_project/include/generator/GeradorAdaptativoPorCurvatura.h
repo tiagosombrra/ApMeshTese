@@ -16,9 +16,9 @@ curvaturas.
 #include "../crab_mesh/performer/ranged_id_manager.h"
 #include "../curvature/curvature_analytical.h"
 #include "../curvature/curvature_discrete.h"
-#include "../data/Definitions.h"
 #include "../data/Noh.h"
 #include "../data/Triangulo.h"
+#include "../data/definitions.h"
 #include "../data/patch/patch_bezier.h"
 #include "../data/patch/patch_coons.h"
 #include "../estimate/ChargeEstimateProcess.h"
@@ -52,7 +52,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
 
 #if USE_MPI
   int execute(int argc, char *argv[], Timer *timer, MPI_Status status);
-  std::list<PatchBezier *> estimateChargeofPatches(Geometria *geometria,
+  std::list<PatchBezier *> estimateChargeofPatches(Geometry *geometria,
                                                    Timer *timer,
                                                    std::string INPUT_MODEL);
   std::vector<CurveAdaptive *> createVectorOfCurves(
@@ -67,7 +67,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
       int numberPatches, std::list<PatchBezier *> listBezierPt);
   void generator(double listOfPatches[], int sizeOfListPatches, Timer *timer,
                  int idrange = 1024, int sizeRank = 1, int sizeThread = 1);
-  Geometria *unpakGeometry(double listOfPatches[], int sizeOfListPatches);
+  Geometry *unpakGeometry(double listOfPatches[], int sizeOfListPatches);
 #else
   int execute(int argc, char *argv[], Timer *timer);
   void generator(Modelo &modelo, Timer *timer, int idrange = 1024,
@@ -91,9 +91,9 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
   void salvarErroMalha(MeshAdaptive *malha);
   void salvaMalha(MeshAdaptive *malha, int passo);
   void salvaErroMalha(MeshAdaptive *malha, int passo);
-  void adaptCurve(Geometria *geo);
-  void adaptDomain(Geometria *geo, MeshAdaptive *malha);
-  void generatorInitialMesh(Geometria *geo, MeshAdaptive *malha, Timer *timer,
+  void adaptCurve(Geometry *geo);
+  void adaptDomain(Geometry *geo, MeshAdaptive *malha);
+  void generatorInitialMesh(Geometry *geo, MeshAdaptive *malha, Timer *timer,
                             int sizeThread, int sizePatch);
   void printElments(MeshAdaptive *malha, int passo, vector<double> erroPasso,
                     int rank = -1);
@@ -105,14 +105,14 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
                                int sizeThread = 0);
   int generatorOmp(Modelo &modelo, Timer *timer, int idrange = 0,
                    int sizeRank = 1, int sizeThread = 1);
-  void adaptCurveOmp(Geometria *geo);
-  void adaptDomainOmp(Geometria *geo, MeshAdaptive *malha, Timer *timer,
+  void adaptCurveOmp(Geometry *geo);
+  void adaptDomainOmp(Geometry *geo, MeshAdaptive *malha, Timer *timer,
                       int sizeThread, int sizePatch);
 #endif  // #USE_OPENMP
 
 #if USE_MPI
   Modelo modelo;
-  Geometria *geo;
+  Geometry *geo;
   PatchCoons *patch;
   MeshAdaptive *malha;
 #endif  // USE_MPI

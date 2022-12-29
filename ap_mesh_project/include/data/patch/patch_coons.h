@@ -4,7 +4,7 @@
 #include <tuple>
 #include <vector>
 
-#include "../../data/Definitions.h"
+#include "../../data/definitions.h"
 #include "../Ponto.h"
 #include "../Vetor.h"
 #include "../curve/curve_adaptive.h"

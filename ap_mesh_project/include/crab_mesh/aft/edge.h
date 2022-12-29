@@ -1,11 +1,11 @@
 #ifndef _EDGE_H_
 #define _EDGE_H_
 
-#include "../crab_mesh/aft/quadtree_cell.h"
-#include "../crab_mesh/aft/shape.h"
-#include "../data/Definitions.h"
-#include "../data/curve/curve_adaptive_parametric.h"
-#include "Vertex.h"
+#include "../../data/curve/curve_adaptive_parametric.h"
+#include "../../data/definitions.h"
+#include "quadtree_cell.h"
+#include "shape.h"
+#include "vertex.h"
 
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::Basics;

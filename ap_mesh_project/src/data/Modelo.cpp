@@ -2,9 +2,9 @@
  */
 #include "../../include/data/Modelo.h"
 
-void Modelo::setGeometria(Geometria* g) { this->geometria = g; }
+void Modelo::setGeometria(Geometry* g) { this->geometria = g; }
 
-Geometria* Modelo::getGeometria() { return this->geometria; }
+Geometry* Modelo::getGeometria() { return this->geometria; }
 
 void Modelo::insereMalha(MeshAdaptive* m) { this->malhas.push_back(m); }
 
@@ -23,7 +23,7 @@ MeshAdaptive* Modelo::getMalha(const unsigned int i) {
 
 Modelo::Modelo() {}
 
-Modelo::Modelo(Geometria* g) { this->geometria = g; }
+Modelo::Modelo(Geometry* g) { this->geometria = g; }
 
 Modelo::~Modelo() {
   // 1. apaga a lista de malha

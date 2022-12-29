@@ -9,13 +9,13 @@
 #include "../data/curve/curve_adaptive.h"
 #include "../data/curve/curve_adaptive_parametric_bezier.h"
 #include "../data/patch/patch_hermite.h"
-using namespace std;
 
-class Geometria {
-  vector<CurveAdaptive*> curvas;
-  vector<Patch*> patches;
-
+class Geometry {
  public:
+  Geometry();
+  Geometry(Geometry*);
+  ~Geometry();
+
   void insereCurva(CurveAdaptive* c);
   void insereCurva(CurveAdaptive* c, int pos);
   unsigned int getNumDeCurvas() const;
@@ -26,8 +26,9 @@ class Geometria {
   Patch* getPatch(const unsigned int i);  // retorna o i-ésimo patch
   CurveAdaptiveParametricBezier* verifyCurveGeometria(Ponto*, Ponto*, Ponto*,
                                                       Ponto*);
-  Geometria();
-  Geometria(Geometria*);
-  ~Geometria();
+
+ protected:
+  vector<CurveAdaptive*> curvas;
+  vector<Patch*> patches;
 };
 #endif

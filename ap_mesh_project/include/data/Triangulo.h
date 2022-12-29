@@ -8,11 +8,11 @@ using namespace std;
 
 #include <tuple>
 
-#include "Elemento.h"
 #include "Noh.h"
 #include "Vetor.h"
+#include "element_adaptive.h"
 
-class Triangulo : public Elemento {
+class Triangulo : public ElementAdaptive {
   Noh* n1;
   Noh* n2;
   Noh* n3;
@@ -30,10 +30,10 @@ class Triangulo : public Elemento {
   tuple<double, double> p2;  // parametro do nó 2
   tuple<double, double> p3;  // parametro do nó 3
 
-  virtual Noh getN(unsigned const int) const;  // retorna o i-ésimo nó
-  virtual double getAngulo(const Noh& n);
-  virtual void calcularArea();    // OBS: Não normalizar a normal!!!!
-  virtual void calcularNormal();  // OBS: Não normalizar a normal!
+  virtual Noh GetNoh(unsigned const int) const;  // retorna o i-ésimo nó
+  virtual double GetAngle(const Noh& n);
+  virtual void CalculateArea();    // OBS: Não normalizar a normal!!!!
+  virtual void CalculateNormal();  // OBS: Não normalizar a normal!
 
   void substituir(Noh* velho, Noh* novo);
 

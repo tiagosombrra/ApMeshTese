@@ -1,4 +1,4 @@
-#include "../../include/data/Edge.h"
+#include "../../../include/crab_mesh/aft/edge.h"
 
 Edge::Edge(Vertex *v1, Vertex *v2, long int id) : Shape(id) {
   mid = vector = NULL;

@@ -9,7 +9,7 @@ CurvatureDiscrete::CurvatureDiscrete(const Noh& noh) {
   // O construtor ordena a lista de elementos do nó, por garantia...
   // para cada o elemento da lista de adjacências de n
   //		some sua área ao A deste objeto
-  //		getAngulo ( n ) e some a sum_phi
+  //		GetAngle ( n ) e some a sum_phi
 
   //	cout << "********** Curvatura discreta **********" << endl;
 
@@ -20,7 +20,7 @@ CurvatureDiscrete::CurvatureDiscrete(const Noh& noh) {
   this->a_ = 0;
   this->sum_phi_ = 0;
 
-  list<Elemento*>::const_iterator element_iterator;
+  list<ElementAdaptive*>::const_iterator element_iterator;
 
   //	cout << "for ( ite = n.guarda_chuva.begin ( ); ite != n.guarda_chuva.end
   //( ); ++ite )\n{" << endl;
@@ -28,10 +28,10 @@ CurvatureDiscrete::CurvatureDiscrete(const Noh& noh) {
   for (element_iterator = noh.guarda_chuva.begin();
        element_iterator != noh.guarda_chuva.end(); ++element_iterator) {
     //		cout << "\tA += " << (*ite)->getArea( ) << endl;
-    this->a_ += (*element_iterator)->getArea();
+    this->a_ += (*element_iterator)->GetArea();
     //		cout << "\tA == " << this->A << endl;
-    //		cout << "\tsum_phi += " << (*ite)->getAngulo ( n ) << endl;
-    this->sum_phi_ += (*element_iterator)->getAngulo(noh);
+    //		cout << "\tsum_phi += " << (*ite)->GetAngle ( n ) << endl;
+    this->sum_phi_ += (*element_iterator)->GetAngle(noh);
     //		cout << "\tsum_phi == " << this->sum_phi << endl;
   }
 
@@ -41,9 +41,11 @@ CurvatureDiscrete::CurvatureDiscrete(const Noh& noh) {
 }
 
 double CurvatureDiscrete::CalculateMeanCurvature() {
-  Elemento* first_element;  // pri de PRImeiro elemento da lista 'elementos'
-  Elemento* next_element;   // seg de SEGundo elemento da lista 'elementos'
-  double angle_gama = 0;    // ângulo entre dois elementos adjacentes
+  ElementAdaptive*
+      first_element;  // pri de PRImeiro elemento da lista 'elementos'
+  ElementAdaptive*
+      next_element;       // seg de SEGundo elemento da lista 'elementos'
+  double angle_gama = 0;  // ângulo entre dois elementos adjacentes
 
   while (this->list_elements_.size() > 1) {
     first_element = this->list_elements_.front();
@@ -75,11 +77,11 @@ void CurvatureDiscrete::AdjacencySort(const Noh& noh_) {
   // copiando os elementos da adjacência de n para a lista de elementos desta
   // classe
   //		copie a lista n.guarda_cuva para nova_lista
-  list<Elemento*> new_list_elements;
+  list<ElementAdaptive*> new_list_elements;
   new_list_elements = noh_.guarda_chuva;
 
   //		retire o primeiro elemento E da nova_lista e insira em elementos
-  Elemento* element_front = new_list_elements.front();
+  ElementAdaptive* element_front = new_list_elements.front();
   this->list_elements_.push_back(element_front);
   new_list_elements.pop_front();
 
@@ -89,7 +91,7 @@ void CurvatureDiscrete::AdjacencySort(const Noh& noh_) {
   bool find_adj_left = true;  // encontrou um adjacente à esquerda
 
   while (find_adj_left) {
-    Elemento* element =
+    ElementAdaptive* element =
         adjacent_.GetElementLeft(noh_, element_front, new_list_elements);
     if (element) {
       this->list_elements_.push_back(element);
@@ -114,7 +116,7 @@ void CurvatureDiscrete::AdjacencySort(const Noh& noh_) {
     bool find_adj_right = true;  // encontrou um adjacente à direita
 
     while (find_adj_right) {
-      Elemento* element =
+      ElementAdaptive* element =
           adjacent_.GetElementRight(noh_, element_front, new_list_elements);
       if (element) {
         this->list_elements_.push_front(element);

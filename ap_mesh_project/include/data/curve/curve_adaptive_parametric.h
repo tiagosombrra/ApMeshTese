@@ -6,7 +6,7 @@
 
 #include "../../crab_mesh/numerical/bisection_equation_root.h"
 #include "../../crab_mesh/numerical/equation_root_function.h"
-#include "../../data/Definitions.h"
+#include "../../data/definitions.h"
 #include "../Vertice.h"
 #include "../Vetor.h"
 #include "curve_adaptive.h"

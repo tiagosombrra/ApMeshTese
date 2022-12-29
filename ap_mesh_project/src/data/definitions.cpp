@@ -1,4 +1,4 @@
-#include "../../include/data/Definitions.h"
+#include "../../include/data/definitions.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -6,20 +6,20 @@
 #if defined(__linux__)
 #include <execinfo.h>
 #include <unistd.h>
-#endif  //#if defined(__linux__)
+#endif  // #if defined(__linux__)
 
-//#include "data/State.h"
-//#include "data/Exact.h"
+// #include "data/State.h"
+// #include "data/Exact.h"
 
-//#if USE_POOL
-//#include "data/Point2D.h"
-//#include "data/Point3D.h"
-//#include "data/Triangle2D.h"
-//#include "data/Tetrahedron.h"
-//#include "data/Box.h"
-//#include "data/FrontElementBoxSearchTreeCell.h"
-//#include "data/VertexBoxSearchTreeCell.h"
-//#endif //#if USE_POOL
+// #if USE_POOL
+// #include "data/Point2D.h"
+// #include "data/Point3D.h"
+// #include "data/Triangle2D.h"
+// #include "data/Tetrahedron.h"
+// #include "data/Box.h"
+// #include "data/FrontElementBoxSearchTreeCell.h"
+// #include "data/VertexBoxSearchTreeCell.h"
+// #endif //#if USE_POOL
 
 #if USE_TIMING
 #if defined(__linux__)
@@ -28,10 +28,10 @@
 #include <omp.h>
 #else
 #include <ctime>
-#endif  //#if defined(__linux__)
-#endif  //#if USE_TIMING
+#endif  // #if defined(__linux__)
+#endif  // #if USE_TIMING
 
-//#include "data/OStream.h"
+// #include "data/OStream.h"
 
 using namespace Data;
 
@@ -92,9 +92,9 @@ Real Data::time() {
   return static_cast<Real>(omp_get_wtime());
 #else
   return static_cast<Real>(time(NULL));
-#endif  //#if defined(__linux__)
+#endif  // #if defined(__linux__)
 }
-#endif  //#if USE_TIMING
+#endif  // #if USE_TIMING
 
 std::string Data::time(Real seconds) {
   return Data::time(static_cast<UInt>(seconds));
@@ -180,7 +180,7 @@ std::string Data::trim(const std::string &s) {
 
   return tmp;
 }
-#endif  //#if defined(__linux__)
+#endif  // #if defined(__linux__)
 
 std::string Data::position(enum Position pos) {
   switch (pos) {
@@ -206,7 +206,7 @@ void Data::setBuffer(const std::string &buffer) {
 }
 
 const std::string &Data::getBuffer() { return Data::state.getBuffer(); }
-#endif  //#if USE_BUFFER
+#endif  // #if USE_BUFFER
 
 #if USE_GUI
 void Data::setStepByStep(bool stepByStep) {
@@ -218,9 +218,9 @@ bool Data::isStepByStep() { return Data::state.isStepByStep(); }
 void Data::glColor(Real r, Real g, Real b) {
 #if USE_DOUBLE
   glColor3d(r, g, b);
-#else   //#if USE_DOUBLE
+#else   // #if USE_DOUBLE
   glColor3f(r, g, b);
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 
   GLfloat amb[] = {0.2f, 0.2f, 0.2f, 1.0f};
   GLfloat col[] = {static_cast<GLfloat>(r), static_cast<GLfloat>(g),
@@ -234,9 +234,9 @@ void Data::glColor(Real r, Real g, Real b) {
 void Data::glColor(Real r, Real g, Real b, Real a) {
 #if USE_DOUBLE
   glColor4d(r, g, b, a);
-#else   //#if USE_DOUBLE
+#else   // #if USE_DOUBLE
   glColor4f(r, g, b, a);
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 
   GLfloat amb[] = {0.2f, 0.2f, 0.2f, static_cast<GLfloat>(a)};
   GLfloat col[] = {static_cast<GLfloat>(r), static_cast<GLfloat>(g),
@@ -250,25 +250,25 @@ void Data::glColor(Real r, Real g, Real b, Real a) {
 void Data::glVertex(Real x, Real y) {
 #if USE_DOUBLE
   glVertex2d(x, y);
-#else   //#if USE_DOUBLE
+#else   // #if USE_DOUBLE
   glVertex2f(x, y);
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 }
 
 void Data::glVertex(Real x, Real y, Real z) {
 #if USE_DOUBLE
   glVertex3d(x, y, z);
-#else   //#if USE_DOUBLE
+#else   // #if USE_DOUBLE
   glVertex3f(x, y, z);
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 }
 
 void Data::glNormal(Real x, Real y, Real z) {
 #if USE_DOUBLE
   glNormal3d(x, y, z);
-#else   //#if USE_DOUBLE
+#else   // #if USE_DOUBLE
   glNormal3f(x, y, z);
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 }
 
 void Data::glTranslate(Real x, Real y) { glTranslate(x, y, 0.0); }
@@ -276,9 +276,9 @@ void Data::glTranslate(Real x, Real y) { glTranslate(x, y, 0.0); }
 void Data::glTranslate(Real x, Real y, Real z) {
 #if USE_DOUBLE
   glTranslated(x, y, z);
-#else   //#if USE_DOUBLE
+#else   // #if USE_DOUBLE
   glTranslatef(x, y, z);
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 }
 
 void Data::glScale(Real x, Real y) { glScale(x, y, 1.0); }
@@ -286,9 +286,9 @@ void Data::glScale(Real x, Real y) { glScale(x, y, 1.0); }
 void Data::glScale(Real x, Real y, Real z) {
 #if USE_DOUBLE
   glScaled(x, y, z);
-#else   //#if USE_DOUBLE
+#else   // #if USE_DOUBLE
   glScalef(x, y, z);
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 }
 
 void Data::glText(Real x, Real y, const std::string &text) {
@@ -308,7 +308,7 @@ void Data::glText(Real x, Real y, Real z, const std::string &text) {
 #else
   glRasterPos3f(x, y, z);
   // glWindowPos3f(x, y, z);
-#endif  //#if USE_DOUBLE
+#endif  // #if USE_DOUBLE
 
   const char *s = text.c_str();
 
@@ -361,7 +361,7 @@ void Data::pallete(Int index, Real &r, Real &g, Real &b) {
   if (index < 0) {
 #if (!USE_SCREENSHOT)
     r = g = b = 1.0;
-#endif  //#if (!USE_SCREENSHOT)
+#endif  // #if (!USE_SCREENSHOT)
 
     return;
   }
@@ -456,4 +456,4 @@ void Data::pallete(Int index, Real &r, Real &g, Real &b) {
       break;
   }
 }
-#endif  //#if USE_GUI
+#endif  // #if USE_GUI

@@ -2,7 +2,7 @@
 
 Modelos3d::Modelos3d() {}
 
-Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
+Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   //=============================== PATCH 1 ==================================
   Ponto* p100 = new Vertice(0.00000, 1.00000, 0.00000);
   Ponto* p110 = new Vertice(0.00000, 0.50000, 0.00000);
@@ -203,7 +203,7 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   return geo;
 }
 
-Geometria* Modelos3d::modelTresPatches(Geometria* geo) {
+Geometry* Modelos3d::modelTresPatches(Geometry* geo) {
   //==============================================================================
   // Exemplo do three_patches_curve
   //==============================================================================
@@ -329,7 +329,7 @@ Geometria* Modelos3d::modelTresPatches(Geometria* geo) {
   //==============================================================================
   return geo;
 }
-Geometria* Modelos3d::modelDoisPatchesPlanosCurva1(Geometria* geo) {
+Geometry* Modelos3d::modelDoisPatchesPlanosCurva1(Geometry* geo) {
   //==============================================================================
   // Exemplo do two_patches_curve
   //==============================================================================
@@ -417,7 +417,7 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva1(Geometria* geo) {
   return geo;
 }
 
-Geometria* Modelos3d::modelDoisPatchesPlanosCurva(Geometria* geo) {
+Geometry* Modelos3d::modelDoisPatchesPlanosCurva(Geometry* geo) {
   //==============================================================================
   // Exemplo do Utahteapot
   //==============================================================================
@@ -504,7 +504,7 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva(Geometria* geo) {
   return geo;
 }
 
-Geometria* Modelos3d::modelCurvaBezier(Geometria* geo) {
+Geometry* Modelos3d::modelCurvaBezier(Geometry* geo) {
   //==============================================================================
   // Exemplo usando curva de Bezier
   //==============================================================================
@@ -553,7 +553,7 @@ Geometria* Modelos3d::modelCurvaBezier(Geometria* geo) {
   return geo;
 }
 
-Geometria* Modelos3d::modelParaboloide(Geometria* geo) {
+Geometry* Modelos3d::modelParaboloide(Geometry* geo) {
   //==============================================================================
   // Exemplo do PARABOLÓIDE HIPERBÓLICO
   //==============================================================================
@@ -609,7 +609,7 @@ Geometria* Modelos3d::modelParaboloide(Geometria* geo) {
   return geo;
 }
 
-Geometria* Modelos3d::modelPneu(Geometria* geo) {
+Geometry* Modelos3d::modelPneu(Geometry* geo) {
   //==============================================================================
   // Exemplo do pneu
   //==============================================================================
@@ -669,7 +669,7 @@ Geometria* Modelos3d::modelPneu(Geometria* geo) {
   //==============================================================================
 }
 
-Geometria* Modelos3d::modelLadoDescendente(Geometria* geo) {
+Geometry* Modelos3d::modelLadoDescendente(Geometry* geo) {
   //==============================================================================
   // Exemplo de uma superfície com um dos lados descendentes
   //==============================================================================
@@ -716,7 +716,7 @@ Geometria* Modelos3d::modelLadoDescendente(Geometria* geo) {
   //==============================================================================
 }
 
-Geometria* Modelos3d::modelBaseCircular(Geometria* geo) {
+Geometry* Modelos3d::modelBaseCircular(Geometry* geo) {
   //==============================================================================
   // Exemplo da base circular
   //==============================================================================
@@ -761,7 +761,7 @@ Geometria* Modelos3d::modelBaseCircular(Geometria* geo) {
   //==============================================================================
 }
 
-Geometria* Modelos3d::modelBaseQuadrada(Geometria* geo) {
+Geometry* Modelos3d::modelBaseQuadrada(Geometry* geo) {
   //==============================================================================
   // Exemplo do patch com base quadrada
   //==============================================================================
@@ -807,7 +807,7 @@ Geometria* Modelos3d::modelBaseQuadrada(Geometria* geo) {
   //==============================================================================
 }
 
-Geometria* Modelos3d::modelBordaCurva(Geometria* geo) {
+Geometry* Modelos3d::modelBordaCurva(Geometry* geo) {
   //==============================================================================
   // Exemplo do patch com borda curva
   //==============================================================================
@@ -853,7 +853,7 @@ Geometria* Modelos3d::modelBordaCurva(Geometria* geo) {
   //==============================================================================
 }
 
-Geometria* Modelos3d::modelDoisPatches(Geometria* geo) {
+Geometry* Modelos3d::modelDoisPatches(Geometry* geo) {
   //==============================================================================
   // Exemplo de dois patches vizinhos
   //==============================================================================
@@ -924,7 +924,7 @@ Geometria* Modelos3d::modelDoisPatches(Geometria* geo) {
   //==============================================================================
 }
 
-Geometria* Modelos3d::modelNariz(Geometria* geo) {
+Geometry* Modelos3d::modelNariz(Geometry* geo) {
   //==============================================================================
   // Exemplo do nariz
   //==============================================================================
@@ -1521,7 +1521,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   //==============================================================================
 }
 
-Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
+Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //==============================================================================
   // Exemplo do Utahteapot
   //==============================================================================

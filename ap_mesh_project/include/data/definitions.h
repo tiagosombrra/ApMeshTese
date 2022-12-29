@@ -1,5 +1,5 @@
-#ifndef _DATA_DEFINITIONS_H_
-#define _DATA_DEFINITIONS_H_
+#ifndef DATA_DEFINITIONS_H_
+#define DATA_DEFINITIONS_H_
 
 /// Global defines
 
@@ -885,4 +885,4 @@ enum  // posicoes dos vertices do meio da quadrtree
 }  // namespace AFT
 }  // namespace Par2DJMesh
 
-#endif  // #ifndef _DATA_DEFINITIONS_H_
+#endif  // DATA_DEFINITIONS_H_

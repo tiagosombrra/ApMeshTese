@@ -54,7 +54,7 @@ include/data/patch/patch_coons.h
 include/data/patch/patch_hermite.h
 include/data/patch/patch.h
 include/data/Ponto.h
-include/data/tree/BinTree.h
+include/data/tree/bin_tree.h
 include/data/Triangulo.h
 include/data/Vertex.h
 include/data/Vertice.h
@@ -114,7 +114,7 @@ src/data/patch/patch_coons.cpp
 src/data/patch/patch_hermite.cpp
 src/data/patch/patch.cpp
 src/data/Ponto.cpp
-src/data/tree/BinTree.cpp
+src/data/tree/bin_tree.cpp
 src/data/Triangulo.cpp
 src/data/Vertex.cpp
 src/data/Vertice.cpp

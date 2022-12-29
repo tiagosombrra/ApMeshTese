@@ -17,7 +17,7 @@
 #include "../data/curve/curve_adaptive_parametric.h"
 #include "../data/mesh/sub_mesh.h"
 #include "../data/patch/patch_coons.h"
-#include "../data/tree/BinTree.h"
+#include "../data/tree/bin_tree.h"
 #include "../parallel/TMCommunicator.h"
 
 class Adapter {

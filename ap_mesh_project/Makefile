@@ -31,7 +31,7 @@ src/data/patch/patch_coons.cpp \
 src/data/patch/patch_hermite.cpp \
 src/data/patch/patch.cpp \
 src/data/Ponto.cpp \
-src/data/tree/BinTree.cpp \
+src/data/tree/bin_tree.cpp \
 src/data/Triangulo.cpp \
 src/data/Vertex.cpp \
 src/data/Vertice.cpp \

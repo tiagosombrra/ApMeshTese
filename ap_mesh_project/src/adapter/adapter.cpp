@@ -73,20 +73,20 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(CurveAdaptive *curve,
     // 1.2.5. Calcule o tamanho paramétrico
     lenght_par = lenght_new / curve->GetLength();
 
-    bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
-                        static_cast<CurveAdaptiveParametric *>(curve));
+    bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
+                       static_cast<CurveAdaptiveParametric *>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.restringir(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
-  parameters = bin_tree.rediscretizacao();
+  parameters = bin_tree.Rediscretization();
   (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
   list<Ponto *> list_new_points;
@@ -222,20 +222,20 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
         static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
             midpoint);
 
-    bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
-                        static_cast<CurveAdaptiveParametric *>(curve));
+    bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
+                       static_cast<CurveAdaptiveParametric *>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.restringir(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
-  parameters = bin_tree.rediscretizacao();
+  parameters = bin_tree.Rediscretization();
   (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
   list<Ponto *> list_new_points;
@@ -547,20 +547,20 @@ list<Ponto *> Adapter::AdaptCurveByCurve(CurveAdaptive *curve,
     // 1.2.5. Calcule o tamanho paramétrico
     lenght_par = lenght_new / curve->GetLength();
 
-    bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
-                        static_cast<CurveAdaptiveParametric *>(curve));
+    bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
+                       static_cast<CurveAdaptiveParametric *>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.restringir(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
-  parameters = bin_tree.rediscretizacao();
+  parameters = bin_tree.Rediscretization();
   (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
   list<Ponto *> list_new_points;
@@ -697,20 +697,20 @@ list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
         static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
             midpoint);
 
-    bin_tree.subdividir(midpoint_segment, lenght_par * factor_disc_global,
-                        static_cast<CurveAdaptiveParametric *>(curve));
+    bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
+                       static_cast<CurveAdaptiveParametric *>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.restringir(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
-  parameters = bin_tree.rediscretizacao();
+  parameters = bin_tree.Rediscretization();
   (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
 
   list<Ponto *> list_new_points;

@@ -17,7 +17,7 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 #if USE_MPI
   if (RANK_MPI == 0) {
     // estimativa e ordenação dos patches para carga de distribuiçao dos patches
-    std::list<BezierPatch*> listBezierPt =
+    std::list<PatchBezier*> listBezierPt =
         estimateChargeofPatches(geo, timer, argv[3]);
 
     // distribuição dos patches entre os (n) processos de acordo com suas cargas
@@ -37,107 +37,107 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
     for (int j = 0; j < SIZE_MPI; j++) {
       i = 0;
 
-      for (std::list<BezierPatch*>::iterator it = listBezierPt.begin();
+      for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
            it != listBezierPt.end(); it++) {
         if (j == (*it)->getIdProcess()) {
-          vecBezierPatches[i] = (*it)->getPt00().x;
+          vecBezierPatches[i] = (*it)->GetPt00().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt00().y;
+          vecBezierPatches[i] = (*it)->GetPt00().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt00().z;
+          vecBezierPatches[i] = (*it)->GetPt00().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt10().x;
+          vecBezierPatches[i] = (*it)->GetPt10().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt10().y;
+          vecBezierPatches[i] = (*it)->GetPt10().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt10().z;
+          vecBezierPatches[i] = (*it)->GetPt10().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt20().x;
+          vecBezierPatches[i] = (*it)->GetPt20().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt20().y;
+          vecBezierPatches[i] = (*it)->GetPt20().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt20().z;
+          vecBezierPatches[i] = (*it)->GetPt20().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt30().x;
+          vecBezierPatches[i] = (*it)->GetPt30().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt30().y;
+          vecBezierPatches[i] = (*it)->GetPt30().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt30().z;
-          i++;
-
-          vecBezierPatches[i] = (*it)->getPt01().x;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt01().y;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt01().z;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt11().x;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt11().y;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt11().z;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt21().x;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt21().y;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt21().z;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt31().x;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt31().y;
-          i++;
-          vecBezierPatches[i] = (*it)->getPt31().z;
+          vecBezierPatches[i] = (*it)->GetPt30().z;
           i++;
 
-          vecBezierPatches[i] = (*it)->getPt02().x;
+          vecBezierPatches[i] = (*it)->GetPt01().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt02().y;
+          vecBezierPatches[i] = (*it)->GetPt01().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt02().z;
+          vecBezierPatches[i] = (*it)->GetPt01().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt12().x;
+          vecBezierPatches[i] = (*it)->GetPt11().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt12().y;
+          vecBezierPatches[i] = (*it)->GetPt11().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt12().z;
+          vecBezierPatches[i] = (*it)->GetPt11().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt22().x;
+          vecBezierPatches[i] = (*it)->GetPt21().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt22().y;
+          vecBezierPatches[i] = (*it)->GetPt21().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt22().z;
+          vecBezierPatches[i] = (*it)->GetPt21().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt32().x;
+          vecBezierPatches[i] = (*it)->GetPt31().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt32().y;
+          vecBezierPatches[i] = (*it)->GetPt31().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt32().z;
+          vecBezierPatches[i] = (*it)->GetPt31().z;
           i++;
 
-          vecBezierPatches[i] = (*it)->getPt03().x;
+          vecBezierPatches[i] = (*it)->GetPt02().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt03().y;
+          vecBezierPatches[i] = (*it)->GetPt02().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt03().z;
+          vecBezierPatches[i] = (*it)->GetPt02().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt13().x;
+          vecBezierPatches[i] = (*it)->GetPt12().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt13().y;
+          vecBezierPatches[i] = (*it)->GetPt12().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt13().z;
+          vecBezierPatches[i] = (*it)->GetPt12().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt23().x;
+          vecBezierPatches[i] = (*it)->GetPt22().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt23().y;
+          vecBezierPatches[i] = (*it)->GetPt22().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt23().z;
+          vecBezierPatches[i] = (*it)->GetPt22().z;
           i++;
-          vecBezierPatches[i] = (*it)->getPt33().x;
+          vecBezierPatches[i] = (*it)->GetPt32().x;
           i++;
-          vecBezierPatches[i] = (*it)->getPt33().y;
+          vecBezierPatches[i] = (*it)->GetPt32().y;
           i++;
-          vecBezierPatches[i] = (*it)->getPt33().z;
+          vecBezierPatches[i] = (*it)->GetPt32().z;
+          i++;
+
+          vecBezierPatches[i] = (*it)->GetPt03().x;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt03().y;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt03().z;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt13().x;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt13().y;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt13().z;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt23().x;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt23().y;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt23().z;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt33().x;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt33().y;
+          i++;
+          vecBezierPatches[i] = (*it)->GetPt33().z;
           i++;
         }
       }
@@ -217,10 +217,10 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 }
 
 #if USE_MPI
-std::list<BezierPatch*> GeradorAdaptativoPorCurvatura::estimateChargeofPatches(
+std::list<PatchBezier*> GeradorAdaptativoPorCurvatura::estimateChargeofPatches(
     Geometria* geometria, Timer* timer, string INPUT_MODEL) {
   ChargeEstimateProcess* cep = new ChargeEstimateProcess();
-  std::list<BezierPatch*> listBezierPt =
+  std::list<PatchBezier*> listBezierPt =
       cep->chargeEstimateProcess(geometria, timer, INPUT_MODEL);
   delete cep;
 
@@ -228,57 +228,57 @@ std::list<BezierPatch*> GeradorAdaptativoPorCurvatura::estimateChargeofPatches(
 }
 
 std::vector<CurveAdaptive*> GeradorAdaptativoPorCurvatura::createVectorOfCurves(
-    std::list<BezierPatch*> listBezierPt) {
+    std::list<PatchBezier*> listBezierPt) {
   CurveAdaptive* curva;
   std::vector<CurveAdaptive*> curves;
 
-  for (std::list<BezierPatch*>::iterator it = listBezierPt.begin();
+  for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {
     if (curves.size() > 0) {
-      if (verifyCurve((*it)->getPt00(), (*it)->getPt10(), (*it)->getPt20(),
-                      (*it)->getPt30(), curves)) {
+      if (verifyCurve((*it)->GetPt00(), (*it)->GetPt10(), (*it)->GetPt20(),
+                      (*it)->GetPt30(), curves)) {
         curva = new CurveAdaptiveParametricBezier(
-            (*it)->getPt00(), (*it)->getPt10(), (*it)->getPt20(),
-            (*it)->getPt30());
+            (*it)->GetPt00(), (*it)->GetPt10(), (*it)->GetPt20(),
+            (*it)->GetPt30());
         curves.push_back(curva);
       }
-      if (verifyCurve((*it)->getPt30(), (*it)->getPt31(), (*it)->getPt32(),
-                      (*it)->getPt33(), curves)) {
+      if (verifyCurve((*it)->GetPt30(), (*it)->GetPt31(), (*it)->GetPt32(),
+                      (*it)->GetPt33(), curves)) {
         curva = new CurveAdaptiveParametricBezier(
-            (*it)->getPt30(), (*it)->getPt31(), (*it)->getPt32(),
-            (*it)->getPt33());
+            (*it)->GetPt30(), (*it)->GetPt31(), (*it)->GetPt32(),
+            (*it)->GetPt33());
         curves.push_back(curva);
       }
-      if (verifyCurve((*it)->getPt03(), (*it)->getPt13(), (*it)->getPt23(),
-                      (*it)->getPt33(), curves)) {
+      if (verifyCurve((*it)->GetPt03(), (*it)->GetPt13(), (*it)->GetPt23(),
+                      (*it)->GetPt33(), curves)) {
         curva = new CurveAdaptiveParametricBezier(
-            (*it)->getPt03(), (*it)->getPt13(), (*it)->getPt23(),
-            (*it)->getPt33());
+            (*it)->GetPt03(), (*it)->GetPt13(), (*it)->GetPt23(),
+            (*it)->GetPt33());
         curves.push_back(curva);
       }
-      if (verifyCurve((*it)->getPt00(), (*it)->getPt01(), (*it)->getPt02(),
-                      (*it)->getPt03(), curves)) {
+      if (verifyCurve((*it)->GetPt00(), (*it)->GetPt01(), (*it)->GetPt02(),
+                      (*it)->GetPt03(), curves)) {
         curva = new CurveAdaptiveParametricBezier(
-            (*it)->getPt00(), (*it)->getPt01(), (*it)->getPt02(),
-            (*it)->getPt03());
+            (*it)->GetPt00(), (*it)->GetPt01(), (*it)->GetPt02(),
+            (*it)->GetPt03());
         curves.push_back(curva);
       }
     } else if (curves.size() == 0) {
       curva =
-          new CurveAdaptiveParametricBezier((*it)->getPt00(), (*it)->getPt10(),
-                                            (*it)->getPt20(), (*it)->getPt30());
+          new CurveAdaptiveParametricBezier((*it)->GetPt00(), (*it)->GetPt10(),
+                                            (*it)->GetPt20(), (*it)->GetPt30());
       curves.push_back(curva);
       curva =
-          new CurveAdaptiveParametricBezier((*it)->getPt30(), (*it)->getPt31(),
-                                            (*it)->getPt32(), (*it)->getPt33());
+          new CurveAdaptiveParametricBezier((*it)->GetPt30(), (*it)->GetPt31(),
+                                            (*it)->GetPt32(), (*it)->GetPt33());
       curves.push_back(curva);
       curva =
-          new CurveAdaptiveParametricBezier((*it)->getPt03(), (*it)->getPt13(),
-                                            (*it)->getPt23(), (*it)->getPt33());
+          new CurveAdaptiveParametricBezier((*it)->GetPt03(), (*it)->GetPt13(),
+                                            (*it)->GetPt23(), (*it)->GetPt33());
       curves.push_back(curva);
       curva =
-          new CurveAdaptiveParametricBezier((*it)->getPt00(), (*it)->getPt01(),
-                                            (*it)->getPt02(), (*it)->getPt03());
+          new CurveAdaptiveParametricBezier((*it)->GetPt00(), (*it)->GetPt01(),
+                                            (*it)->GetPt02(), (*it)->GetPt03());
       curves.push_back(curva);
     }
   }
@@ -286,18 +286,18 @@ std::vector<CurveAdaptive*> GeradorAdaptativoPorCurvatura::createVectorOfCurves(
   return curves;
 }
 
-std::list<BezierPatch*>
+std::list<PatchBezier*>
 GeradorAdaptativoPorCurvatura::orderPatchesDistribProcess(
-    std::list<BezierPatch*> listPatches) {
+    std::list<PatchBezier*> listPatches) {
   std::vector<std::pair<double, int> > vectorEstimativeProcessPair;
-  std::list<BezierPatch*> listPatchesOrder;
+  std::list<PatchBezier*> listPatchesOrder;
 
   if (SIZE_MPI > 1) {
     for (int i = 0; i < SIZE_MPI; i++) {
       vectorEstimativeProcessPair.push_back(std::make_pair(0.0, i));
     }
 
-    for (std::list<BezierPatch*>::iterator it = listPatches.begin();
+    for (std::list<PatchBezier*>::iterator it = listPatches.begin();
          it != listPatches.end(); it++) {
       std::sort(vectorEstimativeProcessPair.begin(),
                 vectorEstimativeProcessPair.end());
@@ -308,7 +308,7 @@ GeradorAdaptativoPorCurvatura::orderPatchesDistribProcess(
     }
 
     for (int i = 0; i < SIZE_MPI; i++) {
-      for (std::list<BezierPatch*>::iterator it = listPatches.begin();
+      for (std::list<PatchBezier*>::iterator it = listPatches.begin();
            it != listPatches.end(); it++) {
         if ((*it)->getIdProcess() == i) {
           listPatchesOrder.push_back((*it));
@@ -319,7 +319,7 @@ GeradorAdaptativoPorCurvatura::orderPatchesDistribProcess(
     return listPatchesOrder;
 
   } else {
-    for (std::list<BezierPatch*>::iterator it = listPatches.begin();
+    for (std::list<PatchBezier*>::iterator it = listPatches.begin();
          it != listPatches.end(); it++) {
       (*it)->setIdProcess(0);
     }
@@ -349,10 +349,10 @@ bool GeradorAdaptativoPorCurvatura::verifyCurve(
 }
 
 void GeradorAdaptativoPorCurvatura::calculateEstimateProcessElements(
-    int sizeProcess, std::list<BezierPatch*> listBezierPt) {
+    int sizeProcess, std::list<PatchBezier*> listBezierPt) {
   double estimate[sizeProcess] = {};
 
-  for (std::list<BezierPatch*>::iterator it = listBezierPt.begin();
+  for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {
     estimate[(*it)->getIdProcess()] += (*it)->getNumberTriangle();
   }
@@ -362,10 +362,10 @@ void GeradorAdaptativoPorCurvatura::calculateEstimateProcessElements(
   }
 }
 
-std::list<BezierPatch*>::iterator
+std::list<PatchBezier*>::iterator
 GeradorAdaptativoPorCurvatura::getIteratorListPatches(
-    int numberPatches, std::list<BezierPatch*> listBezierPt) {
-  std::list<BezierPatch*>::iterator it = listBezierPt.begin();
+    int numberPatches, std::list<PatchBezier*> listBezierPt) {
+  std::list<PatchBezier*>::iterator it = listBezierPt.begin();
   advance(it, numberPatches);
   return it;
 }
@@ -396,7 +396,7 @@ Geometria* GeradorAdaptativoPorCurvatura::unpakGeometry(double listOfPatches[],
   CurveAdaptive* patch_c3;
   CurveAdaptive* patch_c4;
 
-  BezierPatch* bezierPatch;
+  PatchBezier* bezierPatch;
 
   for (int i = 0; i < sizeOfListPatches; i = i + 48) {
     p00 = new Vertice(listOfPatches[i], listOfPatches[i + 1],
@@ -468,9 +468,9 @@ Geometria* GeradorAdaptativoPorCurvatura::unpakGeometry(double listOfPatches[],
       patch_c4 = geo->verifyCurveGeometria(p00, p01, p02, p03);
     }
 
-    bezierPatch = new BezierPatch(patch_c1, patch_c2, patch_c3, patch_c4, *p11,
+    bezierPatch = new PatchBezier(patch_c1, patch_c2, patch_c3, patch_c4, *p11,
                                   *p21, *p12, *p22);
-    bezierPatch->setId(i / 48);
+    bezierPatch->SetId(i / 48);
 
     geo->inserePatch(bezierPatch);
   }
@@ -748,21 +748,21 @@ void GeradorAdaptativoPorCurvatura::adaptCurve(Geometria* geo) {
 void GeradorAdaptativoPorCurvatura::adaptDomain(Geometria* geo,
                                                 MeshAdaptive* malha) {
   for (unsigned int i = 0; i < geo->getNumDePatches(); ++i) {
-    CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
+    PatchCoons* p = static_cast<PatchCoons*>(geo->getPatch(i));
     SubMesh* sub = adapter.AdaptDomain(p, this->idManagers[0], 1);
     sub->SetPatch(p);
     malha->InsertSubMeshAdaptiveByPosition(sub, i);
-    geo->getPatch(i)->setMalha(malha->GetSubMeshAdaptiveByPosition(i));
+    geo->getPatch(i)->SetSubMesh(malha->GetSubMeshAdaptiveByPosition(i));
   }
 }
 
 #if USE_OPENMP
 SubMesh* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
-    CoonsPatch* patch, Performer::IdManager* idManager) {
-  CurveAdaptive* c1 = patch->getCurva(0);
-  CurveAdaptive* c2 = patch->getCurva(1);
-  CurveAdaptive* c3 = patch->getCurva(2);
-  CurveAdaptive* c4 = patch->getCurva(3);
+    PatchCoons* patch, Performer::IdManager* idManager) {
+  CurveAdaptive* c1 = patch->GetCurve(0);
+  CurveAdaptive* c2 = patch->GetCurve(1);
+  CurveAdaptive* c3 = patch->GetCurve(2);
+  CurveAdaptive* c4 = patch->GetCurve(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())
@@ -782,7 +782,7 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
 
   for (double v = 0.0; v <= 1.0; v += 1) {
     for (double u = 0.0; u <= 1.0; u += 1) {
-      Ponto* p = new Noh(patch->parametrizar(u, v));
+      Ponto* p = new Noh(patch->Parameterize(u, v));
       p->id = idManager->next(0);
 
       if (v == 0 and c1)  // p está na curva 1 (c1 = NULL)
@@ -799,7 +799,7 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
     }
   }
 
-  Ponto* p = new Noh(patch->parametrizar(0.5, 0.5));
+  Ponto* p = new Noh(patch->Parameterize(0.5, 0.5));
   p->id = idManager->next(0);
   sub->SetNoh(static_cast<Noh*>(p));
 
@@ -841,7 +841,7 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
   //==============================================================================*/
 
   // 5. define a submalha do patch
-  patch->setMalha(sub);
+  patch->SetSubMesh(sub);
   sub->SetPatch(patch);
 
   return sub;
@@ -890,7 +890,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(MeshAdaptive* malha,
         Ponto* n = sub->GetNoh(j);
         Patch* p = sub->GetPatch();
         CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
-                               *(static_cast<CoonsPatch*>(p)));
+                               *(static_cast<PatchCoons*>(p)));
         CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
         double Ga = ka.CalculateGaussCurvature();
         double Gd = kd.CalculateGaussCurvature();
@@ -1009,8 +1009,8 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
     // 1. Gera a malha inicial
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
-      CoonsPatch* patch = static_cast<CoonsPatch*>(geo->getPatch(i));
-      SubMesh* sub = this->malhaInicialOmp(static_cast<CoonsPatch*>(patch),
+      PatchCoons* patch = static_cast<PatchCoons*>(geo->getPatch(i));
+      SubMesh* sub = this->malhaInicialOmp(static_cast<PatchCoons*>(patch),
                                            this->idManagers[id]);
       malha->InsertSubMeshAdaptiveByPosition(sub, i);
     }
@@ -1105,11 +1105,11 @@ int GeradorAdaptativoPorCurvatura::generatorOmp(Modelo& modelo, Timer* timer,
       // 4.3. Adapta as patches
 #pragma omp for
       for (int i = 0; i < sizePatch; ++i) {
-        CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
+        PatchCoons* p = static_cast<PatchCoons*>(geo->getPatch(i));
         SubMesh* sub = adapter.AdaptDomainOmp(p, this->idManagers[id], 1);
         sub->SetPatch(p);
         malha->InsertSubMeshAdaptiveByPosition(sub, i);
-        geo->getPatch(i)->setMalha(malha->GetSubMeshAdaptiveByPosition(i));
+        geo->getPatch(i)->SetSubMesh(malha->GetSubMeshAdaptiveByPosition(i));
       }
 
       timer->endTimerParallel(0, id, 4);  // adpt. do domínio
@@ -1159,11 +1159,11 @@ void GeradorAdaptativoPorCurvatura::adaptDomainOmp(Geometria* geo,
     // 4.3. Adapta as patches
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
-      CoonsPatch* p = static_cast<CoonsPatch*>(geo->getPatch(i));
+      PatchCoons* p = static_cast<PatchCoons*>(geo->getPatch(i));
       SubMesh* sub = adapter.AdaptDomainOmp(p, this->idManagers[id], 1);
       sub->SetPatch(p);
       malha->InsertSubMeshAdaptiveByPosition(sub, i);
-      geo->getPatch(i)->setMalha(malha->GetSubMeshAdaptiveByPosition(i));
+      geo->getPatch(i)->SetSubMesh(malha->GetSubMeshAdaptiveByPosition(i));
     }
 #if USE_MPI
     timer->endTimerParallel(RANK_MPI, id, 4);  // Adaptação do domínio
@@ -1176,11 +1176,11 @@ void GeradorAdaptativoPorCurvatura::adaptDomainOmp(Geometria* geo,
 #endif  // USE_OPENMP
 
 SubMesh* GeradorAdaptativoPorCurvatura::malhaInicial(
-    CoonsPatch* patch, Performer::IdManager* idManager) {
-  CurveAdaptive* c1 = patch->getCurva(0);
-  CurveAdaptive* c2 = patch->getCurva(1);
-  CurveAdaptive* c3 = patch->getCurva(2);
-  CurveAdaptive* c4 = patch->getCurva(3);
+    PatchCoons* patch, Performer::IdManager* idManager) {
+  CurveAdaptive* c1 = patch->GetCurve(0);
+  CurveAdaptive* c2 = patch->GetCurve(1);
+  CurveAdaptive* c3 = patch->GetCurve(2);
+  CurveAdaptive* c4 = patch->GetCurve(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())
@@ -1200,7 +1200,7 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicial(
   for (double v = 0.0; v <= 1.0; v += 1) {
     for (double u = 0.0; u <= 1.0; u += 1) {
       //			cout << "u = " << u << " v = " << v << endl;
-      Ponto* p = new Noh(patch->parametrizar(u, v));
+      Ponto* p = new Noh(patch->Parameterize(u, v));
       p->id = idManager->next(0);
 
       //			cout << "ponto " << p->id << " " <<  p->x << " "
@@ -1221,7 +1221,7 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicial(
     }
   }
 
-  Ponto* p = new Noh(patch->parametrizar(0.5, 0.5));
+  Ponto* p = new Noh(patch->Parameterize(0.5, 0.5));
   sub->SetNoh(static_cast<Noh*>(p));
   p->id = idManager->next(0);
 
@@ -1255,7 +1255,7 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicial(
   //==============================================================================*/
 
   // 5. define a submalha do patch
-  patch->setMalha(sub);
+  patch->SetSubMesh(sub);
   sub->SetPatch(patch);
 
   return sub;
@@ -1308,7 +1308,7 @@ double GeradorAdaptativoPorCurvatura::erroGlobal(MeshAdaptive* malha,
       Ponto* n = sub->GetNoh(j);
       Patch* p = sub->GetPatch();
       CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
-                             *(static_cast<CoonsPatch*>(p)));
+                             *(static_cast<PatchCoons*>(p)));
       CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
       double Ga = ka.CalculateGaussCurvature();
       double Gd = kd.CalculateGaussCurvature();
@@ -1486,7 +1486,7 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(MeshAdaptive* malha) {
       Ponto* n = sub->GetNoh(j);
       Patch* p = sub->GetPatch();
       CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
-                             *(static_cast<CoonsPatch*>(p)));
+                             *(static_cast<PatchCoons*>(p)));
       CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
       double Ga = ka.CalculateGaussCurvature();
       double Gd = kd.CalculateGaussCurvature();
@@ -1501,7 +1501,7 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(MeshAdaptive* malha) {
 
       arquivo << "P " << n->id << ": ( " << n->x << ", " << n->y << ", " << n->z
               << ")" << endl;
-      tuple<double, double> t_n = ((HermitePatch*)p)->encontrar_u_v(*n);
+      tuple<double, double> t_n = ((PatchHermite*)p)->FindUV(*n);
       arquivo << "\tu = " << get<0>(t_n) << " v = " << get<1>(t_n) << endl;
       unsigned int num = ((Noh*)n)->getNumDeElementos();
       arquivo << "\t" << num << " elementos incidentes:";
@@ -2037,8 +2037,8 @@ void GeradorAdaptativoPorCurvatura::generatorInitialMesh(Geometria* geo,
     // 1. Gera a malha inicial
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
-      CoonsPatch* patch = static_cast<CoonsPatch*>(geo->getPatch(i));
-      SubMesh* sub = this->malhaInicialOmp(static_cast<CoonsPatch*>(patch),
+      PatchCoons* patch = static_cast<PatchCoons*>(geo->getPatch(i));
+      SubMesh* sub = this->malhaInicialOmp(static_cast<PatchCoons*>(patch),
                                            this->idManagers[id]);
       malha->InsertSubMeshAdaptiveByPosition(sub, i);
     }

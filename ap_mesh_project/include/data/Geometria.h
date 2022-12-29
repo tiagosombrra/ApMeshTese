@@ -8,7 +8,7 @@
 
 #include "../data/curve/curve_adaptive.h"
 #include "../data/curve/curve_adaptive_parametric_bezier.h"
-#include "../data/patch/HermitePatch.h"
+#include "../data/patch/patch_hermite.h"
 using namespace std;
 
 class Geometria {

@@ -26,10 +26,10 @@ src/data/mesh/mesh_adaptive.cpp \
 src/data/mesh/sub_mesh.cpp \
 src/data/Modelo.cpp \
 src/data/Noh.cpp \
-src/data/patch/BezierPatch.cpp \
-src/data/patch/CoonsPatch.cpp \
-src/data/patch/HermitePatch.cpp \
-src/data/patch/Patch.cpp \
+src/data/patch/patch_bezier.cpp \
+src/data/patch/patch_coons.cpp \
+src/data/patch/patch_hermite.cpp \
+src/data/patch/patch.cpp \
 src/data/Ponto.cpp \
 src/data/tree/BinTree.cpp \
 src/data/Triangulo.cpp \

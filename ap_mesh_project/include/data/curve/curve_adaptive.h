@@ -6,7 +6,7 @@
 
 #include "../Noh.h"
 #include "../Triangulo.h"
-#include "../patch/Patch.h"
+#include "../patch/patch.h"
 
 class CurveAdaptive {
  public:

@@ -33,7 +33,7 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   CurveAdaptive* patch1_c4 =
       new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
-  Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
+  Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
   geo->inserePatch(patch1);
@@ -72,7 +72,7 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   CurveAdaptive* patch2_c4 =
       new CurveAdaptiveParametricBezier(*p200, *p201, *p202, *p203);
 
-  Patch* patch2 = new BezierPatch(patch1_c1, patch2_c2, patch2_c3, patch2_c4,
+  Patch* patch2 = new PatchBezier(patch1_c1, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
 
   geo->inserePatch(patch2);
@@ -111,7 +111,7 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   CurveAdaptive* patch3_c4 =
       new CurveAdaptiveParametricBezier(*p300, *p301, *p302, *p303);
 
-  Patch* patch3 = new BezierPatch(patch1_c1, patch3_c2, patch3_c3, patch3_c4,
+  Patch* patch3 = new PatchBezier(patch1_c1, patch3_c2, patch3_c3, patch3_c4,
                                   *p311, *p321, *p312, *p322);
 
   geo->inserePatch(patch3);
@@ -150,7 +150,7 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   CurveAdaptive* patch4_c4 =
       new CurveAdaptiveParametricBezier(*p400, *p401, *p402, *p403);
 
-  Patch* patch4 = new BezierPatch(patch1_c1, patch4_c2, patch4_c3, patch4_c4,
+  Patch* patch4 = new PatchBezier(patch1_c1, patch4_c2, patch4_c3, patch4_c4,
                                   *p411, *p421, *p412, *p422);
 
   geo->inserePatch(patch4);
@@ -190,7 +190,7 @@ Geometria* Modelos3d::modelPlanBook(Geometria* geo) {
   CurveAdaptive* patch5_c4 =
       new CurveAdaptiveParametricBezier(*p500, *p501, *p502, *p503);
 
-  Patch* patch5 = new BezierPatch(patch1_c1, patch5_c2, patch5_c3, patch5_c4,
+  Patch* patch5 = new PatchBezier(patch1_c1, patch5_c2, patch5_c3, patch5_c4,
                                   *p511, *p521, *p512, *p522);
 
   geo->inserePatch(patch5);
@@ -238,7 +238,7 @@ Geometria* Modelos3d::modelTresPatches(Geometria* geo) {
   CurveAdaptive* patch1_c4 =
       new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
-  Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
+  Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
   geo->inserePatch(patch1);
@@ -276,7 +276,7 @@ Geometria* Modelos3d::modelTresPatches(Geometria* geo) {
   CurveAdaptive* patch2_c4 =
       new CurveAdaptiveParametricBezier(*p200, *p201, *p202, *p203);
 
-  Patch* patch2 = new BezierPatch(patch1_c3, patch2_c2, patch2_c3, patch2_c4,
+  Patch* patch2 = new PatchBezier(patch1_c3, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
 
   geo->inserePatch(patch2);
@@ -315,7 +315,7 @@ Geometria* Modelos3d::modelTresPatches(Geometria* geo) {
   CurveAdaptive* patch3_c4 =
       new CurveAdaptiveParametricBezier(*p300, *p301, *p302, *p303);
 
-  Patch* patch3 = new BezierPatch(patch1_c3, patch3_c2, patch3_c3, patch3_c4,
+  Patch* patch3 = new PatchBezier(patch1_c3, patch3_c2, patch3_c3, patch3_c4,
                                   *p311, *p321, *p312, *p322);
 
   geo->inserePatch(patch3);
@@ -364,7 +364,7 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva1(Geometria* geo) {
   CurveAdaptive* patch1_c4 =
       new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
-  Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
+  Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
   geo->inserePatch(patch1);
@@ -402,7 +402,7 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva1(Geometria* geo) {
   CurveAdaptive* patch2_c4 =
       new CurveAdaptiveParametricBezier(*p200, *p201, *p202, *p203);
 
-  Patch* patch2 = new BezierPatch(patch1_c3, patch2_c2, patch2_c3, patch2_c4,
+  Patch* patch2 = new PatchBezier(patch1_c3, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
 
   geo->inserePatch(patch2);
@@ -452,7 +452,7 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva(Geometria* geo) {
   CurveAdaptive* patch1_c4 =
       new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
-  Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
+  Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
   geo->inserePatch(patch1);
@@ -492,7 +492,7 @@ Geometria* Modelos3d::modelDoisPatchesPlanosCurva(Geometria* geo) {
   CurveAdaptive* patch2_c4 =
       new CurveAdaptiveParametricBezier(*p200, *p201, *p202, *p203);
 
-  Patch* patch2 = new BezierPatch(patch2_c1, patch2_c2, patch2_c3, patch2_c4,
+  Patch* patch2 = new PatchBezier(patch2_c1, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
 
   geo->inserePatch(patch2);
@@ -539,7 +539,7 @@ Geometria* Modelos3d::modelCurvaBezier(Geometria* geo) {
   CurveAdaptive* patch1_c4 =
       new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
 
-  Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
+  Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p11, *p21, *p12, *p22);
 
   geo->inserePatch(patch1);
@@ -593,7 +593,7 @@ Geometria* Modelos3d::modelParaboloide(Geometria* geo) {
       *patch1_p00, *patch1_p01, *patch1_Qv00, *patch1_Qv01);
 
   Patch* patch1 =
-      new HermitePatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4, *patch1_tw00,
+      new PatchHermite(patch1_c1, patch1_c2, patch1_c3, patch1_c4, *patch1_tw00,
                        *patch1_tw10, *patch1_tw01, *patch1_tw11);
 
   geo->inserePatch(patch1);
@@ -651,9 +651,9 @@ Geometria* Modelos3d::modelPneu(Geometria* geo) {
   Vetor* tw01 = new Vetor(0.0, 60.0, 0.0);
   Vetor* tw11 = new Vetor(0.0, -60.0, 0.0);
 
-  Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
+  Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
   Patch* patch2 =
-      new HermitePatch(c5, c4, c6, c2, *tw_00, *tw_10, *tw_01, *tw_11);
+      new PatchHermite(c5, c4, c6, c2, *tw_00, *tw_10, *tw_01, *tw_11);
 
   geo->inserePatch(patch1);
   geo->inserePatch(patch2);
@@ -701,7 +701,7 @@ Geometria* Modelos3d::modelLadoDescendente(Geometria* geo) {
       new CurveAdaptiveParametricHermite(*p01, *p11, *Qu01, *Qu11);
   CurveAdaptive* c4 =
       new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
-  Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
+  Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
   geo->inserePatch(patch1);
   geo->insereCurva(c1);
@@ -748,7 +748,7 @@ Geometria* Modelos3d::modelBaseCircular(Geometria* geo) {
   CurveAdaptive* c4 =
       new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
 
-  Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
+  Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
   geo->inserePatch(patch1);
   geo->insereCurva(c1);
@@ -794,7 +794,7 @@ Geometria* Modelos3d::modelBaseQuadrada(Geometria* geo) {
   CurveAdaptive* c4 =
       new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
 
-  Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
+  Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
   geo->inserePatch(patch1);
   geo->insereCurva(c1);
@@ -840,7 +840,7 @@ Geometria* Modelos3d::modelBordaCurva(Geometria* geo) {
   CurveAdaptive* c4 =
       new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
 
-  Patch* patch1 = new HermitePatch(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
+  Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
   geo->inserePatch(patch1);
   geo->insereCurva(c1);
@@ -905,9 +905,9 @@ Geometria* Modelos3d::modelDoisPatches(Geometria* geo) {
   // Curva* c8 = new CurvParamHermite ( *p200, *p201, *Qv00, *Qv01 );
 
   Patch* patch1 =
-      new HermitePatch(c1, c2, c3, c4, *tw100, *tw110, *tw101, *tw111);
+      new PatchHermite(c1, c2, c3, c4, *tw100, *tw110, *tw101, *tw111);
   Patch* patch2 =
-      new HermitePatch(c5, c6, c7, c2, *tw200, *tw210, *tw201, *tw211);
+      new PatchHermite(c5, c6, c7, c2, *tw200, *tw210, *tw201, *tw211);
 
   geo->inserePatch(patch1);
   geo->inserePatch(patch2);
@@ -962,7 +962,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
       *patch1_p00, *patch1_p01, *patch1_Qv00, *patch1_Qv01);
 
   Patch* patch1 =
-      new HermitePatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4, *patch1_tw00,
+      new PatchHermite(patch1_c1, patch1_c2, patch1_c3, patch1_c4, *patch1_tw00,
                        *patch1_tw10, *patch1_tw01, *patch1_tw11);
 
   geo->inserePatch(patch1);
@@ -1004,7 +1004,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch2_c4 = patch1_c2;
 
   Patch* patch2 =
-      new HermitePatch(patch2_c1, patch2_c2, patch2_c3, patch2_c4, *patch2_tw00,
+      new PatchHermite(patch2_c1, patch2_c2, patch2_c3, patch2_c4, *patch2_tw00,
                        *patch2_tw10, *patch2_tw01, *patch2_tw11);
 
   geo->inserePatch(patch2);
@@ -1056,7 +1056,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch3_c4 = patch2_c2;
 
   Patch* patch3 =
-      new HermitePatch(patch3_c1, patch3_c2, patch3_c3, patch3_c4, *patch3_tw00,
+      new PatchHermite(patch3_c1, patch3_c2, patch3_c3, patch3_c4, *patch3_tw00,
                        *patch3_tw10, *patch3_tw01, *patch3_tw11);
 
   geo->inserePatch(patch3);
@@ -1096,7 +1096,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
       *patch4_p00, *patch4_p01, *patch4_Qv00, *patch4_Qv01);
 
   Patch* patch4 =
-      new HermitePatch(patch4_c1, patch4_c2, patch4_c3, patch4_c4, *patch4_tw00,
+      new PatchHermite(patch4_c1, patch4_c2, patch4_c3, patch4_c4, *patch4_tw00,
                        *patch4_tw10, *patch4_tw01, *patch4_tw11);
 
   geo->inserePatch(patch4);
@@ -1139,7 +1139,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch5_c4 = patch4_c2;
 
   Patch* patch5 =
-      new HermitePatch(patch5_c1, patch5_c2, patch5_c3, patch5_c4, *patch5_tw00,
+      new PatchHermite(patch5_c1, patch5_c2, patch5_c3, patch5_c4, *patch5_tw00,
                        *patch5_tw10, *patch5_tw01, *patch5_tw11);
 
   geo->inserePatch(patch5);
@@ -1183,7 +1183,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch6_c4 = patch5_c2;
 
   Patch* patch6 =
-      new HermitePatch(patch6_c1, patch6_c2, patch6_c3, patch6_c4, *patch6_tw00,
+      new PatchHermite(patch6_c1, patch6_c2, patch6_c3, patch6_c4, *patch6_tw00,
                        *patch6_tw10, *patch6_tw01, *patch6_tw11);
 
   geo->inserePatch(patch6);
@@ -1225,7 +1225,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
       *patch8_p00, *patch8_p01, *patch8_Qv00, *patch8_Qv01);
 
   Patch* patch8 =
-      new HermitePatch(patch8_c1, patch8_c2, patch8_c3, patch8_c4, *patch8_tw00,
+      new PatchHermite(patch8_c1, patch8_c2, patch8_c3, patch8_c4, *patch8_tw00,
                        *patch8_tw10, *patch8_tw01, *patch8_tw11);
 
   geo->inserePatch(patch8);
@@ -1267,7 +1267,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch10_c4 = new CurveAdaptiveParametricHermite(
       *patch10_p00, *patch10_p01, *patch10_Qv00, *patch10_Qv01);
 
-  Patch* patch10 = new HermitePatch(patch10_c1, patch10_c2, patch10_c3,
+  Patch* patch10 = new PatchHermite(patch10_c1, patch10_c2, patch10_c3,
                                     patch10_c4, *patch10_tw00, *patch10_tw10,
                                     *patch10_tw01, *patch10_tw11);
 
@@ -1308,7 +1308,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
       *patch7_p00, *patch7_p01, *patch7_Qv00, *patch7_Qv01);
 
   Patch* patch7 =
-      new HermitePatch(patch7_c1, patch7_c2, patch7_c3, patch7_c4, *patch7_tw00,
+      new PatchHermite(patch7_c1, patch7_c2, patch7_c3, patch7_c4, *patch7_tw00,
                        *patch7_tw10, *patch7_tw01, *patch7_tw11);
 
   geo->inserePatch(patch7);
@@ -1348,7 +1348,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch9_c4 = patch8_c2;
 
   Patch* patch9 =
-      new HermitePatch(patch9_c1, patch9_c2, patch9_c3, patch9_c4, *patch9_tw00,
+      new PatchHermite(patch9_c1, patch9_c2, patch9_c3, patch9_c4, *patch9_tw00,
                        *patch9_tw10, *patch9_tw01, *patch9_tw11);
 
   geo->inserePatch(patch9);
@@ -1386,7 +1386,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch11_c4 = new CurveAdaptiveParametricHermite(
       *patch11_p00, *patch11_p01, *patch11_Qv00, *patch11_Qv01);
 
-  Patch* patch11 = new HermitePatch(patch11_c1, patch11_c2, patch11_c3,
+  Patch* patch11 = new PatchHermite(patch11_c1, patch11_c2, patch11_c3,
                                     patch11_c4, *patch11_tw00, *patch11_tw10,
                                     *patch11_tw01, *patch11_tw11);
 
@@ -1426,7 +1426,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch12_c3 = patch6_c2;
   CurveAdaptive* patch12_c4 = patch3_c2;
 
-  Patch* patch12 = new HermitePatch(patch12_c1, patch12_c2, patch12_c3,
+  Patch* patch12 = new PatchHermite(patch12_c1, patch12_c2, patch12_c3,
                                     patch12_c4, *patch12_tw00, *patch12_tw10,
                                     *patch12_tw01, *patch12_tw11);
 
@@ -1465,7 +1465,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch13_c4 = new CurveAdaptiveParametricHermite(
       *patch13_p00, *patch13_p01, *patch13_Qv00, *patch13_Qv01);
 
-  Patch* patch13 = new HermitePatch(patch13_c1, patch13_c2, patch13_c3,
+  Patch* patch13 = new PatchHermite(patch13_c1, patch13_c2, patch13_c3,
                                     patch13_c4, *patch13_tw00, *patch13_tw10,
                                     *patch13_tw01, *patch13_tw11);
 
@@ -1505,7 +1505,7 @@ Geometria* Modelos3d::modelNariz(Geometria* geo) {
   CurveAdaptive* patch14_c3 = patch9_c2;
   CurveAdaptive* patch14_c4 = patch12_c2;
 
-  Patch* patch14 = new HermitePatch(patch14_c1, patch14_c2, patch14_c3,
+  Patch* patch14 = new PatchHermite(patch14_c1, patch14_c2, patch14_c3,
                                     patch14_c4, *patch14_tw00, *patch14_tw10,
                                     *patch14_tw01, *patch14_tw11);
 
@@ -1556,7 +1556,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch1_c4 =
       new CurveAdaptiveParametricBezier(*p100, *p101, *p102, *p103);
 
-  Patch* patch1 = new BezierPatch(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
+  Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
   geo->inserePatch(patch1);
@@ -1601,7 +1601,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   // Curva* patch2_c4 = patch1_c2; //new CurvParamBezier ( *p130, *p131, *p132,
   // *p133 ); //( *p200, *p201, *p202, *p203 );
 
-  Patch* patch2 = new BezierPatch(patch2_c1, patch2_c2, patch2_c3, patch1_c2,
+  Patch* patch2 = new PatchBezier(patch2_c1, patch2_c2, patch2_c3, patch1_c2,
                                   *p211, *p221, *p212, *p222);
 
   geo->inserePatch(patch2);
@@ -1646,7 +1646,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p233
   //);
 
-  Patch* patch3 = new BezierPatch(patch3_c1, patch3_c2, patch3_c3, patch2_c2,
+  Patch* patch3 = new PatchBezier(patch3_c1, patch3_c2, patch3_c3, patch2_c2,
                                   *p311, *p321, *p312, *p322);
 
   geo->inserePatch(patch3);
@@ -1686,7 +1686,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   // Curva* patch4_c4 = new CurvParamBezier ( *p330, *p331, *p332, *p333 ); // (
   // *p400, *p401, *p402, *p403 );
 
-  Patch* patch4 = new BezierPatch(patch4_c1, patch1_c4, patch4_c3, patch3_c2,
+  Patch* patch4 = new PatchBezier(patch4_c1, patch1_c4, patch4_c3, patch3_c2,
                                   *p411, *p421, *p412, *p422);
 
   geo->inserePatch(patch4);
@@ -1727,7 +1727,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch5_c4 = new CurveAdaptiveParametricBezier(
       *p103, *p501, *p502, *p503);  // ( *p500, *p501, *p502, *p503 );
 
-  Patch* patch5 = new BezierPatch(patch1_c3, patch5_c2, patch5_c3, patch5_c4,
+  Patch* patch5 = new PatchBezier(patch1_c3, patch5_c2, patch5_c3, patch5_c4,
                                   *p511, *p521, *p512, *p522);
 
   geo->inserePatch(patch5);
@@ -1776,7 +1776,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p533
   //); // ( *p600, *p601, *p602, *p603 );
 
-  Patch* patch6 = new BezierPatch(patch2_c3, patch6_c2, patch6_c3, patch5_c2,
+  Patch* patch6 = new PatchBezier(patch2_c3, patch6_c2, patch6_c3, patch5_c2,
                                   *p611, *p621, *p612, *p622);
 
   geo->inserePatch(patch6);
@@ -1819,7 +1819,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p633
   //);
 
-  Patch* patch7 = new BezierPatch(patch3_c3, patch7_c2, patch7_c3, patch6_c2,
+  Patch* patch7 = new PatchBezier(patch3_c3, patch7_c2, patch7_c3, patch6_c2,
                                   *p711, *p721, *p712, *p722);
 
   geo->inserePatch(patch7);
@@ -1867,7 +1867,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p733
   //);
 
-  Patch* patch8 = new BezierPatch(patch4_c3, patch5_c4, patch8_c3, patch7_c2,
+  Patch* patch8 = new PatchBezier(patch4_c3, patch5_c4, patch8_c3, patch7_c2,
                                   *p811, *p821, *p812, *p822);
 
   geo->inserePatch(patch8);
@@ -1909,7 +1909,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch9_c4 =
       new CurveAdaptiveParametricBezier(*p503, *p901, *p902, *p903);
 
-  Patch* patch9 = new BezierPatch(patch5_c3, patch9_c2, patch9_c3, patch9_c4,
+  Patch* patch9 = new PatchBezier(patch5_c3, patch9_c2, patch9_c3, patch9_c4,
                                   *p911, *p921, *p912, *p922);
 
   geo->inserePatch(patch9);
@@ -1954,7 +1954,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //*p933
   //);
 
-  Patch* patch10 = new BezierPatch(patch6_c3, patch10_c2, patch10_c3, patch9_c2,
+  Patch* patch10 = new PatchBezier(patch6_c3, patch10_c2, patch10_c3, patch9_c2,
                                    *p1011, *p1021, *p1012, *p1022);
 
   geo->inserePatch(patch10);
@@ -1998,7 +1998,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch11_c4 = new CurvParamBezier ( *p633, *p1031, *p1032,
   //*p1033 );
 
-  Patch* patch11 = new BezierPatch(patch7_c3, patch11_c2, patch11_c3,
+  Patch* patch11 = new PatchBezier(patch7_c3, patch11_c2, patch11_c3,
                                    patch10_c2, *p1111, *p1121, *p1112, *p1122);
 
   geo->inserePatch(patch11);
@@ -2042,7 +2042,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch12_c4 = new CurvParamBezier ( *p733, *p1131, *p1132,
   //*p1133 );
 
-  Patch* patch12 = new BezierPatch(patch8_c3, patch9_c4, patch12_c3, patch11_c2,
+  Patch* patch12 = new PatchBezier(patch8_c3, patch9_c4, patch12_c3, patch11_c2,
                                    *p1211, *p1221, *p1212, *p1222);
 
   geo->inserePatch(patch12);
@@ -2082,7 +2082,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch13_c4 =
       new CurveAdaptiveParametricBezier(*p1300, *p1301, *p1302, *p1303);
 
-  Patch* patch13 = new BezierPatch(patch13_c1, patch13_c2, patch13_c3,
+  Patch* patch13 = new PatchBezier(patch13_c1, patch13_c2, patch13_c3,
                                    patch13_c4, *p1311, *p1321, *p1312, *p1322);
 
   geo->inserePatch(patch13);
@@ -2130,7 +2130,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch14_c4 = new CurvParamBezier ( *p1330, *p1331,
   //*p1332, *p1333 );
 
-  Patch* patch14 = new BezierPatch(patch14_c1, patch13_c4, patch14_c3,
+  Patch* patch14 = new PatchBezier(patch14_c1, patch13_c4, patch14_c3,
                                    patch13_c2, *p1411, *p1421, *p1412, *p1422);
 
   geo->inserePatch(patch14);
@@ -2172,7 +2172,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch15_c4 =
       new CurveAdaptiveParametricBezier(*p1303, *p1501, *p1502, *p633);
 
-  Patch* patch15 = new BezierPatch(patch13_c3, patch15_c2, patch15_c3,
+  Patch* patch15 = new PatchBezier(patch13_c3, patch15_c2, patch15_c3,
                                    patch15_c4, *p1511, *p1521, *p1512, *p1522);
 
   geo->inserePatch(patch15);
@@ -2219,7 +2219,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch16_c4 = new CurvParamBezier ( *p1333, *p1531,
   //*p1532, *p1533 );
 
-  Patch* patch16 = new BezierPatch(patch14_c3, patch15_c4, patch16_c3,
+  Patch* patch16 = new PatchBezier(patch14_c3, patch15_c4, patch16_c3,
                                    patch15_c2, *p1611, *p1621, *p1612, *p1622);
 
   geo->inserePatch(patch16);
@@ -2259,7 +2259,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch17_c4 =
       new CurveAdaptiveParametricBezier(*p1700, *p1701, *p1702, *p1703);
 
-  Patch* patch17 = new BezierPatch(patch17_c1, patch17_c2, patch17_c3,
+  Patch* patch17 = new PatchBezier(patch17_c1, patch17_c2, patch17_c3,
                                    patch17_c4, *p1711, *p1721, *p1712, *p1722);
 
   geo->inserePatch(patch17);
@@ -2307,7 +2307,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch18_c4 = new CurvParamBezier ( *p1730, *p1731,
   //*p1732, *p1733 );
 
-  Patch* patch18 = new BezierPatch(patch18_c1, patch17_c4, patch18_c3,
+  Patch* patch18 = new PatchBezier(patch18_c1, patch17_c4, patch18_c3,
                                    patch17_c2, *p1811, *p1821, *p1812, *p1822);
 
   geo->inserePatch(patch18);
@@ -2349,7 +2349,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch19_c4 =
       new CurveAdaptiveParametricBezier(*p1703, *p1901, *p1902, *p1903);
 
-  Patch* patch19 = new BezierPatch(patch17_c3, patch19_c2, patch19_c3,
+  Patch* patch19 = new PatchBezier(patch17_c3, patch19_c2, patch19_c3,
                                    patch19_c4, *p1911, *p1921, *p1912, *p1922);
 
   geo->inserePatch(patch19);
@@ -2396,7 +2396,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch20_c4 = new CurvParamBezier ( *p1733, *p1931,
   //*p1932, *p1933 );
 
-  Patch* patch20 = new BezierPatch(patch20_c1, patch19_c4, patch20_c3,
+  Patch* patch20 = new PatchBezier(patch20_c1, patch19_c4, patch20_c3,
                                    patch19_c2, *p2011, *p2021, *p2012, *p2022);
 
   geo->inserePatch(patch20);
@@ -2437,7 +2437,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch21_c4 =
       new CurveAdaptiveParametricBezier(*p2100, *p2101, *p2102, *p2103);
 
-  Patch* patch21 = new BezierPatch(patch21_c1, patch21_c2, patch21_c3,
+  Patch* patch21 = new PatchBezier(patch21_c1, patch21_c2, patch21_c3,
                                    patch21_c4, *p2111, *p2121, *p2102, *p2102);
 
   geo->inserePatch(patch21);
@@ -2481,7 +2481,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch22_c4 = new CurvParamBezier ( *p2130, *p2131,
   //*p2102, *p2133 );
 
-  Patch* patch22 = new BezierPatch(patch22_c1, patch22_c2, patch22_c3,
+  Patch* patch22 = new PatchBezier(patch22_c1, patch22_c2, patch22_c3,
                                    patch21_c2, *p2211, *p2221, *p2102, *p2102);
 
   geo->inserePatch(patch22);
@@ -2522,7 +2522,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch23_c4 = new CurvParamBezier ( *p2230, *p2231,
   //*p2102, *p2233 );
 
-  Patch* patch23 = new BezierPatch(patch23_c1, patch23_c2, patch23_c3,
+  Patch* patch23 = new PatchBezier(patch23_c1, patch23_c2, patch23_c3,
                                    patch22_c2, *p2311, *p2321, *p2102, *p2102);
 
   geo->inserePatch(patch23);
@@ -2564,7 +2564,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch24_c4 = new CurvParamBezier ( *p2330, *p2331,
   //*p2102, *p2333 );
 
-  Patch* patch24 = new BezierPatch(patch24_c1, patch24_c2, patch24_c3,
+  Patch* patch24 = new PatchBezier(patch24_c1, patch24_c2, patch24_c3,
                                    patch23_c2, *p2411, *p2421, *p2102, *p2102);
 
   geo->inserePatch(patch24);
@@ -2605,7 +2605,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch25_c4 =
       new CurveAdaptiveParametricBezier(*p2103, *p2501, *p2502, *p2503);
 
-  Patch* patch25 = new BezierPatch(patch21_c3, patch25_c2, patch25_c3,
+  Patch* patch25 = new PatchBezier(patch21_c3, patch25_c2, patch25_c3,
                                    patch25_c4, *p2511, *p2521, *p2512, *p2522);
 
   geo->inserePatch(patch25);
@@ -2646,7 +2646,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch26_c4 = new CurvParamBezier ( *p2133, *p2531,
   //*p2532, *p2533 );
 
-  Patch* patch26 = new BezierPatch(patch22_c3, patch26_c2, patch26_c3,
+  Patch* patch26 = new PatchBezier(patch22_c3, patch26_c2, patch26_c3,
                                    patch25_c2, *p2611, *p2621, *p2612, *p2622);
 
   geo->inserePatch(patch26);
@@ -2686,7 +2686,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch27_c4 = new CurvParamBezier ( *p2233, *p2631,
   //*p2632, *p2633 );
 
-  Patch* patch27 = new BezierPatch(patch23_c3, patch27_c2, patch27_c3,
+  Patch* patch27 = new PatchBezier(patch23_c3, patch27_c2, patch27_c3,
                                    patch26_c2, *p2711, *p2721, *p2712, *p2722);
 
   geo->inserePatch(patch27);
@@ -2727,7 +2727,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch28_c4 = new CurvParamBezier ( *p2333, *p2731,
   //*p2732, *p2733 );
 
-  Patch* patch28 = new BezierPatch(patch24_c3, patch25_c4, patch28_c3,
+  Patch* patch28 = new PatchBezier(patch24_c3, patch25_c4, patch28_c3,
                                    patch27_c2, *p2811, *p2821, *p2812, *p2822);
 
   geo->inserePatch(patch28);
@@ -2768,7 +2768,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   CurveAdaptive* patch29_c4 =
       new CurveAdaptiveParametricBezier(*p2900, *p2901, *p2902, *p903);
 
-  Patch* patch29 = new BezierPatch(patch29_c1, patch29_c2, patch29_c3,
+  Patch* patch29 = new PatchBezier(patch29_c1, patch29_c2, patch29_c3,
                                    patch29_c4, *p2911, *p2921, *p2912, *p2922);
 
   geo->inserePatch(patch29);
@@ -2809,7 +2809,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch30_c4 = new CurvParamBezier ( *p2930, *p2931,
   //*p2932, *p1133 );
 
-  Patch* patch30 = new BezierPatch(patch30_c1, patch30_c2, patch30_c3,
+  Patch* patch30 = new PatchBezier(patch30_c1, patch30_c2, patch30_c3,
                                    patch29_c2, *p3011, *p3021, *p3012, *p3022);
 
   geo->inserePatch(patch30);
@@ -2850,7 +2850,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch31_c4 = new CurvParamBezier ( *p3030, *p3031,
   //*p3032, *p1033 );
 
-  Patch* patch31 = new BezierPatch(patch31_c1, patch31_c2, patch31_c3,
+  Patch* patch31 = new PatchBezier(patch31_c1, patch31_c2, patch31_c3,
                                    patch30_c2, *p3111, *p3121, *p3112, *p3122);
 
   geo->inserePatch(patch31);
@@ -2890,7 +2890,7 @@ Geometria* Modelos3d::modelUtahteapot(Geometria* geo) {
   //		Curva* patch32_c4 = new CurvParamBezier ( *p3130, *p3131,
   //*p3132, *p933 );
 
-  Patch* patch32 = new BezierPatch(patch32_c1, patch29_c4, patch32_c3,
+  Patch* patch32 = new PatchBezier(patch32_c1, patch29_c4, patch32_c3,
                                    patch31_c2, *p3211, *p3221, *p3212, *p3222);
 
   geo->inserePatch(patch32);

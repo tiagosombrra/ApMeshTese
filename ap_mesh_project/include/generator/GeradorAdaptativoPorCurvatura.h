@@ -19,8 +19,8 @@ curvaturas.
 #include "../data/Definitions.h"
 #include "../data/Noh.h"
 #include "../data/Triangulo.h"
-#include "../data/patch/BezierPatch.h"
-#include "../data/patch/CoonsPatch.h"
+#include "../data/patch/patch_bezier.h"
+#include "../data/patch/patch_coons.h"
 #include "../estimate/ChargeEstimateProcess.h"
 #include "../input_output/Modelos3d.h"
 #include "../input_output/ReaderPatches.h"
@@ -52,19 +52,19 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
 
 #if USE_MPI
   int execute(int argc, char *argv[], Timer *timer, MPI_Status status);
-  std::list<BezierPatch *> estimateChargeofPatches(Geometria *geometria,
+  std::list<PatchBezier *> estimateChargeofPatches(Geometria *geometria,
                                                    Timer *timer,
                                                    std::string INPUT_MODEL);
   std::vector<CurveAdaptive *> createVectorOfCurves(
-      std::list<BezierPatch *> listBezierPt);
-  std::list<BezierPatch *> orderPatchesDistribProcess(
-      std::list<BezierPatch *> listPatches);
+      std::list<PatchBezier *> listBezierPt);
+  std::list<PatchBezier *> orderPatchesDistribProcess(
+      std::list<PatchBezier *> listPatches);
   bool verifyCurve(Ponto p0, Ponto p1, Ponto p2, Ponto p3,
                    std::vector<CurveAdaptive *> curves);
   void calculateEstimateProcessElements(int sizeProcess,
-                                        std::list<BezierPatch *> listBezierPt);
-  std::list<BezierPatch *>::iterator getIteratorListPatches(
-      int numberPatches, std::list<BezierPatch *> listBezierPt);
+                                        std::list<PatchBezier *> listBezierPt);
+  std::list<PatchBezier *>::iterator getIteratorListPatches(
+      int numberPatches, std::list<PatchBezier *> listBezierPt);
   void generator(double listOfPatches[], int sizeOfListPatches, Timer *timer,
                  int idrange = 1024, int sizeRank = 1, int sizeThread = 1);
   Geometria *unpakGeometry(double listOfPatches[], int sizeOfListPatches);
@@ -74,7 +74,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
                  int sizeRank = 1, int sizeThread = 1);
 #endif
 
-  virtual SubMesh *malhaInicial(CoonsPatch *, Performer::IdManager *idManager);
+  virtual SubMesh *malhaInicial(PatchCoons *, Performer::IdManager *idManager);
   virtual double erroGlobal(MeshAdaptive *malha, Timer *timer, int rank = 0,
                             int sizeThread = 0);
   Performer::IdManager *makeIdManager(const Parallel::TMCommunicator *comm,
@@ -99,7 +99,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
                     int rank = -1);
 
 #if USE_OPENMP
-  virtual SubMesh *malhaInicialOmp(CoonsPatch *,
+  virtual SubMesh *malhaInicialOmp(PatchCoons *,
                                    Performer::IdManager *idManager);
   virtual double erroGlobalOmp(MeshAdaptive *malha, Timer *timer, int rank = 0,
                                int sizeThread = 0);
@@ -113,7 +113,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
 #if USE_MPI
   Modelo modelo;
   Geometria *geo;
-  CoonsPatch *patch;
+  PatchCoons *patch;
   MeshAdaptive *malha;
 #endif  // USE_MPI
 

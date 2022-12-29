@@ -49,10 +49,10 @@ SOURCES += \
     ../src/data/mesh/sub_mesh.cpp \
     ../src/data/Modelo.cpp \
     ../src/data/Noh.cpp \
-    ../src/data/patch/BezierPatch.cpp \
-    ../src/data/patch/CoonsPatch.cpp \
-    ../src/data/patch/HermitePatch.cpp \
-    ../src/data/patch/Patch.cpp \
+    ../src/data/patch/patch_bezier.cpp \
+    ../src/data/patch/patch_coons.cpp \
+    ../src/data/patch/patch_hermite.cpp \
+    ../src/data/patch/patch.cpp \
     ../src/data/Ponto.cpp \
     ../src/data/tree/BinTree.cpp \
     ../src/data/Triangulo.cpp \
@@ -116,14 +116,14 @@ HEADERS += \
     ../include/data/Elemento.h \
     ../include/data/Face.h \
     ../include/data/Geometria.h \
-    ../include/data/Mesh/mesh_adaptive.h \
-    ../include/data/Mesh/sub_mesh.h \
+    ../include/data/mesh/mesh_adaptive.h \
+    ../include/data/mesh/sub_mesh.h \
     ../include/data/Modelo.h \
     ../include/data/Noh.h \
-    ../include/data/Patch/BezierPatch.h \
-    ../include/data/Patch/CoonsPatch.h \
-    ../include/data/Patch/HermitePatch.h \
-    ../include/data/Patch/Patch.h \
+    ../include/data/patch/patch_bezier.h \
+    ../include/data/patch/patch_coons.h \
+    ../include/data/patch/patch_hermite.h \
+    ../include/data/patch/patch.h \
     ../include/data/Ponto.h \
     ../include/data/Tree/BinTree.h \
     ../include/data/Triangulo.h \

@@ -111,14 +111,14 @@ double CurveAdaptiveParametric::CalculateParametricLength(double parameter1,
   double d = 0.0; // distância total entre os dois pontos
 
   // 1. cria Ponto 'p_ant'
-  p_ant = this->parametrizar ( t1 );
+  p_ant = this->Parameterize ( t1 );
 
   do
   {
       t += DELTA;
 
       // 2. cria Ponto 'p'
-      p = this->parametrizar ( t );
+      p = this->Parameterize ( t );
 
       // incrementa distancia
       d += p_ant.distanciaPara ( p );
@@ -172,7 +172,7 @@ double CurveAdaptiveParametric::FindParameterByPoint(const Ponto& point) {
 
   //        for ( long double t = 0.0; t <= 1.0; t += DELTA )
   //        {
-  //            *pi = parametrizar ( t );
+  //            *pi = Parameterize ( t );
   //            di = pi->distanciaPara ( p );
   //            if ( di < d_min )
   //            {
@@ -209,7 +209,7 @@ double CurveAdaptiveParametric::FindParameterByPoint(const Ponto& point) {
   //	do
   //	{
   //		// 1. cria Si (modificou T)
-  //		Si = this->parametrizar ( tm );
+  //		Si = this->Parameterize ( tm );
 
   //		// 2. cria Vj
   //		Vetor Vj ( Si, p );
@@ -233,7 +233,7 @@ double CurveAdaptiveParametric::FindParameterByPoint(const Ponto& point) {
 
 // encontra as coordenadas 3D de um ponto p de parâmetro t
 Ponto CurveAdaptiveParametric::FindPointByParameter(double t) {
-  // parametrizar:
+  // Parameterize:
   //
   //  -> ALTERA a matriz T
   //  -> usa calculaPonto_t

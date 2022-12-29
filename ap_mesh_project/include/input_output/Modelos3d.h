@@ -5,7 +5,7 @@
 #include "../data/Vertice.h"
 #include "../data/curve/curve_adaptive_parametric_bezier.h"
 #include "../data/curve/curve_adaptive_parametric_hermite.h"
-#include "../data/patch/BezierPatch.h"
+#include "../data/patch/patch_bezier.h"
 
 class Modelos3d {
  public:

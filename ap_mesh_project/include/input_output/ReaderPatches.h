@@ -8,21 +8,21 @@
 
 #include "../data/Modelo.h"
 #include "../data/Ponto.h"
-#include "../data/patch/BezierPatch.h"
-#include "../data/patch/HermitePatch.h"
+#include "../data/patch/patch_bezier.h"
+#include "../data/patch/patch_hermite.h"
 
 extern std::string INPUT_MODEL;
 
 class ReaderPatches {
  public:
-  std::list<BezierPatch *> patches;
-  std::list<HermitePatch *> patchesHermite;
-  BezierPatch *patch;
-  HermitePatch *patchHermite;
+  std::list<PatchBezier *> patches;
+  std::list<PatchHermite *> patchesHermite;
+  PatchBezier *patch;
+  PatchHermite *patchHermite;
 
   ReaderPatches();
 
-  std::list<BezierPatch *> loaderBezierPatchFile(string fileName);
+  std::list<PatchBezier *> loaderBezierPatchFile(string fileName);
   Ponto getPointVectorControlPoints(std::vector<Ponto>, unsigned long);
 
   Geometria *readerPatches(Geometria *geo, string fileName);

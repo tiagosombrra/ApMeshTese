@@ -116,7 +116,7 @@ list<Ponto *> Adapter::AdaptCurveByCurveOmp(CurveAdaptive *curve,
   //         it != --parametros.end(); it++)
   //    {
   //        Noh *n = new Noh(((CurveAdaptiveParametric
-  //        *)c)->parametrizar((*it))); n->id = idManager->next(0);
+  //        *)c)->Parameterize((*it))); n->id = idManager->next(0);
   //        c->inserePonto(n);
   //    }
 
@@ -169,7 +169,7 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
     CurvatureAnalytical ka_p0(midpoint,
-                              *(static_cast<CoonsPatch *>(curve->GetPatch(0))));
+                              *(static_cast<PatchCoons *>(curve->GetPatch(0))));
     ka_midpoint = ka_p0.CalculateGaussCurvature();
 
     if (curve->GetNumBerPatches() == 1) {
@@ -189,7 +189,7 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
 
       for (unsigned int i = 1; i < curve->GetNumBerPatches(); i++) {
         CurvatureAnalytical ka_pi(
-            midpoint, *(static_cast<CoonsPatch *>(curve->GetPatch(i))));
+            midpoint, *(static_cast<PatchCoons *>(curve->GetPatch(i))));
         double Ga_pi = ka_pi.CalculateGaussCurvature();
 
         ka_midpoint = (fabs(ka_midpoint) > fabs(Ga_pi)) ? ka_midpoint : Ga_pi;
@@ -259,7 +259,7 @@ list<Ponto *> Adapter::AdaptCurveBySurfaceOmp(CurveAdaptive *curve,
   return list_new_points;
 }
 
-SubMesh *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
+SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
                                  Performer::IdManager *id_manager,
                                  double factor_disc_global) {
   SubMesh *sub_mesh_new = new SubMesh;
@@ -271,8 +271,8 @@ SubMesh *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
   map<Vertex *, Noh *> map;
 
   // 1. Para cada curva do patch
-  for (unsigned int i = 0; i < coons_patch->getNumDeCurvas(); ++i) {
-    CurveAdaptive *curve = coons_patch->getCurva(i);
+  for (unsigned int i = 0; i < coons_patch->GetNumBerCurves(); ++i) {
+    CurveAdaptive *curve = coons_patch->GetCurve(i);
     //((CurveAdaptiveParametric*)c)->ordenaLista ( );
     // #pragma omp critical
     //        {
@@ -343,9 +343,9 @@ SubMesh *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
   }
 
   avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
-      coons_patch->getCurva(coons_patch->getNumDeCurvas() - 1)));
+      coons_patch->GetCurve(coons_patch->GetNumBerCurves() - 1)));
   // essa é a malha anterior!
-  SubMesh *sub_mesh_old = coons_patch->getMalha();
+  SubMesh *sub_mesh_old = coons_patch->GetSubMesh();
 
   // constroi a lista de triangulos antigos para o gerador de malha
   FaceList mesh_old;
@@ -441,7 +441,7 @@ SubMesh *Adapter::AdaptDomainOmp(CoonsPatch *coons_patch,
     new_vertices.pop_front();
 
     Noh *noh =
-        new Noh(coons_patch->parametrizar(vertex->getX(), vertex->getY()));
+        new Noh(coons_patch->Parameterize(vertex->getX(), vertex->getY()));
 
     noh->id = /*id_noh++*/ id_manager->next(0);
 
@@ -659,11 +659,11 @@ list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
     CurvatureAnalytical ka_p0(midpoint,
-                              *(static_cast<CoonsPatch *>(curve->GetPatch(0))));
+                              *(static_cast<PatchCoons *>(curve->GetPatch(0))));
 
     for (unsigned int i = 0; i < curve->GetNumBerPatches(); i++) {
       CurvatureAnalytical ka_p1(
-          midpoint, *(static_cast<CoonsPatch *>(curve->GetPatch(i))));
+          midpoint, *(static_cast<PatchCoons *>(curve->GetPatch(i))));
       double Ga_p0 = ka_p0.CalculateGaussCurvature();
       double Ga_p1 = ka_p1.CalculateGaussCurvature();
 
@@ -758,7 +758,7 @@ list<Ponto *> Adapter::AdaptCurveBySurface(CurveAdaptive *curve,
 
 // Usa a QuadTree. Gera uma nova malha e atualiza a malha do patch. A malha
 // gerada deve ser inserida no modelo pelo Gerador Adaptativo
-SubMesh *Adapter::AdaptDomain(CoonsPatch *coons_patch,
+SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
                               Performer::IdManager *id_manager,
                               double factor_disc_global) {
   SubMesh *sub_mesh_new = new SubMesh;
@@ -771,8 +771,8 @@ SubMesh *Adapter::AdaptDomain(CoonsPatch *coons_patch,
   map<Vertex *, Noh *> map;
 
   // 1. Para cada curva do patch
-  for (unsigned int i = 0; i < coons_patch->getNumDeCurvas(); ++i) {
-    CurveAdaptive *curve = coons_patch->getCurva(i);
+  for (unsigned int i = 0; i < coons_patch->GetNumBerCurves(); ++i) {
+    CurveAdaptive *curve = coons_patch->GetCurve(i);
     (static_cast<CurveAdaptiveParametric *>(curve))->SortPointsByParameters();
 
     if (i == 0 or i == 1) {
@@ -839,9 +839,10 @@ SubMesh *Adapter::AdaptDomain(CoonsPatch *coons_patch,
   }
 
   avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
-      coons_patch->getCurva(coons_patch->getNumDeCurvas() - 1)));
+      coons_patch->GetCurve(coons_patch->GetNumBerCurves() - 1)));
 
-  SubMesh *sub_mesh_old = coons_patch->getMalha();  // essa é a malha anterior!
+  SubMesh *sub_mesh_old =
+      coons_patch->GetSubMesh();  // essa é a malha anterior!
 
   // constroi a lista de triangulos antigos para o gerador de malha
   FaceList mesh_old;
@@ -939,7 +940,7 @@ else
     new_vertices.pop_front();
 
     Noh *noh =
-        new Noh(coons_patch->parametrizar(vertex->getX(), vertex->getY()));
+        new Noh(coons_patch->Parameterize(vertex->getX(), vertex->getY()));
 
     noh->id = id_manager->next(0);
 

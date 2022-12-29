@@ -6,12 +6,12 @@
 
 #include "../data/Ponto.h"
 #include "../data/Vetor.h"
-#include "../data/patch/CoonsPatch.h"
+#include "../data/patch/patch_coons.h"
 #include "curvature.h"
 
 class CurvatureAnalytical : public Curvature {
  public:
-  CurvatureAnalytical(const Ponto& v, CoonsPatch& p);
+  CurvatureAnalytical(const Ponto& v, PatchCoons& p);
   double CalculateMeanCurvature() override;
   double CalculateGaussCurvature() override;
 

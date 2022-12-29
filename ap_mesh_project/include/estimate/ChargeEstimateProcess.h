@@ -11,7 +11,7 @@
 #include "../data/curve/curve_adaptive.h"
 #include "../data/curve/curve_adaptive_parametric_bezier.h"
 #include "../data/mesh/mesh_adaptive.h"
-#include "../data/patch/BezierPatch.h"
+#include "../data/patch/patch_bezier.h"
 #include "../generator/GeradorAdaptativoPorCurvatura.h"
 #include "../input_output/PatchBezierReader.h"
 #include "../input_output/WriteOBJFile.h"
@@ -24,17 +24,17 @@ extern std::string WRITE_MESH;
 class ChargeEstimateProcess {
  public:
   ChargeEstimateProcess();
-  std::list<BezierPatch *> chargeEstimateProcess(Geometria *, Timer *timer,
+  std::list<PatchBezier *> chargeEstimateProcess(Geometria *, Timer *timer,
                                                  string INPUT_MODEL);
   std::vector<Ponto> interpolateControlPointsCurve(Ponto p0, Ponto p1, Ponto p2,
                                                    Ponto p3, double u,
                                                    double v);
-  double calculateKaMedioPatch(BezierPatch *patch, int points);
-  double calculateAreaPatch(BezierPatch *patch, int pointesGauusLegandre);
-  double calculateAreaTriangleMedioRad(BezierPatch *patch);
-  double calculateAreaTriangleMedio(BezierPatch *patch, Timer *timer, int grau);
-  long int calculateNumbersTriangle(BezierPatch *patch, int grau);
-  SubMesh *malhaInicialEstimativa(CoonsPatch *patch, int grau);
+  double calculateKaMedioPatch(PatchBezier *patch, int points);
+  double calculateAreaPatch(PatchBezier *patch, int pointesGauusLegandre);
+  double calculateAreaTriangleMedioRad(PatchBezier *patch);
+  double calculateAreaTriangleMedio(PatchBezier *patch, Timer *timer, int grau);
+  long int calculateNumbersTriangle(PatchBezier *patch, int grau);
+  SubMesh *malhaInicialEstimativa(PatchCoons *patch, int grau);
   bool calculateErroEstimative(MeshAdaptive *malha, Timer *timer, int grau);
   // double calculateAreaPatchSegmets(BezierPatch *patch, int segments);
   // double calculateSegmentMedio(BezierPatch *patch);

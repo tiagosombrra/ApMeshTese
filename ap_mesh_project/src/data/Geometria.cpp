@@ -75,12 +75,12 @@ Geometria::Geometria(Geometria *antiga) {
 
   for (vector<Patch *>::iterator it = antiga->patches.begin();
        it != antiga->patches.end(); ++it) {
-    Patch *p = new HermitePatch((HermitePatch *)(*it));
+    Patch *p = new PatchHermite((PatchHermite *)(*it));
 
-    for (unsigned int i = 0; i < ((HermitePatch *)(*it))->getNumDeCurvas();
+    for (unsigned int i = 0; i < ((PatchHermite *)(*it))->GetNumBerCurves();
          i++) {
-      ((HermitePatch *)p)
-          ->insereCurva(mapaCurvas[((HermitePatch *)(*it))->getCurva(i)]);
+      ((PatchHermite *)p)
+          ->InsertCurve(mapaCurvas[((PatchHermite *)(*it))->GetCurve(i)]);
     }
 
     mapaPatches[(*it)] = p;

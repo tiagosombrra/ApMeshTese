@@ -1,13 +1,13 @@
 #include <string>
 
-#include "../include/data/Vertice.h"
-#include "../include/data/Vetor.h"
 #include "../include/data/curve/curve_adaptive_parametric_bezier.h"
 #include "../include/data/curve/curve_adaptive_parametric_hermite.h"
 #include "../include/data/definitions.h"
 #include "../include/data/model.h"
 #include "../include/data/patch/patch_bezier.h"
 #include "../include/data/patch/patch_hermite.h"
+#include "../include/data/vector_adaptive.h"
+#include "../include/data/vertex_adaptive.h"
 #include "../include/generator/GeradorAdaptativoPorCurvatura.h"
 #include "../include/input_output/Modelos3d.h"
 #include "../include/input_output/PatchBezierReader.h"

@@ -25,7 +25,7 @@ src/data/geometry.cpp \
 src/data/mesh/mesh_adaptive.cpp \
 src/data/mesh/sub_mesh.cpp \
 src/data/model.cpp \
-src/data/noh.cpp \
+src/data/node_adaptive.cpp \
 src/data/patch/patch_bezier.cpp \
 src/data/patch/patch_coons.cpp \
 src/data/patch/patch_hermite.cpp \
@@ -34,8 +34,8 @@ src/data/point_adaptive.cpp \
 src/data/tree/bin_tree.cpp \
 src/data/triangle_adaptive.cpp \
 src/crab_mesh/aft/vertex.cpp \
-src/data/Vertice.cpp \
-src/data/Vetor.cpp \
+src/data/vertex_adaptive.cpp \
+src/data/vector_adaptive.cpp \
 src/estimate/ChargeEstimateProcess.cpp \
 src/generator/Gerador.cpp \
 src/generator/GeradorAdaptativo.cpp \

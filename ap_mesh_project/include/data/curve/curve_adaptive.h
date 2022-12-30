@@ -4,7 +4,7 @@
 #include <list>
 #include <vector>
 
-#include "../noh.h"
+#include "../node_adaptive.h"
 #include "../patch/patch.h"
 #include "../triangle_adaptive.h"
 

@@ -6,7 +6,7 @@ SubMesh::SubMesh() {}
 SubMesh::~SubMesh() {
   // 1. apaga a lista de nós
   while (!this->nos_.empty()) {
-    Noh* noh = this->nos_.back();
+    NodeAdaptive* noh = this->nos_.back();
     this->nos_.pop_back();
     delete noh;
   }
@@ -23,7 +23,7 @@ Patch* SubMesh::GetPatch() const { return this->patch_; }
 
 void SubMesh::SetPatch(Patch* patch) { this->patch_ = patch; }
 
-Noh* SubMesh::GetNoh(const unsigned int position) {
+NodeAdaptive* SubMesh::GetNoh(const unsigned int position) {
   /*// adicionar excessão caso i > nos.size();
   list <Noh*>::iterator it = this->nos.begin();
 
@@ -33,7 +33,7 @@ Noh* SubMesh::GetNoh(const unsigned int position) {
   return (position < this->nos_.size()) ? this->nos_[position] : nullptr;
 }
 
-void SubMesh::SetNoh(Noh* noh) { this->nos_.push_back(noh); }
+void SubMesh::SetNoh(NodeAdaptive* noh) { this->nos_.push_back(noh); }
 
 ElementAdaptive* SubMesh::GetElement(const unsigned int i) {
   // adicionar excessão caso i > elementos.size();

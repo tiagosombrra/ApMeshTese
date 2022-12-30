@@ -40,20 +40,20 @@ class PatchBezier : public PatchCoons {
   // encontra o ponto p na curva dado um parâmetro p
   PointAdaptive Parameterize(double u, double v);
   // calcula as derivadas parciais nas direçõe u e v
-  Vetor Qu(double u, double v);
-  Vetor Qv(double u, double v);
-  Vetor Quu(double u, double v);
-  Vetor Quv(double u, double v);
-  Vetor Qvu(double u, double v);
-  Vetor Qvv(double u, double v);
+  VectorAdaptive Qu(double u, double v);
+  VectorAdaptive Qv(double u, double v);
+  VectorAdaptive Quu(double u, double v);
+  VectorAdaptive Quv(double u, double v);
+  VectorAdaptive Qvu(double u, double v);
+  VectorAdaptive Qvv(double u, double v);
 
   // calcula as derivadas parciais de um ponto p
-  Vetor Qu(const PointAdaptive& point);
-  Vetor Qv(const PointAdaptive& point);
-  Vetor Quu(const PointAdaptive& point);
-  Vetor Quv(const PointAdaptive& point);
-  Vetor Qvu(const PointAdaptive& point);
-  Vetor Qvv(const PointAdaptive& point);
+  VectorAdaptive Qu(const PointAdaptive& point);
+  VectorAdaptive Qv(const PointAdaptive& point);
+  VectorAdaptive Quu(const PointAdaptive& point);
+  VectorAdaptive Quv(const PointAdaptive& point);
+  VectorAdaptive Qvu(const PointAdaptive& point);
+  VectorAdaptive Qvv(const PointAdaptive& point);
 
   Matrix1x4 GetU() const;
   Matrix4x4 GetGx() const;
@@ -103,26 +103,26 @@ class PatchBezier : public PatchCoons {
   void SetPt33(PointAdaptive point);
 
   // gets and sets para estimativa de carga
-  double getArea() const;
-  void setArea(double value);
+  double GetArea() const;
+  void SetArea(double value);
 
-  double getKaMedio() const;
-  void setKaMedio(double value);
+  double GetKaMedio() const;
+  void SetKaMedio(double value);
 
-  double getSegmentMedio() const;
-  void setSegmentMedio(double value);
+  double GetSegmentMedio() const;
+  void SetSegmentMedio(double value);
 
-  double getAreaTriangle() const;
-  void setAreaTriangle(double value);
+  double GetAreaTriangle() const;
+  void SetAreaTriangle(double value);
 
-  double getNumberTriangle() const;
-  void setNumberTriangle(double value);
+  double GetNumberTriangle() const;
+  void SetNumberTriangle(double value);
 
-  int getIdProcess() const;
-  void setIdProcess(int value);
+  int GetIdProcess() const;
+  void SetIdProcess(int value);
 
-  int getId_bezierPatch() const;
-  void setId_bezierPatch(int value);
+  int GetIdPatchBezier() const;
+  void SetIdPatchBezier(int value);
 
  protected:
   Matrix4x4 StartBezierMatrix();

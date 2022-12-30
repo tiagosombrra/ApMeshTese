@@ -157,56 +157,56 @@ Geometry* ReaderPatches::readerPatches(Geometry* geo, string fileName) {
 
   for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {
-    p00 = new Vertice((*it)->GetPt00().GetX(), (*it)->GetPt00().GetY(),
-                      (*it)->GetPt00().GetZ());
+    p00 = new VertexAdaptive((*it)->GetPt00().GetX(), (*it)->GetPt00().GetY(),
+                             (*it)->GetPt00().GetZ());
     p00->SetId((*it)->GetPt00().GetId());
-    p10 = new Vertice((*it)->GetPt10().GetX(), (*it)->GetPt10().GetY(),
-                      (*it)->GetPt10().GetZ());
+    p10 = new VertexAdaptive((*it)->GetPt10().GetX(), (*it)->GetPt10().GetY(),
+                             (*it)->GetPt10().GetZ());
     p10->SetId((*it)->GetPt10().GetId());
-    p20 = new Vertice((*it)->GetPt20().GetX(), (*it)->GetPt20().GetY(),
-                      (*it)->GetPt20().GetZ());
+    p20 = new VertexAdaptive((*it)->GetPt20().GetX(), (*it)->GetPt20().GetY(),
+                             (*it)->GetPt20().GetZ());
     p20->SetId((*it)->GetPt20().GetId());
-    p30 = new Vertice((*it)->GetPt30().GetX(), (*it)->GetPt30().GetY(),
-                      (*it)->GetPt30().GetZ());
+    p30 = new VertexAdaptive((*it)->GetPt30().GetX(), (*it)->GetPt30().GetY(),
+                             (*it)->GetPt30().GetZ());
     p30->SetId((*it)->GetPt30().GetId());
 
-    p01 = new Vertice((*it)->GetPt01().GetX(), (*it)->GetPt01().GetY(),
-                      (*it)->GetPt01().GetZ());
+    p01 = new VertexAdaptive((*it)->GetPt01().GetX(), (*it)->GetPt01().GetY(),
+                             (*it)->GetPt01().GetZ());
     p01->SetId((*it)->GetPt01().GetId());
-    p11 = new Vertice((*it)->GetPt11().GetX(), (*it)->GetPt11().GetY(),
-                      (*it)->GetPt11().GetZ());
+    p11 = new VertexAdaptive((*it)->GetPt11().GetX(), (*it)->GetPt11().GetY(),
+                             (*it)->GetPt11().GetZ());
     p11->SetId((*it)->GetPt11().GetId());
-    p21 = new Vertice((*it)->GetPt21().GetX(), (*it)->GetPt21().GetY(),
-                      (*it)->GetPt21().GetZ());
+    p21 = new VertexAdaptive((*it)->GetPt21().GetX(), (*it)->GetPt21().GetY(),
+                             (*it)->GetPt21().GetZ());
     p21->SetId((*it)->GetPt21().GetId());
-    p31 = new Vertice((*it)->GetPt31().GetX(), (*it)->GetPt31().GetY(),
-                      (*it)->GetPt31().GetZ());
+    p31 = new VertexAdaptive((*it)->GetPt31().GetX(), (*it)->GetPt31().GetY(),
+                             (*it)->GetPt31().GetZ());
     p31->SetId((*it)->GetPt31().GetId());
 
-    p02 = new Vertice((*it)->GetPt02().GetX(), (*it)->GetPt02().GetY(),
-                      (*it)->GetPt02().GetZ());
+    p02 = new VertexAdaptive((*it)->GetPt02().GetX(), (*it)->GetPt02().GetY(),
+                             (*it)->GetPt02().GetZ());
     p02->SetId((*it)->GetPt02().GetId());
-    p12 = new Vertice((*it)->GetPt12().GetX(), (*it)->GetPt12().GetY(),
-                      (*it)->GetPt12().GetZ());
+    p12 = new VertexAdaptive((*it)->GetPt12().GetX(), (*it)->GetPt12().GetY(),
+                             (*it)->GetPt12().GetZ());
     p12->SetId((*it)->GetPt12().GetId());
-    p22 = new Vertice((*it)->GetPt22().GetX(), (*it)->GetPt22().GetY(),
-                      (*it)->GetPt22().GetZ());
+    p22 = new VertexAdaptive((*it)->GetPt22().GetX(), (*it)->GetPt22().GetY(),
+                             (*it)->GetPt22().GetZ());
     p22->SetId((*it)->GetPt22().GetId());
-    p32 = new Vertice((*it)->GetPt32().GetX(), (*it)->GetPt32().GetY(),
-                      (*it)->GetPt32().GetZ());
+    p32 = new VertexAdaptive((*it)->GetPt32().GetX(), (*it)->GetPt32().GetY(),
+                             (*it)->GetPt32().GetZ());
     p32->SetId((*it)->GetPt32().GetId());
 
-    p03 = new Vertice((*it)->GetPt03().GetX(), (*it)->GetPt03().GetY(),
-                      (*it)->GetPt03().GetZ());
+    p03 = new VertexAdaptive((*it)->GetPt03().GetX(), (*it)->GetPt03().GetY(),
+                             (*it)->GetPt03().GetZ());
     p03->SetId((*it)->GetPt03().GetId());
-    p13 = new Vertice((*it)->GetPt13().GetX(), (*it)->GetPt13().GetY(),
-                      (*it)->GetPt13().GetZ());
+    p13 = new VertexAdaptive((*it)->GetPt13().GetX(), (*it)->GetPt13().GetY(),
+                             (*it)->GetPt13().GetZ());
     p13->SetId((*it)->GetPt13().GetId());
-    p23 = new Vertice((*it)->GetPt23().GetX(), (*it)->GetPt23().GetY(),
-                      (*it)->GetPt23().GetZ());
+    p23 = new VertexAdaptive((*it)->GetPt23().GetX(), (*it)->GetPt23().GetY(),
+                             (*it)->GetPt23().GetZ());
     p23->SetId((*it)->GetPt23().GetId());
-    p33 = new Vertice((*it)->GetPt33().GetX(), (*it)->GetPt33().GetY(),
-                      (*it)->GetPt33().GetZ());
+    p33 = new VertexAdaptive((*it)->GetPt33().GetX(), (*it)->GetPt33().GetY(),
+                             (*it)->GetPt33().GetZ());
     p33->SetId((*it)->GetPt33().GetId());
 
     if (geo->VerifyCurveGeometry(p00, p10, p20, p30) == NULL) {

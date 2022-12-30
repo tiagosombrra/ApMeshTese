@@ -10,4 +10,6 @@ unsigned long ElementAdaptive::GetId() { return this->id_; }
 
 double ElementAdaptive::GetArea() const { return this->area_; }
 
-Vetor ElementAdaptive::GetVectorNormal() const { return this->vector_normal_; }
+VectorAdaptive ElementAdaptive::GetVectorNormal() const {
+  return this->vector_normal_;
+}

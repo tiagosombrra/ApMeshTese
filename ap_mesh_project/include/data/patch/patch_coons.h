@@ -5,9 +5,9 @@
 #include <vector>
 
 #include "../../data/definitions.h"
-#include "../Vetor.h"
 #include "../curve/curve_adaptive.h"
 #include "../point_adaptive.h"
+#include "../vector_adaptive.h"
 #include "patch.h"
 
 class PatchCoons : public Patch {
@@ -28,20 +28,20 @@ class PatchCoons : public Patch {
   virtual PointAdaptive Parameterize(double u, double v) = 0;
 
   // calcula as derivadas parciais nas direçõe u e v
-  virtual Vetor Qu(double u, double v) = 0;
-  virtual Vetor Qv(double u, double v) = 0;
-  virtual Vetor Quu(double u, double v) = 0;
-  virtual Vetor Quv(double u, double v) = 0;
-  virtual Vetor Qvu(double u, double v) = 0;
-  virtual Vetor Qvv(double u, double v) = 0;
+  virtual VectorAdaptive Qu(double u, double v) = 0;
+  virtual VectorAdaptive Qv(double u, double v) = 0;
+  virtual VectorAdaptive Quu(double u, double v) = 0;
+  virtual VectorAdaptive Quv(double u, double v) = 0;
+  virtual VectorAdaptive Qvu(double u, double v) = 0;
+  virtual VectorAdaptive Qvv(double u, double v) = 0;
 
   // calcula as derivadas parciais de um ponto p
-  virtual Vetor Qu(const PointAdaptive& point) = 0;
-  virtual Vetor Qv(const PointAdaptive& point) = 0;
-  virtual Vetor Quu(const PointAdaptive& point) = 0;
-  virtual Vetor Quv(const PointAdaptive& point) = 0;
-  virtual Vetor Qvu(const PointAdaptive& point) = 0;
-  virtual Vetor Qvv(const PointAdaptive& point) = 0;
+  virtual VectorAdaptive Qu(const PointAdaptive& point) = 0;
+  virtual VectorAdaptive Qv(const PointAdaptive& point) = 0;
+  virtual VectorAdaptive Quu(const PointAdaptive& point) = 0;
+  virtual VectorAdaptive Quv(const PointAdaptive& point) = 0;
+  virtual VectorAdaptive Qvu(const PointAdaptive& point) = 0;
+  virtual VectorAdaptive Qvv(const PointAdaptive& point) = 0;
 
  protected:
   vector<CurveAdaptive*> curves_;

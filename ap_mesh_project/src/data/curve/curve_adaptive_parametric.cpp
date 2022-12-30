@@ -251,7 +251,7 @@ PointAdaptive CurveAdaptiveParametric::FindPointByParameter(double t) {
 }
 
 // calcula o vetor tangente no parâmetro t
-Vetor CurveAdaptiveParametric::CalculateGradientByParameter(double t) {
+VectorAdaptive CurveAdaptiveParametric::CalculateGradientByParameter(double t) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
@@ -267,7 +267,7 @@ Vetor CurveAdaptiveParametric::CalculateGradientByParameter(double t) {
   this->mat_parameters_(0, 3) = 0;
 
   point = CalculatePointT();
-  Vetor vector(point);
+  VectorAdaptive vector(point);
 
   return vector;
 }
@@ -615,7 +615,7 @@ double CurveAdaptiveParametric::CalculateLength(double t1, double t2, int parts,
 
       double parameter_alfa = ((uf + ui) / 2.0) + ((uf - ui) / 2.0) * alfa;
 
-      Vetor p = CalculateGradientByParameter(parameter_alfa);
+      VectorAdaptive p = CalculateGradientByParameter(parameter_alfa);
 
       double f = p ^ p;
 

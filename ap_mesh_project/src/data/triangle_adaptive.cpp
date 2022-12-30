@@ -8,7 +8,8 @@ extern double TOLERANCIA;
 
 TriangleAdaptive::TriangleAdaptive() : ElementAdaptive() {}
 
-TriangleAdaptive::TriangleAdaptive(Noh* n1, Noh* n2, Noh* n3)
+TriangleAdaptive::TriangleAdaptive(NodeAdaptive* n1, NodeAdaptive* n2,
+                                   NodeAdaptive* n3)
     : ElementAdaptive() {
   this->n1_ = n1;
   this->n2_ = n2;
@@ -29,7 +30,7 @@ TriangleAdaptive::TriangleAdaptive(Noh* n1, Noh* n2, Noh* n3)
 TriangleAdaptive::~TriangleAdaptive() {}
 
 // retorna o i-ésimo nó
-Noh TriangleAdaptive::GetNoh(unsigned const int position) const {
+NodeAdaptive TriangleAdaptive::GetNoh(unsigned const int position) const {
   if (position == 1) {
     return *(this->n1_);
   } else if (position == 2) {
@@ -41,37 +42,37 @@ Noh TriangleAdaptive::GetNoh(unsigned const int position) const {
               << " )!" << std::endl;
   }
 
-  Noh n;
+  NodeAdaptive n;
 
   return n;
 }
 
 // calcula o ângulo no nó 1
 double TriangleAdaptive::CalculateAngleN1() {
-  Vetor vector1(*(this->n1_), *(this->n2_));
-  Vetor vector2(*(this->n1_), *(this->n3_));
+  VectorAdaptive vector1(*(this->n1_), *(this->n2_));
+  VectorAdaptive vector2(*(this->n1_), *(this->n3_));
 
   return vector1.CalculateAngle(vector2);
 }
 
 // calcula o ângulo no nó 2
 double TriangleAdaptive::CalculateAngleN2() {
-  Vetor vector1(*(this->n2_), *(this->n3_));
-  Vetor vector2(*(this->n2_), *(this->n1_));
+  VectorAdaptive vector1(*(this->n2_), *(this->n3_));
+  VectorAdaptive vector2(*(this->n2_), *(this->n1_));
 
   return vector1.CalculateAngle(vector2);
 }
 
 // calcula o ângulo no nó 3
 double TriangleAdaptive::CalculateAngleN3() {
-  Vetor vector1(*(this->n3_), *(this->n1_));
-  Vetor vector2(*(this->n3_), *(this->n2_));
+  VectorAdaptive vector1(*(this->n3_), *(this->n1_));
+  VectorAdaptive vector2(*(this->n3_), *(this->n2_));
 
   return vector1.CalculateAngle(vector2);
 }
 
 // retorna o ângulo do nó n
-double TriangleAdaptive::GetAngle(const Noh& node) {
+double TriangleAdaptive::GetAngle(const NodeAdaptive& node) {
   if (this->n1_->CalculateDistance(node) <= TOLERANCIA) {
     return this->angle_n1_;
   }
@@ -89,18 +90,19 @@ double TriangleAdaptive::GetAngle(const Noh& node) {
 
 // calcula a área do triângulo
 void TriangleAdaptive::CalculateArea() {
-  this->area_ = 0.5 * (this->vector_normal_.modulo());
+  this->area_ = 0.5 * (this->vector_normal_.CalculateModule());
 }
 
 // calcula a normal do triângulo
 void TriangleAdaptive::CalculateNormal() {
-  Vetor vector1(*(this->n1_), *(this->n2_));
-  Vetor vector2(*(this->n1_), *(this->n3_));
+  VectorAdaptive vector1(*(this->n1_), *(this->n2_));
+  VectorAdaptive vector2(*(this->n1_), *(this->n3_));
 
   this->vector_normal_ = vector1 * vector2;
 }
 
-void TriangleAdaptive::ReplaceNode(Noh* old_node, Noh* new_node) {
+void TriangleAdaptive::ReplaceNode(NodeAdaptive* old_node,
+                                   NodeAdaptive* new_node) {
   if (this->n1_ == old_node) {
     this->n1_ = new_node;
   } else if (this->n2_ == old_node) {

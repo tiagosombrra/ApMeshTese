@@ -1,19 +1,19 @@
 
-#ifndef DATA_NOH_H
-#define DATA_NOH_H
+#ifndef DATA_NODE_ADAPTIVE_H
+#define DATA_NODE_ADAPTIVE_H
 
 #include <list>
 
 #include "element_adaptive.h"
 #include "point_adaptive.h"
 
-class Noh : public PointAdaptive {
+class NodeAdaptive : public PointAdaptive {
  public:
-  Noh();
-  Noh(double x, double y, double z);
-  Noh(double x, double y, double z, unsigned long position);
-  explicit Noh(const PointAdaptive &point);
-  ~Noh();
+  NodeAdaptive();
+  NodeAdaptive(double x, double y, double z);
+  NodeAdaptive(double x, double y, double z, unsigned long position);
+  explicit NodeAdaptive(const PointAdaptive &point);
+  ~NodeAdaptive();
 
   void InsertElement(ElementAdaptive *element);
   unsigned int GetNumberElements() const;
@@ -47,4 +47,4 @@ class Noh : public PointAdaptive {
   // friend class CurvaturaDiscreta;
 };
 
-#endif  // DATA_NOH_H
+#endif  // DATA_NODE_ADAPTIVE_H

@@ -6,20 +6,20 @@
 #include <list>
 
 #include "../data/element_adaptive.h"
-#include "../data/noh.h"
+#include "../data/node_adaptive.h"
 #include "adjacent.h"
 #include "curvature.h"
 
 class CurvatureDiscrete : public Curvature {
  public:
-  CurvatureDiscrete(const Noh& n);
+  CurvatureDiscrete(const NodeAdaptive& n);
   double CalculateMeanCurvature() override;
   double CalculateGaussCurvature() override;
 
  private:
-  void AdjacencySort(const Noh& noh);
+  void AdjacencySort(const NodeAdaptive& noh);
 
-  Noh noh_;
+  NodeAdaptive noh_;
   // lista dos elementos de 'm' incidentes em 'n'
   std::list<ElementAdaptive*> elements_;
   // área dos elementos incidentes em 'n'

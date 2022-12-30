@@ -4,25 +4,25 @@ Modelos3d::Modelos3d() {}
 
 Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   //=============================== PATCH 1 ==================================
-  PointAdaptive* p100 = new Vertice(0.00000, 1.00000, 0.00000);
-  PointAdaptive* p110 = new Vertice(0.00000, 0.50000, 0.00000);
-  PointAdaptive* p120 = new Vertice(0.00000, -0.50000, 0.00000);
-  PointAdaptive* p130 = new Vertice(0.00000, -1.00000, 0.00000);
+  PointAdaptive* p100 = new VertexAdaptive(0.00000, 1.00000, 0.00000);
+  PointAdaptive* p110 = new VertexAdaptive(0.00000, 0.50000, 0.00000);
+  PointAdaptive* p120 = new VertexAdaptive(0.00000, -0.50000, 0.00000);
+  PointAdaptive* p130 = new VertexAdaptive(0.00000, -1.00000, 0.00000);
 
-  PointAdaptive* p101 = new Vertice(-0.50000, 1.00000, 0.00000);
-  PointAdaptive* p111 = new Vertice(-0.50000, 0.50000, 0.00000);
-  PointAdaptive* p121 = new Vertice(-0.50000, -0.50000, 0.00000);
-  PointAdaptive* p131 = new Vertice(-0.50000, -1.00000, 0.00000);
+  PointAdaptive* p101 = new VertexAdaptive(-0.50000, 1.00000, 0.00000);
+  PointAdaptive* p111 = new VertexAdaptive(-0.50000, 0.50000, 0.00000);
+  PointAdaptive* p121 = new VertexAdaptive(-0.50000, -0.50000, 0.00000);
+  PointAdaptive* p131 = new VertexAdaptive(-0.50000, -1.00000, 0.00000);
 
-  PointAdaptive* p102 = new Vertice(-1.50000, 1.00000, 0.00000);
-  PointAdaptive* p112 = new Vertice(-1.50000, 0.50000, 0.00000);
-  PointAdaptive* p122 = new Vertice(-1.50000, -0.50000, 0.00000);
-  PointAdaptive* p132 = new Vertice(-1.50000, -1.00000, 0.00000);
+  PointAdaptive* p102 = new VertexAdaptive(-1.50000, 1.00000, 0.00000);
+  PointAdaptive* p112 = new VertexAdaptive(-1.50000, 0.50000, 0.00000);
+  PointAdaptive* p122 = new VertexAdaptive(-1.50000, -0.50000, 0.00000);
+  PointAdaptive* p132 = new VertexAdaptive(-1.50000, -1.00000, 0.00000);
 
-  PointAdaptive* p103 = new Vertice(-2.00000, 1.00000, 0.00000);
-  PointAdaptive* p113 = new Vertice(-2.00000, 0.50000, 0.00000);
-  PointAdaptive* p123 = new Vertice(-2.00000, -0.50000, 0.00000);
-  PointAdaptive* p133 = new Vertice(-2.00000, -1.00000, 0.00000);
+  PointAdaptive* p103 = new VertexAdaptive(-2.00000, 1.00000, 0.00000);
+  PointAdaptive* p113 = new VertexAdaptive(-2.00000, 0.50000, 0.00000);
+  PointAdaptive* p123 = new VertexAdaptive(-2.00000, -0.50000, 0.00000);
+  PointAdaptive* p133 = new VertexAdaptive(-2.00000, -1.00000, 0.00000);
 
   CurveAdaptive* patch1_c1 =
       new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
@@ -44,25 +44,25 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   //======================== FIM DO PATCH 1 ==================================
 
   //=============================== PATCH 2 ==================================
-  PointAdaptive* p200 = new Vertice(0.00000, 1.00000, 0.00000);
+  PointAdaptive* p200 = new VertexAdaptive(0.00000, 1.00000, 0.00000);
   // Ponto* p210 = new Vertice ( 0.00000, 0.50000, 0.00000 );
   // Ponto* p220 = new Vertice ( 0.00000, -0.50000, 0.00000 );
-  PointAdaptive* p230 = new Vertice(0.00000, -1.00000, 0.00000);
+  PointAdaptive* p230 = new VertexAdaptive(0.00000, -1.00000, 0.00000);
 
-  PointAdaptive* p201 = new Vertice(0.00000, 1.00000, 0.50000);
-  PointAdaptive* p211 = new Vertice(0.00000, 0.50000, 0.50000);
-  PointAdaptive* p221 = new Vertice(0.00000, -0.50000, 0.50000);
-  PointAdaptive* p231 = new Vertice(0.00000, -1.00000, 0.50000);
+  PointAdaptive* p201 = new VertexAdaptive(0.00000, 1.00000, 0.50000);
+  PointAdaptive* p211 = new VertexAdaptive(0.00000, 0.50000, 0.50000);
+  PointAdaptive* p221 = new VertexAdaptive(0.00000, -0.50000, 0.50000);
+  PointAdaptive* p231 = new VertexAdaptive(0.00000, -1.00000, 0.50000);
 
-  PointAdaptive* p202 = new Vertice(0.00000, 1.00000, 1.50000);
-  PointAdaptive* p212 = new Vertice(0.00000, 0.50000, 1.50000);
-  PointAdaptive* p222 = new Vertice(0.00000, -0.50000, 1.50000);
-  PointAdaptive* p232 = new Vertice(0.00000, -1.00000, 1.50000);
+  PointAdaptive* p202 = new VertexAdaptive(0.00000, 1.00000, 1.50000);
+  PointAdaptive* p212 = new VertexAdaptive(0.00000, 0.50000, 1.50000);
+  PointAdaptive* p222 = new VertexAdaptive(0.00000, -0.50000, 1.50000);
+  PointAdaptive* p232 = new VertexAdaptive(0.00000, -1.00000, 1.50000);
 
-  PointAdaptive* p203 = new Vertice(0.00000, 1.00000, 2.00000);
-  PointAdaptive* p213 = new Vertice(0.00000, 0.50000, 2.00000);
-  PointAdaptive* p223 = new Vertice(0.00000, -0.50000, 2.00000);
-  PointAdaptive* p233 = new Vertice(0.00000, -1.00000, 2.00000);
+  PointAdaptive* p203 = new VertexAdaptive(0.00000, 1.00000, 2.00000);
+  PointAdaptive* p213 = new VertexAdaptive(0.00000, 0.50000, 2.00000);
+  PointAdaptive* p223 = new VertexAdaptive(0.00000, -0.50000, 2.00000);
+  PointAdaptive* p233 = new VertexAdaptive(0.00000, -1.00000, 2.00000);
 
   // Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
   CurveAdaptive* patch2_c2 =
@@ -83,25 +83,25 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   //======================== FIM DO PATCH 2 ==================================
 
   //=============================== PATCH 3 ==================================
-  PointAdaptive* p300 = new Vertice(0.00000, 1.00000, 0.00000);
+  PointAdaptive* p300 = new VertexAdaptive(0.00000, 1.00000, 0.00000);
   // Ponto* p310 = new Vertice ( 0.00000, 0.50000, 0.00000 );
   // Ponto* p320 = new Vertice ( 0.00000, -0.50000, 0.00000 );
-  PointAdaptive* p330 = new Vertice(0.00000, -1.00000, 0.00000);
+  PointAdaptive* p330 = new VertexAdaptive(0.00000, -1.00000, 0.00000);
 
-  PointAdaptive* p301 = new Vertice(0.50000, 1.00000, 0.00000);
-  PointAdaptive* p311 = new Vertice(0.50000, 0.50000, 0.00000);
-  PointAdaptive* p321 = new Vertice(0.50000, -0.50000, 0.00000);
-  PointAdaptive* p331 = new Vertice(0.50000, -1.00000, 0.00000);
+  PointAdaptive* p301 = new VertexAdaptive(0.50000, 1.00000, 0.00000);
+  PointAdaptive* p311 = new VertexAdaptive(0.50000, 0.50000, 0.00000);
+  PointAdaptive* p321 = new VertexAdaptive(0.50000, -0.50000, 0.00000);
+  PointAdaptive* p331 = new VertexAdaptive(0.50000, -1.00000, 0.00000);
 
-  PointAdaptive* p302 = new Vertice(1.50000, 1.00000, 0.00000);
-  PointAdaptive* p312 = new Vertice(1.50000, 0.50000, 0.00000);
-  PointAdaptive* p322 = new Vertice(1.50000, -0.50000, 0.00000);
-  PointAdaptive* p332 = new Vertice(1.50000, -1.00000, 0.00000);
+  PointAdaptive* p302 = new VertexAdaptive(1.50000, 1.00000, 0.00000);
+  PointAdaptive* p312 = new VertexAdaptive(1.50000, 0.50000, 0.00000);
+  PointAdaptive* p322 = new VertexAdaptive(1.50000, -0.50000, 0.00000);
+  PointAdaptive* p332 = new VertexAdaptive(1.50000, -1.00000, 0.00000);
 
-  PointAdaptive* p303 = new Vertice(2.00000, 1.00000, 0.00000);
-  PointAdaptive* p313 = new Vertice(2.00000, 0.50000, 0.00000);
-  PointAdaptive* p323 = new Vertice(2.00000, -0.50000, 0.00000);
-  PointAdaptive* p333 = new Vertice(2.00000, -1.00000, 0.00000);
+  PointAdaptive* p303 = new VertexAdaptive(2.00000, 1.00000, 0.00000);
+  PointAdaptive* p313 = new VertexAdaptive(2.00000, 0.50000, 0.00000);
+  PointAdaptive* p323 = new VertexAdaptive(2.00000, -0.50000, 0.00000);
+  PointAdaptive* p333 = new VertexAdaptive(2.00000, -1.00000, 0.00000);
 
   // Curva* patch3_c1 = new CurvParamBezier ( *p300, *p310, *p320, *p330 );
   CurveAdaptive* patch3_c2 =
@@ -122,25 +122,25 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   //======================== FIM DO PATCH 3 ==================================
 
   //=============================== PATCH 4 ==================================
-  PointAdaptive* p400 = new Vertice(0.00000, 1.00000, 0.00000);
+  PointAdaptive* p400 = new VertexAdaptive(0.00000, 1.00000, 0.00000);
   // Ponto* p410 = new Vertice ( 0.00000, 0.50000, 0.00000 );
   // Ponto* p420 = new Vertice ( 0.00000, -0.50000, 0.00000 );
-  PointAdaptive* p430 = new Vertice(0.00000, -1.00000, 0.00000);
+  PointAdaptive* p430 = new VertexAdaptive(0.00000, -1.00000, 0.00000);
 
-  PointAdaptive* p401 = new Vertice(-0.50000, 1.00000, 1.00000);
-  PointAdaptive* p411 = new Vertice(-0.50000, 0.50000, 1.00000);
-  PointAdaptive* p421 = new Vertice(-0.50000, -0.50000, 1.00000);
-  PointAdaptive* p431 = new Vertice(-0.50000, -1.00000, 1.00000);
+  PointAdaptive* p401 = new VertexAdaptive(-0.50000, 1.00000, 1.00000);
+  PointAdaptive* p411 = new VertexAdaptive(-0.50000, 0.50000, 1.00000);
+  PointAdaptive* p421 = new VertexAdaptive(-0.50000, -0.50000, 1.00000);
+  PointAdaptive* p431 = new VertexAdaptive(-0.50000, -1.00000, 1.00000);
 
-  PointAdaptive* p402 = new Vertice(-1.50000, 1.00000, 1.00000);
-  PointAdaptive* p412 = new Vertice(-1.50000, 0.50000, 1.00000);
-  PointAdaptive* p422 = new Vertice(-1.50000, -0.50000, 1.00000);
-  PointAdaptive* p432 = new Vertice(-1.50000, -1.00000, 1.00000);
+  PointAdaptive* p402 = new VertexAdaptive(-1.50000, 1.00000, 1.00000);
+  PointAdaptive* p412 = new VertexAdaptive(-1.50000, 0.50000, 1.00000);
+  PointAdaptive* p422 = new VertexAdaptive(-1.50000, -0.50000, 1.00000);
+  PointAdaptive* p432 = new VertexAdaptive(-1.50000, -1.00000, 1.00000);
 
-  PointAdaptive* p403 = new Vertice(-2.00000, 1.00000, 1.00000);
-  PointAdaptive* p413 = new Vertice(-2.00000, 0.50000, 1.00000);
-  PointAdaptive* p423 = new Vertice(-2.00000, -0.50000, 0.50000);
-  PointAdaptive* p433 = new Vertice(-2.00000, -1.00000, 1.00000);
+  PointAdaptive* p403 = new VertexAdaptive(-2.00000, 1.00000, 1.00000);
+  PointAdaptive* p413 = new VertexAdaptive(-2.00000, 0.50000, 1.00000);
+  PointAdaptive* p423 = new VertexAdaptive(-2.00000, -0.50000, 0.50000);
+  PointAdaptive* p433 = new VertexAdaptive(-2.00000, -1.00000, 1.00000);
 
   // Curva* patch4_c1 = new CurvParamBezier ( *p400, *p410, *p420, *p430 );
   CurveAdaptive* patch4_c2 =
@@ -162,25 +162,25 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
 
   //=============================== PATCH 5 ==================================
 
-  PointAdaptive* p500 = new Vertice(0.00000, 1.00000, 0.00000);
+  PointAdaptive* p500 = new VertexAdaptive(0.00000, 1.00000, 0.00000);
   // Ponto* p510 = new Vertice ( 0.00000, 0.50000, 0.00000 );
   // Ponto* p520 = new Vertice ( 0.00000, -0.50000, 0.00000 );
-  PointAdaptive* p530 = new Vertice(0.00000, -1.00000, 0.00000);
+  PointAdaptive* p530 = new VertexAdaptive(0.00000, -1.00000, 0.00000);
 
-  PointAdaptive* p501 = new Vertice(0.50000, 1.00000, 0.28371);
-  PointAdaptive* p511 = new Vertice(0.50000, 0.50000, 0.15342);
-  PointAdaptive* p521 = new Vertice(0.50000, -0.50000, 0.50617);
-  PointAdaptive* p531 = new Vertice(0.50000, -1.00000, 0.28371);
+  PointAdaptive* p501 = new VertexAdaptive(0.50000, 1.00000, 0.28371);
+  PointAdaptive* p511 = new VertexAdaptive(0.50000, 0.50000, 0.15342);
+  PointAdaptive* p521 = new VertexAdaptive(0.50000, -0.50000, 0.50617);
+  PointAdaptive* p531 = new VertexAdaptive(0.50000, -1.00000, 0.28371);
 
-  PointAdaptive* p502 = new Vertice(1.50000, 1.00000, 0.69502);
-  PointAdaptive* p512 = new Vertice(1.50000, 0.50000, 0.8342);
-  PointAdaptive* p522 = new Vertice(1.50000, -0.50000, 1.094);
-  PointAdaptive* p532 = new Vertice(1.50000, -1.00000, 0.8342);
+  PointAdaptive* p502 = new VertexAdaptive(1.50000, 1.00000, 0.69502);
+  PointAdaptive* p512 = new VertexAdaptive(1.50000, 0.50000, 0.8342);
+  PointAdaptive* p522 = new VertexAdaptive(1.50000, -0.50000, 1.094);
+  PointAdaptive* p532 = new VertexAdaptive(1.50000, -1.00000, 0.8342);
 
-  PointAdaptive* p503 = new Vertice(2.00000, 1.00000, 0.96197);
-  PointAdaptive* p513 = new Vertice(2.00000, 0.50000, 0.96197);
-  PointAdaptive* p523 = new Vertice(2.00000, -0.50000, 1.2141);
-  PointAdaptive* p533 = new Vertice(2.00000, -1.00000, 0.76172);
+  PointAdaptive* p503 = new VertexAdaptive(2.00000, 1.00000, 0.96197);
+  PointAdaptive* p513 = new VertexAdaptive(2.00000, 0.50000, 0.96197);
+  PointAdaptive* p523 = new VertexAdaptive(2.00000, -0.50000, 1.2141);
+  PointAdaptive* p533 = new VertexAdaptive(2.00000, -1.00000, 0.76172);
 
   // Curva* patch5_c1 = new CurvParamBezier ( *p500, *p510, *p520, *p530 );
   CurveAdaptive* patch5_c2 =
@@ -209,25 +209,25 @@ Geometry* Modelos3d::modelTresPatches(Geometry* geo) {
   //==============================================================================
 
   //=============================== PATCH 1 ==================================
-  PointAdaptive* p100 = new Vertice(-1.00000, 1.00000, -1.00000);
-  PointAdaptive* p110 = new Vertice(-1.00000, 0.50000, -1.00000);
-  PointAdaptive* p120 = new Vertice(-1.00000, -0.50000, -1.00000);
-  PointAdaptive* p130 = new Vertice(-1.00000, -1.00000, -1.00000);
+  PointAdaptive* p100 = new VertexAdaptive(-1.00000, 1.00000, -1.00000);
+  PointAdaptive* p110 = new VertexAdaptive(-1.00000, 0.50000, -1.00000);
+  PointAdaptive* p120 = new VertexAdaptive(-1.00000, -0.50000, -1.00000);
+  PointAdaptive* p130 = new VertexAdaptive(-1.00000, -1.00000, -1.00000);
 
-  PointAdaptive* p101 = new Vertice(-1.00000, 1.00000, -0.50000);
-  PointAdaptive* p111 = new Vertice(-1.00000, 0.50000, -0.50000);
-  PointAdaptive* p121 = new Vertice(-1.00000, -0.50000, -0.50000);
-  PointAdaptive* p131 = new Vertice(-1.00000, -1.00000, -0.50000);
+  PointAdaptive* p101 = new VertexAdaptive(-1.00000, 1.00000, -0.50000);
+  PointAdaptive* p111 = new VertexAdaptive(-1.00000, 0.50000, -0.50000);
+  PointAdaptive* p121 = new VertexAdaptive(-1.00000, -0.50000, -0.50000);
+  PointAdaptive* p131 = new VertexAdaptive(-1.00000, -1.00000, -0.50000);
 
-  PointAdaptive* p102 = new Vertice(-1.00000, 1.00000, 0.50000);
-  PointAdaptive* p112 = new Vertice(-0.95046, 0.50000, 0.50000);
-  PointAdaptive* p122 = new Vertice(-1.19780, -0.50000, 0.50000);
-  PointAdaptive* p132 = new Vertice(-1.22350, -1.00000, 0.50000);
+  PointAdaptive* p102 = new VertexAdaptive(-1.00000, 1.00000, 0.50000);
+  PointAdaptive* p112 = new VertexAdaptive(-0.95046, 0.50000, 0.50000);
+  PointAdaptive* p122 = new VertexAdaptive(-1.19780, -0.50000, 0.50000);
+  PointAdaptive* p132 = new VertexAdaptive(-1.22350, -1.00000, 0.50000);
 
-  PointAdaptive* p103 = new Vertice(-1.00000, 1.00000, 1.00000);
-  PointAdaptive* p113 = new Vertice(-0.59827, 0.50000, 1.00000);
-  PointAdaptive* p123 = new Vertice(-1.7191, -0.50000, 1.00000);
-  PointAdaptive* p133 = new Vertice(-1.00000, -1.00000, 1.00000);
+  PointAdaptive* p103 = new VertexAdaptive(-1.00000, 1.00000, 1.00000);
+  PointAdaptive* p113 = new VertexAdaptive(-0.59827, 0.50000, 1.00000);
+  PointAdaptive* p123 = new VertexAdaptive(-1.7191, -0.50000, 1.00000);
+  PointAdaptive* p133 = new VertexAdaptive(-1.00000, -1.00000, 1.00000);
 
   CurveAdaptive* patch1_c1 =
       new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
@@ -248,25 +248,25 @@ Geometry* Modelos3d::modelTresPatches(Geometry* geo) {
   geo->InsertCurve(patch1_c4);
   //======================== FIM DO PATCH 1 ==================================
   //=============================== PATCH 2 ==================================
-  PointAdaptive* p200 = new Vertice(-1.00000, 1.00000, 1.00000);
+  PointAdaptive* p200 = new VertexAdaptive(-1.00000, 1.00000, 1.00000);
   // Ponto* p210 = new Vertice ( -0.78827, 0.50000, 1.00000 );
   // Ponto* p220 = new Vertice ( -1.2291, -0.50000, 1.00000 );
-  PointAdaptive* p230 = new Vertice(-1.00000, -1.00000, 1.00000);
+  PointAdaptive* p230 = new VertexAdaptive(-1.00000, -1.00000, 1.00000);
 
-  PointAdaptive* p201 = new Vertice(-0.50000, 1.00000, 1.00000);
-  PointAdaptive* p211 = new Vertice(-0.50000, 0.50000, 1.00000);
-  PointAdaptive* p221 = new Vertice(-0.50000, -0.50000, 1.00000);
-  PointAdaptive* p231 = new Vertice(-0.50000, -1.00000, 1.00000);
+  PointAdaptive* p201 = new VertexAdaptive(-0.50000, 1.00000, 1.00000);
+  PointAdaptive* p211 = new VertexAdaptive(-0.50000, 0.50000, 1.00000);
+  PointAdaptive* p221 = new VertexAdaptive(-0.50000, -0.50000, 1.00000);
+  PointAdaptive* p231 = new VertexAdaptive(-0.50000, -1.00000, 1.00000);
 
-  PointAdaptive* p202 = new Vertice(0.50000, 1.00000, 1.00000);
-  PointAdaptive* p212 = new Vertice(0.50000, 0.50000, 1.00000);
-  PointAdaptive* p222 = new Vertice(0.50000, -0.50000, 1.00000);
-  PointAdaptive* p232 = new Vertice(0.50000, -1.00000, 1.00000);
+  PointAdaptive* p202 = new VertexAdaptive(0.50000, 1.00000, 1.00000);
+  PointAdaptive* p212 = new VertexAdaptive(0.50000, 0.50000, 1.00000);
+  PointAdaptive* p222 = new VertexAdaptive(0.50000, -0.50000, 1.00000);
+  PointAdaptive* p232 = new VertexAdaptive(0.50000, -1.00000, 1.00000);
 
-  PointAdaptive* p203 = new Vertice(1.00000, 1.00000, 1.00000);
-  PointAdaptive* p213 = new Vertice(1.00000, 0.50000, 1.00000);
-  PointAdaptive* p223 = new Vertice(1.00000, -0.50000, 1.00000);
-  PointAdaptive* p233 = new Vertice(1.00000, -1.00000, 1.00000);
+  PointAdaptive* p203 = new VertexAdaptive(1.00000, 1.00000, 1.00000);
+  PointAdaptive* p213 = new VertexAdaptive(1.00000, 0.50000, 1.00000);
+  PointAdaptive* p223 = new VertexAdaptive(1.00000, -0.50000, 1.00000);
+  PointAdaptive* p233 = new VertexAdaptive(1.00000, -1.00000, 1.00000);
 
   // Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
   CurveAdaptive* patch2_c2 =
@@ -287,25 +287,25 @@ Geometry* Modelos3d::modelTresPatches(Geometry* geo) {
   //======================== FIM DO PATCH 2 ==================================
 
   //=============================== PATCH 3 ==================================
-  PointAdaptive* p300 = new Vertice(-1.00000, 1.00000, 1.00000);
+  PointAdaptive* p300 = new VertexAdaptive(-1.00000, 1.00000, 1.00000);
   // Ponto* p310 = new Vertice ( -0.78827, 0.50000, 1.00000 );
   // Ponto* p320 = new Vertice ( -1.2291, -0.50000, 1.00000 );
-  PointAdaptive* p330 = new Vertice(-1.00000, -1.00000, 1.00000);
+  PointAdaptive* p330 = new VertexAdaptive(-1.00000, -1.00000, 1.00000);
 
-  PointAdaptive* p301 = new Vertice(0.12941, 0.65856, 0.66782);
-  PointAdaptive* p311 = new Vertice(0.46925, 0.26552, 0.78358);
-  PointAdaptive* p321 = new Vertice(-0.21486, -0.30157, 0.8773);
-  PointAdaptive* p331 = new Vertice(0.047791, -0.93912, 0.15139);
+  PointAdaptive* p301 = new VertexAdaptive(0.12941, 0.65856, 0.66782);
+  PointAdaptive* p311 = new VertexAdaptive(0.46925, 0.26552, 0.78358);
+  PointAdaptive* p321 = new VertexAdaptive(-0.21486, -0.30157, 0.8773);
+  PointAdaptive* p331 = new VertexAdaptive(0.047791, -0.93912, 0.15139);
 
-  PointAdaptive* p302 = new Vertice(0.45814, 0.79803, 0.11771);
-  PointAdaptive* p312 = new Vertice(0.98101, 0.080047, 0.56072);
-  PointAdaptive* p322 = new Vertice(0.51486, -0.22225, 0.522937);
-  PointAdaptive* p332 = new Vertice(0.57169, -0.90869, -0.24963);
+  PointAdaptive* p302 = new VertexAdaptive(0.45814, 0.79803, 0.11771);
+  PointAdaptive* p312 = new VertexAdaptive(0.98101, 0.080047, 0.56072);
+  PointAdaptive* p322 = new VertexAdaptive(0.51486, -0.22225, 0.522937);
+  PointAdaptive* p332 = new VertexAdaptive(0.57169, -0.90869, -0.24963);
 
-  PointAdaptive* p303 = new Vertice(0.41625, 0.64127, -0.58839);
-  PointAdaptive* p313 = new Vertice(1.0956, 0.12175, 0.12245);
-  PointAdaptive* p323 = new Vertice(1.0956, -0.37825, 0.12405);
-  PointAdaptive* p333 = new Vertice(1.0956, -0.87825, -0.51823);
+  PointAdaptive* p303 = new VertexAdaptive(0.41625, 0.64127, -0.58839);
+  PointAdaptive* p313 = new VertexAdaptive(1.0956, 0.12175, 0.12245);
+  PointAdaptive* p323 = new VertexAdaptive(1.0956, -0.37825, 0.12405);
+  PointAdaptive* p333 = new VertexAdaptive(1.0956, -0.87825, -0.51823);
 
   // Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
   CurveAdaptive* patch3_c2 =
@@ -335,25 +335,25 @@ Geometry* Modelos3d::modelDoisPatchesPlanosCurva1(Geometry* geo) {
   //==============================================================================
 
   //=============================== PATCH 1 ==================================
-  PointAdaptive* p100 = new Vertice(-1.00000, 1.00000, -1.00000);
-  PointAdaptive* p110 = new Vertice(-1.00000, 0.50000, -1.00000);
-  PointAdaptive* p120 = new Vertice(-1.00000, -0.50000, -1.00000);
-  PointAdaptive* p130 = new Vertice(-1.00000, -1.00000, -1.00000);
+  PointAdaptive* p100 = new VertexAdaptive(-1.00000, 1.00000, -1.00000);
+  PointAdaptive* p110 = new VertexAdaptive(-1.00000, 0.50000, -1.00000);
+  PointAdaptive* p120 = new VertexAdaptive(-1.00000, -0.50000, -1.00000);
+  PointAdaptive* p130 = new VertexAdaptive(-1.00000, -1.00000, -1.00000);
 
-  PointAdaptive* p101 = new Vertice(-1.00000, 1.00000, -0.50000);
-  PointAdaptive* p111 = new Vertice(-1.00000, 0.50000, -0.50000);
-  PointAdaptive* p121 = new Vertice(-1.00000, -0.50000, -0.50000);
-  PointAdaptive* p131 = new Vertice(-1.00000, -1.00000, -0.50000);
+  PointAdaptive* p101 = new VertexAdaptive(-1.00000, 1.00000, -0.50000);
+  PointAdaptive* p111 = new VertexAdaptive(-1.00000, 0.50000, -0.50000);
+  PointAdaptive* p121 = new VertexAdaptive(-1.00000, -0.50000, -0.50000);
+  PointAdaptive* p131 = new VertexAdaptive(-1.00000, -1.00000, -0.50000);
 
-  PointAdaptive* p102 = new Vertice(-1.00000, 1.00000, 0.50000);
-  PointAdaptive* p112 = new Vertice(-0.95046, 0.50000, 0.50000);
-  PointAdaptive* p122 = new Vertice(-1.19780, -0.50000, 0.50000);
-  PointAdaptive* p132 = new Vertice(-1.22350, -1.00000, 0.50000);
+  PointAdaptive* p102 = new VertexAdaptive(-1.00000, 1.00000, 0.50000);
+  PointAdaptive* p112 = new VertexAdaptive(-0.95046, 0.50000, 0.50000);
+  PointAdaptive* p122 = new VertexAdaptive(-1.19780, -0.50000, 0.50000);
+  PointAdaptive* p132 = new VertexAdaptive(-1.22350, -1.00000, 0.50000);
 
-  PointAdaptive* p103 = new Vertice(-1.00000, 1.00000, 1.00000);
-  PointAdaptive* p113 = new Vertice(-0.59827, 0.50000, 1.00000);
-  PointAdaptive* p123 = new Vertice(-1.7191, -0.50000, 1.00000);
-  PointAdaptive* p133 = new Vertice(-1.00000, -1.00000, 1.00000);
+  PointAdaptive* p103 = new VertexAdaptive(-1.00000, 1.00000, 1.00000);
+  PointAdaptive* p113 = new VertexAdaptive(-0.59827, 0.50000, 1.00000);
+  PointAdaptive* p123 = new VertexAdaptive(-1.7191, -0.50000, 1.00000);
+  PointAdaptive* p133 = new VertexAdaptive(-1.00000, -1.00000, 1.00000);
 
   CurveAdaptive* patch1_c1 =
       new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
@@ -374,25 +374,25 @@ Geometry* Modelos3d::modelDoisPatchesPlanosCurva1(Geometry* geo) {
   geo->InsertCurve(patch1_c4);
   //======================== FIM DO PATCH 1 ==================================
   //=============================== PATCH 2 ==================================
-  PointAdaptive* p200 = new Vertice(-1.00000, 1.00000, 1.00000);
+  PointAdaptive* p200 = new VertexAdaptive(-1.00000, 1.00000, 1.00000);
   // Ponto* p210 = new Vertice ( -0.78827, 0.50000, 1.00000 );
   // Ponto* p220 = new Vertice ( -1.2291, -0.50000, 1.00000 );
-  PointAdaptive* p230 = new Vertice(-1.00000, -1.00000, 1.00000);
+  PointAdaptive* p230 = new VertexAdaptive(-1.00000, -1.00000, 1.00000);
 
-  PointAdaptive* p201 = new Vertice(-0.50000, 1.00000, 1.00000);
-  PointAdaptive* p211 = new Vertice(-0.50000, 0.50000, 1.00000);
-  PointAdaptive* p221 = new Vertice(-0.50000, -0.50000, 1.00000);
-  PointAdaptive* p231 = new Vertice(-0.50000, -1.00000, 1.00000);
+  PointAdaptive* p201 = new VertexAdaptive(-0.50000, 1.00000, 1.00000);
+  PointAdaptive* p211 = new VertexAdaptive(-0.50000, 0.50000, 1.00000);
+  PointAdaptive* p221 = new VertexAdaptive(-0.50000, -0.50000, 1.00000);
+  PointAdaptive* p231 = new VertexAdaptive(-0.50000, -1.00000, 1.00000);
 
-  PointAdaptive* p202 = new Vertice(0.50000, 1.00000, 1.00000);
-  PointAdaptive* p212 = new Vertice(0.50000, 0.50000, 1.00000);
-  PointAdaptive* p222 = new Vertice(0.50000, -0.50000, 1.00000);
-  PointAdaptive* p232 = new Vertice(0.50000, -1.00000, 1.00000);
+  PointAdaptive* p202 = new VertexAdaptive(0.50000, 1.00000, 1.00000);
+  PointAdaptive* p212 = new VertexAdaptive(0.50000, 0.50000, 1.00000);
+  PointAdaptive* p222 = new VertexAdaptive(0.50000, -0.50000, 1.00000);
+  PointAdaptive* p232 = new VertexAdaptive(0.50000, -1.00000, 1.00000);
 
-  PointAdaptive* p203 = new Vertice(1.00000, 1.00000, 1.00000);
-  PointAdaptive* p213 = new Vertice(1.00000, 0.50000, 1.00000);
-  PointAdaptive* p223 = new Vertice(1.00000, -0.50000, 1.00000);
-  PointAdaptive* p233 = new Vertice(1.00000, -1.00000, 1.00000);
+  PointAdaptive* p203 = new VertexAdaptive(1.00000, 1.00000, 1.00000);
+  PointAdaptive* p213 = new VertexAdaptive(1.00000, 0.50000, 1.00000);
+  PointAdaptive* p223 = new VertexAdaptive(1.00000, -0.50000, 1.00000);
+  PointAdaptive* p233 = new VertexAdaptive(1.00000, -1.00000, 1.00000);
 
   // Curva* patch2_c1 = new CurvParamBezier ( *p200, *p210, *p220, *p230 );
   CurveAdaptive* patch2_c2 =
@@ -423,25 +423,25 @@ Geometry* Modelos3d::modelDoisPatchesPlanosCurva(Geometry* geo) {
   //==============================================================================
 
   //=============================== PATCH 1 ==================================
-  PointAdaptive* p100 = new Vertice(-6.0, 0.0, 0.0);
-  PointAdaptive* p110 = new Vertice(-2.0, 2.0, 0.0);
-  PointAdaptive* p120 = new Vertice(2.0, -2.0, 1.0);
-  PointAdaptive* p130 = new Vertice(6.0, 0.0, 0.0);
+  PointAdaptive* p100 = new VertexAdaptive(-6.0, 0.0, 0.0);
+  PointAdaptive* p110 = new VertexAdaptive(-2.0, 2.0, 0.0);
+  PointAdaptive* p120 = new VertexAdaptive(2.0, -2.0, 1.0);
+  PointAdaptive* p130 = new VertexAdaptive(6.0, 0.0, 0.0);
 
-  PointAdaptive* p101 = new Vertice(-6.0, 4.0, 0.0);
-  PointAdaptive* p111 = new Vertice(-2.0, 4.0, 0.0);
-  PointAdaptive* p121 = new Vertice(2.0, 4.0, 0.0);
-  PointAdaptive* p131 = new Vertice(6.0, 4.0, 0.0);
+  PointAdaptive* p101 = new VertexAdaptive(-6.0, 4.0, 0.0);
+  PointAdaptive* p111 = new VertexAdaptive(-2.0, 4.0, 0.0);
+  PointAdaptive* p121 = new VertexAdaptive(2.0, 4.0, 0.0);
+  PointAdaptive* p131 = new VertexAdaptive(6.0, 4.0, 0.0);
 
-  PointAdaptive* p102 = new Vertice(-6.0, 8.0, 0.0);
-  PointAdaptive* p112 = new Vertice(-2.0, 8.0, 0.0);
-  PointAdaptive* p122 = new Vertice(2.0, 8.0, 0.0);
-  PointAdaptive* p132 = new Vertice(6.0, 8.0, 0.0);
+  PointAdaptive* p102 = new VertexAdaptive(-6.0, 8.0, 0.0);
+  PointAdaptive* p112 = new VertexAdaptive(-2.0, 8.0, 0.0);
+  PointAdaptive* p122 = new VertexAdaptive(2.0, 8.0, 0.0);
+  PointAdaptive* p132 = new VertexAdaptive(6.0, 8.0, 0.0);
 
-  PointAdaptive* p103 = new Vertice(-6.0, 12.0, 0.0);
-  PointAdaptive* p113 = new Vertice(-2.0, 12.0, 0.0);
-  PointAdaptive* p123 = new Vertice(2.0, 12.0, 0.0);
-  PointAdaptive* p133 = new Vertice(6.0, 12.0, 0.0);
+  PointAdaptive* p103 = new VertexAdaptive(-6.0, 12.0, 0.0);
+  PointAdaptive* p113 = new VertexAdaptive(-2.0, 12.0, 0.0);
+  PointAdaptive* p123 = new VertexAdaptive(2.0, 12.0, 0.0);
+  PointAdaptive* p133 = new VertexAdaptive(6.0, 12.0, 0.0);
 
   CurveAdaptive* patch1_c1 =
       new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
@@ -463,20 +463,20 @@ Geometry* Modelos3d::modelDoisPatchesPlanosCurva(Geometry* geo) {
   //======================== FIM DO PATCH 1 ==================================
 
   //=============================== PATCH 2 ==================================
-  PointAdaptive* p200 = new Vertice(-6.0, -12.0, 0.0);
-  PointAdaptive* p210 = new Vertice(-2.0, -12.0, 0.0);
-  PointAdaptive* p220 = new Vertice(2.0, -12.0, 0.0);
-  PointAdaptive* p230 = new Vertice(6.0, -12.0, 0.0);
+  PointAdaptive* p200 = new VertexAdaptive(-6.0, -12.0, 0.0);
+  PointAdaptive* p210 = new VertexAdaptive(-2.0, -12.0, 0.0);
+  PointAdaptive* p220 = new VertexAdaptive(2.0, -12.0, 0.0);
+  PointAdaptive* p230 = new VertexAdaptive(6.0, -12.0, 0.0);
 
-  PointAdaptive* p201 = new Vertice(-6.0, -8.0, 0.0);
-  PointAdaptive* p211 = new Vertice(-2.0, -8.0, 0.0);
-  PointAdaptive* p221 = new Vertice(2.0, -8.0, 0.0);
-  PointAdaptive* p231 = new Vertice(6.0, -8.0, 0.0);
+  PointAdaptive* p201 = new VertexAdaptive(-6.0, -8.0, 0.0);
+  PointAdaptive* p211 = new VertexAdaptive(-2.0, -8.0, 0.0);
+  PointAdaptive* p221 = new VertexAdaptive(2.0, -8.0, 0.0);
+  PointAdaptive* p231 = new VertexAdaptive(6.0, -8.0, 0.0);
 
-  PointAdaptive* p202 = new Vertice(-6.0, -4.0, 0.0);
-  PointAdaptive* p212 = new Vertice(-2.0, -4.0, 0.0);
-  PointAdaptive* p222 = new Vertice(2.0, -4.0, 1.0);
-  PointAdaptive* p232 = new Vertice(6.0, -4.0, 0.0);
+  PointAdaptive* p202 = new VertexAdaptive(-6.0, -4.0, 0.0);
+  PointAdaptive* p212 = new VertexAdaptive(-2.0, -4.0, 0.0);
+  PointAdaptive* p222 = new VertexAdaptive(2.0, -4.0, 1.0);
+  PointAdaptive* p232 = new VertexAdaptive(6.0, -4.0, 0.0);
 
   PointAdaptive* p203 = p100;  // new Vertice (  0.00000, -1.50000, 2.40000 );
   // Ponto* p213 = p110;//new Vertice ( -0.84000,-1.50000, 2.40000 );
@@ -510,25 +510,25 @@ Geometry* Modelos3d::modelCurvaBezier(Geometry* geo) {
   //==============================================================================
   // ============================= Patch 1 ===================================
 
-  PointAdaptive* p00 = new Vertice(1.0, -1.0, 0.0);
-  PointAdaptive* p10 = new Vertice(0.5, -0.5, 0.0);
-  PointAdaptive* p20 = new Vertice(0.5, 0.5, 0.0);
-  PointAdaptive* p30 = new Vertice(1.0, 1.0, 0.0);
+  PointAdaptive* p00 = new VertexAdaptive(1.0, -1.0, 0.0);
+  PointAdaptive* p10 = new VertexAdaptive(0.5, -0.5, 0.0);
+  PointAdaptive* p20 = new VertexAdaptive(0.5, 0.5, 0.0);
+  PointAdaptive* p30 = new VertexAdaptive(1.0, 1.0, 0.0);
 
-  PointAdaptive* p01 = new Vertice(0.5, -1.0, 0.0);
-  PointAdaptive* p11 = new Vertice(0.5, -0.5, 0.5);
-  PointAdaptive* p21 = new Vertice(0.5, 0.5, 0.0);
-  PointAdaptive* p31 = new Vertice(0.5, 1.0, 0.0);
+  PointAdaptive* p01 = new VertexAdaptive(0.5, -1.0, 0.0);
+  PointAdaptive* p11 = new VertexAdaptive(0.5, -0.5, 0.5);
+  PointAdaptive* p21 = new VertexAdaptive(0.5, 0.5, 0.0);
+  PointAdaptive* p31 = new VertexAdaptive(0.5, 1.0, 0.0);
 
-  PointAdaptive* p02 = new Vertice(-0.5, -1.0, 0.0);
-  PointAdaptive* p12 = new Vertice(-0.5, -0.5, 0.0);
-  PointAdaptive* p22 = new Vertice(-0.5, 0.5, 0.0);
-  PointAdaptive* p32 = new Vertice(-0.5, 1.0, 0.0);
+  PointAdaptive* p02 = new VertexAdaptive(-0.5, -1.0, 0.0);
+  PointAdaptive* p12 = new VertexAdaptive(-0.5, -0.5, 0.0);
+  PointAdaptive* p22 = new VertexAdaptive(-0.5, 0.5, 0.0);
+  PointAdaptive* p32 = new VertexAdaptive(-0.5, 1.0, 0.0);
 
-  PointAdaptive* p03 = new Vertice(-1.0, -1.0, 0.0);
-  PointAdaptive* p13 = new Vertice(-1.0, -0.5, 0.0);
-  PointAdaptive* p23 = new Vertice(-1.0, 0.5, 0.0);
-  PointAdaptive* p33 = new Vertice(-1.0, 1.0, 0.0);
+  PointAdaptive* p03 = new VertexAdaptive(-1.0, -1.0, 0.0);
+  PointAdaptive* p13 = new VertexAdaptive(-1.0, -0.5, 0.0);
+  PointAdaptive* p23 = new VertexAdaptive(-1.0, 0.5, 0.0);
+  PointAdaptive* p33 = new VertexAdaptive(-1.0, 1.0, 0.0);
 
   CurveAdaptive* patch1_c1 =
       new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
@@ -559,29 +559,29 @@ Geometry* Modelos3d::modelParaboloide(Geometry* geo) {
   //==============================================================================
 
   //=============================== PATCH 1 ==================================
-  PointAdaptive* patch1_p00 = new Vertice(-5.0, -5.0, 0.0);
-  PointAdaptive* patch1_p10 = new Vertice(5.0, -5.0, 0.0);
-  PointAdaptive* patch1_p01 = new Vertice(-5.0, 5.0, 0.0);
-  PointAdaptive* patch1_p11 = new Vertice(5.0, 5.0, 0.0);
+  PointAdaptive* patch1_p00 = new VertexAdaptive(-5.0, -5.0, 0.0);
+  PointAdaptive* patch1_p10 = new VertexAdaptive(5.0, -5.0, 0.0);
+  PointAdaptive* patch1_p01 = new VertexAdaptive(-5.0, 5.0, 0.0);
+  PointAdaptive* patch1_p11 = new VertexAdaptive(5.0, 5.0, 0.0);
 
-  Vetor* patch1_Qu00 = new Vetor(1.0, 0.0, 18.25);
-  Vetor* patch1_Qu10 =
-      new Vetor(patch1_Qu00->x_, -patch1_Qu00->y, -patch1_Qu00->z);
-  Vetor* patch1_Qu01 = new Vetor(1.0, 0.0, 18.25);
-  Vetor* patch1_Qu11 =
-      new Vetor(patch1_Qu01->x_, -patch1_Qu01->y, -patch1_Qu01->z);
+  VectorAdaptive* patch1_Qu00 = new VectorAdaptive(1.0, 0.0, 18.25);
+  VectorAdaptive* patch1_Qu10 = new VectorAdaptive(
+      patch1_Qu00->GetX(), -patch1_Qu00->GetY(), -patch1_Qu00->GetZ());
+  VectorAdaptive* patch1_Qu01 = new VectorAdaptive(1.0, 0.0, 18.25);
+  VectorAdaptive* patch1_Qu11 = new VectorAdaptive(
+      patch1_Qu01->GetX(), -patch1_Qu01->GetY(), -patch1_Qu01->GetZ());
 
-  Vetor* patch1_Qv00 = new Vetor(0.0, 1.0, -18.25);
-  Vetor* patch1_Qv10 = new Vetor(0.0, 1.0, -18.25);
-  Vetor* patch1_Qv01 =
-      new Vetor(-patch1_Qv00->x_, patch1_Qv00->y, -patch1_Qv00->z);
-  Vetor* patch1_Qv11 =
-      new Vetor(-patch1_Qv10->x_, patch1_Qv10->y, -patch1_Qv10->z);
+  VectorAdaptive* patch1_Qv00 = new VectorAdaptive(0.0, 1.0, -18.25);
+  VectorAdaptive* patch1_Qv10 = new VectorAdaptive(0.0, 1.0, -18.25);
+  VectorAdaptive* patch1_Qv01 = new VectorAdaptive(
+      -patch1_Qv00->GetX(), patch1_Qv00->GetY(), -patch1_Qv00->GetZ());
+  VectorAdaptive* patch1_Qv11 = new VectorAdaptive(
+      -patch1_Qv10->GetX(), patch1_Qv10->GetY(), -patch1_Qv10->GetZ());
 
-  Vetor* patch1_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch1_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch1_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch1_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch1_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch1_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch1_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch1_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch1_c1 = new CurveAdaptiveParametricHermite(
       *patch1_p00, *patch1_p10, *patch1_Qu00, *patch1_Qu10);
@@ -613,20 +613,20 @@ Geometry* Modelos3d::modelPneu(Geometry* geo) {
   //==============================================================================
   // Exemplo do pneu
   //==============================================================================
-  PointAdaptive* p00 = new Vertice(-5.0, 0.0, -5.0);
-  PointAdaptive* p10 = new Vertice(5.0, 0.0, -5.0);
-  PointAdaptive* p01 = new Vertice(-5.0, 0.0, 5.0);
-  PointAdaptive* p11 = new Vertice(5.0, 0.0, 5.0);
+  PointAdaptive* p00 = new VertexAdaptive(-5.0, 0.0, -5.0);
+  PointAdaptive* p10 = new VertexAdaptive(5.0, 0.0, -5.0);
+  PointAdaptive* p01 = new VertexAdaptive(-5.0, 0.0, 5.0);
+  PointAdaptive* p11 = new VertexAdaptive(5.0, 0.0, 5.0);
 
-  Vetor* Qu00 = new Vetor(0.0, -20.0, 0.0);
-  Vetor* Qu10 = new Vetor(0.0, 20.0, 0.0);
-  Vetor* Qu01 = new Vetor(0.0, -20.0, 0.0);
-  Vetor* Qu11 = new Vetor(0.0, 20.0, 0.0);
+  VectorAdaptive* Qu00 = new VectorAdaptive(0.0, -20.0, 0.0);
+  VectorAdaptive* Qu10 = new VectorAdaptive(0.0, 20.0, 0.0);
+  VectorAdaptive* Qu01 = new VectorAdaptive(0.0, -20.0, 0.0);
+  VectorAdaptive* Qu11 = new VectorAdaptive(0.0, 20.0, 0.0);
 
-  Vetor* Qv00 = new Vetor(-15.0, 0.0, -15.0);
-  Vetor* Qv10 = new Vetor(15.0, 0.0, -15.0);
-  Vetor* Qv01 = new Vetor(15.0, 0.0, -15.0);
-  Vetor* Qv11 = new Vetor(-15.0, 0.0, -15.0);
+  VectorAdaptive* Qv00 = new VectorAdaptive(-15.0, 0.0, -15.0);
+  VectorAdaptive* Qv10 = new VectorAdaptive(15.0, 0.0, -15.0);
+  VectorAdaptive* Qv01 = new VectorAdaptive(15.0, 0.0, -15.0);
+  VectorAdaptive* Qv11 = new VectorAdaptive(-15.0, 0.0, -15.0);
 
   CurveAdaptive* c1 =
       new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
@@ -641,15 +641,15 @@ Geometry* Modelos3d::modelPneu(Geometry* geo) {
   CurveAdaptive* c6 =
       new CurveAdaptiveParametricHermite(*p11, *p01, *Qu11, *Qu01);
 
-  Vetor* tw_00 = new Vetor(0.0, 60.0, 0.0);
-  Vetor* tw_10 = new Vetor(0.0, -60.0, 0.0);
-  Vetor* tw_01 = new Vetor(0.0, -60.0, 0.0);
-  Vetor* tw_11 = new Vetor(0.0, 60.0, 0.0);
+  VectorAdaptive* tw_00 = new VectorAdaptive(0.0, 60.0, 0.0);
+  VectorAdaptive* tw_10 = new VectorAdaptive(0.0, -60.0, 0.0);
+  VectorAdaptive* tw_01 = new VectorAdaptive(0.0, -60.0, 0.0);
+  VectorAdaptive* tw_11 = new VectorAdaptive(0.0, 60.0, 0.0);
 
-  Vetor* tw00 = new Vetor(0.0, -60.0, 0.0);
-  Vetor* tw10 = new Vetor(0.0, 60.0, 0.0);
-  Vetor* tw01 = new Vetor(0.0, 60.0, 0.0);
-  Vetor* tw11 = new Vetor(0.0, -60.0, 0.0);
+  VectorAdaptive* tw00 = new VectorAdaptive(0.0, -60.0, 0.0);
+  VectorAdaptive* tw10 = new VectorAdaptive(0.0, 60.0, 0.0);
+  VectorAdaptive* tw01 = new VectorAdaptive(0.0, 60.0, 0.0);
+  VectorAdaptive* tw11 = new VectorAdaptive(0.0, -60.0, 0.0);
 
   Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
   Patch* patch2 =
@@ -673,25 +673,25 @@ Geometry* Modelos3d::modelLadoDescendente(Geometry* geo) {
   //==============================================================================
   // Exemplo de uma superfície com um dos lados descendentes
   //==============================================================================
-  PointAdaptive* p00 = new Vertice(-0.5, 0.0, 0.5);
-  PointAdaptive* p10 = new Vertice(0.5, 0.0, 0.5);
-  PointAdaptive* p01 = new Vertice(-0.5, 0.0, -0.5);
-  PointAdaptive* p11 = new Vertice(0.5, -0.5, -0.5);
+  PointAdaptive* p00 = new VertexAdaptive(-0.5, 0.0, 0.5);
+  PointAdaptive* p10 = new VertexAdaptive(0.5, 0.0, 0.5);
+  PointAdaptive* p01 = new VertexAdaptive(-0.5, 0.0, -0.5);
+  PointAdaptive* p11 = new VertexAdaptive(0.5, -0.5, -0.5);
 
-  Vetor* Qu00 = new Vetor(1.0, 0.0, 0.0);
-  Vetor* Qu10 = new Vetor(1.0, 0.0, 0.0);
-  Vetor* Qu01 = new Vetor(3.0, 0.0, 0.0);
-  Vetor* Qu11 = new Vetor(1.0, 0.0, 0.0);
+  VectorAdaptive* Qu00 = new VectorAdaptive(1.0, 0.0, 0.0);
+  VectorAdaptive* Qu10 = new VectorAdaptive(1.0, 0.0, 0.0);
+  VectorAdaptive* Qu01 = new VectorAdaptive(3.0, 0.0, 0.0);
+  VectorAdaptive* Qu11 = new VectorAdaptive(1.0, 0.0, 0.0);
 
-  Vetor* Qv00 = new Vetor(0.0, 0.0, -1.0);
-  Vetor* Qv10 = new Vetor(0.0, 0.0, -3.0);
-  Vetor* Qv01 = new Vetor(0.0, 0.0, -1.0);
-  Vetor* Qv11 = new Vetor(0.0, 0.0, -1.0);
+  VectorAdaptive* Qv00 = new VectorAdaptive(0.0, 0.0, -1.0);
+  VectorAdaptive* Qv10 = new VectorAdaptive(0.0, 0.0, -3.0);
+  VectorAdaptive* Qv01 = new VectorAdaptive(0.0, 0.0, -1.0);
+  VectorAdaptive* Qv11 = new VectorAdaptive(0.0, 0.0, -1.0);
 
-  Vetor* tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* c1 =
       new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
@@ -720,24 +720,24 @@ Geometry* Modelos3d::modelBaseCircular(Geometry* geo) {
   //==============================================================================
   // Exemplo da base circular
   //==============================================================================
-  PointAdaptive* p00 = new Vertice(0.0, -5.0, 0.0);
-  PointAdaptive* p10 = new Vertice(5.0, 0.0, 0.0);
-  PointAdaptive* p11 = new Vertice(0.0, 5.0, 0.0);
-  PointAdaptive* p01 = new Vertice(-5.0, 0.0, 0.0);
+  PointAdaptive* p00 = new VertexAdaptive(0.0, -5.0, 0.0);
+  PointAdaptive* p10 = new VertexAdaptive(5.0, 0.0, 0.0);
+  PointAdaptive* p11 = new VertexAdaptive(0.0, 5.0, 0.0);
+  PointAdaptive* p01 = new VertexAdaptive(-5.0, 0.0, 0.0);
 
-  Vetor* Qu00 = new Vetor(8.25, 0.0, 0.0);
-  Vetor* Qu10 = new Vetor(0.0, 8.25, 0.0);
-  Vetor* Qu01 = new Vetor(0.0, 8.25, 0.0);
-  Vetor* Qu11 = new Vetor(8.25, 0.0, 0.0);
-  Vetor* Qv00 = new Vetor(-8.25, 0.0, 0.0);
-  Vetor* Qv10 = new Vetor(0.0, 8.25, 0.0);
-  Vetor* Qv01 = new Vetor(0.0, 8.25, 0.0);
-  Vetor* Qv11 = new Vetor(-8.25, 0.0, 0.0);
+  VectorAdaptive* Qu00 = new VectorAdaptive(8.25, 0.0, 0.0);
+  VectorAdaptive* Qu10 = new VectorAdaptive(0.0, 8.25, 0.0);
+  VectorAdaptive* Qu01 = new VectorAdaptive(0.0, 8.25, 0.0);
+  VectorAdaptive* Qu11 = new VectorAdaptive(8.25, 0.0, 0.0);
+  VectorAdaptive* Qv00 = new VectorAdaptive(-8.25, 0.0, 0.0);
+  VectorAdaptive* Qv10 = new VectorAdaptive(0.0, 8.25, 0.0);
+  VectorAdaptive* Qv01 = new VectorAdaptive(0.0, 8.25, 0.0);
+  VectorAdaptive* Qv11 = new VectorAdaptive(-8.25, 0.0, 0.0);
 
-  Vetor* tw00 = new Vetor(0.0, 0.0, 10.0);
-  Vetor* tw10 = new Vetor(0.0, 0.0, -10.0);
-  Vetor* tw01 = new Vetor(0.0, 0.0, -10.0);
-  Vetor* tw11 = new Vetor(0.0, 0.0, 10.0);
+  VectorAdaptive* tw00 = new VectorAdaptive(0.0, 0.0, 10.0);
+  VectorAdaptive* tw10 = new VectorAdaptive(0.0, 0.0, -10.0);
+  VectorAdaptive* tw01 = new VectorAdaptive(0.0, 0.0, -10.0);
+  VectorAdaptive* tw11 = new VectorAdaptive(0.0, 0.0, 10.0);
 
   CurveAdaptive* c1 =
       new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
@@ -765,25 +765,25 @@ Geometry* Modelos3d::modelBaseQuadrada(Geometry* geo) {
   //==============================================================================
   // Exemplo do patch com base quadrada
   //==============================================================================
-  PointAdaptive* p00 = new Vertice(-0.5, 0.0, 0.5);
-  PointAdaptive* p10 = new Vertice(0.5, 0.0, 0.5);
-  PointAdaptive* p01 = new Vertice(-0.5, 0.0, -0.5);
-  PointAdaptive* p11 = new Vertice(0.5, 0.0, -0.5);
+  PointAdaptive* p00 = new VertexAdaptive(-0.5, 0.0, 0.5);
+  PointAdaptive* p10 = new VertexAdaptive(0.5, 0.0, 0.5);
+  PointAdaptive* p01 = new VertexAdaptive(-0.5, 0.0, -0.5);
+  PointAdaptive* p11 = new VertexAdaptive(0.5, 0.0, -0.5);
 
-  Vetor* Qu00 = new Vetor(1.0, 0.0, 0.0);
-  Vetor* Qu10 = new Vetor(1.0, 0.0, 0.0);
-  Vetor* Qu01 = new Vetor(1.0, 0.0, 0.0);
-  Vetor* Qu11 = new Vetor(1.0, 0.0, 0.0);
+  VectorAdaptive* Qu00 = new VectorAdaptive(1.0, 0.0, 0.0);
+  VectorAdaptive* Qu10 = new VectorAdaptive(1.0, 0.0, 0.0);
+  VectorAdaptive* Qu01 = new VectorAdaptive(1.0, 0.0, 0.0);
+  VectorAdaptive* Qu11 = new VectorAdaptive(1.0, 0.0, 0.0);
 
-  Vetor* Qv00 = new Vetor(0.0, 0.0, -1.0);
-  Vetor* Qv10 = new Vetor(0.0, 0.0, -1.0);
-  Vetor* Qv01 = new Vetor(0.0, 0.0, -1.0);
-  Vetor* Qv11 = new Vetor(0.0, 0.0, -1.0);
+  VectorAdaptive* Qv00 = new VectorAdaptive(0.0, 0.0, -1.0);
+  VectorAdaptive* Qv10 = new VectorAdaptive(0.0, 0.0, -1.0);
+  VectorAdaptive* Qv01 = new VectorAdaptive(0.0, 0.0, -1.0);
+  VectorAdaptive* Qv11 = new VectorAdaptive(0.0, 0.0, -1.0);
 
-  Vetor* tw00 = new Vetor(0.0, 20.0, 0.0);
-  Vetor* tw10 = new Vetor(0.0, -20.0, 0.0);
-  Vetor* tw01 = new Vetor(0.0, -20.0, 0.0);
-  Vetor* tw11 = new Vetor(0.0, 20.0, 0.0);
+  VectorAdaptive* tw00 = new VectorAdaptive(0.0, 20.0, 0.0);
+  VectorAdaptive* tw10 = new VectorAdaptive(0.0, -20.0, 0.0);
+  VectorAdaptive* tw01 = new VectorAdaptive(0.0, -20.0, 0.0);
+  VectorAdaptive* tw11 = new VectorAdaptive(0.0, 20.0, 0.0);
 
   CurveAdaptive* c1 =
       new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
@@ -811,25 +811,25 @@ Geometry* Modelos3d::modelBordaCurva(Geometry* geo) {
   //==============================================================================
   // Exemplo do patch com borda curva
   //==============================================================================
-  PointAdaptive* p00 = new Vertice(-5.0, -5.0, 0.0);
-  PointAdaptive* p10 = new Vertice(5.0, -5.0, 0.0);
-  PointAdaptive* p01 = new Vertice(-5.0, 5.0, 0.0);
-  PointAdaptive* p11 = new Vertice(5.0, 5.0, 0.0);
+  PointAdaptive* p00 = new VertexAdaptive(-5.0, -5.0, 0.0);
+  PointAdaptive* p10 = new VertexAdaptive(5.0, -5.0, 0.0);
+  PointAdaptive* p01 = new VertexAdaptive(-5.0, 5.0, 0.0);
+  PointAdaptive* p11 = new VertexAdaptive(5.0, 5.0, 0.0);
 
-  Vetor* Qu00 = new Vetor(10.0, 10.0, 0.0);
-  Vetor* Qu10 = new Vetor(10.0, 10.0, 0.0);
-  Vetor* Qu01 = new Vetor(10.0, 10.0, 0.0);
-  Vetor* Qu11 = new Vetor(10.0, 10.0, 0.0);
+  VectorAdaptive* Qu00 = new VectorAdaptive(10.0, 10.0, 0.0);
+  VectorAdaptive* Qu10 = new VectorAdaptive(10.0, 10.0, 0.0);
+  VectorAdaptive* Qu01 = new VectorAdaptive(10.0, 10.0, 0.0);
+  VectorAdaptive* Qu11 = new VectorAdaptive(10.0, 10.0, 0.0);
 
-  Vetor* Qv00 = new Vetor(-10.0, 10.0, 0.0);
-  Vetor* Qv10 = new Vetor(-10.0, 10.0, 0.0);
-  Vetor* Qv01 = new Vetor(-10.0, 10.0, 0.0);
-  Vetor* Qv11 = new Vetor(-10.0, 10.0, 0.0);
+  VectorAdaptive* Qv00 = new VectorAdaptive(-10.0, 10.0, 0.0);
+  VectorAdaptive* Qv10 = new VectorAdaptive(-10.0, 10.0, 0.0);
+  VectorAdaptive* Qv01 = new VectorAdaptive(-10.0, 10.0, 0.0);
+  VectorAdaptive* Qv11 = new VectorAdaptive(-10.0, 10.0, 0.0);
 
-  Vetor* tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* c1 =
       new CurveAdaptiveParametricHermite(*p00, *p10, *Qu00, *Qu10);
@@ -857,35 +857,35 @@ Geometry* Modelos3d::modelDoisPatches(Geometry* geo) {
   //==============================================================================
   // Exemplo de dois patches vizinhos
   //==============================================================================
-  PointAdaptive* p100 = new Vertice(-1.0, 0.0, 0.5);
-  PointAdaptive* p110 = new Vertice(0.0, 0.0, 0.5);
-  PointAdaptive* p101 = new Vertice(-1.0, 0.0, -0.5);
-  PointAdaptive* p111 = new Vertice(0.0, 0.0, -0.5);
+  PointAdaptive* p100 = new VertexAdaptive(-1.0, 0.0, 0.5);
+  PointAdaptive* p110 = new VertexAdaptive(0.0, 0.0, 0.5);
+  PointAdaptive* p101 = new VertexAdaptive(-1.0, 0.0, -0.5);
+  PointAdaptive* p111 = new VertexAdaptive(0.0, 0.0, -0.5);
 
-  PointAdaptive* p200 = new Vertice(0.0, 0.0, 0.5);
-  PointAdaptive* p210 = new Vertice(1.0, 0.0, 0.5);
-  PointAdaptive* p201 = new Vertice(0.0, 0.0, -0.5);
-  PointAdaptive* p211 = new Vertice(1.0, 0.0, -0.5);
+  PointAdaptive* p200 = new VertexAdaptive(0.0, 0.0, 0.5);
+  PointAdaptive* p210 = new VertexAdaptive(1.0, 0.0, 0.5);
+  PointAdaptive* p201 = new VertexAdaptive(0.0, 0.0, -0.5);
+  PointAdaptive* p211 = new VertexAdaptive(1.0, 0.0, -0.5);
 
-  Vetor* Qu00 = new Vetor(0.1, 0.0, 0.0);
-  Vetor* Qu10 = new Vetor(0.1, 0.0, 0.0);
-  Vetor* Qu01 = new Vetor(0.1, 0.0, 0.0);
-  Vetor* Qu11 = new Vetor(0.1, 0.0, 0.0);
+  VectorAdaptive* Qu00 = new VectorAdaptive(0.1, 0.0, 0.0);
+  VectorAdaptive* Qu10 = new VectorAdaptive(0.1, 0.0, 0.0);
+  VectorAdaptive* Qu01 = new VectorAdaptive(0.1, 0.0, 0.0);
+  VectorAdaptive* Qu11 = new VectorAdaptive(0.1, 0.0, 0.0);
 
-  Vetor* Qv00 = new Vetor(0.0, 0.0, -0.1);
-  Vetor* Qv10 = new Vetor(0.0, 0.0, -0.1);
-  Vetor* Qv01 = new Vetor(0.0, 0.0, -0.1);
-  Vetor* Qv11 = new Vetor(0.0, 0.0, -0.1);
+  VectorAdaptive* Qv00 = new VectorAdaptive(0.0, 0.0, -0.1);
+  VectorAdaptive* Qv10 = new VectorAdaptive(0.0, 0.0, -0.1);
+  VectorAdaptive* Qv01 = new VectorAdaptive(0.0, 0.0, -0.1);
+  VectorAdaptive* Qv11 = new VectorAdaptive(0.0, 0.0, -0.1);
 
-  Vetor* tw100 = new Vetor(0.0, 20.0, 0.0);
-  Vetor* tw110 = new Vetor(0.0, -20.0, 0.0);
-  Vetor* tw101 = new Vetor(0.0, -20.0, 0.0);
-  Vetor* tw111 = new Vetor(0.0, 20.0, 0.0);
+  VectorAdaptive* tw100 = new VectorAdaptive(0.0, 20.0, 0.0);
+  VectorAdaptive* tw110 = new VectorAdaptive(0.0, -20.0, 0.0);
+  VectorAdaptive* tw101 = new VectorAdaptive(0.0, -20.0, 0.0);
+  VectorAdaptive* tw111 = new VectorAdaptive(0.0, 20.0, 0.0);
 
-  Vetor* tw200 = new Vetor(0.0, 20.0, 0.0);
-  Vetor* tw210 = new Vetor(0.0, -20.0, 0.0);
-  Vetor* tw201 = new Vetor(0.0, -20.0, 0.0);
-  Vetor* tw211 = new Vetor(0.0, 20.0, 0.0);
+  VectorAdaptive* tw200 = new VectorAdaptive(0.0, 20.0, 0.0);
+  VectorAdaptive* tw210 = new VectorAdaptive(0.0, -20.0, 0.0);
+  VectorAdaptive* tw201 = new VectorAdaptive(0.0, -20.0, 0.0);
+  VectorAdaptive* tw211 = new VectorAdaptive(0.0, 20.0, 0.0);
 
   CurveAdaptive* c1 =
       new CurveAdaptiveParametricHermite(*p100, *p110, *Qu00, *Qu10);
@@ -929,28 +929,28 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   // Exemplo do nariz
   //==============================================================================
   //=============================== PATCH 1 ===================================
-  PointAdaptive* patch1_p00 = new Vertice(-8.00, 2.5, 0.0);
-  PointAdaptive* patch1_p10 = new Vertice(-2.50, 0.0, 0.0);
-  PointAdaptive* patch1_p01 = new Vertice(-7.00, 2.5, 5.0);
-  PointAdaptive* patch1_p11 = new Vertice(-3.50, 0.0, 7.5);
+  PointAdaptive* patch1_p00 = new VertexAdaptive(-8.00, 2.5, 0.0);
+  PointAdaptive* patch1_p10 = new VertexAdaptive(-2.50, 0.0, 0.0);
+  PointAdaptive* patch1_p01 = new VertexAdaptive(-7.00, 2.5, 5.0);
+  PointAdaptive* patch1_p11 = new VertexAdaptive(-3.50, 0.0, 7.5);
 
-  Vetor* patch1_Qu00 = new Vetor(5.5, -2.5, 18.0);
-  Vetor* patch1_Qu10 =
-      new Vetor(patch1_Qu00->x_, patch1_Qu00->y, -patch1_Qu00->z);
-  Vetor* patch1_Qu01 = new Vetor(3.5, -2.5, 2.5);
-  Vetor* patch1_Qu11 =
-      new Vetor(patch1_Qu01->x_, patch1_Qu01->y, patch1_Qu01->z);
+  VectorAdaptive* patch1_Qu00 = new VectorAdaptive(5.5, -2.5, 18.0);
+  VectorAdaptive* patch1_Qu10 = new VectorAdaptive(
+      patch1_Qu00->GetX(), patch1_Qu00->GetY(), -patch1_Qu00->GetZ());
+  VectorAdaptive* patch1_Qu01 = new VectorAdaptive(3.5, -2.5, 2.5);
+  VectorAdaptive* patch1_Qu11 = new VectorAdaptive(
+      patch1_Qu01->GetX(), patch1_Qu01->GetY(), patch1_Qu01->GetZ());
 
-  Vetor* patch1_Qv00 = new Vetor(-7.5, 2.5, 0.0);
-  Vetor* patch1_Qv10 = new Vetor(3.5, -5.0, 7.5);
-  Vetor* patch1_Qv01 = new Vetor(5.5, 2.5, 0.0);
-  Vetor* patch1_Qv11 =
-      new Vetor(-patch1_Qv10->x_, -patch1_Qv10->y, patch1_Qv10->z);
+  VectorAdaptive* patch1_Qv00 = new VectorAdaptive(-7.5, 2.5, 0.0);
+  VectorAdaptive* patch1_Qv10 = new VectorAdaptive(3.5, -5.0, 7.5);
+  VectorAdaptive* patch1_Qv01 = new VectorAdaptive(5.5, 2.5, 0.0);
+  VectorAdaptive* patch1_Qv11 = new VectorAdaptive(
+      -patch1_Qv10->GetX(), -patch1_Qv10->GetY(), patch1_Qv10->GetZ());
 
-  Vetor* patch1_tw00 = new Vetor(0.0, -10.0, 0.0);
-  Vetor* patch1_tw10 = new Vetor(0.0, 10.0, 0.0);
-  Vetor* patch1_tw01 = new Vetor(0.0, 10.0, 0.0);
-  Vetor* patch1_tw11 = new Vetor(0.0, -10.0, 0.0);
+  VectorAdaptive* patch1_tw00 = new VectorAdaptive(0.0, -10.0, 0.0);
+  VectorAdaptive* patch1_tw10 = new VectorAdaptive(0.0, 10.0, 0.0);
+  VectorAdaptive* patch1_tw01 = new VectorAdaptive(0.0, 10.0, 0.0);
+  VectorAdaptive* patch1_tw11 = new VectorAdaptive(0.0, -10.0, 0.0);
 
   CurveAdaptive* patch1_c1 = new CurveAdaptiveParametricHermite(
       *patch1_p00, *patch1_p10, *patch1_Qu00, *patch1_Qu10);
@@ -974,28 +974,30 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
 
   //=============================== PATCH 2 ===================================
   PointAdaptive* patch2_p00 = patch1_p10;
-  PointAdaptive* patch2_p10 =
-      new Vertice(-patch1_p10->GetX(), patch1_p10->GetY(), patch1_p10->GetZ());
+  PointAdaptive* patch2_p10 = new VertexAdaptive(
+      -patch1_p10->GetX(), patch1_p10->GetY(), patch1_p10->GetZ());
   PointAdaptive* patch2_p01 = patch1_p11;
-  PointAdaptive* patch2_p11 =
-      new Vertice(-patch1_p11->GetX(), patch1_p11->GetY(), patch1_p11->GetZ());
+  PointAdaptive* patch2_p11 = new VertexAdaptive(
+      -patch1_p11->GetX(), patch1_p11->GetY(), patch1_p11->GetZ());
 
-  Vetor* patch2_Qu00 = new Vetor(7.5, -2.5, 0.0);
-  Vetor* patch2_Qu10 = new Vetor(7.5, 2.5, 0.0);
-  Vetor* patch2_Qu01 = new Vetor(7.0, -5.0, 5.0);
-  Vetor* patch2_Qu11 = new Vetor(7.0, 5.0, -5.0);
+  VectorAdaptive* patch2_Qu00 = new VectorAdaptive(7.5, -2.5, 0.0);
+  VectorAdaptive* patch2_Qu10 = new VectorAdaptive(7.5, 2.5, 0.0);
+  VectorAdaptive* patch2_Qu01 = new VectorAdaptive(7.0, -5.0, 5.0);
+  VectorAdaptive* patch2_Qu11 = new VectorAdaptive(7.0, 5.0, -5.0);
 
-  // Vetor* patch2_Qv00 = new Vetor ( *patch2_p00, *patch2_p01 );
-  Vetor* patch2_Qv10 =
-      new Vetor(-patch1_Qv10->x_, patch1_Qv10->y, patch1_Qv10->z);
-  // Vetor* patch2_Qv01 = new Vetor ( *patch2_p00, *patch2_p01 );
-  Vetor* patch2_Qv11 =
-      new Vetor(-patch1_Qv11->x_, patch1_Qv11->y, patch1_Qv11->z);
+  // VectorAdaptive* patch2_Qv00 = new VectorAdaptive ( *patch2_p00, *patch2_p01
+  // );
+  VectorAdaptive* patch2_Qv10 = new VectorAdaptive(
+      -patch1_Qv10->GetX(), patch1_Qv10->GetY(), patch1_Qv10->GetZ());
+  // VectorAdaptive* patch2_Qv01 = new VectorAdaptive ( *patch2_p00, *patch2_p01
+  // );
+  VectorAdaptive* patch2_Qv11 = new VectorAdaptive(
+      -patch1_Qv11->GetX(), patch1_Qv11->GetY(), patch1_Qv11->GetZ());
 
-  Vetor* patch2_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch2_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch2_tw01 = new Vetor(0.0, 10.0, 0.0);
-  Vetor* patch2_tw11 = new Vetor(0.0, -10.0, 0.0);
+  VectorAdaptive* patch2_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch2_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch2_tw01 = new VectorAdaptive(0.0, 10.0, 0.0);
+  VectorAdaptive* patch2_tw11 = new VectorAdaptive(0.0, -10.0, 0.0);
 
   CurveAdaptive* patch2_c1 = new CurveAdaptiveParametricHermite(
       *patch2_p00, *patch2_p10, *patch2_Qu00, *patch2_Qu10);
@@ -1018,38 +1020,42 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
 
   //=============================== PATCH 3 ===================================
   PointAdaptive* patch3_p00 = patch2_p10;
-  PointAdaptive* patch3_p10 =
-      new Vertice(-patch1_p00->GetX(), patch1_p00->GetY(), patch1_p00->GetZ());
+  PointAdaptive* patch3_p10 = new VertexAdaptive(
+      -patch1_p00->GetX(), patch1_p00->GetY(), patch1_p00->GetZ());
   PointAdaptive* patch3_p01 = patch2_p11;
-  PointAdaptive* patch3_p11 =
-      new Vertice(-patch1_p01->GetX(), patch1_p01->GetY(), patch1_p01->GetZ());
+  PointAdaptive* patch3_p11 = new VertexAdaptive(
+      -patch1_p01->GetX(), patch1_p01->GetY(), patch1_p01->GetZ());
 
-  Vetor* patch3_Qu00 = new Vetor(-(-(*patch1_Qu10)).x_, (-(*patch1_Qu10)).y,
-                                 (-(*patch1_Qu10)).z);
-  Vetor* patch3_Qu10 = new Vetor(-(-(*patch1_Qu00)).x_, (-(*patch1_Qu00)).y,
-                                 (-(*patch1_Qu00)).z);
-  Vetor* patch3_Qu01 = new Vetor(-(-(*patch1_Qu11)).x_, (-(*patch1_Qu11)).y,
-                                 (-(*patch1_Qu11)).z);
-  Vetor* patch3_Qu11 = new Vetor(-(-(*patch1_Qu01)).x_, (-(*patch1_Qu01)).y,
-                                 (-(*patch1_Qu01)).z);
+  VectorAdaptive* patch3_Qu00 =
+      new VectorAdaptive(-(-(*patch1_Qu10)).GetX(), (-(*patch1_Qu10)).GetY(),
+                         (-(*patch1_Qu10)).GetZ());
+  VectorAdaptive* patch3_Qu10 =
+      new VectorAdaptive(-(-(*patch1_Qu00)).GetX(), (-(*patch1_Qu00)).GetY(),
+                         (-(*patch1_Qu00)).GetZ());
+  VectorAdaptive* patch3_Qu01 =
+      new VectorAdaptive(-(-(*patch1_Qu11)).GetX(), (-(*patch1_Qu11)).GetY(),
+                         (-(*patch1_Qu11)).GetZ());
+  VectorAdaptive* patch3_Qu11 =
+      new VectorAdaptive(-(-(*patch1_Qu01)).GetX(), (-(*patch1_Qu01)).GetY(),
+                         (-(*patch1_Qu01)).GetZ());
 
-  // Vetor* patch3_Qv00 = new Vetor ( -patch1_Qv10->x, patch1_Qv10->y,
-  // patch1_Qv10->z );
-  Vetor* patch3_Qv10 =
-      new Vetor(-patch1_Qv00->x_, patch1_Qv00->y, patch1_Qv00->z);
-  // Vetor* patch3_Qv01 = new Vetor ( -patch1_Qv11->x, patch1_Qv11->y,
-  // patch1_Qv11->z );
-  Vetor* patch3_Qv11 =
-      new Vetor(-patch1_Qv01->x_, patch1_Qv01->y, patch1_Qv01->z);
+  // VectorAdaptive* patch3_Qv00 = new VectorAdaptive ( -patch1_Qv10->x,
+  // patch1_Qv10->GetY(), patch1_Qv10->GetZ() );
+  VectorAdaptive* patch3_Qv10 = new VectorAdaptive(
+      -patch1_Qv00->GetX(), patch1_Qv00->GetY(), patch1_Qv00->GetZ());
+  // VectorAdaptive* patch3_Qv01 = new VectorAdaptive ( -patch1_Qv11->x,
+  // patch1_Qv11->GetY(), patch1_Qv11->GetZ() );
+  VectorAdaptive* patch3_Qv11 = new VectorAdaptive(
+      -patch1_Qv01->GetX(), patch1_Qv01->GetY(), patch1_Qv01->GetZ());
 
-  Vetor* patch3_tw00 =
-      new Vetor(patch1_tw00->x_, patch1_tw00->y, patch1_tw00->z);
-  Vetor* patch3_tw10 =
-      new Vetor(patch1_tw10->x_, patch1_tw10->y, patch1_tw10->z);
-  Vetor* patch3_tw01 =
-      new Vetor(patch1_tw01->x_, patch1_tw01->y, patch1_tw01->z);
-  Vetor* patch3_tw11 =
-      new Vetor(patch1_tw11->x_, patch1_tw11->y, patch1_tw11->z);
+  VectorAdaptive* patch3_tw00 = new VectorAdaptive(
+      patch1_tw00->GetX(), patch1_tw00->GetY(), patch1_tw00->GetZ());
+  VectorAdaptive* patch3_tw10 = new VectorAdaptive(
+      patch1_tw10->GetX(), patch1_tw10->GetY(), patch1_tw10->GetZ());
+  VectorAdaptive* patch3_tw01 = new VectorAdaptive(
+      patch1_tw01->GetX(), patch1_tw01->GetY(), patch1_tw01->GetZ());
+  VectorAdaptive* patch3_tw11 = new VectorAdaptive(
+      patch1_tw11->GetX(), patch1_tw11->GetY(), patch1_tw11->GetZ());
 
   CurveAdaptive* patch3_c1 = new CurveAdaptiveParametricHermite(
       *patch3_p00, *patch3_p10, *patch3_Qu00, *patch3_Qu10);
@@ -1073,23 +1079,24 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   //=============================== PATCH 4 ===================================
   PointAdaptive* patch4_p00 = patch1_p01;
   PointAdaptive* patch4_p10 = patch1_p11;
-  PointAdaptive* patch4_p01 = new Vertice(-6.00, 5.0, 2.5);
-  PointAdaptive* patch4_p11 = new Vertice(-3.50, 4.0, 7.5);
+  PointAdaptive* patch4_p01 = new VertexAdaptive(-6.00, 5.0, 2.5);
+  PointAdaptive* patch4_p11 = new VertexAdaptive(-3.50, 4.0, 7.5);
 
-  // Vetor* patch4_Qu00 = new Vetor ( *patch4_p00, *patch4_p10 );
-  // Vetor* patch4_Qu10 = new Vetor ( *patch4_p00, *patch4_p10 );
-  Vetor* patch4_Qu01 = new Vetor(*patch4_p01, *patch4_p11);
-  Vetor* patch4_Qu11 = new Vetor(*patch4_p01, *patch4_p11);
+  // VectorAdaptive* patch4_Qu00 = new VectorAdaptive ( *patch4_p00, *patch4_p10
+  // ); VectorAdaptive* patch4_Qu10 = new VectorAdaptive ( *patch4_p00,
+  // *patch4_p10 );
+  VectorAdaptive* patch4_Qu01 = new VectorAdaptive(*patch4_p01, *patch4_p11);
+  VectorAdaptive* patch4_Qu11 = new VectorAdaptive(*patch4_p01, *patch4_p11);
 
-  Vetor* patch4_Qv00 = new Vetor(*patch4_p00, *patch4_p01);
-  Vetor* patch4_Qv10 = new Vetor(*patch4_p10, *patch4_p11);
-  Vetor* patch4_Qv01 = new Vetor(*patch4_p00, *patch4_p01);
-  Vetor* patch4_Qv11 = new Vetor(*patch4_p10, *patch4_p11);
+  VectorAdaptive* patch4_Qv00 = new VectorAdaptive(*patch4_p00, *patch4_p01);
+  VectorAdaptive* patch4_Qv10 = new VectorAdaptive(*patch4_p10, *patch4_p11);
+  VectorAdaptive* patch4_Qv01 = new VectorAdaptive(*patch4_p00, *patch4_p01);
+  VectorAdaptive* patch4_Qv11 = new VectorAdaptive(*patch4_p10, *patch4_p11);
 
-  Vetor* patch4_tw00 = new Vetor(0.0, 0.0, 10.0);
-  Vetor* patch4_tw10 = new Vetor(0.0, 0.0, -10.0);
-  Vetor* patch4_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch4_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch4_tw00 = new VectorAdaptive(0.0, 0.0, 10.0);
+  VectorAdaptive* patch4_tw10 = new VectorAdaptive(0.0, 0.0, -10.0);
+  VectorAdaptive* patch4_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch4_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch4_c1 = patch1_c3;
   CurveAdaptive* patch4_c2 = new CurveAdaptiveParametricHermite(
@@ -1114,27 +1121,30 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   // Ponto* patch5_p00 = patch1_p11;
   PointAdaptive* patch5_p10 = patch2_p11;
   PointAdaptive* patch5_p01 = patch4_p11;
-  PointAdaptive* patch5_p11 =
-      new Vertice(-patch4_p11->GetX(), patch4_p11->GetY(), patch4_p11->GetZ());
+  PointAdaptive* patch5_p11 = new VertexAdaptive(
+      -patch4_p11->GetX(), patch4_p11->GetY(), patch4_p11->GetZ());
 
-  // Vetor* patch5_Qu00 = new Vetor ( *patch5_p00, *patch5_p10 );
-  // Vetor* patch5_Qu10 = new Vetor ( *patch5_p00, *patch5_p10 );
-  Vetor* patch5_Qu01 =
-      new Vetor(patch4_Qu11->x_, patch4_Qu11->y, patch4_Qu11->z);
-  Vetor* patch5_Qu11 =
-      new Vetor(patch5_Qu01->x_, -patch5_Qu01->y, -patch5_Qu01->z);
+  // VectorAdaptive* patch5_Qu00 = new VectorAdaptive ( *patch5_p00, *patch5_p10
+  // ); VectorAdaptive* patch5_Qu10 = new VectorAdaptive ( *patch5_p00,
+  // *patch5_p10 );
+  VectorAdaptive* patch5_Qu01 = new VectorAdaptive(
+      patch4_Qu11->GetX(), patch4_Qu11->GetY(), patch4_Qu11->GetZ());
+  VectorAdaptive* patch5_Qu11 = new VectorAdaptive(
+      patch5_Qu01->GetX(), -patch5_Qu01->GetY(), -patch5_Qu01->GetZ());
 
-  // Vetor* patch5_Qv00 = new Vetor ( *patch5_p00, *patch5_p01 );
-  Vetor* patch5_Qv10 =
-      new Vetor(-patch4_Qv10->x_, patch4_Qv10->y, patch4_Qv10->z);
-  // Vetor* patch5_Qv01 = new Vetor ( *patch5_p00, *patch5_p01 );
-  Vetor* patch5_Qv11 =
-      new Vetor(-patch4_Qv11->x_, patch4_Qv11->y, patch4_Qv11->z);
+  // VectorAdaptive* patch5_Qv00 = new VectorAdaptive ( *patch5_p00, *patch5_p01
+  // );
+  VectorAdaptive* patch5_Qv10 = new VectorAdaptive(
+      -patch4_Qv10->GetX(), patch4_Qv10->GetY(), patch4_Qv10->GetZ());
+  // VectorAdaptive* patch5_Qv01 = new VectorAdaptive ( *patch5_p00, *patch5_p01
+  // );
+  VectorAdaptive* patch5_Qv11 = new VectorAdaptive(
+      -patch4_Qv11->GetX(), patch4_Qv11->GetY(), patch4_Qv11->GetZ());
 
-  Vetor* patch5_tw00 = new Vetor(0.0, 0.0, 20.0);
-  Vetor* patch5_tw10 = new Vetor(0.0, 0.0, -20.0);
-  Vetor* patch5_tw01 = new Vetor(0.0, 0.0, -5.0);
-  Vetor* patch5_tw11 = new Vetor(0.0, 0.0, 5.0);
+  VectorAdaptive* patch5_tw00 = new VectorAdaptive(0.0, 0.0, 20.0);
+  VectorAdaptive* patch5_tw10 = new VectorAdaptive(0.0, 0.0, -20.0);
+  VectorAdaptive* patch5_tw01 = new VectorAdaptive(0.0, 0.0, -5.0);
+  VectorAdaptive* patch5_tw11 = new VectorAdaptive(0.0, 0.0, 5.0);
 
   CurveAdaptive* patch5_c1 = patch2_c3;
   CurveAdaptive* patch5_c2 = new CurveAdaptiveParametricHermite(
@@ -1158,28 +1168,31 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   // Ponto* patch6_p00 = patch2_p11;
   PointAdaptive* patch6_p10 = patch3_p11;
   PointAdaptive* patch6_p01 = patch5_p11;
-  PointAdaptive* patch6_p11 =
-      new Vertice(-patch4_p01->GetX(), patch4_p01->GetY(), patch4_p01->GetZ());
+  PointAdaptive* patch6_p11 = new VertexAdaptive(
+      -patch4_p01->GetX(), patch4_p01->GetY(), patch4_p01->GetZ());
 
-  // Vetor* patch6_Qu00 = new Vetor ( patch5_Qu11->x, patch5_Qu11->y,
-  // patch5_Qu11->z ); Vetor* patch6_Qu10 = new Vetor (
-  // patch6_Qu00->x,-patch6_Qu00->y,-patch6_Qu00->z );
-  Vetor* patch6_Qu01 =
-      new Vetor(patch4_Qu11->x_, -patch4_Qu11->y, -patch4_Qu11->z);
-  Vetor* patch6_Qu11 =
-      new Vetor(patch4_Qu01->x_, -patch4_Qu01->y, -patch4_Qu01->z);
+  // VectorAdaptive* patch6_Qu00 = new VectorAdaptive ( patch5_Qu11->x,
+  // patch5_Qu11->GetY(), patch5_Qu11->GetZ() ); VectorAdaptive* patch6_Qu10 =
+  // new VectorAdaptive (
+  // patch6_Qu00->x,-patch6_Qu00->GetY(),-patch6_Qu00->GetZ() );
+  VectorAdaptive* patch6_Qu01 = new VectorAdaptive(
+      patch4_Qu11->GetX(), -patch4_Qu11->GetY(), -patch4_Qu11->GetZ());
+  VectorAdaptive* patch6_Qu11 = new VectorAdaptive(
+      patch4_Qu01->GetX(), -patch4_Qu01->GetY(), -patch4_Qu01->GetZ());
 
-  // Vetor* patch6_Qv00 = new Vetor ( *patch6_p00, *patch6_p01 );
-  Vetor* patch6_Qv10 =
-      new Vetor(-patch4_Qv00->x_, patch4_Qv00->y, patch4_Qv00->z);
-  // Vetor* patch6_Qv01 = new Vetor ( *patch6_p00, *patch6_p01 );
-  Vetor* patch6_Qv11 =
-      new Vetor(-patch4_Qv01->x_, patch4_Qv01->y, patch4_Qv01->z);
+  // VectorAdaptive* patch6_Qv00 = new VectorAdaptive ( *patch6_p00, *patch6_p01
+  // );
+  VectorAdaptive* patch6_Qv10 = new VectorAdaptive(
+      -patch4_Qv00->GetX(), patch4_Qv00->GetY(), patch4_Qv00->GetZ());
+  // VectorAdaptive* patch6_Qv01 = new VectorAdaptive ( *patch6_p00, *patch6_p01
+  // );
+  VectorAdaptive* patch6_Qv11 = new VectorAdaptive(
+      -patch4_Qv01->GetX(), patch4_Qv01->GetY(), patch4_Qv01->GetZ());
 
-  Vetor* patch6_tw00 = new Vetor(0.0, 0.0, 10.0);
-  Vetor* patch6_tw10 = new Vetor(0.0, 0.0, -10.0);
-  Vetor* patch6_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch6_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch6_tw00 = new VectorAdaptive(0.0, 0.0, 10.0);
+  VectorAdaptive* patch6_tw10 = new VectorAdaptive(0.0, 0.0, -10.0);
+  VectorAdaptive* patch6_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch6_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch6_c1 = patch3_c3;
   CurveAdaptive* patch6_c2 = new CurveAdaptiveParametricHermite(
@@ -1202,25 +1215,26 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   //=============================== PATCH 8 ===================================
   PointAdaptive* patch8_p00 = patch4_p11;
   PointAdaptive* patch8_p10 = patch5_p11;
-  PointAdaptive* patch8_p01 = new Vertice(-2.5, 7.5, 6.5);
-  PointAdaptive* patch8_p11 = new Vertice(2.5, 7.5, 6.5);
+  PointAdaptive* patch8_p01 = new VertexAdaptive(-2.5, 7.5, 6.5);
+  PointAdaptive* patch8_p11 = new VertexAdaptive(2.5, 7.5, 6.5);
 
-  // Vetor* patch8_Qu00 = new Vetor ( patch4_Qu11->x, patch4_Qu11->y,
-  // patch4_Qu11->z ); Vetor* patch8_Qu10 = new Vetor (
-  // patch5_Qu01->x,-patch5_Qu01->y,-patch5_Qu01->z );
-  Vetor* patch8_Qu01 = new Vetor(5.0, -3.5, 3.5);
-  Vetor* patch8_Qu11 =
-      new Vetor(patch8_Qu01->x_, -patch8_Qu01->y, -patch8_Qu01->z);
+  // VectorAdaptive* patch8_Qu00 = new VectorAdaptive ( patch4_Qu11->x,
+  // patch4_Qu11->GetY(), patch4_Qu11->GetZ() ); VectorAdaptive* patch8_Qu10 =
+  // new VectorAdaptive (
+  // patch5_Qu01->x,-patch5_Qu01->GetY(),-patch5_Qu01->GetZ() );
+  VectorAdaptive* patch8_Qu01 = new VectorAdaptive(5.0, -3.5, 3.5);
+  VectorAdaptive* patch8_Qu11 = new VectorAdaptive(
+      patch8_Qu01->GetX(), -patch8_Qu01->GetY(), -patch8_Qu01->GetZ());
 
-  Vetor* patch8_Qv00 = new Vetor(*patch5_Qv10);
-  Vetor* patch8_Qv10 = new Vetor(*patch5_Qv11);
-  Vetor* patch8_Qv01 = new Vetor(*patch8_p00, *patch8_p01);
-  Vetor* patch8_Qv11 = new Vetor(*patch8_p10, *patch8_p11);
+  VectorAdaptive* patch8_Qv00 = new VectorAdaptive(*patch5_Qv10);
+  VectorAdaptive* patch8_Qv10 = new VectorAdaptive(*patch5_Qv11);
+  VectorAdaptive* patch8_Qv01 = new VectorAdaptive(*patch8_p00, *patch8_p01);
+  VectorAdaptive* patch8_Qv11 = new VectorAdaptive(*patch8_p10, *patch8_p11);
 
-  Vetor* patch8_tw00 = new Vetor(0.0, 0.0, -8.0);
-  Vetor* patch8_tw10 = new Vetor(0.0, 0.0, 8.0);
-  Vetor* patch8_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch8_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch8_tw00 = new VectorAdaptive(0.0, 0.0, -8.0);
+  VectorAdaptive* patch8_tw10 = new VectorAdaptive(0.0, 0.0, 8.0);
+  VectorAdaptive* patch8_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch8_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch8_c1 = patch5_c3;
   CurveAdaptive* patch8_c2 = new CurveAdaptiveParametricHermite(
@@ -1244,26 +1258,26 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   //=============================== PATCH 10 ==================================
   PointAdaptive* patch10_p00 = patch8_p01;
   PointAdaptive* patch10_p10 = patch8_p11;
-  PointAdaptive* patch10_p01 = new Vertice(-2.0, 22.5, 2.5);
-  PointAdaptive* patch10_p11 = new Vertice(
+  PointAdaptive* patch10_p01 = new VertexAdaptive(-2.0, 22.5, 2.5);
+  PointAdaptive* patch10_p11 = new VertexAdaptive(
       -patch10_p01->GetX(), patch10_p01->GetY(), patch10_p01->GetZ());
 
-  // Vetor* patch10_Qu00 = new Vetor ( *patch8_Qu01 );
-  // Vetor* patch10_Qu10 = new Vetor ( *patch8_Qu11 );
-  Vetor* patch10_Qu01 = new Vetor(1.0, 2.5, 3.5);
-  Vetor* patch10_Qu11 =
-      new Vetor(patch10_Qu01->x_, -patch10_Qu01->y, -patch10_Qu01->z);
+  // VectorAdaptive* patch10_Qu00 = new VectorAdaptive ( *patch8_Qu01 );
+  // VectorAdaptive* patch10_Qu10 = new VectorAdaptive ( *patch8_Qu11 );
+  VectorAdaptive* patch10_Qu01 = new VectorAdaptive(1.0, 2.5, 3.5);
+  VectorAdaptive* patch10_Qu11 = new VectorAdaptive(
+      patch10_Qu01->GetX(), -patch10_Qu01->GetY(), -patch10_Qu01->GetZ());
 
-  Vetor* patch10_Qv00 = new Vetor(*patch8_Qv01);
-  Vetor* patch10_Qv10 = new Vetor(*patch8_Qv11);
-  Vetor* patch10_Qv01 = new Vetor(-1.0, 2.5, 0.0);
-  Vetor* patch10_Qv11 =
-      new Vetor(-patch10_Qv01->x_, patch10_Qv01->y, patch10_Qv01->z);
+  VectorAdaptive* patch10_Qv00 = new VectorAdaptive(*patch8_Qv01);
+  VectorAdaptive* patch10_Qv10 = new VectorAdaptive(*patch8_Qv11);
+  VectorAdaptive* patch10_Qv01 = new VectorAdaptive(-1.0, 2.5, 0.0);
+  VectorAdaptive* patch10_Qv11 = new VectorAdaptive(
+      -patch10_Qv01->GetX(), patch10_Qv01->GetY(), patch10_Qv01->GetZ());
 
-  Vetor* patch10_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch10_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch10_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch10_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch10_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch10_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch10_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch10_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch10_c1 = patch8_c3;
   CurveAdaptive* patch10_c2 = new CurveAdaptiveParametricHermite(
@@ -1290,21 +1304,21 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   PointAdaptive* patch7_p01 = patch10_p01;
   PointAdaptive* patch7_p11 = patch10_p00;
 
-  // Vetor* patch7_Qu00 = new Vetor ( *patch4_Qu01  );
-  // Vetor* patch7_Qu10 = new Vetor ( *patch4_Qu11  );
-  Vetor* patch7_Qu01 = new Vetor(-(*patch10_Qv01));
-  Vetor* patch7_Qu11 = new Vetor(-(*patch10_Qv00));
+  // VectorAdaptive* patch7_Qu00 = new VectorAdaptive ( *patch4_Qu01  );
+  // VectorAdaptive* patch7_Qu10 = new VectorAdaptive ( *patch4_Qu11  );
+  VectorAdaptive* patch7_Qu01 = new VectorAdaptive(-(*patch10_Qv01));
+  VectorAdaptive* patch7_Qu11 = new VectorAdaptive(-(*patch10_Qv00));
 
-  Vetor* patch7_Qv00 = new Vetor(5.0, 1.5, -8.0);
-  // Vetor* patch7_Qv10 = new Vetor ( *patch8_Qv00 );
-  Vetor* patch7_Qv01 =
-      new Vetor(-patch7_Qv00->x_, patch7_Qv00->y, -patch7_Qv00->z);
-  // Vetor* patch7_Qv11 = new Vetor ( *patch8_Qv00 );
+  VectorAdaptive* patch7_Qv00 = new VectorAdaptive(5.0, 1.5, -8.0);
+  // VectorAdaptive* patch7_Qv10 = new VectorAdaptive ( *patch8_Qv00 );
+  VectorAdaptive* patch7_Qv01 = new VectorAdaptive(
+      -patch7_Qv00->GetX(), patch7_Qv00->GetY(), -patch7_Qv00->GetZ());
+  // VectorAdaptive* patch7_Qv11 = new VectorAdaptive ( *patch8_Qv00 );
 
-  Vetor* patch7_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch7_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch7_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch7_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch7_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch7_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch7_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch7_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch7_c1 = patch4_c3;
   CurveAdaptive* patch7_c2 = patch8_c4;
@@ -1330,22 +1344,25 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   // Ponto* patch9_p01 = patch8_p11;
   PointAdaptive* patch9_p11 = patch10_p11;
 
-  // Vetor* patch9_Qu00 = new Vetor ( *patch8_Qu10 );
-  // Vetor* patch9_Qu10 = new Vetor ( *patch9_p00, *patch9_p10 );
-  // Vetor* patch9_Qu01 = new Vetor ( *patch9_p01, *patch9_p11 );
-  // Vetor* patch9_Qu11 = new Vetor ( *patch9_p01, *patch9_p11 );
+  // VectorAdaptive* patch9_Qu00 = new VectorAdaptive ( *patch8_Qu10 );
+  // VectorAdaptive* patch9_Qu10 = new VectorAdaptive ( *patch9_p00, *patch9_p10
+  // ); VectorAdaptive* patch9_Qu01 = new VectorAdaptive ( *patch9_p01,
+  // *patch9_p11 ); VectorAdaptive* patch9_Qu11 = new VectorAdaptive (
+  // *patch9_p01, *patch9_p11 );
 
-  // Vetor* patch9_Qv00 = new Vetor ( *patch9_p00, *patch9_p01 );
-  Vetor* patch9_Qv10 =
-      new Vetor(-patch7_Qv00->x_, patch7_Qv00->y, patch7_Qv00->z);
-  // Vetor* patch9_Qv01 = new Vetor ( *patch9_p00, *patch9_p01 );
-  Vetor* patch9_Qv11 =
-      new Vetor(-patch9_Qv10->x_, patch9_Qv10->y, -patch9_Qv10->z);
+  // VectorAdaptive* patch9_Qv00 = new VectorAdaptive ( *patch9_p00, *patch9_p01
+  // );
+  VectorAdaptive* patch9_Qv10 = new VectorAdaptive(
+      -patch7_Qv00->GetX(), patch7_Qv00->GetY(), patch7_Qv00->GetZ());
+  // VectorAdaptive* patch9_Qv01 = new VectorAdaptive ( *patch9_p00, *patch9_p01
+  // );
+  VectorAdaptive* patch9_Qv11 = new VectorAdaptive(
+      -patch9_Qv10->GetX(), patch9_Qv10->GetY(), -patch9_Qv10->GetZ());
 
-  Vetor* patch9_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch9_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch9_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch9_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch9_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch9_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch9_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch9_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch9_c1 = patch6_c3;
   CurveAdaptive* patch9_c2 = new CurveAdaptiveParametricHermite(
@@ -1367,23 +1384,26 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   //=============================== PATCH 11 ==================================
   PointAdaptive* patch11_p00 = patch1_p00;
   // Ponto* patch11_p10 = patch1_p01;
-  PointAdaptive* patch11_p01 = new Vertice(-8.0, 5.0, 0.0);
+  PointAdaptive* patch11_p01 = new VertexAdaptive(-8.0, 5.0, 0.0);
   PointAdaptive* patch11_p11 = patch4_p01;
 
-  // Vetor* patch11_Qu00 = new Vetor ( *patch11_p00, *patch11_p10 );
-  // Vetor* patch11_Qu10 = new Vetor ( *patch11_p00, *patch11_p10 );
-  Vetor* patch11_Qu01 = new Vetor(*patch11_p01, *patch11_p11);
-  Vetor* patch11_Qu11 = new Vetor(*patch11_p01, *patch11_p11);
+  // VectorAdaptive* patch11_Qu00 = new VectorAdaptive ( *patch11_p00,
+  // *patch11_p10 ); VectorAdaptive* patch11_Qu10 = new VectorAdaptive (
+  // *patch11_p00, *patch11_p10 );
+  VectorAdaptive* patch11_Qu01 = new VectorAdaptive(*patch11_p01, *patch11_p11);
+  VectorAdaptive* patch11_Qu11 = new VectorAdaptive(*patch11_p01, *patch11_p11);
 
-  Vetor* patch11_Qv00 = new Vetor(*patch11_p00, *patch11_p01);
-  // Vetor* patch11_Qv10 = new Vetor ( *patch11_p10, *patch11_p11 );
-  Vetor* patch11_Qv01 = new Vetor(*patch11_p00, *patch11_p01);
-  // Vetor* patch11_Qv11 = new Vetor ( *patch11_p10, *patch11_p11 );
+  VectorAdaptive* patch11_Qv00 = new VectorAdaptive(*patch11_p00, *patch11_p01);
+  // VectorAdaptive* patch11_Qv10 = new VectorAdaptive ( *patch11_p10,
+  // *patch11_p11 );
+  VectorAdaptive* patch11_Qv01 = new VectorAdaptive(*patch11_p00, *patch11_p01);
+  // VectorAdaptive* patch11_Qv11 = new VectorAdaptive ( *patch11_p10,
+  // *patch11_p11 );
 
-  Vetor* patch11_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch11_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch11_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch11_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch11_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch11_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch11_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch11_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch11_c1 = patch1_c4;
   CurveAdaptive* patch11_c2 = patch4_c4;
@@ -1405,25 +1425,28 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
 
   //=============================== PATCH 12 ==================================
   PointAdaptive* patch12_p00 = patch3_p10;
-  PointAdaptive* patch12_p10 = new Vertice(
+  PointAdaptive* patch12_p10 = new VertexAdaptive(
       -patch11_p01->GetX(), patch11_p01->GetY(), patch11_p01->GetZ());
   // Ponto* patch12_p01 = patch3_p11;
   PointAdaptive* patch12_p11 = patch6_p11;
 
-  Vetor* patch12_Qu00 = new Vetor(*patch12_p00, *patch12_p10);
-  Vetor* patch12_Qu10 = new Vetor(*patch12_p00, *patch12_p10);
-  // Vetor* patch12_Qu01 = new Vetor ( *patch12_p01, *patch12_p11 );
-  // Vetor* patch12_Qu11 = new Vetor ( *patch12_p01, *patch12_p11 );
+  VectorAdaptive* patch12_Qu00 = new VectorAdaptive(*patch12_p00, *patch12_p10);
+  VectorAdaptive* patch12_Qu10 = new VectorAdaptive(*patch12_p00, *patch12_p10);
+  // VectorAdaptive* patch12_Qu01 = new VectorAdaptive ( *patch12_p01,
+  // *patch12_p11 ); VectorAdaptive* patch12_Qu11 = new VectorAdaptive (
+  // *patch12_p01, *patch12_p11 );
 
-  // Vetor* patch12_Qv00 = new Vetor ( *patch12_p00, *patch12_p01 );
-  Vetor* patch12_Qv10 = new Vetor(*patch12_p10, *patch12_p11);
-  // Vetor* patch12_Qv01 = new Vetor ( *patch12_p00, *patch12_p01 );
-  Vetor* patch12_Qv11 = new Vetor(*patch12_p10, *patch12_p11);
+  // VectorAdaptive* patch12_Qv00 = new VectorAdaptive ( *patch12_p00,
+  // *patch12_p01 );
+  VectorAdaptive* patch12_Qv10 = new VectorAdaptive(*patch12_p10, *patch12_p11);
+  // VectorAdaptive* patch12_Qv01 = new VectorAdaptive ( *patch12_p00,
+  // *patch12_p01 );
+  VectorAdaptive* patch12_Qv11 = new VectorAdaptive(*patch12_p10, *patch12_p11);
 
-  Vetor* patch12_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch12_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch12_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch12_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch12_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch12_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch12_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch12_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch12_c1 = new CurveAdaptiveParametricHermite(
       *patch12_p00, *patch12_p10, *patch12_Qu00, *patch12_Qu10);
@@ -1446,23 +1469,26 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
   //=============================== PATCH 13 ==================================
   PointAdaptive* patch13_p00 = patch11_p01;
   // Ponto* patch13_p10 = patch11_p11;
-  PointAdaptive* patch13_p01 = new Vertice(-1.0, 21.5, 2.0);
+  PointAdaptive* patch13_p01 = new VertexAdaptive(-1.0, 21.5, 2.0);
   PointAdaptive* patch13_p11 = patch10_p01;
 
-  // Vetor* patch13_Qu00 = new Vetor ( *patch13_p00, *patch13_p10 );
-  // Vetor* patch13_Qu10 = new Vetor ( *patch13_p00, *patch13_p10 );
-  Vetor* patch13_Qu01 = new Vetor(*patch13_p01, *patch13_p11);
-  Vetor* patch13_Qu11 = new Vetor(*patch13_p01, *patch13_p11);
+  // VectorAdaptive* patch13_Qu00 = new VectorAdaptive ( *patch13_p00,
+  // *patch13_p10 ); VectorAdaptive* patch13_Qu10 = new VectorAdaptive (
+  // *patch13_p00, *patch13_p10 );
+  VectorAdaptive* patch13_Qu01 = new VectorAdaptive(*patch13_p01, *patch13_p11);
+  VectorAdaptive* patch13_Qu11 = new VectorAdaptive(*patch13_p01, *patch13_p11);
 
-  Vetor* patch13_Qv00 = new Vetor(*patch13_p00, *patch13_p01);
-  // Vetor* patch13_Qv10 = new Vetor ( *patch13_p10, *patch13_p11 );
-  Vetor* patch13_Qv01 = new Vetor(*patch13_p00, *patch11_p01);
-  // Vetor* patch13_Qv11 = new Vetor ( *patch13_p10, *patch13_p11 );
+  VectorAdaptive* patch13_Qv00 = new VectorAdaptive(*patch13_p00, *patch13_p01);
+  // VectorAdaptive* patch13_Qv10 = new VectorAdaptive ( *patch13_p10,
+  // *patch13_p11 );
+  VectorAdaptive* patch13_Qv01 = new VectorAdaptive(*patch13_p00, *patch11_p01);
+  // VectorAdaptive* patch13_Qv11 = new VectorAdaptive ( *patch13_p10,
+  // *patch13_p11 );
 
-  Vetor* patch13_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch13_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch13_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch13_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch13_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch13_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch13_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch13_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch13_c1 = patch11_c3;
   CurveAdaptive* patch13_c2 = patch7_c4;
@@ -1484,25 +1510,28 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
 
   //=============================== PATCH 14 ==================================
   PointAdaptive* patch14_p00 = patch12_p10;
-  PointAdaptive* patch14_p10 = new Vertice(
+  PointAdaptive* patch14_p10 = new VertexAdaptive(
       -patch13_p01->GetX(), patch13_p01->GetY(), patch13_p01->GetZ());
   // Ponto* patch14_p01 = patch6_p11;
   PointAdaptive* patch14_p11 = patch10_p11;
 
-  Vetor* patch14_Qu00 = new Vetor(*patch14_p00, *patch14_p10);
-  Vetor* patch14_Qu10 = new Vetor(*patch14_p00, *patch14_p10);
-  // Vetor* patch14_Qu01 = new Vetor ( *patch14_p01, *patch14_p11 );
-  // Vetor* patch14_Qu11 = new Vetor ( *patch14_p01, *patch14_p11 );
+  VectorAdaptive* patch14_Qu00 = new VectorAdaptive(*patch14_p00, *patch14_p10);
+  VectorAdaptive* patch14_Qu10 = new VectorAdaptive(*patch14_p00, *patch14_p10);
+  // VectorAdaptive* patch14_Qu01 = new VectorAdaptive ( *patch14_p01,
+  // *patch14_p11 ); VectorAdaptive* patch14_Qu11 = new VectorAdaptive (
+  // *patch14_p01, *patch14_p11 );
 
-  // Vetor* patch14_Qv00 = new Vetor ( *patch14_p00, *patch14_p01 );
-  Vetor* patch14_Qv10 = new Vetor(*patch14_p10, *patch14_p11);
-  // Vetor* patch14_Qv01 = new Vetor ( *patch14_p00, *patch14_p01 );
-  Vetor* patch14_Qv11 = new Vetor(*patch14_p10, *patch14_p11);
+  // VectorAdaptive* patch14_Qv00 = new VectorAdaptive ( *patch14_p00,
+  // *patch14_p01 );
+  VectorAdaptive* patch14_Qv10 = new VectorAdaptive(*patch14_p10, *patch14_p11);
+  // VectorAdaptive* patch14_Qv01 = new VectorAdaptive ( *patch14_p00,
+  // *patch14_p01 );
+  VectorAdaptive* patch14_Qv11 = new VectorAdaptive(*patch14_p10, *patch14_p11);
 
-  Vetor* patch14_tw00 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch14_tw10 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch14_tw01 = new Vetor(0.0, 0.0, 0.0);
-  Vetor* patch14_tw11 = new Vetor(0.0, 0.0, 0.0);
+  VectorAdaptive* patch14_tw00 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch14_tw10 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch14_tw01 = new VectorAdaptive(0.0, 0.0, 0.0);
+  VectorAdaptive* patch14_tw11 = new VectorAdaptive(0.0, 0.0, 0.0);
 
   CurveAdaptive* patch14_c1 = new CurveAdaptiveParametricHermite(
       *patch14_p00, *patch14_p10, *patch14_Qu00, *patch14_Qu10);
@@ -1533,25 +1562,25 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //==============================================================================
 
   //=============================== PATCH 1 ==================================
-  PointAdaptive* p100 = new Vertice(1.40000, 0.00000, 2.40000);
-  PointAdaptive* p110 = new Vertice(1.40000, -0.78400, 2.40000);
-  PointAdaptive* p120 = new Vertice(0.78400, -1.40000, 2.40000);
-  PointAdaptive* p130 = new Vertice(0.00000, -1.40000, 2.40000);
+  PointAdaptive* p100 = new VertexAdaptive(1.40000, 0.00000, 2.40000);
+  PointAdaptive* p110 = new VertexAdaptive(1.40000, -0.78400, 2.40000);
+  PointAdaptive* p120 = new VertexAdaptive(0.78400, -1.40000, 2.40000);
+  PointAdaptive* p130 = new VertexAdaptive(0.00000, -1.40000, 2.40000);
 
-  PointAdaptive* p101 = new Vertice(1.33750, 0.00000, 2.53125);
-  PointAdaptive* p111 = new Vertice(1.33750, -0.74900, 2.53125);
-  PointAdaptive* p121 = new Vertice(0.74900, -1.33750, 2.53125);
-  PointAdaptive* p131 = new Vertice(0.00000, -1.33750, 2.53125);
+  PointAdaptive* p101 = new VertexAdaptive(1.33750, 0.00000, 2.53125);
+  PointAdaptive* p111 = new VertexAdaptive(1.33750, -0.74900, 2.53125);
+  PointAdaptive* p121 = new VertexAdaptive(0.74900, -1.33750, 2.53125);
+  PointAdaptive* p131 = new VertexAdaptive(0.00000, -1.33750, 2.53125);
 
-  PointAdaptive* p102 = new Vertice(1.43750, 0.00000, 2.53125);
-  PointAdaptive* p112 = new Vertice(1.43750, -0.80500, 2.53125);
-  PointAdaptive* p122 = new Vertice(0.80500, -1.43750, 2.53125);
-  PointAdaptive* p132 = new Vertice(0.00000, -1.43750, 2.53125);
+  PointAdaptive* p102 = new VertexAdaptive(1.43750, 0.00000, 2.53125);
+  PointAdaptive* p112 = new VertexAdaptive(1.43750, -0.80500, 2.53125);
+  PointAdaptive* p122 = new VertexAdaptive(0.80500, -1.43750, 2.53125);
+  PointAdaptive* p132 = new VertexAdaptive(0.00000, -1.43750, 2.53125);
 
-  PointAdaptive* p103 = new Vertice(1.50000, 0.00000, 2.40000);
-  PointAdaptive* p113 = new Vertice(1.50000, -0.84000, 2.40000);
-  PointAdaptive* p123 = new Vertice(0.84000, -1.50000, 2.40000);
-  PointAdaptive* p133 = new Vertice(0.00000, -1.50000, 2.40000);
+  PointAdaptive* p103 = new VertexAdaptive(1.50000, 0.00000, 2.40000);
+  PointAdaptive* p113 = new VertexAdaptive(1.50000, -0.84000, 2.40000);
+  PointAdaptive* p123 = new VertexAdaptive(0.84000, -1.50000, 2.40000);
+  PointAdaptive* p133 = new VertexAdaptive(0.00000, -1.50000, 2.40000);
 
   CurveAdaptive* patch1_c1 =
       new CurveAdaptiveParametricBezier(*p100, *p110, *p120, *p130);
@@ -1576,27 +1605,27 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //		Ponto* p200 = p130; // new Vertice (  0.00000,
   //-1.40000,  2.40000
   //);
-  PointAdaptive* p210 = new Vertice(-0.78400, -1.40000, 2.40000);
-  PointAdaptive* p220 = new Vertice(-1.40000, -0.78400, 2.40000);
-  PointAdaptive* p230 = new Vertice(-1.40000, 0.00000, 2.40000);
+  PointAdaptive* p210 = new VertexAdaptive(-0.78400, -1.40000, 2.40000);
+  PointAdaptive* p220 = new VertexAdaptive(-1.40000, -0.78400, 2.40000);
+  PointAdaptive* p230 = new VertexAdaptive(-1.40000, 0.00000, 2.40000);
 
   //		Ponto* p201 = p131; // new Vertice (  0.00000, -1.33750, 2.53125
   //);
-  PointAdaptive* p211 = new Vertice(-0.74900, -1.33750, 2.53125);
-  PointAdaptive* p221 = new Vertice(-1.33750, -0.74900, 2.53125);
-  PointAdaptive* p231 = new Vertice(-1.33750, 0.00000, 2.53125);
+  PointAdaptive* p211 = new VertexAdaptive(-0.74900, -1.33750, 2.53125);
+  PointAdaptive* p221 = new VertexAdaptive(-1.33750, -0.74900, 2.53125);
+  PointAdaptive* p231 = new VertexAdaptive(-1.33750, 0.00000, 2.53125);
 
   //		Ponto* p202 = p132; //new Vertice (  0.00000, -1.43750, 2.53125
   //);
-  PointAdaptive* p212 = new Vertice(-0.80500, -1.43750, 2.53125);
-  PointAdaptive* p222 = new Vertice(-1.43750, -0.80500, 2.53125);
-  PointAdaptive* p232 = new Vertice(-1.43750, 0.00000, 2.53125);
+  PointAdaptive* p212 = new VertexAdaptive(-0.80500, -1.43750, 2.53125);
+  PointAdaptive* p222 = new VertexAdaptive(-1.43750, -0.80500, 2.53125);
+  PointAdaptive* p232 = new VertexAdaptive(-1.43750, 0.00000, 2.53125);
 
   //		Ponto* p203 = p133; //new Vertice (  0.00000, -1.50000, 2.40000
   //);
-  PointAdaptive* p213 = new Vertice(-0.84000, -1.50000, 2.40000);
-  PointAdaptive* p223 = new Vertice(-1.50000, -0.84000, 2.40000);
-  PointAdaptive* p233 = new Vertice(-1.50000, 0.00000, 2.40000);
+  PointAdaptive* p213 = new VertexAdaptive(-0.84000, -1.50000, 2.40000);
+  PointAdaptive* p223 = new VertexAdaptive(-1.50000, -0.84000, 2.40000);
+  PointAdaptive* p233 = new VertexAdaptive(-1.50000, 0.00000, 2.40000);
 
   CurveAdaptive* patch2_c1 = new CurveAdaptiveParametricBezier(
       *p130, *p210, *p220, *p230);  //( *p200, *p210, *p220, *p230 );
@@ -1620,27 +1649,27 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //=============================== PATCH 3 ==================================
   //		Ponto* p300 = p230; //new Vertice ( -1.40000, 0.00000, 2.40000
   //);
-  PointAdaptive* p310 = new Vertice(-1.40000, 0.78400, 2.40000);
-  PointAdaptive* p320 = new Vertice(-0.78400, 1.40000, 2.40000);
-  PointAdaptive* p330 = new Vertice(0.00000, 1.40000, 2.40000);
+  PointAdaptive* p310 = new VertexAdaptive(-1.40000, 0.78400, 2.40000);
+  PointAdaptive* p320 = new VertexAdaptive(-0.78400, 1.40000, 2.40000);
+  PointAdaptive* p330 = new VertexAdaptive(0.00000, 1.40000, 2.40000);
 
   //		Ponto* p301 = p231; //new Vertice ( -1.33750, 0.00000, 2.53125
   //);
-  PointAdaptive* p311 = new Vertice(-1.33750, 0.74900, 2.53125);
-  PointAdaptive* p321 = new Vertice(-0.74900, 1.33750, 2.53125);
-  PointAdaptive* p331 = new Vertice(0.00000, 1.33750, 2.53125);
+  PointAdaptive* p311 = new VertexAdaptive(-1.33750, 0.74900, 2.53125);
+  PointAdaptive* p321 = new VertexAdaptive(-0.74900, 1.33750, 2.53125);
+  PointAdaptive* p331 = new VertexAdaptive(0.00000, 1.33750, 2.53125);
 
   //		Ponto* p302 = p232; //new Vertice ( -1.43750, 0.00000, 2.53125
   //);
-  PointAdaptive* p312 = new Vertice(-1.43750, 0.80500, 2.53125);
-  PointAdaptive* p322 = new Vertice(-0.80500, 1.43750, 2.53125);
-  PointAdaptive* p332 = new Vertice(0.00000, 1.43750, 2.53125);
+  PointAdaptive* p312 = new VertexAdaptive(-1.43750, 0.80500, 2.53125);
+  PointAdaptive* p322 = new VertexAdaptive(-0.80500, 1.43750, 2.53125);
+  PointAdaptive* p332 = new VertexAdaptive(0.00000, 1.43750, 2.53125);
 
   //		Ponto* p303 = p233; //new Vertice ( -1.50000, 0.00000, 2.40000
   //);
-  PointAdaptive* p313 = new Vertice(-1.50000, 0.84000, 2.40000);
-  PointAdaptive* p323 = new Vertice(-0.84000, 1.50000, 2.40000);
-  PointAdaptive* p333 = new Vertice(0.00000, 1.50000, 2.40000);
+  PointAdaptive* p313 = new VertexAdaptive(-1.50000, 0.84000, 2.40000);
+  PointAdaptive* p323 = new VertexAdaptive(-0.84000, 1.50000, 2.40000);
+  PointAdaptive* p333 = new VertexAdaptive(0.00000, 1.50000, 2.40000);
 
   CurveAdaptive* patch3_c1 =
       new CurveAdaptiveParametricBezier(*p230, *p310, *p320, *p330);
@@ -1664,23 +1693,23 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //=============================== PATCH 4 ==================================
   // Ponto* p400 = p330; //new Vertice ( 0.00000, 1.40000, 2.40000 );
-  PointAdaptive* p410 = new Vertice(0.78400, 1.40000, 2.40000);
-  PointAdaptive* p420 = new Vertice(1.40000, 0.78400, 2.40000);
+  PointAdaptive* p410 = new VertexAdaptive(0.78400, 1.40000, 2.40000);
+  PointAdaptive* p420 = new VertexAdaptive(1.40000, 0.78400, 2.40000);
   // Ponto* p430 = p100; // new Vertice ( 1.40000, 0.00000, 2.40000 );
 
   // Ponto* p401 = p331; //new Vertice (	0.00000, 1.33750, 2.53125 );
-  PointAdaptive* p411 = new Vertice(0.74900, 1.33750, 2.53125);
-  PointAdaptive* p421 = new Vertice(1.33750, 0.74900, 2.53125);
+  PointAdaptive* p411 = new VertexAdaptive(0.74900, 1.33750, 2.53125);
+  PointAdaptive* p421 = new VertexAdaptive(1.33750, 0.74900, 2.53125);
   // Ponto* p431 = p101; // new Vertice ( 1.33750, 0.00000, 2.53125 );
 
   // Ponto* p402 = p332; //new Vertice (	0.00000, 1.43750, 2.53125 );
-  PointAdaptive* p412 = new Vertice(0.80500, 1.43750, 2.53125);
-  PointAdaptive* p422 = new Vertice(1.43750, 0.80500, 2.53125);
+  PointAdaptive* p412 = new VertexAdaptive(0.80500, 1.43750, 2.53125);
+  PointAdaptive* p422 = new VertexAdaptive(1.43750, 0.80500, 2.53125);
   // Ponto* p432 = p102; //new Vertice ( 1.43750, 0.00000, 2.53125 );
 
   // Ponto* p403 = p333; //new Vertice (	0.00000, 1.50000, 2.40000 );
-  PointAdaptive* p413 = new Vertice(0.84000, 1.50000, 2.40000);
-  PointAdaptive* p423 = new Vertice(1.50000, 0.84000, 2.40000);
+  PointAdaptive* p413 = new VertexAdaptive(0.84000, 1.50000, 2.40000);
+  PointAdaptive* p423 = new VertexAdaptive(1.50000, 0.84000, 2.40000);
   // Ponto* p433 = p103; //new Vertice ( 1.50000, 0.00000, 2.40000 );
 
   CurveAdaptive* patch4_c1 = new CurveAdaptiveParametricBezier(
@@ -1709,20 +1738,20 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //); Ponto* p520 = p123; //new Vertice ( 0.84000, -1.50000, 2.40000 );
   // Ponto* p530 = p133; //new Vertice ( 0.00000, -1.50000, 2.40000 );
 
-  PointAdaptive* p501 = new Vertice(1.75000, 0.00000, 1.87500);
-  PointAdaptive* p511 = new Vertice(1.75000, -0.98000, 1.87500);
-  PointAdaptive* p521 = new Vertice(0.98000, -1.75000, 1.87500);
-  PointAdaptive* p531 = new Vertice(0.00000, -1.75000, 1.87500);
+  PointAdaptive* p501 = new VertexAdaptive(1.75000, 0.00000, 1.87500);
+  PointAdaptive* p511 = new VertexAdaptive(1.75000, -0.98000, 1.87500);
+  PointAdaptive* p521 = new VertexAdaptive(0.98000, -1.75000, 1.87500);
+  PointAdaptive* p531 = new VertexAdaptive(0.00000, -1.75000, 1.87500);
 
-  PointAdaptive* p502 = new Vertice(2.00000, 0.00000, 1.35000);
-  PointAdaptive* p512 = new Vertice(2.00000, -1.12000, 1.35000);
-  PointAdaptive* p522 = new Vertice(1.12000, -2.00000, 1.35000);
-  PointAdaptive* p532 = new Vertice(0.00000, -2.00000, 1.35000);
+  PointAdaptive* p502 = new VertexAdaptive(2.00000, 0.00000, 1.35000);
+  PointAdaptive* p512 = new VertexAdaptive(2.00000, -1.12000, 1.35000);
+  PointAdaptive* p522 = new VertexAdaptive(1.12000, -2.00000, 1.35000);
+  PointAdaptive* p532 = new VertexAdaptive(0.00000, -2.00000, 1.35000);
 
-  PointAdaptive* p503 = new Vertice(2.00000, 0.00000, 0.90000);
-  PointAdaptive* p513 = new Vertice(2.00000, -1.12000, 0.90000);
-  PointAdaptive* p523 = new Vertice(1.12000, -2.00000, 0.90000);
-  PointAdaptive* p533 = new Vertice(0.00000, -2.00000, 0.90000);
+  PointAdaptive* p503 = new VertexAdaptive(2.00000, 0.00000, 0.90000);
+  PointAdaptive* p513 = new VertexAdaptive(2.00000, -1.12000, 0.90000);
+  PointAdaptive* p523 = new VertexAdaptive(1.12000, -2.00000, 0.90000);
+  PointAdaptive* p533 = new VertexAdaptive(0.00000, -2.00000, 0.90000);
 
   // Curva* patch5_c1 = patch1_c3; //new CurvParamBezier ( *p103, *p113, *p123,
   // *p133 ); // ( *p500, *p510, *p520, *p530 );
@@ -1753,23 +1782,23 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //		Ponto* p601 = p531; //new Vertice (	0.00000,
   //-1.75000, 1.87500
   //);
-  PointAdaptive* p611 = new Vertice(-0.98000, -1.75000, 1.87500);
-  PointAdaptive* p621 = new Vertice(-1.75000, -0.98000, 1.87500);
-  PointAdaptive* p631 = new Vertice(-1.75000, 0.00000, 1.87500);
+  PointAdaptive* p611 = new VertexAdaptive(-0.98000, -1.75000, 1.87500);
+  PointAdaptive* p621 = new VertexAdaptive(-1.75000, -0.98000, 1.87500);
+  PointAdaptive* p631 = new VertexAdaptive(-1.75000, 0.00000, 1.87500);
 
   //		Ponto* p602 = p532; //new Vertice (	0.00000,
   //-2.00000, 1.35000
   //);
-  PointAdaptive* p612 = new Vertice(-1.12000, -2.00000, 1.35000);
-  PointAdaptive* p622 = new Vertice(-2.00000, -1.12000, 1.35000);
-  PointAdaptive* p632 = new Vertice(-2.00000, 0.00000, 1.35000);
+  PointAdaptive* p612 = new VertexAdaptive(-1.12000, -2.00000, 1.35000);
+  PointAdaptive* p622 = new VertexAdaptive(-2.00000, -1.12000, 1.35000);
+  PointAdaptive* p632 = new VertexAdaptive(-2.00000, 0.00000, 1.35000);
 
   //		Ponto* p603 = p533; //new Vertice (	0.00000, -2.00000,
   // 0.90000
   //);
-  PointAdaptive* p613 = new Vertice(-1.12000, -2.00000, 0.90000);
-  PointAdaptive* p623 = new Vertice(-2.00000, -1.12000, 0.90000);
-  PointAdaptive* p633 = new Vertice(-2.00000, 0.00000, 0.90000);
+  PointAdaptive* p613 = new VertexAdaptive(-1.12000, -2.00000, 0.90000);
+  PointAdaptive* p623 = new VertexAdaptive(-2.00000, -1.12000, 0.90000);
+  PointAdaptive* p633 = new VertexAdaptive(-2.00000, 0.00000, 0.90000);
 
   //		Curva* patch6_c1 = new CurvParamBezier ( *p133, *p213, *p223,
   //*p233
@@ -1800,19 +1829,19 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   // Ponto* p730 = p333; //new Vertice ( 0.00000, 1.50000, 2.40000 );
 
   //		Ponto* p701 = p631; //new Vertice (-1.75000, 0.00000, 1.87500 );
-  PointAdaptive* p711 = new Vertice(-1.75000, 0.98000, 1.87500);
-  PointAdaptive* p721 = new Vertice(-0.98000, 1.75000, 1.87500);
-  PointAdaptive* p731 = new Vertice(0.00000, 1.75000, 1.87500);
+  PointAdaptive* p711 = new VertexAdaptive(-1.75000, 0.98000, 1.87500);
+  PointAdaptive* p721 = new VertexAdaptive(-0.98000, 1.75000, 1.87500);
+  PointAdaptive* p731 = new VertexAdaptive(0.00000, 1.75000, 1.87500);
 
   //		Ponto* p702 = p632; //new Vertice (-2.00000, 0.00000, 1.35000 );
-  PointAdaptive* p712 = new Vertice(-2.00000, 1.12000, 1.35000);
-  PointAdaptive* p722 = new Vertice(-1.12000, 2.00000, 1.35000);
-  PointAdaptive* p732 = new Vertice(0.00000, 2.00000, 1.35000);
+  PointAdaptive* p712 = new VertexAdaptive(-2.00000, 1.12000, 1.35000);
+  PointAdaptive* p722 = new VertexAdaptive(-1.12000, 2.00000, 1.35000);
+  PointAdaptive* p732 = new VertexAdaptive(0.00000, 2.00000, 1.35000);
 
   //		Ponto* p703 = p633; //new Vertice (-2.00000, 0.00000, 0.90000 );
-  PointAdaptive* p713 = new Vertice(-2.00000, 1.12000, 0.90000);
-  PointAdaptive* p723 = new Vertice(-1.12000, 2.00000, 0.90000);
-  PointAdaptive* p733 = new Vertice(0.00000, 2.00000, 0.90000);
+  PointAdaptive* p713 = new VertexAdaptive(-2.00000, 1.12000, 0.90000);
+  PointAdaptive* p723 = new VertexAdaptive(-1.12000, 2.00000, 0.90000);
+  PointAdaptive* p733 = new VertexAdaptive(0.00000, 2.00000, 0.90000);
 
   //		Curva* patch7_c1 = new CurvParamBezier ( *p233, *p313, *p323,
   //*p333
@@ -1845,22 +1874,22 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //		Ponto* p801 = p731; //new Vertice (
   // 0.00000, 1.75000, 1.87500
   //);
-  PointAdaptive* p811 = new Vertice(0.98000, 1.75000, 1.87500);
-  PointAdaptive* p821 = new Vertice(1.75000, 0.98000, 1.87500);
+  PointAdaptive* p811 = new VertexAdaptive(0.98000, 1.75000, 1.87500);
+  PointAdaptive* p821 = new VertexAdaptive(1.75000, 0.98000, 1.87500);
   //		Ponto* p831 = p501; //new Vertice ( 1.75000, 0.00000, 1.87500 );
 
   //		Ponto* p802 = p732; //new Vertice (
   // 0.00000, 2.00000, 1.35000
   //);
-  PointAdaptive* p812 = new Vertice(1.12000, 2.00000, 1.35000);
-  PointAdaptive* p822 = new Vertice(2.00000, 1.12000, 1.35000);
+  PointAdaptive* p812 = new VertexAdaptive(1.12000, 2.00000, 1.35000);
+  PointAdaptive* p822 = new VertexAdaptive(2.00000, 1.12000, 1.35000);
   //		Ponto* p832 = p502; //new Vertice ( 2.00000, 0.00000, 1.35000 );
 
   //		Ponto* p803 = p733; //new Vertice (	0.00000, 2.00000,
   // 0.90000
   //);
-  PointAdaptive* p813 = new Vertice(1.12000, 2.00000, 0.90000);
-  PointAdaptive* p823 = new Vertice(2.00000, 1.12000, 0.90000);
+  PointAdaptive* p813 = new VertexAdaptive(1.12000, 2.00000, 0.90000);
+  PointAdaptive* p823 = new VertexAdaptive(2.00000, 1.12000, 0.90000);
   //		Ponto* p833 = p503; //new Vertice ( 2.00000, 0.00000, 0.90000 );
 
   //		Curva* patch8_c1 = new CurvParamBezier ( *p333, *p413, *p423,
@@ -1890,20 +1919,20 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //); Ponto* p920 = p523; //new Vertice ( 1.12000, -2.00000, 0.90000 );
   // Ponto* p930 = p533; //new Vertice ( 0.00000, -2.00000, 0.90000 );
 
-  PointAdaptive* p901 = new Vertice(2.00000, 0.00000, 0.45000);
-  PointAdaptive* p911 = new Vertice(2.00000, -1.12000, 0.45000);
-  PointAdaptive* p921 = new Vertice(1.12000, -2.00000, 0.45000);
-  PointAdaptive* p931 = new Vertice(0.00000, -2.00000, 0.45000);
+  PointAdaptive* p901 = new VertexAdaptive(2.00000, 0.00000, 0.45000);
+  PointAdaptive* p911 = new VertexAdaptive(2.00000, -1.12000, 0.45000);
+  PointAdaptive* p921 = new VertexAdaptive(1.12000, -2.00000, 0.45000);
+  PointAdaptive* p931 = new VertexAdaptive(0.00000, -2.00000, 0.45000);
 
-  PointAdaptive* p902 = new Vertice(1.50000, 0.00000, 0.22500);
-  PointAdaptive* p912 = new Vertice(1.50000, -0.84000, 0.22500);
-  PointAdaptive* p922 = new Vertice(0.84000, -1.50000, 0.22500);
-  PointAdaptive* p932 = new Vertice(0.00000, -1.50000, 0.22500);
+  PointAdaptive* p902 = new VertexAdaptive(1.50000, 0.00000, 0.22500);
+  PointAdaptive* p912 = new VertexAdaptive(1.50000, -0.84000, 0.22500);
+  PointAdaptive* p922 = new VertexAdaptive(0.84000, -1.50000, 0.22500);
+  PointAdaptive* p932 = new VertexAdaptive(0.00000, -1.50000, 0.22500);
 
-  PointAdaptive* p903 = new Vertice(1.50000, 0.00000, 0.15000);
-  PointAdaptive* p913 = new Vertice(1.50000, -0.84000, 0.15000);
-  PointAdaptive* p923 = new Vertice(0.84000, -1.50000, 0.15000);
-  PointAdaptive* p933 = new Vertice(0.00000, -1.50000, 0.15000);
+  PointAdaptive* p903 = new VertexAdaptive(1.50000, 0.00000, 0.15000);
+  PointAdaptive* p913 = new VertexAdaptive(1.50000, -0.84000, 0.15000);
+  PointAdaptive* p923 = new VertexAdaptive(0.84000, -1.50000, 0.15000);
+  PointAdaptive* p933 = new VertexAdaptive(0.00000, -1.50000, 0.15000);
 
   //		Curva* patch9_c1 = new CurvParamBezier ( *p503, *p513, *p523,
   //*p533
@@ -1933,21 +1962,21 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //		Ponto* p1001 = p931; //new Vertice ( 0.00000,-2.00000, 0.45000
   //);
-  PointAdaptive* p1011 = new Vertice(-1.12000, -2.00000, 0.45000);
-  PointAdaptive* p1021 = new Vertice(-2.00000, -1.12000, 0.45000);
-  PointAdaptive* p1031 = new Vertice(-2.00000, 0.00000, 0.45000);
+  PointAdaptive* p1011 = new VertexAdaptive(-1.12000, -2.00000, 0.45000);
+  PointAdaptive* p1021 = new VertexAdaptive(-2.00000, -1.12000, 0.45000);
+  PointAdaptive* p1031 = new VertexAdaptive(-2.00000, 0.00000, 0.45000);
 
   //		Ponto* p1002 = p932; //new Vertice ( 0.00000,-1.50000, 0.22500
   //);
-  PointAdaptive* p1012 = new Vertice(-0.84000, -1.50000, 0.22500);
-  PointAdaptive* p1022 = new Vertice(-1.50000, -0.84000, 0.22500);
-  PointAdaptive* p1032 = new Vertice(-1.50000, 0.00000, 0.22500);
+  PointAdaptive* p1012 = new VertexAdaptive(-0.84000, -1.50000, 0.22500);
+  PointAdaptive* p1022 = new VertexAdaptive(-1.50000, -0.84000, 0.22500);
+  PointAdaptive* p1032 = new VertexAdaptive(-1.50000, 0.00000, 0.22500);
 
   //		Ponto* p1003 = p933; //new Vertice ( 0.00000,-1.50000, 0.15000
   //);
-  PointAdaptive* p1013 = new Vertice(-0.84000, -1.50000, 0.15000);
-  PointAdaptive* p1023 = new Vertice(-1.50000, -0.84000, 0.15000);
-  PointAdaptive* p1033 = new Vertice(-1.50000, 0.00000, 0.15000);
+  PointAdaptive* p1013 = new VertexAdaptive(-0.84000, -1.50000, 0.15000);
+  PointAdaptive* p1023 = new VertexAdaptive(-1.50000, -0.84000, 0.15000);
+  PointAdaptive* p1033 = new VertexAdaptive(-1.50000, 0.00000, 0.15000);
 
   //		Curva* patch10_c1 = new CurvParamBezier ( *p533, *p613, *p623,
   //*p633
@@ -1978,21 +2007,21 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //		Ponto* p1031 = p1031; //new Vertice (-2.00000, 0.00000, 0.45000
   //);
-  PointAdaptive* p1111 = new Vertice(-2.00000, 1.12000, 0.45000);
-  PointAdaptive* p1121 = new Vertice(-1.12000, 2.00000, 0.45000);
-  PointAdaptive* p1131 = new Vertice(0.00000, 2.00000, 0.45000);
+  PointAdaptive* p1111 = new VertexAdaptive(-2.00000, 1.12000, 0.45000);
+  PointAdaptive* p1121 = new VertexAdaptive(-1.12000, 2.00000, 0.45000);
+  PointAdaptive* p1131 = new VertexAdaptive(0.00000, 2.00000, 0.45000);
 
   //		Ponto* p1032 = p1032; //new Vertice (-1.50000, 0.00000, 0.22500
   //);
-  PointAdaptive* p1112 = new Vertice(-1.50000, 0.84000, 0.22500);
-  PointAdaptive* p1122 = new Vertice(-0.84000, 1.50000, 0.22500);
-  PointAdaptive* p1132 = new Vertice(0.00000, 1.50000, 0.22500);
+  PointAdaptive* p1112 = new VertexAdaptive(-1.50000, 0.84000, 0.22500);
+  PointAdaptive* p1122 = new VertexAdaptive(-0.84000, 1.50000, 0.22500);
+  PointAdaptive* p1132 = new VertexAdaptive(0.00000, 1.50000, 0.22500);
 
   //		Ponto* p1033 = p1033; //new Vertice (-1.50000, 0.00000, 0.15000
   //);
-  PointAdaptive* p1113 = new Vertice(-1.50000, 0.84000, 0.15000);
-  PointAdaptive* p1123 = new Vertice(-0.84000, 1.50000, 0.15000);
-  PointAdaptive* p1133 = new Vertice(0.00000, 1.50000, 0.15000);
+  PointAdaptive* p1113 = new VertexAdaptive(-1.50000, 0.84000, 0.15000);
+  PointAdaptive* p1123 = new VertexAdaptive(-0.84000, 1.50000, 0.15000);
+  PointAdaptive* p1133 = new VertexAdaptive(0.00000, 1.50000, 0.15000);
 
   //		Curva* patch11_c1 = new CurvParamBezier ( *p633, *p713, *p723,
   //*p733
@@ -2023,20 +2052,20 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //		Ponto* p1131 = p1131; //new Vertice ( 0.00000, 2.00000, 0.45000
   //);
-  PointAdaptive* p1211 = new Vertice(1.12000, 2.00000, 0.45000);
-  PointAdaptive* p1221 = new Vertice(2.00000, 1.20000, 0.45000);
+  PointAdaptive* p1211 = new VertexAdaptive(1.12000, 2.00000, 0.45000);
+  PointAdaptive* p1221 = new VertexAdaptive(2.00000, 1.20000, 0.45000);
   //		Ponto* p901 = p901; //new Vertice ( 2.00000, 0.00000, 0.45000 );
 
   //		Ponto* p1132 = p1132; //new Vertice ( 0.00000, 1.50000, 0.22500
   //);
-  PointAdaptive* p1212 = new Vertice(0.84000, 1.50000, 0.22500);
-  PointAdaptive* p1222 = new Vertice(1.50000, 0.84000, 0.22500);
+  PointAdaptive* p1212 = new VertexAdaptive(0.84000, 1.50000, 0.22500);
+  PointAdaptive* p1222 = new VertexAdaptive(1.50000, 0.84000, 0.22500);
   //		Ponto* p902 = p902; //new Vertice ( 1.50000, 0.00000, 0.22500 );
 
   //		Ponto* p1133 = p1133; //new Vertice ( 0.00000, 1.50000, 0.15000
   //);
-  PointAdaptive* p1213 = new Vertice(0.84000, 1.50000, 0.15000);
-  PointAdaptive* p1223 = new Vertice(1.50000, 0.84000, 0.15000);
+  PointAdaptive* p1213 = new VertexAdaptive(0.84000, 1.50000, 0.15000);
+  PointAdaptive* p1223 = new VertexAdaptive(1.50000, 0.84000, 0.15000);
   //		Ponto* p903 = p903; //new Vertice ( 1.50000, 0.00000, 0.15000 );
 
   //		Curva* patch12_c1 = new CurvParamBezier ( *p733, *p813, *p823,
@@ -2059,25 +2088,25 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //======================== FIM DO PATCH 12 =================================
 
   //============================== PATCH 13 ==================================
-  PointAdaptive* p1300 = new Vertice(-1.60000, 0.00000, 2.02500);
-  PointAdaptive* p1310 = new Vertice(-1.60000, -0.30000, 2.02500);
-  PointAdaptive* p1320 = new Vertice(-1.50000, -0.30000, 2.25000);
-  PointAdaptive* p1330 = new Vertice(-1.50000, 0.00000, 2.25000);
+  PointAdaptive* p1300 = new VertexAdaptive(-1.60000, 0.00000, 2.02500);
+  PointAdaptive* p1310 = new VertexAdaptive(-1.60000, -0.30000, 2.02500);
+  PointAdaptive* p1320 = new VertexAdaptive(-1.50000, -0.30000, 2.25000);
+  PointAdaptive* p1330 = new VertexAdaptive(-1.50000, 0.00000, 2.25000);
 
-  PointAdaptive* p1301 = new Vertice(-2.30000, 0.00000, 2.02500);
-  PointAdaptive* p1311 = new Vertice(-2.30000, -0.30000, 2.02500);
-  PointAdaptive* p1321 = new Vertice(-2.50000, -0.30000, 2.25000);
-  PointAdaptive* p1331 = new Vertice(-2.50000, 0.00000, 2.25000);
+  PointAdaptive* p1301 = new VertexAdaptive(-2.30000, 0.00000, 2.02500);
+  PointAdaptive* p1311 = new VertexAdaptive(-2.30000, -0.30000, 2.02500);
+  PointAdaptive* p1321 = new VertexAdaptive(-2.50000, -0.30000, 2.25000);
+  PointAdaptive* p1331 = new VertexAdaptive(-2.50000, 0.00000, 2.25000);
 
-  PointAdaptive* p1302 = new Vertice(-2.70000, 0.00000, 2.02500);
-  PointAdaptive* p1312 = new Vertice(-2.70000, -0.30000, 2.02500);
-  PointAdaptive* p1322 = new Vertice(-3.00000, -0.30000, 2.25000);
-  PointAdaptive* p1332 = new Vertice(-3.00000, 0.00000, 2.25000);
+  PointAdaptive* p1302 = new VertexAdaptive(-2.70000, 0.00000, 2.02500);
+  PointAdaptive* p1312 = new VertexAdaptive(-2.70000, -0.30000, 2.02500);
+  PointAdaptive* p1322 = new VertexAdaptive(-3.00000, -0.30000, 2.25000);
+  PointAdaptive* p1332 = new VertexAdaptive(-3.00000, 0.00000, 2.25000);
 
-  PointAdaptive* p1303 = new Vertice(-2.70000, 0.00000, 1.80000);
-  PointAdaptive* p1313 = new Vertice(-2.70000, -0.30000, 1.80000);
-  PointAdaptive* p1323 = new Vertice(-3.00000, -0.30000, 1.80000);
-  PointAdaptive* p1333 = new Vertice(-3.00000, 0.00000, 1.80000);
+  PointAdaptive* p1303 = new VertexAdaptive(-2.70000, 0.00000, 1.80000);
+  PointAdaptive* p1313 = new VertexAdaptive(-2.70000, -0.30000, 1.80000);
+  PointAdaptive* p1323 = new VertexAdaptive(-3.00000, -0.30000, 1.80000);
+  PointAdaptive* p1333 = new VertexAdaptive(-3.00000, 0.00000, 1.80000);
 
   CurveAdaptive* patch13_c1 =
       new CurveAdaptiveParametricBezier(*p1300, *p1310, *p1320, *p1330);
@@ -2101,29 +2130,29 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //============================== PATCH 14 ==================================
   //		Ponto* p1330 = p1330; //new Vertice ( -1.50000, 0.00000, 2.25000
   //);
-  PointAdaptive* p1410 = new Vertice(-1.50000, 0.30000, 2.25000);
-  PointAdaptive* p1420 = new Vertice(-1.60000, 0.30000, 2.02500);
+  PointAdaptive* p1410 = new VertexAdaptive(-1.50000, 0.30000, 2.25000);
+  PointAdaptive* p1420 = new VertexAdaptive(-1.60000, 0.30000, 2.02500);
   //		Ponto* p1300 = p1300; //new Vertice ( -1.60000, 0.00000, 2.02500
   //);
 
   //		Ponto* p1331 = p1331; //new Vertice ( -2.50000, 0.00000, 2.25000
   //);
-  PointAdaptive* p1411 = new Vertice(-2.50000, 0.30000, 2.25000);
-  PointAdaptive* p1421 = new Vertice(-2.30000, 0.30000, 2.02500);
+  PointAdaptive* p1411 = new VertexAdaptive(-2.50000, 0.30000, 2.25000);
+  PointAdaptive* p1421 = new VertexAdaptive(-2.30000, 0.30000, 2.02500);
   //		Ponto* p1301 = p1301; //new Vertice ( -2.30000, 0.00000, 2.02500
   //);
 
   //		Ponto* p1332 = p1332; //new Vertice ( -3.00000, 0.00000, 2.25000
   //);
-  PointAdaptive* p1412 = new Vertice(-3.00000, 0.30000, 2.25000);
-  PointAdaptive* p1422 = new Vertice(-2.70000, 0.30000, 2.02500);
+  PointAdaptive* p1412 = new VertexAdaptive(-3.00000, 0.30000, 2.25000);
+  PointAdaptive* p1422 = new VertexAdaptive(-2.70000, 0.30000, 2.02500);
   //		Ponto* p1302 = p1302; //new Vertice ( -2.70000, 0.00000, 2.02500
   //);
 
   //		Ponto* p1333 = p1333; //new Vertice ( -3.00000, 0.00000, 1.80000
   //);
-  PointAdaptive* p1413 = new Vertice(-3.00000, 0.30000, 1.80000);
-  PointAdaptive* p1423 = new Vertice(-2.70000, 0.30000, 1.80000);
+  PointAdaptive* p1413 = new VertexAdaptive(-3.00000, 0.30000, 1.80000);
+  PointAdaptive* p1423 = new VertexAdaptive(-2.70000, 0.30000, 1.80000);
   //		Ponto* p1303 = p1303; //new Vertice ( -2.70000, 0.00000, 1.80000
   //);
 
@@ -2153,21 +2182,21 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //); 		Ponto* p1333 = p1333; //new Vertice ( -3.00000, 0.00000, 1.80000
   //);
 
-  PointAdaptive* p1501 = new Vertice(-2.70000, 0.00000, 1.57500);
-  PointAdaptive* p1511 = new Vertice(-2.70000, -0.30000, 1.57500);
-  PointAdaptive* p1521 = new Vertice(-3.00000, -0.30000, 1.35000);
-  PointAdaptive* p1531 = new Vertice(-3.00000, 0.00000, 1.35000);
+  PointAdaptive* p1501 = new VertexAdaptive(-2.70000, 0.00000, 1.57500);
+  PointAdaptive* p1511 = new VertexAdaptive(-2.70000, -0.30000, 1.57500);
+  PointAdaptive* p1521 = new VertexAdaptive(-3.00000, -0.30000, 1.35000);
+  PointAdaptive* p1531 = new VertexAdaptive(-3.00000, 0.00000, 1.35000);
 
-  PointAdaptive* p1502 = new Vertice(-2.50000, 0.00000, 1.12500);
-  PointAdaptive* p1512 = new Vertice(-2.50000, -0.30000, 1.12500);
-  PointAdaptive* p1522 = new Vertice(-2.65000, -0.30000, 0.93750);
-  PointAdaptive* p1532 = new Vertice(-2.65000, 0.00000, 0.93750);
+  PointAdaptive* p1502 = new VertexAdaptive(-2.50000, 0.00000, 1.12500);
+  PointAdaptive* p1512 = new VertexAdaptive(-2.50000, -0.30000, 1.12500);
+  PointAdaptive* p1522 = new VertexAdaptive(-2.65000, -0.30000, 0.93750);
+  PointAdaptive* p1532 = new VertexAdaptive(-2.65000, 0.00000, 0.93750);
 
   //		Ponto* p633 = p633; //new Vertice ( -2.00000, 0.00000, 0.90000
   //);
-  PointAdaptive* p1513 = new Vertice(-2.00000, -0.30000, 0.90000);
-  PointAdaptive* p1523 = new Vertice(-1.90000, -0.30000, 0.60000);
-  PointAdaptive* p1533 = new Vertice(-1.90000, 0.00000, 0.60000);
+  PointAdaptive* p1513 = new VertexAdaptive(-2.00000, -0.30000, 0.90000);
+  PointAdaptive* p1523 = new VertexAdaptive(-1.90000, -0.30000, 0.60000);
+  PointAdaptive* p1533 = new VertexAdaptive(-1.90000, 0.00000, 0.60000);
 
   //		Curva* patch15_c1 = new CurvParamBezier ( *p1303, *p1313,
   //*p1323, *p1333 );
@@ -2197,22 +2226,22 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //		Ponto* p1531 = p1531; //new Vertice ( -3.00000, 0.00000, 1.35000
   //);
-  PointAdaptive* p1611 = new Vertice(-3.00000, 0.30000, 1.35000);
-  PointAdaptive* p1621 = new Vertice(-2.70000, 0.30000, 1.57500);
+  PointAdaptive* p1611 = new VertexAdaptive(-3.00000, 0.30000, 1.35000);
+  PointAdaptive* p1621 = new VertexAdaptive(-2.70000, 0.30000, 1.57500);
   //		Ponto* p1501 = p1501; //new Vertice ( -2.70000, 0.00000, 1.57500
   //);
 
   //		Ponto* p1532 = p1532; //new Vertice ( -2.65000, 0.00000, 0.93750
   //);
-  PointAdaptive* p1612 = new Vertice(-2.65000, 0.30000, 0.93750);
-  PointAdaptive* p1622 = new Vertice(-2.50000, 0.30000, 1.12500);
+  PointAdaptive* p1612 = new VertexAdaptive(-2.65000, 0.30000, 0.93750);
+  PointAdaptive* p1622 = new VertexAdaptive(-2.50000, 0.30000, 1.12500);
   //		Ponto* p1502 = p1502; //new Vertice ( -2.50000, 0.00000, 1.12500
   //);
 
   //		Ponto* p1533 = p1533; //new Vertice ( -1.90000, 0.00000, 0.60000
   //);
-  PointAdaptive* p1613 = new Vertice(-1.90000, 0.30000, 0.60000);
-  PointAdaptive* p1623 = new Vertice(-2.00000, 0.30000, 0.90000);
+  PointAdaptive* p1613 = new VertexAdaptive(-1.90000, 0.30000, 0.60000);
+  PointAdaptive* p1623 = new VertexAdaptive(-2.00000, 0.30000, 0.90000);
   //		Ponto* p633 = p633; //new Vertice ( -2.00000, 0.00000, 0.90000
   //);
 
@@ -2236,25 +2265,25 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //======================== FIM DO PATCH 16 =================================
 
   //============================== PATCH 17 ==================================
-  PointAdaptive* p1700 = new Vertice(1.70000, 0.00000, 1.42500);
-  PointAdaptive* p1710 = new Vertice(1.70000, -0.66000, 1.42500);
-  PointAdaptive* p1720 = new Vertice(1.70000, -0.66000, 0.60000);
-  PointAdaptive* p1730 = new Vertice(1.70000, 0.00000, 0.60000);
+  PointAdaptive* p1700 = new VertexAdaptive(1.70000, 0.00000, 1.42500);
+  PointAdaptive* p1710 = new VertexAdaptive(1.70000, -0.66000, 1.42500);
+  PointAdaptive* p1720 = new VertexAdaptive(1.70000, -0.66000, 0.60000);
+  PointAdaptive* p1730 = new VertexAdaptive(1.70000, 0.00000, 0.60000);
 
-  PointAdaptive* p1701 = new Vertice(2.60000, 0.00000, 1.42500);
-  PointAdaptive* p1711 = new Vertice(2.60000, -0.66000, 1.42500);
-  PointAdaptive* p1721 = new Vertice(3.10000, -0.66000, 0.82500);
-  PointAdaptive* p1731 = new Vertice(3.10000, 0.00000, 0.82500);
+  PointAdaptive* p1701 = new VertexAdaptive(2.60000, 0.00000, 1.42500);
+  PointAdaptive* p1711 = new VertexAdaptive(2.60000, -0.66000, 1.42500);
+  PointAdaptive* p1721 = new VertexAdaptive(3.10000, -0.66000, 0.82500);
+  PointAdaptive* p1731 = new VertexAdaptive(3.10000, 0.00000, 0.82500);
 
-  PointAdaptive* p1702 = new Vertice(2.30000, 0.00000, 2.10000);
-  PointAdaptive* p1712 = new Vertice(2.30000, -0.25000, 2.10000);
-  PointAdaptive* p1722 = new Vertice(2.40000, -0.25000, 2.02500);
-  PointAdaptive* p1732 = new Vertice(2.40000, 0.00000, 2.02500);
+  PointAdaptive* p1702 = new VertexAdaptive(2.30000, 0.00000, 2.10000);
+  PointAdaptive* p1712 = new VertexAdaptive(2.30000, -0.25000, 2.10000);
+  PointAdaptive* p1722 = new VertexAdaptive(2.40000, -0.25000, 2.02500);
+  PointAdaptive* p1732 = new VertexAdaptive(2.40000, 0.00000, 2.02500);
 
-  PointAdaptive* p1703 = new Vertice(2.70000, 0.00000, 2.40000);
-  PointAdaptive* p1713 = new Vertice(2.70000, -0.25000, 2.40000);
-  PointAdaptive* p1723 = new Vertice(3.30000, -0.25000, 2.40000);
-  PointAdaptive* p1733 = new Vertice(3.30000, 0.00000, 2.40000);
+  PointAdaptive* p1703 = new VertexAdaptive(2.70000, 0.00000, 2.40000);
+  PointAdaptive* p1713 = new VertexAdaptive(2.70000, -0.25000, 2.40000);
+  PointAdaptive* p1723 = new VertexAdaptive(3.30000, -0.25000, 2.40000);
+  PointAdaptive* p1733 = new VertexAdaptive(3.30000, 0.00000, 2.40000);
 
   CurveAdaptive* patch17_c1 =
       new CurveAdaptiveParametricBezier(*p1700, *p1710, *p1720, *p1730);
@@ -2278,29 +2307,29 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //============================== PATCH 18 ==================================
   //		Ponto* p1730 = p1730; //new Vertice ( 1.70000, 0.00000, 0.60000
   //);
-  PointAdaptive* p1810 = new Vertice(1.70000, 0.66000, 0.60000);
-  PointAdaptive* p1820 = new Vertice(1.70000, 0.66000, 1.42500);
+  PointAdaptive* p1810 = new VertexAdaptive(1.70000, 0.66000, 0.60000);
+  PointAdaptive* p1820 = new VertexAdaptive(1.70000, 0.66000, 1.42500);
   //		Ponto* p1700 = p1700; //new Vertice ( 1.70000, 0.00000, 1.42500
   //);
 
   //		Ponto* p1731 = p1731; //new Vertice ( 3.10000, 0.00000, 0.82500
   //);
-  PointAdaptive* p1811 = new Vertice(3.10000, 0.66000, 0.82500);
-  PointAdaptive* p1821 = new Vertice(2.60000, 0.66000, 1.42500);
+  PointAdaptive* p1811 = new VertexAdaptive(3.10000, 0.66000, 0.82500);
+  PointAdaptive* p1821 = new VertexAdaptive(2.60000, 0.66000, 1.42500);
   //		Ponto* p1701 = p1701; //new Vertice ( 2.60000, 0.00000, 1.42500
   //);
 
   //		Ponto* p1732 = p1732; //new Vertice ( 2.40000, 0.00000, 2.02500
   //);
-  PointAdaptive* p1812 = new Vertice(2.40000, 0.25000, 2.02500);
-  PointAdaptive* p1822 = new Vertice(2.30000, 0.25000, 2.10000);
+  PointAdaptive* p1812 = new VertexAdaptive(2.40000, 0.25000, 2.02500);
+  PointAdaptive* p1822 = new VertexAdaptive(2.30000, 0.25000, 2.10000);
   //		Ponto* p1702 = p1702; //new Vertice ( 2.30000, 0.00000, 2.10000
   //);
 
   //		Ponto* p1733 = p1733; //new Vertice ( 3.30000, 0.00000, 2.40000
   //);
-  PointAdaptive* p1813 = new Vertice(3.30000, 0.25000, 2.40000);
-  PointAdaptive* p1823 = new Vertice(2.70000, 0.25000, 2.40000);
+  PointAdaptive* p1813 = new VertexAdaptive(3.30000, 0.25000, 2.40000);
+  PointAdaptive* p1823 = new VertexAdaptive(2.70000, 0.25000, 2.40000);
   //		Ponto* p1703 = p1703; //new Vertice ( 2.70000, 0.00000, 2.40000
   //);
 
@@ -2331,20 +2360,20 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //( 3.30000,-0.25000, 2.40000 ); 		Ponto* p1733 = p1733; //new
   // Vertice ( 3.30000, 0.00000, 2.40000 );
 
-  PointAdaptive* p1901 = new Vertice(2.80000, 0.00000, 2.47500);
-  PointAdaptive* p1911 = new Vertice(2.80000, -0.25000, 2.47500);
-  PointAdaptive* p1921 = new Vertice(3.52500, -0.25000, 2.49375);
-  PointAdaptive* p1931 = new Vertice(3.52500, 0.00000, 2.49375);
+  PointAdaptive* p1901 = new VertexAdaptive(2.80000, 0.00000, 2.47500);
+  PointAdaptive* p1911 = new VertexAdaptive(2.80000, -0.25000, 2.47500);
+  PointAdaptive* p1921 = new VertexAdaptive(3.52500, -0.25000, 2.49375);
+  PointAdaptive* p1931 = new VertexAdaptive(3.52500, 0.00000, 2.49375);
 
-  PointAdaptive* p1902 = new Vertice(2.90000, 0.00000, 2.47500);
-  PointAdaptive* p1912 = new Vertice(2.90000, -0.15000, 2.47500);
-  PointAdaptive* p1922 = new Vertice(3.45000, -0.15000, 2.51250);
-  PointAdaptive* p1932 = new Vertice(3.45000, 0.00000, 2.51250);
+  PointAdaptive* p1902 = new VertexAdaptive(2.90000, 0.00000, 2.47500);
+  PointAdaptive* p1912 = new VertexAdaptive(2.90000, -0.15000, 2.47500);
+  PointAdaptive* p1922 = new VertexAdaptive(3.45000, -0.15000, 2.51250);
+  PointAdaptive* p1932 = new VertexAdaptive(3.45000, 0.00000, 2.51250);
 
-  PointAdaptive* p1903 = new Vertice(2.80000, 0.00000, 2.40000);
-  PointAdaptive* p1913 = new Vertice(2.80000, -0.15000, 2.40000);
+  PointAdaptive* p1903 = new VertexAdaptive(2.80000, 0.00000, 2.40000);
+  PointAdaptive* p1913 = new VertexAdaptive(2.80000, -0.15000, 2.40000);
   //		Ponto* p1933 = new Vertice ( 3.20000, 0.00000, 2.40000 );
-  PointAdaptive* p1933 = new Vertice(3.20000, 0.00000, 2.40000);
+  PointAdaptive* p1933 = new VertexAdaptive(3.20000, 0.00000, 2.40000);
 
   //		Curva* patch19_c1 = new CurvParamBezier ( *p1703, *p1713,
   //*p1723, *p1733 );
@@ -2368,28 +2397,28 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //============================== PATCH 20 ==================================
   //		Ponto* p1733 = p1733; //new Vertice ( 3.30000, 0.00000, 2.40000
   //);
-  PointAdaptive* p2010 = new Vertice(3.30000, 0.25000, 2.40000);
-  PointAdaptive* p2020 = new Vertice(2.70000, 0.25000, 2.40000);
+  PointAdaptive* p2010 = new VertexAdaptive(3.30000, 0.25000, 2.40000);
+  PointAdaptive* p2020 = new VertexAdaptive(2.70000, 0.25000, 2.40000);
   //		Ponto* p1703 = p1703; //new Vertice ( 2.70000, 0.00000, 2.40000
   //);
 
   //		Ponto* p1931 = p1931; //new Vertice ( 3.52500, 0.00000, 2.49375
   //);
-  PointAdaptive* p2011 = new Vertice(3.52500, 0.25000, 2.49375);
-  PointAdaptive* p2021 = new Vertice(2.80000, 0.25000, 2.47500);
+  PointAdaptive* p2011 = new VertexAdaptive(3.52500, 0.25000, 2.49375);
+  PointAdaptive* p2021 = new VertexAdaptive(2.80000, 0.25000, 2.47500);
   //		Ponto* p1901 = p1901; //new Vertice ( 2.80000, 0.00000, 2.47500
   //);
 
   //		Ponto* p1932 = p1932; //new Vertice ( 3.45000, 0.00000, 2.51250
   //);
-  PointAdaptive* p2012 = new Vertice(3.45000, 0.15000, 2.51250);
-  PointAdaptive* p2022 = new Vertice(2.90000, 0.15000, 2.47500);
+  PointAdaptive* p2012 = new VertexAdaptive(3.45000, 0.15000, 2.51250);
+  PointAdaptive* p2022 = new VertexAdaptive(2.90000, 0.15000, 2.47500);
   //		Ponto* p1902 = p1902; //new Vertice ( 2.90000, 0.00000, 2.47500
   //);
 
   //		Ponto* p1933 = p1933; //new Vertice ( 3.20000, 0.00000, 2.40000
   //); 		Ponto* p2013 = new Vertice ( 3.20000, 0.15000, 2.40000 );
-  PointAdaptive* p2023 = new Vertice(2.80000, 0.15000, 2.40000);
+  PointAdaptive* p2023 = new VertexAdaptive(2.80000, 0.15000, 2.40000);
   //		Ponto* p1903 = p1903; //new Vertice ( 2.80000, 0.00000, 2.40000
   //);
 
@@ -2413,26 +2442,26 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //======================== FIM DO PATCH 20 =================================
 
   //============================== PATCH 21 ==================================
-  PointAdaptive* p2100 = new Vertice(0.10000, 0.00000, 3.15000);
-  PointAdaptive* p2110 = new Vertice(0.08660, -0.05000, 3.15000);
-  PointAdaptive* p2120 = new Vertice(0.05000, -0.08660, 3.15000);
-  PointAdaptive* p2130 = new Vertice(0.00000, -0.10000, 3.15000);
+  PointAdaptive* p2100 = new VertexAdaptive(0.10000, 0.00000, 3.15000);
+  PointAdaptive* p2110 = new VertexAdaptive(0.08660, -0.05000, 3.15000);
+  PointAdaptive* p2120 = new VertexAdaptive(0.05000, -0.08660, 3.15000);
+  PointAdaptive* p2130 = new VertexAdaptive(0.00000, -0.10000, 3.15000);
 
-  PointAdaptive* p2101 = new Vertice(0.80000, 0.00000, 3.15000);
-  PointAdaptive* p2111 = new Vertice(0.80000, -0.45000, 3.15000);
-  PointAdaptive* p2121 = new Vertice(0.45000, -0.80000, 3.15000);
-  PointAdaptive* p2131 = new Vertice(0.00000, -0.80000, 3.15000);
+  PointAdaptive* p2101 = new VertexAdaptive(0.80000, 0.00000, 3.15000);
+  PointAdaptive* p2111 = new VertexAdaptive(0.80000, -0.45000, 3.15000);
+  PointAdaptive* p2121 = new VertexAdaptive(0.45000, -0.80000, 3.15000);
+  PointAdaptive* p2131 = new VertexAdaptive(0.00000, -0.80000, 3.15000);
 
-  PointAdaptive* p2102 = new Vertice(0.00000, 0.00000, 2.85000);
+  PointAdaptive* p2102 = new VertexAdaptive(0.00000, 0.00000, 2.85000);
   //		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
   //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
   //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
   // );
 
-  PointAdaptive* p2103 = new Vertice(0.20000, 0.00000, 2.70000);
-  PointAdaptive* p2113 = new Vertice(0.20000, -0.11200, 2.70000);
-  PointAdaptive* p2123 = new Vertice(0.11200, -0.20000, 2.70000);
-  PointAdaptive* p2133 = new Vertice(0.00000, -0.20000, 2.70000);
+  PointAdaptive* p2103 = new VertexAdaptive(0.20000, 0.00000, 2.70000);
+  PointAdaptive* p2113 = new VertexAdaptive(0.20000, -0.11200, 2.70000);
+  PointAdaptive* p2123 = new VertexAdaptive(0.11200, -0.20000, 2.70000);
+  PointAdaptive* p2133 = new VertexAdaptive(0.00000, -0.20000, 2.70000);
 
   CurveAdaptive* patch21_c1 =
       new CurveAdaptiveParametricBezier(*p2100, *p2110, *p2120, *p2130);
@@ -2456,15 +2485,15 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //============================== PATCH 22 ==================================
   //		Ponto* p2130 = p2130; //new Vertice ( 0.00000,-0.10000, 3.15000
   //);
-  PointAdaptive* p2210 = new Vertice(-0.05000, -0.08660, 3.15000);
-  PointAdaptive* p2220 = new Vertice(-0.08660, -0.05000, 3.15000);
-  PointAdaptive* p2230 = new Vertice(-0.10000, 0.00000, 3.15000);
+  PointAdaptive* p2210 = new VertexAdaptive(-0.05000, -0.08660, 3.15000);
+  PointAdaptive* p2220 = new VertexAdaptive(-0.08660, -0.05000, 3.15000);
+  PointAdaptive* p2230 = new VertexAdaptive(-0.10000, 0.00000, 3.15000);
 
   //		Ponto* p2131 = p2131; //new Vertice (  0.00000,-0.80000, 3.15000
   //);
-  PointAdaptive* p2211 = new Vertice(-0.45000, -0.80000, 3.15000);
-  PointAdaptive* p2221 = new Vertice(-0.80000, -0.45000, 3.15000);
-  PointAdaptive* p2231 = new Vertice(-0.80000, 0.00000, 3.15000);
+  PointAdaptive* p2211 = new VertexAdaptive(-0.45000, -0.80000, 3.15000);
+  PointAdaptive* p2221 = new VertexAdaptive(-0.80000, -0.45000, 3.15000);
+  PointAdaptive* p2231 = new VertexAdaptive(-0.80000, 0.00000, 3.15000);
 
   //		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
   //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
@@ -2474,9 +2503,9 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //		Ponto* p2133 = p2133; //new Vertice (  0.00000,-0.20000, 2.70000
   //);
-  PointAdaptive* p2213 = new Vertice(-0.11200, -0.20000, 2.70000);
-  PointAdaptive* p2223 = new Vertice(-0.20000, -0.11200, 2.70000);
-  PointAdaptive* p2233 = new Vertice(-0.20000, 0.00000, 2.70000);
+  PointAdaptive* p2213 = new VertexAdaptive(-0.11200, -0.20000, 2.70000);
+  PointAdaptive* p2223 = new VertexAdaptive(-0.20000, -0.11200, 2.70000);
+  PointAdaptive* p2233 = new VertexAdaptive(-0.20000, 0.00000, 2.70000);
 
   CurveAdaptive* patch22_c1 =
       new CurveAdaptiveParametricBezier(*p2130, *p2210, *p2220, *p2230);
@@ -2499,14 +2528,14 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //============================== PATCH 23 ==================================
   //		Ponto* p2230 = new Vertice (-0.10000, 0.00000, 3.15000 );
-  PointAdaptive* p2310 = new Vertice(-0.08660, 0.05000, 3.15000);
-  PointAdaptive* p2320 = new Vertice(-0.05000, 0.08660, 3.15000);
-  PointAdaptive* p2330 = new Vertice(0.00000, 0.10000, 3.15000);
+  PointAdaptive* p2310 = new VertexAdaptive(-0.08660, 0.05000, 3.15000);
+  PointAdaptive* p2320 = new VertexAdaptive(-0.05000, 0.08660, 3.15000);
+  PointAdaptive* p2330 = new VertexAdaptive(0.00000, 0.10000, 3.15000);
 
   //		Ponto* p2231 = new Vertice ( -0.80000, 0.00000, 3.15000 );
-  PointAdaptive* p2311 = new Vertice(-0.80000, 0.45000, 3.15000);
-  PointAdaptive* p2321 = new Vertice(-0.45000, 0.80000, 3.15000);
-  PointAdaptive* p2331 = new Vertice(0.00000, 0.80000, 3.15000);
+  PointAdaptive* p2311 = new VertexAdaptive(-0.80000, 0.45000, 3.15000);
+  PointAdaptive* p2321 = new VertexAdaptive(-0.45000, 0.80000, 3.15000);
+  PointAdaptive* p2331 = new VertexAdaptive(0.00000, 0.80000, 3.15000);
 
   //		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
   //); 		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
@@ -2515,9 +2544,9 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   // 0.00000, 2.85000 );
 
   //		Ponto* p2233 = new Vertice ( -0.20000, 0.00000, 2.70000 );
-  PointAdaptive* p2313 = new Vertice(-0.20000, 0.11200, 2.70000);
-  PointAdaptive* p2323 = new Vertice(-0.11200, 0.20000, 2.70000);
-  PointAdaptive* p2333 = new Vertice(0.00000, 0.20000, 2.70000);
+  PointAdaptive* p2313 = new VertexAdaptive(-0.20000, 0.11200, 2.70000);
+  PointAdaptive* p2323 = new VertexAdaptive(-0.11200, 0.20000, 2.70000);
+  PointAdaptive* p2333 = new VertexAdaptive(0.00000, 0.20000, 2.70000);
 
   CurveAdaptive* patch23_c1 =
       new CurveAdaptiveParametricBezier(*p2230, *p2310, *p2320, *p2330);
@@ -2540,13 +2569,13 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //============================== PATCH 24 ==================================
   //		Ponto* p2330 = new Vertice ( 0.00000, 0.10000, 3.15000 );
-  PointAdaptive* p2410 = new Vertice(0.05000, 0.08660, 3.15000);
-  PointAdaptive* p2420 = new Vertice(0.08660, 0.05000, 3.15000);
+  PointAdaptive* p2410 = new VertexAdaptive(0.05000, 0.08660, 3.15000);
+  PointAdaptive* p2420 = new VertexAdaptive(0.08660, 0.05000, 3.15000);
   //		Ponto* p2100 = new Vertice ( 0.10000, 0.00000, 3.15000 );
 
   //		Ponto* p2331 = new Vertice ( 0.00000, 0.80000, 3.15000 );
-  PointAdaptive* p2411 = new Vertice(0.45000, 0.80000, 3.15000);
-  PointAdaptive* p2421 = new Vertice(0.80000, 0.45000, 3.15000);
+  PointAdaptive* p2411 = new VertexAdaptive(0.45000, 0.80000, 3.15000);
+  PointAdaptive* p2421 = new VertexAdaptive(0.80000, 0.45000, 3.15000);
   PointAdaptive* p2431 = p2101;  // new Vertice ( 0.80000, 0.00000, 3.15000 );
 
   //		Ponto* p2102 = p2102; //new Vertice ( 0.00000, 0.00000, 2.85000
@@ -2556,8 +2585,8 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   // 0.00000, 2.85000 );
 
   //		Ponto* p2333 = new Vertice ( 0.00000, 0.20000, 2.70000 );
-  PointAdaptive* p2413 = new Vertice(0.11200, 0.20000, 2.70000);
-  PointAdaptive* p2423 = new Vertice(0.20000, 0.11200, 2.70000);
+  PointAdaptive* p2413 = new VertexAdaptive(0.11200, 0.20000, 2.70000);
+  PointAdaptive* p2423 = new VertexAdaptive(0.20000, 0.11200, 2.70000);
   //		Ponto* p2103 = p2103; //new Vertice ( 0.20000, 0.00000, 2.70000
   //);
 
@@ -2587,20 +2616,20 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   // ); 		Ponto* p2133 = p2133; //new Vertice (
   // 0.00000,-0.20000, 2.70000 );
 
-  PointAdaptive* p2501 = new Vertice(0.40000, 0.00000, 2.55000);
-  PointAdaptive* p2511 = new Vertice(0.40000, -0.22400, 2.55000);
-  PointAdaptive* p2521 = new Vertice(0.22400, -0.40000, 2.55000);
-  PointAdaptive* p2531 = new Vertice(0.00000, -0.40000, 2.55000);
+  PointAdaptive* p2501 = new VertexAdaptive(0.40000, 0.00000, 2.55000);
+  PointAdaptive* p2511 = new VertexAdaptive(0.40000, -0.22400, 2.55000);
+  PointAdaptive* p2521 = new VertexAdaptive(0.22400, -0.40000, 2.55000);
+  PointAdaptive* p2531 = new VertexAdaptive(0.00000, -0.40000, 2.55000);
 
-  PointAdaptive* p2502 = new Vertice(1.30000, 0.00000, 2.55000);
-  PointAdaptive* p2512 = new Vertice(1.30000, -0.72800, 2.55000);
-  PointAdaptive* p2522 = new Vertice(0.72800, -1.30000, 2.55000);
-  PointAdaptive* p2532 = new Vertice(0.00000, -1.30000, 2.55000);
+  PointAdaptive* p2502 = new VertexAdaptive(1.30000, 0.00000, 2.55000);
+  PointAdaptive* p2512 = new VertexAdaptive(1.30000, -0.72800, 2.55000);
+  PointAdaptive* p2522 = new VertexAdaptive(0.72800, -1.30000, 2.55000);
+  PointAdaptive* p2532 = new VertexAdaptive(0.00000, -1.30000, 2.55000);
 
-  PointAdaptive* p2503 = new Vertice(1.30000, 0.00000, 2.40000);
-  PointAdaptive* p2513 = new Vertice(1.30000, -0.72800, 2.40000);
-  PointAdaptive* p2523 = new Vertice(0.72800, -1.30000, 2.40000);
-  PointAdaptive* p2533 = new Vertice(0.00000, -1.30000, 2.40000);
+  PointAdaptive* p2503 = new VertexAdaptive(1.30000, 0.00000, 2.40000);
+  PointAdaptive* p2513 = new VertexAdaptive(1.30000, -0.72800, 2.40000);
+  PointAdaptive* p2523 = new VertexAdaptive(0.72800, -1.30000, 2.40000);
+  PointAdaptive* p2533 = new VertexAdaptive(0.00000, -1.30000, 2.40000);
 
   //		Curva* patch25_c1 = new CurvParamBezier ( *p2103, *p2113,
   //*p2123, *p2133 );
@@ -2629,19 +2658,19 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //(-0.20000, 0.00000, 2.70000 );
 
   //		Ponto* p2531 = new Vertice ( 0.00000,-0.40000, 2.55000 );
-  PointAdaptive* p2611 = new Vertice(-0.22400, -0.40000, 2.55000);
-  PointAdaptive* p2621 = new Vertice(-0.40000, -0.22400, 2.55000);
-  PointAdaptive* p2631 = new Vertice(-0.40000, 0.00000, 2.55000);
+  PointAdaptive* p2611 = new VertexAdaptive(-0.22400, -0.40000, 2.55000);
+  PointAdaptive* p2621 = new VertexAdaptive(-0.40000, -0.22400, 2.55000);
+  PointAdaptive* p2631 = new VertexAdaptive(-0.40000, 0.00000, 2.55000);
 
   //		Ponto* p2532 = new Vertice ( 0.00000,-1.30000, 2.55000 );
-  PointAdaptive* p2612 = new Vertice(-0.72800, -1.30000, 2.55000);
-  PointAdaptive* p2622 = new Vertice(-1.30000, -0.72800, 2.55000);
-  PointAdaptive* p2632 = new Vertice(-1.30000, 0.00000, 2.55000);
+  PointAdaptive* p2612 = new VertexAdaptive(-0.72800, -1.30000, 2.55000);
+  PointAdaptive* p2622 = new VertexAdaptive(-1.30000, -0.72800, 2.55000);
+  PointAdaptive* p2632 = new VertexAdaptive(-1.30000, 0.00000, 2.55000);
 
   //		Ponto* p2533 = new Vertice ( 0.00000,-1.30000, 2.40000 );
-  PointAdaptive* p2613 = new Vertice(-0.72800, -1.30000, 2.40000);
-  PointAdaptive* p2623 = new Vertice(-1.30000, -0.72800, 2.40000);
-  PointAdaptive* p2633 = new Vertice(-1.30000, 0.00000, 2.40000);
+  PointAdaptive* p2613 = new VertexAdaptive(-0.72800, -1.30000, 2.40000);
+  PointAdaptive* p2623 = new VertexAdaptive(-1.30000, -0.72800, 2.40000);
+  PointAdaptive* p2633 = new VertexAdaptive(-1.30000, 0.00000, 2.40000);
 
   //		Curva* patch26_c1 = new CurvParamBezier ( *p2133, *p2213,
   //*p2223, *p2233 );
@@ -2669,19 +2698,19 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //		Ponto* p2333 = new Vertice (  0.00000, 0.20000, 2.70000 );
 
   //		Ponto* p2631 = new Vertice ( -0.40000, 0.00000, 2.55000 );
-  PointAdaptive* p2711 = new Vertice(-0.40000, 0.22400, 2.55000);
-  PointAdaptive* p2721 = new Vertice(-0.22400, 0.40000, 2.55000);
-  PointAdaptive* p2731 = new Vertice(0.00000, 0.40000, 2.55000);
+  PointAdaptive* p2711 = new VertexAdaptive(-0.40000, 0.22400, 2.55000);
+  PointAdaptive* p2721 = new VertexAdaptive(-0.22400, 0.40000, 2.55000);
+  PointAdaptive* p2731 = new VertexAdaptive(0.00000, 0.40000, 2.55000);
 
   //		Ponto* p2632 = new Vertice ( -1.30000, 0.00000, 2.55000 );
-  PointAdaptive* p2712 = new Vertice(-1.30000, 0.72800, 2.55000);
-  PointAdaptive* p2722 = new Vertice(-0.72800, 1.30000, 2.55000);
-  PointAdaptive* p2732 = new Vertice(0.00000, 1.30000, 2.55000);
+  PointAdaptive* p2712 = new VertexAdaptive(-1.30000, 0.72800, 2.55000);
+  PointAdaptive* p2722 = new VertexAdaptive(-0.72800, 1.30000, 2.55000);
+  PointAdaptive* p2732 = new VertexAdaptive(0.00000, 1.30000, 2.55000);
 
   //		Ponto* p2633 = new Vertice ( -1.30000, 0.00000, 2.40000 );
-  PointAdaptive* p2713 = new Vertice(-1.30000, 0.72800, 2.40000);
-  PointAdaptive* p2723 = new Vertice(-0.72800, 1.30000, 2.40000);
-  PointAdaptive* p2733 = new Vertice(0.00000, 1.30000, 2.40000);
+  PointAdaptive* p2713 = new VertexAdaptive(-1.30000, 0.72800, 2.40000);
+  PointAdaptive* p2723 = new VertexAdaptive(-0.72800, 1.30000, 2.40000);
+  PointAdaptive* p2733 = new VertexAdaptive(0.00000, 1.30000, 2.40000);
 
   //		Curva* patch27_c1 = new CurvParamBezier ( *p2233, *p2313,
   //*p2323, *p2333 );
@@ -2710,18 +2739,18 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //);
 
   //		Ponto* p2731 = new Vertice ( 0.00000, 0.40000, 2.55000 );
-  PointAdaptive* p2811 = new Vertice(0.22400, 0.40000, 2.55000);
-  PointAdaptive* p2821 = new Vertice(0.40000, 0.22400, 2.55000);
+  PointAdaptive* p2811 = new VertexAdaptive(0.22400, 0.40000, 2.55000);
+  PointAdaptive* p2821 = new VertexAdaptive(0.40000, 0.22400, 2.55000);
   //		Ponto* p2501 = new Vertice ( 0.40000, 0.00000, 2.55000 );
 
   //		Ponto* p2732 = new Vertice ( 0.00000, 1.30000, 2.55000 );
-  PointAdaptive* p2812 = new Vertice(0.72800, 1.30000, 2.55000);
-  PointAdaptive* p2822 = new Vertice(1.30000, 0.72800, 2.55000);
+  PointAdaptive* p2812 = new VertexAdaptive(0.72800, 1.30000, 2.55000);
+  PointAdaptive* p2822 = new VertexAdaptive(1.30000, 0.72800, 2.55000);
   //		Ponto* p2502 = new Vertice ( 1.30000, 0.00000, 2.55000 );
 
   //		Ponto* p2733 = new Vertice ( 0.00000, 1.30000, 2.40000 );
-  PointAdaptive* p2813 = new Vertice(0.72800, 1.30000, 2.40000);
-  PointAdaptive* p2823 = new Vertice(1.30000, 0.72800, 2.40000);
+  PointAdaptive* p2813 = new VertexAdaptive(0.72800, 1.30000, 2.40000);
+  PointAdaptive* p2823 = new VertexAdaptive(1.30000, 0.72800, 2.40000);
   //		Ponto* p2503 = new Vertice ( 1.30000, 0.00000, 2.40000 );
 
   //		Curva* patch28_c1 = new CurvParamBezier ( *p2333, *p2413,
@@ -2744,20 +2773,20 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   //======================== FIM DO PATCH 28 =================================
 
   //============================== PATCH 29 ==================================
-  PointAdaptive* p2900 = new Vertice(0.10000, 0.00000, 0.00001);
-  PointAdaptive* p2910 = new Vertice(0.08660, 0.05000, 0.00001);
-  PointAdaptive* p2920 = new Vertice(0.05000, 0.08660, 0.00001);
-  PointAdaptive* p2930 = new Vertice(0.00000, 0.10000, 0.00001);
+  PointAdaptive* p2900 = new VertexAdaptive(0.10000, 0.00000, 0.00001);
+  PointAdaptive* p2910 = new VertexAdaptive(0.08660, 0.05000, 0.00001);
+  PointAdaptive* p2920 = new VertexAdaptive(0.05000, 0.08660, 0.00001);
+  PointAdaptive* p2930 = new VertexAdaptive(0.00000, 0.10000, 0.00001);
 
-  PointAdaptive* p2901 = new Vertice(1.42500, 0.00000, 0.00000);
-  PointAdaptive* p2911 = new Vertice(1.42500, 0.79800, 0.00000);
-  PointAdaptive* p2921 = new Vertice(0.79800, 1.42500, 0.00000);
-  PointAdaptive* p2931 = new Vertice(0.00000, 1.42500, 0.00000);
+  PointAdaptive* p2901 = new VertexAdaptive(1.42500, 0.00000, 0.00000);
+  PointAdaptive* p2911 = new VertexAdaptive(1.42500, 0.79800, 0.00000);
+  PointAdaptive* p2921 = new VertexAdaptive(0.79800, 1.42500, 0.00000);
+  PointAdaptive* p2931 = new VertexAdaptive(0.00000, 1.42500, 0.00000);
 
-  PointAdaptive* p2902 = new Vertice(1.50000, 0.00000, 0.07500);
-  PointAdaptive* p2912 = new Vertice(1.50000, 0.84000, 0.07500);
-  PointAdaptive* p2922 = new Vertice(0.84000, 1.50000, 0.07500);
-  PointAdaptive* p2932 = new Vertice(0.00000, 1.50000, 0.07500);
+  PointAdaptive* p2902 = new VertexAdaptive(1.50000, 0.00000, 0.07500);
+  PointAdaptive* p2912 = new VertexAdaptive(1.50000, 0.84000, 0.07500);
+  PointAdaptive* p2922 = new VertexAdaptive(0.84000, 1.50000, 0.07500);
+  PointAdaptive* p2932 = new VertexAdaptive(0.00000, 1.50000, 0.07500);
 
   //		Ponto* p903 = p903; //new Vertice ( 1.50000, 0.00000, 0.15000 );
   //		Ponto* p1223 = new Vertice ( 1.50000, 0.84000, 0.15000 );
@@ -2786,19 +2815,19 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //============================== PATCH 30 ==================================
   //		Ponto* p2930 = new Vertice ( 0.00000, 0.10000, 0.00001 );
-  PointAdaptive* p3010 = new Vertice(-0.05000, 0.08660, 0.00001);
-  PointAdaptive* p3020 = new Vertice(-0.08660, 0.05000, 0.00001);
-  PointAdaptive* p3030 = new Vertice(-0.10000, 0.00000, 0.00001);
+  PointAdaptive* p3010 = new VertexAdaptive(-0.05000, 0.08660, 0.00001);
+  PointAdaptive* p3020 = new VertexAdaptive(-0.08660, 0.05000, 0.00001);
+  PointAdaptive* p3030 = new VertexAdaptive(-0.10000, 0.00000, 0.00001);
 
   //		Ponto* p2931 = new Vertice (  0.00000, 1.42500, 0.00000 );
-  PointAdaptive* p3011 = new Vertice(-0.79800, 1.42500, 0.00000);
-  PointAdaptive* p3021 = new Vertice(-1.42500, 0.79800, 0.00000);
-  PointAdaptive* p3031 = new Vertice(-1.42500, 0.00000, 0.00000);
+  PointAdaptive* p3011 = new VertexAdaptive(-0.79800, 1.42500, 0.00000);
+  PointAdaptive* p3021 = new VertexAdaptive(-1.42500, 0.79800, 0.00000);
+  PointAdaptive* p3031 = new VertexAdaptive(-1.42500, 0.00000, 0.00000);
 
   //		Ponto* p2932 = new Vertice ( 0.00000, 1.50000, 0.07500 );
-  PointAdaptive* p3012 = new Vertice(-0.84000, 1.50000, 0.07500);
-  PointAdaptive* p3022 = new Vertice(-1.50000, 0.84000, 0.07500);
-  PointAdaptive* p3032 = new Vertice(-1.50000, 0.00000, 0.07500);
+  PointAdaptive* p3012 = new VertexAdaptive(-0.84000, 1.50000, 0.07500);
+  PointAdaptive* p3022 = new VertexAdaptive(-1.50000, 0.84000, 0.07500);
+  PointAdaptive* p3032 = new VertexAdaptive(-1.50000, 0.00000, 0.07500);
 
   //		Ponto* p1133 = p1133; //new Vertice ( 0.00000, 1.50000, 0.15000
   //); 		Ponto* p1123 = p1123; //new Vertice (-0.84000, 1.50000, 0.15000
@@ -2827,19 +2856,19 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //============================== PATCH 31 ==================================
   //		Ponto* p3030 = new Vertice (-0.10000, 0.00000, 0.00001 );
-  PointAdaptive* p3110 = new Vertice(-0.08660, -0.05000, 0.00001);
-  PointAdaptive* p3120 = new Vertice(-0.05000, -0.08660, 0.00001);
-  PointAdaptive* p3130 = new Vertice(0.00000, -0.10000, 0.00001);
+  PointAdaptive* p3110 = new VertexAdaptive(-0.08660, -0.05000, 0.00001);
+  PointAdaptive* p3120 = new VertexAdaptive(-0.05000, -0.08660, 0.00001);
+  PointAdaptive* p3130 = new VertexAdaptive(0.00000, -0.10000, 0.00001);
 
   //		Ponto* p3031 = new Vertice ( -1.42500, 0.00000, 0.00000 );
-  PointAdaptive* p3111 = new Vertice(-1.42500, -0.79800, 0.00000);
-  PointAdaptive* p3121 = new Vertice(-0.79800, -1.42500, 0.00000);
-  PointAdaptive* p3131 = new Vertice(0.00000, -1.42500, 0.00000);
+  PointAdaptive* p3111 = new VertexAdaptive(-1.42500, -0.79800, 0.00000);
+  PointAdaptive* p3121 = new VertexAdaptive(-0.79800, -1.42500, 0.00000);
+  PointAdaptive* p3131 = new VertexAdaptive(0.00000, -1.42500, 0.00000);
 
   //		Ponto* p3032 = new Vertice ( -1.50000, 0.00000, 0.07500 );
-  PointAdaptive* p3112 = new Vertice(-1.50000, -0.84000, 0.07500);
-  PointAdaptive* p3122 = new Vertice(-0.84000, -1.50000, 0.07500);
-  PointAdaptive* p3132 = new Vertice(0.00000, -1.50000, 0.07500);
+  PointAdaptive* p3112 = new VertexAdaptive(-1.50000, -0.84000, 0.07500);
+  PointAdaptive* p3122 = new VertexAdaptive(-0.84000, -1.50000, 0.07500);
+  PointAdaptive* p3132 = new VertexAdaptive(0.00000, -1.50000, 0.07500);
 
   //		Ponto* p1033 = new Vertice ( -1.50000, 0.00000, 0.15000 );
   //		Ponto* p1023 = new Vertice ( -1.50000,-0.84000, 0.15000 );
@@ -2868,18 +2897,18 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
 
   //============================== PATCH 32 ==================================
   //		Ponto* p3130 = new Vertice ( 0.00000,-0.10000, 0.00001 );
-  PointAdaptive* p3210 = new Vertice(0.05000, -0.08660, 0.00001);
-  PointAdaptive* p3220 = new Vertice(0.08660, -0.05000, 0.00001);
+  PointAdaptive* p3210 = new VertexAdaptive(0.05000, -0.08660, 0.00001);
+  PointAdaptive* p3220 = new VertexAdaptive(0.08660, -0.05000, 0.00001);
   //		Ponto* p2900 = new Vertice ( 0.10000, 0.00000, 0.00001 );
 
   //		Ponto* p3131 = new Vertice ( 0.00000,-1.42500, 0.00000 );
-  PointAdaptive* p3211 = new Vertice(0.79800, -1.42500, 0.00000);
-  PointAdaptive* p3221 = new Vertice(1.42500, -0.79800, 0.00000);
+  PointAdaptive* p3211 = new VertexAdaptive(0.79800, -1.42500, 0.00000);
+  PointAdaptive* p3221 = new VertexAdaptive(1.42500, -0.79800, 0.00000);
   //		Ponto* p2901 = new Vertice ( 1.42500, 0.00000, 0.00000 );
 
   //		Ponto* p3132 = new Vertice ( 0.00000,-1.50000, 0.07500 );
-  PointAdaptive* p3212 = new Vertice(0.84000, -1.50000, 0.07500);
-  PointAdaptive* p3222 = new Vertice(1.50000, -0.84000, 0.07500);
+  PointAdaptive* p3212 = new VertexAdaptive(0.84000, -1.50000, 0.07500);
+  PointAdaptive* p3222 = new VertexAdaptive(1.50000, -0.84000, 0.07500);
   //		Ponto* p2902 = new Vertice ( 1.50000, 0.00000, 0.07500 );
 
   //		Ponto* p933 = p933; //new Vertice ( 0.00000,-1.50000, 0.15000 );

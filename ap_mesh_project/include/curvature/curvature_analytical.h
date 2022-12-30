@@ -4,9 +4,9 @@
 #include <cmath>
 #include <tuple>
 
-#include "../data/Vetor.h"
 #include "../data/patch/patch_coons.h"
 #include "../data/point_adaptive.h"
+#include "../data/vector_adaptive.h"
 #include "curvature.h"
 
 class CurvatureAnalytical : public Curvature {
@@ -16,12 +16,12 @@ class CurvatureAnalytical : public Curvature {
   double CalculateGaussCurvature() override;
 
  private:
-  Vetor qu_;
-  Vetor qv_;
-  Vetor quu_;
-  Vetor quv_;
-  Vetor qvv_;
-  Vetor prod_;
+  VectorAdaptive qu_;
+  VectorAdaptive qv_;
+  VectorAdaptive quu_;
+  VectorAdaptive quv_;
+  VectorAdaptive qvv_;
+  VectorAdaptive prod_;
   double a_;
   double b_;
   double c_;

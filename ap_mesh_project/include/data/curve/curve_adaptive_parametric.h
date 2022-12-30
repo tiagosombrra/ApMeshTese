@@ -7,8 +7,8 @@
 #include "../../crab_mesh/numerical/bisection_equation_root.h"
 #include "../../crab_mesh/numerical/equation_root_function.h"
 #include "../../data/definitions.h"
-#include "../Vertice.h"
-#include "../Vetor.h"
+#include "../vector_adaptive.h"
+#include "../vertex_adaptive.h"
 #include "curve_adaptive.h"
 
 class CurveAdaptiveParametric : public CurveAdaptive {
@@ -39,7 +39,7 @@ class CurveAdaptiveParametric : public CurveAdaptive {
   // encontra o ponto p na curva dado um parâmetro t
   PointAdaptive FindPointByParameter(double parameter);
   // calcula o gradiente no parâmetro t
-  Vetor CalculateGradientByParameter(double parameter);
+  VectorAdaptive CalculateGradientByParameter(double parameter);
   // retorna o ponto que fica na metade da curva
   PointAdaptive CalculateMidpointByPoints(const PointAdaptive& point1,
                                           const PointAdaptive& point2);

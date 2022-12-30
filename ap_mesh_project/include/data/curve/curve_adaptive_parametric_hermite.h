@@ -7,20 +7,21 @@ class CurveAdaptiveParametricHermite : public CurveAdaptiveParametric {
  public:
   CurveAdaptiveParametricHermite();
   CurveAdaptiveParametricHermite(PointAdaptive point0, PointAdaptive point1,
-                                 Vetor vector0, Vetor vector1);
+                                 VectorAdaptive vector0,
+                                 VectorAdaptive vector1);
   CurveAdaptiveParametricHermite(CurveAdaptiveParametricHermite*);
   ~CurveAdaptiveParametricHermite();
   double CalculateCurvature(double t);
 
-  Vetor GetVector0() const;
-  void SetVector0(const Vetor& vector0);
-  Vetor GetVector1() const;
-  void SetVector1(const Vetor& vector1);
+  VectorAdaptive GetVector0() const;
+  void SetVector0(const VectorAdaptive& vector0);
+  VectorAdaptive GetVector1() const;
+  void SetVector1(const VectorAdaptive& vector1);
 
  protected:
   // vetor tangente no ponto inicial
-  Vetor vector0_;
+  VectorAdaptive vector0_;
   // vetor tangente no ponto final
-  Vetor vector1_;
+  VectorAdaptive vector1_;
 };
 #endif  // DATA_CURVE_CURVE_ADAPTIVE_PARAMETRIC_HERMITE_H

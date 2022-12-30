@@ -8,9 +8,9 @@
 
 #include "../../include/input_output/WriteOBJFile.h"
 
-WriteOBJFIle::WriteOBJFIle() {}
+WriteOBJFile::WriteOBJFile() {}
 
-void WriteOBJFIle::writeCurvaturePatches(
+void WriteOBJFile::writeCurvaturePatches(
     std::vector<double> vecCurvaturePatches, double maxValue) {
   stringstream nameFile;
   nameFile << NAME_MODEL + "_analise_curvature_patches.log";
@@ -74,7 +74,7 @@ void WriteOBJFIle::writeCurvaturePatches(
   file.close();
 }
 
-bool WriteOBJFIle::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
+bool WriteOBJFile::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
                                     int process) {
   stringstream nameFile;
   nameFile << "mesh_";
@@ -108,7 +108,7 @@ bool WriteOBJFIle::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
     SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
     for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
-      Noh* n = sub->GetNoh(j);
+      NodeAdaptive* n = sub->GetNoh(j);
       file << "v " << n->GetX() << " " << n->GetY() << " " << n->GetZ() << endl;
     }
   }
@@ -132,4 +132,4 @@ bool WriteOBJFIle::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
   return true;
 }
 
-WriteOBJFIle::~WriteOBJFIle() {}
+WriteOBJFile::~WriteOBJFile() {}

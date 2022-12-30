@@ -197,11 +197,11 @@ double CurveAdaptiveParametricBezier::CalculateCurvature(double t) {
       6 * (1 - t) * (point2_.GetZ() - 2 * point1_.GetZ() + point0_.GetZ()) +
       6 * t * (point3_.GetZ() - 2 * point2_.GetZ() + point1_.GetZ());
 
-  Vetor vector_d1(v0, v1, v2);
-  Vetor vector_d2(v00, v10, v20);
+  VectorAdaptive vector_d1(v0, v1, v2);
+  VectorAdaptive vector_d2(v00, v10, v20);
 
-  double k = ((vector_d1.operator*(vector_d2)).modulo()) /
-             (pow(vector_d1.modulo(), 3));
+  double k = ((vector_d1.operator*(vector_d2)).CalculateModule()) /
+             (pow(vector_d1.CalculateModule(), 3));
 
   return k;
 }

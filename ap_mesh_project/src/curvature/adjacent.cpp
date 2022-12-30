@@ -4,7 +4,7 @@ extern double TOLERANCIA;
 
 // P de Primeiro, U de Último !!! :D
 // confirma que U é adjacente à esquerda de P
-bool Adjacent::ConfirmLeftAdjacency(const Noh& noh,
+bool Adjacent::ConfirmLeftAdjacency(const NodeAdaptive& noh,
                                     const ElementAdaptive& first_element,
                                     const ElementAdaptive& last_element) {
   //	quem é o noh para P? ( n1, n2 ou n3? )
@@ -52,7 +52,7 @@ bool Adjacent::ConfirmLeftAdjacency(const Noh& noh,
 }
 
 // confirma que U é adjacente à direita de P
-bool Adjacent::ConfirmRightAdjacency(const Noh& noh,
+bool Adjacent::ConfirmRightAdjacency(const NodeAdaptive& noh,
                                      const ElementAdaptive& first_element,
                                      const ElementAdaptive& last_element) {
   //	quem é o noh para P? ( n1, n2 ou n3? )
@@ -99,7 +99,7 @@ bool Adjacent::ConfirmRightAdjacency(const Noh& noh,
 }
 
 ElementAdaptive* Adjacent::GetElementLeft(
-    const Noh& noh, ElementAdaptive* element,
+    const NodeAdaptive& noh, ElementAdaptive* element,
     std::list<ElementAdaptive*>& list_element) {
   ElementAdaptive* element_result = nullptr;
   std::list<ElementAdaptive*>::iterator element_iterator;
@@ -118,7 +118,7 @@ ElementAdaptive* Adjacent::GetElementLeft(
 
 // busca na lista um elemento adjacente à direita de elem
 ElementAdaptive* Adjacent::GetElementRight(
-    const Noh& noh, ElementAdaptive* element,
+    const NodeAdaptive& noh, ElementAdaptive* element,
     std::list<ElementAdaptive*>& list_element) {
   ElementAdaptive* element_result = nullptr;
   std::list<ElementAdaptive*>::iterator element_iterator;
@@ -136,17 +136,17 @@ ElementAdaptive* Adjacent::GetElementRight(
 }
 
 // verifica a concavidade de dois elementos adjacentes
-int Adjacent::ConcavityElement(const Noh& noh,
+int Adjacent::ConcavityElement(const NodeAdaptive& noh,
                                const ElementAdaptive& first_element,
                                const ElementAdaptive& next_element) {
-  Vetor vector;
+  VectorAdaptive vector;
 
   if (noh == next_element.GetNoh(1))
-    vector = Vetor(next_element.GetNoh(1), next_element.GetNoh(3));
+    vector = VectorAdaptive(next_element.GetNoh(1), next_element.GetNoh(3));
   else if (noh == next_element.GetNoh(2))
-    vector = Vetor(next_element.GetNoh(2), next_element.GetNoh(1));
+    vector = VectorAdaptive(next_element.GetNoh(2), next_element.GetNoh(1));
   else
-    vector = Vetor(next_element.GetNoh(3), next_element.GetNoh(2));
+    vector = VectorAdaptive(next_element.GetNoh(3), next_element.GetNoh(2));
 
   double d;
   d = first_element.GetVectorNormal() ^ vector;
@@ -161,8 +161,8 @@ int Adjacent::ConcavityElement(const Noh& noh,
 
 double Adjacent::AngleElement(const ElementAdaptive& first_element,
                               const ElementAdaptive& next_element) {
-  Vetor first_vector = first_element.GetVectorNormal();
-  Vetor next_vector = next_element.GetVectorNormal();
+  VectorAdaptive first_vector = first_element.GetVectorNormal();
+  VectorAdaptive next_vector = next_element.GetVectorNormal();
 
   return first_vector.CalculateAngle(next_vector);
 }

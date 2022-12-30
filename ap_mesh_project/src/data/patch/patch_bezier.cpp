@@ -359,8 +359,8 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& p) {
     //         cout<<"u_i: "<<u_i<<" v_i: "<<v_i<<" thread:
     //         "<<omp_get_thread_num()<<endl;
 
-    Vetor Tu = -(this->Qu(u_i, v_i));
-    Vetor Tv = -(this->Qv(u_i, v_i));
+    VectorAdaptive Tu = -(this->Qu(u_i, v_i));
+    VectorAdaptive Tv = -(this->Qv(u_i, v_i));
 
     p_i = this->Parameterize(u_i, v_i);  // palpite inicial
 
@@ -376,14 +376,14 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& p) {
     //        }
 
     Matrix<double, 3, 3> matrix;
-    matrix(0, 0) = Tu.x_;
-    matrix(0, 1) = Tv.x_;
+    matrix(0, 0) = Tu.GetX();
+    matrix(0, 1) = Tv.GetX();
     matrix(0, 2) = p_i.GetX() - p.GetX();
-    matrix(1, 0) = Tu.y;
-    matrix(1, 1) = Tv.y;
+    matrix(1, 0) = Tu.GetY();
+    matrix(1, 1) = Tv.GetY();
     matrix(1, 2) = p_i.GetY() - p.GetY();
-    matrix(2, 0) = Tu.z;
-    matrix(2, 1) = Tv.z;
+    matrix(2, 0) = Tu.GetZ();
+    matrix(2, 1) = Tv.GetZ();
     matrix(2, 2) = p_i.GetZ() - p.GetZ();
 
     //        Vector3d b= {p.x, p.y, p.z};
@@ -507,7 +507,7 @@ PointAdaptive PatchBezier::Parameterize(double u, double v) {
 }
 
 // calcula o vetor tangente na direção u nas coordenadas paramétricas u, v
-Vetor PatchBezier::Qu(double u, double v) {
+VectorAdaptive PatchBezier::Qu(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
@@ -529,13 +529,13 @@ Vetor PatchBezier::Qu(double u, double v) {
   this->mat_base_v_(3, 0) = 1;
 
   P = CalculatePointUV();
-  Vetor V(P);
+  VectorAdaptive V(P);
 
   return V;
 }
 
 // calcula o vetor tangente na direção v nas coordenadas paramétricas u, v
-Vetor PatchBezier::Qv(double u, double v) {
+VectorAdaptive PatchBezier::Qv(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
@@ -557,13 +557,13 @@ Vetor PatchBezier::Qv(double u, double v) {
   this->mat_base_v_(3, 0) = 0;
 
   P = CalculatePointUV();
-  Vetor V(P);
+  VectorAdaptive V(P);
 
   return V;
 }
 
 // calcula a derivada parcial Quu nas coordenadas paramétricas u, v
-Vetor PatchBezier::Quu(double u, double v) {
+VectorAdaptive PatchBezier::Quu(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
@@ -585,13 +585,13 @@ Vetor PatchBezier::Quu(double u, double v) {
   this->mat_base_v_(3, 0) = 1;
 
   P = CalculatePointUV();
-  Vetor V(P);
+  VectorAdaptive V(P);
 
   return V;
 }
 
 // calcula a derivada parcial Quv nas coordenadas paramétricas u, v
-Vetor PatchBezier::Quv(double u, double v) {
+VectorAdaptive PatchBezier::Quv(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
@@ -613,16 +613,16 @@ Vetor PatchBezier::Quv(double u, double v) {
   this->mat_base_v_(3, 0) = 0;
 
   P = CalculatePointUV();
-  Vetor V(P);
+  VectorAdaptive V(P);
 
   return V;
 }
 
 // calcula a derivada parcial Qvu nas coordenadas paramétricas u, v
-Vetor PatchBezier::Qvu(double u, double v) { return Quv(u, v); }
+VectorAdaptive PatchBezier::Qvu(double u, double v) { return Quv(u, v); }
 
 // calcula a derivada parcial Qvv nas coordenadas paramétricas u, v
-Vetor PatchBezier::Qvv(double u, double v) {
+VectorAdaptive PatchBezier::Qvv(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
@@ -644,43 +644,43 @@ Vetor PatchBezier::Qvv(double u, double v) {
   this->mat_base_v_(3, 0) = 0;
 
   P = CalculatePointUV();
-  Vetor V(P);
+  VectorAdaptive V(P);
 
   return V;
 }
 
 // calcula o vetor tangente na direção u para o ponto p
-Vetor PatchBezier::Qu(const PointAdaptive& p) {
+VectorAdaptive PatchBezier::Qu(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Qu(get<0>(t), get<1>(t));
 }
 
 // calcula o vetor tangente na direção v para o ponto p
-Vetor PatchBezier::Qv(const PointAdaptive& p) {
+VectorAdaptive PatchBezier::Qv(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Qv(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Quu para o ponto p
-Vetor PatchBezier::Quu(const PointAdaptive& p) {
+VectorAdaptive PatchBezier::Quu(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Quu(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Quv para o ponto p
-Vetor PatchBezier::Quv(const PointAdaptive& p) {
+VectorAdaptive PatchBezier::Quv(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Quv(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Qvu para o ponto p
-Vetor PatchBezier::Qvu(const PointAdaptive& p) {
+VectorAdaptive PatchBezier::Qvu(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Qvu(get<0>(t), get<1>(t));
 }
 
 // calcula a derivada parcial Qvv para o ponto p
-Vetor PatchBezier::Qvv(const PointAdaptive& p) {
+VectorAdaptive PatchBezier::Qvv(const PointAdaptive& p) {
   tuple<double, double> t = this->FindUV(p);
   return this->Qvv(get<0>(t), get<1>(t));
 }
@@ -761,33 +761,33 @@ void PatchBezier::SetPt32(PointAdaptive value) { pt32_ = value; }
 
 void PatchBezier::SetPt33(PointAdaptive value) { pt33_ = value; }
 
-double PatchBezier::getNumberTriangle() const { return number_triangle_; }
+double PatchBezier::GetNumberTriangle() const { return number_triangle_; }
 
-void PatchBezier::setNumberTriangle(double value) { number_triangle_ = value; }
+void PatchBezier::SetNumberTriangle(double value) { number_triangle_ = value; }
 
-double PatchBezier::getAreaTriangle() const { return area_triangle_; }
+double PatchBezier::GetAreaTriangle() const { return area_triangle_; }
 
-void PatchBezier::setAreaTriangle(double value) { area_triangle_ = value; }
+void PatchBezier::SetAreaTriangle(double value) { area_triangle_ = value; }
 
-double PatchBezier::getSegmentMedio() const { return segment_medio_; }
+double PatchBezier::GetSegmentMedio() const { return segment_medio_; }
 
-void PatchBezier::setSegmentMedio(double value) { segment_medio_ = value; }
+void PatchBezier::SetSegmentMedio(double value) { segment_medio_ = value; }
 
-double PatchBezier::getKaMedio() const { return ka_medio_; }
+double PatchBezier::GetKaMedio() const { return ka_medio_; }
 
-void PatchBezier::setKaMedio(double value) { ka_medio_ = value; }
+void PatchBezier::SetKaMedio(double value) { ka_medio_ = value; }
 
-double PatchBezier::getArea() const { return area_; }
+double PatchBezier::GetArea() const { return area_; }
 
-void PatchBezier::setArea(double value) { area_ = value; }
+void PatchBezier::SetArea(double value) { area_ = value; }
 
-int PatchBezier::getIdProcess() const { return id_process_; }
+int PatchBezier::GetIdProcess() const { return id_process_; }
 
-void PatchBezier::setIdProcess(int value) { id_process_ = value; }
+void PatchBezier::SetIdProcess(int value) { id_process_ = value; }
 
-int PatchBezier::getId_bezierPatch() const { return id_patch_bezier_; }
+int PatchBezier::GetIdPatchBezier() const { return id_patch_bezier_; }
 
-void PatchBezier::setId_bezierPatch(int value) { id_patch_bezier_ = value; }
+void PatchBezier::SetIdPatchBezier(int value) { id_patch_bezier_ = value; }
 
 Matrix4x4 PatchBezier::StartBezierMatrix() {
   Matrix4x4 matrix_bezier;

@@ -17,7 +17,7 @@ curvaturas.
 #include "../curvature/curvature_analytical.h"
 #include "../curvature/curvature_discrete.h"
 #include "../data/definitions.h"
-#include "../data/noh.h"
+#include "../data/node_adaptive.h"
 #include "../data/patch/patch_bezier.h"
 #include "../data/patch/patch_coons.h"
 #include "../data/triangle_adaptive.h"

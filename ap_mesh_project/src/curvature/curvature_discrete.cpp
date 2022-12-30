@@ -5,7 +5,7 @@
 // on Geometrical Modeling and Computer Graphics in the WWW Era (1999), pp.
 // 97–104.
 
-CurvatureDiscrete::CurvatureDiscrete(const Noh& noh) {
+CurvatureDiscrete::CurvatureDiscrete(const NodeAdaptive& noh) {
   // O construtor ordena a lista de elementos do nó, por garantia...
   // para cada o elemento da lista de adjacências de n
   //		some sua área ao A deste objeto
@@ -71,7 +71,7 @@ double CurvatureDiscrete::CalculateGaussCurvature() {
   return (3.0 * (this->factor_disc_ - this->sum_phi_) / this->a_);
 }
 
-void CurvatureDiscrete::AdjacencySort(const Noh& noh_) {
+void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh_) {
   this->elements_.clear();
 
   // copiando os elementos da adjacência de n para a lista de elementos desta

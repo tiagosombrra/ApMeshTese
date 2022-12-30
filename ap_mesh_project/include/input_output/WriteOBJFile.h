@@ -10,13 +10,13 @@
 
 extern std::string NAME_MODEL;
 
-class WriteOBJFIle {
+class WriteOBJFile {
  public:
-  WriteOBJFIle();
+  WriteOBJFile();
   bool writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo, int process);
   void writeCurvaturePatches(std::vector<double> vecCurvaturePatches,
                              double maxValue);
-  ~WriteOBJFIle();
+  ~WriteOBJFile();
 };
 
 #endif /* WriteOBJFIle_h */

@@ -8,7 +8,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "../data/Definitions.h"
+#include "../data/definitions.h"
 
 using namespace std;
 extern double TIME_READ_FILE;

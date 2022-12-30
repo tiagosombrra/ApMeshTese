@@ -6,7 +6,7 @@
 
 #include "../../crab_mesh/numerical/bisection_equation_root.h"
 #include "../../crab_mesh/numerical/equation_root_function.h"
-#include "../../data/Definitions.h"
+#include "../../data/definitions.h"
 #include "../Vertice.h"
 #include "../Vetor.h"
 #include "curve_adaptive.h"
@@ -18,15 +18,15 @@ class CurveAdaptiveParametric : public CurveAdaptive {
   CurveAdaptiveParametric();
   // Esse construtor é mais recomendado !!! Evita erros ao esquecer de setar
   // os valores indicados na observação do construtor default !!!
-  CurveAdaptiveParametric(Ponto point0, Ponto point1);
+  CurveAdaptiveParametric(PointAdaptive point0, PointAdaptive point1);
   CurveAdaptiveParametric(CurveAdaptiveParametric*);
   ~CurveAdaptiveParametric();
 
   // calcula o comprimento de curva de p1 a p2
-  virtual double CalculateLengthPoints(const Ponto& point1,
-                                       const Ponto& point2);
+  virtual double CalculateLengthPoints(const PointAdaptive& point1,
+                                       const PointAdaptive& point2);
   // calcula o comprimento de curva até p
-  virtual double CalculateLengthPoint(const Ponto& point);
+  virtual double CalculateLengthPoint(const PointAdaptive& point);
   // calcula comprimento total "L" da curva
   virtual void CalculateLengthCurve();
   // calcula a curvatuta da curva
@@ -35,13 +35,14 @@ class CurveAdaptiveParametric : public CurveAdaptive {
   double CalculateParametricLength(double parameter1, double parameter2);
   // encontra o parâmetro t de um dado ponto p na curva, ou do ponto na
   // curva mais próximo de p
-  double FindParameterByPoint(const Ponto& point);
+  double FindParameterByPoint(const PointAdaptive& point);
   // encontra o ponto p na curva dado um parâmetro t
-  Ponto FindPointByParameter(double parameter);
+  PointAdaptive FindPointByParameter(double parameter);
   // calcula o gradiente no parâmetro t
   Vetor CalculateGradientByParameter(double parameter);
   // retorna o ponto que fica na metade da curva
-  Ponto CalculateMidpointByPoints(const Ponto& point1, const Ponto& point2);
+  PointAdaptive CalculateMidpointByPoints(const PointAdaptive& point1,
+                                          const PointAdaptive& point2);
   // retorna o ponto que fica na metade da curva
   double CalculateMidparameterByParamters(const double parameter1,
                                           const double parameter2);
@@ -64,27 +65,28 @@ class CurveAdaptiveParametric : public CurveAdaptive {
   Matrix1x4 GetMatParameters() const;
   void SetMatParameters(Matrix1x4& mat_parameters);
 
-  Ponto GetPoint0() const;
-  void SetPoint0(const Ponto& point0);
+  PointAdaptive GetPoint0() const;
+  void SetPoint0(const PointAdaptive& point0);
 
-  Ponto GetPoint1() const;
-  void SetPoint1(const Ponto& point1);
+  PointAdaptive GetPoint1() const;
+  void SetPoint1(const PointAdaptive& point1);
 
-  void SetPoint0Point1(const Ponto& point0, const Ponto& point1);
+  void SetPoint0Point1(const PointAdaptive& point0,
+                       const PointAdaptive& point1);
 
   // parâmetros dos pontos
   list<double> parameters_;
 
  protected:
   // retorna o ponto calculado por T x M x Gx,y,z
-  Ponto CalculatePointT();
+  PointAdaptive CalculatePointT();
   double CalculateLength(double t1, double t2, int parts, int points);
   double CalculateMidpointBisection(double t1, double t2);
 
   // ponto inicial
-  Ponto point0_;
+  PointAdaptive point0_;
   // ponto final
-  Ponto point1_;
+  PointAdaptive point1_;
   // matrizes geométricas
   Matrix4x1 mat_geo_gx_;
   Matrix4x1 mat_geo_gy_;

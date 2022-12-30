@@ -6,9 +6,9 @@
 #include <list>
 #include <sstream>
 
-#include "../data/Ponto.h"
-#include "../data/patch/BezierPatch.h"
-#include "../data/patch/HermitePatch.h"
+#include "../data/patch/patch_bezier.h"
+#include "../data/patch/patch_hermite.h"
+#include "../data/point_adaptive.h"
 // #include "../../Libs/Boost/boost/filesystem.hpp"
 // #include "../../Libs/Boost/boost/filesystem/fstream.hpp"
 // #include "../../Libs/Boost/boost/archive/text_iarchive.hpp"
@@ -17,20 +17,21 @@ extern std::string INPUT_MODEL;
 extern int RANK_MPI;
 
 class PatchBezierReader {
-  std::list<BezierPatch *> patches;
-  std::list<HermitePatch *> patchesHermite;
-  BezierPatch *patch;
-  HermitePatch *patchHermite;
+  std::list<PatchBezier *> patches;
+  std::list<PatchHermite *> patchesHermite;
+  PatchBezier *patch;
+  PatchHermite *patchHermite;
 
  public:
   PatchBezierReader();
-  std::list<BezierPatch *> parsePatchesBezier();
-  std::list<BezierPatch *> LoaderRibFile();
-  std::list<BezierPatch *> loaderBPFile(string filename);
-  std::list<HermitePatch *> loaderBPFileHermite();
-  std::list<BezierPatch *> loaderOBJFile();
-  std::list<BezierPatch *> orderVectorToListBezierPatches(std::vector<double>);
-  Ponto getPointVectorControlPoints(std::vector<Ponto>, unsigned long);
+  std::list<PatchBezier *> parsePatchesBezier();
+  std::list<PatchBezier *> LoaderRibFile();
+  std::list<PatchBezier *> loaderBPFile(string filename);
+  std::list<PatchHermite *> loaderBPFileHermite();
+  std::list<PatchBezier *> loaderOBJFile();
+  std::list<PatchBezier *> orderVectorToListBezierPatches(std::vector<double>);
+  PointAdaptive getPointVectorControlPoints(std::vector<PointAdaptive>,
+                                            unsigned long);
 
   ~PatchBezierReader();
 };

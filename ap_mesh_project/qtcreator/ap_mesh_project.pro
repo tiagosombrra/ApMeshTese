@@ -40,22 +40,22 @@ SOURCES += \
     ../src/data/curve/curve_adaptive_parametric.cpp \
     ../src/data/curve/curve_adaptive_parametric_bezier.cpp \
     ../src/data/curve/curve_adaptive_parametric_hermite.cpp \
-    ../src/data/Definitions.cpp \
-    ../src/data/Edge.cpp \
-    ../src/data/Elemento.cpp \
+    ../src/data/definitions.cpp \
+    ../src/crab_mesh/aft/edge.cpp \
+    ../src/data/element_adaptive.cpp \
     ../src/data/Face.cpp \
-    ../src/data/Geometria.cpp \
-    ../src/data/mesh/Malha.cpp \
-    ../src/data/mesh/SubMalha.cpp \
-    ../src/data/Modelo.cpp \
-    ../src/data/Noh.cpp \
-    ../src/data/patch/BezierPatch.cpp \
-    ../src/data/patch/CoonsPatch.cpp \
-    ../src/data/patch/HermitePatch.cpp \
-    ../src/data/patch/Patch.cpp \
-    ../src/data/Ponto.cpp \
-    ../src/data/tree/BinTree.cpp \
-    ../src/data/Triangulo.cpp \
+    ../src/data/geometry.cpp \
+    ../src/data/mesh/mesh_adaptive.cpp \
+    ../src/data/mesh/sub_mesh.cpp \
+    ../src/data/model.cpp \
+    ../src/data/noh.cpp \
+    ../src/data/patch/patch_bezier.cpp \
+    ../src/data/patch/patch_coons.cpp \
+    ../src/data/patch/patch_hermite.cpp \
+    ../src/data/patch/patch.cpp \
+    ../src/data/point_adaptive.cpp \
+    ../src/data/tree/bin_tree.cpp \
+    ../src/data/triangle_adaptive.cpp \
     ../src/data/Vertex.cpp \
     ../src/data/Vertice.cpp \
     ../src/data/Vetor.cpp \
@@ -111,22 +111,22 @@ HEADERS += \
     ../include/data/curve/curve_adaptive_parametric.h \
     ../include/data/curve/curve_adaptive_parametric_bezier.h \
     ../include/data/curve/curve_adaptive_parametric_hermite.h \
-    ../include/data/Definitions.h \
-    ../include/data/Edge.h \
-    ../include/data/Elemento.h \
+    ../include/data/definitions.h \
+    ../include/crab_mesh/aft/edge.h \
+    ../include/data/element_adaptive.h \
     ../include/data/Face.h \
-    ../include/data/Geometria.h \
-    ../include/data/Mesh/Malha.h \
-    ../include/data/Mesh/SubMalha.h \
-    ../include/data/Modelo.h \
-    ../include/data/Noh.h \
-    ../include/data/Patch/BezierPatch.h \
-    ../include/data/Patch/CoonsPatch.h \
-    ../include/data/Patch/HermitePatch.h \
-    ../include/data/Patch/Patch.h \
-    ../include/data/Ponto.h \
-    ../include/data/Tree/BinTree.h \
-    ../include/data/Triangulo.h \
+    ../include/data/geometry.h \
+    ../include/data/mesh/mesh_adaptive.h \
+    ../include/data/mesh/sub_mesh.h \
+    ../include/data/model.h \
+    ../include/data/noh.h \
+    ../include/data/patch/patch_bezier.h \
+    ../include/data/patch/patch_coons.h \
+    ../include/data/patch/patch_hermite.h \
+    ../include/data/patch/patch.h \
+    ../include/data/point_adaptive.h \
+    ../include/data/tree/bin_tree.h \
+    ../include/data/triangle_adaptive.h \
     ../include/data/Vertex.h \
     ../include/data/Vertice.h \
     ../include/data/Vetor.h \
@@ -141,7 +141,7 @@ HEADERS += \
     ../include/input_output/WriteOBJFIle.h \
     ../include/parallel/ApMeshCommunicator.h \
     ../include/parallel/Communicator.h \
-    ../include/parallel/Definitions.h \
+    ../include/parallel/definitions.h \
     ../include/parallel/Message.h \
     ../include/parallel/MPICommunicator.h \
     ../include/parallel/MPIMessage.h \

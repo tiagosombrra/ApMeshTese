@@ -6,7 +6,7 @@ extern double TOLERANCIA;
 // Global function
 vector<CurveAdaptiveParametric*> ptr_aux;
 
-bool Compare(Ponto* point1, Ponto* point2) {
+bool Compare(PointAdaptive* point1, PointAdaptive* point2) {
   double parameter1, parameter2;
 
 #if USE_OPENMP
@@ -28,7 +28,8 @@ CurveAdaptiveParametric::CurveAdaptiveParametric() {
   mat_parameters_.setZero(1, 4);
 }
 
-CurveAdaptiveParametric::CurveAdaptiveParametric(Ponto point0, Ponto point1)
+CurveAdaptiveParametric::CurveAdaptiveParametric(PointAdaptive point0,
+                                                 PointAdaptive point1)
     : point0_(point0), point1_(point1) {
   mat_geo_gx_.setZero(4, 1);
   mat_geo_gy_.setZero(4, 1);
@@ -58,8 +59,8 @@ CurveAdaptiveParametric::~CurveAdaptiveParametric() {
 }
 
 // calcula o comprimento de curva de p1 a p2
-double CurveAdaptiveParametric::CalculateLengthPoints(const Ponto& point1,
-                                                      const Ponto& point2) {
+double CurveAdaptiveParametric::CalculateLengthPoints(
+    const PointAdaptive& point1, const PointAdaptive& point2) {
   // parâmetro do ponto p1
   double parameter1 = FindParameterByPoint(point1);
   // parâmetro do ponto p2
@@ -76,7 +77,8 @@ double CurveAdaptiveParametric::CalculateLengthPoints(const Ponto& point1,
 }
 
 // calcula o comprimento de curva de point_0_ até p
-double CurveAdaptiveParametric::CalculateLengthPoint(const Ponto& point) {
+double CurveAdaptiveParametric::CalculateLengthPoint(
+    const PointAdaptive& point) {
   return CalculateParametricLength(0, FindParameterByPoint(point));
 }
 
@@ -111,14 +113,14 @@ double CurveAdaptiveParametric::CalculateParametricLength(double parameter1,
   double d = 0.0; // distância total entre os dois pontos
 
   // 1. cria Ponto 'p_ant'
-  p_ant = this->parametrizar ( t1 );
+  p_ant = this->Parameterize ( t1 );
 
   do
   {
       t += DELTA;
 
       // 2. cria Ponto 'p'
-      p = this->parametrizar ( t );
+      p = this->Parameterize ( t );
 
       // incrementa distancia
       d += p_ant.distanciaPara ( p );
@@ -135,9 +137,10 @@ double CurveAdaptiveParametric::CalculateParametricLength(double parameter1,
 }
 
 // encontra o parâmetro t de um dado ponto p na curva
-double CurveAdaptiveParametric::FindParameterByPoint(const Ponto& point) {
+double CurveAdaptiveParametric::FindParameterByPoint(
+    const PointAdaptive& point) {
   struct DistanceFunction : public Data::Numerical::EquationRootFunction {
-    const Ponto* point;
+    const PointAdaptive* point;
     CurveAdaptiveParametric* curva;
 
     double min() { return 0.0; };
@@ -145,8 +148,8 @@ double CurveAdaptiveParametric::FindParameterByPoint(const Ponto& point) {
 
     using Data::Numerical::EquationRootFunction::f;
     double f(double parameter) {
-      Ponto point1 = curva->FindPointByParameter(parameter);
-      return point->distanciaPara(point1);
+      PointAdaptive point1 = curva->FindPointByParameter(parameter);
+      return point->CalculateDistance(point1);
     };
   };
 
@@ -172,7 +175,7 @@ double CurveAdaptiveParametric::FindParameterByPoint(const Ponto& point) {
 
   //        for ( long double t = 0.0; t <= 1.0; t += DELTA )
   //        {
-  //            *pi = parametrizar ( t );
+  //            *pi = Parameterize ( t );
   //            di = pi->distanciaPara ( p );
   //            if ( di < d_min )
   //            {
@@ -209,7 +212,7 @@ double CurveAdaptiveParametric::FindParameterByPoint(const Ponto& point) {
   //	do
   //	{
   //		// 1. cria Si (modificou T)
-  //		Si = this->parametrizar ( tm );
+  //		Si = this->Parameterize ( tm );
 
   //		// 2. cria Vj
   //		Vetor Vj ( Si, p );
@@ -232,8 +235,8 @@ double CurveAdaptiveParametric::FindParameterByPoint(const Ponto& point) {
 }
 
 // encontra as coordenadas 3D de um ponto p de parâmetro t
-Ponto CurveAdaptiveParametric::FindPointByParameter(double t) {
-  // parametrizar:
+PointAdaptive CurveAdaptiveParametric::FindPointByParameter(double t) {
+  // Parameterize:
   //
   //  -> ALTERA a matriz T
   //  -> usa calculaPonto_t
@@ -256,7 +259,7 @@ Vetor CurveAdaptiveParametric::CalculateGradientByParameter(double t) {
   //  -> ALTERA a matriz T !!!
   //
 
-  Ponto point;
+  PointAdaptive point;
 
   this->mat_parameters_(0, 0) = 3 * t * t;
   this->mat_parameters_(0, 1) = 2 * t;
@@ -270,8 +273,8 @@ Vetor CurveAdaptiveParametric::CalculateGradientByParameter(double t) {
 }
 
 // retorna o ponto que fica na metade de um segmento
-Ponto CurveAdaptiveParametric::CalculateMidpointByPoints(const Ponto& point1,
-                                                         const Ponto& point2) {
+PointAdaptive CurveAdaptiveParametric::CalculateMidpointByPoints(
+    const PointAdaptive& point1, const PointAdaptive& point2) {
   return this->FindPointByParameter(this->CalculateMidparameterByParamters(
       this->FindParameterByPoint(point1), this->FindParameterByPoint(point2)));
 }
@@ -390,39 +393,37 @@ void CurveAdaptiveParametric::SetMatParameters(Matrix1x4& mat_parameters) {
   this->mat_parameters_ = mat_parameters;
 }
 
-Ponto CurveAdaptiveParametric::GetPoint0() const { return this->point0_; }
+PointAdaptive CurveAdaptiveParametric::GetPoint0() const {
+  return this->point0_;
+}
 
-void CurveAdaptiveParametric::SetPoint0(const Ponto& point0) {
+void CurveAdaptiveParametric::SetPoint0(const PointAdaptive& point0) {
   this->point0_ = point0;
 }
 
-Ponto CurveAdaptiveParametric::GetPoint1() const { return this->point1_; }
+PointAdaptive CurveAdaptiveParametric::GetPoint1() const {
+  return this->point1_;
+}
 
-void CurveAdaptiveParametric::SetPoint1(const Ponto& point1) {
+void CurveAdaptiveParametric::SetPoint1(const PointAdaptive& point1) {
   this->point1_ = point1;
   CalculateLengthCurve();
 }
 
-void CurveAdaptiveParametric::SetPoint0Point1(const Ponto& point0,
-                                              const Ponto& point1) {
+void CurveAdaptiveParametric::SetPoint0Point1(const PointAdaptive& point0,
+                                              const PointAdaptive& point1) {
   this->point0_ = point0;
   this->point1_ = point1;
 }
 
 // faz as multiplicações necessárias para 'parametriar ( t )' e 'Qt ( t )'
-Ponto CurveAdaptiveParametric::CalculatePointT() {
-  //  ALOCA um Ponto e retorna
-  //
-
-  Ponto point;
+PointAdaptive CurveAdaptiveParametric::CalculatePointT() {
+  PointAdaptive point;
 
   // C = ( T * ( M * G ) )
-  point.x = (this->GetMatParameters() *
-             (/*this->getM() * */ this->GetMatGeoGx()))(0, 0);
-  point.y = (this->GetMatParameters() *
-             (/*this->getM() * */ this->GetMatGeoGy()))(0, 0);
-  point.z = (this->GetMatParameters() *
-             (/*this->getM() * */ this->GetMatGeoGz()))(0, 0);
+  point.SetX((this->GetMatParameters() * (this->GetMatGeoGx()))(0, 0));
+  point.SetY((this->GetMatParameters() * (this->GetMatGeoGy()))(0, 0));
+  point.SetZ((this->GetMatParameters() * (this->GetMatGeoGz()))(0, 0));
 
   return point;
 }

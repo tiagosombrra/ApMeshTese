@@ -1,13 +1,13 @@
 #ifndef _QUADTREE_CELL_H_
 #define _QUADTREE_CELL_H_
 
-#include "../../data/Definitions.h"
-#include "../../data/Edge.h"
-#include "../../data/Face.h"
-#include "../../data/Vertex.h"
+#include "../../data/definitions.h"
 #include "boundary.h"
+#include "edge.h"
+#include "face.h"
 #include "quadtree.h"
 #include "shape.h"
+#include "vertex.h"
 
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;

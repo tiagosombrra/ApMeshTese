@@ -6,8 +6,8 @@
 class CurveAdaptiveParametricHermite : public CurveAdaptiveParametric {
  public:
   CurveAdaptiveParametricHermite();
-  CurveAdaptiveParametricHermite(Ponto point0, Ponto point1, Vetor vector0,
-                                 Vetor vector1);
+  CurveAdaptiveParametricHermite(PointAdaptive point0, PointAdaptive point1,
+                                 Vetor vector0, Vetor vector1);
   CurveAdaptiveParametricHermite(CurveAdaptiveParametricHermite*);
   ~CurveAdaptiveParametricHermite();
   double CalculateCurvature(double t);

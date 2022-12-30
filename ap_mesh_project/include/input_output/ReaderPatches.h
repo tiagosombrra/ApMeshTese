@@ -6,26 +6,27 @@
 #include <list>
 #include <sstream>
 
-#include "../data/Modelo.h"
-#include "../data/Ponto.h"
-#include "../data/patch/BezierPatch.h"
-#include "../data/patch/HermitePatch.h"
+#include "../data/model.h"
+#include "../data/patch/patch_bezier.h"
+#include "../data/patch/patch_hermite.h"
+#include "../data/point_adaptive.h"
 
 extern std::string INPUT_MODEL;
 
 class ReaderPatches {
  public:
-  std::list<BezierPatch *> patches;
-  std::list<HermitePatch *> patchesHermite;
-  BezierPatch *patch;
-  HermitePatch *patchHermite;
+  std::list<PatchBezier *> patches;
+  std::list<PatchHermite *> patchesHermite;
+  PatchBezier *patch;
+  PatchHermite *patchHermite;
 
   ReaderPatches();
 
-  std::list<BezierPatch *> loaderBezierPatchFile(string fileName);
-  Ponto getPointVectorControlPoints(std::vector<Ponto>, unsigned long);
+  std::list<PatchBezier *> loaderBezierPatchFile(string fileName);
+  PointAdaptive getPointVectorControlPoints(std::vector<PointAdaptive>,
+                                            unsigned long);
 
-  Geometria *readerPatches(Geometria *geo, string fileName);
+  Geometry *readerPatches(Geometry *geo, string fileName);
 };
 
 #endif  // READERPATCHES_H

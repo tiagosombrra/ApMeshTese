@@ -4,7 +4,7 @@ PatchBezierReader::PatchBezierReader() {
   // patch = new BezierPatch();
 }
 
-std::list<HermitePatch*> PatchBezierReader::loaderBPFileHermite() {
+std::list<PatchHermite*> PatchBezierReader::loaderBPFileHermite() {
 #ifdef __APPLE__
   string filename =
       "/Users/tiagosombra/Dropbox/tiago/ufc/MestradoTiago/GitHub/TMeshSurf/"
@@ -13,7 +13,7 @@ std::list<HermitePatch*> PatchBezierReader::loaderBPFileHermite() {
   string filename = INPUT_MODEL;  //"../../INPUT_MODEL/mountain.bp"
 #endif  // #ifdef __APPLE__
 
-  patchHermite = new HermitePatch();
+  patchHermite = new PatchHermite();
 
   if (!filename.empty()) {
     std::ifstream fin(filename);
@@ -22,7 +22,7 @@ std::list<HermitePatch*> PatchBezierReader::loaderBPFileHermite() {
       while (fin) {
         std::string line;
         std::vector<double> v;
-        std::vector<Ponto> vectorControlPoints;
+        std::vector<PointAdaptive> vectorControlPoints;
         std::vector<long> p;
         long id_ponto = 0;
 
@@ -39,7 +39,7 @@ std::list<HermitePatch*> PatchBezierReader::loaderBPFileHermite() {
               v.push_back(n);
             }
 
-            Ponto ponto(v[0], v[1], v[2], id_ponto);
+            PointAdaptive ponto(v[0], v[1], v[2], id_ponto);
             id_ponto++;
             vectorControlPoints.push_back(ponto);
             v.erase(v.begin(), v.end());
@@ -107,7 +107,7 @@ std::list<HermitePatch*> PatchBezierReader::loaderBPFileHermite() {
 
             p.erase(p.begin(), p.end());
             patchesHermite.push_back(patchHermite);
-            patchHermite = new HermitePatch();
+            patchHermite = new PatchHermite();
           }
         }
       }
@@ -124,8 +124,8 @@ std::list<HermitePatch*> PatchBezierReader::loaderBPFileHermite() {
   return patchesHermite;
 }
 
-std::list<BezierPatch*> PatchBezierReader::loaderBPFile(std::string filename) {
-  patch = new BezierPatch();
+std::list<PatchBezier*> PatchBezierReader::loaderBPFile(std::string filename) {
+  patch = new PatchBezier();
 
   if (!filename.empty()) {
     std::ifstream fin(filename);
@@ -135,7 +135,7 @@ std::list<BezierPatch*> PatchBezierReader::loaderBPFile(std::string filename) {
       while (fin) {
         std::string line;
         std::vector<double> v;
-        std::vector<Ponto> vectorControlPoints;
+        std::vector<PointAdaptive> vectorControlPoints;
         std::vector<long> p;
         long id_ponto = 0;
 
@@ -149,7 +149,7 @@ std::list<BezierPatch*> PatchBezierReader::loaderBPFile(std::string filename) {
               v.push_back(n);
             }
 
-            Ponto ponto(v[0], v[1], v[2], id_ponto);
+            PointAdaptive ponto(v[0], v[1], v[2], id_ponto);
             id_ponto++;
             vectorControlPoints.push_back(ponto);
             v.erase(v.begin(), v.end());
@@ -165,59 +165,59 @@ std::list<BezierPatch*> PatchBezierReader::loaderBPFile(std::string filename) {
 
             for (unsigned int i = 0; i < p.size(); i++) {
               if (i == 0) {
-                patch->setPt00(
+                patch->SetPt00(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 1) {
-                patch->setPt10(
+                patch->SetPt10(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 2) {
-                patch->setPt20(
+                patch->SetPt20(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 3) {
-                patch->setPt30(
+                patch->SetPt30(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 4) {
-                patch->setPt01(
+                patch->SetPt01(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 5) {
-                patch->setPt11(
+                patch->SetPt11(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 6) {
-                patch->setPt21(
+                patch->SetPt21(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 7) {
-                patch->setPt31(
+                patch->SetPt31(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 8) {
-                patch->setPt02(
+                patch->SetPt02(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 9) {
-                patch->setPt12(
+                patch->SetPt12(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 10) {
-                patch->setPt22(
+                patch->SetPt22(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 11) {
-                patch->setPt32(
+                patch->SetPt32(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 12) {
-                patch->setPt03(
+                patch->SetPt03(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 13) {
-                patch->setPt13(
+                patch->SetPt13(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 14) {
-                patch->setPt23(
+                patch->SetPt23(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               } else if (i == 15) {
-                patch->setPt33(
+                patch->SetPt33(
                     getPointVectorControlPoints(vectorControlPoints, p[i]));
               }
             }
 
             p.erase(p.begin(), p.end());
             patches.push_back(patch);
-            patch = new BezierPatch();
+            patch = new PatchBezier();
           }
         }
       }
@@ -234,7 +234,7 @@ std::list<BezierPatch*> PatchBezierReader::loaderBPFile(std::string filename) {
   return patches;
 }
 
-std::list<BezierPatch*> PatchBezierReader::loaderOBJFile() {
+std::list<PatchBezier*> PatchBezierReader::loaderOBJFile() {
 #ifdef __APPLE__
   string filename =
       "/Users/tiagosombra/Dropbox/tiago/ufc/MestradoTiago/GitHub/TMeshSurf/"
@@ -243,7 +243,7 @@ std::list<BezierPatch*> PatchBezierReader::loaderOBJFile() {
   string filename = "../../INPUT_MODEL/uteapot.obj";
 #endif  // #ifdef __APPLE__
 
-  patch = new BezierPatch();
+  patch = new PatchBezier();
 
   if (!filename.empty()) {
     std::ifstream fin(filename);
@@ -252,7 +252,7 @@ std::list<BezierPatch*> PatchBezierReader::loaderOBJFile() {
       while (fin) {
         std::string line;
         std::vector<double> v;
-        std::vector<Ponto> vectorControlPoints;
+        std::vector<PointAdaptive> vectorControlPoints;
         std::vector<long> p;
         long id_Ponto = 0;
 
@@ -266,7 +266,7 @@ std::list<BezierPatch*> PatchBezierReader::loaderOBJFile() {
               v.push_back(n);
             }
 
-            Ponto ponto(v[0], v[1], v[2], id_Ponto);
+            PointAdaptive ponto(v[0], v[1], v[2], id_Ponto);
             id_Ponto++;
             vectorControlPoints.push_back(ponto);
             v.erase(v.begin(), v.end());
@@ -283,43 +283,43 @@ std::list<BezierPatch*> PatchBezierReader::loaderOBJFile() {
 
             for (unsigned int i = 0; i < p.size(); i++) {
               if (i == 0) {
-                patch->setPt00(vectorControlPoints.at(i));
+                patch->SetPt00(vectorControlPoints.at(i));
               } else if (i == 1) {
-                patch->setPt10(vectorControlPoints.at(i));
+                patch->SetPt10(vectorControlPoints.at(i));
               } else if (i == 2) {
-                patch->setPt20(vectorControlPoints.at(i));
+                patch->SetPt20(vectorControlPoints.at(i));
               } else if (i == 3) {
-                patch->setPt30(vectorControlPoints.at(i));
+                patch->SetPt30(vectorControlPoints.at(i));
               } else if (i == 4) {
-                patch->setPt01(vectorControlPoints.at(i));
+                patch->SetPt01(vectorControlPoints.at(i));
               } else if (i == 5) {
-                patch->setPt11(vectorControlPoints.at(i));
+                patch->SetPt11(vectorControlPoints.at(i));
               } else if (i == 6) {
-                patch->setPt21(vectorControlPoints.at(i));
+                patch->SetPt21(vectorControlPoints.at(i));
               } else if (i == 7) {
-                patch->setPt31(vectorControlPoints.at(i));
+                patch->SetPt31(vectorControlPoints.at(i));
               } else if (i == 8) {
-                patch->setPt02(vectorControlPoints.at(i));
+                patch->SetPt02(vectorControlPoints.at(i));
               } else if (i == 9) {
-                patch->setPt12(vectorControlPoints.at(i));
+                patch->SetPt12(vectorControlPoints.at(i));
               } else if (i == 10) {
-                patch->setPt22(vectorControlPoints.at(i));
+                patch->SetPt22(vectorControlPoints.at(i));
               } else if (i == 11) {
-                patch->setPt32(vectorControlPoints.at(i));
+                patch->SetPt32(vectorControlPoints.at(i));
               } else if (i == 12) {
-                patch->setPt03(vectorControlPoints.at(i));
+                patch->SetPt03(vectorControlPoints.at(i));
               } else if (i == 13) {
-                patch->setPt13(vectorControlPoints.at(i));
+                patch->SetPt13(vectorControlPoints.at(i));
               } else if (i == 14) {
-                patch->setPt23(vectorControlPoints.at(i));
+                patch->SetPt23(vectorControlPoints.at(i));
               } else if (i == 15) {
-                patch->setPt33(vectorControlPoints.at(i));
+                patch->SetPt33(vectorControlPoints.at(i));
               }
             }
 
             p.erase(p.begin(), p.end());
             patches.push_back(patch);
-            patch = new BezierPatch();
+            patch = new PatchBezier();
           }
         }
       }
@@ -339,29 +339,29 @@ std::list<BezierPatch*> PatchBezierReader::loaderOBJFile() {
 PatchBezierReader::~PatchBezierReader() {
   // delete patch;
 }
-std::list<BezierPatch*> PatchBezierReader::orderVectorToListBezierPatches(
+std::list<PatchBezier*> PatchBezierReader::orderVectorToListBezierPatches(
     std::vector<double> vecDouble) {
   for (unsigned int i = 0; i < vecDouble.size(); i += i + 16) {
-    patch = new BezierPatch();
+    patch = new PatchBezier();
   }
 
   return patches;
 }
 
-Ponto PatchBezierReader::getPointVectorControlPoints(
-    std::vector<Ponto> vectorPoints, unsigned long idPoint) {
-  for (std::vector<Ponto>::iterator it = vectorPoints.begin();
+PointAdaptive PatchBezierReader::getPointVectorControlPoints(
+    std::vector<PointAdaptive> vectorPoints, unsigned long idPoint) {
+  for (std::vector<PointAdaptive>::iterator it = vectorPoints.begin();
        it != vectorPoints.end(); ++it) {
-    if ((*it).getId() == idPoint) {
+    if ((*it).GetId() == idPoint) {
       return (*it);
     }
   }
 
-  Ponto ponto;
+  PointAdaptive ponto;
   return ponto;
 }
 
-std::list<BezierPatch*> PatchBezierReader::parsePatchesBezier() {
+std::list<PatchBezier*> PatchBezierReader::parsePatchesBezier() {
 #if USE_INTERFACEQT
 
   QFileDialog dialog;
@@ -434,74 +434,74 @@ std::list<BezierPatch*> PatchBezierReader::parsePatchesBezier() {
             while (iss >> n) {
               v.push_back(n);
             }
-            Ponto point3D(v[0], v[1], v[2], id_point);
+            PointAdaptive point3D(v[0], v[1], v[2], id_point);
 
             id_point++;
 
             v.erase(v.begin(), v.end());
 
             if (name_patch == "pc00") {
-              patch->setPt00(point3D);
+              patch->SetPt00(point3D);
               count_points++;
 
             } else if (name_patch == "pc10") {
-              patch->setPt10(point3D);
+              patch->SetPt10(point3D);
               count_points++;
 
             } else if (name_patch == "pc20") {
-              patch->setPt20(point3D);
+              patch->SetPt20(point3D);
               count_points++;
 
             } else if (name_patch == "pc30") {
-              patch->setPt30(point3D);
+              patch->SetPt30(point3D);
               count_points++;
 
             } else if (name_patch == "pc01") {
-              patch->setPt01(point3D);
+              patch->SetPt01(point3D);
               count_points++;
 
             } else if (name_patch == "pc11") {
-              patch->setPt11(point3D);
+              patch->SetPt11(point3D);
               count_points++;
 
             } else if (name_patch == "pc21") {
-              patch->setPt21(point3D);
+              patch->SetPt21(point3D);
               count_points++;
 
             } else if (name_patch == "pc31") {
-              patch->setPt31(point3D);
+              patch->SetPt31(point3D);
               count_points++;
 
             } else if (name_patch == "pc02") {
-              patch->setPt02(point3D);
+              patch->SetPt02(point3D);
               count_points++;
 
             } else if (name_patch == "pc12") {
-              patch->setPt12(point3D);
+              patch->SetPt12(point3D);
               count_points++;
 
             } else if (name_patch == "pc22") {
-              patch->setPt22(point3D);
+              patch->SetPt22(point3D);
               count_points++;
 
             } else if (name_patch == "pc32") {
-              patch->setPt32(point3D);
+              patch->SetPt32(point3D);
               count_points++;
 
             } else if (name_patch == "pc03") {
-              patch->setPt03(point3D);
+              patch->SetPt03(point3D);
               count_points++;
 
             } else if (name_patch == "pc13") {
-              patch->setPt13(point3D);
+              patch->SetPt13(point3D);
               count_points++;
 
             } else if (name_patch == "pc23") {
-              patch->setPt23(point3D);
+              patch->SetPt23(point3D);
               count_points++;
 
             } else if (name_patch == "pc33") {
-              patch->setPt33(point3D);
+              patch->SetPt33(point3D);
               count_points++;
             }
 
@@ -512,7 +512,7 @@ std::list<BezierPatch*> PatchBezierReader::parsePatchesBezier() {
             count_points = 0;
             patches.push_back(patch);
             // patch = nullptr;
-            patch = new BezierPatch();
+            patch = new PatchBezier();
           }
         }
       }
@@ -531,7 +531,7 @@ std::list<BezierPatch*> PatchBezierReader::parsePatchesBezier() {
   return patches;
 }
 
-std::list<BezierPatch*> PatchBezierReader::LoaderRibFile() {
+std::list<PatchBezier*> PatchBezierReader::LoaderRibFile() {
 #ifdef __APPLE__
   string filename =
       "/Users/tiagosombra/Dropbox/tiago/ufc/GitHub/TMeshSurfAux_Documentos/"

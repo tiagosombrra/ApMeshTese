@@ -1,7 +1,7 @@
 #ifndef _PERFORMER_DEFINITIONS_H_
 #define _PERFORMER_DEFINITIONS_H_
 
-#include "../../data/Definitions.h"
+#include "../../data/definitions.h"
 
 namespace Performer {
 using Data::Int;
@@ -83,7 +83,7 @@ class CovarianceMatrixFinder;
 class PrincipalComponentsAnalyzer;
 class PrincipalComponentsBasisFinder;
 class HotellingTransformer;
-#endif  //#if USE_NUMERICAL
+#endif  // #if USE_NUMERICAL
 
 struct Crack {
   Data::FrontElement *fel1;
@@ -121,7 +121,7 @@ typedef std::unordered_map<Data::Element *, VEHashMap> EVEMapHashMap;
 
 typedef std::unordered_map<Data::Element *, ECrack> ECrackHashMap;
 typedef std::unordered_map<Data::Element *, Data::ElementHash> EEHashHashMap;
-#endif  //#if USE_C__11
+#endif  // #if USE_C__11
 
 typedef std::map<Data::Vertex *, Data::FrontElement *> VFEMap;
 typedef std::map<Data::FrontElement *, Data::Vertex *> FEVMap;
@@ -140,4 +140,4 @@ typedef std::map<Data::Element *, ECrack> ECrackMap;
 typedef std::map<Data::Element *, Data::ElementSet> EESetMap;
 }  // namespace Performer
 
-#endif  //#ifndef _PERFORMER_DEFINITIONS_H_
+#endif  // #ifndef _PERFORMER_DEFINITIONS_H_

@@ -1,13 +1,13 @@
 #include <string>
 
-#include "../include/data/Definitions.h"
-#include "../include/data/Modelo.h"
 #include "../include/data/Vertice.h"
 #include "../include/data/Vetor.h"
 #include "../include/data/curve/curve_adaptive_parametric_bezier.h"
 #include "../include/data/curve/curve_adaptive_parametric_hermite.h"
-#include "../include/data/patch/BezierPatch.h"
-#include "../include/data/patch/HermitePatch.h"
+#include "../include/data/definitions.h"
+#include "../include/data/model.h"
+#include "../include/data/patch/patch_bezier.h"
+#include "../include/data/patch/patch_hermite.h"
 #include "../include/generator/GeradorAdaptativoPorCurvatura.h"
 #include "../include/input_output/Modelos3d.h"
 #include "../include/input_output/PatchBezierReader.h"
@@ -34,9 +34,9 @@ double EPSYLON = 0.0000001;     // trashrold
 double DISCRETIZACAO_CURVA = 1.414213562;
 double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
 double TIME_READ_FILE = 0.0;
-
-std::set<Ponto *> LIST_ALL_POINTS_MODEL;
-std::set<SubMalha *> LIST_ALL_SUB_MESH_MODEL;
+int I_MAX = 50000;  // i maximo do método findUV()
+std::set<PointAdaptive *> LIST_ALL_POINTS_MODEL;
+std::set<SubMesh *> LIST_ALL_SUB_MESH_MODEL;
 std::string NAME_MODEL;
 std::string INPUT_MODEL;
 std::string NUMBER_PROCESS;

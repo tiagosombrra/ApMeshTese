@@ -5,8 +5,9 @@ extern double TOLERANCIA;
 // Dill, J. C. (1981). An Application of Color Graphics to the Display of
 // Surface Curvature. Comp. Graph., Vol. 15, pag. 153-161. SIGGRAPH 81.
 
-CurvatureAnalytical::CurvatureAnalytical(const Ponto& v, CoonsPatch& p) {
-  tuple<double, double> t = p.find_u_v(v);
+CurvatureAnalytical::CurvatureAnalytical(const PointAdaptive& v,
+                                         PatchCoons& p) {
+  tuple<double, double> t = p.FindUV(v);
 
   this->qu_ = p.Qu(get<0>(t), get<1>(t));
   this->qv_ = p.Qv(get<0>(t), get<1>(t));

@@ -1,7 +1,7 @@
 #ifndef _DATA_NUMERICAL_MULTI_VARIABLE_FUNCTION_H_
 #define _DATA_NUMERICAL_MULTI_VARIABLE_FUNCTION_H_
 
-#include "../../data/Definitions.h"
+#include "../../data/definitions.h"
 
 namespace Data {
 namespace Numerical {
@@ -13,4 +13,4 @@ class MultiVariableFunction {
 }  // namespace Numerical
 }  // namespace Data
 
-#endif  //#ifndef _DATA_NUMERICAL_MULTI_VARIABLE_FUNCTION_H_
+#endif  // #ifndef _DATA_NUMERICAL_MULTI_VARIABLE_FUNCTION_H_

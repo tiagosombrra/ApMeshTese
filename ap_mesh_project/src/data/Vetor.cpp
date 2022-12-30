@@ -68,10 +68,10 @@ double Vetor::modulo() const {
   return (sqrt(this->x_ * this->x_ + this->y * this->y + this->z * this->z));
 }
 
-double Vetor::anguloCom(Vetor& v) const {
+double Vetor::CalculateAngle(Vetor& vector) const {
   Vetor c(this->x_, this->y, this->z);
 
-  double cos = static_cast<double>(c ^ v) / (c.modulo() * v.modulo());
+  double cos = static_cast<double>(c ^ vector) / (c.modulo() * vector.modulo());
 
   return (acos((cos > 1.0) ? 1.0 : ((cos < -1.0) ? -1.0 : cos)));
 }

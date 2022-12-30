@@ -4,9 +4,9 @@
 #include <list>
 #include <vector>
 
-#include "../Triangulo.h"
 #include "../noh.h"
 #include "../patch/patch.h"
+#include "../triangle_adaptive.h"
 
 class CurveAdaptive {
  public:

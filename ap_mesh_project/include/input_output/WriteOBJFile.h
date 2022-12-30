@@ -5,8 +5,8 @@
 #include <fstream>
 #include <sstream>
 
-#include "../data/Triangulo.h"
 #include "../data/mesh/mesh_adaptive.h"
+#include "../data/triangle_adaptive.h"
 
 extern std::string NAME_MODEL;
 

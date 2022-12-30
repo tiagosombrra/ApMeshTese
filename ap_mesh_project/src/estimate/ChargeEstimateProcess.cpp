@@ -875,37 +875,47 @@ SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
       total_1 = total_1 - 1;
     }
 
-    ElementAdaptive* e1 = new Triangulo(sub->GetNoh(i), sub->GetNoh(i + 1),
-                                        sub->GetNoh(i + total_1));
-    ((Triangulo*)e1)->p1 = patch->FindUV(*(sub->GetNoh(i)));
-    ((Triangulo*)e1)->p2 = patch->FindUV(*(sub->GetNoh(i + 1)));
-    ((Triangulo*)e1)->p3 = patch->FindUV(*(sub->GetNoh(i + total_1)));
+    ElementAdaptive* e1 = new TriangleAdaptive(
+        sub->GetNoh(i), sub->GetNoh(i + 1), sub->GetNoh(i + total_1));
+    ((TriangleAdaptive*)e1)->SetParametersN1(patch->FindUV(*(sub->GetNoh(i))));
+    ((TriangleAdaptive*)e1)
+        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + 1))));
+    ((TriangleAdaptive*)e1)
+        ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e1->SetId(ide++);
     sub->SetElement(e1);
 
-    ElementAdaptive* e2 =
-        new Triangulo(sub->GetNoh(i + 1), sub->GetNoh(i + comprimento + 1),
-                      sub->GetNoh(i + total_1));
-    ((Triangulo*)e2)->p1 = patch->FindUV(*(sub->GetNoh(i + 1)));
-    ((Triangulo*)e2)->p2 = patch->FindUV(*(sub->GetNoh(i + comprimento + 1)));
-    ((Triangulo*)e2)->p3 = patch->FindUV(*(sub->GetNoh(i + total_1)));
+    ElementAdaptive* e2 = new TriangleAdaptive(sub->GetNoh(i + 1),
+                                               sub->GetNoh(i + comprimento + 1),
+                                               sub->GetNoh(i + total_1));
+    ((TriangleAdaptive*)e2)
+        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + 1))));
+    ((TriangleAdaptive*)e2)
+        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + comprimento + 1))));
+    ((TriangleAdaptive*)e2)
+        ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e2->SetId(ide++);
     sub->SetElement(e2);
 
-    ElementAdaptive* e3 =
-        new Triangulo(sub->GetNoh(i + comprimento + 1),
-                      sub->GetNoh(i + comprimento), sub->GetNoh(i + total_1));
-    ((Triangulo*)e3)->p1 = patch->FindUV(*(sub->GetNoh(i + comprimento + 1)));
-    ((Triangulo*)e3)->p2 = patch->FindUV(*(sub->GetNoh(i + comprimento)));
-    ((Triangulo*)e3)->p3 = patch->FindUV(*(sub->GetNoh(i + total_1)));
+    ElementAdaptive* e3 = new TriangleAdaptive(sub->GetNoh(i + comprimento + 1),
+                                               sub->GetNoh(i + comprimento),
+                                               sub->GetNoh(i + total_1));
+    ((TriangleAdaptive*)e3)
+        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + comprimento + 1))));
+    ((TriangleAdaptive*)e3)
+        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + comprimento))));
+    ((TriangleAdaptive*)e3)
+        ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e3->SetId(ide++);
     sub->SetElement(e3);
 
-    ElementAdaptive* e4 = new Triangulo(
+    ElementAdaptive* e4 = new TriangleAdaptive(
         sub->GetNoh(i + comprimento), sub->GetNoh(i), sub->GetNoh(i + total_1));
-    ((Triangulo*)e4)->p1 = patch->FindUV(*(sub->GetNoh(i + comprimento)));
-    ((Triangulo*)e4)->p2 = patch->FindUV(*(sub->GetNoh(i)));
-    ((Triangulo*)e4)->p3 = patch->FindUV(*(sub->GetNoh(i + total_1)));
+    ((TriangleAdaptive*)e4)
+        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + comprimento))));
+    ((TriangleAdaptive*)e4)->SetParametersN2(patch->FindUV(*(sub->GetNoh(i))));
+    ((TriangleAdaptive*)e4)
+        ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e4->SetId(ide++);
     sub->SetElement(e4);
     // cout<<"i "<<i<<endl;

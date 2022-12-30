@@ -32,7 +32,7 @@ src/data/patch/patch_hermite.cpp \
 src/data/patch/patch.cpp \
 src/data/point_adaptive.cpp \
 src/data/tree/bin_tree.cpp \
-src/data/Triangulo.cpp \
+src/data/triangle_adaptive.cpp \
 src/crab_mesh/aft/vertex.cpp \
 src/data/Vertice.cpp \
 src/data/Vetor.cpp \

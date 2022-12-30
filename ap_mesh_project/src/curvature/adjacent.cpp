@@ -100,9 +100,9 @@ bool Adjacent::ConfirmRightAdjacency(const Noh& noh,
 
 ElementAdaptive* Adjacent::GetElementLeft(
     const Noh& noh, ElementAdaptive* element,
-    list<ElementAdaptive*>& list_element) {
+    std::list<ElementAdaptive*>& list_element) {
   ElementAdaptive* element_result = nullptr;
-  list<ElementAdaptive*>::iterator element_iterator;
+  std::list<ElementAdaptive*>::iterator element_iterator;
 
   for (element_iterator = list_element.begin();
        element_iterator != list_element.end(); ++element_iterator) {
@@ -119,9 +119,9 @@ ElementAdaptive* Adjacent::GetElementLeft(
 // busca na lista um elemento adjacente à direita de elem
 ElementAdaptive* Adjacent::GetElementRight(
     const Noh& noh, ElementAdaptive* element,
-    list<ElementAdaptive*>& list_element) {
+    std::list<ElementAdaptive*>& list_element) {
   ElementAdaptive* element_result = nullptr;
-  list<ElementAdaptive*>::iterator element_iterator;
+  std::list<ElementAdaptive*>::iterator element_iterator;
 
   for (element_iterator = list_element.begin();
        element_iterator != list_element.end(); ++element_iterator) {
@@ -164,5 +164,5 @@ double Adjacent::AngleElement(const ElementAdaptive& first_element,
   Vetor first_vector = first_element.GetVectorNormal();
   Vetor next_vector = next_element.GetVectorNormal();
 
-  return first_vector.anguloCom(next_vector);
+  return first_vector.CalculateAngle(next_vector);
 }

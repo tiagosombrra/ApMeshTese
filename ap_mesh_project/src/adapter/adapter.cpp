@@ -353,7 +353,8 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
   double area_total = 0;
 
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
-    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
+    TriangleAdaptive *tri =
+        static_cast<TriangleAdaptive *>(sub_mesh_old->GetElement(i));
 
     /*Noh centro (	( tri->GetNoh ( 1 ).x + tri->GetNoh ( 2 ).x +
 tri->GetNoh
@@ -364,9 +365,12 @@ tri->GetNoh
 / 3.0
 ); tuple < double, double > centro_par = patch->encontrar_u_v ( centro );*/
 
-    Vertex *v1 = new Vertex(get<0>(tri->p1), get<1>(tri->p1));
-    Vertex *v2 = new Vertex(get<0>(tri->p2), get<1>(tri->p2));
-    Vertex *v3 = new Vertex(get<0>(tri->p3), get<1>(tri->p3));
+    Vertex *v1 = new Vertex(get<0>(tri->GetParametersN1()),
+                            get<1>(tri->GetParametersN1()));
+    Vertex *v2 = new Vertex(get<0>(tri->GetParametersN2()),
+                            get<1>(tri->GetParametersN2()));
+    Vertex *v3 = new Vertex(get<0>(tri->GetParametersN3()),
+                            get<1>(tri->GetParametersN3()));
     // Vertex* c = new Vertex  ( get<0>( centro_par ), get<1>( centro_par ) );
 
     // cout << "APC.cpp: u = " << get<0>( centro_par ) << " v = " << get<1>(
@@ -383,7 +387,8 @@ tri->GetNoh
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
     double length_old = 0;
 
-    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
+    TriangleAdaptive *tri =
+        static_cast<TriangleAdaptive *>(sub_mesh_old->GetElement(i));
     Face *face = (*face_list_iterator);
 
     length_old = sqrt(tri->GetArea() / area_total);
@@ -469,18 +474,21 @@ tri->GetNoh
     new_mesh.pop_front();
 
     ElementAdaptive *element =
-        new Triangulo(static_cast<Noh *>(map[face->getV1()]),
-                      static_cast<Noh *>(map[face->getV2()]),
-                      static_cast<Noh *>(map[face->getV3()]));
+        new TriangleAdaptive(static_cast<Noh *>(map[face->getV1()]),
+                             static_cast<Noh *>(map[face->getV2()]),
+                             static_cast<Noh *>(map[face->getV3()]));
 
     element->SetId(/*id_ele++*/ id_manager->next(1));
 
-    (static_cast<Triangulo *>(element))->p1 =
-        make_tuple(face->getV1()->getX(), face->getV1()->getY());
-    (static_cast<Triangulo *>(element))->p2 =
-        make_tuple(face->getV2()->getX(), face->getV2()->getY());
-    (static_cast<Triangulo *>(element))->p3 =
-        make_tuple(face->getV3()->getX(), face->getV3()->getY());
+    (static_cast<TriangleAdaptive *>(element))
+        ->SetParametersN1(
+            make_tuple(face->getV1()->getX(), face->getV1()->getY()));
+    (static_cast<TriangleAdaptive *>(element))
+        ->SetParametersN2(
+            make_tuple(face->getV2()->getX(), face->getV2()->getY()));
+    (static_cast<TriangleAdaptive *>(element))
+        ->SetParametersN3(
+            make_tuple(face->getV3()->getX(), face->getV3()->getY()));
 
     sub_mesh_new->SetElement(element);
   }
@@ -863,7 +871,8 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
   double area_total = 0;  // área de todos os elementos
 
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
-    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
+    TriangleAdaptive *tri =
+        static_cast<TriangleAdaptive *>(sub_mesh_old->GetElement(i));
 
     /*Noh centro (	( tri->GetNoh ( 1 ).x + tri->GetNoh ( 2 ).x +
 tri->GetNoh
@@ -874,9 +883,12 @@ tri->GetNoh
 / 3.0
 ); tuple < double, double > centro_par = patch->encontrar_u_v ( centro );*/
 
-    Vertex *v1 = new Vertex(get<0>(tri->p1), get<1>(tri->p1));
-    Vertex *v2 = new Vertex(get<0>(tri->p2), get<1>(tri->p2));
-    Vertex *v3 = new Vertex(get<0>(tri->p3), get<1>(tri->p3));
+    Vertex *v1 = new Vertex(get<0>(tri->GetParametersN1()),
+                            get<1>(tri->GetParametersN1()));
+    Vertex *v2 = new Vertex(get<0>(tri->GetParametersN2()),
+                            get<1>(tri->GetParametersN2()));
+    Vertex *v3 = new Vertex(get<0>(tri->GetParametersN3()),
+                            get<1>(tri->GetParametersN3()));
     // Vertex* c = new Vertex  ( get<0>( centro_par ), get<1>( centro_par ) );
 
     // cout << "APC.cpp: u = " << get<0>( centro_par ) << " v = " << get<1>(
@@ -893,7 +905,8 @@ tri->GetNoh
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
     double length_old = 0;
 
-    Triangulo *tri = static_cast<Triangulo *>(sub_mesh_old->GetElement(i));
+    TriangleAdaptive *tri =
+        static_cast<TriangleAdaptive *>(sub_mesh_old->GetElement(i));
     Face *face = (*face_list_iterator);
 
     length_old = sqrt(tri->GetArea() / area_total);
@@ -981,18 +994,21 @@ else
     new_mesh.pop_front();
 
     ElementAdaptive *element =
-        new Triangulo(static_cast<Noh *>(map[face->getV1()]),
-                      static_cast<Noh *>(map[face->getV2()]),
-                      static_cast<Noh *>(map[face->getV3()]));
+        new TriangleAdaptive(static_cast<Noh *>(map[face->getV1()]),
+                             static_cast<Noh *>(map[face->getV2()]),
+                             static_cast<Noh *>(map[face->getV3()]));
 
     element->SetId(id_manager->next(1));
 
-    (static_cast<Triangulo *>(element))->p1 =
-        make_tuple(face->getV1()->getX(), face->getV1()->getY());
-    (static_cast<Triangulo *>(element))->p2 =
-        make_tuple(face->getV2()->getX(), face->getV2()->getY());
-    (static_cast<Triangulo *>(element))->p3 =
-        make_tuple(face->getV3()->getX(), face->getV3()->getY());
+    (static_cast<TriangleAdaptive *>(element))
+        ->SetParametersN1(
+            make_tuple(face->getV1()->getX(), face->getV1()->getY()));
+    (static_cast<TriangleAdaptive *>(element))
+        ->SetParametersN2(
+            make_tuple(face->getV2()->getX(), face->getV2()->getY()));
+    (static_cast<TriangleAdaptive *>(element))
+        ->SetParametersN3(
+            make_tuple(face->getV3()->getX(), face->getV3()->getY()));
 
     sub_mesh_new->SetElement(element);
   }

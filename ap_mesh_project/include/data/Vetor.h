@@ -26,8 +26,8 @@ struct Vetor {
   const Vetor& operator=(const PointAdaptive& p);  // atribuição
 
   double modulo() const;
-  double anguloCom(Vetor& v) const;  // ângulo entre dois vetores
-  Vetor unitario();                  // vetor unitário
+  double CalculateAngle(Vetor& vector) const;  // ângulo entre dois vetores
+  Vetor unitario();                            // vetor unitário
 
   Vetor();
   Vetor(double c_x, double c_y, double c_z);

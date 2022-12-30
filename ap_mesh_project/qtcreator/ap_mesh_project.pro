@@ -55,7 +55,7 @@ SOURCES += \
     ../src/data/patch/patch.cpp \
     ../src/data/point_adaptive.cpp \
     ../src/data/tree/bin_tree.cpp \
-    ../src/data/Triangulo.cpp \
+    ../src/data/triangle_adaptive.cpp \
     ../src/data/Vertex.cpp \
     ../src/data/Vertice.cpp \
     ../src/data/Vetor.cpp \
@@ -126,7 +126,7 @@ HEADERS += \
     ../include/data/patch/patch.h \
     ../include/data/point_adaptive.h \
     ../include/data/tree/bin_tree.h \
-    ../include/data/Triangulo.h \
+    ../include/data/triangle_adaptive.h \
     ../include/data/Vertex.h \
     ../include/data/Vertice.h \
     ../include/data/Vetor.h \

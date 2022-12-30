@@ -21,7 +21,7 @@ class CurvatureDiscrete : public Curvature {
 
   Noh noh_;
   // lista dos elementos de 'm' incidentes em 'n'
-  list<ElementAdaptive*> elements_;
+  std::list<ElementAdaptive*> elements_;
   // área dos elementos incidentes em 'n'
   double a_;
   // assume M_PI ou 2 * M_PI

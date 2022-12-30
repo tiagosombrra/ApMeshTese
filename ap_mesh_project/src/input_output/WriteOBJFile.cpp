@@ -119,7 +119,7 @@ bool WriteOBJFIle::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
     SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
     for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
-      Triangulo* t = (Triangulo*)sub->GetElement(j);
+      TriangleAdaptive* t = (TriangleAdaptive*)sub->GetElement(j);
       file << "f " << t->GetNoh(1).GetId() << " " << t->GetNoh(2).GetId() << " "
            << t->GetNoh(3).GetId() << endl;
     }

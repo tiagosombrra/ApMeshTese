@@ -20,7 +20,7 @@ CurvatureDiscrete::CurvatureDiscrete(const Noh& noh) {
   this->a_ = 0;
   this->sum_phi_ = 0;
 
-  list<ElementAdaptive*>::const_iterator element_iterator;
+  std::list<ElementAdaptive*>::const_iterator element_iterator;
 
   //	cout << "for ( ite = n.guarda_chuva.begin ( ); ite != n.guarda_chuva.end
   //( ); ++ite )\n{" << endl;
@@ -77,7 +77,7 @@ void CurvatureDiscrete::AdjacencySort(const Noh& noh_) {
   // copiando os elementos da adjacência de n para a lista de elementos desta
   // classe
   //		copie a lista n.guarda_cuva para nova_lista
-  list<ElementAdaptive*> new_list_elements;
+  std::list<ElementAdaptive*> new_list_elements;
   new_list_elements = noh_.GetElements();
 
   //		retire o primeiro elemento E da nova_lista e insira em elementos

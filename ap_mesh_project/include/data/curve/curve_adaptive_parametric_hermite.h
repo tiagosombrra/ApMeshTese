@@ -6,12 +6,13 @@
 class CurveAdaptiveParametricHermite : public CurveAdaptiveParametric {
  public:
   CurveAdaptiveParametricHermite();
-  CurveAdaptiveParametricHermite(PointAdaptive point0, PointAdaptive point1,
-                                 VectorAdaptive vector0,
-                                 VectorAdaptive vector1);
-  CurveAdaptiveParametricHermite(CurveAdaptiveParametricHermite*);
+  CurveAdaptiveParametricHermite(const PointAdaptive point0,
+                                 const PointAdaptive point1,
+                                 const VectorAdaptive vector0,
+                                 const VectorAdaptive vector1);
+  explicit CurveAdaptiveParametricHermite(CurveAdaptiveParametricHermite*);
   ~CurveAdaptiveParametricHermite();
-  double CalculateCurvature(double t);
+  double CalculateCurvature(double t) override;
 
   VectorAdaptive GetVector0() const;
   void SetVector0(const VectorAdaptive& vector0);

@@ -87,7 +87,7 @@ class Quadtree : public Shape {
 
   enum MethodStatus makeTemplateBasedMesh();
 
-  string getText();
+  string getText() override;
 
   // #if USE_OPENGL
   //     void highlight();

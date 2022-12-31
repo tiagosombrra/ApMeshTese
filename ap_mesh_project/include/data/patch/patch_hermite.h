@@ -9,7 +9,7 @@
 class PatchHermite : public PatchCoons {
  public:
   PatchHermite();
-  PatchHermite(PatchHermite* patch_hermite);
+  explicit PatchHermite(PatchHermite* patch_hermite);
   // Ordem das curvas:
   //		C3
   //	C4		C2
@@ -26,27 +26,27 @@ class PatchHermite : public PatchCoons {
   void PrintAllMatrixPatchHermite();
   // encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
   // ou a projeção desse ponto na superfície
-  // tuple<double, double> encontrar_u_v(const Ponto& p);
-  tuple<double, double> FindUV(const PointAdaptive& point);
+  // tuple<double, double> FindUV(const Ponto& p);
+  tuple<double, double> FindUV(const PointAdaptive& point) override;
 
   // encontra o ponto p na curva dado um parâmetro p
-  PointAdaptive Parameterize(double u, double v);
+  PointAdaptive Parameterize(double u, double v) override;
 
   // calcula as derivadas parciais nas direçõe u e v
-  VectorAdaptive Qu(double u, double v);
-  VectorAdaptive Qv(double u, double v);
-  VectorAdaptive Quu(double u, double v);
-  VectorAdaptive Quv(double u, double v);
-  VectorAdaptive Qvu(double u, double v);
-  VectorAdaptive Qvv(double u, double v);
+  VectorAdaptive Qu(double u, double v) override;
+  VectorAdaptive Qv(double u, double v) override;
+  VectorAdaptive Quu(double u, double v) override;
+  VectorAdaptive Quv(double u, double v) override;
+  VectorAdaptive Qvu(double u, double v) override;
+  VectorAdaptive Qvv(double u, double v) override;
 
   // calcula as derivadas parciais de um ponto p
-  VectorAdaptive Qu(const PointAdaptive& point);
-  VectorAdaptive Qv(const PointAdaptive& point);
-  VectorAdaptive Quu(const PointAdaptive& point);
-  VectorAdaptive Quv(const PointAdaptive& point);
-  VectorAdaptive Qvu(const PointAdaptive& point);
-  VectorAdaptive Qvv(const PointAdaptive& point);
+  VectorAdaptive Qu(const PointAdaptive& point) override;
+  VectorAdaptive Qv(const PointAdaptive& point) override;
+  VectorAdaptive Quu(const PointAdaptive& point) override;
+  VectorAdaptive Quv(const PointAdaptive& point) override;
+  VectorAdaptive Qvu(const PointAdaptive& point) override;
+  VectorAdaptive Qvv(const PointAdaptive& point) override;
 
   Matrix1x4 GetU() const;
   Matrix4x4 GetGx() const;

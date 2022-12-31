@@ -41,10 +41,8 @@ CurvatureDiscrete::CurvatureDiscrete(const NodeAdaptive& noh) {
 }
 
 double CurvatureDiscrete::CalculateMeanCurvature() {
-  ElementAdaptive*
-      first_element;  // pri de PRImeiro elemento da lista 'elementos'
-  ElementAdaptive*
-      next_element;       // seg de SEGundo elemento da lista 'elementos'
+  ElementAdaptive* first_element;
+  ElementAdaptive* next_element;
   double angle_gama = 0;  // ângulo entre dois elementos adjacentes
 
   while (this->elements_.size() > 1) {
@@ -71,14 +69,14 @@ double CurvatureDiscrete::CalculateGaussCurvature() {
   return (3.0 * (this->factor_disc_ - this->sum_phi_) / this->a_);
 }
 
-void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh_) {
+void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh) {
   this->elements_.clear();
 
   // copiando os elementos da adjacência de n para a lista de elementos desta
   // classe
   //		copie a lista n.guarda_cuva para nova_lista
   std::list<ElementAdaptive*> new_list_elements;
-  new_list_elements = noh_.GetElements();
+  new_list_elements = noh.GetElements();
 
   //		retire o primeiro elemento E da nova_lista e insira em elementos
   ElementAdaptive* element_front = new_list_elements.front();
@@ -92,7 +90,7 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh_) {
 
   while (find_adj_left) {
     ElementAdaptive* element =
-        adjacent_.GetElementLeft(noh_, element_front, new_list_elements);
+        adjacent_.GetElementLeft(noh, element_front, new_list_elements);
     if (element) {
       this->elements_.push_back(element);
       element_front = element;
@@ -117,7 +115,7 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh_) {
 
     while (find_adj_right) {
       ElementAdaptive* element =
-          adjacent_.GetElementRight(noh_, element_front, new_list_elements);
+          adjacent_.GetElementRight(noh, element_front, new_list_elements);
       if (element) {
         this->elements_.push_front(element);
         element_front = element;
@@ -131,7 +129,7 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh_) {
   // senão 				fator = M_PI ( n está na borda
   //)
   else {
-    if (adjacent_.ConfirmRightAdjacency(noh_, *(this->elements_.front()),
+    if (adjacent_.ConfirmRightAdjacency(noh, *(this->elements_.front()),
                                         *(this->elements_.back()))) {
       this->factor_disc_ = 2 * M_PI;  // n está no interior !!!
       this->elements_.push_back(this->elements_.front());  // lista "circular"

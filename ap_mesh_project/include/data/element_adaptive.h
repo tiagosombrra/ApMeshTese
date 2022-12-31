@@ -11,7 +11,7 @@ class ElementAdaptive {
   virtual ~ElementAdaptive();
 
   unsigned long GetId();
-  void SetId(unsigned long id);
+  void SetId(const unsigned long id);
   double GetArea() const;
   VectorAdaptive GetVectorNormal() const;
 

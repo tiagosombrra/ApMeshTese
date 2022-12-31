@@ -1,14 +1,16 @@
 #include "../../include/data/node_adaptive.h"
 
-NodeAdaptive::NodeAdaptive() : PointAdaptive() {}
+NodeAdaptive::NodeAdaptive()
+    : PointAdaptive(), ga_(0), gd_(0), ha_(0), hd_(0) {}
 
 NodeAdaptive::NodeAdaptive(double x, double y, double z)
-    : PointAdaptive(x, y, z) {}
+    : PointAdaptive(x, y, z), ga_(0), gd_(0), ha_(0), hd_(0) {}
 
 NodeAdaptive::NodeAdaptive(double x, double y, double z, unsigned long position)
-    : PointAdaptive(x, y, z, position) {}
+    : PointAdaptive(x, y, z, position), ga_(0), gd_(0), ha_(0), hd_(0) {}
 
-NodeAdaptive::NodeAdaptive(const PointAdaptive &point) {
+NodeAdaptive::NodeAdaptive(const PointAdaptive &point)
+    : ga_(0), gd_(0), ha_(0), hd_(0) {
   this->id_ = point.GetId();
   this->x_ = point.GetX();
   this->y_ = point.GetY();

@@ -14,7 +14,7 @@ class PatchCoons : public Patch {
  public:
   PatchCoons();
   PatchCoons(PatchCoons* patch_coons);
-  PatchCoons(vector<CurveAdaptive*> curves);
+  PatchCoons(const vector<CurveAdaptive*> curves);
   virtual ~PatchCoons();
 
   void InsertCurve(CurveAdaptive* curve);

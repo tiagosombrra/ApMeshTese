@@ -2,11 +2,11 @@
 
 VectorAdaptive::VectorAdaptive() : x_(0), y_(0), z_(0) {}
 
-VectorAdaptive::VectorAdaptive(double c_x, double c_y, double c_z)
-    : x_(c_x), y_(c_y), z_(c_z) {}
+VectorAdaptive::VectorAdaptive(double x, double y, double z)
+    : x_(x), y_(y), z_(z) {}
 
-VectorAdaptive::VectorAdaptive(const VectorAdaptive& v)
-    : x_(v.x_), y_(v.y_), z_(v.z_) {}
+VectorAdaptive::VectorAdaptive(const VectorAdaptive& vector)
+    : x_(vector.x_), y_(vector.y_), z_(vector.z_) {}
 
 VectorAdaptive::VectorAdaptive(const PointAdaptive& point)
     : x_(point.GetX()), y_(point.GetY()), z_(point.GetZ()) {}
@@ -16,14 +16,16 @@ VectorAdaptive::VectorAdaptive(const PointAdaptive& p, const PointAdaptive& q)
       y_(q.GetY() - p.GetY()),
       z_(q.GetZ() - p.GetZ()) {}
 
-VectorAdaptive VectorAdaptive::operator+(const VectorAdaptive& v) const {
-  VectorAdaptive soma(this->x_ + v.x_, this->y_ + v.y_, this->z_ + v.z_);
+VectorAdaptive VectorAdaptive::operator+(const VectorAdaptive& vector) const {
+  VectorAdaptive soma(this->x_ + vector.x_, this->y_ + vector.y_,
+                      this->z_ + vector.z_);
 
   return soma;
 }
 
-VectorAdaptive VectorAdaptive::operator-(const VectorAdaptive& v) const {
-  VectorAdaptive subt(this->x_ - v.x_, this->y_ - v.y_, this->z_ - v.z_);
+VectorAdaptive VectorAdaptive::operator-(const VectorAdaptive& vector) const {
+  VectorAdaptive subt(this->x_ - vector.x_, this->y_ - vector.y_,
+                      this->z_ - vector.z_);
 
   return subt;
 }
@@ -34,35 +36,35 @@ VectorAdaptive VectorAdaptive::operator-() const {
   return invr;
 }
 
-double VectorAdaptive::operator^(const VectorAdaptive& v) const {
-  return (this->x_ * v.x_ + this->y_ * v.y_ + this->z_ * v.z_);
+double VectorAdaptive::operator^(const VectorAdaptive& vector) const {
+  return (this->x_ * vector.x_ + this->y_ * vector.y_ + this->z_ * vector.z_);
 }
 
-VectorAdaptive VectorAdaptive::operator^(const double d) const {
-  VectorAdaptive prod(d * this->x_, d * this->y_, d * this->z_);
+VectorAdaptive VectorAdaptive::operator^(const double value) const {
+  VectorAdaptive prod(value * this->x_, value * this->y_, value * this->z_);
   return prod;
 }
 
-VectorAdaptive VectorAdaptive::operator*(const VectorAdaptive& v) const {
-  VectorAdaptive prod(this->y_ * v.z_ - this->z_ * v.y_,
-                      this->z_ * v.x_ - this->x_ * v.z_,
-                      this->x_ * v.y_ - this->y_ * v.x_);
+VectorAdaptive VectorAdaptive::operator*(const VectorAdaptive& vector) const {
+  VectorAdaptive prod(this->y_ * vector.z_ - this->z_ * vector.y_,
+                      this->z_ * vector.x_ - this->x_ * vector.z_,
+                      this->x_ * vector.y_ - this->y_ * vector.x_);
 
   return prod;
 }
 
-const VectorAdaptive& VectorAdaptive::operator=(const VectorAdaptive& v) {
-  this->x_ = v.x_;
-  this->y_ = v.y_;
-  this->z_ = v.z_;
+const VectorAdaptive& VectorAdaptive::operator=(const VectorAdaptive& vector) {
+  this->x_ = vector.x_;
+  this->y_ = vector.y_;
+  this->z_ = vector.z_;
 
   return *this;
 }
 
-const VectorAdaptive& VectorAdaptive::operator=(const PointAdaptive& p) {
-  this->x_ = p.GetX();
-  this->y_ = p.GetY();
-  this->z_ = p.GetZ();
+const VectorAdaptive& VectorAdaptive::operator=(const PointAdaptive& point) {
+  this->x_ = point.GetX();
+  this->y_ = point.GetY();
+  this->z_ = point.GetZ();
 
   return *this;
 }
@@ -82,13 +84,13 @@ double VectorAdaptive::CalculateAngle(VectorAdaptive& vector) const {
 }
 
 VectorAdaptive VectorAdaptive::CalculateUnitVector() {
-  double modulo = this->CalculateModule();
+  double module = this->CalculateModule();
 
-  VectorAdaptive N(static_cast<double>(this->x_) / modulo,
-                   static_cast<double>(this->y_) / modulo,
-                   static_cast<double>(this->z_) / modulo);
+  VectorAdaptive unit_vector(static_cast<double>(this->x_) / module,
+                             static_cast<double>(this->y_) / module,
+                             static_cast<double>(this->z_) / module);
 
-  return N;
+  return unit_vector;
 }
 
 double VectorAdaptive::GetX() const { return x_; }

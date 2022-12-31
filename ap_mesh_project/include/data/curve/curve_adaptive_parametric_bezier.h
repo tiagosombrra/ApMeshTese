@@ -10,12 +10,14 @@ class CurveAdaptiveParametricBezier : public CurveAdaptiveParametric {
   CurveAdaptiveParametricBezier();
   // Esse construtor é mais recomendado !!! Evita erros ao esquecer de setar
   // os valores indicados na observação do construtor default !!!
-  CurveAdaptiveParametricBezier(PointAdaptive point0, PointAdaptive point1,
-                                PointAdaptive point2, PointAdaptive point3);
-  CurveAdaptiveParametricBezier(CurveAdaptiveParametricBezier *);
+  CurveAdaptiveParametricBezier(const PointAdaptive point0,
+                                const PointAdaptive point1,
+                                const PointAdaptive point2,
+                                const PointAdaptive point3);
+  explicit CurveAdaptiveParametricBezier(CurveAdaptiveParametricBezier *);
   ~CurveAdaptiveParametricBezier();
 
-  double CalculateCurvature(double parameter);
+  double CalculateCurvature(double parameter) override;
 
   PointAdaptive GetPoint2() const;
   void SetPoint2(const PointAdaptive &point);

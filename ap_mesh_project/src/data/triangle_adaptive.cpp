@@ -6,7 +6,14 @@
 
 extern double TOLERANCIA;
 
-TriangleAdaptive::TriangleAdaptive() : ElementAdaptive() {}
+TriangleAdaptive::TriangleAdaptive()
+    : ElementAdaptive(),
+      n1_(nullptr),
+      n2_(nullptr),
+      n3_(nullptr),
+      angle_n1_(0),
+      angle_n2_(0),
+      angle_n3_(0) {}
 
 TriangleAdaptive::TriangleAdaptive(NodeAdaptive* n1, NodeAdaptive* n2,
                                    NodeAdaptive* n3)
@@ -23,8 +30,8 @@ TriangleAdaptive::TriangleAdaptive(NodeAdaptive* n1, NodeAdaptive* n2,
   this->angle_n2_ = CalculateAngleN2();
   this->angle_n3_ = CalculateAngleN3();
 
-  CalculateNormal();
-  CalculateArea();
+  TriangleAdaptive::CalculateNormal();
+  TriangleAdaptive::CalculateArea();
 }
 
 TriangleAdaptive::~TriangleAdaptive() {}
@@ -101,7 +108,7 @@ void TriangleAdaptive::CalculateNormal() {
   this->vector_normal_ = vector1 * vector2;
 }
 
-void TriangleAdaptive::ReplaceNode(NodeAdaptive* old_node,
+void TriangleAdaptive::ReplaceNode(const NodeAdaptive* old_node,
                                    NodeAdaptive* new_node) {
   if (this->n1_ == old_node) {
     this->n1_ = new_node;

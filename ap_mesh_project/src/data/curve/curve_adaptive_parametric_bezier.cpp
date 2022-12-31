@@ -81,8 +81,8 @@ CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier()
 }
 
 CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier(
-    PointAdaptive point0, PointAdaptive point1, PointAdaptive point2,
-    PointAdaptive point3)
+    const PointAdaptive point0, const PointAdaptive point1,
+    const PointAdaptive point2, const PointAdaptive point3)
     : CurveAdaptiveParametric(point0, point1),
       point2_(point2),
       point3_(point3) {
@@ -214,10 +214,10 @@ PointAdaptive CurveAdaptiveParametricBezier::GetPoint3() const {
   return this->point3_;
 }
 
-void CurveAdaptiveParametricBezier::SetPoint2(const PointAdaptive &p) {
-  this->point2_ = p;
+void CurveAdaptiveParametricBezier::SetPoint2(const PointAdaptive &point) {
+  this->point2_ = point;
 }
 
-void CurveAdaptiveParametricBezier::SetPoint3(const PointAdaptive &p) {
-  this->point3_ = p;
+void CurveAdaptiveParametricBezier::SetPoint3(const PointAdaptive &point) {
+  this->point3_ = point;
 }

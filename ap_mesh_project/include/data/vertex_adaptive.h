@@ -7,6 +7,6 @@ class VertexAdaptive : public PointAdaptive {
  public:
   VertexAdaptive();
   VertexAdaptive(double x, double y, double z);
-  VertexAdaptive(PointAdaptive* point);
+  explicit VertexAdaptive(PointAdaptive* point);
 };
 #endif  // DATA_VERTEX_ADAPTIVE_H

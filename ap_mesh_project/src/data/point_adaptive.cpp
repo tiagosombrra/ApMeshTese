@@ -7,7 +7,7 @@ extern double EPSYLON;
 PointAdaptive::PointAdaptive() : id_(-1), x_(0), y_(0), z_(0) {}
 
 PointAdaptive::PointAdaptive(double x, double y, double z)
-    : x_(x), y_(y), z_(z) {}
+    : id_(0), x_(x), y_(y), z_(z) {}
 
 PointAdaptive::PointAdaptive(double x, double y, double z, unsigned long id)
     : id_(id), x_(x), y_(y), z_(z) {}

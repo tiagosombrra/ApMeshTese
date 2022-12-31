@@ -1,7 +1,7 @@
 
 #include "../../../include/data/mesh/sub_mesh.h"
 
-SubMesh::SubMesh() {}
+SubMesh::SubMesh() : patch_(nullptr), nos_({}), elements_({}) {}
 
 SubMesh::~SubMesh() {
   // 1. apaga a lista de nós

@@ -3,7 +3,19 @@
 extern double TOLERANCIA;  // distância máxima entre dois pontos
 extern double I_MAX;
 
-PatchBezier::PatchBezier() : PatchCoons() {}
+PatchBezier::PatchBezier()
+    : PatchCoons(),
+      signal_curve1_(true),
+      signal_curve2_(true),
+      signal_curve3_(true),
+      signal_curve4_(true),
+      area_(0),
+      ka_medio_(0),
+      segment_medio_(0),
+      area_triangle_(0),
+      number_triangle_(0),
+      id_process_(0),
+      id_patch_bezier_(0) {}
 
 PatchBezier::PatchBezier(PatchBezier* patch_bezier) : PatchCoons(patch_bezier) {
   this->pt03_ = patch_bezier->pt03_;
@@ -184,14 +196,14 @@ PatchBezier::PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
 
 // Esse patch acha que é isolado! As curvas que apontam para ele devem ser
 // definidas externamente.
-PatchBezier ::PatchBezier(PointAdaptive pt00, PointAdaptive pt01,
-                          PointAdaptive pt02, PointAdaptive pt03,
-                          PointAdaptive pt10, PointAdaptive pt11,
-                          PointAdaptive pt12, PointAdaptive pt13,
-                          PointAdaptive pt20, PointAdaptive pt21,
-                          PointAdaptive pt22, PointAdaptive pt23,
-                          PointAdaptive pt30, PointAdaptive pt31,
-                          PointAdaptive pt32, PointAdaptive pt33,
+PatchBezier ::PatchBezier(const PointAdaptive pt00, const PointAdaptive pt01,
+                          const PointAdaptive pt02, const PointAdaptive pt03,
+                          const PointAdaptive pt10, const PointAdaptive pt11,
+                          const PointAdaptive pt12, const PointAdaptive pt13,
+                          const PointAdaptive pt20, const PointAdaptive pt21,
+                          const PointAdaptive pt22, const PointAdaptive pt23,
+                          const PointAdaptive pt30, const PointAdaptive pt31,
+                          const PointAdaptive pt32, const PointAdaptive pt33,
                           bool signal_curve1, bool signal_curve2,
                           bool signal_curve3, bool signal_curve4)
     : PatchCoons(),
@@ -339,7 +351,7 @@ void PatchBezier::PrintAllMatrixPatchBezier() {
 }
 
 // encontra o parâmetro t de um dado ponto p na curva
-tuple<double, double> PatchBezier::FindUV(const PointAdaptive& p) {
+tuple<double, double> PatchBezier::FindUV(const PointAdaptive& point) {
   unsigned int iMax = 0;
 
   // chute inicial
@@ -378,13 +390,13 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& p) {
     Matrix<double, 3, 3> matrix;
     matrix(0, 0) = Tu.GetX();
     matrix(0, 1) = Tv.GetX();
-    matrix(0, 2) = p_i.GetX() - p.GetX();
+    matrix(0, 2) = p_i.GetX() - point.GetX();
     matrix(1, 0) = Tu.GetY();
     matrix(1, 1) = Tv.GetY();
-    matrix(1, 2) = p_i.GetY() - p.GetY();
+    matrix(1, 2) = p_i.GetY() - point.GetY();
     matrix(2, 0) = Tu.GetZ();
     matrix(2, 1) = Tv.GetZ();
-    matrix(2, 2) = p_i.GetZ() - p.GetZ();
+    matrix(2, 2) = p_i.GetZ() - point.GetZ();
 
     //        Vector3d b= {p.x, p.y, p.z};
     //        cout<<A.colPivHouseholderQr().solve(b)<<endl;
@@ -402,8 +414,8 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& p) {
     if (fabs(pivot) < TOLERANCIA) {
       cout << "Erro! Não é possível encontrar as coordenadas paramétricas no "
               "ponto p"
-           << p.GetId() << " (" << p.GetX() << ", " << p.GetY() << ", "
-           << p.GetZ() << ")" << endl;
+           << point.GetId() << " (" << point.GetX() << ", " << point.GetY()
+           << ", " << point.GetZ() << ")" << endl;
 
       return make_tuple(-1.0, -1.0);
     }
@@ -729,37 +741,37 @@ PointAdaptive PatchBezier::GetPt32() const { return this->pt32_; }
 
 PointAdaptive PatchBezier::GetPt33() const { return this->pt33_; }
 
-void PatchBezier::SetPt00(PointAdaptive value) { pt00_ = value; }
+void PatchBezier::SetPt00(const PointAdaptive point) { pt00_ = point; }
 
-void PatchBezier::SetPt01(PointAdaptive value) { pt01_ = value; }
+void PatchBezier::SetPt01(const PointAdaptive point) { pt01_ = point; }
 
-void PatchBezier::SetPt02(PointAdaptive value) { pt02_ = value; }
+void PatchBezier::SetPt02(const PointAdaptive point) { pt02_ = point; }
 
-void PatchBezier::SetPt03(PointAdaptive value) { pt03_ = value; }
+void PatchBezier::SetPt03(const PointAdaptive point) { pt03_ = point; }
 
-void PatchBezier::SetPt10(PointAdaptive value) { pt10_ = value; }
+void PatchBezier::SetPt10(const PointAdaptive point) { pt10_ = point; }
 
-void PatchBezier::SetPt11(PointAdaptive value) { pt11_ = value; }
+void PatchBezier::SetPt11(const PointAdaptive point) { pt11_ = point; }
 
-void PatchBezier::SetPt12(PointAdaptive value) { pt12_ = value; }
+void PatchBezier::SetPt12(const PointAdaptive point) { pt12_ = point; }
 
-void PatchBezier::SetPt13(PointAdaptive value) { pt13_ = value; }
+void PatchBezier::SetPt13(const PointAdaptive point) { pt13_ = point; }
 
-void PatchBezier::SetPt20(PointAdaptive value) { pt20_ = value; }
+void PatchBezier::SetPt20(const PointAdaptive point) { pt20_ = point; }
 
-void PatchBezier::SetPt21(PointAdaptive value) { pt21_ = value; }
+void PatchBezier::SetPt21(const PointAdaptive point) { pt21_ = point; }
 
-void PatchBezier::SetPt22(PointAdaptive value) { pt22_ = value; }
+void PatchBezier::SetPt22(const PointAdaptive point) { pt22_ = point; }
 
-void PatchBezier::SetPt23(PointAdaptive value) { pt23_ = value; }
+void PatchBezier::SetPt23(const PointAdaptive point) { pt23_ = point; }
 
-void PatchBezier::SetPt30(PointAdaptive value) { pt30_ = value; }
+void PatchBezier::SetPt30(const PointAdaptive point) { pt30_ = point; }
 
-void PatchBezier::SetPt31(PointAdaptive value) { pt31_ = value; }
+void PatchBezier::SetPt31(const PointAdaptive point) { pt31_ = point; }
 
-void PatchBezier::SetPt32(PointAdaptive value) { pt32_ = value; }
+void PatchBezier::SetPt32(const PointAdaptive point) { pt32_ = point; }
 
-void PatchBezier::SetPt33(PointAdaptive value) { pt33_ = value; }
+void PatchBezier::SetPt33(const PointAdaptive point) { pt33_ = point; }
 
 double PatchBezier::GetNumberTriangle() const { return number_triangle_; }
 

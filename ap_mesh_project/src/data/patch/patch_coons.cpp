@@ -6,7 +6,7 @@ PatchCoons::PatchCoons() : Patch() {}
 
 PatchCoons::PatchCoons(PatchCoons* patch_coons) : Patch(patch_coons) {}
 
-PatchCoons::PatchCoons(vector<CurveAdaptive*> curves)
+PatchCoons::PatchCoons(const vector<CurveAdaptive*> curves)
     : Patch(), curves_(curves) {}
 
 PatchCoons::~PatchCoons() {

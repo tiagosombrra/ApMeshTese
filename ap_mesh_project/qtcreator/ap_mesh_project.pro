@@ -12,7 +12,7 @@ QMAKE_CC = mpicc
 
 QMAKE_CFLAGS += $$system(mpicc --showme:compile)
 QMAKE_LFLAGS += $$system(mpicxx --showme:link)
-QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK -I/usr/lib/gcc/x86_64-linux-gnu/11/include
 QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
 
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -43,7 +43,7 @@ SOURCES += \
     ../src/data/definitions.cpp \
     ../src/crab_mesh/aft/edge.cpp \
     ../src/data/element_adaptive.cpp \
-    ../src/data/Face.cpp \
+    ../src/crab_mesh/aft/face.cpp \
     ../src/data/geometry.cpp \
     ../src/data/mesh/mesh_adaptive.cpp \
     ../src/data/mesh/sub_mesh.cpp \

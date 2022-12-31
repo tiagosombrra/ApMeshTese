@@ -67,9 +67,8 @@ CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite()
   // inicial e final e os vetores tangentes inicial e final !!!
 }
 
-CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(
-    PointAdaptive point0, PointAdaptive point1, VectorAdaptive vector0,
-    VectorAdaptive vector1)
+CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(const PointAdaptive point0, const PointAdaptive point1, const VectorAdaptive vector0,
+    const VectorAdaptive vector1)
     : CurveAdaptiveParametric(point0, point1),
       vector0_(vector0),
       vector1_(vector1) {

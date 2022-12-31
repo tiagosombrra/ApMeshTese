@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <map>
+#include <vector>
 
 #include "../adapter/adapter.h"
 #include "../data/curve/curve_adaptive.h"
@@ -26,13 +27,10 @@ class ChargeEstimateProcess {
   ChargeEstimateProcess();
   ~ChargeEstimateProcess();
 
-  std::list<PatchBezier *> ChargeEstimate(Geometry *geometry, Timer *timer,
-                                          string INPUT_MODEL);
-  std::vector<PointAdaptive> InterpolateControlPointsCurve(PointAdaptive p0,
-                                                           PointAdaptive p1,
-                                                           PointAdaptive p2,
-                                                           PointAdaptive p3,
-                                                           double u, double v);
+  std::list<PatchBezier *> ChargeEstimate(Geometry *geometry, Timer *timer);
+  std::vector<PointAdaptive> InterpolateControlPointsCurve(
+      const PointAdaptive p0, const PointAdaptive p1, const PointAdaptive p2,
+      const PointAdaptive p3, const double u, const double v);
   double CalculateKaMedioPatch(PatchBezier *patch, int points);
   double CalculateAreaPatch(PatchBezier *patch, int pointsGaussLegandre);
   double CalculateAreaTriangleMedioRad(PatchBezier *patch);

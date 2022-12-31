@@ -73,6 +73,7 @@ int main(int argc, char **argv) {
 
   // cout<<atoi(argv[1])<<atoi(argv[2])<<endl;
   // cout<<RANK_MPI<<THREAD_ROOT<<endl;
+  INPUT_MODEL = argv[3];
 
   // writeMeshOn ou writeMeshOff da escrita da malha
   WRITE_MESH = argv[4];

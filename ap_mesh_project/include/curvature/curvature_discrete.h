@@ -12,7 +12,7 @@
 
 class CurvatureDiscrete : public Curvature {
  public:
-  CurvatureDiscrete(const NodeAdaptive& n);
+  explicit CurvatureDiscrete(const NodeAdaptive& noh);
   double CalculateMeanCurvature() override;
   double CalculateGaussCurvature() override;
 

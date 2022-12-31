@@ -53,7 +53,7 @@ class Boundary : public Shape {
   bool belongs(Edge *e);
   bool belongs(Vertex *v1, Vertex *v2);
 
-  string getText();
+  string getText() override;
 
   // #if USE_OPENGL
   //     void highlight();

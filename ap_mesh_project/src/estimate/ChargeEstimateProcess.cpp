@@ -2,6 +2,8 @@
 
 #include "../../include/generator/GeradorAdaptativoPorCurvatura.h"
 
+extern std::string INPUT_MODEL;
+
 ChargeEstimateProcess::ChargeEstimateProcess()
     : minor_error_(10000), minor_degree_(0) {}
 
@@ -14,7 +16,7 @@ static bool SortByNt(const PatchBezier* lhs, const PatchBezier* rhs) {
 // retonar uma lista de patch de bezier ordenadChargeEstimateProcessestimativa
 // de carga em ordem decrescente.
 std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
-    Geometry* geometry, Timer* timer, std::string INPUT_MODEL) {
+    Geometry* geometry, Timer* timer) {
   std::list<PatchBezier*> list_patch_bezier;
   std::list<PatchBezier*> list_patch_bezier_order;
 
@@ -176,8 +178,8 @@ std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
 }
 
 std::vector<PointAdaptive> ChargeEstimateProcess::InterpolateControlPointsCurve(
-    PointAdaptive p0, PointAdaptive p1, PointAdaptive p2, PointAdaptive p3,
-    double u, double v) {
+    const PointAdaptive p0, const PointAdaptive p1, const PointAdaptive p2,
+    const PointAdaptive p3, const double u, const double v) {
   double a = 0.0, b = 0.0, c = 0.0, d = 0.0, det = 0.0;
 
   PointAdaptive q1;
@@ -648,14 +650,14 @@ double ChargeEstimateProcess::CalculateKaMedioPatch(PatchBezier* patch,
 }
 
 double ChargeEstimateProcess::CalculateAreaPatch(PatchBezier* patch,
-                                                 int pointesGauusLegandre) {
+                                                 int pointsGaussLegandre) {
   VectorAdaptive V;
   double I = 0.0;
-  double beta[pointesGauusLegandre];
-  double peso[pointesGauusLegandre];
+  double beta[pointsGaussLegandre];
+  double peso[pointsGaussLegandre];
   double u = 0.0, v = 0.0;
 
-  switch (pointesGauusLegandre) {
+  switch (pointsGaussLegandre) {
     case 3: {
       // Gauss–Legendre, valores para 3 pontos
       beta[0] = -sqrt(3.0 / 5.0);
@@ -690,10 +692,10 @@ double ChargeEstimateProcess::CalculateAreaPatch(PatchBezier* patch,
     }
   }
 
-  for (int i = 0; i < pointesGauusLegandre; ++i) {
+  for (int i = 0; i < pointsGaussLegandre; ++i) {
     u = 0.5 * (1 + beta[i]);
 
-    for (int j = 0; j < pointesGauusLegandre; ++j) {
+    for (int j = 0; j < pointsGaussLegandre; ++j) {
       v = 0.5 * (1 + beta[j]);
 
       VectorAdaptive Pu = patch->Qu(u, v);
@@ -739,48 +741,48 @@ double ChargeEstimateProcess::CalculateAreaTriangleMedioRad(
 
 double ChargeEstimateProcess::CalculateAreaTriangleMedio(PatchBezier* patch,
                                                          Timer* timer,
-                                                         int grau) {
-  MeshAdaptive* malha = new MeshAdaptive;
-  SubMesh* sub = InitialMeshEstimate(patch, grau);
-  malha->InsertSubMeshAdaptive(sub);
+                                                         int degree) {
+  MeshAdaptive* mesh = new MeshAdaptive;
+  SubMesh* sub_mesh = InitialMeshEstimate(patch, degree);
+  mesh->InsertSubMeshAdaptive(sub_mesh);
   // delete sub;
 
-  while (CalculateErroEstimative(malha, timer, grau) && grau < 5) {
-    ++grau;
+  while (CalculateErroEstimative(mesh, timer, degree) && degree < 5) {
+    ++degree;
     //        cout<<"grau: "<<grau<<endl;
     //        cout<<"sub: "<<sub<<endl;
-    SubMesh* sub1 = InitialMeshEstimate(patch, grau);
-    malha->RemoveSubMeshAdaptive();
-    malha->InsertSubMeshAdaptive(sub1);
+    SubMesh* sub1 = InitialMeshEstimate(patch, degree);
+    mesh->RemoveSubMeshAdaptive();
+    mesh->InsertSubMeshAdaptive(sub1);
     // delete sub1;
   }
 
   // cout<<"menor_grau: "<<menor_grau<<endl;
 
   SubMesh* sub2 = InitialMeshEstimate(patch, minor_degree_);
-  malha->RemoveSubMeshAdaptive();
-  malha->InsertSubMeshAdaptive(sub2);
+  mesh->RemoveSubMeshAdaptive();
+  mesh->InsertSubMeshAdaptive(sub2);
 
   static_cast<PatchBezier*>(patch)->SetAreaTriangle(
-      malha->GetSubMeshAdaptiveByPosition(0)->GetElement(0)->GetArea());
+      mesh->GetSubMeshAdaptiveByPosition(0)->GetElement(0)->GetArea());
   // delete malha;
   return patch->GetAreaTriangle();
 }
 
 long ChargeEstimateProcess::CalculateNumbersTriangle(PatchBezier* patch,
-                                                     int grau) {
-  SubMesh* sub = InitialMeshEstimate(patch, grau);
+                                                     int degree) {
+  SubMesh* sub = InitialMeshEstimate(patch, degree);
 
   return sub->GetNumberElements();
 }
 
 // grau tem que ser multiplo de grau == 2^n
 SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
-                                                    int grau) {
+                                                    int degree) {
   int idv = 1;
   int ide = 1;
-  int salto = grau;
-  int comprimento = grau + 1;
+  int jump = degree;
+  int length = degree + 1;
   int total_1 = 0;
   int total_2 = 0;
 
@@ -801,8 +803,8 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
 
   SubMesh* sub = new SubMesh;
 
-  for (double v = 0.0; v <= 1.0; v += 1.0 / grau) {
-    for (double u = 0.0; u <= 1.0; u += 1.0 / grau) {
+  for (double v = 0.0; v <= 1.0; v += 1.0 / degree) {
+    for (double u = 0.0; u <= 1.0; u += 1.0 / degree) {
       PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
       p->SetId(idv++);
 
@@ -822,10 +824,10 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
     }
   }
 
-  for (double v = 1.0 / (2.0 * grau); v <= 1.0 - (1.0 / (2.0 * grau));
-       v += 1.0 / grau) {
-    for (double u = 1.0 / (2.0 * grau); u <= 1.0 - (1.0 / (2.0 * grau));
-         u += 1.0 / grau) {
+  for (double v = 1.0 / (2.0 * degree); v <= 1.0 - (1.0 / (2.0 * degree));
+       v += 1.0 / degree) {
+    for (double u = 1.0 / (2.0 * degree); u <= 1.0 - (1.0 / (2.0 * degree));
+         u += 1.0 / degree) {
       //   cout << "u = " << u << " v = " << v << endl;
       PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
       sub->SetNoh(static_cast<NodeAdaptive*>(p));
@@ -835,9 +837,9 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
 
   total_2 = total_1;
 
-  for (int i = 0; i < (total_2 - comprimento - 1); ++i) {
-    if (i == salto) {
-      salto = salto + comprimento;
+  for (int i = 0; i < (total_2 - length - 1); ++i) {
+    if (i == jump) {
+      jump = jump + length;
       ++i;
       total_1 = total_1 - 1;
     }
@@ -852,34 +854,34 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
     e1->SetId(ide++);
     sub->SetElement(e1);
 
-    ElementAdaptive* e2 = new TriangleAdaptive(sub->GetNoh(i + 1),
-                                               sub->GetNoh(i + comprimento + 1),
-                                               sub->GetNoh(i + total_1));
+    ElementAdaptive* e2 =
+        new TriangleAdaptive(sub->GetNoh(i + 1), sub->GetNoh(i + length + 1),
+                             sub->GetNoh(i + total_1));
     ((TriangleAdaptive*)e2)
         ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + 1))));
     ((TriangleAdaptive*)e2)
-        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + comprimento + 1))));
+        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + length + 1))));
     ((TriangleAdaptive*)e2)
         ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e2->SetId(ide++);
     sub->SetElement(e2);
 
-    ElementAdaptive* e3 = new TriangleAdaptive(sub->GetNoh(i + comprimento + 1),
-                                               sub->GetNoh(i + comprimento),
-                                               sub->GetNoh(i + total_1));
+    ElementAdaptive* e3 =
+        new TriangleAdaptive(sub->GetNoh(i + length + 1),
+                             sub->GetNoh(i + length), sub->GetNoh(i + total_1));
     ((TriangleAdaptive*)e3)
-        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + comprimento + 1))));
+        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + length + 1))));
     ((TriangleAdaptive*)e3)
-        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + comprimento))));
+        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + length))));
     ((TriangleAdaptive*)e3)
         ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e3->SetId(ide++);
     sub->SetElement(e3);
 
     ElementAdaptive* e4 = new TriangleAdaptive(
-        sub->GetNoh(i + comprimento), sub->GetNoh(i), sub->GetNoh(i + total_1));
+        sub->GetNoh(i + length), sub->GetNoh(i), sub->GetNoh(i + total_1));
     ((TriangleAdaptive*)e4)
-        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + comprimento))));
+        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + length))));
     ((TriangleAdaptive*)e4)->SetParametersN2(patch->FindUV(*(sub->GetNoh(i))));
     ((TriangleAdaptive*)e4)
         ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
@@ -892,17 +894,17 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
   patch->SetSubMesh(sub);
   sub->SetPatch(patch);
 
-  MeshAdaptive* malha = new MeshAdaptive;
-  malha->InsertSubMeshAdaptive(sub);
+  MeshAdaptive* mesh = new MeshAdaptive;
+  mesh->InsertSubMeshAdaptive(sub);
 
   return sub;
 }
 
-bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* malha,
-                                                    Timer* timer, int grau) {
+bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
+                                                    Timer* timer, int degree) {
   GeradorAdaptativoPorCurvatura* ger = new GeradorAdaptativoPorCurvatura();
 #if USE_OPENMP
-  double erro = ger->erroGlobalOmp(malha, timer);
+  double erro = ger->erroGlobalOmp(mesh, timer);
 #else
   double erro = ger->erroGlobal(malha, timer);
 #endif
@@ -912,7 +914,7 @@ bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* malha,
   // endl;
 
   if (erro < minor_error_) {
-    minor_degree_ = grau;
+    minor_degree_ = degree;
   }
 
   if (erro <= TOLERANCIA_ESTIMATIVE) {

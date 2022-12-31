@@ -53,8 +53,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
 #if USE_MPI
   int execute(int argc, char *argv[], Timer *timer, MPI_Status status);
   std::list<PatchBezier *> estimateChargeofPatches(Geometry *geometria,
-                                                   Timer *timer,
-                                                   std::string INPUT_MODEL);
+                                                   Timer *timer);
   std::vector<CurveAdaptive *> createVectorOfCurves(
       std::list<PatchBezier *> listBezierPt);
   std::list<PatchBezier *> orderPatchesDistribProcess(

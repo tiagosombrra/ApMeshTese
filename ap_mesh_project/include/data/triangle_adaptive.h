@@ -14,13 +14,13 @@ class TriangleAdaptive : public ElementAdaptive {
   TriangleAdaptive(NodeAdaptive* n1, NodeAdaptive* n2, NodeAdaptive* n3);
   virtual ~TriangleAdaptive();
 
-  virtual void CalculateArea();    // OBS: Não normalizar a normal!!!!
-  virtual void CalculateNormal();  // OBS: Não normalizar a normal!
+  void CalculateArea() override;    // OBS: Não normalizar a normal!!!!
+  void CalculateNormal() override;  // OBS: Não normalizar a normal!
 
-  virtual NodeAdaptive GetNoh(unsigned const int position) const;
-  virtual double GetAngle(const NodeAdaptive& n);
+  NodeAdaptive GetNoh(unsigned const int position) const override;
+  double GetAngle(const NodeAdaptive& n) override;
 
-  void ReplaceNode(NodeAdaptive* old_node, NodeAdaptive* new_node);
+  void ReplaceNode(const NodeAdaptive *old_node, NodeAdaptive* new_node);
   double CalculateQualityTriangle();
 
   double CalculateAngleN1();  // calcula o ângulo no nó 1

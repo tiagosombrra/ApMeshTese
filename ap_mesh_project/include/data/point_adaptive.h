@@ -7,7 +7,7 @@ class PointAdaptive {
  public:
   PointAdaptive();
   PointAdaptive(double x, double y, double z);
-  PointAdaptive(double x, double y, double z, unsigned long position);
+  PointAdaptive(double x, double y, double z, unsigned long id);
   ~PointAdaptive() = default;
 
   bool operator==(const PointAdaptive& point) const;

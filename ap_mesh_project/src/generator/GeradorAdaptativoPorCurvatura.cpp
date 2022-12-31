@@ -17,8 +17,7 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 #if USE_MPI
   if (RANK_MPI == 0) {
     // estimativa e ordenação dos patches para carga de distribuiçao dos patches
-    std::list<PatchBezier*> listBezierPt =
-        estimateChargeofPatches(geo, timer, argv[3]);
+    std::list<PatchBezier*> listBezierPt = estimateChargeofPatches(geo, timer);
 
     // distribuição dos patches entre os (n) processos de acordo com suas cargas
     // ordenadas
@@ -218,10 +217,9 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 
 #if USE_MPI
 std::list<PatchBezier*> GeradorAdaptativoPorCurvatura::estimateChargeofPatches(
-    Geometry* geometria, Timer* timer, string INPUT_MODEL) {
+    Geometry* geometria, Timer* timer) {
   ChargeEstimateProcess* cep = new ChargeEstimateProcess();
-  std::list<PatchBezier*> listBezierPt =
-      cep->ChargeEstimate(geometria, timer, INPUT_MODEL);
+  std::list<PatchBezier*> listBezierPt = cep->ChargeEstimate(geometria, timer);
   delete cep;
 
   return listBezierPt;

@@ -17,8 +17,7 @@ class NodeAdaptive : public PointAdaptive {
 
   void InsertElement(ElementAdaptive *element);
   unsigned int GetNumberElements() const;
-  ElementAdaptive *GetElement(
-      const unsigned int position);  // retorna o i-ésimo elemento
+  ElementAdaptive *GetElement(const unsigned int position);
   void ClearElements();
 
   const std::list<ElementAdaptive *> &GetElements() const;

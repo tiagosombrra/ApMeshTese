@@ -1,8 +1,8 @@
 #include "../../../include/data/patch/patch.h"
 
-Patch::Patch() { this->sub_mesh_ = nullptr; }
+Patch::Patch() : id_(0), sub_mesh_(nullptr) {}
 
-Patch::Patch(Patch*) { this->sub_mesh_ = nullptr; }
+Patch::Patch(Patch* patch) : id_(patch->GetId()), sub_mesh_(nullptr) {}
 
 Patch::~Patch() {
   // não delete o que não for alocado com new!

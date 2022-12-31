@@ -127,7 +127,7 @@ class QuadtreeCell : public Shape {
   void makeOuterEdges();
   void makeTemplateBasedMesh();
 
-  string getText();
+  string getText() override;
 
   // #if USE_OPENGL
   //     void highlight();

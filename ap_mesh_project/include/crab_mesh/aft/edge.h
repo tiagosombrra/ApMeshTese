@@ -104,7 +104,7 @@ class Edge : public Shape {
   double getLen();
   void makeParamMid();
 
-  string getText();
+  string getText() override;
 
   // #if USE_OPENGL
   //     void highlight();

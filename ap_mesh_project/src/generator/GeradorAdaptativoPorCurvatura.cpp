@@ -17,8 +17,7 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 #if USE_MPI
   if (RANK_MPI == 0) {
     // estimativa e ordenação dos patches para carga de distribuiçao dos patches
-    std::list<PatchBezier*> listBezierPt =
-        estimateChargeofPatches(geo, timer, argv[3]);
+    std::list<PatchBezier*> listBezierPt = estimateChargeofPatches(geo, timer);
 
     // distribuição dos patches entre os (n) processos de acordo com suas cargas
     // ordenadas
@@ -39,7 +38,7 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 
       for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
            it != listBezierPt.end(); it++) {
-        if (j == (*it)->getIdProcess()) {
+        if (j == (*it)->GetIdProcess()) {
           vecBezierPatches[i] = (*it)->GetPt00().GetX();
           i++;
           vecBezierPatches[i] = (*it)->GetPt00().GetY();
@@ -218,10 +217,9 @@ int GeradorAdaptativoPorCurvatura::execute(int argc, char* argv[], Timer* timer)
 
 #if USE_MPI
 std::list<PatchBezier*> GeradorAdaptativoPorCurvatura::estimateChargeofPatches(
-    Geometry* geometria, Timer* timer, string INPUT_MODEL) {
+    Geometry* geometria, Timer* timer) {
   ChargeEstimateProcess* cep = new ChargeEstimateProcess();
-  std::list<PatchBezier*> listBezierPt =
-      cep->chargeEstimateProcess(geometria, timer, INPUT_MODEL);
+  std::list<PatchBezier*> listBezierPt = cep->ChargeEstimate(geometria, timer);
   delete cep;
 
   return listBezierPt;
@@ -302,15 +300,15 @@ GeradorAdaptativoPorCurvatura::orderPatchesDistribProcess(
       std::sort(vectorEstimativeProcessPair.begin(),
                 vectorEstimativeProcessPair.end());
 
-      (*it)->setIdProcess(vectorEstimativeProcessPair.front().second);
+      (*it)->SetIdProcess(vectorEstimativeProcessPair.front().second);
 
-      vectorEstimativeProcessPair.front().first += (*it)->getNumberTriangle();
+      vectorEstimativeProcessPair.front().first += (*it)->GetNumberTriangle();
     }
 
     for (int i = 0; i < SIZE_MPI; i++) {
       for (std::list<PatchBezier*>::iterator it = listPatches.begin();
            it != listPatches.end(); it++) {
-        if ((*it)->getIdProcess() == i) {
+        if ((*it)->GetIdProcess() == i) {
           listPatchesOrder.push_back((*it));
         }
       }
@@ -321,7 +319,7 @@ GeradorAdaptativoPorCurvatura::orderPatchesDistribProcess(
   } else {
     for (std::list<PatchBezier*>::iterator it = listPatches.begin();
          it != listPatches.end(); it++) {
-      (*it)->setIdProcess(0);
+      (*it)->SetIdProcess(0);
     }
 
     return listPatches;
@@ -354,7 +352,7 @@ void GeradorAdaptativoPorCurvatura::calculateEstimateProcessElements(
 
   for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
        it != listBezierPt.end(); it++) {
-    estimate[(*it)->getIdProcess()] += (*it)->getNumberTriangle();
+    estimate[(*it)->GetIdProcess()] += (*it)->GetNumberTriangle();
   }
 
   for (int i = 0; i < SIZE_MPI; ++i) {
@@ -399,41 +397,41 @@ Geometry* GeradorAdaptativoPorCurvatura::unpakGeometry(double listOfPatches[],
   PatchBezier* bezierPatch;
 
   for (int i = 0; i < sizeOfListPatches; i = i + 48) {
-    p00 = new Vertice(listOfPatches[i], listOfPatches[i + 1],
-                      listOfPatches[i + 2]);
-    p10 = new Vertice(listOfPatches[i + 3], listOfPatches[i + 4],
-                      listOfPatches[i + 5]);
-    p20 = new Vertice(listOfPatches[i + 6], listOfPatches[i + 7],
-                      listOfPatches[i + 8]);
-    p30 = new Vertice(listOfPatches[i + 9], listOfPatches[i + 10],
-                      listOfPatches[i + 11]);
+    p00 = new VertexAdaptive(listOfPatches[i], listOfPatches[i + 1],
+                             listOfPatches[i + 2]);
+    p10 = new VertexAdaptive(listOfPatches[i + 3], listOfPatches[i + 4],
+                             listOfPatches[i + 5]);
+    p20 = new VertexAdaptive(listOfPatches[i + 6], listOfPatches[i + 7],
+                             listOfPatches[i + 8]);
+    p30 = new VertexAdaptive(listOfPatches[i + 9], listOfPatches[i + 10],
+                             listOfPatches[i + 11]);
 
-    p01 = new Vertice(listOfPatches[i + 12], listOfPatches[i + 13],
-                      listOfPatches[i + 14]);
-    p11 = new Vertice(listOfPatches[i + 15], listOfPatches[i + 16],
-                      listOfPatches[i + 17]);
-    p21 = new Vertice(listOfPatches[i + 18], listOfPatches[i + 19],
-                      listOfPatches[i + 20]);
-    p31 = new Vertice(listOfPatches[i + 21], listOfPatches[i + 22],
-                      listOfPatches[i + 23]);
+    p01 = new VertexAdaptive(listOfPatches[i + 12], listOfPatches[i + 13],
+                             listOfPatches[i + 14]);
+    p11 = new VertexAdaptive(listOfPatches[i + 15], listOfPatches[i + 16],
+                             listOfPatches[i + 17]);
+    p21 = new VertexAdaptive(listOfPatches[i + 18], listOfPatches[i + 19],
+                             listOfPatches[i + 20]);
+    p31 = new VertexAdaptive(listOfPatches[i + 21], listOfPatches[i + 22],
+                             listOfPatches[i + 23]);
 
-    p02 = new Vertice(listOfPatches[i + 24], listOfPatches[i + 25],
-                      listOfPatches[i + 26]);
-    p12 = new Vertice(listOfPatches[i + 27], listOfPatches[i + 28],
-                      listOfPatches[i + 29]);
-    p22 = new Vertice(listOfPatches[i + 30], listOfPatches[i + 31],
-                      listOfPatches[i + 32]);
-    p32 = new Vertice(listOfPatches[i + 33], listOfPatches[i + 34],
-                      listOfPatches[i + 35]);
+    p02 = new VertexAdaptive(listOfPatches[i + 24], listOfPatches[i + 25],
+                             listOfPatches[i + 26]);
+    p12 = new VertexAdaptive(listOfPatches[i + 27], listOfPatches[i + 28],
+                             listOfPatches[i + 29]);
+    p22 = new VertexAdaptive(listOfPatches[i + 30], listOfPatches[i + 31],
+                             listOfPatches[i + 32]);
+    p32 = new VertexAdaptive(listOfPatches[i + 33], listOfPatches[i + 34],
+                             listOfPatches[i + 35]);
 
-    p03 = new Vertice(listOfPatches[i + 36], listOfPatches[i + 37],
-                      listOfPatches[i + 38]);
-    p13 = new Vertice(listOfPatches[i + 39], listOfPatches[i + 40],
-                      listOfPatches[i + 41]);
-    p23 = new Vertice(listOfPatches[i + 42], listOfPatches[i + 43],
-                      listOfPatches[i + 44]);
-    p33 = new Vertice(listOfPatches[i + 45], listOfPatches[i + 46],
-                      listOfPatches[i + 47]);
+    p03 = new VertexAdaptive(listOfPatches[i + 36], listOfPatches[i + 37],
+                             listOfPatches[i + 38]);
+    p13 = new VertexAdaptive(listOfPatches[i + 39], listOfPatches[i + 40],
+                             listOfPatches[i + 41]);
+    p23 = new VertexAdaptive(listOfPatches[i + 42], listOfPatches[i + 43],
+                             listOfPatches[i + 44]);
+    p33 = new VertexAdaptive(listOfPatches[i + 45], listOfPatches[i + 46],
+                             listOfPatches[i + 47]);
 
     patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
     patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
@@ -782,7 +780,7 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
 
   for (double v = 0.0; v <= 1.0; v += 1) {
     for (double u = 0.0; u <= 1.0; u += 1) {
-      PointAdaptive* p = new Noh(patch->Parameterize(u, v));
+      PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
       p->SetId(idManager->next(0));
 
       if (v == 0 and c1)  // p está na curva 1 (c1 = NULL)
@@ -795,13 +793,13 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicialOmp(
       else if (u == 1 and c2)  // p está na curva 2
         c2->InsertPoint(p);
 
-      sub->SetNoh(static_cast<Noh*>(p));
+      sub->SetNoh(static_cast<NodeAdaptive*>(p));
     }
   }
 
-  PointAdaptive* p = new Noh(patch->Parameterize(0.5, 0.5));
+  PointAdaptive* p = new NodeAdaptive(patch->Parameterize(0.5, 0.5));
   p->SetId(idManager->next(0));
-  sub->SetNoh(static_cast<Noh*>(p));
+  sub->SetNoh(static_cast<NodeAdaptive*>(p));
 
   ElementAdaptive* e1 =
       new TriangleAdaptive(sub->GetNoh(0), sub->GetNoh(1), sub->GetNoh(4));
@@ -885,9 +883,9 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(MeshAdaptive* malha,
 
         PointAdaptive* n = sub->GetNoh(j);
         Patch* p = sub->GetPatch();
-        CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
+        CurvatureAnalytical ka(*(static_cast<NodeAdaptive*>(n)),
                                *(static_cast<PatchCoons*>(p)));
-        CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
+        CurvatureDiscrete kd(*(static_cast<NodeAdaptive*>(n)));
         double Ga = ka.CalculateGaussCurvature();
         double Gd = kd.CalculateGaussCurvature();
         double Ha = ka.CalculateMeanCurvature();
@@ -902,10 +900,10 @@ double GeradorAdaptativoPorCurvatura::erroGlobalOmp(MeshAdaptive* malha,
 
         // atualiza as curvaturas do nó ( para que não sejam recalculadas na
         // adaptação das curvas e do domínio )
-        ((Noh*)n)->SetGa(Ga);
-        ((Noh*)n)->SetGd(Gd);
-        ((Noh*)n)->SetHa(Ha);
-        ((Noh*)n)->SetHd(Hd);
+        ((NodeAdaptive*)n)->SetGa(Ga);
+        ((NodeAdaptive*)n)->SetGd(Gd);
+        ((NodeAdaptive*)n)->SetHa(Ha);
+        ((NodeAdaptive*)n)->SetHd(Hd);
 #if USE_MPI
         timer->endTimerParallel(RANK_MPI, omp_get_thread_num(),
                                 6);  // MediaGauss
@@ -1196,7 +1194,7 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicial(
   for (double v = 0.0; v <= 1.0; v += 1) {
     for (double u = 0.0; u <= 1.0; u += 1) {
       //			cout << "u = " << u << " v = " << v << endl;
-      PointAdaptive* p = new Noh(patch->Parameterize(u, v));
+      PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
       p->SetId(idManager->next(0));
 
       //			cout << "ponto " << p->id << " " <<  p->x << " "
@@ -1213,12 +1211,12 @@ SubMesh* GeradorAdaptativoPorCurvatura::malhaInicial(
       else if (u == 1 and c2)  // p está na curva 2
         c2->InsertPoint(p);
 
-      sub->SetNoh(static_cast<Noh*>(p));
+      sub->SetNoh(static_cast<NodeAdaptive*>(p));
     }
   }
 
-  PointAdaptive* p = new Noh(patch->Parameterize(0.5, 0.5));
-  sub->SetNoh(static_cast<Noh*>(p));
+  PointAdaptive* p = new NodeAdaptive(patch->Parameterize(0.5, 0.5));
+  sub->SetNoh(static_cast<NodeAdaptive*>(p));
   p->SetId(idManager->next(0));
 
   ElementAdaptive* e1 =
@@ -1307,19 +1305,19 @@ double GeradorAdaptativoPorCurvatura::erroGlobal(MeshAdaptive* malha,
 
       PointAdaptive* n = sub->GetNoh(j);
       Patch* p = sub->GetPatch();
-      CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
+      CurvatureAnalytical ka(*(static_cast<NodeAdaptive*>(n)),
                              *(static_cast<PatchCoons*>(p)));
-      CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
+      CurvatureDiscrete kd(*(static_cast<NodeAdaptive*>(n)));
       double Ga = ka.CalculateGaussCurvature();
       double Gd = kd.CalculateGaussCurvature();
       double Ha = ka.CalculateMeanCurvature();
       double Hd = kd.CalculateMeanCurvature();
       // atualiza as curvaturas do nó ( para que não sejam recalculadas na
       // adaptação das curvas e do domínio )
-      ((Noh*)n)->SetGa(Ga);
-      ((Noh*)n)->SetGd(Gd);
-      ((Noh*)n)->SetHa(Ha);
-      ((Noh*)n)->SetHd(Hd);
+      ((NodeAdaptive*)n)->SetGa(Ga);
+      ((NodeAdaptive*)n)->SetGd(Gd);
+      ((NodeAdaptive*)n)->SetHa(Ha);
+      ((NodeAdaptive*)n)->SetHd(Hd);
 #if USE_MPI
       timer->endTimerParallel(RANK_MPI, omp_get_thread_num(), 6);  // MediaGauss
       timer->initTimerParallel(RANK_MPI, omp_get_thread_num(),
@@ -1485,35 +1483,35 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(MeshAdaptive* malha) {
     for (unsigned int j = 0; j < Nv; ++j) {
       PointAdaptive* n = sub->GetNoh(j);
       Patch* p = sub->GetPatch();
-      CurvatureAnalytical ka(*(static_cast<Noh*>(n)),
+      CurvatureAnalytical ka(*(static_cast<NodeAdaptive*>(n)),
                              *(static_cast<PatchCoons*>(p)));
-      CurvatureDiscrete kd(*(static_cast<Noh*>(n)));
+      CurvatureDiscrete kd(*(static_cast<NodeAdaptive*>(n)));
       double Ga = ka.CalculateGaussCurvature();
       double Gd = kd.CalculateGaussCurvature();
       double Ha = ka.CalculateMeanCurvature();
       double Hd = kd.CalculateMeanCurvature();
       // atualiza as curvaturas do nó ( para que não sejam recalculadas na
       // adaptação das curvas e do domínio )
-      ((Noh*)n)->SetGa(Ga);
-      ((Noh*)n)->SetGd(Gd);
-      ((Noh*)n)->SetHa(Ha);
-      ((Noh*)n)->SetHd(Hd);
+      ((NodeAdaptive*)n)->SetGa(Ga);
+      ((NodeAdaptive*)n)->SetGd(Gd);
+      ((NodeAdaptive*)n)->SetHa(Ha);
+      ((NodeAdaptive*)n)->SetHd(Hd);
 
       arquivo << "P " << n->GetId() << ": ( " << n->GetX() << ", " << n->GetY()
               << ", " << n->GetZ() << ")" << endl;
       tuple<double, double> t_n = ((PatchHermite*)p)->FindUV(*n);
       arquivo << "\tu = " << get<0>(t_n) << " v = " << get<1>(t_n) << endl;
-      unsigned int num = ((Noh*)n)->GetNumberElements();
+      unsigned int num = ((NodeAdaptive*)n)->GetNumberElements();
       arquivo << "\t" << num << " elementos incidentes:";
       for (unsigned int i = 0; i < num; ++i) {
-        ElementAdaptive* elem = ((Noh*)n)->GetElement(i);
+        ElementAdaptive* elem = ((NodeAdaptive*)n)->GetElement(i);
         arquivo << " T-" << elem->GetId();
       }
       arquivo << endl;
-      arquivo << "\tGd = " << ((Noh*)n)->GetGd()
-              << " Ga = " << ((Noh*)n)->GetGa() << endl;
-      arquivo << "\tHd = " << ((Noh*)n)->GetHd()
-              << " Ha = " << ((Noh*)n)->GetHa() << endl;
+      arquivo << "\tGd = " << ((NodeAdaptive*)n)->GetGd()
+              << " Ga = " << ((NodeAdaptive*)n)->GetGa() << endl;
+      arquivo << "\tHd = " << ((NodeAdaptive*)n)->GetHd()
+              << " Ha = " << ((NodeAdaptive*)n)->GetHa() << endl;
 
       double power = 0.0;
       double diff = 0.0;
@@ -1523,8 +1521,8 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(MeshAdaptive* malha) {
         power = pow(diff, 2);
         Njs += power;
         curvPower += pow(Ga, 2);
-        arquivo << "\tCd = " << ((Noh*)n)->GetGd()
-                << " Ca = " << ((Noh*)n)->GetGa() << endl;
+        arquivo << "\tCd = " << ((NodeAdaptive*)n)->GetGd()
+                << " Ca = " << ((NodeAdaptive*)n)->GetGa() << endl;
         arquivo << "\t|Cd - Ca| = " << fabs(diff) << endl;
         if (fabs(diff) <= TOLERANCIA)
           arquivo << "\tdiferença menor que tolerância!!" << endl;
@@ -1533,8 +1531,8 @@ void GeradorAdaptativoPorCurvatura::salvarErroMalha(MeshAdaptive* malha) {
         power = pow(diff, 2);
         Njs += power;
         curvPower += pow(Ha, 2);
-        arquivo << "\tCd = " << ((Noh*)n)->GetHd()
-                << " Ca = " << ((Noh*)n)->GetHa() << endl;
+        arquivo << "\tCd = " << ((NodeAdaptive*)n)->GetHd()
+                << " Ca = " << ((NodeAdaptive*)n)->GetHa() << endl;
         arquivo << "\t|Cd - Ca| = " << fabs(diff) << endl;
         if (fabs(diff) <= TOLERANCIA)
           arquivo << "\tdiferença menor que tolerância!!" << endl;
@@ -1592,7 +1590,7 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(MeshAdaptive* malha,
     SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
     for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
-      Noh* n = sub->GetNoh(j);
+      NodeAdaptive* n = sub->GetNoh(j);
 
       arq << n->GetId() << " " << n->GetX() << " " << n->GetY() << " "
           << n->GetZ() << endl;
@@ -1710,7 +1708,7 @@ void GeradorAdaptativoPorCurvatura::escreveMalha(MeshAdaptive* malha, int passo,
     SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
 
     for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
-      Noh* n = sub->GetNoh(j);
+      NodeAdaptive* n = sub->GetNoh(j);
 
       arq << n->GetId() << " " << n->GetX() << " " << n->GetY() << " "
           << n->GetZ() << endl;
@@ -1989,9 +1987,9 @@ void escreveElementos(int passo, SubMesh* sub, int i) {
   for (unsigned int k = 0; k < sub->GetNumberElements(); ++k) {
     ElementAdaptive* elem = sub->GetElement(k);
 
-    Noh n1(elem->GetNoh(1));
-    Noh n2(elem->GetNoh(2));
-    Noh n3(elem->GetNoh(3));
+    NodeAdaptive n1(elem->GetNoh(1));
+    NodeAdaptive n2(elem->GetNoh(2));
+    NodeAdaptive n3(elem->GetNoh(3));
 
     tuple<double, double> t1 = ((TriangleAdaptive*)elem)->GetParametersN1();
     tuple<double, double> t2 = ((TriangleAdaptive*)elem)->GetParametersN2();
@@ -1999,9 +1997,9 @@ void escreveElementos(int passo, SubMesh* sub, int i) {
 
     arq << "T-" << elem->GetId() << ":\n\t"
         << "área = " << elem->GetArea() << ";\n\t"
-        << "normal = " << elem->GetVectorNormal().x_ << ", "
-        << elem->GetVectorNormal().y << ", " << elem->GetVectorNormal().z
-        << "\n\t"
+        << "normal = " << elem->GetVectorNormal().GetX() << ", "
+        << elem->GetVectorNormal().GetY() << ", "
+        << elem->GetVectorNormal().GetZ() << "\n\t"
         << "n-" << n1.GetId() << "( " << get<0>(t1) << " , " << get<1>(t1)
         << ") ângulo = " << elem->GetAngle(n1) << ";\n\t"
         << "n-" << n2.GetId() << "( " << get<0>(t2) << " , " << get<1>(t2)

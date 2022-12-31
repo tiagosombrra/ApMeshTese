@@ -412,7 +412,7 @@ std::list<PatchBezier*> PatchBezierReader::parsePatchesBezier() {
             std::istringstream iss(line);
             int id_patch;
             iss >> id_patch;
-            patch->setId_bezierPatch(id_patch);
+            patch->SetIdPatchBezier(id_patch);
           }
 
           if (line[0] == 'p' && line[1] == 'c') {

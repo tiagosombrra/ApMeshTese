@@ -12,7 +12,7 @@ QMAKE_CC = mpicc
 
 QMAKE_CFLAGS += $$system(mpicc --showme:compile)
 QMAKE_LFLAGS += $$system(mpicxx --showme:link)
-QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+QMAKE_CXXFLAGS += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK -I/usr/lib/gcc/x86_64-linux-gnu/11/include
 QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
 
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -43,12 +43,12 @@ SOURCES += \
     ../src/data/definitions.cpp \
     ../src/crab_mesh/aft/edge.cpp \
     ../src/data/element_adaptive.cpp \
-    ../src/data/Face.cpp \
+    ../src/crab_mesh/aft/face.cpp \
     ../src/data/geometry.cpp \
     ../src/data/mesh/mesh_adaptive.cpp \
     ../src/data/mesh/sub_mesh.cpp \
     ../src/data/model.cpp \
-    ../src/data/noh.cpp \
+    ../src/data/node_adaptive.cpp \
     ../src/data/patch/patch_bezier.cpp \
     ../src/data/patch/patch_coons.cpp \
     ../src/data/patch/patch_hermite.cpp \
@@ -56,9 +56,9 @@ SOURCES += \
     ../src/data/point_adaptive.cpp \
     ../src/data/tree/bin_tree.cpp \
     ../src/data/triangle_adaptive.cpp \
-    ../src/data/Vertex.cpp \
-    ../src/data/Vertice.cpp \
-    ../src/data/Vetor.cpp \
+    ../src/crab_mesh/aft/vertex.cpp \
+    ../src/data/vertex_adaptive.cpp \
+    ../src/data/vector_adaptive.cpp \
     ../src/estimate/ChargeEstimateProcess.cpp \
     ../src/generator/Gerador.cpp \
     ../src/generator/GeradorAdaptativo.cpp \
@@ -119,7 +119,7 @@ HEADERS += \
     ../include/data/mesh/mesh_adaptive.h \
     ../include/data/mesh/sub_mesh.h \
     ../include/data/model.h \
-    ../include/data/noh.h \
+    ../include/data/node_adaptive.h \
     ../include/data/patch/patch_bezier.h \
     ../include/data/patch/patch_coons.h \
     ../include/data/patch/patch_hermite.h \
@@ -127,9 +127,9 @@ HEADERS += \
     ../include/data/point_adaptive.h \
     ../include/data/tree/bin_tree.h \
     ../include/data/triangle_adaptive.h \
-    ../include/data/Vertex.h \
-    ../include/data/Vertice.h \
-    ../include/data/Vetor.h \
+    ../include/crab_mesh/aft/vertex.h \
+    ../include/data/vertex_adaptive.h \
+    ../include/data/vector_adaptive.h \
     ../include/estimate/ChargeEstimateProcess.h \
     ../include/generator/Gerador.h \
     ../include/generator/GeradorAdaptativo.h \

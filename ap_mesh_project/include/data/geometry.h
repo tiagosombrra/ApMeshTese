@@ -11,7 +11,7 @@
 class Geometry {
  public:
   Geometry();
-  Geometry(Geometry* geometry);
+  //  explicit Geometry(Geometry* geometry);
   ~Geometry();
 
   void InsertCurve(CurveAdaptive* curve);

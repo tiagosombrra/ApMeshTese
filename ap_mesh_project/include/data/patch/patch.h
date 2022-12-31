@@ -8,7 +8,7 @@
 class Patch {
  public:
   Patch();
-  Patch(Patch*);
+  explicit Patch(Patch* patch);
   ~Patch();
 
   unsigned int GetId() const;

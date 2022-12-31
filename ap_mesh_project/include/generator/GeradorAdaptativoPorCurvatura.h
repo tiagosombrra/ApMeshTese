@@ -17,7 +17,7 @@ curvaturas.
 #include "../curvature/curvature_analytical.h"
 #include "../curvature/curvature_discrete.h"
 #include "../data/definitions.h"
-#include "../data/noh.h"
+#include "../data/node_adaptive.h"
 #include "../data/patch/patch_bezier.h"
 #include "../data/patch/patch_coons.h"
 #include "../data/triangle_adaptive.h"
@@ -53,8 +53,7 @@ class GeradorAdaptativoPorCurvatura : public GeradorAdaptativo {
 #if USE_MPI
   int execute(int argc, char *argv[], Timer *timer, MPI_Status status);
   std::list<PatchBezier *> estimateChargeofPatches(Geometry *geometria,
-                                                   Timer *timer,
-                                                   std::string INPUT_MODEL);
+                                                   Timer *timer);
   std::vector<CurveAdaptive *> createVectorOfCurves(
       std::list<PatchBezier *> listBezierPt);
   std::list<PatchBezier *> orderPatchesDistribProcess(

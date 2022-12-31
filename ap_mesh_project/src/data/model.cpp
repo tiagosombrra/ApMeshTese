@@ -1,6 +1,6 @@
 #include "../../include/data/model.h"
 
-Model::Model() {}
+Model::Model() : geometry_(nullptr) {}
 
 Model::Model(Geometry* geometry) { this->geometry_ = geometry; }
 

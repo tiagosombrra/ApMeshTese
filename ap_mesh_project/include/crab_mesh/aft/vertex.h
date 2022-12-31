@@ -75,7 +75,7 @@ class Vertex : public Shape {
   bool equals(double x, double y);
   bool matches(Vertex *v);
 
-  string getText();
+  string getText() override;
 
   // #if USE_OPENGL
   //     void highlight();

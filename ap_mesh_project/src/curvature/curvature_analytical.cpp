@@ -33,7 +33,7 @@ CurvatureAnalytical::CurvatureAnalytical(const PointAdaptive& v,
   //         "Quv ( " << Quv.x << ", " << Quv.y << ", " << Quv.z << " )" <<
   //         endl; cout << "Qvv ( " << Qvv.x << ", " << Qvv.y << ", " << Qvv.z
   //         << " )"
-  //         << endl; if ( 0 == prod.modulo() )
+  //         << endl; if ( 0 == prod.CalculateModule() )
   //             cout << "Qu X Qv = 0 no ponto p" << v.id << " (" << v.x << ", "
   //             << v.y << ", " << v.z << ")" << endl;
   //     }
@@ -49,12 +49,12 @@ CurvatureAnalytical::CurvatureAnalytical(const PointAdaptive& v,
 
 double CurvatureAnalytical::CalculateMeanCurvature() {
   // Vetor ^ Vetor -> produto escalar
-  double prodModule = prod_.modulo();
+  double prodModule = prod_.CalculateModule();
 
   if (prodModule <= TOLERANCIA) return 0.0;  // regra de L'Hôpital
 
-  double qvModule = qv_.modulo();
-  double quModule = qu_.modulo();
+  double qvModule = qv_.CalculateModule();
+  double quModule = qu_.CalculateModule();
 
   // H = ( A.|Qv|² - 2.B.Qu.Qv + C.|Qu|² ) / ( 2.| Qu x Qv |³ )
   double resultado =
@@ -70,7 +70,7 @@ double CurvatureAnalytical::CalculateMeanCurvature() {
 }
 
 double CurvatureAnalytical::CalculateGaussCurvature() {
-  double prodModule = prod_.modulo();
+  double prodModule = prod_.CalculateModule();
 
   if (prodModule <= TOLERANCIA) return 0.0;  // regra de L'Hôpital
 

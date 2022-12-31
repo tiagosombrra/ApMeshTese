@@ -1,13 +1,13 @@
 #include "../../../include/data/curve/curve_adaptive.h"
 
-CurveAdaptive::CurveAdaptive() {}
+CurveAdaptive::CurveAdaptive()
+    : id_(0), length_(0), points_({}), patches_({}) {}
 
-CurveAdaptive::CurveAdaptive(CurveAdaptive* curve) {
-  this->id_ = curve->id_;
-  this->length_ = curve->length_;
-  this->points_ = curve->points_;
-  this->patches_ = curve->patches_;
-}
+CurveAdaptive::CurveAdaptive(CurveAdaptive* curve)
+    : id_(curve->id_),
+      length_(curve->length_),
+      points_(curve->points_),
+      patches_(curve->patches_) {}
 
 CurveAdaptive::~CurveAdaptive() {
   // 1. apaga a lista de pontos
@@ -26,8 +26,8 @@ void CurveAdaptive::SetId(unsigned int id) { this->id_ = id; }
 
 double CurveAdaptive::GetLength() { return this->length_; }
 
-void CurveAdaptive::InsertPoint(PointAdaptive* p) {
-  this->points_.push_back(p);
+void CurveAdaptive::InsertPoint(PointAdaptive* point) {
+  this->points_.push_back(point);
 }
 
 unsigned int CurveAdaptive::GetNumBerPoints() const {
@@ -45,11 +45,11 @@ void CurveAdaptive::InsertPatch(Patch* patch) {
   this->patches_.push_back(patch);
 }
 
-void CurveAdaptive::SetPoints(list<PointAdaptive*> new_points) {
+void CurveAdaptive::SetPoints(std::list<PointAdaptive*> new_points) {
   this->points_ = new_points;
 }
 
-list<PointAdaptive*>& CurveAdaptive::GetPoints() { return this->points_; }
+std::list<PointAdaptive*>& CurveAdaptive::GetPoints() { return this->points_; }
 
 unsigned int CurveAdaptive::GetNumBerPatches() const {
   return (int)patches_.size();

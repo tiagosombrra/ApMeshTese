@@ -7,7 +7,7 @@
 class Model {
  public:
   Model();
-  Model(Geometry* geometry);
+  explicit Model(Geometry* geometry);
   ~Model();
 
   void SetGeometry(Geometry* geometry);

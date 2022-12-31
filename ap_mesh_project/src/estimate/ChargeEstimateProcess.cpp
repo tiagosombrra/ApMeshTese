@@ -1,26 +1,30 @@
 #include "../../include/estimate/ChargeEstimateProcess.h"
 
-ChargeEstimateProcess::ChargeEstimateProcess() {
-  menor_erro = 10000;
-  menor_grau = 0;
+#include "../../include/generator/GeradorAdaptativoPorCurvatura.h"
+
+extern std::string INPUT_MODEL;
+
+ChargeEstimateProcess::ChargeEstimateProcess()
+    : minor_error_(10000), minor_degree_(0) {}
+
+ChargeEstimateProcess::~ChargeEstimateProcess() {}
+
+static bool SortByNt(const PatchBezier* lhs, const PatchBezier* rhs) {
+  return lhs->GetKaMedio() > rhs->GetKaMedio();
 }
 
-static bool sortByNt(const PatchBezier* lhs, const PatchBezier* rhs) {
-  return lhs->getKaMedio() > rhs->getKaMedio();
-}
-
-// retonar uma lista de patch de bezier ordenados de acordo com sua estimativa
+// retonar uma lista de patch de bezier ordenadChargeEstimateProcessestimativa
 // de carga em ordem decrescente.
-std::list<PatchBezier*> ChargeEstimateProcess::chargeEstimateProcess(
-    Geometry* geo, Timer* timer, std::string INPUT_MODEL) {
-  std::list<PatchBezier*> listBezierPt;
-  std::list<PatchBezier*> listBezierPtOrder;
+std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
+    Geometry* geometry, Timer* timer) {
+  std::list<PatchBezier*> list_patch_bezier;
+  std::list<PatchBezier*> list_patch_bezier_order;
 
-  PatchBezierReader* pt = new PatchBezierReader();
+  PatchBezierReader* patch_bezier_reader = new PatchBezierReader();
   timer->endTimerParallel(0, 0, 10);  // Full
   timer->initTimerParallel(0, 0, 5);  // Leitura arquivo
 
-  listBezierPt = pt->loaderBPFile(INPUT_MODEL);
+  list_patch_bezier = patch_bezier_reader->loaderBPFile(INPUT_MODEL);
 
   timer->endTimerParallel(0, 0, 5);  // Leitura arquivo
   TIME_READ_FILE = timer->timerParallel[0][0][5];
@@ -29,7 +33,7 @@ std::list<PatchBezier*> ChargeEstimateProcess::chargeEstimateProcess(
 
   timer->initTimerParallel(0, 0, 1);  // Estimativa de carga process 0
 
-  delete pt;
+  delete patch_bezier_reader;
 
   PointAdaptive* p00;
   PointAdaptive* p01;
@@ -53,165 +57,129 @@ std::list<PatchBezier*> ChargeEstimateProcess::chargeEstimateProcess(
   CurveAdaptive* patch_c3;
   CurveAdaptive* patch_c4;
 
-  double areaMenor = 1000;
-  double areaMaior = 0;
-  double kamMenor = 1000;
-  double kamMaior = 0;
+  double area_minor = 1000;
+  double area_major = 0;
+  double kam_minor = 1000;
+  double kam_major = 0;
 
   double elementos = 0;
 
-  // timer->endTimerParallel(0, 0, 8); // Over
-  // timer->initTimerParallel(0, 0, 1); // Estimativa de carga process 0
+  for (std::list<PatchBezier*>::iterator it = list_patch_bezier.begin();
+       it != list_patch_bezier.end(); it++) {
+    p00 = new VertexAdaptive((*it)->GetPt00().GetX(), (*it)->GetPt00().GetY(),
+                             (*it)->GetPt00().GetZ());
+    p10 = new VertexAdaptive((*it)->GetPt10().GetX(), (*it)->GetPt10().GetY(),
+                             (*it)->GetPt10().GetZ());
+    p20 = new VertexAdaptive((*it)->GetPt20().GetX(), (*it)->GetPt20().GetY(),
+                             (*it)->GetPt20().GetZ());
+    p30 = new VertexAdaptive((*it)->GetPt30().GetX(), (*it)->GetPt30().GetY(),
+                             (*it)->GetPt30().GetZ());
 
-  //     cout<<"INIT >> ESTIMATIVE"<< endl;
+    p01 = new VertexAdaptive((*it)->GetPt01().GetX(), (*it)->GetPt01().GetY(),
+                             (*it)->GetPt01().GetZ());
+    p11 = new VertexAdaptive((*it)->GetPt11().GetX(), (*it)->GetPt11().GetY(),
+                             (*it)->GetPt11().GetZ());
+    p21 = new VertexAdaptive((*it)->GetPt21().GetX(), (*it)->GetPt21().GetY(),
+                             (*it)->GetPt21().GetZ());
+    p31 = new VertexAdaptive((*it)->GetPt31().GetX(), (*it)->GetPt31().GetY(),
+                             (*it)->GetPt31().GetZ());
 
-  for (std::list<PatchBezier*>::iterator it = listBezierPt.begin();
-       it != listBezierPt.end(); it++) {
-    p00 = new Vertice((*it)->GetPt00().GetX(), (*it)->GetPt00().GetY(),
-                      (*it)->GetPt00().GetZ());
-    p10 = new Vertice((*it)->GetPt10().GetX(), (*it)->GetPt10().GetY(),
-                      (*it)->GetPt10().GetZ());
-    p20 = new Vertice((*it)->GetPt20().GetX(), (*it)->GetPt20().GetY(),
-                      (*it)->GetPt20().GetZ());
-    p30 = new Vertice((*it)->GetPt30().GetX(), (*it)->GetPt30().GetY(),
-                      (*it)->GetPt30().GetZ());
+    p02 = new VertexAdaptive((*it)->GetPt02().GetX(), (*it)->GetPt02().GetY(),
+                             (*it)->GetPt02().GetZ());
+    p12 = new VertexAdaptive((*it)->GetPt12().GetX(), (*it)->GetPt12().GetY(),
+                             (*it)->GetPt12().GetZ());
+    p22 = new VertexAdaptive((*it)->GetPt22().GetX(), (*it)->GetPt22().GetY(),
+                             (*it)->GetPt22().GetZ());
+    p32 = new VertexAdaptive((*it)->GetPt32().GetX(), (*it)->GetPt32().GetY(),
+                             (*it)->GetPt32().GetZ());
 
-    p01 = new Vertice((*it)->GetPt01().GetX(), (*it)->GetPt01().GetY(),
-                      (*it)->GetPt01().GetZ());
-    p11 = new Vertice((*it)->GetPt11().GetX(), (*it)->GetPt11().GetY(),
-                      (*it)->GetPt11().GetZ());
-    p21 = new Vertice((*it)->GetPt21().GetX(), (*it)->GetPt21().GetY(),
-                      (*it)->GetPt21().GetZ());
-    p31 = new Vertice((*it)->GetPt31().GetX(), (*it)->GetPt31().GetY(),
-                      (*it)->GetPt31().GetZ());
+    p03 = new VertexAdaptive((*it)->GetPt03().GetX(), (*it)->GetPt03().GetY(),
+                             (*it)->GetPt03().GetZ());
+    p13 = new VertexAdaptive((*it)->GetPt13().GetX(), (*it)->GetPt13().GetY(),
+                             (*it)->GetPt13().GetZ());
+    p23 = new VertexAdaptive((*it)->GetPt23().GetX(), (*it)->GetPt23().GetY(),
+                             (*it)->GetPt23().GetZ());
+    p33 = new VertexAdaptive((*it)->GetPt33().GetX(), (*it)->GetPt33().GetY(),
+                             (*it)->GetPt33().GetZ());
 
-    p02 = new Vertice((*it)->GetPt02().GetX(), (*it)->GetPt02().GetY(),
-                      (*it)->GetPt02().GetZ());
-    p12 = new Vertice((*it)->GetPt12().GetX(), (*it)->GetPt12().GetY(),
-                      (*it)->GetPt12().GetZ());
-    p22 = new Vertice((*it)->GetPt22().GetX(), (*it)->GetPt22().GetY(),
-                      (*it)->GetPt22().GetZ());
-    p32 = new Vertice((*it)->GetPt32().GetX(), (*it)->GetPt32().GetY(),
-                      (*it)->GetPt32().GetZ());
-
-    p03 = new Vertice((*it)->GetPt03().GetX(), (*it)->GetPt03().GetY(),
-                      (*it)->GetPt03().GetZ());
-    p13 = new Vertice((*it)->GetPt13().GetX(), (*it)->GetPt13().GetY(),
-                      (*it)->GetPt13().GetZ());
-    p23 = new Vertice((*it)->GetPt23().GetX(), (*it)->GetPt23().GetY(),
-                      (*it)->GetPt23().GetZ());
-    p33 = new Vertice((*it)->GetPt33().GetX(), (*it)->GetPt33().GetY(),
-                      (*it)->GetPt33().GetZ());
-
-    if (geo->VerifyCurveGeometry(p00, p10, p20, p30) == NULL) {
+    if (geometry->VerifyCurveGeometry(p00, p10, p20, p30) == nullptr) {
       patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
-      geo->InsertCurve(patch_c1);
+      geometry->InsertCurve(patch_c1);
     } else {
-      patch_c1 = geo->VerifyCurveGeometry(p00, p10, p20, p30);
+      patch_c1 = geometry->VerifyCurveGeometry(p00, p10, p20, p30);
     }
 
-    if (geo->VerifyCurveGeometry(p30, p31, p32, p33) == NULL) {
+    if (geometry->VerifyCurveGeometry(p30, p31, p32, p33) == nullptr) {
       patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
-      geo->InsertCurve(patch_c2);
+      geometry->InsertCurve(patch_c2);
     } else {
-      patch_c2 = geo->VerifyCurveGeometry(p30, p31, p32, p33);
+      patch_c2 = geometry->VerifyCurveGeometry(p30, p31, p32, p33);
     }
 
-    if (geo->VerifyCurveGeometry(p03, p13, p23, p33) == NULL) {
+    if (geometry->VerifyCurveGeometry(p03, p13, p23, p33) == nullptr) {
       patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
-      geo->InsertCurve(patch_c3);
+      geometry->InsertCurve(patch_c3);
     } else {
-      patch_c3 = geo->VerifyCurveGeometry(p03, p13, p23, p33);
+      patch_c3 = geometry->VerifyCurveGeometry(p03, p13, p23, p33);
     }
 
-    if (geo->VerifyCurveGeometry(p00, p01, p02, p03) == NULL) {
+    if (geometry->VerifyCurveGeometry(p00, p01, p02, p03) == nullptr) {
       patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
-      geo->InsertCurve(patch_c4);
+      geometry->InsertCurve(patch_c4);
     } else {
-      patch_c4 = geo->VerifyCurveGeometry(p00, p01, p02, p03);
+      patch_c4 = geometry->VerifyCurveGeometry(p00, p01, p02, p03);
     }
 
     (*it) = new PatchBezier(patch_c1, patch_c2, patch_c3, patch_c4, *p11, *p21,
                             *p12, *p22);
 
-    (*it)->setArea(calculateAreaPatch((*it), 4));
+    (*it)->SetArea(CalculateAreaPatch((*it), 4));
     // cout << "Área do patch: " << (*it)->getArea() << endl;
 
-    if ((*it)->getArea() < areaMenor) {
-      areaMenor = (*it)->getArea();
-    } else if ((*it)->getArea() > areaMaior) {
-      areaMaior = (*it)->getArea();
+    if ((*it)->GetArea() < area_minor) {
+      area_minor = (*it)->GetArea();
+    } else if ((*it)->GetArea() > area_major) {
+      area_major = (*it)->GetArea();
     }
 
-    //(*it)->setKaMedio(calculateKaMedioPatch((*it), 4));
-    // cout << "KAM: " << (*it)->getKaMedio() << endl;
+    (*it)->SetKaMedio(CalculateKaMedioPatch((*it), 25));
 
-    //        (*it)->setKaMedio(calculateKaMedioPatch((*it), 9));
-    //        cout << "KAM: " << (*it)->getKaMedio() << endl;
-
-    //    (*it)->setKaMedio(calculateKaMedioPatch((*it), 17));
-    //    cout << "KAM: " << (*it)->getKaMedio() << endl;
-    //
-    (*it)->setKaMedio(calculateKaMedioPatch((*it), 25));
-    //    cout << "KAM: " << (*it)->getKaMedio() << endl;
-
-    if ((*it)->getKaMedio() < kamMenor) {
-      kamMenor = (*it)->getKaMedio();
-    } else if ((*it)->getKaMedio() > kamMaior) {
-      kamMaior = (*it)->getKaMedio();
+    if ((*it)->GetKaMedio() < kam_minor) {
+      kam_minor = (*it)->GetKaMedio();
+    } else if ((*it)->GetKaMedio() > kam_major) {
+      kam_major = (*it)->GetKaMedio();
     }
 
-    (*it)->setAreaTriangle(calculateAreaTriangleMedioRad((*it)));
-    TRIANGLE_MEDIO = (*it)->getAreaTriangle();
-    // cout << "Triângulo Medio 1: " << (*it)->getAreaTriangle() << endl;
+    (*it)->SetAreaTriangle(CalculateAreaTriangleMedioRad((*it)));
+    TRIANGLE_MEDIO = (*it)->GetAreaTriangle();
 
-    (*it)->setNumberTriangle((*it)->getArea() / (*it)->getAreaTriangle());
-    // cout << "Quant. de triângulos do patch: " << (*it)->getNumberTriangle()
-    // << endl;
-    elementos += (*it)->getNumberTriangle();
-    //        (*it)->setAreaTriangle(calculateAreaTriangleMedio((*it),4));
-    //        cout << "Triângulo Medio 2: " << (*it)->getAreaTriangle() << endl;
-    //
-    //        (*it)->setNumberTriangle((*it)->getArea() /
-    //        (*it)->getAreaTriangle()); cout << "Quant. de triângulos do patch:
-    //        " << (*it)->getNumberTriangle() << endl;
+    (*it)->SetNumberTriangle((*it)->GetArea() / (*it)->GetAreaTriangle());
 
-    geo->InsertPatch((*it));
+    elementos += (*it)->GetNumberTriangle();
 
-    listBezierPtOrder.push_back((*it));
+    geometry->InsertPatch((*it));
 
-    vecCurvature.push_back((*it)->getKaMedio());
+    list_patch_bezier_order.push_back((*it));
+
+    curvatures_.push_back((*it)->GetKaMedio());
   }
 
-  //    cout<<"INIT >> ANALISE CURVATURE"<< endl;
   if (WRITE_MESH == std::string("m")) {
-    write.writeCurvaturePatches(vecCurvature, kamMaior);
+    write_obj_file_.writeCurvaturePatches(curvatures_, kam_major);
   }
-  //    cout<<"area menor: "<<areaMenor<<endl;
-  //    cout<<"area maior: "<<areaMaior<<endl;
-  //    cout<<"kam menor: "<<kamMenor<<endl;
-  //    cout<<"kam maior: "<<kamMaior<<endl;
-  //    cout<<"#elementos_estimados: "<<elementos<<endl;
 
-  if (listBezierPtOrder.size() > 1) {
-    listBezierPtOrder.sort(sortByNt);
+  if (list_patch_bezier_order.size() > 1) {
+    list_patch_bezier_order.sort(SortByNt);
   }
-  //    for (std::list<BezierPatch*>::iterator it = listBezierPtOrder.begin();
-  //    it != listBezierPtOrder.end(); it++) {
-  //	// cout << "ordenado: " << (*it)->getNumberTriangle() << " area: " <<
-  //(*it)->getArea()
-  //	//     << " kam: " << (*it)->getKaMedio() << endl;
-  //	// cout<<(*it)->getNumberTriangle()<<endl;
-  //    }
 
   timer->endTimerParallel(0, 0, 1);  // Estimativa de carga process 0
 
-  return listBezierPtOrder;
+  return list_patch_bezier_order;
 }
 
-std::vector<PointAdaptive> ChargeEstimateProcess::interpolateControlPointsCurve(
-    PointAdaptive p0, PointAdaptive p1, PointAdaptive p2, PointAdaptive p3,
-    double u, double v) {
+std::vector<PointAdaptive> ChargeEstimateProcess::InterpolateControlPointsCurve(
+    const PointAdaptive p0, const PointAdaptive p1, const PointAdaptive p2,
+    const PointAdaptive p3, const double u, const double v) {
   double a = 0.0, b = 0.0, c = 0.0, d = 0.0, det = 0.0;
 
   PointAdaptive q1;
@@ -272,7 +240,7 @@ std::vector<PointAdaptive> ChargeEstimateProcess::interpolateControlPointsCurve(
   return list_pcs;
 }
 
-double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
+double ChargeEstimateProcess::CalculateKaMedioPatch(PatchBezier* patch,
                                                     int points) {
   if (points < 4) {
     cout << "Numero Mínimo de Pontos para o cálculo da curvatara média é 4 ou "
@@ -281,7 +249,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
     return 0.0;
   }
 
-  double arrayKAM[points];
+  double array_kam[points];
   int i = 0;
 
   if (points <= 25) {
@@ -302,13 +270,13 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
       PointAdaptive ponto_dd = patch->Parameterize(0.75, 0.75);
       ponto_d = &ponto_dd;
 
-      CurvatureAnalytical kaa(*(static_cast<Noh*>(ponto_a)),
+      CurvatureAnalytical kaa(*(static_cast<NodeAdaptive*>(ponto_a)),
                               *(static_cast<PatchCoons*>(patch)));
-      CurvatureAnalytical kab(*(static_cast<Noh*>(ponto_b)),
+      CurvatureAnalytical kab(*(static_cast<NodeAdaptive*>(ponto_b)),
                               *(static_cast<PatchCoons*>(patch)));
-      CurvatureAnalytical kac(*(static_cast<Noh*>(ponto_c)),
+      CurvatureAnalytical kac(*(static_cast<NodeAdaptive*>(ponto_c)),
                               *(static_cast<PatchCoons*>(patch)));
-      CurvatureAnalytical kad(*(static_cast<Noh*>(ponto_d)),
+      CurvatureAnalytical kad(*(static_cast<NodeAdaptive*>(ponto_d)),
                               *(static_cast<PatchCoons*>(patch)));
 
       double ka_ponto_a = kaa.CalculateGaussCurvature();
@@ -317,7 +285,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
         ka_ponto_a = kaa.CalculateMeanCurvature();
       }
 
-      arrayKAM[i] = fabs(ka_ponto_a);
+      array_kam[i] = fabs(ka_ponto_a);
       i++;
 
       double kb_ponto_b = kab.CalculateGaussCurvature();
@@ -326,7 +294,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
         kb_ponto_b = kab.CalculateMeanCurvature();
       }
 
-      arrayKAM[i] = fabs(kb_ponto_b);
+      array_kam[i] = fabs(kb_ponto_b);
       i++;
 
       double kc_ponto_c = kac.CalculateGaussCurvature();
@@ -335,7 +303,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
         kc_ponto_c = kac.CalculateMeanCurvature();
       }
 
-      arrayKAM[i] = fabs(kc_ponto_c);
+      array_kam[i] = fabs(kc_ponto_c);
       i++;
 
       double kd_ponto_d = kad.CalculateGaussCurvature();
@@ -344,7 +312,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
         kd_ponto_d = kad.CalculateMeanCurvature();
       }
 
-      arrayKAM[i] = fabs(kd_ponto_d);
+      array_kam[i] = fabs(kd_ponto_d);
       i++;
 
       if (points >= 9) {
@@ -368,15 +336,15 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
         PointAdaptive ponto_ii = patch->Parameterize(1.0, 1.0);
         ponto_i = &ponto_ii;
 
-        CurvatureAnalytical kae(*(static_cast<Noh*>(ponto_e)),
+        CurvatureAnalytical kae(*(static_cast<NodeAdaptive*>(ponto_e)),
                                 *(static_cast<PatchCoons*>(patch)));
-        CurvatureAnalytical kaf(*(static_cast<Noh*>(ponto_f)),
+        CurvatureAnalytical kaf(*(static_cast<NodeAdaptive*>(ponto_f)),
                                 *(static_cast<PatchCoons*>(patch)));
-        CurvatureAnalytical kag(*(static_cast<Noh*>(ponto_g)),
+        CurvatureAnalytical kag(*(static_cast<NodeAdaptive*>(ponto_g)),
                                 *(static_cast<PatchCoons*>(patch)));
-        CurvatureAnalytical kah(*(static_cast<Noh*>(ponto_h)),
+        CurvatureAnalytical kah(*(static_cast<NodeAdaptive*>(ponto_h)),
                                 *(static_cast<PatchCoons*>(patch)));
-        CurvatureAnalytical kai(*(static_cast<Noh*>(ponto_i)),
+        CurvatureAnalytical kai(*(static_cast<NodeAdaptive*>(ponto_i)),
                                 *(static_cast<PatchCoons*>(patch)));
 
         double ke_ponto_e = kae.CalculateGaussCurvature();
@@ -385,7 +353,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
           ke_ponto_e = kae.CalculateMeanCurvature();
         }
 
-        arrayKAM[i] = fabs(ke_ponto_e);
+        array_kam[i] = fabs(ke_ponto_e);
         i++;
 
         double kf_ponto_f = kaf.CalculateGaussCurvature();
@@ -394,7 +362,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
           kf_ponto_f = kaf.CalculateMeanCurvature();
         }
 
-        arrayKAM[i] = fabs(kf_ponto_f);
+        array_kam[i] = fabs(kf_ponto_f);
         i++;
 
         double kg_ponto_g = kag.CalculateGaussCurvature();
@@ -403,7 +371,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
           kg_ponto_g = kag.CalculateMeanCurvature();
         }
 
-        arrayKAM[i] = fabs(kg_ponto_g);
+        array_kam[i] = fabs(kg_ponto_g);
         i++;
 
         double kh_ponto_h = kah.CalculateGaussCurvature();
@@ -412,7 +380,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
           kh_ponto_h = kah.CalculateMeanCurvature();
         }
 
-        arrayKAM[i] = fabs(kh_ponto_h);
+        array_kam[i] = fabs(kh_ponto_h);
         i++;
 
         double ki_ponto_i = kai.CalculateGaussCurvature();
@@ -421,7 +389,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
           ki_ponto_i = kai.CalculateMeanCurvature();
         }
 
-        arrayKAM[i] = fabs(ki_ponto_i);
+        array_kam[i] = fabs(ki_ponto_i);
         i++;
 
         if (points >= 17) {
@@ -457,21 +425,21 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
           PointAdaptive ponto_rr = patch->Parameterize(0.875, 0.875);
           ponto_r = &ponto_rr;
 
-          CurvatureAnalytical kaj(*(static_cast<Noh*>(ponto_j)),
+          CurvatureAnalytical kaj(*(static_cast<NodeAdaptive*>(ponto_j)),
                                   *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kal(*(static_cast<Noh*>(ponto_l)),
+          CurvatureAnalytical kal(*(static_cast<NodeAdaptive*>(ponto_l)),
                                   *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kam(*(static_cast<Noh*>(ponto_m)),
+          CurvatureAnalytical kam(*(static_cast<NodeAdaptive*>(ponto_m)),
                                   *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kan(*(static_cast<Noh*>(ponto_n)),
+          CurvatureAnalytical kan(*(static_cast<NodeAdaptive*>(ponto_n)),
                                   *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kao(*(static_cast<Noh*>(ponto_o)),
+          CurvatureAnalytical kao(*(static_cast<NodeAdaptive*>(ponto_o)),
                                   *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kap(*(static_cast<Noh*>(ponto_p)),
+          CurvatureAnalytical kap(*(static_cast<NodeAdaptive*>(ponto_p)),
                                   *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kaq(*(static_cast<Noh*>(ponto_q)),
+          CurvatureAnalytical kaq(*(static_cast<NodeAdaptive*>(ponto_q)),
                                   *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kar(*(static_cast<Noh*>(ponto_r)),
+          CurvatureAnalytical kar(*(static_cast<NodeAdaptive*>(ponto_r)),
                                   *(static_cast<PatchCoons*>(patch)));
 
           double kj_ponto_j = kaj.CalculateGaussCurvature();
@@ -480,7 +448,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             kj_ponto_j = kaj.CalculateMeanCurvature();
           }
 
-          arrayKAM[i] = fabs(kj_ponto_j);
+          array_kam[i] = fabs(kj_ponto_j);
           i++;
 
           double kl_ponto_l = kal.CalculateGaussCurvature();
@@ -489,7 +457,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             kl_ponto_l = kal.CalculateMeanCurvature();
           }
 
-          arrayKAM[i] = fabs(kl_ponto_l);
+          array_kam[i] = fabs(kl_ponto_l);
           i++;
 
           double km_ponto_m = kam.CalculateGaussCurvature();
@@ -498,7 +466,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             km_ponto_m = kam.CalculateMeanCurvature();
           }
 
-          arrayKAM[i] = fabs(km_ponto_m);
+          array_kam[i] = fabs(km_ponto_m);
           i++;
 
           double kn_ponto_n = kan.CalculateGaussCurvature();
@@ -507,7 +475,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             kn_ponto_n = kan.CalculateMeanCurvature();
           }
 
-          arrayKAM[i] = fabs(kn_ponto_n);
+          array_kam[i] = fabs(kn_ponto_n);
           i++;
 
           double ko_ponto_o = kao.CalculateGaussCurvature();
@@ -516,7 +484,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             ko_ponto_o = kao.CalculateMeanCurvature();
           }
 
-          arrayKAM[i] = fabs(ko_ponto_o);
+          array_kam[i] = fabs(ko_ponto_o);
           i++;
 
           double kp_ponto_p = kap.CalculateGaussCurvature();
@@ -525,7 +493,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             kp_ponto_p = kap.CalculateMeanCurvature();
           }
 
-          arrayKAM[i] = fabs(kp_ponto_p);
+          array_kam[i] = fabs(kp_ponto_p);
           i++;
 
           double kq_ponto_q = kaq.CalculateGaussCurvature();
@@ -534,7 +502,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             kq_ponto_q = kaq.CalculateMeanCurvature();
           }
 
-          arrayKAM[i] = fabs(kq_ponto_q);
+          array_kam[i] = fabs(kq_ponto_q);
           i++;
 
           double kr_ponto_r = kar.CalculateGaussCurvature();
@@ -543,7 +511,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             kr_ponto_r = kar.CalculateMeanCurvature();
           }
 
-          arrayKAM[i] = fabs(kr_ponto_r);
+          array_kam[i] = fabs(kr_ponto_r);
           i++;
 
           if (points == 25) {
@@ -579,21 +547,21 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
             PointAdaptive ponto_zz = patch->Parameterize(0.75, 1.0);
             ponto_z = &ponto_zz;
 
-            CurvatureAnalytical kas(*(static_cast<Noh*>(ponto_s)),
+            CurvatureAnalytical kas(*(static_cast<NodeAdaptive*>(ponto_s)),
                                     *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kat(*(static_cast<Noh*>(ponto_t)),
+            CurvatureAnalytical kat(*(static_cast<NodeAdaptive*>(ponto_t)),
                                     *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kau(*(static_cast<Noh*>(ponto_u)),
+            CurvatureAnalytical kau(*(static_cast<NodeAdaptive*>(ponto_u)),
                                     *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kav(*(static_cast<Noh*>(ponto_v)),
+            CurvatureAnalytical kav(*(static_cast<NodeAdaptive*>(ponto_v)),
                                     *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kaw(*(static_cast<Noh*>(ponto_w)),
+            CurvatureAnalytical kaw(*(static_cast<NodeAdaptive*>(ponto_w)),
                                     *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kax(*(static_cast<Noh*>(ponto_x)),
+            CurvatureAnalytical kax(*(static_cast<NodeAdaptive*>(ponto_x)),
                                     *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kay(*(static_cast<Noh*>(ponto_y)),
+            CurvatureAnalytical kay(*(static_cast<NodeAdaptive*>(ponto_y)),
                                     *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kaz(*(static_cast<Noh*>(ponto_z)),
+            CurvatureAnalytical kaz(*(static_cast<NodeAdaptive*>(ponto_z)),
                                     *(static_cast<PatchCoons*>(patch)));
 
             double ks_ponto_s = kas.CalculateGaussCurvature();
@@ -602,7 +570,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
               ks_ponto_s = kas.CalculateMeanCurvature();
             }
 
-            arrayKAM[i] = fabs(ks_ponto_s);
+            array_kam[i] = fabs(ks_ponto_s);
             i++;
 
             double kt_ponto_t = kat.CalculateGaussCurvature();
@@ -611,7 +579,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
               kt_ponto_t = kat.CalculateMeanCurvature();
             }
 
-            arrayKAM[i] = fabs(kt_ponto_t);
+            array_kam[i] = fabs(kt_ponto_t);
             i++;
 
             double ku_ponto_u = kau.CalculateGaussCurvature();
@@ -620,7 +588,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
               ku_ponto_u = kau.CalculateMeanCurvature();
             }
 
-            arrayKAM[i] = fabs(ku_ponto_u);
+            array_kam[i] = fabs(ku_ponto_u);
             i++;
 
             double kv_ponto_v = kav.CalculateGaussCurvature();
@@ -629,7 +597,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
               kv_ponto_v = kav.CalculateMeanCurvature();
             }
 
-            arrayKAM[i] = fabs(kv_ponto_v);
+            array_kam[i] = fabs(kv_ponto_v);
             i++;
 
             double kw_ponto_w = kaw.CalculateGaussCurvature();
@@ -638,7 +606,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
               kw_ponto_w = kaw.CalculateMeanCurvature();
             }
 
-            arrayKAM[i] = fabs(kw_ponto_w);
+            array_kam[i] = fabs(kw_ponto_w);
             i++;
 
             double kx_ponto_x = kax.CalculateGaussCurvature();
@@ -647,7 +615,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
               kx_ponto_x = kax.CalculateMeanCurvature();
             }
 
-            arrayKAM[i] = fabs(kx_ponto_x);
+            array_kam[i] = fabs(kx_ponto_x);
             i++;
 
             double ky_ponto_y = kay.CalculateGaussCurvature();
@@ -656,7 +624,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
               ky_ponto_y = kay.CalculateMeanCurvature();
             }
 
-            arrayKAM[i] = fabs(ky_ponto_y);
+            array_kam[i] = fabs(ky_ponto_y);
             i++;
 
             double kz_ponto_z = kaz.CalculateGaussCurvature();
@@ -665,7 +633,7 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
               kz_ponto_z = kaz.CalculateMeanCurvature();
             }
 
-            arrayKAM[i] = fabs(kz_ponto_z);
+            array_kam[i] = fabs(kz_ponto_z);
             i++;
           }
         }
@@ -675,22 +643,21 @@ double ChargeEstimateProcess::calculateKaMedioPatch(PatchBezier* patch,
 
   double result = 0.0;
   for (int j = 0; j < i; j++) {
-    // cout<<arrayKAM[j]<<endl;
-    result += arrayKAM[j];
+    result += array_kam[j];
   }
 
   return result / points;
 }
 
-double ChargeEstimateProcess::calculateAreaPatch(PatchBezier* patch,
-                                                 int pointesGauusLegandre) {
-  Vetor V;
+double ChargeEstimateProcess::CalculateAreaPatch(PatchBezier* patch,
+                                                 int pointsGaussLegandre) {
+  VectorAdaptive V;
   double I = 0.0;
-  double beta[pointesGauusLegandre];
-  double peso[pointesGauusLegandre];
+  double beta[pointsGaussLegandre];
+  double peso[pointsGaussLegandre];
   double u = 0.0, v = 0.0;
 
-  switch (pointesGauusLegandre) {
+  switch (pointsGaussLegandre) {
     case 3: {
       // Gauss–Legendre, valores para 3 pontos
       beta[0] = -sqrt(3.0 / 5.0);
@@ -725,30 +692,32 @@ double ChargeEstimateProcess::calculateAreaPatch(PatchBezier* patch,
     }
   }
 
-  for (int i = 0; i < pointesGauusLegandre; ++i) {
+  for (int i = 0; i < pointsGaussLegandre; ++i) {
     u = 0.5 * (1 + beta[i]);
 
-    for (int j = 0; j < pointesGauusLegandre; ++j) {
+    for (int j = 0; j < pointsGaussLegandre; ++j) {
       v = 0.5 * (1 + beta[j]);
 
-      Vetor Pu = patch->Qu(u, v);
-      Vetor Pv = patch->Qv(u, v);
+      VectorAdaptive Pu = patch->Qu(u, v);
+      VectorAdaptive Pv = patch->Qv(u, v);
 
-      V.x_ = Pu.y * Pv.z - Pu.z * Pv.y;
-      V.y = Pu.z * Pv.x_ - Pu.x_ * Pv.z;
-      V.z = Pu.x_ * Pv.y - Pu.y * Pv.x_;
+      V.SetX(Pu.GetY() * Pv.GetZ() - Pu.GetZ() * Pv.GetY());
+      V.SetY(Pu.GetZ() * Pv.GetX() - Pu.GetX() * Pv.GetZ());
+      V.SetZ(Pu.GetX() * Pv.GetY() - Pu.GetY() * Pv.GetX());
 
-      I = I + 0.25 * ((sqrt(pow(V.x_, 2) + pow(V.y, 2) + pow(V.z, 2))) *
-                      peso[i] * peso[j]);
+      I = I +
+          0.25 *
+              ((sqrt(pow(V.GetX(), 2) + pow(V.GetY(), 2) + pow(V.GetZ(), 2))) *
+               peso[i] * peso[j]);
     }
   }
 
   return I;
 }
 
-double ChargeEstimateProcess::calculateAreaTriangleMedioRad(
+double ChargeEstimateProcess::CalculateAreaTriangleMedioRad(
     PatchBezier* patch) {
-  double Kam = patch->getKaMedio();
+  double Kam = patch->GetKaMedio();
 
   // cout << "Kam " << Kam << endl;
 
@@ -770,50 +739,50 @@ double ChargeEstimateProcess::calculateAreaTriangleMedioRad(
   return area;
 }
 
-double ChargeEstimateProcess::calculateAreaTriangleMedio(PatchBezier* patch,
+double ChargeEstimateProcess::CalculateAreaTriangleMedio(PatchBezier* patch,
                                                          Timer* timer,
-                                                         int grau) {
-  MeshAdaptive* malha = new MeshAdaptive;
-  SubMesh* sub = malhaInicialEstimativa(patch, grau);
-  malha->InsertSubMeshAdaptive(sub);
+                                                         int degree) {
+  MeshAdaptive* mesh = new MeshAdaptive;
+  SubMesh* sub_mesh = InitialMeshEstimate(patch, degree);
+  mesh->InsertSubMeshAdaptive(sub_mesh);
   // delete sub;
 
-  while (calculateErroEstimative(malha, timer, grau) && grau < 5) {
-    ++grau;
+  while (CalculateErroEstimative(mesh, timer, degree) && degree < 5) {
+    ++degree;
     //        cout<<"grau: "<<grau<<endl;
     //        cout<<"sub: "<<sub<<endl;
-    SubMesh* sub1 = malhaInicialEstimativa(patch, grau);
-    malha->RemoveSubMeshAdaptive();
-    malha->InsertSubMeshAdaptive(sub1);
+    SubMesh* sub1 = InitialMeshEstimate(patch, degree);
+    mesh->RemoveSubMeshAdaptive();
+    mesh->InsertSubMeshAdaptive(sub1);
     // delete sub1;
   }
 
   // cout<<"menor_grau: "<<menor_grau<<endl;
 
-  SubMesh* sub2 = malhaInicialEstimativa(patch, menor_grau);
-  malha->RemoveSubMeshAdaptive();
-  malha->InsertSubMeshAdaptive(sub2);
+  SubMesh* sub2 = InitialMeshEstimate(patch, minor_degree_);
+  mesh->RemoveSubMeshAdaptive();
+  mesh->InsertSubMeshAdaptive(sub2);
 
-  static_cast<PatchBezier*>(patch)->setAreaTriangle(
-      malha->GetSubMeshAdaptiveByPosition(0)->GetElement(0)->GetArea());
+  static_cast<PatchBezier*>(patch)->SetAreaTriangle(
+      mesh->GetSubMeshAdaptiveByPosition(0)->GetElement(0)->GetArea());
   // delete malha;
-  return patch->getAreaTriangle();
+  return patch->GetAreaTriangle();
 }
 
-long ChargeEstimateProcess::calculateNumbersTriangle(PatchBezier* patch,
-                                                     int grau) {
-  SubMesh* sub = malhaInicialEstimativa(patch, grau);
+long ChargeEstimateProcess::CalculateNumbersTriangle(PatchBezier* patch,
+                                                     int degree) {
+  SubMesh* sub = InitialMeshEstimate(patch, degree);
 
   return sub->GetNumberElements();
 }
 
 // grau tem que ser multiplo de grau == 2^n
-SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
-                                                       int grau) {
+SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
+                                                    int degree) {
   int idv = 1;
   int ide = 1;
-  int salto = grau;
-  int comprimento = grau + 1;
+  int jump = degree;
+  int length = degree + 1;
   int total_1 = 0;
   int total_2 = 0;
 
@@ -824,19 +793,19 @@ SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())
-    c1 = NULL;  // c1 já foi trabalhada no patch vizinho
+    c1 = nullptr;  // c1 já foi trabalhada no patch vizinho
   if (c2->GetNumBerPoints())
-    c2 = NULL;  // c2 já foi trabalhada no patch vizinho
+    c2 = nullptr;  // c2 já foi trabalhada no patch vizinho
   if (c3->GetNumBerPoints())
-    c3 = NULL;  // c3 já foi trabalhada no patch vizinho
+    c3 = nullptr;  // c3 já foi trabalhada no patch vizinho
   if (c4->GetNumBerPoints())
-    c4 = NULL;  // c4 já foi trabalhada no patch vizinho
+    c4 = nullptr;  // c4 já foi trabalhada no patch vizinho
 
   SubMesh* sub = new SubMesh;
 
-  for (double v = 0.0; v <= 1.0; v += 1.0 / grau) {
-    for (double u = 0.0; u <= 1.0; u += 1.0 / grau) {
-      PointAdaptive* p = new Noh(patch->Parameterize(u, v));
+  for (double v = 0.0; v <= 1.0; v += 1.0 / degree) {
+    for (double u = 0.0; u <= 1.0; u += 1.0 / degree) {
+      PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
       p->SetId(idv++);
 
       // cout << "u = " << u << " v = " << v << endl;
@@ -850,27 +819,27 @@ SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
       else if (u == 1 and c2)  // p está na curva 2
         c2->InsertPoint(p);
 
-      sub->SetNoh(static_cast<Noh*>(p));
+      sub->SetNoh(static_cast<NodeAdaptive*>(p));
       total_1++;
     }
   }
 
-  for (double v = 1.0 / (2.0 * grau); v <= 1.0 - (1.0 / (2.0 * grau));
-       v += 1.0 / grau) {
-    for (double u = 1.0 / (2.0 * grau); u <= 1.0 - (1.0 / (2.0 * grau));
-         u += 1.0 / grau) {
+  for (double v = 1.0 / (2.0 * degree); v <= 1.0 - (1.0 / (2.0 * degree));
+       v += 1.0 / degree) {
+    for (double u = 1.0 / (2.0 * degree); u <= 1.0 - (1.0 / (2.0 * degree));
+         u += 1.0 / degree) {
       //   cout << "u = " << u << " v = " << v << endl;
-      PointAdaptive* p = new Noh(patch->Parameterize(u, v));
-      sub->SetNoh(static_cast<Noh*>(p));
+      PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
+      sub->SetNoh(static_cast<NodeAdaptive*>(p));
       p->SetId(idv++);
     }
   }
 
   total_2 = total_1;
 
-  for (int i = 0; i < (total_2 - comprimento - 1); ++i) {
-    if (i == salto) {
-      salto = salto + comprimento;
+  for (int i = 0; i < (total_2 - length - 1); ++i) {
+    if (i == jump) {
+      jump = jump + length;
       ++i;
       total_1 = total_1 - 1;
     }
@@ -885,34 +854,34 @@ SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
     e1->SetId(ide++);
     sub->SetElement(e1);
 
-    ElementAdaptive* e2 = new TriangleAdaptive(sub->GetNoh(i + 1),
-                                               sub->GetNoh(i + comprimento + 1),
-                                               sub->GetNoh(i + total_1));
+    ElementAdaptive* e2 =
+        new TriangleAdaptive(sub->GetNoh(i + 1), sub->GetNoh(i + length + 1),
+                             sub->GetNoh(i + total_1));
     ((TriangleAdaptive*)e2)
         ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + 1))));
     ((TriangleAdaptive*)e2)
-        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + comprimento + 1))));
+        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + length + 1))));
     ((TriangleAdaptive*)e2)
         ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e2->SetId(ide++);
     sub->SetElement(e2);
 
-    ElementAdaptive* e3 = new TriangleAdaptive(sub->GetNoh(i + comprimento + 1),
-                                               sub->GetNoh(i + comprimento),
-                                               sub->GetNoh(i + total_1));
+    ElementAdaptive* e3 =
+        new TriangleAdaptive(sub->GetNoh(i + length + 1),
+                             sub->GetNoh(i + length), sub->GetNoh(i + total_1));
     ((TriangleAdaptive*)e3)
-        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + comprimento + 1))));
+        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + length + 1))));
     ((TriangleAdaptive*)e3)
-        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + comprimento))));
+        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + length))));
     ((TriangleAdaptive*)e3)
         ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e3->SetId(ide++);
     sub->SetElement(e3);
 
     ElementAdaptive* e4 = new TriangleAdaptive(
-        sub->GetNoh(i + comprimento), sub->GetNoh(i), sub->GetNoh(i + total_1));
+        sub->GetNoh(i + length), sub->GetNoh(i), sub->GetNoh(i + total_1));
     ((TriangleAdaptive*)e4)
-        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + comprimento))));
+        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + length))));
     ((TriangleAdaptive*)e4)->SetParametersN2(patch->FindUV(*(sub->GetNoh(i))));
     ((TriangleAdaptive*)e4)
         ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
@@ -925,17 +894,17 @@ SubMesh* ChargeEstimateProcess::malhaInicialEstimativa(PatchCoons* patch,
   patch->SetSubMesh(sub);
   sub->SetPatch(patch);
 
-  MeshAdaptive* malha = new MeshAdaptive;
-  malha->InsertSubMeshAdaptive(sub);
+  MeshAdaptive* mesh = new MeshAdaptive;
+  mesh->InsertSubMeshAdaptive(sub);
 
   return sub;
 }
 
-bool ChargeEstimateProcess::calculateErroEstimative(MeshAdaptive* malha,
-                                                    Timer* timer, int grau) {
+bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
+                                                    Timer* timer, int degree) {
   GeradorAdaptativoPorCurvatura* ger = new GeradorAdaptativoPorCurvatura();
 #if USE_OPENMP
-  double erro = ger->erroGlobalOmp(malha, timer);
+  double erro = ger->erroGlobalOmp(mesh, timer);
 #else
   double erro = ger->erroGlobal(malha, timer);
 #endif
@@ -944,8 +913,8 @@ bool ChargeEstimateProcess::calculateErroEstimative(MeshAdaptive* malha,
   // cout << "erro: " << erro << " tolerancia: " << TOLERANCIA_ESTIMATIVE <<
   // endl;
 
-  if (erro < menor_erro) {
-    menor_grau = grau;
+  if (erro < minor_error_) {
+    minor_degree_ = degree;
   }
 
   if (erro <= TOLERANCIA_ESTIMATIVE) {
@@ -956,5 +925,3 @@ bool ChargeEstimateProcess::calculateErroEstimative(MeshAdaptive* malha,
 
   return true;
 }
-
-ChargeEstimateProcess::~ChargeEstimateProcess() {}

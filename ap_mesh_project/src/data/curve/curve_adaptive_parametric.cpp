@@ -28,8 +28,8 @@ CurveAdaptiveParametric::CurveAdaptiveParametric() {
   mat_parameters_.setZero(1, 4);
 }
 
-CurveAdaptiveParametric::CurveAdaptiveParametric(PointAdaptive point0,
-                                                 PointAdaptive point1)
+CurveAdaptiveParametric::CurveAdaptiveParametric(const PointAdaptive point0,
+                                                 const PointAdaptive point1)
     : point0_(point0), point1_(point1) {
   mat_geo_gx_.setZero(4, 1);
   mat_geo_gy_.setZero(4, 1);
@@ -251,7 +251,7 @@ PointAdaptive CurveAdaptiveParametric::FindPointByParameter(double t) {
 }
 
 // calcula o vetor tangente no parâmetro t
-Vetor CurveAdaptiveParametric::CalculateGradientByParameter(double t) {
+VectorAdaptive CurveAdaptiveParametric::CalculateGradientByParameter(double t) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
@@ -267,7 +267,7 @@ Vetor CurveAdaptiveParametric::CalculateGradientByParameter(double t) {
   this->mat_parameters_(0, 3) = 0;
 
   point = CalculatePointT();
-  Vetor vector(point);
+  VectorAdaptive vector(point);
 
   return vector;
 }
@@ -349,7 +349,8 @@ void CurveAdaptiveParametric::SortPointsByParameters() {
   this->points_.sort(Compare);
 }
 
-void CurveAdaptiveParametric::UpdateParameters(list<double> new_parameters) {
+void CurveAdaptiveParametric::UpdateParameters(
+    const list<double> new_parameters) {
   this->parameters_ = new_parameters;
 }
 
@@ -357,7 +358,7 @@ Matrix4x1 CurveAdaptiveParametric::GetMatGeoGx() const {
   return this->mat_geo_gx_;
 }
 
-void CurveAdaptiveParametric::SetMatGeoGx(Matrix4x1& mat_geo_gx) {
+void CurveAdaptiveParametric::SetMatGeoGx(const Matrix4x1& mat_geo_gx) {
   this->mat_geo_gx_ = mat_geo_gx;
 }
 
@@ -365,7 +366,7 @@ Matrix4x1 CurveAdaptiveParametric::GetMatGeoGy() const {
   return this->mat_geo_gy_;
 }
 
-void CurveAdaptiveParametric::SetMatGeoGy(Matrix4x1& mat_geo_gy) {
+void CurveAdaptiveParametric::SetMatGeoGy(const Matrix4x1& mat_geo_gy) {
   this->mat_geo_gy_ = mat_geo_gy;
 }
 
@@ -373,7 +374,7 @@ Matrix4x1 CurveAdaptiveParametric::GetMatGeoGz() const {
   return this->mat_geo_gz_;
 }
 
-void CurveAdaptiveParametric::SetMatGeoGz(Matrix4x1& mat_geo_gz) {
+void CurveAdaptiveParametric::SetMatGeoGz(const Matrix4x1& mat_geo_gz) {
   this->mat_geo_gz_ = mat_geo_gz;
 }
 
@@ -389,7 +390,8 @@ Matrix1x4 CurveAdaptiveParametric::GetMatParameters() const {
   return this->mat_parameters_;
 }
 
-void CurveAdaptiveParametric::SetMatParameters(Matrix1x4& mat_parameters) {
+void CurveAdaptiveParametric::SetMatParameters(
+    const Matrix1x4& mat_parameters) {
   this->mat_parameters_ = mat_parameters;
 }
 
@@ -615,7 +617,7 @@ double CurveAdaptiveParametric::CalculateLength(double t1, double t2, int parts,
 
       double parameter_alfa = ((uf + ui) / 2.0) + ((uf - ui) / 2.0) * alfa;
 
-      Vetor p = CalculateGradientByParameter(parameter_alfa);
+      VectorAdaptive p = CalculateGradientByParameter(parameter_alfa);
 
       double f = p ^ p;
 

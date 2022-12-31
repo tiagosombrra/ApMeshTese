@@ -1,6 +1,6 @@
 #include "../../../include/data/mesh/mesh_adaptive.h"
 
-MeshAdaptive::MeshAdaptive() {}
+MeshAdaptive::MeshAdaptive() : sub_meshes_({}) {}
 
 MeshAdaptive::~MeshAdaptive() {
   // 1. apaga a lista de SubMalhas

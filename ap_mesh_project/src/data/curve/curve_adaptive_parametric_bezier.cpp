@@ -81,8 +81,8 @@ CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier()
 }
 
 CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier(
-    PointAdaptive point0, PointAdaptive point1, PointAdaptive point2,
-    PointAdaptive point3)
+    const PointAdaptive point0, const PointAdaptive point1,
+    const PointAdaptive point2, const PointAdaptive point3)
     : CurveAdaptiveParametric(point0, point1),
       point2_(point2),
       point3_(point3) {
@@ -197,11 +197,11 @@ double CurveAdaptiveParametricBezier::CalculateCurvature(double t) {
       6 * (1 - t) * (point2_.GetZ() - 2 * point1_.GetZ() + point0_.GetZ()) +
       6 * t * (point3_.GetZ() - 2 * point2_.GetZ() + point1_.GetZ());
 
-  Vetor vector_d1(v0, v1, v2);
-  Vetor vector_d2(v00, v10, v20);
+  VectorAdaptive vector_d1(v0, v1, v2);
+  VectorAdaptive vector_d2(v00, v10, v20);
 
-  double k = ((vector_d1.operator*(vector_d2)).modulo()) /
-             (pow(vector_d1.modulo(), 3));
+  double k = ((vector_d1.operator*(vector_d2)).CalculateModule()) /
+             (pow(vector_d1.CalculateModule(), 3));
 
   return k;
 }
@@ -214,10 +214,10 @@ PointAdaptive CurveAdaptiveParametricBezier::GetPoint3() const {
   return this->point3_;
 }
 
-void CurveAdaptiveParametricBezier::SetPoint2(const PointAdaptive &p) {
-  this->point2_ = p;
+void CurveAdaptiveParametricBezier::SetPoint2(const PointAdaptive &point) {
+  this->point2_ = point;
 }
 
-void CurveAdaptiveParametricBezier::SetPoint3(const PointAdaptive &p) {
-  this->point3_ = p;
+void CurveAdaptiveParametricBezier::SetPoint3(const PointAdaptive &point) {
+  this->point3_ = point;
 }

@@ -4,7 +4,7 @@
 #include <list>
 #include <vector>
 
-#include "../noh.h"
+#include "../node_adaptive.h"
 #include "../patch/patch.h"
 #include "../triangle_adaptive.h"
 
@@ -21,8 +21,8 @@ class CurveAdaptive {
   // retorna o i-ésimo ponto
   PointAdaptive* GetPoint(const unsigned int position);
   // troca a lista de pontos
-  void SetPoints(list<PointAdaptive*> new_points);
-  list<PointAdaptive*>& GetPoints();
+  void SetPoints(std::list<PointAdaptive*> new_points);
+  std::list<PointAdaptive*>& GetPoints();
   void InsertPatch(Patch* patch);
   unsigned int GetNumBerPatches() const;
   // retorna o i-ésimo patch

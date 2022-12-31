@@ -6,7 +6,7 @@
 
 #include "../definitions.h"
 #include "../element_adaptive.h"
-#include "../noh.h"
+#include "../node_adaptive.h"
 
 class Patch;
 
@@ -17,8 +17,8 @@ class SubMesh {
 
   Patch* GetPatch() const;
   void SetPatch(Patch* patch);
-  Noh* GetNoh(const unsigned int position);
-  void SetNoh(Noh* noh);
+  NodeAdaptive* GetNoh(const unsigned int position);
+  void SetNoh(NodeAdaptive* noh);
   ElementAdaptive* GetElement(const unsigned int position);
   void SetElement(ElementAdaptive* element);
   unsigned int GetNumberNos() const;
@@ -26,7 +26,7 @@ class SubMesh {
 
  protected:
   Patch* patch_;
-  vector<Noh*> nos_;
+  vector<NodeAdaptive*> nos_;
   vector<ElementAdaptive*> elements_;
 };
 

@@ -91,19 +91,19 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
 
   list<PointAdaptive *> list_new_points;
 
-  Noh *point_front = static_cast<Noh *>(points.front());
+  NodeAdaptive *point_front = static_cast<NodeAdaptive *>(points.front());
   point_front->SetId(id_manager->next(0));
 
-  Noh *point_back = static_cast<Noh *>(points.back());
+  NodeAdaptive *point_back = static_cast<NodeAdaptive *>(points.back());
   point_back->SetId(id_manager->next(0));
 
   list_new_points.push_front(point_front);
 
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    Noh *point_intermediate =
-        new Noh((static_cast<CurveAdaptiveParametric *>(curve))
-                    ->FindPointByParameter((*param_iterator)));
+    NodeAdaptive *point_intermediate =
+        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
+                             ->FindPointByParameter((*param_iterator)));
     point_intermediate->SetId(id_manager->next(0));
     list_new_points.push_back(point_intermediate);
   }
@@ -176,12 +176,12 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
       // testamos se ka é ZERO!
       if (fabs(ka_midpoint) < TOLERANCIA) {
         ka_midpoint = ka_p0.CalculateMeanCurvature();
-        kd_average = ((static_cast<Noh *>((*point_current)))->GetHd() +
-                      (static_cast<Noh *>((*point_next))->GetHd())) /
+        kd_average = ((static_cast<NodeAdaptive *>((*point_current)))->GetHd() +
+                      (static_cast<NodeAdaptive *>((*point_next))->GetHd())) /
                      2.0;
       } else {
-        kd_average = ((static_cast<Noh *>((*point_current)))->GetGd() +
-                      (static_cast<Noh *>((*point_next)))->GetGd()) /
+        kd_average = ((static_cast<NodeAdaptive *>((*point_current)))->GetGd() +
+                      (static_cast<NodeAdaptive *>((*point_next)))->GetGd()) /
                      2.0;
       }
     } else {
@@ -199,13 +199,15 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
           double Ha_pi = ka_pi.CalculateMeanCurvature();
 
           ka_midpoint = (Ha > Ha_pi) ? Ha : Ha_pi;
-          kd_average = ((static_cast<Noh *>((*point_current)))->GetHd() +
-                        (static_cast<Noh *>((*point_next))->GetHd())) /
-                       2.0;
+          kd_average =
+              ((static_cast<NodeAdaptive *>((*point_current)))->GetHd() +
+               (static_cast<NodeAdaptive *>((*point_next))->GetHd())) /
+              2.0;
         } else {
-          kd_average = ((static_cast<Noh *>((*point_current)))->GetGd() +
-                        (static_cast<Noh *>((*point_next)))->GetGd()) /
-                       2.0;
+          kd_average =
+              ((static_cast<NodeAdaptive *>((*point_current)))->GetGd() +
+               (static_cast<NodeAdaptive *>((*point_next)))->GetGd()) /
+              2.0;
         }
       }
     }
@@ -240,19 +242,20 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
 
   list<PointAdaptive *> list_new_points;
 
-  Noh *point_front = static_cast<Noh *>(points.front());
+  NodeAdaptive *point_front = static_cast<NodeAdaptive *>(points.front());
   point_front->SetId(id_manager->next(0));
   list_new_points.push_front(point_front);
 
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    Noh *n = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
-                         ->FindPointByParameter((*param_iterator)));
+    NodeAdaptive *n =
+        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
+                             ->FindPointByParameter((*param_iterator)));
     n->SetId(id_manager->next(0));
     list_new_points.push_back(n);
   }
 
-  Noh *point_back = static_cast<Noh *>(points.back());
+  NodeAdaptive *point_back = static_cast<NodeAdaptive *>(points.back());
   point_back->SetId(id_manager->next(0));
   list_new_points.push_back(point_back);
 
@@ -268,7 +271,7 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
   // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
   AdvancingFront avanco(PROPORCAO, TOLERANCIA_AFT, SUAVIZACAO,
                         FATOR_SUAVIZACAO);
-  map<Vertex *, Noh *> map;
+  map<Vertex *, NodeAdaptive *> map;
 
   // 1. Para cada curva do patch
   for (unsigned int i = 0; i < coons_patch->GetNumBerCurves(); ++i) {
@@ -300,7 +303,8 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
               1.0, *param_iterator,
               static_cast<CurveAdaptiveParametric *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
+        NodeAdaptive *noh =
+            static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -331,7 +335,8 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
               0.0, *param_iterator,
               static_cast<CurveAdaptiveParametric *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
+        NodeAdaptive *noh =
+            static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -457,8 +462,8 @@ tri->GetNoh
     Vertex *vertex = new_vertices.front();
     new_vertices.pop_front();
 
-    Noh *noh =
-        new Noh(coons_patch->Parameterize(vertex->getX(), vertex->getY()));
+    NodeAdaptive *noh = new NodeAdaptive(
+        coons_patch->Parameterize(vertex->getX(), vertex->getY()));
 
     noh->SetId(id_manager->next(0));
 
@@ -474,9 +479,9 @@ tri->GetNoh
     new_mesh.pop_front();
 
     ElementAdaptive *element =
-        new TriangleAdaptive(static_cast<Noh *>(map[face->getV1()]),
-                             static_cast<Noh *>(map[face->getV2()]),
-                             static_cast<Noh *>(map[face->getV3()]));
+        new TriangleAdaptive(static_cast<NodeAdaptive *>(map[face->getV1()]),
+                             static_cast<NodeAdaptive *>(map[face->getV2()]),
+                             static_cast<NodeAdaptive *>(map[face->getV3()]));
 
     element->SetId(/*id_ele++*/ id_manager->next(1));
 
@@ -585,39 +590,40 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
 
   list<PointAdaptive *> list_new_points;
 
-  Noh *point_front = static_cast<Noh *>(points.front());
+  NodeAdaptive *point_front = static_cast<NodeAdaptive *>(points.front());
   point_front->SetId(id_manager->next(0));
 
-  Noh *point_back = static_cast<Noh *>(points.back());
+  NodeAdaptive *point_back = static_cast<NodeAdaptive *>(points.back());
   point_back->SetId(id_manager->next(0));
 
-  Noh *new_noh1, *new_noh2;
+  NodeAdaptive *new_noh1, *new_noh2;
 
   map<PointAdaptive *, PointAdaptive *>::iterator point_iterator =
       map_points.find(point_front);
 
   if (point_iterator == map_points.end()) {
-    new_noh1 = new Noh(*point_front);
+    new_noh1 = new NodeAdaptive(*point_front);
     new_noh1->SetId(id_manager->next(0));
     map_points[point_front] = new_noh1;
   } else {
-    new_noh1 = static_cast<Noh *>(map_points[point_front]);
+    new_noh1 = static_cast<NodeAdaptive *>(map_points[point_front]);
   }
 
   point_iterator = map_points.find(point_back);
 
   if (point_iterator == map_points.end()) {
-    new_noh2 = new Noh(*point_back);
+    new_noh2 = new NodeAdaptive(*point_back);
     new_noh2->SetId(id_manager->next(0));
     map_points[point_back] = new_noh2;
   } else {
-    new_noh2 = static_cast<Noh *>(map_points[point_back]);
+    new_noh2 = static_cast<NodeAdaptive *>(map_points[point_back]);
   }
 
   for (list<double>::iterator param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    Noh *noh = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
-                           ->FindPointByParameter((*param_iterator)));
+    NodeAdaptive *noh =
+        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
+                             ->FindPointByParameter((*param_iterator)));
     noh->SetId(id_manager->next(0));
     list_new_points.push_back(noh);
   }
@@ -695,12 +701,12 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
         double Ha_p1 = ka_p1.CalculateMeanCurvature();
 
         ka_midpoint = (Ha_p0 > Ha_p1) ? Ha_p0 : Ha_p1;
-        kd_average = (static_cast<Noh *>((*point_current))->GetHd() +
-                      static_cast<Noh *>((*point_next))->GetHd()) /
+        kd_average = (static_cast<NodeAdaptive *>((*point_current))->GetHd() +
+                      static_cast<NodeAdaptive *>((*point_next))->GetHd()) /
                      2.0;
       } else {
-        kd_average = (static_cast<Noh *>((*point_current))->GetGd() +
-                      static_cast<Noh *>((*point_next))->GetGd()) /
+        kd_average = (static_cast<NodeAdaptive *>((*point_current))->GetGd() +
+                      static_cast<NodeAdaptive *>((*point_next))->GetGd()) /
                      2.0;
       }
     }
@@ -735,38 +741,39 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
 
   list<PointAdaptive *> list_new_points;
 
-  Noh *point_front = static_cast<Noh *>(points.front());
+  NodeAdaptive *point_front = static_cast<NodeAdaptive *>(points.front());
   point_front->SetId(id_manager->next(0));
-  Noh *point_back = static_cast<Noh *>(points.back());
+  NodeAdaptive *point_back = static_cast<NodeAdaptive *>(points.back());
   point_back->SetId(id_manager->next(0));
 
-  Noh *new_noh1, *new_noh2;
+  NodeAdaptive *new_noh1, *new_noh2;
 
   map<PointAdaptive *, PointAdaptive *>::iterator point_iterator =
       map_points.find(point_front);
 
   if (point_iterator == map_points.end()) {
-    new_noh1 = new Noh(*point_front);
+    new_noh1 = new NodeAdaptive(*point_front);
     new_noh1->SetId(id_manager->next(0));
     map_points[point_front] = new_noh1;
   } else {
-    new_noh1 = static_cast<Noh *>(map_points[point_front]);
+    new_noh1 = static_cast<NodeAdaptive *>(map_points[point_front]);
   }
 
   point_iterator = map_points.find(point_back);
 
   if (point_iterator == map_points.end()) {
-    new_noh2 = new Noh(*point_back);
+    new_noh2 = new NodeAdaptive(*point_back);
     new_noh2->SetId(id_manager->next(0));
     map_points[point_back] = new_noh2;
   } else {
-    new_noh2 = static_cast<Noh *>(map_points[point_back]);
+    new_noh2 = static_cast<NodeAdaptive *>(map_points[point_back]);
   }
 
   for (list<double>::iterator param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    Noh *noh = new Noh((static_cast<CurveAdaptiveParametric *>(curve))
-                           ->FindPointByParameter((*param_iterator)));
+    NodeAdaptive *noh =
+        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
+                             ->FindPointByParameter((*param_iterator)));
     noh->SetId(id_manager->next(0));
     list_new_points.push_back(noh);
   }
@@ -789,7 +796,7 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
   // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
   AdvancingFront avanco(PROPORCAO, TOLERANCIA_AFT, SUAVIZACAO,
                         FATOR_SUAVIZACAO);
-  map<Vertex *, Noh *> map;
+  map<Vertex *, NodeAdaptive *> map;
 
   // 1. Para cada curva do patch
   for (unsigned int i = 0; i < coons_patch->GetNumBerCurves(); ++i) {
@@ -817,7 +824,8 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
               1.0, *param_iterator,
               static_cast<CurveAdaptiveParametric *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
+        NodeAdaptive *noh =
+            static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -848,7 +856,8 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
               0.0, *param_iterator,
               static_cast<CurveAdaptiveParametric *>(curve));
 
-        Noh *noh = static_cast<Noh *>(curve->GetPoint(parameter));
+        NodeAdaptive *noh =
+            static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -977,8 +986,8 @@ else
     Vertex *vertex = new_vertices.front();
     new_vertices.pop_front();
 
-    Noh *noh =
-        new Noh(coons_patch->Parameterize(vertex->getX(), vertex->getY()));
+    NodeAdaptive *noh = new NodeAdaptive(
+        coons_patch->Parameterize(vertex->getX(), vertex->getY()));
 
     noh->SetId(id_manager->next(0));
 
@@ -994,9 +1003,9 @@ else
     new_mesh.pop_front();
 
     ElementAdaptive *element =
-        new TriangleAdaptive(static_cast<Noh *>(map[face->getV1()]),
-                             static_cast<Noh *>(map[face->getV2()]),
-                             static_cast<Noh *>(map[face->getV3()]));
+        new TriangleAdaptive(static_cast<NodeAdaptive *>(map[face->getV1()]),
+                             static_cast<NodeAdaptive *>(map[face->getV2()]),
+                             static_cast<NodeAdaptive *>(map[face->getV3()]));
 
     element->SetId(id_manager->next(1));
 

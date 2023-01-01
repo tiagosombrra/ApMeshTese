@@ -1,6 +1,6 @@
-#include "../../include/estimate/ChargeEstimateProcess.h"
+#include "../../include/estimate/charge_estimate_process.h"
 
-#include "../../include/generator/GeradorAdaptativoPorCurvatura.h"
+#include "../../include/generator/generator_adaptive.h"
 
 extern std::string INPUT_MODEL;
 
@@ -20,18 +20,18 @@ std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
   std::list<PatchBezier*> list_patch_bezier;
   std::list<PatchBezier*> list_patch_bezier_order;
 
-  PatchBezierReader* patch_bezier_reader = new PatchBezierReader();
-  timer->endTimerParallel(0, 0, 10);  // Full
-  timer->initTimerParallel(0, 0, 5);  // Leitura arquivo
+  PatchReader* patch_bezier_reader = new PatchReader();
+  timer->EndTimerParallel(0, 0, 10);  // Full
+  timer->InitTimerParallel(0, 0, 5);  // Leitura arquivo
 
-  list_patch_bezier = patch_bezier_reader->loaderBPFile(INPUT_MODEL);
+  list_patch_bezier = patch_bezier_reader->LoaderBPFile(INPUT_MODEL);
 
-  timer->endTimerParallel(0, 0, 5);  // Leitura arquivo
-  TIME_READ_FILE = timer->timerParallel[0][0][5];
+  timer->EndTimerParallel(0, 0, 5);  // Leitura arquivo
+  TIME_READ_FILE = timer->timer_parallel_[0][0][5];
 
-  timer->initTimerParallel(0, 0, 5);  // Full
+  timer->InitTimerParallel(0, 0, 5);  // Full
 
-  timer->initTimerParallel(0, 0, 1);  // Estimativa de carga process 0
+  timer->InitTimerParallel(0, 0, 1);  // Estimativa de carga process 0
 
   delete patch_bezier_reader;
 
@@ -165,14 +165,14 @@ std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
   }
 
   if (WRITE_MESH == std::string("m")) {
-    write_obj_file_.writeCurvaturePatches(curvatures_, kam_major);
+    write_obj_file_.WriteCurvaturePatches(curvatures_, kam_major);
   }
 
   if (list_patch_bezier_order.size() > 1) {
     list_patch_bezier_order.sort(SortByNt);
   }
 
-  timer->endTimerParallel(0, 0, 1);  // Estimativa de carga process 0
+  timer->EndTimerParallel(0, 0, 1);  // Estimativa de carga process 0
 
   return list_patch_bezier_order;
 }
@@ -902,11 +902,11 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
 
 bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
                                                     Timer* timer, int degree) {
-  GeradorAdaptativoPorCurvatura* ger = new GeradorAdaptativoPorCurvatura();
+  GeneratorAdaptive* ger = new GeneratorAdaptive();
 #if USE_OPENMP
-  double erro = ger->erroGlobalOmp(mesh, timer);
+  double erro = ger->CalculateErrorGlobalOmp(mesh, timer);
 #else
-  double erro = ger->erroGlobal(malha, timer);
+  double erro = ger->ErrorGlobal(mesh, timer);
 #endif
   // delete ger;
 

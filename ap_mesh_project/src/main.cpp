@@ -8,16 +8,15 @@
 #include "../include/data/patch/patch_hermite.h"
 #include "../include/data/vector_adaptive.h"
 #include "../include/data/vertex_adaptive.h"
-#include "../include/generator/GeradorAdaptativoPorCurvatura.h"
-#include "../include/input_output/Modelos3d.h"
-#include "../include/input_output/PatchBezierReader.h"
-#include "../include/input_output/ReaderPatches.h"
-#include "../include/timer/Timer.h"
+#include "../include/generator/generator_adaptive.h"
+#include "../include/input_output/models_3d.h"
+#include "../include/input_output/patch_reader.h"
+#include "../include/timer/timer.h"
 
 #if USE_MPI
 int RANK_MPI, SIZE_MPI;
 #endif  // #if USE_OPENMPI
-int PASSOS = 4;
+int PASSOS = 3;
 double TRIANGLE_MEDIO = 0.0;
 double TOLERANCIA_ESTIMATIVE = 1.0;
 // distância entre um parâmetro e outro
@@ -87,23 +86,23 @@ int main(int argc, char **argv) {
   // contador do tempo de inicialização em segundos em todos os processos
 #if USE_MPI
 #if USE_OPENMP
-  timer->initTimerParallel(RANK_MPI, THREAD_ROOT, 10);  // Full
+  timer->InitTimerParallel(RANK_MPI, THREAD_ROOT, 10);  // Full
 #else
-  timer->initTimerParallel(RANK_MPI, 0, 10);  // Full
+  timer->InitTimerParallel(RANK_MPI, 0, 10);  // Full
 #endif
 #elif USE_OPENMP
-  timer->initTimerParallel(0, THREAD_ROOT, 10);  // Full
+  timer->InitTimerParallel(0, THREAD_ROOT, 10);  // Full
 #else
-  timer->initTimerParallel(0, 0, 10);  // Full
+  timer->InitTimerParallel(0, 0, 10);  // Full
 #endif
 
-  GeradorAdaptativoPorCurvatura ger;
+  GeneratorAdaptive ger;
 
 #if USE_MPI
-  if (ger.execute(argc, argv, timer, status) == 0) {
+  if (ger.Execute(argv, timer, status) == 0) {
     cout << endl << "Tempo do processo " << RANK_MPI << endl;
 
-    timer->printTime(RANK_MPI);
+    timer->PrintTime(RANK_MPI);
     cout << "Método do processo " << RANK_MPI << " com " << argv[2]
          << " thread(s) finalizado com Sucesso!" << endl;
     delete timer;
@@ -111,7 +110,7 @@ int main(int argc, char **argv) {
     return MPI_Finalize();
   }
 #else
-  if (ger.execute(argc, argv, timer) == 0) {
+  if (ger.Execute(argv, timer) == 0) {
     cout << "Método com " << argv[1] << " processo(s) e " << argv[2]
          << " thread(s) finalizado com Sucesso!" << endl;
     return 0;

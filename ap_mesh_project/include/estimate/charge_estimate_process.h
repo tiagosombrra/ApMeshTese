@@ -13,9 +13,9 @@
 #include "../data/patch/patch_bezier.h"
 #include "../data/point_adaptive.h"
 #include "../data/vertex_adaptive.h"
-#include "../input_output/PatchBezierReader.h"
-#include "../input_output/WriteOBJFile.h"
-#include "../timer/Timer.h"
+#include "../input_output/patch_reader.h"
+#include "../input_output/write_obj_file.h"
+#include "../timer/timer.h"
 
 extern double TIME_READ_FILE;
 extern double TOLERANCIA_ESTIMATIVE;

@@ -1,21 +1,15 @@
-//
-//  WriteOBJFile.cpp
-//  apMesh
-//
-//  Created by Tiago Guimarães Sombra on 05/12/15.
-//  Copyright © 2015 TMeshSurf. All rights reserved.
-//
-
-#include "../../include/input_output/WriteOBJFile.h"
+#include "../../include/input_output/write_obj_file.h"
 
 WriteOBJFile::WriteOBJFile() {}
 
-void WriteOBJFile::writeCurvaturePatches(
-    std::vector<double> vecCurvaturePatches, double maxValue) {
-  stringstream nameFile;
-  nameFile << NAME_MODEL + "_analise_curvature_patches.log";
+WriteOBJFile::~WriteOBJFile() {}
 
-  ofstream file(nameFile.str().c_str());
+void WriteOBJFile::WriteCurvaturePatches(std::vector<double> patches,
+                                         double max_value) {
+  stringstream name_file;
+  name_file << NAME_MODEL + "_analise_curvature_patches.log";
+
+  ofstream file(name_file.str().c_str());
 
   file << "File Analise Curvature" << endl << endl;
 
@@ -30,10 +24,10 @@ void WriteOBJFile::writeCurvaturePatches(
   std::vector<double> vec_80_90;
   std::vector<double> vec_90_100;
 
-  for (std::vector<double>::iterator it = vecCurvaturePatches.begin();
-       it != vecCurvaturePatches.end(); it++) {
+  for (std::vector<double>::iterator it = patches.begin(); it != patches.end();
+       it++) {
     double value;
-    value = (*it) / maxValue;
+    value = (*it) / max_value;
     // cout<<value<<endl;
     if (0.0 <= value and value <= 0.1) {
       vec_0_10.push_back(value);
@@ -58,32 +52,32 @@ void WriteOBJFile::writeCurvaturePatches(
     }
   }
 
-  file << vec_0_10.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_10_20.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_20_30.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_30_40.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_40_50.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_50_60.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_60_70.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_70_80.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_80_90.size() / (double)vecCurvaturePatches.size() << endl;
-  file << vec_90_100.size() / (double)vecCurvaturePatches.size() << endl;
+  file << vec_0_10.size() / (double)patches.size() << endl;
+  file << vec_10_20.size() / (double)patches.size() << endl;
+  file << vec_20_30.size() / (double)patches.size() << endl;
+  file << vec_30_40.size() / (double)patches.size() << endl;
+  file << vec_40_50.size() / (double)patches.size() << endl;
+  file << vec_50_60.size() / (double)patches.size() << endl;
+  file << vec_60_70.size() / (double)patches.size() << endl;
+  file << vec_70_80.size() / (double)patches.size() << endl;
+  file << vec_80_90.size() / (double)patches.size() << endl;
+  file << vec_90_100.size() / (double)patches.size() << endl;
 
   file.flush();
 
   file.close();
 }
 
-bool WriteOBJFile::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
+bool WriteOBJFile::WriteMeshOBJFile(MeshAdaptive* mesh, unsigned int step,
                                     int process) {
-  stringstream nameFile;
-  nameFile << "mesh_";
-  nameFile << passo;
-  nameFile << "_process_";
-  nameFile << process;
-  nameFile << ".obj";
+  stringstream name_file;
+  name_file << "mesh_";
+  name_file << step;
+  name_file << "_process_";
+  name_file << process;
+  name_file << ".obj";
 
-  ofstream file(nameFile.str().c_str());
+  ofstream file(name_file.str().c_str());
 
   file << " File Wavefront OBJ generated apMesh" << endl << endl;
 
@@ -95,8 +89,8 @@ bool WriteOBJFile::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
   unsigned long int Nv, Nt;
   Nv = Nt = 0;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = mesh->GetSubMeshAdaptiveByPosition(i);
 
     Nv += sub->GetNumberNos();
     Nt += sub->GetNumberElements();
@@ -104,8 +98,8 @@ bool WriteOBJFile::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
 
   file << "# of vertices" << endl << Nv << endl << endl;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = mesh->GetSubMeshAdaptiveByPosition(i);
 
     for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
       NodeAdaptive* n = sub->GetNoh(j);
@@ -115,8 +109,8 @@ bool WriteOBJFile::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
 
   file << "# of faces " << endl << Nt << endl;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    SubMesh* sub = mesh->GetSubMeshAdaptiveByPosition(i);
 
     for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
       TriangleAdaptive* t = (TriangleAdaptive*)sub->GetElement(j);
@@ -131,5 +125,3 @@ bool WriteOBJFile::writeMeshOBJFile(MeshAdaptive* malha, unsigned int passo,
 
   return true;
 }
-
-WriteOBJFile::~WriteOBJFile() {}

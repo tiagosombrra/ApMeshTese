@@ -1,8 +1,8 @@
-#include "../../include/input_output/Modelos3d.h"
+#include "../../include/input_output/models_3d.h"
 
-Modelos3d::Modelos3d() {}
+Models3d::Models3d() {}
 
-Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
+Geometry* Models3d::ModelPlanBook(Geometry* geometry) {
   //=============================== PATCH 1 ==================================
   PointAdaptive* p100 = new VertexAdaptive(0.00000, 1.00000, 0.00000);
   PointAdaptive* p110 = new VertexAdaptive(0.00000, 0.50000, 0.00000);
@@ -36,11 +36,11 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(patch1_c1);
-  geo->InsertCurve(patch1_c2);
-  geo->InsertCurve(patch1_c3);
-  geo->InsertCurve(patch1_c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(patch1_c1);
+  geometry->InsertCurve(patch1_c2);
+  geometry->InsertCurve(patch1_c3);
+  geometry->InsertCurve(patch1_c4);
   //======================== FIM DO PATCH 1 ==================================
 
   //=============================== PATCH 2 ==================================
@@ -75,11 +75,11 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   Patch* patch2 = new PatchBezier(patch1_c1, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
 
-  geo->InsertPatch(patch2);
+  geometry->InsertPatch(patch2);
   // geo->InsertCurve ( patch2_c1 );
-  geo->InsertCurve(patch2_c2);
-  geo->InsertCurve(patch2_c3);
-  geo->InsertCurve(patch2_c4);
+  geometry->InsertCurve(patch2_c2);
+  geometry->InsertCurve(patch2_c3);
+  geometry->InsertCurve(patch2_c4);
   //======================== FIM DO PATCH 2 ==================================
 
   //=============================== PATCH 3 ==================================
@@ -114,11 +114,11 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   Patch* patch3 = new PatchBezier(patch1_c1, patch3_c2, patch3_c3, patch3_c4,
                                   *p311, *p321, *p312, *p322);
 
-  geo->InsertPatch(patch3);
+  geometry->InsertPatch(patch3);
   // geo->InsertCurve ( patch3_c1 );
-  geo->InsertCurve(patch3_c2);
-  geo->InsertCurve(patch3_c3);
-  geo->InsertCurve(patch3_c4);
+  geometry->InsertCurve(patch3_c2);
+  geometry->InsertCurve(patch3_c3);
+  geometry->InsertCurve(patch3_c4);
   //======================== FIM DO PATCH 3 ==================================
 
   //=============================== PATCH 4 ==================================
@@ -153,11 +153,11 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   Patch* patch4 = new PatchBezier(patch1_c1, patch4_c2, patch4_c3, patch4_c4,
                                   *p411, *p421, *p412, *p422);
 
-  geo->InsertPatch(patch4);
+  geometry->InsertPatch(patch4);
   // geo->InsertCurve ( patch4_c1 );
-  geo->InsertCurve(patch4_c2);
-  geo->InsertCurve(patch4_c3);
-  geo->InsertCurve(patch4_c4);
+  geometry->InsertCurve(patch4_c2);
+  geometry->InsertCurve(patch4_c3);
+  geometry->InsertCurve(patch4_c4);
   //======================== FIM DO PATCH 4 ==================================
 
   //=============================== PATCH 5 ==================================
@@ -193,17 +193,17 @@ Geometry* Modelos3d::modelPlanBook(Geometry* geo) {
   Patch* patch5 = new PatchBezier(patch1_c1, patch5_c2, patch5_c3, patch5_c4,
                                   *p511, *p521, *p512, *p522);
 
-  geo->InsertPatch(patch5);
+  geometry->InsertPatch(patch5);
   // geo->InsertCurve ( patch5_c1 );
-  geo->InsertCurve(patch5_c2);
-  geo->InsertCurve(patch5_c3);
-  geo->InsertCurve(patch5_c4);
+  geometry->InsertCurve(patch5_c2);
+  geometry->InsertCurve(patch5_c3);
+  geometry->InsertCurve(patch5_c4);
   //======================== FIM DO PATCH 5 ==================================
 
-  return geo;
+  return geometry;
 }
 
-Geometry* Modelos3d::modelTresPatches(Geometry* geo) {
+Geometry* Models3d::ModelTresPatches(Geometry* geometry) {
   //==============================================================================
   // Exemplo do three_patches_curve
   //==============================================================================
@@ -241,11 +241,11 @@ Geometry* Modelos3d::modelTresPatches(Geometry* geo) {
   Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(patch1_c1);
-  geo->InsertCurve(patch1_c2);
-  geo->InsertCurve(patch1_c3);
-  geo->InsertCurve(patch1_c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(patch1_c1);
+  geometry->InsertCurve(patch1_c2);
+  geometry->InsertCurve(patch1_c3);
+  geometry->InsertCurve(patch1_c4);
   //======================== FIM DO PATCH 1 ==================================
   //=============================== PATCH 2 ==================================
   PointAdaptive* p200 = new VertexAdaptive(-1.00000, 1.00000, 1.00000);
@@ -279,11 +279,11 @@ Geometry* Modelos3d::modelTresPatches(Geometry* geo) {
   Patch* patch2 = new PatchBezier(patch1_c3, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
 
-  geo->InsertPatch(patch2);
+  geometry->InsertPatch(patch2);
   // geo->InsertCurve ( patch2_c1 );
-  geo->InsertCurve(patch2_c2);
-  geo->InsertCurve(patch2_c3);
-  geo->InsertCurve(patch2_c4);
+  geometry->InsertCurve(patch2_c2);
+  geometry->InsertCurve(patch2_c3);
+  geometry->InsertCurve(patch2_c4);
   //======================== FIM DO PATCH 2 ==================================
 
   //=============================== PATCH 3 ==================================
@@ -318,18 +318,19 @@ Geometry* Modelos3d::modelTresPatches(Geometry* geo) {
   Patch* patch3 = new PatchBezier(patch1_c3, patch3_c2, patch3_c3, patch3_c4,
                                   *p311, *p321, *p312, *p322);
 
-  geo->InsertPatch(patch3);
+  geometry->InsertPatch(patch3);
   // geo->InsertCurve ( patch2_c1 );
-  geo->InsertCurve(patch3_c2);
-  geo->InsertCurve(patch3_c3);
-  geo->InsertCurve(patch3_c4);
+  geometry->InsertCurve(patch3_c2);
+  geometry->InsertCurve(patch3_c3);
+  geometry->InsertCurve(patch3_c4);
   //======================== FIM DO PATCH 3 ==================================
   //==============================================================================
   // FIM do Exemplo three_patches_curve
   //==============================================================================
-  return geo;
+  return geometry;
 }
-Geometry* Modelos3d::modelDoisPatchesPlanosCurva1(Geometry* geo) {
+
+Geometry* Models3d::ModelDoisPatchesPlanosCurva1(Geometry* geometry) {
   //==============================================================================
   // Exemplo do two_patches_curve
   //==============================================================================
@@ -367,11 +368,11 @@ Geometry* Modelos3d::modelDoisPatchesPlanosCurva1(Geometry* geo) {
   Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(patch1_c1);
-  geo->InsertCurve(patch1_c2);
-  geo->InsertCurve(patch1_c3);
-  geo->InsertCurve(patch1_c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(patch1_c1);
+  geometry->InsertCurve(patch1_c2);
+  geometry->InsertCurve(patch1_c3);
+  geometry->InsertCurve(patch1_c4);
   //======================== FIM DO PATCH 1 ==================================
   //=============================== PATCH 2 ==================================
   PointAdaptive* p200 = new VertexAdaptive(-1.00000, 1.00000, 1.00000);
@@ -405,19 +406,19 @@ Geometry* Modelos3d::modelDoisPatchesPlanosCurva1(Geometry* geo) {
   Patch* patch2 = new PatchBezier(patch1_c3, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
 
-  geo->InsertPatch(patch2);
+  geometry->InsertPatch(patch2);
   // geo->InsertCurve ( patch2_c1 );
-  geo->InsertCurve(patch2_c2);
-  geo->InsertCurve(patch2_c3);
-  geo->InsertCurve(patch2_c4);
+  geometry->InsertCurve(patch2_c2);
+  geometry->InsertCurve(patch2_c3);
+  geometry->InsertCurve(patch2_c4);
   //======================== FIM DO PATCH 2 ==================================
   //==============================================================================
   // FIM do Exemplo two_patches
   //==============================================================================
-  return geo;
+  return geometry;
 }
 
-Geometry* Modelos3d::modelDoisPatchesPlanosCurva(Geometry* geo) {
+Geometry* Models3d::ModelDoisPatchesPlanosCurva(Geometry* geometry) {
   //==============================================================================
   // Exemplo do Utahteapot
   //==============================================================================
@@ -455,11 +456,11 @@ Geometry* Modelos3d::modelDoisPatchesPlanosCurva(Geometry* geo) {
   Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(patch1_c1);
-  geo->InsertCurve(patch1_c2);
-  geo->InsertCurve(patch1_c3);
-  geo->InsertCurve(patch1_c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(patch1_c1);
+  geometry->InsertCurve(patch1_c2);
+  geometry->InsertCurve(patch1_c3);
+  geometry->InsertCurve(patch1_c4);
   //======================== FIM DO PATCH 1 ==================================
 
   //=============================== PATCH 2 ==================================
@@ -495,16 +496,16 @@ Geometry* Modelos3d::modelDoisPatchesPlanosCurva(Geometry* geo) {
   Patch* patch2 = new PatchBezier(patch2_c1, patch2_c2, patch2_c3, patch2_c4,
                                   *p211, *p221, *p212, *p222);
 
-  geo->InsertPatch(patch2);
-  geo->InsertCurve(patch2_c1);
-  geo->InsertCurve(patch2_c2);
+  geometry->InsertPatch(patch2);
+  geometry->InsertCurve(patch2_c1);
+  geometry->InsertCurve(patch2_c2);
   // geo->InsertCurve ( patch2_c3 );
-  geo->InsertCurve(patch2_c4);
+  geometry->InsertCurve(patch2_c4);
   //======================== FIM DO PATCH 2 ==================================
-  return geo;
+  return geometry;
 }
 
-Geometry* Modelos3d::modelCurvaBezier(Geometry* geo) {
+Geometry* Models3d::ModelCurvaBezier(Geometry* geometry) {
   //==============================================================================
   // Exemplo usando curva de Bezier
   //==============================================================================
@@ -542,18 +543,18 @@ Geometry* Modelos3d::modelCurvaBezier(Geometry* geo) {
   Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p11, *p21, *p12, *p22);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(patch1_c1);
-  geo->InsertCurve(patch1_c2);
-  geo->InsertCurve(patch1_c3);
-  geo->InsertCurve(patch1_c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(patch1_c1);
+  geometry->InsertCurve(patch1_c2);
+  geometry->InsertCurve(patch1_c3);
+  geometry->InsertCurve(patch1_c4);
   //==============================================================================
   // Fim do exemplo usando curva de Bezier
   //==============================================================================
-  return geo;
+  return geometry;
 }
 
-Geometry* Modelos3d::modelParaboloide(Geometry* geo) {
+Geometry* Models3d::ModelParaboloide(Geometry* geometry) {
   //==============================================================================
   // Exemplo do PARABOLÓIDE HIPERBÓLICO
   //==============================================================================
@@ -596,20 +597,20 @@ Geometry* Modelos3d::modelParaboloide(Geometry* geo) {
       new PatchHermite(patch1_c1, patch1_c2, patch1_c3, patch1_c4, *patch1_tw00,
                        *patch1_tw10, *patch1_tw01, *patch1_tw11);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(patch1_c1);
-  geo->InsertCurve(patch1_c2);
-  geo->InsertCurve(patch1_c3);
-  geo->InsertCurve(patch1_c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(patch1_c1);
+  geometry->InsertCurve(patch1_c2);
+  geometry->InsertCurve(patch1_c3);
+  geometry->InsertCurve(patch1_c4);
 
   //======================== FIM DO PATCH 1 ===================================
   //==============================================================================
   // FIM do Exemplo do PARABOLÓIDE HIPERBÓLICO
   //==============================================================================
-  return geo;
+  return geometry;
 }
 
-Geometry* Modelos3d::modelPneu(Geometry* geo) {
+Geometry* Models3d::ModelPneu(Geometry* geometry) {
   //==============================================================================
   // Exemplo do pneu
   //==============================================================================
@@ -655,21 +656,21 @@ Geometry* Modelos3d::modelPneu(Geometry* geo) {
   Patch* patch2 =
       new PatchHermite(c5, c4, c6, c2, *tw_00, *tw_10, *tw_01, *tw_11);
 
-  geo->InsertPatch(patch1);
-  geo->InsertPatch(patch2);
-  geo->InsertCurve(c1);
-  geo->InsertCurve(c2);
-  geo->InsertCurve(c3);
-  geo->InsertCurve(c4);
-  geo->InsertCurve(c5);
-  geo->InsertCurve(c6);
-  return geo;
+  geometry->InsertPatch(patch1);
+  geometry->InsertPatch(patch2);
+  geometry->InsertCurve(c1);
+  geometry->InsertCurve(c2);
+  geometry->InsertCurve(c3);
+  geometry->InsertCurve(c4);
+  geometry->InsertCurve(c5);
+  geometry->InsertCurve(c6);
+  return geometry;
   //==============================================================================
   // Fim do Exemplo do pneu
   //==============================================================================
 }
 
-Geometry* Modelos3d::modelLadoDescendente(Geometry* geo) {
+Geometry* Models3d::ModelLadoDescendente(Geometry* geometry) {
   //==============================================================================
   // Exemplo de uma superfície com um dos lados descendentes
   //==============================================================================
@@ -703,20 +704,20 @@ Geometry* Modelos3d::modelLadoDescendente(Geometry* geo) {
       new CurveAdaptiveParametricHermite(*p00, *p01, *Qv00, *Qv01);
   Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(c1);
-  geo->InsertCurve(c2);
-  geo->InsertCurve(c3);
-  geo->InsertCurve(c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(c1);
+  geometry->InsertCurve(c2);
+  geometry->InsertCurve(c3);
+  geometry->InsertCurve(c4);
 
-  return geo;
+  return geometry;
 
   //==============================================================================
   // FIM do Exemplo de uma superfície com um dos lados descendentes
   //==============================================================================
 }
 
-Geometry* Modelos3d::modelBaseCircular(Geometry* geo) {
+Geometry* Models3d::ModelBaseCircular(Geometry* geometry) {
   //==============================================================================
   // Exemplo da base circular
   //==============================================================================
@@ -750,18 +751,18 @@ Geometry* Modelos3d::modelBaseCircular(Geometry* geo) {
 
   Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(c1);
-  geo->InsertCurve(c2);
-  geo->InsertCurve(c3);
-  geo->InsertCurve(c4);
-  return geo;
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(c1);
+  geometry->InsertCurve(c2);
+  geometry->InsertCurve(c3);
+  geometry->InsertCurve(c4);
+  return geometry;
   //==============================================================================
   // FIM do Exemplo da base circular
   //==============================================================================
 }
 
-Geometry* Modelos3d::modelBaseQuadrada(Geometry* geo) {
+Geometry* Models3d::ModelBaseQuadrada(Geometry* geometry) {
   //==============================================================================
   // Exemplo do patch com base quadrada
   //==============================================================================
@@ -796,18 +797,18 @@ Geometry* Modelos3d::modelBaseQuadrada(Geometry* geo) {
 
   Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(c1);
-  geo->InsertCurve(c2);
-  geo->InsertCurve(c3);
-  geo->InsertCurve(c4);
-  return geo;
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(c1);
+  geometry->InsertCurve(c2);
+  geometry->InsertCurve(c3);
+  geometry->InsertCurve(c4);
+  return geometry;
   //==============================================================================
   // FIM do exemplo do patch com base quadrada
   //==============================================================================
 }
 
-Geometry* Modelos3d::modelBordaCurva(Geometry* geo) {
+Geometry* Models3d::ModelBordaCurva(Geometry* geometry) {
   //==============================================================================
   // Exemplo do patch com borda curva
   //==============================================================================
@@ -842,18 +843,18 @@ Geometry* Modelos3d::modelBordaCurva(Geometry* geo) {
 
   Patch* patch1 = new PatchHermite(c1, c2, c3, c4, *tw00, *tw10, *tw01, *tw11);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(c1);
-  geo->InsertCurve(c2);
-  geo->InsertCurve(c3);
-  geo->InsertCurve(c4);
-  return geo;
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(c1);
+  geometry->InsertCurve(c2);
+  geometry->InsertCurve(c3);
+  geometry->InsertCurve(c4);
+  return geometry;
   //==============================================================================
   // FIM do exemplo do patch com borda curva
   //==============================================================================
 }
 
-Geometry* Modelos3d::modelDoisPatches(Geometry* geo) {
+Geometry* Models3d::ModelDoisPatches(Geometry* geometry) {
   //==============================================================================
   // Exemplo de dois patches vizinhos
   //==============================================================================
@@ -909,22 +910,22 @@ Geometry* Modelos3d::modelDoisPatches(Geometry* geo) {
   Patch* patch2 =
       new PatchHermite(c5, c6, c7, c2, *tw200, *tw210, *tw201, *tw211);
 
-  geo->InsertPatch(patch1);
-  geo->InsertPatch(patch2);
-  geo->InsertCurve(c1);
-  geo->InsertCurve(c2);
-  geo->InsertCurve(c3);
-  geo->InsertCurve(c4);
-  geo->InsertCurve(c5);
-  geo->InsertCurve(c6);
-  geo->InsertCurve(c7);
-  return geo;
+  geometry->InsertPatch(patch1);
+  geometry->InsertPatch(patch2);
+  geometry->InsertCurve(c1);
+  geometry->InsertCurve(c2);
+  geometry->InsertCurve(c3);
+  geometry->InsertCurve(c4);
+  geometry->InsertCurve(c5);
+  geometry->InsertCurve(c6);
+  geometry->InsertCurve(c7);
+  return geometry;
   //==============================================================================
   // Fim do Exemplo de dois patches vizinhos
   //==============================================================================
 }
 
-Geometry* Modelos3d::modelNariz(Geometry* geo) {
+Geometry* Models3d::ModelNariz(Geometry* geometry) {
   //==============================================================================
   // Exemplo do nariz
   //==============================================================================
@@ -965,11 +966,11 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch1_c1, patch1_c2, patch1_c3, patch1_c4, *patch1_tw00,
                        *patch1_tw10, *patch1_tw01, *patch1_tw11);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(patch1_c1);
-  geo->InsertCurve(patch1_c2);
-  geo->InsertCurve(patch1_c3);
-  geo->InsertCurve(patch1_c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(patch1_c1);
+  geometry->InsertCurve(patch1_c2);
+  geometry->InsertCurve(patch1_c3);
+  geometry->InsertCurve(patch1_c4);
   //======================== FIM DO PATCH 1 ===================================
 
   //=============================== PATCH 2 ===================================
@@ -1011,10 +1012,10 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch2_c1, patch2_c2, patch2_c3, patch2_c4, *patch2_tw00,
                        *patch2_tw10, *patch2_tw01, *patch2_tw11);
 
-  geo->InsertPatch(patch2);
-  geo->InsertCurve(patch2_c1);
-  geo->InsertCurve(patch2_c2);
-  geo->InsertCurve(patch2_c3);
+  geometry->InsertPatch(patch2);
+  geometry->InsertCurve(patch2_c1);
+  geometry->InsertCurve(patch2_c2);
+  geometry->InsertCurve(patch2_c3);
   // geo->InsertCurve ( patch2_c4 );
   //======================== FIM DO PATCH 2 ===================================
 
@@ -1069,10 +1070,10 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch3_c1, patch3_c2, patch3_c3, patch3_c4, *patch3_tw00,
                        *patch3_tw10, *patch3_tw01, *patch3_tw11);
 
-  geo->InsertPatch(patch3);
-  geo->InsertCurve(patch3_c1);
-  geo->InsertCurve(patch3_c2);
-  geo->InsertCurve(patch3_c3);
+  geometry->InsertPatch(patch3);
+  geometry->InsertCurve(patch3_c1);
+  geometry->InsertCurve(patch3_c2);
+  geometry->InsertCurve(patch3_c3);
   // geo->InsertCurve ( patch3_c4 );
   //======================== FIM DO PATCH 3 ===================================
 
@@ -1110,11 +1111,11 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch4_c1, patch4_c2, patch4_c3, patch4_c4, *patch4_tw00,
                        *patch4_tw10, *patch4_tw01, *patch4_tw11);
 
-  geo->InsertPatch(patch4);
+  geometry->InsertPatch(patch4);
   // geo->InsertCurve ( patch4_c1 );
-  geo->InsertCurve(patch4_c2);
-  geo->InsertCurve(patch4_c3);
-  geo->InsertCurve(patch4_c4);
+  geometry->InsertCurve(patch4_c2);
+  geometry->InsertCurve(patch4_c3);
+  geometry->InsertCurve(patch4_c4);
   //======================== FIM DO PATCH 4 ===================================
 
   //=============================== PATCH 5 ===================================
@@ -1157,10 +1158,10 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch5_c1, patch5_c2, patch5_c3, patch5_c4, *patch5_tw00,
                        *patch5_tw10, *patch5_tw01, *patch5_tw11);
 
-  geo->InsertPatch(patch5);
+  geometry->InsertPatch(patch5);
   // geo->InsertCurve ( patch4_c1 );
-  geo->InsertCurve(patch5_c2);
-  geo->InsertCurve(patch5_c3);
+  geometry->InsertCurve(patch5_c2);
+  geometry->InsertCurve(patch5_c3);
   // geo->InsertCurve ( patch5_c4 );
   //======================== FIM DO PATCH 5 ===================================
 
@@ -1205,10 +1206,10 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch6_c1, patch6_c2, patch6_c3, patch6_c4, *patch6_tw00,
                        *patch6_tw10, *patch6_tw01, *patch6_tw11);
 
-  geo->InsertPatch(patch6);
+  geometry->InsertPatch(patch6);
   // geo->InsertCurve ( patch4_c1 );
-  geo->InsertCurve(patch6_c2);
-  geo->InsertCurve(patch6_c3);
+  geometry->InsertCurve(patch6_c2);
+  geometry->InsertCurve(patch6_c3);
   // geo->InsertCurve ( patch5_c4 );
   //======================== FIM DO PATCH 6 ===================================
 
@@ -1248,11 +1249,11 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch8_c1, patch8_c2, patch8_c3, patch8_c4, *patch8_tw00,
                        *patch8_tw10, *patch8_tw01, *patch8_tw11);
 
-  geo->InsertPatch(patch8);
+  geometry->InsertPatch(patch8);
   // geo->InsertCurve ( patch8_c1 );
-  geo->InsertCurve(patch8_c2);
-  geo->InsertCurve(patch8_c3);
-  geo->InsertCurve(patch8_c4);
+  geometry->InsertCurve(patch8_c2);
+  geometry->InsertCurve(patch8_c3);
+  geometry->InsertCurve(patch8_c4);
   //======================== FIM DO PATCH 8 ===================================
 
   //=============================== PATCH 10 ==================================
@@ -1291,11 +1292,11 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
                                     patch10_c4, *patch10_tw00, *patch10_tw10,
                                     *patch10_tw01, *patch10_tw11);
 
-  geo->InsertPatch(patch10);
+  geometry->InsertPatch(patch10);
   // geo->InsertCurve ( patch10_c1 );
-  geo->InsertCurve(patch10_c2);
-  geo->InsertCurve(patch10_c3);
-  geo->InsertCurve(patch10_c4);
+  geometry->InsertCurve(patch10_c2);
+  geometry->InsertCurve(patch10_c3);
+  geometry->InsertCurve(patch10_c4);
   //======================== FIM DO PATCH 10 ==================================
 
   //=============================== PATCH 7 ===================================
@@ -1331,11 +1332,11 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch7_c1, patch7_c2, patch7_c3, patch7_c4, *patch7_tw00,
                        *patch7_tw10, *patch7_tw01, *patch7_tw11);
 
-  geo->InsertPatch(patch7);
+  geometry->InsertPatch(patch7);
   // geo->InsertCurve ( patch7_c1 );
   // geo->InsertCurve ( patch7_c2 );
-  geo->InsertCurve(patch7_c3);
-  geo->InsertCurve(patch7_c4);
+  geometry->InsertCurve(patch7_c3);
+  geometry->InsertCurve(patch7_c4);
   //======================== FIM DO PATCH 7 ===================================
 
   //=============================== PATCH 9 ===================================
@@ -1374,9 +1375,9 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
       new PatchHermite(patch9_c1, patch9_c2, patch9_c3, patch9_c4, *patch9_tw00,
                        *patch9_tw10, *patch9_tw01, *patch9_tw11);
 
-  geo->InsertPatch(patch9);
+  geometry->InsertPatch(patch9);
   // geo->InsertCurve ( patch9_c1 );
-  geo->InsertCurve(patch9_c2);
+  geometry->InsertCurve(patch9_c2);
   // geo->InsertCurve ( patch9_c3 );
   // geo->InsertCurve ( patch9_c4 );
   //======================== FIM DO PATCH 9 ===================================
@@ -1416,11 +1417,11 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
                                     patch11_c4, *patch11_tw00, *patch11_tw10,
                                     *patch11_tw01, *patch11_tw11);
 
-  geo->InsertPatch(patch11);
+  geometry->InsertPatch(patch11);
   // geo->InsertCurve ( patch11_c1 );
   // geo->InsertCurve ( patch11_c2 );
-  geo->InsertCurve(patch11_c3);
-  geo->InsertCurve(patch11_c4);
+  geometry->InsertCurve(patch11_c3);
+  geometry->InsertCurve(patch11_c4);
   //======================== FIM DO PATCH 11 ==================================
 
   //=============================== PATCH 12 ==================================
@@ -1459,9 +1460,9 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
                                     patch12_c4, *patch12_tw00, *patch12_tw10,
                                     *patch12_tw01, *patch12_tw11);
 
-  geo->InsertPatch(patch12);
-  geo->InsertCurve(patch12_c1);
-  geo->InsertCurve(patch12_c2);
+  geometry->InsertPatch(patch12);
+  geometry->InsertCurve(patch12_c1);
+  geometry->InsertCurve(patch12_c2);
   // geo->InsertCurve ( patch12_c3 );
   // geo->InsertCurve ( patch12_c4 );
   //======================== FIM DO PATCH 12 ==================================
@@ -1501,11 +1502,11 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
                                     patch13_c4, *patch13_tw00, *patch13_tw10,
                                     *patch13_tw01, *patch13_tw11);
 
-  geo->InsertPatch(patch13);
+  geometry->InsertPatch(patch13);
   // geo->InsertCurve ( patch13_c1 );
   // geo->InsertCurve ( patch13_c2 );
-  geo->InsertCurve(patch13_c3);
-  geo->InsertCurve(patch13_c4);
+  geometry->InsertCurve(patch13_c3);
+  geometry->InsertCurve(patch13_c4);
   //======================== FIM DO PATCH 13 ==================================
 
   //=============================== PATCH 14 ==================================
@@ -1544,19 +1545,19 @@ Geometry* Modelos3d::modelNariz(Geometry* geo) {
                                     patch14_c4, *patch14_tw00, *patch14_tw10,
                                     *patch14_tw01, *patch14_tw11);
 
-  geo->InsertPatch(patch14);
-  geo->InsertCurve(patch14_c1);
-  geo->InsertCurve(patch14_c2);
+  geometry->InsertPatch(patch14);
+  geometry->InsertCurve(patch14_c1);
+  geometry->InsertCurve(patch14_c2);
   // geo->InsertCurve ( patch14_c3 );
   // geo->InsertCurve ( patch14_c4 );
-  return geo;
+  return geometry;
   //=========================== FIM DO PATCH 14
   //==================================
   // Fim do Exemplo do Nariz
   //==============================================================================
 }
 
-Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
+Geometry* Models3d::ModelUtahteapot(Geometry* geometry) {
   //==============================================================================
   // Exemplo do Utahteapot
   //==============================================================================
@@ -1594,11 +1595,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch1 = new PatchBezier(patch1_c1, patch1_c2, patch1_c3, patch1_c4,
                                   *p111, *p121, *p112, *p122);
 
-  geo->InsertPatch(patch1);
-  geo->InsertCurve(patch1_c1);
-  geo->InsertCurve(patch1_c2);
-  geo->InsertCurve(patch1_c3);
-  geo->InsertCurve(patch1_c4);
+  geometry->InsertPatch(patch1);
+  geometry->InsertCurve(patch1_c1);
+  geometry->InsertCurve(patch1_c2);
+  geometry->InsertCurve(patch1_c3);
+  geometry->InsertCurve(patch1_c4);
   //======================== FIM DO PATCH 1 ==================================
 
   //=============================== PATCH 2 ==================================
@@ -1639,10 +1640,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch2 = new PatchBezier(patch2_c1, patch2_c2, patch2_c3, patch1_c2,
                                   *p211, *p221, *p212, *p222);
 
-  geo->InsertPatch(patch2);
-  geo->InsertCurve(patch2_c1);
-  geo->InsertCurve(patch2_c2);
-  geo->InsertCurve(patch2_c3);
+  geometry->InsertPatch(patch2);
+  geometry->InsertCurve(patch2_c1);
+  geometry->InsertCurve(patch2_c2);
+  geometry->InsertCurve(patch2_c3);
   // geo->InsertCurve ( patch2_c4 );
   //======================== FIM DO PATCH 2 ==================================
 
@@ -1684,10 +1685,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch3 = new PatchBezier(patch3_c1, patch3_c2, patch3_c3, patch2_c2,
                                   *p311, *p321, *p312, *p322);
 
-  geo->InsertPatch(patch3);
-  geo->InsertCurve(patch3_c1);
-  geo->InsertCurve(patch3_c2);
-  geo->InsertCurve(patch3_c3);
+  geometry->InsertPatch(patch3);
+  geometry->InsertCurve(patch3_c1);
+  geometry->InsertCurve(patch3_c2);
+  geometry->InsertCurve(patch3_c3);
   //		geo->InsertCurve ( patch3_c4 );
   //======================== FIM DO PATCH 3 ==================================
 
@@ -1724,10 +1725,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch4 = new PatchBezier(patch4_c1, patch1_c4, patch4_c3, patch3_c2,
                                   *p411, *p421, *p412, *p422);
 
-  geo->InsertPatch(patch4);
-  geo->InsertCurve(patch4_c1);
+  geometry->InsertPatch(patch4);
+  geometry->InsertCurve(patch4_c1);
   // geo->InsertCurve ( patch4_c2 );
-  geo->InsertCurve(patch4_c3);
+  geometry->InsertCurve(patch4_c3);
   // geo->InsertCurve ( patch4_c4 );
   //======================== FIM DO PATCH 4 ==================================
 
@@ -1765,11 +1766,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch5 = new PatchBezier(patch1_c3, patch5_c2, patch5_c3, patch5_c4,
                                   *p511, *p521, *p512, *p522);
 
-  geo->InsertPatch(patch5);
+  geometry->InsertPatch(patch5);
   // geo->InsertCurve ( patch5_c1 );
-  geo->InsertCurve(patch5_c2);
-  geo->InsertCurve(patch5_c3);
-  geo->InsertCurve(patch5_c4);
+  geometry->InsertCurve(patch5_c2);
+  geometry->InsertCurve(patch5_c3);
+  geometry->InsertCurve(patch5_c4);
   //======================== FIM DO PATCH 5 ==================================
 
   //=============================== PATCH 6 ==================================
@@ -1814,10 +1815,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch6 = new PatchBezier(patch2_c3, patch6_c2, patch6_c3, patch5_c2,
                                   *p611, *p621, *p612, *p622);
 
-  geo->InsertPatch(patch6);
+  geometry->InsertPatch(patch6);
   //		geo->InsertCurve ( patch6_c1 );
-  geo->InsertCurve(patch6_c2);
-  geo->InsertCurve(patch6_c3);
+  geometry->InsertCurve(patch6_c2);
+  geometry->InsertCurve(patch6_c3);
   //		geo->InsertCurve ( patch6_c4 );
   //======================== FIM DO PATCH 6 ==================================
 
@@ -1857,10 +1858,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch7 = new PatchBezier(patch3_c3, patch7_c2, patch7_c3, patch6_c2,
                                   *p711, *p721, *p712, *p722);
 
-  geo->InsertPatch(patch7);
+  geometry->InsertPatch(patch7);
   //		geo->InsertCurve ( patch7_c1 );
-  geo->InsertCurve(patch7_c2);
-  geo->InsertCurve(patch7_c3);
+  geometry->InsertCurve(patch7_c2);
+  geometry->InsertCurve(patch7_c3);
   //		geo->InsertCurve ( patch7_c4 );
   //======================== FIM DO PATCH 7 ==================================
 
@@ -1905,10 +1906,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch8 = new PatchBezier(patch4_c3, patch5_c4, patch8_c3, patch7_c2,
                                   *p811, *p821, *p812, *p822);
 
-  geo->InsertPatch(patch8);
+  geometry->InsertPatch(patch8);
   //		geo->InsertCurve ( patch8_c1 );
   //		geo->InsertCurve ( patch8_c2 );
-  geo->InsertCurve(patch8_c3);
+  geometry->InsertCurve(patch8_c3);
   //		geo->InsertCurve ( patch8_c4 );
   //======================== FIM DO PATCH 8 ==================================
 
@@ -1947,11 +1948,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch9 = new PatchBezier(patch5_c3, patch9_c2, patch9_c3, patch9_c4,
                                   *p911, *p921, *p912, *p922);
 
-  geo->InsertPatch(patch9);
+  geometry->InsertPatch(patch9);
   //		geo->InsertCurve ( patch9_c1 );
-  geo->InsertCurve(patch9_c2);
-  geo->InsertCurve(patch9_c3);
-  geo->InsertCurve(patch9_c4);
+  geometry->InsertCurve(patch9_c2);
+  geometry->InsertCurve(patch9_c3);
+  geometry->InsertCurve(patch9_c4);
   //======================== FIM DO PATCH 9 ==================================
 
   //============================== PATCH 10 ==================================
@@ -1992,10 +1993,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch10 = new PatchBezier(patch6_c3, patch10_c2, patch10_c3, patch9_c2,
                                    *p1011, *p1021, *p1012, *p1022);
 
-  geo->InsertPatch(patch10);
+  geometry->InsertPatch(patch10);
   //		geo->InsertCurve ( patch10_c1 );
-  geo->InsertCurve(patch10_c2);
-  geo->InsertCurve(patch10_c3);
+  geometry->InsertCurve(patch10_c2);
+  geometry->InsertCurve(patch10_c3);
   //		geo->InsertCurve ( patch10_c4 );
   //======================== FIM DO PATCH 10 =================================
 
@@ -2036,10 +2037,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch11 = new PatchBezier(patch7_c3, patch11_c2, patch11_c3,
                                    patch10_c2, *p1111, *p1121, *p1112, *p1122);
 
-  geo->InsertPatch(patch11);
+  geometry->InsertPatch(patch11);
   //		geo->InsertCurve ( patch11_c1 );
-  geo->InsertCurve(patch11_c2);
-  geo->InsertCurve(patch11_c3);
+  geometry->InsertCurve(patch11_c2);
+  geometry->InsertCurve(patch11_c3);
   //		geo->InsertCurve ( patch11_c4 );
   //======================== FIM DO PATCH 11 =================================
 
@@ -2080,10 +2081,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch12 = new PatchBezier(patch8_c3, patch9_c4, patch12_c3, patch11_c2,
                                    *p1211, *p1221, *p1212, *p1222);
 
-  geo->InsertPatch(patch12);
+  geometry->InsertPatch(patch12);
   //		geo->InsertCurve ( patch12_c1 );
   //		geo->InsertCurve ( patch12_c2 );
-  geo->InsertCurve(patch12_c3);
+  geometry->InsertCurve(patch12_c3);
   //		geo->InsertCurve ( patch12_c4 );
   //======================== FIM DO PATCH 12 =================================
 
@@ -2120,11 +2121,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch13 = new PatchBezier(patch13_c1, patch13_c2, patch13_c3,
                                    patch13_c4, *p1311, *p1321, *p1312, *p1322);
 
-  geo->InsertPatch(patch13);
-  geo->InsertCurve(patch13_c1);
-  geo->InsertCurve(patch13_c2);
-  geo->InsertCurve(patch13_c3);
-  geo->InsertCurve(patch13_c4);
+  geometry->InsertPatch(patch13);
+  geometry->InsertCurve(patch13_c1);
+  geometry->InsertCurve(patch13_c2);
+  geometry->InsertCurve(patch13_c3);
+  geometry->InsertCurve(patch13_c4);
   //======================== FIM DO PATCH 13 =================================
 
   //============================== PATCH 14 ==================================
@@ -2168,10 +2169,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch14 = new PatchBezier(patch14_c1, patch13_c4, patch14_c3,
                                    patch13_c2, *p1411, *p1421, *p1412, *p1422);
 
-  geo->InsertPatch(patch14);
-  geo->InsertCurve(patch14_c1);
+  geometry->InsertPatch(patch14);
+  geometry->InsertCurve(patch14_c1);
   //		geo->InsertCurve ( patch14_c2 );
-  geo->InsertCurve(patch14_c3);
+  geometry->InsertCurve(patch14_c3);
   //		geo->InsertCurve ( patch14_c4 );
   //======================== FIM DO PATCH 14 =================================
 
@@ -2210,11 +2211,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch15 = new PatchBezier(patch13_c3, patch15_c2, patch15_c3,
                                    patch15_c4, *p1511, *p1521, *p1512, *p1522);
 
-  geo->InsertPatch(patch15);
+  geometry->InsertPatch(patch15);
   //		geo->InsertCurve ( patch15_c1 );
-  geo->InsertCurve(patch15_c2);
-  geo->InsertCurve(patch15_c3);
-  geo->InsertCurve(patch15_c4);
+  geometry->InsertCurve(patch15_c2);
+  geometry->InsertCurve(patch15_c3);
+  geometry->InsertCurve(patch15_c4);
   //======================== FIM DO PATCH 15 =================================
 
   //============================== PATCH 16 ==================================
@@ -2257,10 +2258,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch16 = new PatchBezier(patch14_c3, patch15_c4, patch16_c3,
                                    patch15_c2, *p1611, *p1621, *p1612, *p1622);
 
-  geo->InsertPatch(patch16);
+  geometry->InsertPatch(patch16);
   //		geo->InsertCurve ( patch16_c1 );
   //		geo->InsertCurve ( patch16_c2 );
-  geo->InsertCurve(patch16_c3);
+  geometry->InsertCurve(patch16_c3);
   //		geo->InsertCurve ( patch16_c4 );
   //======================== FIM DO PATCH 16 =================================
 
@@ -2297,11 +2298,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch17 = new PatchBezier(patch17_c1, patch17_c2, patch17_c3,
                                    patch17_c4, *p1711, *p1721, *p1712, *p1722);
 
-  geo->InsertPatch(patch17);
-  geo->InsertCurve(patch17_c1);
-  geo->InsertCurve(patch17_c2);
-  geo->InsertCurve(patch17_c3);
-  geo->InsertCurve(patch17_c4);
+  geometry->InsertPatch(patch17);
+  geometry->InsertCurve(patch17_c1);
+  geometry->InsertCurve(patch17_c2);
+  geometry->InsertCurve(patch17_c3);
+  geometry->InsertCurve(patch17_c4);
   //======================== FIM DO PATCH 17 =================================
 
   //============================== PATCH 18 ==================================
@@ -2345,10 +2346,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch18 = new PatchBezier(patch18_c1, patch17_c4, patch18_c3,
                                    patch17_c2, *p1811, *p1821, *p1812, *p1822);
 
-  geo->InsertPatch(patch18);
-  geo->InsertCurve(patch18_c1);
+  geometry->InsertPatch(patch18);
+  geometry->InsertCurve(patch18_c1);
   //		geo->InsertCurve ( patch18_c2 );
-  geo->InsertCurve(patch18_c3);
+  geometry->InsertCurve(patch18_c3);
   //		geo->InsertCurve ( patch18_c4 );
   //======================== FIM DO PATCH 18 =================================
 
@@ -2387,11 +2388,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch19 = new PatchBezier(patch17_c3, patch19_c2, patch19_c3,
                                    patch19_c4, *p1911, *p1921, *p1912, *p1922);
 
-  geo->InsertPatch(patch19);
+  geometry->InsertPatch(patch19);
   //		geo->InsertCurve ( patch19_c1 );
-  geo->InsertCurve(patch19_c2);
-  geo->InsertCurve(patch19_c3);
-  geo->InsertCurve(patch19_c4);
+  geometry->InsertCurve(patch19_c2);
+  geometry->InsertCurve(patch19_c3);
+  geometry->InsertCurve(patch19_c4);
   //======================== FIM DO PATCH 19 =================================
 
   //============================== PATCH 20 ==================================
@@ -2434,10 +2435,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch20 = new PatchBezier(patch20_c1, patch19_c4, patch20_c3,
                                    patch19_c2, *p2011, *p2021, *p2012, *p2022);
 
-  geo->InsertPatch(patch20);
-  geo->InsertCurve(patch20_c1);
+  geometry->InsertPatch(patch20);
+  geometry->InsertCurve(patch20_c1);
   //		geo->InsertCurve ( patch20_c2 );
-  geo->InsertCurve(patch20_c3);
+  geometry->InsertCurve(patch20_c3);
   //		geo->InsertCurve ( patch20_c4 );
   //======================== FIM DO PATCH 20 =================================
 
@@ -2475,11 +2476,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch21 = new PatchBezier(patch21_c1, patch21_c2, patch21_c3,
                                    patch21_c4, *p2111, *p2121, *p2102, *p2102);
 
-  geo->InsertPatch(patch21);
-  geo->InsertCurve(patch21_c1);
-  geo->InsertCurve(patch21_c2);
-  geo->InsertCurve(patch21_c3);
-  geo->InsertCurve(patch21_c4);
+  geometry->InsertPatch(patch21);
+  geometry->InsertCurve(patch21_c1);
+  geometry->InsertCurve(patch21_c2);
+  geometry->InsertCurve(patch21_c3);
+  geometry->InsertCurve(patch21_c4);
   //======================== FIM DO PATCH 21 =================================
 
   //============================== PATCH 22 ==================================
@@ -2519,10 +2520,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch22 = new PatchBezier(patch22_c1, patch22_c2, patch22_c3,
                                    patch21_c2, *p2211, *p2221, *p2102, *p2102);
 
-  geo->InsertPatch(patch22);
-  geo->InsertCurve(patch22_c1);
-  geo->InsertCurve(patch22_c2);
-  geo->InsertCurve(patch22_c3);
+  geometry->InsertPatch(patch22);
+  geometry->InsertCurve(patch22_c1);
+  geometry->InsertCurve(patch22_c2);
+  geometry->InsertCurve(patch22_c3);
   //		geo->InsertCurve ( patch22_c4 );
   //======================== FIM DO PATCH 22 =================================
 
@@ -2560,10 +2561,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch23 = new PatchBezier(patch23_c1, patch23_c2, patch23_c3,
                                    patch22_c2, *p2311, *p2321, *p2102, *p2102);
 
-  geo->InsertPatch(patch23);
-  geo->InsertCurve(patch23_c1);
-  geo->InsertCurve(patch23_c2);
-  geo->InsertCurve(patch23_c3);
+  geometry->InsertPatch(patch23);
+  geometry->InsertCurve(patch23_c1);
+  geometry->InsertCurve(patch23_c2);
+  geometry->InsertCurve(patch23_c3);
   //		geo->InsertCurve ( patch23_c4 );
   //======================== FIM DO PATCH 23 =================================
 
@@ -2602,10 +2603,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch24 = new PatchBezier(patch24_c1, patch24_c2, patch24_c3,
                                    patch23_c2, *p2411, *p2421, *p2102, *p2102);
 
-  geo->InsertPatch(patch24);
-  geo->InsertCurve(patch24_c1);
-  geo->InsertCurve(patch24_c2);
-  geo->InsertCurve(patch24_c3);
+  geometry->InsertPatch(patch24);
+  geometry->InsertCurve(patch24_c1);
+  geometry->InsertCurve(patch24_c2);
+  geometry->InsertCurve(patch24_c3);
   //		geo->InsertCurve ( patch24_c4 );
   //======================== FIM DO PATCH 24 =================================
 
@@ -2643,11 +2644,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch25 = new PatchBezier(patch21_c3, patch25_c2, patch25_c3,
                                    patch25_c4, *p2511, *p2521, *p2512, *p2522);
 
-  geo->InsertPatch(patch25);
+  geometry->InsertPatch(patch25);
   //		geo->InsertCurve ( patch25_c1 );
-  geo->InsertCurve(patch25_c2);
-  geo->InsertCurve(patch25_c3);
-  geo->InsertCurve(patch25_c4);
+  geometry->InsertCurve(patch25_c2);
+  geometry->InsertCurve(patch25_c3);
+  geometry->InsertCurve(patch25_c4);
   //======================== FIM DO PATCH 25 =================================
 
   //============================== PATCH 26 ==================================
@@ -2684,10 +2685,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch26 = new PatchBezier(patch22_c3, patch26_c2, patch26_c3,
                                    patch25_c2, *p2611, *p2621, *p2612, *p2622);
 
-  geo->InsertPatch(patch26);
+  geometry->InsertPatch(patch26);
   //		geo->InsertCurve ( patch26_c1 );
-  geo->InsertCurve(patch26_c2);
-  geo->InsertCurve(patch26_c3);
+  geometry->InsertCurve(patch26_c2);
+  geometry->InsertCurve(patch26_c3);
   //		geo->InsertCurve ( patch26_c4 );
   //======================== FIM DO PATCH 26 =================================
 
@@ -2724,10 +2725,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch27 = new PatchBezier(patch23_c3, patch27_c2, patch27_c3,
                                    patch26_c2, *p2711, *p2721, *p2712, *p2722);
 
-  geo->InsertPatch(patch27);
+  geometry->InsertPatch(patch27);
   //		geo->InsertCurve ( patch27_c1 );
-  geo->InsertCurve(patch27_c2);
-  geo->InsertCurve(patch27_c3);
+  geometry->InsertCurve(patch27_c2);
+  geometry->InsertCurve(patch27_c3);
   //		geo->InsertCurve ( patch27_c4 );
   //======================== FIM DO PATCH 27 =================================
 
@@ -2765,10 +2766,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch28 = new PatchBezier(patch24_c3, patch25_c4, patch28_c3,
                                    patch27_c2, *p2811, *p2821, *p2812, *p2822);
 
-  geo->InsertPatch(patch28);
+  geometry->InsertPatch(patch28);
   //		geo->InsertCurve ( patch28_c1 );
   //		geo->InsertCurve ( patch28_c2 );
-  geo->InsertCurve(patch28_c3);
+  geometry->InsertCurve(patch28_c3);
   //		geo->InsertCurve ( patch28_c4 );
   //======================== FIM DO PATCH 28 =================================
 
@@ -2806,11 +2807,11 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch29 = new PatchBezier(patch29_c1, patch29_c2, patch29_c3,
                                    patch29_c4, *p2911, *p2921, *p2912, *p2922);
 
-  geo->InsertPatch(patch29);
-  geo->InsertCurve(patch29_c1);
-  geo->InsertCurve(patch29_c2);
-  geo->InsertCurve(patch29_c3);
-  geo->InsertCurve(patch29_c4);
+  geometry->InsertPatch(patch29);
+  geometry->InsertCurve(patch29_c1);
+  geometry->InsertCurve(patch29_c2);
+  geometry->InsertCurve(patch29_c3);
+  geometry->InsertCurve(patch29_c4);
   //======================== FIM DO PATCH 29 =================================
 
   //============================== PATCH 30 ==================================
@@ -2847,10 +2848,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch30 = new PatchBezier(patch30_c1, patch30_c2, patch30_c3,
                                    patch29_c2, *p3011, *p3021, *p3012, *p3022);
 
-  geo->InsertPatch(patch30);
-  geo->InsertCurve(patch30_c1);
-  geo->InsertCurve(patch30_c2);
-  geo->InsertCurve(patch30_c3);
+  geometry->InsertPatch(patch30);
+  geometry->InsertCurve(patch30_c1);
+  geometry->InsertCurve(patch30_c2);
+  geometry->InsertCurve(patch30_c3);
   //		geo->InsertCurve ( patch30_c4 );
   //======================== FIM DO PATCH 30 =================================
 
@@ -2888,10 +2889,10 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch31 = new PatchBezier(patch31_c1, patch31_c2, patch31_c3,
                                    patch30_c2, *p3111, *p3121, *p3112, *p3122);
 
-  geo->InsertPatch(patch31);
-  geo->InsertCurve(patch31_c1);
-  geo->InsertCurve(patch31_c2);
-  geo->InsertCurve(patch31_c3);
+  geometry->InsertPatch(patch31);
+  geometry->InsertCurve(patch31_c1);
+  geometry->InsertCurve(patch31_c2);
+  geometry->InsertCurve(patch31_c3);
   //		geo->InsertCurve ( patch31_c4 );
   //======================== FIM DO PATCH 31 =================================
 
@@ -2928,14 +2929,14 @@ Geometry* Modelos3d::modelUtahteapot(Geometry* geo) {
   Patch* patch32 = new PatchBezier(patch32_c1, patch29_c4, patch32_c3,
                                    patch31_c2, *p3211, *p3221, *p3212, *p3222);
 
-  geo->InsertPatch(patch32);
-  geo->InsertCurve(patch32_c1);
+  geometry->InsertPatch(patch32);
+  geometry->InsertCurve(patch32_c1);
   //		geo->InsertCurve ( patch32_c2 );
-  geo->InsertCurve(patch32_c3);
+  geometry->InsertCurve(patch32_c3);
   //		geo->InsertCurve ( patch32_c4 );
   //======================== FIM DO PATCH 32 =================================
   //==============================================================================
   // Fim do exemplo do Utahteapot
   //==============================================================================
-  return geo;
+  return geometry;
 }

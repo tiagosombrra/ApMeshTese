@@ -1,7 +1,7 @@
 #include "../../../include/data/curve/curve_adaptive_parametric.h"
 
 extern double DELTA;
-extern double TOLERANCIA;
+extern double TOLERANCE;
 
 // Global function
 vector<CurveAdaptiveParametric*> ptr_aux;
@@ -51,11 +51,11 @@ CurveAdaptiveParametric::CurveAdaptiveParametric(
 }
 
 CurveAdaptiveParametric::~CurveAdaptiveParametric() {
-  delete &mat_geo_gx_;
-  delete &mat_geo_gy_;
-  delete &mat_geo_gz_;
-  delete &mat_base_;
-  delete &mat_parameters_;
+  // delete &mat_geo_gx_;
+  // delete &mat_geo_gy_;
+  // delete &mat_geo_gz_;
+  // delete &mat_base_;
+  // delete &mat_parameters_;
 }
 
 // calcula o comprimento de curva de p1 a p2
@@ -226,7 +226,7 @@ double CurveAdaptiveParametric::FindParameterByPoint(
   //		// 5. calcula 'tm' (este eh o ultimo valor de 'tm' calculado)
   //		tm += delta_t * frp;
   //	}
-  //	while ( Si.distanciaPara ( p ) > TOLERANCIA );
+  //	while ( Si.distanciaPara ( p ) > TOLERANCE );
 
   //	if ( tm < DELTA ) tm = 0.0; // t está muito próximo a 0
   //	else if ( tm > ( 1.0 - DELTA ) ) tm = 1.0; // t está muito próximo a 1
@@ -648,12 +648,12 @@ double CurveAdaptiveParametric::CalculateMidpointBisection(double parameter1,
   for (int i = 0; i < 5000; i++) {
     half = (newa + newb) / 2.0;
 
-    if (fabs(newb - newa) < TOLERANCIA) {
+    if (fabs(newb - newa) < TOLERANCE) {
       return half;
     } else {
       double yH = l - 2.0 * CalculateParametricLength(a, half);
 
-      if (fabs(yH) < TOLERANCIA) {
+      if (fabs(yH) < TOLERANCE) {
         return half;
       }
 

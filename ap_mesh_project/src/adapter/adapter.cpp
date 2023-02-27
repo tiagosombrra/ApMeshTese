@@ -1,13 +1,13 @@
 #include "../../include/adapter/adapter.h"
 
-extern double TOLERANCIA;
-extern double TOLERANCIA_AFT;
-extern double TOLERANCIA_CURVATURA;
-extern double PROPORCAO;
-extern double SUAVIZACAO;
-extern double FATOR_SUAVIZACAO;
-extern double DISCRETIZACAO_CURVA;
-extern double DISCRETIZACAO_INTER;
+extern double TOLERANCE;
+extern double TOLERANCE_AFT;
+extern double TOLERANCE_CURVATURE;
+extern double RATIO_AFT;
+extern double SMOOTHING_LAPLACIAN_NUMBER;
+extern double SMOOTHING_LAPLACIAN_FACTOR;
+extern double DISCRETIZATION_CURVE_FACTOR;
+extern double DISCRETIZATION_CURVE_FACTOR_INTERNAL;
 
 #if USE_OPENMP
 list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
@@ -39,7 +39,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
     // parametro correspondente ao ponto central do segmento
     double midpoint_segment = 0;
     // pow ( 2, exp ); // o fator de rediscretização
-    double factor_disc = DISCRETIZACAO_CURVA;
+    double factor_disc = DISCRETIZATION_CURVE_FACTOR;
     // curvatura analítica do ponto central de um segmento
     double ka_midpoint = 0;
     // média das curvaturas discretas dos extremos de um segmento
@@ -152,7 +152,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
     // parametro correspondente ao ponto central do segmento
     double midpoint_segment = 0;
     // pow ( 2, exp ); // o fator de rediscretização
-    double factor_disc = DISCRETIZACAO_CURVA;
+    double factor_disc = DISCRETIZATION_CURVE_FACTOR;
     // curvatura analítica do ponto central de um segmento
     double ka_midpoint = 0;
     // média das curvaturas discretas dos extremos de um segmento
@@ -174,7 +174,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
 
     if (curve->GetNumBerPatches() == 1) {
       // testamos se ka é ZERO!
-      if (fabs(ka_midpoint) < TOLERANCIA) {
+      if (fabs(ka_midpoint) < TOLERANCE) {
         ka_midpoint = ka_p0.CalculateMeanCurvature();
         kd_average = ((static_cast<NodeAdaptive *>((*point_current)))->GetHd() +
                       (static_cast<NodeAdaptive *>((*point_next))->GetHd())) /
@@ -195,7 +195,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
         ka_midpoint = (fabs(ka_midpoint) > fabs(Ga_pi)) ? ka_midpoint : Ga_pi;
 
         // testamos se ka é ZERO!
-        if (fabs(ka_midpoint) < TOLERANCIA) {
+        if (fabs(ka_midpoint) < TOLERANCE) {
           double Ha_pi = ka_pi.CalculateMeanCurvature();
 
           ka_midpoint = (Ha > Ha_pi) ? Ha : Ha_pi;
@@ -267,10 +267,10 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
                                  double factor_disc_global) {
   SubMesh *sub_mesh_new = new SubMesh;
   // pow ( 2, exp ); // o fator de rediscretização
-  double factor_disc = DISCRETIZACAO_INTER;
+  double factor_disc = DISCRETIZATION_CURVE_FACTOR_INTERNAL;
   // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
-  AdvancingFront avanco(PROPORCAO, TOLERANCIA_AFT, SUAVIZACAO,
-                        FATOR_SUAVIZACAO);
+  AdvancingFront avanco(RATIO_AFT, TOLERANCE_AFT, SMOOTHING_LAPLACIAN_NUMBER,
+                        SMOOTHING_LAPLACIAN_FACTOR);
   map<Vertex *, NodeAdaptive *> map;
 
   // 1. Para cada curva do patch
@@ -402,9 +402,9 @@ tri->GetNoh
     double ka = 0.0;
     double kd = 0.0;
 
-    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCIA &&
-        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCIA &&
-        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCIA) {
+    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCE &&
+        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCE &&
+        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCE) {
       ka = (tri->GetNoh(1).GetGa() + tri->GetNoh(2).GetGa() +
             tri->GetNoh(3).GetGa()) /
            3.0;
@@ -539,7 +539,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
     // parametro correspondente ao ponto central do segmento
     double midpoint_segment = 0;
     // pow ( 2, exp ); // o fator de rediscretização
-    double factor_disc = DISCRETIZACAO_CURVA;
+    double factor_disc = DISCRETIZATION_CURVE_FACTOR;
     // curvatura analítica do ponto central de um segmento
     double ka_midpoint = 0;
     // média das curvaturas discretas dos extremos de um segmento
@@ -663,7 +663,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
     // parametro correspondente ao ponto central do segmento
     double midpoint_segment = 0;
     // pow ( 2, exp ); // o fator de rediscretização
-    double factor_disc = DISCRETIZACAO_CURVA;
+    double factor_disc = DISCRETIZATION_CURVE_FACTOR;
     // curvatura analítica do ponto central de um segmento
     double ka_midpoint = 0;
     // média das curvaturas discretas dos extremos de um segmento
@@ -696,7 +696,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
       ka_midpoint = (fabs(Ga_p0) > fabs(Ga_p1)) ? Ga_p0 : Ga_p1;
 
       // testamos se ka é ZERO!
-      if (fabs(ka_midpoint) < TOLERANCIA) {
+      if (fabs(ka_midpoint) < TOLERANCE) {
         double Ha_p0 = ka_p0.CalculateMeanCurvature();
         double Ha_p1 = ka_p1.CalculateMeanCurvature();
 
@@ -791,11 +791,12 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
                               double factor_disc_global) {
   SubMesh *sub_mesh_new = new SubMesh;
   double factor_disc =
-      DISCRETIZACAO_INTER;  // pow ( 2, exp ); // o fator de rediscretização
+      DISCRETIZATION_CURVE_FACTOR_INTERNAL;  // pow ( 2, exp ); // o fator de
+                                             // rediscretização
 
   // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
-  AdvancingFront avanco(PROPORCAO, TOLERANCIA_AFT, SUAVIZACAO,
-                        FATOR_SUAVIZACAO);
+  AdvancingFront avanco(RATIO_AFT, TOLERANCE_AFT, SMOOTHING_LAPLACIAN_NUMBER,
+                        SMOOTHING_LAPLACIAN_FACTOR);
   map<Vertex *, NodeAdaptive *> map;
 
   // 1. Para cada curva do patch
@@ -810,7 +811,7 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
 
       int parameter = 0;
 
-      for (auto param_iterator = (static_cast<CurveAdaptiveParametric *>(curve))
+      for (auto param_iterator = static_cast<CurveAdaptiveParametric *>(curve)
                                      ->parameters_.begin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
@@ -924,9 +925,9 @@ tri->GetNoh
     double ka = 0.0;
     double kd = 0.0;
 
-    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCIA &&
-        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCIA &&
-        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCIA) {
+    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCE &&
+        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCE &&
+        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCE) {
       ka = (tri->GetNoh(1).GetGa() + tri->GetNoh(2).GetGa() +
             tri->GetNoh(3).GetGa()) /
            3.0;
@@ -1037,10 +1038,9 @@ double Adapter::CalculateNewSize(const double ka, const double kd,
                                  const double factor_disc,
                                  const double length_old) {
   // Cenário 1 : ka está muito próxima a kd
-  if (((ka - TOLERANCIA_CURVATURA) < kd) &&
-      (kd < (ka + TOLERANCIA_CURVATURA))) {
+  if (((ka - TOLERANCE_CURVATURE) < kd) && (kd < (ka + TOLERANCE_CURVATURE))) {
     // está próximo ao plano, desrefine
-    if (fabs(ka) < TOLERANCIA_CURVATURA) {
+    if (fabs(ka) < TOLERANCE_CURVATURE) {
       return length_old * factor_disc;
     } else {
       // a discretização reflete bem a superfície, não faça nada!

@@ -177,8 +177,8 @@ bool Face::out(Vertex *v) {
   barycentricCoordinates(v, l1, l2, l3);
 
   // return ((l1 >= 0.0) && (l2 >= 0.0) && (l3 >= 0.0));
-  return ((l1 < -TOLERANCIA_AFT) || (l2 < -TOLERANCIA_AFT) ||
-          (l3 < -TOLERANCIA_AFT));
+  return ((l1 < -TOLERANCE_AFT) || (l2 < -TOLERANCE_AFT) ||
+          (l3 < -TOLERANCE_AFT));
 }
 
 void Face::barycentricCoordinates(Vertex *v, double &l1, double &l2,

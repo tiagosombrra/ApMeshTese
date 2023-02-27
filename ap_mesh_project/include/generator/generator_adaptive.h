@@ -3,9 +3,6 @@
 
 #include <omp.h>
 
-// #include <fstream>
-// #include <iostream>
-// #include <sstream>
 #include <list>
 #include <string>
 
@@ -26,15 +23,15 @@
 
 using namespace Data;
 
-extern double TOLERANCIA;
-extern double TOLERANCIA_CURVATURA;
+extern double TOLERANCE;
+extern double TOLERANCE_CURVATURE;
 extern int NUM_THREADS;
-extern double DISCRETIZACAO_CURVA;
-extern int PASSOS;
+extern double DISCRETIZATION_CURVE_FACTOR;
+extern int STEPS;
 extern std::string WRITE_MESH;
 extern int RANK_MPI;
 extern int SIZE_MPI;
-extern double TOLERANCIA;
+extern double TOLERANCE;
 extern double EPSYLON;
 extern vector<CurveAdaptiveParametric *> ptr_aux;
 
@@ -112,8 +109,9 @@ class GeneratorAdaptive {
   Model model_;
   Geometry *geometry_;
   PatchCoons *patch_;
-  MeshAdaptive *mesh_;
 #endif  // USE_MPI
+
+  MeshAdaptive *mesh_;
 
  protected:
 #if (USE_MPI || USE_OPENMP)
@@ -131,9 +129,10 @@ class GeneratorAdaptive {
   MeshVector save_mesh_;
   ErrorMeshVector save_error_mesh_;
   vector<double> error_step_;
-  Adapter adapter;
+  Adapter adapter_;
 
   int step_;
   double error_local_process_;
 };
+
 #endif  // GENERATOR_GENERATOR_ADAPTIVE_H

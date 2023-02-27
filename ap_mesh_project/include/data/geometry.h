@@ -11,17 +11,16 @@
 class Geometry {
  public:
   Geometry();
-  //  explicit Geometry(Geometry* geometry);
   ~Geometry();
 
   void InsertCurve(CurveAdaptive* curve);
   void InsertCurve(CurveAdaptive* curve, int position);
-  unsigned int GetNumBerCurves() const;
+  unsigned int GetNumberCurves() const;
   CurveAdaptive* GetCurve(
       const unsigned int position);  // retorna a i-ésima curva
   void InsertPatch(Patch* patch);
   void InsertPatch(Patch* patch, int position);
-  unsigned int GetNumBerPatches() const;
+  unsigned int GetNumberPatches() const;
   Patch* GetPatch(const unsigned int position);  // retorna o i-ésimo patch
   CurveAdaptiveParametricBezier* VerifyCurveGeometry(PointAdaptive*,
                                                      PointAdaptive*,

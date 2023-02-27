@@ -1,92 +1,90 @@
-PROGRAMA = ap_mesh
+# Nome do programa
+PROGRAM = ap_mesh
 
-FONTES = src/adapter/adapter.cpp \
-src/crab_mesh/aft/advancing_front.cpp \
-src/crab_mesh/aft/boundary.cpp \
-src/crab_mesh/aft/edge.cpp \
-src/crab_mesh/aft/face.cpp \
-src/crab_mesh/aft/quadtree_cell.cpp \
-src/crab_mesh/aft/quadtree.cpp \
-src/crab_mesh/aft/shape.cpp \
-src/crab_mesh/aft/vertex.cpp \
-src/crab_mesh/numerical/bisection_equation_root.cpp \
-src/crab_mesh/numerical/function.cpp \
-src/crab_mesh/performer/id_manager.cpp \
-src/crab_mesh/performer/ranged_id_manager.cpp \
-src/curvature/adjacent.cpp \
-src/curvature/curvature_analytical.cpp \
-src/curvature/curvature_discrete.cpp \
-src/data/curve/curve_adaptive_parametric_bezier.cpp \
-src/data/curve/curve_adaptive_parametric_hermite.cpp \
-src/data/curve/curve_adaptive_parametric.cpp \
-src/data/curve/curve_adaptive.cpp \
-src/data/definitions.cpp \
-src/data/element_adaptive.cpp \
-src/data/geometry.cpp \
-src/data/mesh/mesh_adaptive.cpp \
-src/data/mesh/sub_mesh.cpp \
-src/data/model.cpp \
-src/data/node_adaptive.cpp \
-src/data/patch/patch_bezier.cpp \
-src/data/patch/patch_coons.cpp \
-src/data/patch/patch_hermite.cpp \
-src/data/patch/patch.cpp \
-src/data/point_adaptive.cpp \
-src/data/tree/bin_tree.cpp \
-src/data/triangle_adaptive.cpp \
-src/data/vector_adaptive.cpp \
-src/data/vertex_adaptive.cpp \
-src/estimate/charge_estimate_process.cpp \
-src/generator/generator_adaptive.cpp \
-src/input_output/file.cpp \
-src/input_output/models_3d.cpp \
-src/input_output/patch_reader.cpp \
-src/input_output/write_obj_file.cpp \
-src/parallel/ApMeshCommunicator.cpp \
-src/parallel/Communicator.cpp \
-src/parallel/Message.cpp \
-src/parallel/MPICommunicator.cpp \
-src/parallel/MPIMessage.cpp \
-src/parallel/NoCommunicator.cpp \
-src/parallel/NoThreadManager.cpp \
-src/parallel/OMPThreadManager.cpp \
-src/parallel/ParallelMeshGenerator.cpp \
-src/parallel/ThreadManager.cpp \
-src/parallel/TMCommunicator.cpp \
-src/parallel/Transferable.cpp \
-src/timer/timer.cpp \
-src/main.cpp
+# Diretórios de código-fonte
+SRC_DIRS := src
 
-OBJETOS = $(FONTES:.cpp=.o)
+# Obtenha todas as fontes em SRC_DIRS
+SOURCES := $(shell find $(SRC_DIRS) -name "*.cpp")
 
+# Diretório de build
+BUILD_DIR := build_make
+
+# Subdiretórios de build
+SUB_DIRS := $(shell find $(SRC_DIRS) -type d)
+BUILD_SUB_DIRS := $(patsubst $(SRC_DIRS)%,$(BUILD_DIR)%,$(SUB_DIRS))
+
+# Objetos a serem criados a partir de cada fonte
+OBJECTS := $(patsubst $(SRC_DIRS)/%.cpp,$(BUILD_DIR)/%.o,$(SOURCES))
+
+# Compiladores
 CC            = gcc
 CXX           = g++
 MPICC         = mpicc
 MPICXX        = mpicxx
+# Define o compilador padrão como MPICXX
+COMPILER ?= $(MPICXX)
 
-INCPATH = -Iinclude/adapter -Iinclude/crab_mesh/aft -Iinclude/crab_mesh/numerical -Iinclude/curvature -Iinclude/data -Iinclude/data/curve -Iinclude/data/mesh -Iinclude/data/patch -Iinclude/data/tree -Iinclude/estimate -Iinclude/generator -Iinclude/input_output -Iinclude/parallel -Iinclude/timer
+# Variáveis de caminho de inclusão e biblioteca
+DIR_ROOTS := .
+DIRS := $(shell find $(DIR_ROOTS) -type d \( -name include -o -name src \))
+INC_PATH := $(addprefix -I, $(addsuffix /include, $(DIRS)))
+LIB_PATH := $(addprefix -L, $(addsuffix /src, $(DIRS)))
 
-LIBPATH = -Lsrc/adapter -Lsrc/crab_mesh/aft -Lsrc/crab_mesh/numerical -Lsrc/curvature -Lsrc/data -Lsrc/data/curve -Lsrc/data/mesh -Lsrc/data/patch -Lsrc/data/tree -Lsrc/estimate -Lsrc/generator -Lsrc/input_output -Lsrc/parallel -Lsrc/timer
-
-CXXFLAGS_EXTRA = -O3 -W -Wall
+# Variáveis de opções de compilação
+CXXFLAGS_EXTRA = -O3 -W -Wall -ftree-vectorize -flto -fno-strict-aliasing -Wno-cast-function-type
 CXXFLAGS      = -std=c++17 $(CXXFLAGS_EXTRA)
-CXXFLAGS_OMP  = -fopenmp  $(CXXFLAGS) 
+CXXFLAGS_OMP  = -fopenmp $(CXXFLAGS)
 
-SUBDIR_ROOTS := src
-DIRS := . $(shell find $(SUBDIR_ROOTS) -type d)
+# Variáveis de limpeza
 GARBAGE_PATTERNS := *.o
-GARBAGE := $(foreach DIR,$(DIRS),$(addprefix $(DIR)/,$(GARBAGE_PATTERNS)))
+GARBAGE := $(foreach DIR,$(BUILD_DIR) $(BUILD_SUB_DIRS),$(addprefix $(DIR)/,$(GARBAGE_PATTERNS)))
 
-$(PROGRAMA): $(OBJETOS)
-	@echo "gerando o executavel..."
-	$(MPICXX) $(INCPATH) $(CXXFLAGS_OMP) $(LIBPATH) $(OBJETOS) -o $@
+# Regra principal para criar o programa
+$(BUILD_DIR)/$(PROGRAM): $(OBJECTS)
+	@echo "Criando o executável..."
+	$(COMPILER) $(INC_PATH) $(CXXFLAGS_OMP) $(LIB_PATH) $^ -o $@
 
-.cpp.o:
-	@echo "gerando os .o..."
-	$(MPICXX) $(INCPATH) -c $(CXXFLAGS_OMP) $< -o $@
+# Regra de construção de objeto
+$(BUILD_DIR)/%.o: $(SRC_DIRS)/%.cpp | $(BUILD_DIR) $(BUILD_SUB_DIRS)
+	@echo "Criando o objeto $@..."
+	$(COMPILER) $(INC_PATH) -c $(CXXFLAGS_OMP) $< -o $@
 
+# Regra para criar o diretório de build e subdiretórios
+$(BUILD_DIR) $(BUILD_SUB_DIRS):
+	@echo "Criando diretórios de build, se necessário..."
+	if [ ! -d $@ ]; then mkdir -p $@; fi
+
+# Regra de limpeza
 clean:
-	rm -rfv $(GARBAGE) $(PROGRAMA)
+	rm -rfv $(GARBAGE) $(BUILD_DIR)/$(PROGRAM)
 
-exec: 
-	./$(PROGRAMA)
+# Regra para executar o programa
+exec:
+	./$(BUILD_DIR)/$(PROGRAM)
+
+# Carregar opções adicionais do arquivo .makefileopts, se existir
+-include .makefileopts
+
+# make COMPILER=g++
+
+# Regras de depuração
+print-%:
+	@echo "$*=$($*)"
+
+# Mostra todas as variáveis de ambiente
+show-environment:
+	env | sort
+
+# Mostra todos os alvos disponíveis
+show-targets:
+	@echo "Alvos disponíveis:"
+	@echo "  make                - Compila e constrói o programa"
+	@echo "  make clean          - Remove todos os arquivos gerados pelo make"
+	@echo "  make exec           - Executa o programa"
+	@echo "  make COMPILER=<CXX> - Especifica o compilador a ser usado (padrão: mpicxx)"
+	@echo "  make print-<var>    - Imprime o valor de uma variável"
+	@echo "  make show-environment - Imprime todas as variáveis de ambiente usadas pelo make"
+	@echo "  make show-targets   - Imprime a lista de alvos disponíveis"
+
+.PHONY: clean exec show-environment show-targets

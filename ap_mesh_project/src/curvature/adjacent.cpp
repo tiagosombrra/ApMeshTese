@@ -1,6 +1,6 @@
 #include "../../include/curvature/adjacent.h"
 
-extern double TOLERANCIA;
+extern double TOLERANCE;
 
 // P de Primeiro, U de Último !!! :D
 // confirma que U é adjacente à esquerda de P
@@ -151,7 +151,7 @@ int Adjacent::ConcavityElement(const NodeAdaptive& noh,
   double d;
   d = first_element.GetVectorNormal() ^ vector;
 
-  if (fabs(d) <= TOLERANCIA) return 0;
+  if (fabs(d) <= TOLERANCE) return 0;
 
   if (d > 0)
     return -1;

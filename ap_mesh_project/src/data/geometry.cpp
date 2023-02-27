@@ -2,38 +2,6 @@
 
 Geometry::Geometry() {}
 
-// Geometry::Geometry(Geometry *geometry) {
-//   map<CurveAdaptive *, CurveAdaptive *> curves;
-//   map<Patch *, Patch *> patches;
-
-//  for (vector<CurveAdaptive *>::iterator it = geometry->curves_.begin();
-//       it != geometry->curves_.end(); ++it) {
-//    CurveAdaptive *curve = new CurveAdaptive((*it));
-
-//    curves[(*it)] = curve;
-//  }
-
-//  for (vector<Patch *>::iterator it = geometry->patches_.begin();
-//       it != geometry->patches_.end(); ++it) {
-//    Patch *patch = new PatchHermite((PatchHermite *)(*it));
-
-//    for (unsigned int i = 0; i < ((PatchHermite *)(*it))->GetNumBerCurves();
-//         i++) {
-//      ((PatchHermite *)patch)
-//          ->InsertCurve(curves[((PatchHermite *)(*it))->GetCurve(i)]);
-//    }
-
-//    patches[(*it)] = patch;
-//  }
-
-//  for (vector<CurveAdaptive *>::iterator it = geometry->curves_.begin();
-//       it != geometry->curves_.end(); ++it) {
-//    for (unsigned int i = 0; i < (*it)->GetNumBerPatches(); i++) {
-//      curves[(*it)]->InsertPatch(patches[(*it)->GetPatch(i)]);
-//    }
-//  }
-//}
-
 Geometry::~Geometry() {
   // 1. apaga a lista de curvas
   while (!this->curves_.empty()) {
@@ -58,7 +26,7 @@ void Geometry::InsertCurve(CurveAdaptive *curve, int position) {
   this->curves_[position] = curve;
 }
 
-unsigned int Geometry::GetNumBerCurves() const {
+unsigned int Geometry::GetNumberCurves() const {
   return static_cast<int>(curves_.size());
 }
 
@@ -72,7 +40,7 @@ void Geometry::InsertPatch(Patch *patch, int position) {
   this->patches_[position] = patch;
 }
 
-unsigned int Geometry::GetNumBerPatches() const {
+unsigned int Geometry::GetNumberPatches() const {
   return static_cast<int>(patches_.size());
 }
 

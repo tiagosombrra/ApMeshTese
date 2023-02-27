@@ -1,11 +1,12 @@
 #include "../../../include/crab_mesh/aft/advancing_front.h"
 
-AdvancingFront::AdvancingFront(double factor, double tolerance,
+AdvancingFront::AdvancingFront(double factor, [[maybe_unused]] double tolerance,
                                unsigned int numImproves, double phi)
     : Shape() {
   boundary = new Boundary();
   quadtree = new Quadtree(boundary, factor);
 
+  // cout << "AdvancingFront tolerance: " << tolerance << endl;
   // Shape::setTolerance(tolerance);
 
   boundarySorted = true;
@@ -16,10 +17,13 @@ AdvancingFront::AdvancingFront(double factor, double tolerance,
 }
 
 AdvancingFront::AdvancingFront(Boundary *boundary, Quadtree *quadtree,
-                               double tolerance, unsigned int numImproves)
+                               [[maybe_unused]] double tolerance,
+                               unsigned int numImproves)
     : Shape() {
   setBoundary(boundary);
   setQuadtree(quadtree);
+
+  // cout << "AdvancingFront tolerance: " << tolerance << endl;
   // Shape::setTolerance(tolerance);
 
   setBoundarySorted(true);
@@ -454,7 +458,7 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
       if (angle > maxAngle) {
         maxAngle = angle;
         best = candidate;
-      } else if (fabs(maxAngle - angle) < TOLERANCIA_AFT) {
+      } else if (fabs(maxAngle - angle) < TOLERANCE_AFT) {
         // caso em que os 2 vertices, candidate e best sao geometricamente
         // iguais, mas topologicamente diferentes
         Edge *candidateEdge1, *candidateEdge2;
@@ -911,7 +915,7 @@ bool AdvancingFront::laplacianSmoothing(bool &changed) {
       den += weight;
     }
 
-    den = (den > TOLERANCIA_AFT) ? phi / den : 0;
+    den = (den > TOLERANCE_AFT) ? phi / den : 0;
 
     numx *= den;
     numy *= den;
@@ -928,7 +932,7 @@ bool AdvancingFront::laplacianSmoothing(bool &changed) {
 
       for (FaceList::iterator iter2 = faces.begin(); iter2 != faces.end();
            iter2++) {
-        if ((*iter2)->orientedSurface() <= TOLERANCIA_AFT) {
+        if ((*iter2)->orientedSurface() <= TOLERANCE_AFT) {
           negativeSurface = true;
 
           break;

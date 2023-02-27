@@ -2,7 +2,7 @@
  */
 #include "../../../include/data/tree/bin_tree.h"
 
-extern double TOLERANCIA;
+extern double TOLERANCE;
 
 BinTree::BinTree(double initial_param_coord, double final_param_coord,
                  BinTree* bin_tree) {
@@ -102,7 +102,7 @@ void BinTree::Subdivide(CurveAdaptiveParametric* curve) {
 void BinTree::Subdivide(double t, double t_par,
                         CurveAdaptiveParametric* curve) {
   if (this->IsLeaf()) {
-    if ((this->GetSize() - t_par) < TOLERANCIA) {
+    if ((this->GetSize() - t_par) < TOLERANCE) {
       return;
     }
     Subdivide(curve);
@@ -111,11 +111,11 @@ void BinTree::Subdivide(double t, double t_par,
   double middle = curve->CalculateMidparameterByParamters(
       this->initial_param_coord_, this->final_param_coord_);
 
-  if (t <= middle + TOLERANCIA) {
+  if (t <= middle + TOLERANCE) {
     this->bt_left_child_->Subdivide(t, t_par, curve);
   }
 
-  if (t >= middle - TOLERANCIA) {
+  if (t >= middle - TOLERANCE) {
     this->bt_right_child_->Subdivide(t, t_par, curve);
   }
 }

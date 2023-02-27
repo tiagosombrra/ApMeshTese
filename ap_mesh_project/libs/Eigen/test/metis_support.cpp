@@ -7,17 +7,19 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#include <Eigen/MetisSupport>
+#include "sparse_solver.h"
 #include <Eigen/SparseLU>
+#include <Eigen/MetisSupport>
 #include <unsupported/Eigen/SparseExtra>
 
-#include "sparse_solver.h"
-
-template <typename T>
-void test_metis_T() {
+template<typename T> void test_metis_T()
+{
   SparseLU<SparseMatrix<T, ColMajor>, MetisOrdering<int> > sparselu_metis;
-
-  check_sparse_square_solving(sparselu_metis);
+  
+  check_sparse_square_solving(sparselu_metis); 
 }
 
-void test_metis_support() { CALL_SUBTEST_1(test_metis_T<double>()); }
+EIGEN_DECLARE_TEST(metis_support)
+{
+  CALL_SUBTEST_1(test_metis_T<double>());
+}

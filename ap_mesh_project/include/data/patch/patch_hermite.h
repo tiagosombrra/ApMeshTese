@@ -2,6 +2,7 @@
 #define DATA_PATCH_PATCH_HERMITE_H
 
 #include "../../data/curve/curve_adaptive_parametric_hermite.h"
+#include "../../data/definitions.h"
 #include "patch_coons.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para

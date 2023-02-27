@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-extern double TOLERANCIA;
+extern double TOLERANCE;
 
 TriangleAdaptive::TriangleAdaptive()
     : ElementAdaptive(),
@@ -80,15 +80,15 @@ double TriangleAdaptive::CalculateAngleN3() {
 
 // retorna o ângulo do nó n
 double TriangleAdaptive::GetAngle(const NodeAdaptive& node) {
-  if (this->n1_->CalculateDistance(node) <= TOLERANCIA) {
+  if (this->n1_->CalculateDistance(node) <= TOLERANCE) {
     return this->angle_n1_;
   }
 
-  if (this->n2_->CalculateDistance(node) <= TOLERANCIA) {
+  if (this->n2_->CalculateDistance(node) <= TOLERANCE) {
     return this->angle_n2_;
   }
 
-  if (this->n3_->CalculateDistance(node) <= TOLERANCIA) {
+  if (this->n3_->CalculateDistance(node) <= TOLERANCE) {
     return this->angle_n3_;
   }
 

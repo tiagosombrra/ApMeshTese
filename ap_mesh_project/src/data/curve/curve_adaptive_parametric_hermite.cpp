@@ -61,14 +61,15 @@ CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite()
   this->mat_geo_gy_ = this->GetMatBase() * this->GetMatGeoGy();
   this->mat_geo_gz_ = this->GetMatBase() * this->GetMatGeoGz();
 
-  delete &mat_base_;
+  // delete &mat_base_;
 
   // IMPORTANTE: Ao usar esse construtor, não esquecer de setar os pontos
   // inicial e final e os vetores tangentes inicial e final !!!
 }
 
-CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(const PointAdaptive point0, const PointAdaptive point1, const VectorAdaptive vector0,
-    const VectorAdaptive vector1)
+CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(
+    const PointAdaptive point0, const PointAdaptive point1,
+    const VectorAdaptive vector0, const VectorAdaptive vector1)
     : CurveAdaptiveParametric(point0, point1),
       vector0_(vector0),
       vector1_(vector1) {

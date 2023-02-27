@@ -62,7 +62,7 @@ std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
   double kam_minor = 1000;
   double kam_major = 0;
 
-  double elementos = 0;
+  [[maybe_unused]] double elementos = 0;
 
   for (std::list<PatchBezier*>::iterator it = list_patch_bezier.begin();
        it != list_patch_bezier.end(); it++) {
@@ -910,14 +910,14 @@ bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
 #endif
   // delete ger;
 
-  // cout << "erro: " << erro << " tolerancia: " << TOLERANCIA_ESTIMATIVE <<
+  // cout << "erro: " << erro << " tolerancia: " << ESTIMATIVE_TOLERANCE <<
   // endl;
 
   if (erro < minor_error_) {
     minor_degree_ = degree;
   }
 
-  if (erro <= TOLERANCIA_ESTIMATIVE) {
+  if (erro <= ESTIMATIVE_TOLERANCE) {
     //  cout<<"return: false" <<endl;
     return false;
   }

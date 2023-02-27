@@ -1,7 +1,7 @@
 #include "../../../include/data/patch/patch_bezier.h"
 
-extern double TOLERANCIA;  // distância máxima entre dois pontos
-extern double I_MAX;
+extern double TOLERANCE;  // distância máxima entre dois pontos
+extern unsigned int I_MAX;
 
 PatchBezier::PatchBezier()
     : PatchCoons(),
@@ -326,8 +326,8 @@ PatchBezier ::PatchBezier(const PointAdaptive pt00, const PointAdaptive pt01,
 }
 
 PatchBezier::~PatchBezier() {
-  delete &mat_base_v_;
-  delete &mat_base_u_;
+  // delete &mat_base_v_;
+  // delete &mat_base_u_;
 }
 
 PointAdaptive PatchBezier::CalculatePointUV() {
@@ -404,14 +404,14 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& point) {
     int k = 0;
     double pivot = matrix(0, 0);
 
-    while ((fabs(pivot) < TOLERANCIA) and (k < 2)) {
+    while ((fabs(pivot) < TOLERANCE) and (k < 2)) {
       ++k;
       pivot = matrix(k, 0);
     }
 
     matrix.row(k).swap(matrix.row(0));
 
-    if (fabs(pivot) < TOLERANCIA) {
+    if (fabs(pivot) < TOLERANCE) {
       cout << "Erro! Não é possível encontrar as coordenadas paramétricas no "
               "ponto p"
            << point.GetId() << " (" << point.GetX() << ", " << point.GetY()
@@ -431,7 +431,7 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& point) {
 
     pivot = matrix(1, 1);
 
-    if (fabs(pivot) < TOLERANCIA) {
+    if (fabs(pivot) < TOLERANCE) {
       pivot = matrix(2, 1);
       matrix.row(2).swap(matrix.row(1));
     }
@@ -475,17 +475,17 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& point) {
     // cout << "u = " << u_i << " " << "v = " << v_i << endl;
     // cout << "delta_u = " << delta_u << " " << "delta_v = " << delta_v <<
     // endl;
-  } while (fabs(delta_u) >= TOLERANCIA or fabs(delta_v) >= TOLERANCIA);
-  // while ( p.distanciaPara(p_i) >= TOLERANCIA );
+  } while (fabs(delta_u) >= TOLERANCE or fabs(delta_v) >= TOLERANCE);
+  // while ( p.distanciaPara(p_i) >= TOLERANCE );
 
-  if (u_i <= TOLERANCIA)
+  if (u_i <= TOLERANCE)
     u_i = 0.0;
-  else if (u_i >= 1.0 - TOLERANCIA)
+  else if (u_i >= 1.0 - TOLERANCE)
     u_i = 1.0;
 
-  if (v_i <= TOLERANCIA)
+  if (v_i <= TOLERANCE)
     v_i = 0.0;
-  else if (v_i >= 1.0 - TOLERANCIA)
+  else if (v_i >= 1.0 - TOLERANCE)
     v_i = 1.0;
 
   if (std::isnan(u_i) || std::isnan(v_i)) {

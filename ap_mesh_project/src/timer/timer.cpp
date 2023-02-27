@@ -1,5 +1,7 @@
 #include "../../include/timer/timer.h"
 
+extern double MAX_TIME;
+
 Timer::Timer() {
   this->timer_parallel_init_.resize(1);
   this->timer_parallel_end_.resize(1);
@@ -149,9 +151,9 @@ void Timer::PrintTime(int rank_process) {
     cout << "Overhead: "
          << max[10] - max[9] - max[7] - max[6] - max[5] - max[4] - max[3] -
                 max[2] - max[1] - max[0]
-         << endl;                              // Overhead
-    cout << max[9] - TIME_READ_FILE << endl;   // Recv
-    cout << max[10] - TIME_READ_FILE << endl;  // Full
+         << endl;                                  // Overhead
+    cout << "Recv: " << max[9] << endl;            // Recv
+    cout << "Full: " << max[10] - max[5] << endl;  // Full
   }
 }
 
@@ -185,7 +187,7 @@ vector<double> Timer::GetMinTime() {
   min.resize(this->timer_parallel_[0][0].size());
 
   for (unsigned int i = 0; i < this->timer_parallel_[0][0].size(); ++i) {
-    min[i] = 999999;
+    min[i] = MAX_TIME;
   }
 
   for (unsigned int i = 0; i < this->timer_parallel_.size(); ++i) {

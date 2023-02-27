@@ -191,7 +191,7 @@ bool Edge::intercept(Vertex *va, Vertex *vb) {
 }
 
 bool Edge::intercept(Vertex *v) {
-  return (distance(v) < TOLERANCIA_AFT);
+  return (distance(v) < TOLERANCE_AFT);
 
   /*static Vertex ac, bc;
 
@@ -255,7 +255,7 @@ double Edge::distance(Vertex *v) {
   ac.scalarMultiplication(1.0 / ac.norm());
   vec.scalarMultiplication(1.0 / vec.norm());
 
-  if (ac.dot(&vec) < TOLERANCIA_AFT) {
+  if (ac.dot(&vec) < TOLERANCE_AFT) {
     return this->v[0]->distance(v);
   }
 
@@ -265,7 +265,7 @@ double Edge::distance(Vertex *v) {
   ac.scalarMultiplication(1.0 / ac.norm());
   vec.scalarMultiplication(-1.0);
 
-  if (ac.dot(&vec) < TOLERANCIA_AFT) {
+  if (ac.dot(&vec) < TOLERANCE_AFT) {
     return this->v[1]->distance(v);
   }
 

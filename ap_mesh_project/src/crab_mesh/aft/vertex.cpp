@@ -150,8 +150,8 @@ bool Vertex::clockWise(Vertex *v1, Vertex *v2) {
 }
 
 bool Vertex::equals(double x, double y) {
-  return ((this->x > x - TOLERANCIA_AFT) && (this->x < x + TOLERANCIA_AFT) &&
-          (this->y > y - TOLERANCIA_AFT) && (this->y < y + TOLERANCIA_AFT));
+  return ((this->x > x - TOLERANCE_AFT) && (this->x < x + TOLERANCE_AFT) &&
+          (this->y > y - TOLERANCE_AFT) && (this->y < y + TOLERANCE_AFT));
 }
 
 bool Vertex::matches(Vertex *v) { return ((x == v->x) && (y == v->y)); }

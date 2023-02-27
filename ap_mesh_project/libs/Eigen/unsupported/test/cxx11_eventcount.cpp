@@ -9,9 +9,8 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #define EIGEN_USE_THREADS
-#include <Eigen/CXX11/ThreadPool>
-
 #include "main.h"
+#include <Eigen/CXX11/ThreadPool>
 
 // Visual studio doesn't implement a rand_r() function since its
 // implementation of rand() is already thread safe
@@ -24,17 +23,18 @@ int rand_reentrant(unsigned int* s) {
 #endif
 }
 
-static void test_basic_eventcount() {
+static void test_basic_eventcount()
+{
   MaxSizeVector<EventCount::Waiter> waiters(1);
   waiters.resize(1);
   EventCount ec(waiters);
   EventCount::Waiter& w = waiters[0];
   ec.Notify(false);
-  ec.Prewait(&w);
+  ec.Prewait();
   ec.Notify(true);
   ec.CommitWait(&w);
-  ec.Prewait(&w);
-  ec.CancelWait(&w);
+  ec.Prewait();
+  ec.CancelWait();
 }
 
 // Fake bounded counter-based queue.
@@ -76,7 +76,8 @@ const int TestQueue::kQueueSize;
 // A number of producers send messages to a set of consumers using a set of
 // fake queues. Ensure that it does not crash, consumers don't deadlock and
 // number of blocked and unblocked threads match.
-static void test_stress_eventcount() {
+static void test_stress_eventcount()
+{
   const int kThreads = std::thread::hardware_concurrency();
   static const int kEvents = 1 << 16;
   static const int kQueues = 10;
@@ -89,8 +90,7 @@ static void test_stress_eventcount() {
   std::vector<std::unique_ptr<std::thread>> producers;
   for (int i = 0; i < kThreads; i++) {
     producers.emplace_back(new std::thread([&ec, &queues]() {
-      unsigned int rnd = static_cast<unsigned int>(
-          std::hash<std::thread::id>()(std::this_thread::get_id()));
+      unsigned int rnd = static_cast<unsigned int>(std::hash<std::thread::id>()(std::this_thread::get_id()));
       for (int j = 0; j < kEvents; j++) {
         unsigned idx = rand_reentrant(&rnd) % kQueues;
         if (queues[idx].Push()) {
@@ -107,13 +107,12 @@ static void test_stress_eventcount() {
   for (int i = 0; i < kThreads; i++) {
     consumers.emplace_back(new std::thread([&ec, &queues, &waiters, i]() {
       EventCount::Waiter& w = waiters[i];
-      unsigned int rnd = static_cast<unsigned int>(
-          std::hash<std::thread::id>()(std::this_thread::get_id()));
+      unsigned int rnd = static_cast<unsigned int>(std::hash<std::thread::id>()(std::this_thread::get_id()));
       for (int j = 0; j < kEvents; j++) {
         unsigned idx = rand_reentrant(&rnd) % kQueues;
         if (queues[idx].Pop()) continue;
         j--;
-        ec.Prewait(&w);
+        ec.Prewait();
         bool empty = true;
         for (int q = 0; q < kQueues; q++) {
           if (!queues[q].Empty()) {
@@ -122,7 +121,7 @@ static void test_stress_eventcount() {
           }
         }
         if (!empty) {
-          ec.CancelWait(&w);
+          ec.CancelWait();
           continue;
         }
         ec.CommitWait(&w);
@@ -136,7 +135,8 @@ static void test_stress_eventcount() {
   }
 }
 
-void test_cxx11_eventcount() {
+EIGEN_DECLARE_TEST(cxx11_eventcount)
+{
   CALL_SUBTEST(test_basic_eventcount());
   CALL_SUBTEST(test_stress_eventcount());
 }

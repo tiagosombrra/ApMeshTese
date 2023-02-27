@@ -152,11 +152,11 @@
 #include <tuple>
 
 // Verificação de sistema operacional
-#ifdef __APPLE__
-#include <Eigen/Eigen>
-#elif __linux__
+#ifdef __linux__
 #include "../../libs/Eigen/Eigen/Dense"
 #include "../../libs/Eigen/Eigen/Eigen"
+#elif __APPLE__
+#include <Eigen/Eigen>
 #else
 #error "Unknown compiler"
 #endif

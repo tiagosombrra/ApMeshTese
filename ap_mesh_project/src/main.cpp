@@ -16,24 +16,28 @@
 #if USE_MPI
 int RANK_MPI, SIZE_MPI;
 #endif  // #if USE_OPENMPI
-int PASSOS = 3;
+int STEPS = 3;
 double TRIANGLE_MEDIO = 0.0;
-double TOLERANCIA_ESTIMATIVE = 1.0;
+double ESTIMATIVE_TOLERANCE = 1.0;
 // distância entre um parâmetro e outro
 double DELTA = 0.0001;
 // distância máxima entre dois pontos
-double TOLERANCIA = 0.0001;
-double TOLERANCIA_CURVATURA = 0.0001;
-double TOLERANCIA_AFT = 0.0001;
-double PROPORCAO =
-    1.0;  // proporção usada no avanço de fronteira (antes era 0.5)
-double SUAVIZACAO = 7;  // número de vezes que se dará a suavização laplaciana
-double FATOR_SUAVIZACAO = 0.5;  // fator usado na suavização laplaciana
-double EPSYLON = 0.0000001;     // trashrold
-double DISCRETIZACAO_CURVA = 1.414213562;
-double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
+double TOLERANCE = 0.0001;
+double TOLERANCE_CURVATURE = 0.0001;
+double TOLERANCE_AFT = 0.0001;
+// proporção usada no avanço de fronteira (antes era 0.5)
+double RATIO_AFT = 1.0;
+// número de vezes que se dará a suavização laplaciana
+double SMOOTHING_LAPLACIAN_NUMBER = 7;
+// fator usado na suavização laplaciana
+double SMOOTHING_LAPLACIAN_FACTOR = 0.5;
+double EPSYLON = 0.0000001;  // trashrold
+double DISCRETIZATION_CURVE_FACTOR = 1.414213562;
+double DISCRETIZATION_CURVE_FACTOR_INTERNAL = sqrt(DISCRETIZATION_CURVE_FACTOR);
 double TIME_READ_FILE = 0.0;
-int I_MAX = 50000;  // i maximo do método findUV()
+unsigned int I_MAX = 50000;  // i maximo do método findUV()
+double MAX_TIME = 999999999;
+int MAX_THREADS = 1;
 std::set<PointAdaptive *> LIST_ALL_POINTS_MODEL;
 std::set<SubMesh *> LIST_ALL_SUB_MESH_MODEL;
 std::string NAME_MODEL;
@@ -57,6 +61,10 @@ int main(int argc, char **argv) {
   MPI_Comm_size(MPI_COMM_WORLD, &SIZE_MPI);
   MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
   MPI_Status status;
+
+  if (atoi(argv[1]) < SIZE_MPI) {
+    SIZE_MPI = atoi(argv[1]);
+  }
 
 #endif
 
@@ -96,30 +104,31 @@ int main(int argc, char **argv) {
   timer->InitTimerParallel(0, 0, 10);  // Full
 #endif
 
-  GeneratorAdaptive ger;
+  GeneratorAdaptive generator;
 
 #if USE_MPI
-  if (ger.Execute(argv, timer, status) == 0) {
-    cout << endl << "Tempo do processo " << RANK_MPI << endl;
-
-    timer->PrintTime(RANK_MPI);
+  if (generator.Execute(argv, timer, status) == 0) {
     cout << "Método do processo " << RANK_MPI << " com " << argv[2]
          << " thread(s) finalizado com Sucesso!" << endl;
-    delete timer;
 
     return MPI_Finalize();
+  } else {
+    cout << endl << "Erro na execução generator.Execute()." << RANK_MPI << endl;
   }
 #else
-  if (ger.Execute(argv, timer) == 0) {
-    cout << "Método com " << argv[1] << " processo(s) e " << argv[2]
+  if (generator.Execute(argv, timer) == 0) {
+    cout << "Método com " << argv[1] << " processo(s) e " << MAX_THREADS
          << " thread(s) finalizado com Sucesso!" << endl;
+
     return 0;
   } else if (argc < 4) {
     cout << "Erro!!! Apenas" << argc
          << " parâmetros inseridos, quantidade correta é 5 parâmetros" << endl;
+
     return -1;
   } else {
     cout << "Erro na execução no método main()" << endl;
+
     return -1;
   }
 #endif

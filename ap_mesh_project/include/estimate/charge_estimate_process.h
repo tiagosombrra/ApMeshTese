@@ -18,7 +18,7 @@
 #include "../timer/timer.h"
 
 extern double TIME_READ_FILE;
-extern double TOLERANCIA_ESTIMATIVE;
+extern double ESTIMATIVE_TOLERANCE;
 extern double TRIANGLE_MEDIO;
 extern std::string WRITE_MESH;
 

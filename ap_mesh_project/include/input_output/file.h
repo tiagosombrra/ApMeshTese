@@ -12,7 +12,7 @@
 
 class File {
  public:
-  File(const char* name);
+  explicit File(const char* name);
   ~File();
 
   string GetName();

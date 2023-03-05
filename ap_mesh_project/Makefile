@@ -13,6 +13,7 @@ BUILD_DIR := build_make
 # Subdiretórios de build
 SUB_DIRS := $(shell find $(SRC_DIRS) -type d)
 BUILD_SUB_DIRS := $(patsubst $(SRC_DIRS)%,$(BUILD_DIR)%,$(SUB_DIRS))
+# BUILD_SUB_DIRS := $(foreach DIR,$(SUB_DIRS),$(patsubst $(SRC_DIRS)%,$(BUILD_DIR)%,$(DIR)))
 
 # Objetos a serem criados a partir de cada fonte
 OBJECTS := $(patsubst $(SRC_DIRS)/%.cpp,$(BUILD_DIR)/%.o,$(SOURCES))

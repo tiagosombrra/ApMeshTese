@@ -1277,12 +1277,26 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
   Ns = malha->GetNumberSubMeshesAdaptive();
 
 #if USE_MPI
-  timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(),
-                           7);  // calculo do erro global
+#if USE_OPENMP
+  // Seção de código para MPI + OpenMP
+  // calculo do erro global
+  timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
 #else
-  timer->InitTimerParallel(0, omp_get_thread_num(),
-                           7);  // calculo do erro global
-#endif  // USE_MPI
+  // Seção de código para MPI sem OpenMP
+  // calculo do erro global
+  timer->InitTimerParallel(RANK_MPI, 0, 7);
+#endif
+#else
+#if USE_OPENMP
+  // Seção de código para OpenMP sem MPI
+  // calculo do erro global
+  timer->InitTimerParallel(0, omp_get_thread_num(), 7);
+#else
+  // Seção de código sem MPI e sem OpenMP
+  // calculo do erro global
+  timer->InitTimerParallel(0, 0, 7);
+#endif
+#endif
 
   // Calcula o erro global de cada submalha
   for (unsigned int i = 0; i < Ns; ++i) {
@@ -1294,15 +1308,34 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
     // Calcula o erro relativo para cada nó e soma a Nj
     for (unsigned int j = 0; j < Nv; ++j) {
 #if USE_MPI
-      timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(),
-                              7);  // calculo do erro global
-      timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(),
-                               6);  // MediaGauss
+#if USE_OPENMP
+      // Seção de código para MPI + OpenMP
+      // calculo do erro global
+      timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+      // MediaGauss
+      timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(), 6);
 #else
-      timer->EndTimerParallel(0, omp_get_thread_num(),
-                              7);  // calculo do erro global
-      timer->InitTimerParallel(0, omp_get_thread_num(), 6);  // MediaGauss
-#endif  // USE_MPI
+      // Seção de código para MPI sem OpenMP
+      // calculo do erro global
+      timer->EndTimerParallel(RANK_MPI, 0, 7);
+      // MediaGauss
+      timer->InitTimerParallel(RANK_MPI, 0, 6);
+#endif
+#else
+#if USE_OPENMP
+      // Seção de código para OpenMP sem MPI
+      // calculo do erro global
+      timer->EndTimerParallel(0, omp_get_thread_num(), 7);
+      // MediaGauss
+      timer->InitTimerParallel(0, omp_get_thread_num(), 6);
+#else
+      // Seção de código sem MPI e sem OpenMP
+      // calculo do erro global
+      timer->EndTimerParallel(0, 0, 7);
+      // MediaGauss
+      timer->InitTimerParallel(0, 0, 6);
+#endif
+#endif
 
       PointAdaptive* point_adaptive = sub->GetNoh(j);
       Patch* p = sub->GetPatch();
@@ -1319,15 +1352,37 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
       (static_cast<NodeAdaptive*>(point_adaptive))->SetGd(Gd);
       (static_cast<NodeAdaptive*>(point_adaptive))->SetHa(Ha);
       (static_cast<NodeAdaptive*>(point_adaptive))->SetHd(Hd);
+
 #if USE_MPI
-      timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(), 6);  // MediaGauss
-      timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(),
-                               7);  // calculo do erro global
+#if USE_OPENMP
+      // Seção de código para MPI + OpenMP
+      // MediaGauss
+      timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(), 6);
+      // calculo do erro global
+      timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
 #else
-      timer->EndTimerParallel(0, omp_get_thread_num(), 6);   // MediaGauss
+      // Seção de código para MPI sem OpenMP
+      // MediaGauss
+      timer->EndTimerParallel(RANK_MPI, 0, 6);
+      // calculo do erro global
+      timer->InitTimerParallel(RANK_MPI, 0, 7);
+#endif
+#else
+#if USE_OPENMP
+      // Seção de código para OpenMP sem MPI
+      // MediaGauss
+      timer->EndTimerParallel(0, omp_get_thread_num(), 6);
       // calculo do erro global
       timer->InitTimerParallel(0, omp_get_thread_num(), 7);
-#endif  // USE_MPI
+#else
+      // Seção de código sem MPI e sem OpenMP
+      // calculo do erro global
+      timer->EndTimerParallel(0, 0, 7);
+      // MediaGauss
+      timer->InitTimerParallel(0, 0, 6);
+#endif
+#endif
+
       double power = 0.0;
       double diff = 0.0;
 
@@ -1351,15 +1406,30 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
     Nj += Njs;
   }
 
-  Nj /= Ns;  // o erro global é a média do erro das submalhas
+  // o erro global é a média do erro das submalhas
+  Nj /= Ns;
 
 #if USE_MPI
-  timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(),
-                          7);  // calculo do erro global
+#if USE_OPENMP
+  // Seção de código para MPI + OpenMP
+  // calculo do erro global
+  timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
 #else
-  timer->EndTimerParallel(0, omp_get_thread_num(), 7);  // calculo do erro
-                                                        // global
-#endif  // USE_MPI
+  // Seção de código para MPI sem OpenMP
+  // calculo do erro global
+  timer->EndTimerParallel(RANK_MPI, 0, 7);
+#endif
+#else
+#if USE_OPENMP
+  // Seção de código para OpenMP sem MPI
+  // calculo do erro global
+  timer->EndTimerParallel(0, omp_get_thread_num(), 7);
+#else
+  // Seção de código sem MPI e sem OpenMP
+  // calculo do erro global
+  timer->EndTimerParallel(0, 0, 7);
+#endif
+#endif
 
   return Nj;
 }

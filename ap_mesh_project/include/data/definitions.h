@@ -16,12 +16,12 @@
 #endif  // #ifndef TRUE
 
 #ifndef USE_MPI
-#define USE_MPI TRUE
+#define USE_MPI FALSE
 #define RANK_ROOT 0
 #endif  // #ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP TRUE
+#define USE_OPENMP FALSE
 #define THREAD_ROOT 0
 #endif  // #ifndef USE_OPENMP
 

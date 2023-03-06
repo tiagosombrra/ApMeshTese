@@ -9,7 +9,7 @@
 class MeshAdaptive {
  public:
   MeshAdaptive();
-  ~MeshAdaptive();
+  ~MeshAdaptive() = default;
 
   void InsertSubMeshAdaptiveByPosition(SubMesh* sub_mesh_adaptive,
                                        const signed int position);

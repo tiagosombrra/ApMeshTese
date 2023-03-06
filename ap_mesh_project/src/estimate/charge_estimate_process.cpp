@@ -16,7 +16,7 @@ static bool SortByNt(const PatchBezier* lhs, const PatchBezier* rhs) {
 // retonar uma lista de patch de bezier ordenadChargeEstimateProcessestimativa
 // de carga em ordem decrescente.
 std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
-    std::shared_ptr<Geometry> geometry, std::shared_ptr<Timer> &timer) {
+    std::shared_ptr<Geometry> geometry, std::shared_ptr<Timer>& timer) {
   std::list<PatchBezier*> list_patch_bezier;
   std::list<PatchBezier*> list_patch_bezier_order;
 
@@ -739,10 +739,9 @@ double ChargeEstimateProcess::CalculateAreaTriangleMedioRad(
   return area;
 }
 
-double ChargeEstimateProcess::CalculateAreaTriangleMedio(PatchBezier* patch,
-                                                         std::shared_ptr<Timer> &timer,
-                                                         int degree) {
-  MeshAdaptive* mesh = new MeshAdaptive;
+double ChargeEstimateProcess::CalculateAreaTriangleMedio(
+    PatchBezier* patch, std::shared_ptr<Timer>& timer, int degree) {
+  auto mesh = std::make_shared<MeshAdaptive>();
   SubMesh* sub_mesh = InitialMeshEstimate(patch, degree);
   mesh->InsertSubMeshAdaptive(sub_mesh);
   // delete sub;
@@ -894,14 +893,15 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
   patch->SetSubMesh(sub);
   sub->SetPatch(patch);
 
-  MeshAdaptive* mesh = new MeshAdaptive;
+  auto mesh = std::make_shared<MeshAdaptive>();
   mesh->InsertSubMeshAdaptive(sub);
 
   return sub;
 }
 
-bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
-                                                    std::shared_ptr<Timer> &timer, int degree) {
+bool ChargeEstimateProcess::CalculateErroEstimative(
+    std::shared_ptr<MeshAdaptive> mesh, std::shared_ptr<Timer>& timer,
+    int degree) {
   GeneratorAdaptive* ger = new GeneratorAdaptive();
 #if USE_OPENMP
   double erro = ger->CalculateErrorGlobalOmp(mesh, timer);

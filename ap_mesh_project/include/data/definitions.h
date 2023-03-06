@@ -21,7 +21,7 @@
 #endif  // #ifndef USE_MPI
 
 #ifndef USE_OPENMP
-#define USE_OPENMP TRUE
+#define USE_OPENMP FALSE
 #define THREAD_ROOT 0
 #endif  // #ifndef USE_OPENMP
 

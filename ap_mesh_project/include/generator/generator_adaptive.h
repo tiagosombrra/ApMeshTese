@@ -40,16 +40,17 @@ class GeneratorAdaptive {
  public:
   // gera a malha inicial e insere na lista de malhas do modelo
   // a lista de pontos da curva é preenchida durante a geração
-  typedef std::vector<std::pair<int, MeshAdaptive *> > MeshVector;
-  typedef std::vector<std::pair<int, MeshAdaptive *> > ErrorMeshVector;
+  typedef std::vector<std::pair<int, std::shared_ptr<MeshAdaptive>>> MeshVector;
+  typedef std::vector<std::pair<int, std::shared_ptr<MeshAdaptive>>>
+      ErrorMeshVector;
 
   GeneratorAdaptive();
   ~GeneratorAdaptive() = default;
 
 #if USE_MPI
   int Execute(char *argv[], std::shared_ptr<Timer> &timer, MPI_Status status);
-  std::list<PatchBezier *> EstimateChargeofPatches(std::shared_ptr<Geometry>geometry,
-                                                   std::shared_ptr<Timer> &timer);
+  std::list<PatchBezier *> EstimateChargeofPatches(
+      std::shared_ptr<Geometry> geometry, std::shared_ptr<Timer> &timer);
   std::vector<CurveAdaptive *> CreateVectorOfCurves(
       std::list<PatchBezier *> patches);
   std::list<PatchBezier *> OrderPatchesDistribProcess(
@@ -60,17 +61,19 @@ class GeneratorAdaptive {
                                         std::list<PatchBezier *> patches);
   std::list<PatchBezier *>::iterator GetIteratorListPatches(
       int size_patches, std::list<PatchBezier *> patches);
-  void Generator(double patches[], int size_patches, std::shared_ptr<Timer> &timer,
-                 int id_range = 1024, int size_rank = 1, int size_thread = 1);
-  std::shared_ptr<Geometry>UnpakGeometry(double patches[], int size_patches);
+  void Generator(double patches[], int size_patches,
+                 std::shared_ptr<Timer> &timer, int id_range = 1024,
+                 int size_rank = 1, int size_thread = 1);
+  std::shared_ptr<Geometry> UnpakGeometry(double patches[], int size_patches);
 #else
   int Execute(char *argv[], std::shared_ptr<Timer> &timer);
-  void Generator(Model &model, std::shared_ptr<Timer> &timer, int id_range = 1024,
-                 int size_rank = 1, int size_thread = 1);
+  void Generator(Model &model, std::shared_ptr<Timer> &timer,
+                 int id_range = 1024, int size_rank = 1, int size_thread = 1);
 #endif
 
   SubMesh *InitialMesh(PatchCoons *, Performer::IdManager *id_manager);
-  double ErrorGlobal(MeshAdaptive *mesh, std::shared_ptr<Timer> &timer, int rank = 0,
+  double ErrorGlobal(std::shared_ptr<MeshAdaptive> mesh,
+                     std::shared_ptr<Timer> &timer, int rank = 0,
                      int size_thread = 0);
   Performer::IdManager *MakeIdManager(const Parallel::TMCommunicator *comm,
                                       Int id) const;
@@ -79,31 +82,37 @@ class GeneratorAdaptive {
   Performer::IdManager *MakeIdManagerElementOmp(
       const Parallel::TMCommunicator *comm, Int id) const;
 
-  void WriteMesh(MeshAdaptive *mesh, int step);
-  void WriteMesh(MeshAdaptive *mesh, int step, vector<double> error_step,
-                 int rank = -1);
-  void WriteQualityMesh(MeshAdaptive *mesh, int step, vector<double> error_step,
-                        int rank = -1);
-  void SaveErrorMesh(MeshAdaptive *mesh);
-  void SaveMesh(MeshAdaptive *mesh, int step);
-  void SaveErrorMesh(MeshAdaptive *mesh, int step);
+  void WriteMesh(std::shared_ptr<MeshAdaptive> mesh, int step);
+  void WriteMesh(std::shared_ptr<MeshAdaptive> mesh, int step,
+                 vector<double> error_step, int rank = -1);
+  void WriteQualityMesh(std::shared_ptr<MeshAdaptive> mesh, int step,
+                        vector<double> error_step, int rank = -1);
+  void SaveErrorMesh(std::shared_ptr<MeshAdaptive> mesh);
+  void SaveMesh(std::shared_ptr<MeshAdaptive> mesh, int step);
+  void SaveErrorMesh(std::shared_ptr<MeshAdaptive> mesh, int step);
   void AdaptCurve(std::shared_ptr<Geometry> geometry);
-  void AdaptDomain(std::shared_ptr<Geometry> geometry, MeshAdaptive *mesh);
-  void GeneratorInitialMesh(std::shared_ptr<Geometry> geometry, MeshAdaptive *mesh,
-                            std::shared_ptr<Timer> &timer, int size_thread, int size_patch);
-  void PrintElments(MeshAdaptive *mesh, int step, vector<double> error_step,
-                    int rank = -1);
+  void AdaptDomain(std::shared_ptr<Geometry> geometry,
+                   std::shared_ptr<MeshAdaptive> mesh);
+  void GeneratorInitialMesh(std::shared_ptr<Geometry> geometry,
+                            std::shared_ptr<MeshAdaptive> mesh,
+                            std::shared_ptr<Timer> &timer, int size_thread,
+                            int size_patch);
+  void PrintElments(std::shared_ptr<MeshAdaptive> mesh, int step,
+                    vector<double> error_step, int rank = -1);
 
 #if USE_OPENMP
   virtual SubMesh *GeneratorInitialMeshOmp(PatchCoons *,
                                            Performer::IdManager *id_Manager);
-  virtual double CalculateErrorGlobalOmp(MeshAdaptive *mesh, std::shared_ptr<Timer> &timer,
+  virtual double CalculateErrorGlobalOmp(std::shared_ptr<MeshAdaptive> mesh,
+                                         std::shared_ptr<Timer> &timer,
                                          int rank = 0, int size_thread = 0);
-  int GeneratorOmp(Model &model, std::shared_ptr<Timer> &timer, int id_range = 0,
-                   int sizeRank = 1, int sizeThread = 1);
+  int GeneratorOmp(Model &model, std::shared_ptr<Timer> &timer,
+                   int id_range = 0, int sizeRank = 1, int sizeThread = 1);
   void AdaptCurveOmp(std::shared_ptr<Geometry> geometry);
-  void AdaptDomainOmp(std::shared_ptr<Geometry> geometry, MeshAdaptive *mesh, std::shared_ptr<Timer> &timer,
-                      int size_thread, int size_patch);
+  void AdaptDomainOmp(std::shared_ptr<Geometry> geometry,
+                      std::shared_ptr<MeshAdaptive> mesh,
+                      std::shared_ptr<Timer> &timer, int size_thread,
+                      int size_patch);
 #endif  // #USE_OPENMP
 
 #if USE_MPI
@@ -112,11 +121,11 @@ class GeneratorAdaptive {
   PatchCoons *patch_;
 #endif  // USE_MPI
 
-  MeshAdaptive *mesh_;
+  std::shared_ptr<MeshAdaptive> mesh_;
 
  protected:
 #if (USE_MPI || USE_OPENMP)
-  ApMeshCommunicator *communicator_;
+  std::shared_ptr<ApMeshCommunicator> communicator_;
 #else
   Parallel::TMCommunicator *communicator_;
 #endif  // USE_MPI

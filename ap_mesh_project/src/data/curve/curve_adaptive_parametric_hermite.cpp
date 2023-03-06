@@ -144,8 +144,6 @@ CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(
   this->vector1_ = curve_adaptive_parametric_hermite->vector1_;
 }
 
-CurveAdaptiveParametricHermite::~CurveAdaptiveParametricHermite() {}
-
 double CurveAdaptiveParametricHermite::CalculateCurvature(double t) {
   // B'(t)= 3(1-t)²(P1-point_0_)+6t(1-t)(P2-P1)+3t²(P3-P2)
   double v0 = 3 * pow((1 - t), 2) * (vector0_.GetX() - point0_.GetX()) +

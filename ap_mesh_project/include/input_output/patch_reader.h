@@ -28,7 +28,8 @@ class PatchReader {
   PointAdaptive GetPointVectorControlPoints(std::vector<PointAdaptive>,
                                             unsigned long);
   std::list<PatchBezier *> LoaderBezierPatchFile(string fileName);
-  std::shared_ptr<Geometry> ReaderFilePatches(std::shared_ptr<Geometry> geometry, string fileName);
+  std::shared_ptr<Geometry> ReaderFilePatches(
+      std::shared_ptr<Geometry> geometry, string fileName);
 
  protected:
   std::list<PatchBezier *> patches_;

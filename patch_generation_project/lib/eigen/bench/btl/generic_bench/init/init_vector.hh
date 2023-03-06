@@ -24,13 +24,12 @@
 //            resize() method
 //            [] operator for setting element
 //            value_type defined
-template<double init_function(int), class Vector>
-void init_vector(Vector & X, int size){
-
+template <double init_function(int), class Vector>
+void init_vector(Vector& X, int size) {
   X.resize(size);
 
-  for (int i=0;i<X.size();i++){
-    X[i]=typename Vector::value_type(init_function(i));
+  for (int i = 0; i < X.size(); i++) {
+    X[i] = typename Vector::value_type(init_function(i));
   }
 }
 

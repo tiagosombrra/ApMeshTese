@@ -7,3 +7,4 @@ ap_mesh_project/build_make/*
 *.user
 *.log
 ap_mesh
+ap_mesh_project

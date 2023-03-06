@@ -50,14 +50,6 @@ CurveAdaptiveParametric::CurveAdaptiveParametric(
   this->mat_parameters_ = curve_adaptive_parametric->mat_parameters_;
 }
 
-CurveAdaptiveParametric::~CurveAdaptiveParametric() {
-  // delete &mat_geo_gx_;
-  // delete &mat_geo_gy_;
-  // delete &mat_geo_gz_;
-  // delete &mat_base_;
-  // delete &mat_parameters_;
-}
-
 // calcula o comprimento de curva de p1 a p2
 double CurveAdaptiveParametric::CalculateLengthPoints(
     const PointAdaptive& point1, const PointAdaptive& point2) {

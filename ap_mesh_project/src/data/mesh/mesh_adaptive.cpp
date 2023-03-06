@@ -2,15 +2,6 @@
 
 MeshAdaptive::MeshAdaptive() : sub_meshes_({}) {}
 
-MeshAdaptive::~MeshAdaptive() {
-  // 1. apaga a lista de SubMalhas
-  while (!this->sub_meshes_.empty()) {
-    // SubMalha* SM = this->subMalhas.back ( );
-    this->sub_meshes_.pop_back();
-    // delete SM;
-  }
-}
-
 void MeshAdaptive::InsertSubMeshAdaptiveByPosition(SubMesh* sub_mesh_adaptive,
                                                    const signed int position) {
   this->sub_meshes_[position] = sub_mesh_adaptive;

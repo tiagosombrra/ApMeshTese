@@ -12,7 +12,7 @@ class CurveAdaptive {
  public:
   CurveAdaptive();
   explicit CurveAdaptive(CurveAdaptive*);
-  virtual ~CurveAdaptive();
+  virtual ~CurveAdaptive() = default;
 
   void SetId(unsigned int id);
   double GetLength();

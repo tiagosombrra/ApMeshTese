@@ -10,22 +10,22 @@
 #ifndef EIGEN_AUTODIFF_JACOBIAN_H
 #define EIGEN_AUTODIFF_JACOBIAN_H
 
-namespace Eigen
-{
+namespace Eigen {
 
-template<typename Functor> class AutoDiffJacobian : public Functor
-{
-public:
+template <typename Functor>
+class AutoDiffJacobian : public Functor {
+ public:
   AutoDiffJacobian() : Functor() {}
   AutoDiffJacobian(const Functor& f) : Functor(f) {}
 
   // forward constructors
-  template<typename T0>
+  template <typename T0>
   AutoDiffJacobian(const T0& a0) : Functor(a0) {}
-  template<typename T0, typename T1>
+  template <typename T0, typename T1>
   AutoDiffJacobian(const T0& a0, const T1& a1) : Functor(a0, a1) {}
-  template<typename T0, typename T1, typename T2>
-  AutoDiffJacobian(const T0& a0, const T1& a1, const T2& a2) : Functor(a0, a1, a2) {}
+  template <typename T0, typename T1, typename T2>
+  AutoDiffJacobian(const T0& a0, const T1& a1, const T2& a2)
+      : Functor(a0, a1, a2) {}
 
   enum {
     InputsAtCompileTime = Functor::InputsAtCompileTime,
@@ -38,18 +38,16 @@ public:
   typedef typename JacobianType::Scalar Scalar;
   typedef typename JacobianType::Index Index;
 
-  typedef Matrix<Scalar,InputsAtCompileTime,1> DerivativeType;
+  typedef Matrix<Scalar, InputsAtCompileTime, 1> DerivativeType;
   typedef AutoDiffScalar<DerivativeType> ActiveScalar;
-
 
   typedef Matrix<ActiveScalar, InputsAtCompileTime, 1> ActiveInput;
   typedef Matrix<ActiveScalar, ValuesAtCompileTime, 1> ActiveValue;
 
-  void operator() (const InputType& x, ValueType* v, JacobianType* _jac=0) const
-  {
-    eigen_assert(v!=0);
-    if (!_jac)
-    {
+  void operator()(const InputType& x, ValueType* v,
+                  JacobianType* _jac = 0) const {
+    eigen_assert(v != 0);
+    if (!_jac) {
       Functor::operator()(x, v);
       return;
     }
@@ -59,25 +57,24 @@ public:
     ActiveInput ax = x.template cast<ActiveScalar>();
     ActiveValue av(jac.rows());
 
-    if(InputsAtCompileTime==Dynamic)
-      for (Index j=0; j<jac.rows(); j++)
+    if (InputsAtCompileTime == Dynamic)
+      for (Index j = 0; j < jac.rows(); j++)
         av[j].derivatives().resize(this->inputs());
 
-    for (Index i=0; i<jac.cols(); i++)
-      ax[i].derivatives() = DerivativeType::Unit(this->inputs(),i);
+    for (Index i = 0; i < jac.cols(); i++)
+      ax[i].derivatives() = DerivativeType::Unit(this->inputs(), i);
 
     Functor::operator()(ax, &av);
 
-    for (Index i=0; i<jac.rows(); i++)
-    {
+    for (Index i = 0; i < jac.rows(); i++) {
       (*v)[i] = av[i].value();
       jac.row(i) = av[i].derivatives();
     }
   }
-protected:
 
+ protected:
 };
 
-}
+}  // namespace Eigen
 
-#endif // EIGEN_AUTODIFF_JACOBIAN_H
+#endif  // EIGEN_AUTODIFF_JACOBIAN_H

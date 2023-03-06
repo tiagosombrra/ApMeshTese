@@ -12,12 +12,14 @@
 
 #include "../blas/common.h"
 
-#define EIGEN_LAPACK_FUNC(FUNC,ARGLIST)               \
-  extern "C" { int EIGEN_BLAS_FUNC(FUNC) ARGLIST; }   \
-  int EIGEN_BLAS_FUNC(FUNC) ARGLIST
+#define EIGEN_LAPACK_FUNC(FUNC, ARGLIST) \
+  extern "C" {                           \
+  int EIGEN_BLAS_FUNC(FUNC) ARGLIST;     \
+  }                                      \
+  int EIGEN_BLAS_FUNC(FUNC)              \
+  ARGLIST
 
-typedef Eigen::Map<Eigen::Transpositions<Eigen::Dynamic,Eigen::Dynamic,int> > PivotsType;
+typedef Eigen::Map<Eigen::Transpositions<Eigen::Dynamic, Eigen::Dynamic, int> >
+    PivotsType;
 
-
-
-#endif // EIGEN_LAPACK_COMMON_H
+#endif  // EIGEN_LAPACK_COMMON_H

@@ -11,7 +11,7 @@ class CurveAdaptiveParametricHermite : public CurveAdaptiveParametric {
                                  const VectorAdaptive vector0,
                                  const VectorAdaptive vector1);
   explicit CurveAdaptiveParametricHermite(CurveAdaptiveParametricHermite*);
-  ~CurveAdaptiveParametricHermite();
+  ~CurveAdaptiveParametricHermite() = default;
   double CalculateCurvature(double t) override;
 
   VectorAdaptive GetVector0() const;

@@ -203,7 +203,6 @@ class PointerMapper {
     if (this->count() == 0) {
       m_pointerMap.clear();
       EIGEN_THROW_X(std::out_of_range("There are no pointers allocated\n"));
-
     }
     if (is_nullptr(ptr)) {
       m_pointerMap.clear();
@@ -221,7 +220,6 @@ class PointerMapper {
         m_pointerMap.clear();
         EIGEN_THROW_X(
             std::out_of_range("The pointer is not registered in the map\n"));
-
       }
       --node;
     }

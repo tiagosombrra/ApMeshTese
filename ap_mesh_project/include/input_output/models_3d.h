@@ -14,17 +14,26 @@ class Models3d {
   Models3d();
   std::shared_ptr<Geometry> ModelBook(std::shared_ptr<Geometry> geometry);
   std::shared_ptr<Geometry> ModelPlanBook(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelTresPatches(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelDoisPatchesPlanosCurva1(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelDoisPatchesPlanosCurva(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelCurvaBezier(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelParaboloide(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelTresPatches(
+      std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelDoisPatchesPlanosCurva1(
+      std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelDoisPatchesPlanosCurva(
+      std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelCurvaBezier(
+      std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelParaboloide(
+      std::shared_ptr<Geometry> geometry);
   std::shared_ptr<Geometry> ModelPneu(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelLadoDescendente(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelBaseCircular(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelBaseQuadrada(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelLadoDescendente(
+      std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelBaseCircular(
+      std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelBaseQuadrada(
+      std::shared_ptr<Geometry> geometry);
   std::shared_ptr<Geometry> ModelBordaCurva(std::shared_ptr<Geometry> geometry);
-  std::shared_ptr<Geometry> ModelDoisPatches(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelDoisPatches(
+      std::shared_ptr<Geometry> geometry);
   std::shared_ptr<Geometry> ModelNariz(std::shared_ptr<Geometry> geometry);
   std::shared_ptr<Geometry> ModelUtahteapot(std::shared_ptr<Geometry> geometry);
 };

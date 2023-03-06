@@ -172,8 +172,6 @@ CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier(
   this->point3_ = curve_adaptive_parametric_bezier->point3_;
 }
 
-CurveAdaptiveParametricBezier::~CurveAdaptiveParametricBezier() {}
-
 double CurveAdaptiveParametricBezier::CalculateCurvature(double t) {
   // B'(t)= 3(1-t)²(point_1_-point_0_)+6t(1-t)(P2-point_1_)+3t²(P3-P2)
   double v0 = 3 * pow((1 - t), 2) * (point1_.GetX() - point0_.GetX()) +

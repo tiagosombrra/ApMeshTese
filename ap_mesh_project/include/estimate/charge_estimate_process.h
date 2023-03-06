@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <map>
+#include <memory>
 #include <vector>
 
 #include "../adapter/adapter.h"
@@ -27,18 +28,18 @@ class ChargeEstimateProcess {
   ChargeEstimateProcess();
   ~ChargeEstimateProcess();
 
-  std::list<PatchBezier *> ChargeEstimate(Geometry *geometry, Timer *timer);
+  std::list<PatchBezier *> ChargeEstimate(std::shared_ptr<Geometry> geometry, std::shared_ptr<Timer> &timer);
   std::vector<PointAdaptive> InterpolateControlPointsCurve(
       const PointAdaptive p0, const PointAdaptive p1, const PointAdaptive p2,
       const PointAdaptive p3, const double u, const double v);
   double CalculateKaMedioPatch(PatchBezier *patch, int points);
   double CalculateAreaPatch(PatchBezier *patch, int pointsGaussLegandre);
   double CalculateAreaTriangleMedioRad(PatchBezier *patch);
-  double CalculateAreaTriangleMedio(PatchBezier *patch, Timer *timer,
+  double CalculateAreaTriangleMedio(PatchBezier *patch, std::shared_ptr<Timer> &timer,
                                     int degree);
   long int CalculateNumbersTriangle(PatchBezier *patch, int degree);
   SubMesh *InitialMeshEstimate(PatchCoons *patch, int degree);
-  bool CalculateErroEstimative(MeshAdaptive *mesh, Timer *timer, int degree);
+  bool CalculateErroEstimative(MeshAdaptive *mesh, std::shared_ptr<Timer> &timer, int degree);
 
   double minor_error_;
   int minor_degree_;

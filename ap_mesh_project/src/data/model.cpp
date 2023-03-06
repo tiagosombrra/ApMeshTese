@@ -2,7 +2,7 @@
 
 Model::Model() : geometry_(nullptr) {}
 
-Model::Model(Geometry* geometry) { this->geometry_ = geometry; }
+Model::Model(std::shared_ptr<Geometry> geometry) : geometry_(std::move(geometry)) {}
 
 Model::~Model() {
   // 1. apaga a lista de malha
@@ -13,9 +13,11 @@ Model::~Model() {
   }
 }
 
-void Model::SetGeometry(Geometry* geometry) { this->geometry_ = geometry; }
+void Model::SetGeometry(std::shared_ptr<Geometry> geometry) {
+    this->geometry_ = std::move(geometry);
+}
 
-Geometry* Model::GetGeometry() { return this->geometry_; }
+std::shared_ptr<Geometry> Model::GetGeometry() { return this->geometry_; }
 
 void Model::InsertMeshAdaptive(MeshAdaptive* mesh_adaptive) {
   this->meshes_.push_back(mesh_adaptive);

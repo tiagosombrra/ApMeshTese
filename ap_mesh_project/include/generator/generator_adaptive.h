@@ -4,6 +4,7 @@
 #include <omp.h>
 
 #include <list>
+#include <memory>
 #include <string>
 
 #include "../adapter/adapter.h"
@@ -46,9 +47,9 @@ class GeneratorAdaptive {
   ~GeneratorAdaptive() = default;
 
 #if USE_MPI
-  int Execute(char *argv[], Timer *timer, MPI_Status status);
-  std::list<PatchBezier *> EstimateChargeofPatches(Geometry *geometry,
-                                                   Timer *timer);
+  int Execute(char *argv[], std::shared_ptr<Timer> &timer, MPI_Status status);
+  std::list<PatchBezier *> EstimateChargeofPatches(std::shared_ptr<Geometry>geometry,
+                                                   std::shared_ptr<Timer> &timer);
   std::vector<CurveAdaptive *> CreateVectorOfCurves(
       std::list<PatchBezier *> patches);
   std::list<PatchBezier *> OrderPatchesDistribProcess(
@@ -59,17 +60,17 @@ class GeneratorAdaptive {
                                         std::list<PatchBezier *> patches);
   std::list<PatchBezier *>::iterator GetIteratorListPatches(
       int size_patches, std::list<PatchBezier *> patches);
-  void Generator(double patches[], int size_patches, Timer *timer,
+  void Generator(double patches[], int size_patches, std::shared_ptr<Timer> &timer,
                  int id_range = 1024, int size_rank = 1, int size_thread = 1);
-  Geometry *UnpakGeometry(double patches[], int size_patches);
+  std::shared_ptr<Geometry>UnpakGeometry(double patches[], int size_patches);
 #else
-  int Execute(char *argv[], Timer *timer);
-  void Generator(Model &model, Timer *timer, int id_range = 1024,
+  int Execute(char *argv[], std::shared_ptr<Timer> &timer);
+  void Generator(Model &model, std::shared_ptr<Timer> &timer, int id_range = 1024,
                  int size_rank = 1, int size_thread = 1);
 #endif
 
   SubMesh *InitialMesh(PatchCoons *, Performer::IdManager *id_manager);
-  double ErrorGlobal(MeshAdaptive *mesh, Timer *timer, int rank = 0,
+  double ErrorGlobal(MeshAdaptive *mesh, std::shared_ptr<Timer> &timer, int rank = 0,
                      int size_thread = 0);
   Performer::IdManager *MakeIdManager(const Parallel::TMCommunicator *comm,
                                       Int id) const;
@@ -86,28 +87,28 @@ class GeneratorAdaptive {
   void SaveErrorMesh(MeshAdaptive *mesh);
   void SaveMesh(MeshAdaptive *mesh, int step);
   void SaveErrorMesh(MeshAdaptive *mesh, int step);
-  void AdaptCurve(Geometry *geometry);
-  void AdaptDomain(Geometry *geometry, MeshAdaptive *mesh);
-  void GeneratorInitialMesh(Geometry *geometry, MeshAdaptive *mesh,
-                            Timer *timer, int size_thread, int size_patch);
+  void AdaptCurve(std::shared_ptr<Geometry> geometry);
+  void AdaptDomain(std::shared_ptr<Geometry> geometry, MeshAdaptive *mesh);
+  void GeneratorInitialMesh(std::shared_ptr<Geometry> geometry, MeshAdaptive *mesh,
+                            std::shared_ptr<Timer> &timer, int size_thread, int size_patch);
   void PrintElments(MeshAdaptive *mesh, int step, vector<double> error_step,
                     int rank = -1);
 
 #if USE_OPENMP
   virtual SubMesh *GeneratorInitialMeshOmp(PatchCoons *,
                                            Performer::IdManager *id_Manager);
-  virtual double CalculateErrorGlobalOmp(MeshAdaptive *mesh, Timer *timer,
+  virtual double CalculateErrorGlobalOmp(MeshAdaptive *mesh, std::shared_ptr<Timer> &timer,
                                          int rank = 0, int size_thread = 0);
-  int GeneratorOmp(Model &model, Timer *timer, int id_range = 0,
+  int GeneratorOmp(Model &model, std::shared_ptr<Timer> &timer, int id_range = 0,
                    int sizeRank = 1, int sizeThread = 1);
-  void AdaptCurveOmp(Geometry *geometry);
-  void AdaptDomainOmp(Geometry *geometry, MeshAdaptive *mesh, Timer *timer,
+  void AdaptCurveOmp(std::shared_ptr<Geometry> geometry);
+  void AdaptDomainOmp(std::shared_ptr<Geometry> geometry, MeshAdaptive *mesh, std::shared_ptr<Timer> &timer,
                       int size_thread, int size_patch);
 #endif  // #USE_OPENMP
 
 #if USE_MPI
   Model model_;
-  Geometry *geometry_;
+  std::shared_ptr<Geometry> geometry_;
   PatchCoons *patch_;
 #endif  // USE_MPI
 

@@ -1,3 +1,4 @@
+#include <memory>
 #include <string>
 
 #include "../include/data/curve/curve_adaptive_parametric_bezier.h"
@@ -76,7 +77,7 @@ int main(int argc, char **argv) {
 
   // contador do tempo para carregar a malha na memória
   // (sizeRank, sizeThread, sizeType)
-  Timer *timer = new Timer(atoi(argv[1]), atoi(argv[2]), 11);
+  auto timer = std::shared_ptr<Timer>(new Timer(atoi(argv[1]), atoi(argv[2]), 11));
 
   // cout<<atoi(argv[1])<<atoi(argv[2])<<endl;
   // cout<<RANK_MPI<<THREAD_ROOT<<endl;

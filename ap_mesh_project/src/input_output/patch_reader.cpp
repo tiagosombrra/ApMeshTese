@@ -690,7 +690,7 @@ std::list<PatchBezier*> PatchReader::LoaderBezierPatchFile(string fileName) {
   return patches_;
 }
 
-Geometry* PatchReader::ReaderFilePatches(Geometry* geometry, string file_name) {
+std::shared_ptr<Geometry> PatchReader::ReaderFilePatches(std::shared_ptr<Geometry> geometry, string file_name) {
   PatchReader* patch_reader = new PatchReader();
   std::list<PatchBezier*> patches =
       patch_reader->LoaderBezierPatchFile(file_name);

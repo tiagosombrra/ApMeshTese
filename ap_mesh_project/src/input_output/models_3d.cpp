@@ -2,7 +2,7 @@
 
 Models3d::Models3d() {}
 
-Geometry* Models3d::ModelPlanBook(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelPlanBook(std::shared_ptr<Geometry> geometry) {
   //=============================== PATCH 1 ==================================
   PointAdaptive* p100 = new VertexAdaptive(0.00000, 1.00000, 0.00000);
   PointAdaptive* p110 = new VertexAdaptive(0.00000, 0.50000, 0.00000);
@@ -203,7 +203,7 @@ Geometry* Models3d::ModelPlanBook(Geometry* geometry) {
   return geometry;
 }
 
-Geometry* Models3d::ModelTresPatches(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelTresPatches(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do three_patches_curve
   //==============================================================================
@@ -330,7 +330,7 @@ Geometry* Models3d::ModelTresPatches(Geometry* geometry) {
   return geometry;
 }
 
-Geometry* Models3d::ModelDoisPatchesPlanosCurva1(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelDoisPatchesPlanosCurva1(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do two_patches_curve
   //==============================================================================
@@ -418,7 +418,7 @@ Geometry* Models3d::ModelDoisPatchesPlanosCurva1(Geometry* geometry) {
   return geometry;
 }
 
-Geometry* Models3d::ModelDoisPatchesPlanosCurva(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelDoisPatchesPlanosCurva(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do Utahteapot
   //==============================================================================
@@ -505,7 +505,7 @@ Geometry* Models3d::ModelDoisPatchesPlanosCurva(Geometry* geometry) {
   return geometry;
 }
 
-Geometry* Models3d::ModelCurvaBezier(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelCurvaBezier(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo usando curva de Bezier
   //==============================================================================
@@ -554,7 +554,7 @@ Geometry* Models3d::ModelCurvaBezier(Geometry* geometry) {
   return geometry;
 }
 
-Geometry* Models3d::ModelParaboloide(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelParaboloide(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do PARABOLÓIDE HIPERBÓLICO
   //==============================================================================
@@ -610,7 +610,7 @@ Geometry* Models3d::ModelParaboloide(Geometry* geometry) {
   return geometry;
 }
 
-Geometry* Models3d::ModelPneu(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelPneu(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do pneu
   //==============================================================================
@@ -670,7 +670,7 @@ Geometry* Models3d::ModelPneu(Geometry* geometry) {
   //==============================================================================
 }
 
-Geometry* Models3d::ModelLadoDescendente(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelLadoDescendente(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo de uma superfície com um dos lados descendentes
   //==============================================================================
@@ -717,7 +717,7 @@ Geometry* Models3d::ModelLadoDescendente(Geometry* geometry) {
   //==============================================================================
 }
 
-Geometry* Models3d::ModelBaseCircular(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelBaseCircular(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo da base circular
   //==============================================================================
@@ -762,7 +762,7 @@ Geometry* Models3d::ModelBaseCircular(Geometry* geometry) {
   //==============================================================================
 }
 
-Geometry* Models3d::ModelBaseQuadrada(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelBaseQuadrada(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do patch com base quadrada
   //==============================================================================
@@ -808,7 +808,7 @@ Geometry* Models3d::ModelBaseQuadrada(Geometry* geometry) {
   //==============================================================================
 }
 
-Geometry* Models3d::ModelBordaCurva(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelBordaCurva(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do patch com borda curva
   //==============================================================================
@@ -854,7 +854,7 @@ Geometry* Models3d::ModelBordaCurva(Geometry* geometry) {
   //==============================================================================
 }
 
-Geometry* Models3d::ModelDoisPatches(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelDoisPatches(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo de dois patches vizinhos
   //==============================================================================
@@ -925,7 +925,7 @@ Geometry* Models3d::ModelDoisPatches(Geometry* geometry) {
   //==============================================================================
 }
 
-Geometry* Models3d::ModelNariz(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelNariz(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do nariz
   //==============================================================================
@@ -1557,7 +1557,7 @@ Geometry* Models3d::ModelNariz(Geometry* geometry) {
   //==============================================================================
 }
 
-Geometry* Models3d::ModelUtahteapot(Geometry* geometry) {
+std::shared_ptr<Geometry> Models3d::ModelUtahteapot(std::shared_ptr<Geometry> geometry) {
   //==============================================================================
   // Exemplo do Utahteapot
   //==============================================================================

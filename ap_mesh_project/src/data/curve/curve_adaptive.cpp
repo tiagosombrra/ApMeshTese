@@ -10,16 +10,16 @@ CurveAdaptive::CurveAdaptive(CurveAdaptive* curve)
       patches_(curve->patches_) {}
 
 CurveAdaptive::~CurveAdaptive() {
-  // 1. apaga a lista de pontos
-  while (!this->points_.empty()) {
-    PointAdaptive* P = this->points_.back();
-    this->points_.pop_back();
-    delete P;
-  }
-  // 3. apaga a lista de pontos
-  this->points_.clear();
-  // 4. apaga a lista de patches
-  this->patches_.clear();
+//  // 1. apaga a lista de pontos
+//  while (!this->points_.empty()) {
+//    PointAdaptive* P = this->points_.back();
+//    this->points_.pop_back();
+//    delete P;
+//  }
+//  // 3. apaga a lista de pontos
+//  this->points_.clear();
+//  // 4. apaga a lista de patches
+//  this->patches_.clear();
 }
 
 void CurveAdaptive::SetId(unsigned int id) { this->id_ = id; }

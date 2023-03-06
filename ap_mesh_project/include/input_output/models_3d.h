@@ -1,6 +1,8 @@
 #ifndef INPUT_OUTPUT_MODELS_3D_H
 #define INPUT_OUTPUT_MODELS_3D_H
 
+#include <memory>
+
 #include "../data/curve/curve_adaptive_parametric_bezier.h"
 #include "../data/curve/curve_adaptive_parametric_hermite.h"
 #include "../data/geometry.h"
@@ -10,21 +12,21 @@
 class Models3d {
  public:
   Models3d();
-  Geometry *ModelBook(Geometry *geometry);
-  Geometry *ModelPlanBook(Geometry *geometry);
-  Geometry *ModelTresPatches(Geometry *geometry);
-  Geometry *ModelDoisPatchesPlanosCurva1(Geometry *geometry);
-  Geometry *ModelDoisPatchesPlanosCurva(Geometry *geometry);
-  Geometry *ModelCurvaBezier(Geometry *geometry);
-  Geometry *ModelParaboloide(Geometry *geometry);
-  Geometry *ModelPneu(Geometry *geometry);
-  Geometry *ModelLadoDescendente(Geometry *geometry);
-  Geometry *ModelBaseCircular(Geometry *geometry);
-  Geometry *ModelBaseQuadrada(Geometry *geometry);
-  Geometry *ModelBordaCurva(Geometry *geometry);
-  Geometry *ModelDoisPatches(Geometry *geometry);
-  Geometry *ModelNariz(Geometry *geometry);
-  Geometry *ModelUtahteapot(Geometry *geometry);
+  std::shared_ptr<Geometry> ModelBook(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelPlanBook(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelTresPatches(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelDoisPatchesPlanosCurva1(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelDoisPatchesPlanosCurva(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelCurvaBezier(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelParaboloide(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelPneu(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelLadoDescendente(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelBaseCircular(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelBaseQuadrada(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelBordaCurva(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelDoisPatches(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelNariz(std::shared_ptr<Geometry> geometry);
+  std::shared_ptr<Geometry> ModelUtahteapot(std::shared_ptr<Geometry> geometry);
 };
 
 #endif  // INPUT_OUTPUT_MODELS_3D_H

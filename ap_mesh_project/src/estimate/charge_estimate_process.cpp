@@ -16,7 +16,7 @@ static bool SortByNt(const PatchBezier* lhs, const PatchBezier* rhs) {
 // retonar uma lista de patch de bezier ordenadChargeEstimateProcessestimativa
 // de carga em ordem decrescente.
 std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
-    Geometry* geometry, Timer* timer) {
+    std::shared_ptr<Geometry> geometry, std::shared_ptr<Timer> &timer) {
   std::list<PatchBezier*> list_patch_bezier;
   std::list<PatchBezier*> list_patch_bezier_order;
 
@@ -740,7 +740,7 @@ double ChargeEstimateProcess::CalculateAreaTriangleMedioRad(
 }
 
 double ChargeEstimateProcess::CalculateAreaTriangleMedio(PatchBezier* patch,
-                                                         Timer* timer,
+                                                         std::shared_ptr<Timer> &timer,
                                                          int degree) {
   MeshAdaptive* mesh = new MeshAdaptive;
   SubMesh* sub_mesh = InitialMeshEstimate(patch, degree);
@@ -901,7 +901,7 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
 }
 
 bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
-                                                    Timer* timer, int degree) {
+                                                    std::shared_ptr<Timer> &timer, int degree) {
   GeneratorAdaptive* ger = new GeneratorAdaptive();
 #if USE_OPENMP
   double erro = ger->CalculateErrorGlobalOmp(mesh, timer);

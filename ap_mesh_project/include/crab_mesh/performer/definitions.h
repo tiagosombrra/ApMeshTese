@@ -1,6 +1,9 @@
 #ifndef _PERFORMER_DEFINITIONS_H_
 #define _PERFORMER_DEFINITIONS_H_
 
+#include <memory>
+#include <vector>
+
 #include "../../data/definitions.h"
 
 namespace Performer {
@@ -102,7 +105,7 @@ struct ECrack {
 
 typedef std::list<MeshOptimizer *> MeshOptimizerList;
 
-typedef std::vector<IdManager *> IdManagerVector;
+typedef std::vector<std::shared_ptr<IdManager>> IdManagerVector;
 
 #if USE_C__11
 typedef std::unordered_map<Data::Vertex *, Data::FrontElement *> VFEHashMap;

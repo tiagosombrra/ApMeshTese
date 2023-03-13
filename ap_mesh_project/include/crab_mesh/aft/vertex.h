@@ -1,6 +1,8 @@
 #ifndef _VERTEX_H_
 #define _VERTEX_H_
 
+#include <memory>
+
 #include "../../data/definitions.h"
 #include "edge.h"
 #include "shape.h"
@@ -17,15 +19,6 @@ class Vertex : public Shape {
 
   EdgeSet adjacentEdges;
 
-  // #if USE_OPENGL
-  //     double size;
-  // #endif //#if USE_OPENGL
-
-  // #if DEBUG_MODE
-  //  public:
-  //     double h;
-  // #endif //#if DEBUG_MODE
-
  public:
   Vertex(double x = 0.0, double y = 0.0, long int id = 0);
   ~Vertex();
@@ -35,57 +28,48 @@ class Vertex : public Shape {
   void setPosition(double x, double y);
   double getX();
   double getY();
-  void getPosition(double *x, double *y);
+  void getPosition(std::shared_ptr<double> x, std::shared_ptr<double> y);
 
   // #if USE_OPENGL
   //     void setSize(double size);
   // #endif //#if USE_OPENGL
 
-  void addAdjacentEdge(Edge *e);
-  void removeAdjacentEdge(Edge *e);
+  void addAdjacentEdge(std::shared_ptr<Edge> e);
+  void removeAdjacentEdge(std::shared_ptr<Edge> e);
   EdgeSet getAdjacentEdges();
 
-  void sum(Vertex *v);
+  void sum(std::shared_ptr<Vertex> v);
   void scalarMultiplication(double d);
 
-  double dot(Vertex *v);
-  double cross(Vertex *v);
+  double dot(std::shared_ptr<Vertex> v);
+  double cross(std::shared_ptr<Vertex> v);
 
   double norm();
 
-  double distance(Vertex *v);
+  double distance(std::shared_ptr<Vertex> v);
 
-  double angle(Vertex *v);
+  double angle(std::shared_ptr<Vertex> v);
   double pseudoAngle();
-  double pseudoAngle(Vertex *v);
+  double pseudoAngle(std::shared_ptr<Vertex> v);
   double squarePseudoAngle();
 
   double orientedAngle();
-  double orientedAngle(Vertex *v);
+  double orientedAngle(std::shared_ptr<Vertex> v);
 
-  bool left(Vertex *v);
-  bool right(Vertex *v);
+  bool left(std::shared_ptr<Vertex> v);
+  bool right(std::shared_ptr<Vertex> v);
 
-  double surface(Vertex *v1, Vertex *v2);
-  double orientedSurface(Vertex *v1, Vertex *v2);
+  double surface(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
+  double orientedSurface(std::shared_ptr<Vertex> v1,
+                         std::shared_ptr<Vertex> v2);
 
-  bool counterClockWise(Vertex *v1, Vertex *v2);
-  bool clockWise(Vertex *v1, Vertex *v2);
+  bool counterClockWise(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
+  bool clockWise(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
 
   bool equals(double x, double y);
-  bool matches(Vertex *v);
+  bool matches(std::shared_ptr<Vertex> v);
 
   string getText() override;
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void unhighlight();
-
-  //    void draw();
-  // #if DEBUG_MODE
-  //    void drawCircle();
-  // #endif //#if DEBUG_MODE
-  // #endif //#if USE_OPENGL
 };
 }  // namespace Basics
 }  // namespace Par2DJMesh

@@ -4,7 +4,8 @@
 
 PatchCoons::PatchCoons() : Patch() {}
 
-PatchCoons::PatchCoons(std::shared_ptr<PatchCoons> patch_coons) : Patch(patch_coons) {}
+PatchCoons::PatchCoons(std::shared_ptr<PatchCoons> patch_coons)
+    : Patch(patch_coons) {}
 
 PatchCoons::PatchCoons(const vector<std::shared_ptr<CurveAdaptive>> curves)
     : Patch(), curves_(curves) {}
@@ -20,7 +21,8 @@ void PatchCoons::InsertCurve(std::shared_ptr<CurveAdaptive> curve) {
 
 unsigned int PatchCoons::GetNumBerCurves() const { return (int)curves_.size(); }
 
-std::shared_ptr<CurveAdaptive> PatchCoons::GetCurve(const unsigned int position) {
+std::shared_ptr<CurveAdaptive> PatchCoons::GetCurve(
+    const unsigned int position) {
   // adicionar excessão caso i > curvas.size();
   /*list <Curva*>::iterator it = this->curvas.begin();
 

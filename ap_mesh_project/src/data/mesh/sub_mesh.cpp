@@ -1,55 +1,41 @@
 
 #include "../../../include/data/mesh/sub_mesh.h"
 
+#include <memory>
+
 SubMesh::SubMesh() : patch_(nullptr), nos_({}), elements_({}) {}
 
 SubMesh::~SubMesh() {
   // 1. apaga a lista de nós
   while (!this->nos_.empty()) {
-    NodeAdaptive* noh = this->nos_.back();
+    std::shared_ptr<NodeAdaptive> noh = this->nos_.back();
     this->nos_.pop_back();
-    delete noh;
   }
 
   // 2. apaga a lista de elementos
   while (!this->elements_.empty()) {
-    ElementAdaptive* element = this->elements_.back();
+    std::shared_ptr<ElementAdaptive> element = this->elements_.back();
     this->elements_.pop_back();
-    delete element;
   }
 }
 
-Patch* SubMesh::GetPatch() const { return this->patch_; }
+std::shared_ptr<Patch> SubMesh::GetPatch() const { return this->patch_; }
 
-void SubMesh::SetPatch(Patch* patch) { this->patch_ = patch; }
+void SubMesh::SetPatch(std::shared_ptr<Patch> patch) { this->patch_ = patch; }
 
-NodeAdaptive* SubMesh::GetNoh(const unsigned int position) {
-  /*// adicionar excessão caso i > nos.size();
-  list <Noh*>::iterator it = this->nos.begin();
-
-  advance ( it, i );
-
-  return *it;*/
+std::shared_ptr<NodeAdaptive> SubMesh::GetNoh(const unsigned int position) {
   return (position < this->nos_.size()) ? this->nos_[position] : nullptr;
 }
 
-void SubMesh::SetNoh(NodeAdaptive* noh) { this->nos_.push_back(noh); }
+void SubMesh::SetNoh(std::shared_ptr<NodeAdaptive> noh) {
+  this->nos_.push_back(noh);
+}
 
-ElementAdaptive* SubMesh::GetElement(const unsigned int i) {
-  // adicionar excessão caso i > elementos.size();
-  /*list <Elemento*>::iterator it = this->elementos.begin();
-
-  advance ( it, i );
-
-  return *it;*/
+std::shared_ptr<ElementAdaptive> SubMesh::GetElement(const unsigned int i) {
   return (i < this->elements_.size()) ? this->elements_[i] : nullptr;
 }
 
-void SubMesh::SetElement(ElementAdaptive* element) {
-  //    if (position > this->elementos.size()) {
-  //        this->elementos.resize(position,NULL);
-  //    }
-  //    this->elementos.insert(this->elementos.begin()+position, elem);
+void SubMesh::SetElement(std::shared_ptr<ElementAdaptive> element) {
   this->elements_.push_back(element);
 }
 
@@ -57,4 +43,10 @@ unsigned int SubMesh::GetNumberNos() const { return (unsigned int)nos_.size(); }
 
 unsigned int SubMesh::GetNumberElements() const {
   return (unsigned int)elements_.size();
+}
+
+vector<std::shared_ptr<NodeAdaptive>> SubMesh::GetNos() { return nos_; }
+
+vector<std::shared_ptr<ElementAdaptive>> SubMesh::GetElements() {
+  return elements_;
 }

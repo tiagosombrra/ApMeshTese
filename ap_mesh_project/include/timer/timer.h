@@ -6,6 +6,7 @@
 
 #include <cstdio>
 #include <fstream>
+#include <memory>
 #include <sstream>
 
 #include "../data/definitions.h"
@@ -27,7 +28,7 @@ extern std::string NUMBER_PROCESS;
 //[9]= Timer send and recv process
 //[10]= Full
 
-class Timer {
+class Timer : public std::enable_shared_from_this<Timer> {
  public:
   Timer();
   Timer(int size_rank, int size_thread, int size_type);

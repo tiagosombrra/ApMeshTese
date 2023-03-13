@@ -37,7 +37,7 @@ struct traits<DiagonalProduct<MatrixType, DiagonalType, ProductOrder> >
     // should be the one
     //_Vectorizable = bool(int(MatrixType::Flags)&PacketAccessBit) &&
     //((!_PacketOnDiag) || (_SameTypes &&
-    //bool(int(DiagonalType::DiagonalVectorType::Flags)&PacketAccessBit))),
+    // bool(int(DiagonalType::DiagonalVectorType::Flags)&PacketAccessBit))),
     _Vectorizable = bool(int(MatrixType::Flags) & PacketAccessBit) &&
                     _SameTypes &&
                     (_ScalarAccessOnDiag ||

@@ -1,6 +1,8 @@
 #ifndef DATA_ELEMENT_ADAPTIVE_H
 #define DATA_ELEMENT_ADAPTIVE_H
 
+#include <cstdint>
+
 #include "vector_adaptive.h"
 
 class NodeAdaptive;
@@ -10,18 +12,18 @@ class ElementAdaptive {
   ElementAdaptive();
   virtual ~ElementAdaptive();
 
-  unsigned long GetId();
-  void SetId(const unsigned long id);
+  std::uint64_t GetId();
+  void SetId(const std::uint64_t id);
   double GetArea() const;
   VectorAdaptive GetVectorNormal() const;
 
   virtual void CalculateArea() = 0;
   virtual void CalculateNormal() = 0;
-  virtual NodeAdaptive GetNoh(unsigned const int) const = 0;
+  virtual NodeAdaptive GetNoh(const std::uint64_t) const = 0;
   virtual double GetAngle(const NodeAdaptive& n) = 0;
 
  protected:
-  unsigned long id_;
+  std::uint64_t id_;
   double area_;
   VectorAdaptive vector_normal_;
 };

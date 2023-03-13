@@ -1,12 +1,15 @@
 #include "../../../include/data/curve/curve_adaptive_parametric.h"
 
+#include <memory>
+
 extern double DELTA;
 extern double TOLERANCE;
 
 // Global function
-vector<CurveAdaptiveParametric*> ptr_aux;
+vector<std::shared_ptr<CurveAdaptiveParametric>> ptr_aux;
 
-bool Compare(PointAdaptive* point1, PointAdaptive* point2) {
+bool Compare(std::shared_ptr<PointAdaptive> point1,
+             std::shared_ptr<PointAdaptive> point2) {
   double parameter1, parameter2;
 
 #if USE_OPENMP
@@ -39,7 +42,7 @@ CurveAdaptiveParametric::CurveAdaptiveParametric(const PointAdaptive point0,
 }
 
 CurveAdaptiveParametric::CurveAdaptiveParametric(
-    CurveAdaptiveParametric* curve_adaptive_parametric)
+    std::shared_ptr<CurveAdaptiveParametric> curve_adaptive_parametric)
     : CurveAdaptive(curve_adaptive_parametric) {
   this->point0_ = curve_adaptive_parametric->point0_;
   this->point1_ = curve_adaptive_parametric->point1_;
@@ -132,22 +135,22 @@ double CurveAdaptiveParametric::CalculateParametricLength(double parameter1,
 double CurveAdaptiveParametric::FindParameterByPoint(
     const PointAdaptive& point) {
   struct DistanceFunction : public Data::Numerical::EquationRootFunction {
-    const PointAdaptive* point;
-    CurveAdaptiveParametric* curva;
+    std::shared_ptr<PointAdaptive> point;
+    std::shared_ptr<CurveAdaptiveParametric> curve;
 
-    double min() { return 0.0; };
-    double max() { return 1.0; };
+    double min() { return 0.0; }
+    double max() { return 1.0; }
 
     using Data::Numerical::EquationRootFunction::f;
     double f(double parameter) {
-      PointAdaptive point1 = curva->FindPointByParameter(parameter);
+      PointAdaptive point1 = curve->FindPointByParameter(parameter);
       return point->CalculateDistance(point1);
-    };
+    }
   };
 
   DistanceFunction distance_function;
-  distance_function.curva = this;
-  distance_function.point = &point;
+  distance_function.curve = this->shared_from_this();
+  distance_function.point = std::make_shared<PointAdaptive>(point);
 
   Data::Numerical::ClosestBisectionEquationRoot closet_bisection_eq_root;
 
@@ -157,73 +160,6 @@ double CurveAdaptiveParametric::FindParameterByPoint(
       closet_bisection_eq_root.execute(&distance_function, return_function);
 
   return return_function ? parameter : -1.0;
-
-  //    // end markos
-
-  //        long double d_min = 1.0e50; // distância mínima entre p e a curva
-  //        long double di = 0; // distância do palpite até p
-  //        long double t_min = 0.0; // parâmetro do pondo da curva mais próximo
-  //        a p Ponto *pi = new Ponto; // ponto de palpite
-
-  //        for ( long double t = 0.0; t <= 1.0; t += DELTA )
-  //        {
-  //            *pi = Parameterize ( t );
-  //            di = pi->distanciaPara ( p );
-  //            if ( di < d_min )
-  //            {
-  //                    d_min = di;
-  //                    t_min = t;
-  //            }
-  //        }
-
-  //        delete pi;
-
-  //        return t_min;
-
-  //	/* Método utilizando projeção vetorial, de forma
-  //		semelhante ao método da bisseção. Quanto mais próximo
-  //		p estiver dos extremos, menor será a precisão */
-
-  //	double frp = DELTA; // fator de reposicionamento
-  //	double tm = 0.5; // método da bisseção
-  //	double delta_t = 0.0; // o quanto o parâmetro terá de percorrer
-  //	double d_point_0_ = this->point_0_.distanciaPara ( p ); // distância de
-  // point_0_ a p 	double d_P1 = this->point_1_.distanciaPara ( p ); //
-  // distância de point_1_ a p
-
-  //	// o ponto está muuuuito próximo de point_0_ ?
-  //	if ( d_point_0_ <= DELTA )
-  //		tm = 0.0; // retorna tm = 0.0
-
-  //	// o ponto está muuuuito próximo de point_1_ ?
-  //	if ( d_P1 <= DELTA )
-  //		tm = 1.0; // retorna tm = 1.0
-
-  //	Ponto Si;
-
-  //	do
-  //	{
-  //		// 1. cria Si (modificou T)
-  //		Si = this->Parameterize ( tm );
-
-  //		// 2. cria Vj
-  //		Vetor Vj ( Si, p );
-
-  //		// 3. cria Tu (modificou T)
-  //		Vetor Tu ( this->Qt ( tm ) );
-
-  //		// 4. calcula a projecao de Vj em Tu
-  //		delta_t = Vj ^ Tu;
-
-  //		// 5. calcula 'tm' (este eh o ultimo valor de 'tm' calculado)
-  //		tm += delta_t * frp;
-  //	}
-  //	while ( Si.distanciaPara ( p ) > TOLERANCE );
-
-  //	if ( tm < DELTA ) tm = 0.0; // t está muito próximo a 0
-  //	else if ( tm > ( 1.0 - DELTA ) ) tm = 1.0; // t está muito próximo a 1
-
-  //	return tm; // retorna o ultimo valor de 'tm' calculado
 }
 
 // encontra as coordenadas 3D de um ponto p de parâmetro t
@@ -335,7 +271,7 @@ void CurveAdaptiveParametric::SortPointsByParameters() {
 #if USE_OPENMP
   ptr_aux[omp_get_thread_num()] = this;
 #else
-  ptr_aux[0] = this;
+  ptr_aux[0] = this->shared_from_this();
 #endif  // USE_OPENMP
 
   this->points_.sort(Compare);

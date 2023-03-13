@@ -1,5 +1,7 @@
 #include "../../include/data/geometry.h"
 
+#include <memory>
+
 Geometry::Geometry() {}
 
 void Geometry::InsertCurve(std::shared_ptr<CurveAdaptive> curve) {
@@ -18,7 +20,9 @@ std::shared_ptr<CurveAdaptive> Geometry::GetCurve(const unsigned int position) {
   return (position < this->curves_.size()) ? this->curves_[position] : nullptr;
 }
 
-void Geometry::InsertPatch(std::shared_ptr<Patch> patch) { this->patches_.push_back(patch); }
+void Geometry::InsertPatch(std::shared_ptr<Patch> patch) {
+  this->patches_.push_back(patch);
+}
 
 void Geometry::InsertPatch(std::shared_ptr<Patch> patch, int position) {
   this->patches_[position] = patch;
@@ -34,16 +38,22 @@ std::shared_ptr<Patch> Geometry::GetPatch(const unsigned int position) {
 }
 
 std::shared_ptr<CurveAdaptiveParametricBezier> Geometry::VerifyCurveGeometry(
-    std::shared_ptr<PointAdaptive> point0, std::shared_ptr<PointAdaptive> point1, std::shared_ptr<PointAdaptive> point2,
+    std::shared_ptr<PointAdaptive> point0,
+    std::shared_ptr<PointAdaptive> point1,
+    std::shared_ptr<PointAdaptive> point2,
     std::shared_ptr<PointAdaptive> point3) {
   for (auto it = curves_.begin(); it != curves_.end(); it++) {
     std::shared_ptr<CurveAdaptiveParametricBezier> curve =
         std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(*it);
-    if (curve && curve->GetPoint0() == *point0 && curve->GetPoint1() == *point1 &&
-        curve->GetPoint2() == *point2 && curve->GetPoint3() == *point3) {
+    if (curve && curve->GetPoint0() == *point0 &&
+        curve->GetPoint1() == *point1 && curve->GetPoint2() == *point2 &&
+        curve->GetPoint3() == *point3) {
       return curve;
     }
   }
   return nullptr;
 }
 
+std::vector<std::shared_ptr<CurveAdaptive>> Geometry::GetCurves() {
+  return curves_;
+}

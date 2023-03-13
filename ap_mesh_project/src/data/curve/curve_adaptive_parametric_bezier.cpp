@@ -1,5 +1,7 @@
 #include "../../../include/data/curve/curve_adaptive_parametric_bezier.h"
 
+#include <memory>
+
 CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier()
     : CurveAdaptiveParametric() {
   // 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Bezier
@@ -166,7 +168,8 @@ CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier(
 }
 
 CurveAdaptiveParametricBezier::CurveAdaptiveParametricBezier(
-    CurveAdaptiveParametricBezier *curve_adaptive_parametric_bezier)
+    std::shared_ptr<CurveAdaptiveParametricBezier>
+        curve_adaptive_parametric_bezier)
     : CurveAdaptiveParametric(curve_adaptive_parametric_bezier) {
   this->point2_ = curve_adaptive_parametric_bezier->point2_;
   this->point3_ = curve_adaptive_parametric_bezier->point3_;

@@ -6,6 +6,8 @@
 #include <list>
 #include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "../adapter/adapter.h"
 #include "../crab_mesh/performer/ranged_id_manager.h"
@@ -34,9 +36,9 @@ extern int RANK_MPI;
 extern int SIZE_MPI;
 extern double TOLERANCE;
 extern double EPSYLON;
-extern vector<CurveAdaptiveParametric *> ptr_aux;
+extern vector<std::shared_ptr<CurveAdaptiveParametric>> ptr_aux;
 
-class GeneratorAdaptive {
+class GeneratorAdaptive : public std::enable_shared_from_this<GeneratorAdaptive> {
  public:
   // gera a malha inicial e insere na lista de malhas do modelo
   // a lista de pontos da curva é preenchida durante a geração
@@ -49,18 +51,18 @@ class GeneratorAdaptive {
 
 #if USE_MPI
   int Execute(char *argv[], std::shared_ptr<Timer> &timer, MPI_Status status);
-  std::list<PatchBezier *> EstimateChargeofPatches(
+  std::list<std:shared_ptr<PatchBezier>> EstimateChargeofPatches(
       std::shared_ptr<Geometry> geometry, std::shared_ptr<Timer> &timer);
-  std::vector<CurveAdaptive *> CreateVectorOfCurves(
-      std::list<PatchBezier *> patches);
-  std::list<PatchBezier *> OrderPatchesDistribProcess(
-      std::list<PatchBezier *> patches);
+  std::vector<std::shared_ptr<CurveAdaptive>> CreateVectorOfCurves(
+      std::list<std:shared_ptr<PatchBezier>> patches);
+  std::list<std:shared_ptr<PatchBezier>> OrderPatchesDistribProcess(
+      std::list<std:shared_ptr<PatchBezier>> patches);
   bool VerifyCurve(PointAdaptive p0, PointAdaptive p1, PointAdaptive p2,
-                   PointAdaptive p3, std::vector<CurveAdaptive *> curves);
+                   PointAdaptive p3, std::vector<std::shared_ptr<CurveAdaptive>> curves);
   void CalculateEstimateProcessElements(int size_process,
-                                        std::list<PatchBezier *> patches);
-  std::list<PatchBezier *>::iterator GetIteratorListPatches(
-      int size_patches, std::list<PatchBezier *> patches);
+                                        std::list<std:shared_ptr<PatchBezier>> patches);
+  std::list<std:shared_ptr<PatchBezier>>::iterator GetIteratorListPatches(
+      int size_patches, std::list<std:shared_ptr<PatchBezier>> patches);
   void Generator(double patches[], int size_patches,
                  std::shared_ptr<Timer> &timer, int id_range = 1024,
                  int size_rank = 1, int size_thread = 1);
@@ -71,16 +73,16 @@ class GeneratorAdaptive {
                  int id_range = 1024, int size_rank = 1, int size_thread = 1);
 #endif
 
-  SubMesh *InitialMesh(PatchCoons *, Performer::IdManager *id_manager);
+  std::shared_ptr<SubMesh> InitialMesh(std::shared_ptr<PatchCoons>, std::shared_ptr<Performer::IdManager> id_manager);
   double ErrorGlobal(std::shared_ptr<MeshAdaptive> mesh,
                      std::shared_ptr<Timer> &timer, int rank = 0,
                      int size_thread = 0);
-  Performer::IdManager *MakeIdManager(const Parallel::TMCommunicator *comm,
+  std::shared_ptr<Performer::IdManager> MakeIdManager(const std::shared_ptr<Parallel::TMCommunicator> comm,
                                       Int id) const;
-  Performer::IdManager *MakeIdManagerOmp(const Parallel::TMCommunicator *comm,
+  std::shared_ptr<Performer::IdManager> MakeIdManagerOmp(const std::shared_ptr<Parallel::TMCommunicator> comm,
                                          Int id) const;
-  Performer::IdManager *MakeIdManagerElementOmp(
-      const Parallel::TMCommunicator *comm, Int id) const;
+  std::shared_ptr<Performer::IdManager> MakeIdManagerElementOmp(
+      const std::shared_ptr<Parallel::TMCommunicator> comm, Int id) const;
 
   void WriteMesh(std::shared_ptr<MeshAdaptive> mesh, int step);
   void WriteMesh(std::shared_ptr<MeshAdaptive> mesh, int step,
@@ -101,8 +103,8 @@ class GeneratorAdaptive {
                     vector<double> error_step, int rank = -1);
 
 #if USE_OPENMP
-  virtual SubMesh *GeneratorInitialMeshOmp(PatchCoons *,
-                                           Performer::IdManager *id_Manager);
+  virtual std::shared_ptr<SubMesh> GeneratorInitialMeshOmp(std::shared_ptr<PatchCoons>,
+                                           std::shared_ptr<Performer::IdManager> id_Manager);
   virtual double CalculateErrorGlobalOmp(std::shared_ptr<MeshAdaptive> mesh,
                                          std::shared_ptr<Timer> &timer,
                                          int rank = 0, int size_thread = 0);
@@ -118,7 +120,7 @@ class GeneratorAdaptive {
 #if USE_MPI
   Model model_;
   std::shared_ptr<Geometry> geometry_;
-  PatchCoons *patch_;
+  std::shared_ptr<PatchCoons>patch_;
 #endif  // USE_MPI
 
   std::shared_ptr<MeshAdaptive> mesh_;
@@ -127,10 +129,10 @@ class GeneratorAdaptive {
 #if (USE_MPI || USE_OPENMP)
   std::shared_ptr<ApMeshCommunicator> communicator_;
 #else
-  Parallel::TMCommunicator *communicator_;
+  std::shared_ptr<Parallel::TMCommunicator> communicator_;
 #endif  // USE_MPI
 
-  Performer::IdManager *id_manager_;
+  std::shared_ptr<Performer::IdManager> id_manager_;
   Performer::IdManagerVector id_managers_;
   mutable ULInt id_off_set_;
   ULInt id_range_;
@@ -138,7 +140,7 @@ class GeneratorAdaptive {
  private:
   MeshVector save_mesh_;
   ErrorMeshVector save_error_mesh_;
-  vector<double> error_step_;
+  std::vector<double> error_step_;
   Adapter adapter_;
 
   int step_;

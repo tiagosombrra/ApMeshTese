@@ -1,5 +1,7 @@
 #include "../../include/input_output/patch_reader.h"
 
+#include <memory>
+
 PatchReader::PatchReader() {
   // patch = new BezierPatch();
 }
@@ -694,32 +696,33 @@ std::list<std::shared_ptr<PatchBezier>> PatchReader::LoaderBezierPatchFile(
 
 std::shared_ptr<Geometry> PatchReader::ReaderFilePatches(
     std::shared_ptr<Geometry> geometry, string file_name) {
-  std::unique_ptr<PatchReader> patch_reader = std::make_unique<PatchReader>();
+  std::shared_ptr<PatchReader> patch_reader = std::make_shared<PatchReader>();
   auto patches = patch_reader->LoaderBezierPatchFile(file_name);
 
-  std::shared_ptr<PointAdaptive> p00;
-  std::shared_ptr<PointAdaptive> p01;
-  std::shared_ptr<PointAdaptive> p02;
-  std::shared_ptr<PointAdaptive> p03;
-  std::shared_ptr<PointAdaptive> p10;
-  std::shared_ptr<PointAdaptive> p11;
-  std::shared_ptr<PointAdaptive> p12;
-  std::shared_ptr<PointAdaptive> p13;
-  std::shared_ptr<PointAdaptive> p20;
-  std::shared_ptr<PointAdaptive> p21;
-  std::shared_ptr<PointAdaptive> p22;
-  std::shared_ptr<PointAdaptive> p23;
-  std::shared_ptr<PointAdaptive> p30;
-  std::shared_ptr<PointAdaptive> p31;
-  std::shared_ptr<PointAdaptive> p32;
-  std::shared_ptr<PointAdaptive> p33;
-  std::shared_ptr<CurveAdaptive> patch_c1;
-  std::shared_ptr<CurveAdaptive> patch_c2;
-  std::shared_ptr<CurveAdaptive> patch_c3;
-  std::shared_ptr<CurveAdaptive> patch_c4;
-
+  int i = 0;
   for (std::list<std::shared_ptr<PatchBezier>>::iterator it = patches.begin();
        it != patches.end(); it++) {
+    std::shared_ptr<PointAdaptive> p00;
+    std::shared_ptr<PointAdaptive> p01;
+    std::shared_ptr<PointAdaptive> p02;
+    std::shared_ptr<PointAdaptive> p03;
+    std::shared_ptr<PointAdaptive> p10;
+    std::shared_ptr<PointAdaptive> p11;
+    std::shared_ptr<PointAdaptive> p12;
+    std::shared_ptr<PointAdaptive> p13;
+    std::shared_ptr<PointAdaptive> p20;
+    std::shared_ptr<PointAdaptive> p21;
+    std::shared_ptr<PointAdaptive> p22;
+    std::shared_ptr<PointAdaptive> p23;
+    std::shared_ptr<PointAdaptive> p30;
+    std::shared_ptr<PointAdaptive> p31;
+    std::shared_ptr<PointAdaptive> p32;
+    std::shared_ptr<PointAdaptive> p33;
+    std::shared_ptr<CurveAdaptive> patch_c1;
+    std::shared_ptr<CurveAdaptive> patch_c2;
+    std::shared_ptr<CurveAdaptive> patch_c3;
+    std::shared_ptr<CurveAdaptive> patch_c4;
+
     p00 = std::make_shared<VertexAdaptive>((*it)->GetPt00().GetX(),
                                            (*it)->GetPt00().GetY(),
                                            (*it)->GetPt00().GetZ());
@@ -789,35 +792,41 @@ std::shared_ptr<Geometry> PatchReader::ReaderFilePatches(
     p33->SetId((*it)->GetPt33().GetId());
 
     if (geometry->VerifyCurveGeometry(p00, p10, p20, p30) == nullptr) {
-      patch_c1 = std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p10, *p20, *p30);
+      patch_c1 = std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p10,
+                                                                 *p20, *p30);
       geometry->InsertCurve(patch_c1);
     } else {
       patch_c1 = geometry->VerifyCurveGeometry(p00, p10, p20, p30);
     }
 
     if (geometry->VerifyCurveGeometry(p30, p31, p32, p33) == nullptr) {
-      patch_c2 = std::make_shared<CurveAdaptiveParametricBezier>(*p30, *p31, *p32, *p33);
+      patch_c2 = std::make_shared<CurveAdaptiveParametricBezier>(*p30, *p31,
+                                                                 *p32, *p33);
       geometry->InsertCurve(patch_c2);
     } else {
       patch_c2 = geometry->VerifyCurveGeometry(p30, p31, p32, p33);
     }
 
     if (geometry->VerifyCurveGeometry(p03, p13, p23, p33) == nullptr) {
-      patch_c3 = std::make_shared<CurveAdaptiveParametricBezier>(*p03, *p13, *p23, *p33);
+      patch_c3 = std::make_shared<CurveAdaptiveParametricBezier>(*p03, *p13,
+                                                                 *p23, *p33);
       geometry->InsertCurve(patch_c3);
     } else {
       patch_c3 = geometry->VerifyCurveGeometry(p03, p13, p23, p33);
     }
 
     if (geometry->VerifyCurveGeometry(p00, p01, p02, p03) == nullptr) {
-      patch_c4 = std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p01, *p02, *p03);
+      patch_c4 = std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p01,
+                                                                 *p02, *p03);
       geometry->InsertCurve(patch_c4);
     } else {
       patch_c4 = geometry->VerifyCurveGeometry(p00, p01, p02, p03);
     }
+    i++;
+    std::cout << "cont: " << i << std::endl;
 
-    (*it) = std::make_shared<PatchBezier>(patch_c1, patch_c2, patch_c3, patch_c4, *p11, *p21,
-                            *p12, *p22);
+    (*it) = std::make_shared<PatchBezier>(patch_c1, patch_c2, patch_c3,
+                                          patch_c4, *p11, *p21, *p12, *p22);
 
     geometry->InsertPatch((*it));
   }

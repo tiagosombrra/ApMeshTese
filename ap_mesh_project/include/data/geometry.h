@@ -9,7 +9,7 @@
 #include "../data/curve/curve_adaptive_parametric_bezier.h"
 #include "../data/patch/patch_hermite.h"
 
-class Geometry {
+class Geometry : public std::enable_shared_from_this<Geometry> {
  public:
   Geometry();
   ~Geometry() = default;
@@ -27,9 +27,10 @@ class Geometry {
   std::shared_ptr<CurveAdaptiveParametricBezier> VerifyCurveGeometry(
       std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>,
       std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>);
+  std::vector<std::shared_ptr<CurveAdaptive>> GetCurves();
 
  protected:
-  vector<std::shared_ptr<CurveAdaptive>> curves_;
-  vector<std::shared_ptr<Patch>> patches_;
+  std::vector<std::shared_ptr<CurveAdaptive>> curves_;
+  std::vector<std::shared_ptr<Patch>> patches_;
 };
 #endif

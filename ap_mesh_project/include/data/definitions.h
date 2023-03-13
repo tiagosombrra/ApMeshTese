@@ -3,6 +3,8 @@
 
 /// Global defines
 
+#include <memory>
+
 #ifndef TRUE
 #define TRUE 1
 #endif  // #ifndef TRUE
@@ -448,31 +450,34 @@ enum Position { UNKNOWN = 0, IN = 1, ON, OUT };
 
 typedef std::set<ULInt> ULIntSet;
 typedef std::set<Real> RealSet;
-typedef std::set<Identifiable *> IdentifiableSet;
-typedef std::set<Point *> PointSet;
-typedef std::set<Vertex *> VertexSet;
-typedef std::set<FrontElement *> FrontElementSet;
-typedef std::set<Element *> ElementSet;
-typedef std::set<GraphNode *> GraphNodeSet;
+typedef std::set<std::shared_ptr<Identifiable>> IdentifiableSet;
+typedef std::set<std::shared_ptr<Point>> PointSet;
+typedef std::set<std::shared_ptr<Vertex>> VertexSet;
+typedef std::set<std::shared_ptr<FrontElement>> FrontElementSet;
+typedef std::set<std::shared_ptr<Element>> ElementSet;
+typedef std::set<std::shared_ptr<GraphNode>> GraphNodeSet;
 
 #if USE_SET
-// typedef std::multiset<FrontElement *, Front> FrontElementMultiSet;
-typedef std::multiset<FrontElement *, AbstractFront> FrontElementMultiSet;
+// typedef std::multiset<std::shared_ptr<FrontElement>, Front>
+// FrontElementMultiSet;
+typedef std::multiset<std::shared_ptr<FrontElement>, AbstractFront>
+    FrontElementMultiSet;
 #endif  // #if USE_SET
 
 #if USE_C__11
 typedef std::unordered_set<ULInt> ULIntHash;
 typedef std::unordered_set<Real> RealHash;
-typedef std::unordered_set<Identifiable *> IdentifiableHash;
-typedef std::unordered_set<Point *> PointHash;
-typedef std::unordered_set<Vertex *> VertexHash;
-typedef std::unordered_set<FrontElement *> FrontElementHash;
-typedef std::unordered_set<Element *> ElementHash;
-typedef std::unordered_set<GraphNode *> GraphNodeHash;
+typedef std::unordered_set<std::shared_ptr<Identifiable>> IdentifiableHash;
+typedef std::unordered_set<std::shared_ptr<Point>> PointHash;
+typedef std::unordered_set<std::shared_ptr<Vertex>> VertexHash;
+typedef std::unordered_set<std::shared_ptr<FrontElement>> FrontElementHash;
+typedef std::unordered_set<std::shared_ptr<Element>> ElementHash;
+typedef std::unordered_set<std::shared_ptr<GraphNode>> GraphNodeHash;
 
 #if USE_SET
-// typedef std::unordered_multiset<FrontElement *, Front> FrontElementMultiHash;
-typedef std::unordered_multiset<FrontElement *, AbstractFront>
+// typedef std::unordered_multiset<std::shared_ptr<FrontElement>, Front>
+// FrontElementMultiHash;
+typedef std::unordered_multiset<std::shared_ptr<FrontElement>, AbstractFront>
     FrontElementMultiHash;
 #endif  // #if USE_SET
 #endif  // #if USE_C__11
@@ -480,27 +485,27 @@ typedef std::unordered_multiset<FrontElement *, AbstractFront>
 typedef std::list<Int> IntList;
 typedef std::list<UInt> UIntList;
 typedef std::list<ULInt> ULIntList;
-typedef std::list<Identifiable *> IdentifiableList;
+typedef std::list<std::shared_ptr<Identifiable>> IdentifiableList;
 #if USE_EXPERIMENTAL_3
 typedef std::list<Point2D> Point2DObjList;
 typedef std::list<Point3D> Point3DObjList;
 #else
 typedef std::list<Point> PointObjList;
 #endif  // #if USE_EXPERIMENTAL_3
-typedef std::list<Point *> PointList;
+typedef std::list<std::shared_ptr<Point>> PointList;
 #if USE_GUI
-typedef std::list<Drawable *> DrawableList;
+typedef std::list<std::shared_ptr<Drawable>> DrawableList;
 #endif  // #if USE_GUI
-typedef std::list<Edge *> EdgeList;
-typedef std::list<Box *> BoxList;
-typedef std::list<Polygon *> PolygonList;
-typedef std::list<Vertex *> VertexList;
-typedef std::list<FrontElement *> FrontElementList;
-typedef std::list<Element *> ElementList;
-typedef std::list<Boundary *> BoundaryList;
-typedef std::list<Front *> FrontList;
-typedef std::list<GraphNode *> GraphNodeList;
-typedef std::list<Mesh *> MeshList;
+typedef std::list<std::shared_ptr<Edge>> EdgeList;
+typedef std::list<std::shared_ptr<Box>> BoxList;
+typedef std::list<std::shared_ptr<Polygon>> PolygonList;
+typedef std::list<std::shared_ptr<Vertex>> VertexList;
+typedef std::list<std::shared_ptr<FrontElement>> FrontElementList;
+typedef std::list<std::shared_ptr<Element>> ElementList;
+typedef std::list<std::shared_ptr<Boundary>> BoundaryList;
+typedef std::list<std::shared_ptr<Front>> FrontList;
+typedef std::list<std::shared_ptr<GraphNode>> GraphNodeList;
+typedef std::list<std::shared_ptr<Mesh>> MeshList;
 
 typedef std::vector<bool> BoolVector;
 typedef std::vector<Real> RealVector;
@@ -513,28 +518,28 @@ typedef std::vector<Point3D> Point3DObjVector;
 #else
 typedef std::vector<Point> PointObjVector;
 #endif  // #if USE_EXPERIMENTAL_3
-typedef std::vector<Point *> PointVector;
+typedef std::vector<std::shared_ptr<Point>> PointVector;
 typedef std::vector<PointVector> PointMatrix;
-typedef std::vector<Vector *> VectorVector;
-typedef std::vector<Polygon *> PolygonVector;
-typedef std::vector<Vertex *> VertexVector;
-typedef std::vector<FrontElement *> FrontElementVector;
-typedef std::vector<Element *> ElementVector;
-typedef std::vector<GraphNode *> GraphNodeVector;
+typedef std::vector<std::shared_ptr<Vector>> VectorVector;
+typedef std::vector<std::shared_ptr<Polygon>> PolygonVector;
+typedef std::vector<std::shared_ptr<Vertex>> VertexVector;
+typedef std::vector<std::shared_ptr<FrontElement>> FrontElementVector;
+typedef std::vector<std::shared_ptr<Element>> ElementVector;
+typedef std::vector<std::shared_ptr<GraphNode>> GraphNodeVector;
 
 typedef std::map<ULInt, UShort> UShortMap;
 typedef std::map<ULInt, Int> IntMap;
 typedef std::map<ULInt, UInt> UIntMap;
 typedef std::map<ULInt, ULInt> ULIntMap;
 typedef std::map<ULInt, Real> RealMap;
-typedef std::map<ULInt, Point *> PointMap;
-typedef std::map<ULInt, Vertex *> VertexMap;
-typedef std::map<ULInt, FrontElement *> FrontElementMap;
-typedef std::map<ULInt, Element *> ElementMap;
+typedef std::map<ULInt, std::shared_ptr<Point>> PointMap;
+typedef std::map<ULInt, std::shared_ptr<Vertex>> VertexMap;
+typedef std::map<ULInt, std::shared_ptr<FrontElement>> FrontElementMap;
+typedef std::map<ULInt, std::shared_ptr<Element>> ElementMap;
 typedef std::map<ULInt, enum Data::Position> PositionMap;
-typedef std::map<ULInt, GraphNode *> GraphNodeMap;
+typedef std::map<ULInt, std::shared_ptr<GraphNode>> GraphNodeMap;
 #if USE_GUI
-typedef std::multimap<GLuint, Drawable *> DrawableMultiMap;
+typedef std::multimap<GLuint, std::shared_ptr<Drawable>> DrawableMultiMap;
 #endif  // #if USE_GUI
 
 #if USE_C__11
@@ -543,12 +548,13 @@ typedef std::unordered_map<ULInt, Int> IntHashMap;
 typedef std::unordered_map<ULInt, UInt> UIntHashMap;
 typedef std::unordered_map<ULInt, ULInt> ULIntHashMap;
 typedef std::unordered_map<ULInt, Real> RealHashMap;
-typedef std::unordered_map<ULInt, Point *> PointHashMap;
-typedef std::unordered_map<ULInt, Vertex *> VertexHashMap;
-typedef std::unordered_map<ULInt, FrontElement *> FrontElementHashMap;
-typedef std::unordered_map<ULInt, Element *> ElementHashMap;
+typedef std::unordered_map<ULInt, std::shared_ptr<Point>> PointHashMap;
+typedef std::unordered_map<ULInt, std::shared_ptr<Vertex>> VertexHashMap;
+typedef std::unordered_map<ULInt, std::shared_ptr<FrontElement>>
+    FrontElementHashMap;
+typedef std::unordered_map<ULInt, std::shared_ptr<Element>> ElementHashMap;
 typedef std::unordered_map<ULInt, enum Data::Position> PositionHashMap;
-typedef std::unordered_map<ULInt, GraphNode *> GraphNodeHashMap;
+typedef std::unordered_map<ULInt, std::shared_ptr<GraphNode>> GraphNodeHashMap;
 #endif  // #if USE_C__11
 
 #if USE_C__11
@@ -558,7 +564,9 @@ typedef std::tuple<Real, Real, Real, Real> R4Tuple;
 typedef std::tuple<UInt, UInt> UI2Tuple;
 typedef std::tuple<ULInt, ULInt> ULI2Tuple;
 typedef std::tuple<ULInt, ULInt, ULInt, ULInt> ULI4Tuple;
-typedef std::tuple<Vertex *, FrontElementList *, Element *> ElementTuple;
+typedef std::tuple<std::shared_ptr<Vertex>, std::shared_ptr<FrontElementList>,
+                   std::shared_ptr<Element>>
+    ElementTuple;
 #else
 struct R2Tuple {
   Real values[2];
@@ -579,9 +587,9 @@ struct ULI4Tuple {
   ULInt values[4];
 };
 struct ElementTuple {
-  Vertex *v;
-  FrontElementList *fes;
-  Element *e;
+  std::shared_ptr<Vertex> v;
+  std::shared_ptr<FrontElementList> fes;
+  std::std::shared_ptr<shared_pt> Element > e;
 };
 #endif  // #if USE_C__11
 
@@ -748,18 +756,18 @@ class AdvancingFront;
 
 // Definicoes de listas e conjuntos
 namespace Basics {
-typedef list<Vertex *> VertexList;
-typedef list<Edge *> EdgeList;
-typedef list<Face *> FaceList;
+typedef list<std::shared_ptr<Vertex>> VertexList;
+typedef list<std::shared_ptr<Edge>> EdgeList;
+typedef list<std::shared_ptr<Face>> FaceList;
 
-typedef set<Vertex *> VertexSet;
-typedef set<Edge *> EdgeSet;
-typedef set<Face *> FaceSet;
+typedef set<std::shared_ptr<Vertex>> VertexSet;
+typedef set<std::shared_ptr<Edge>> EdgeSet;
+typedef set<std::shared_ptr<Face>> FaceSet;
 }  // namespace Basics
 
 namespace AFT {
-typedef list<Boundary *> BoundaryList;
-typedef list<QuadtreeCell *> QuadtreeCellList;
+typedef list<std::shared_ptr<Boundary>> BoundaryList;
+typedef list<std::shared_ptr<QuadtreeCell>> QuadtreeCellList;
 }  // namespace AFT
 
 namespace AFT {

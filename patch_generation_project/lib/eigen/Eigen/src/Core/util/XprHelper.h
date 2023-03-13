@@ -140,7 +140,7 @@ class compute_matrix_flags {
                        ((!is_dynamic_size_storage) &&
                         (((MaxCols * MaxRows * int(sizeof(Scalar))) % 16) == 0))
 #else
-                        0
+                       0
 #endif
 
                        ||
@@ -148,7 +148,7 @@ class compute_matrix_flags {
 #if EIGEN_ALIGN
                        is_dynamic_size_storage
 #else
-                        0
+                       0
 #endif
 
                        ))

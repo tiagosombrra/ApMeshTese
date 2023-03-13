@@ -1,33 +1,31 @@
 #include "../../../include/crab_mesh/aft/boundary.h"
 
+#include <memory>
+
 Boundary::Boundary() : Shape() {
   lastVertexId = lastEdgeId = 0;
 
-  first = NULL;
+  first = nullptr;
 }
 
 Boundary::~Boundary() {
   while (!edges.empty()) {
-    Edge *e = edges.front();
+    std::shared_ptr<Edge> e = edges.front();
     edges.pop_front();
 
-    e->setVertices(NULL, NULL);
-
-    delete e;
+    e->setVertices(nullptr, nullptr);
   }
 
   while (!boundary.empty()) {
-    Vertex *v = boundary.front();
+    std::shared_ptr<Vertex> v = boundary.front();
     boundary.pop_front();
-
-    delete v;
   }
 }
 
-Edge *Boundary::makeEdge(Vertex *v) {
-  Edge *e = NULL;
+std::shared_ptr<Edge> Boundary::makeEdge(std::shared_ptr<Vertex> v) {
+  std::shared_ptr<Edge> e = nullptr;
 
-  e = new Edge(boundary.back(), v, ++lastEdgeId);
+  e = std::make_shared<Edge>(boundary.back(), v, ++lastEdgeId);
 
   boundary.back()->addAdjacentEdge(e);
   v->addAdjacentEdge(e);
@@ -57,10 +55,11 @@ long int Boundary::getLastVertexId() { return lastVertexId; }
 
 long int Boundary::getLastEdgeId() { return lastEdgeId; }
 
-Vertex *Boundary::addVertex(double x, double y, CurveAdaptiveParametric *c) {
-  Vertex *v = NULL;
+std::shared_ptr<Vertex> Boundary::addVertex(
+    double x, double y, std::shared_ptr<CurveAdaptiveParametric> c) {
+  std::shared_ptr<Vertex> v = nullptr;
 
-  v = new Vertex(x, y, ++lastVertexId);
+  v = std::make_shared<Vertex>(x, y, ++lastVertexId);
 
   // #if USE_OPENGL
   //     //figura
@@ -73,7 +72,7 @@ Vertex *Boundary::addVertex(double x, double y, CurveAdaptiveParametric *c) {
   if (!first) {
     first = v;
   } else if (!boundary.empty()) {
-    Edge *e = makeEdge(v);
+    std::shared_ptr<Edge> e = makeEdge(v);
 
     e->setCurva(c);
 
@@ -99,8 +98,8 @@ Vertex *Boundary::addVertex(double x, double y, CurveAdaptiveParametric *c) {
   return v;
 }
 
-Vertex *Boundary::addVertex(long int id, double x, double y) {
-  Vertex *v = addVertex(x, y, NULL);
+std::shared_ptr<Vertex> Boundary::addVertex(long int id, double x, double y) {
+  std::shared_ptr<Vertex> v = addVertex(x, y, nullptr);
 
   if (v) {
     v->setId(id);
@@ -113,8 +112,9 @@ Vertex *Boundary::addVertex(long int id, double x, double y) {
   return v;
 }
 
-bool Boundary::close(CurveAdaptiveParametric *c) {
-  Edge *e = new Edge(boundary.back(), first, ++lastEdgeId);
+bool Boundary::close(std::shared_ptr<CurveAdaptiveParametric> c) {
+  std::shared_ptr<Edge> e =
+      std::make_shared<Edge>(boundary.back(), first, ++lastEdgeId);
 
   e->setCurva(c);
 
@@ -123,7 +123,7 @@ bool Boundary::close(CurveAdaptiveParametric *c) {
   boundary.back()->addAdjacentEdge(e);
   first->addAdjacentEdge(e);
 
-  first = NULL;
+  first = nullptr;
 
   ////figura
   // #if USE_OPENGL
@@ -138,17 +138,17 @@ bool Boundary::close(CurveAdaptiveParametric *c) {
   return true;
 }
 
-Edge *Boundary::getEdge(long int id) {
+std::shared_ptr<Edge> Boundary::getEdge(long int id) {
   for (EdgeList::iterator iter = edges.begin(); iter != edges.end(); iter++) {
     if ((*iter)->getId() == id) {
       return (*iter);
     }
   }
 
-  return NULL;
+  return nullptr;
 }
 
-Vertex *Boundary::getVertex(long int id) {
+std::shared_ptr<Vertex> Boundary::getVertex(long int id) {
   for (VertexList::iterator iter = boundary.begin(); iter != boundary.end();
        iter++) {
     if ((*iter)->getId() == id) {
@@ -156,7 +156,7 @@ Vertex *Boundary::getVertex(long int id) {
     }
   }
 
-  return NULL;
+  return nullptr;
 }
 
 void Boundary::getBox(double *minX, double *minY, double *maxX, double *maxY) {
@@ -186,7 +186,7 @@ void Boundary::getBox(double *minX, double *minY, double *maxX, double *maxY) {
   }
 }
 
-bool Boundary::belongs(Edge *e) {
+bool Boundary::belongs(std::shared_ptr<Edge> e) {
   for (EdgeList::iterator iter = edges.begin(); iter != edges.end(); iter++) {
     if ((*iter) == e) {
       return true;
@@ -196,7 +196,7 @@ bool Boundary::belongs(Edge *e) {
   return false;
 }
 
-bool Boundary::belongs(Vertex *v1, Vertex *v2) {
+bool Boundary::belongs(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) {
   for (EdgeList::iterator iter = edges.begin(); iter != edges.end(); iter++) {
     if ((*iter)->equals(v1, v2)) {
       return true;
@@ -211,39 +211,3 @@ string Boundary::getText() {
 
   return s;
 }
-
-// #if USE_OPENGL
-//  void Boundary::highlight()
-//{
-
-//}
-
-// void Boundary::unhighlight()
-//{
-
-//}
-
-// void Boundary::draw()
-//{
-//    for (EdgeList::iterator iter = edges.begin();
-//         iter != edges.end(); iter++)
-//    {
-//        (*iter)->draw();
-//    }
-
-//    for (VertexList::iterator iter = boundary.begin();
-//         iter != boundary.end(); iter++)
-//    {
-//        (*iter)->draw();
-//    }
-//}
-
-// void Boundary::drawNormals()
-//{
-//    for (EdgeList::iterator iter = edges.begin();
-//         iter != edges.end(); iter++)
-//    {
-//        (*iter)->drawNormal();
-//    }
-//}
-// #endif //#if USE_OPENGL

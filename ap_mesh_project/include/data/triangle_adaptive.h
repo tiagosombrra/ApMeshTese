@@ -1,26 +1,32 @@
 #ifndef DATA_TRIANGLE_ADAPTIVE_H
 #define DATA_TRIANGLE_ADAPTIVE_H
 
+#include <cstdint>
+#include <memory>
 #include <tuple>
 
 #include "element_adaptive.h"
 #include "node_adaptive.h"
 #include "vector_adaptive.h"
 
-class TriangleAdaptive : public ElementAdaptive {
+class TriangleAdaptive : public ElementAdaptive,
+                         std::enable_shared_from_this<TriangleAdaptive> {
  public:
   TriangleAdaptive();
   // será construído no sentido n1->n2->n3
-  TriangleAdaptive(NodeAdaptive* n1, NodeAdaptive* n2, NodeAdaptive* n3);
+  TriangleAdaptive(std::shared_ptr<NodeAdaptive> n1,
+                   std::shared_ptr<NodeAdaptive> n2,
+                   std::shared_ptr<NodeAdaptive> n3);
   virtual ~TriangleAdaptive();
 
   void CalculateArea() override;    // OBS: Não normalizar a normal!!!!
   void CalculateNormal() override;  // OBS: Não normalizar a normal!
 
-  NodeAdaptive GetNoh(unsigned const int position) const override;
+  NodeAdaptive GetNoh(const std::uint64_t position) const override;
   double GetAngle(const NodeAdaptive& n) override;
 
-  void ReplaceNode(const NodeAdaptive* old_node, NodeAdaptive* new_node);
+  void ReplaceNode(const std::shared_ptr<NodeAdaptive> old_node,
+                   std::shared_ptr<NodeAdaptive> new_node);
   double CalculateQualityTriangle();
 
   double CalculateAngleN1();  // calcula o ângulo no nó 1
@@ -37,9 +43,9 @@ class TriangleAdaptive : public ElementAdaptive {
   void SetParametersN3(const std::tuple<double, double>& parameters_n3);
 
  protected:
-  NodeAdaptive* n1_;
-  NodeAdaptive* n2_;
-  NodeAdaptive* n3_;
+  std::shared_ptr<NodeAdaptive> n1_;
+  std::shared_ptr<NodeAdaptive> n2_;
+  std::shared_ptr<NodeAdaptive> n3_;
 
   double angle_n1_;  // o ângulo no nó 1
   double angle_n2_;  // o ângulo no nó 2

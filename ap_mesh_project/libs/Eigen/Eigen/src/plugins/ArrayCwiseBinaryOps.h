@@ -140,7 +140,7 @@ EIGEN_MAKE_SCALAR_BINARY_OP_ONTHERIGHT(pow, pow)
  */
 template <typename T>
 const CwiseBinaryOp<internal::scalar_pow_op<Scalar, T>, Derived, Constant<T> >
-pow(const T& exponent) const;
+pow(const T &exponent) const;
 #endif
 
 // TODO code generating macros could be moved to Macros.h and could include
@@ -292,7 +292,7 @@ EIGEN_MAKE_SCALAR_BINARY_OP(operator+, sum)
  */
 template <typename T>
 const CwiseBinaryOp<internal::scalar_sum_op<Scalar, T>, Derived, Constant<T> >
-operator+(const T& scalar) const;
+operator+(const T &scalar) const;
 /** \returns an expression of \a expr with each coeff incremented by the
  * constant \a scalar
  *
@@ -302,7 +302,7 @@ operator+(const T& scalar) const;
 template <typename T>
 friend const CwiseBinaryOp<internal::scalar_sum_op<T, Scalar>, Constant<T>,
                            Derived>
-operator+(const T& scalar, const StorageBaseType& expr);
+operator+(const T &scalar, const StorageBaseType &expr);
 #endif
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -322,7 +322,7 @@ EIGEN_MAKE_SCALAR_BINARY_OP(operator-, difference)
 template <typename T>
 const CwiseBinaryOp<internal::scalar_difference_op<Scalar, T>, Derived,
                     Constant<T> >
-operator-(const T& scalar) const;
+operator-(const T &scalar) const;
 /** \returns an expression of the constant matrix of value \a scalar decremented
  * by the coefficients of \a expr
  *
@@ -332,7 +332,7 @@ operator-(const T& scalar) const;
 template <typename T>
 friend const CwiseBinaryOp<internal::scalar_difference_op<T, Scalar>,
                            Constant<T>, Derived>
-operator-(const T& scalar, const StorageBaseType& expr);
+operator-(const T &scalar, const StorageBaseType &expr);
 #endif
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -347,7 +347,7 @@ EIGEN_MAKE_SCALAR_BINARY_OP_ONTHELEFT(operator/, quotient)
 template <typename T>
 friend inline const CwiseBinaryOp<internal::scalar_quotient_op<T, Scalar>,
                                   Constant<T>, Derived>
-operator/(const T& s, const StorageBaseType& a);
+operator/(const T &s, const StorageBaseType &a);
 #endif
 
 /** \returns an expression of the coefficient-wise ^ operator of *this and \a

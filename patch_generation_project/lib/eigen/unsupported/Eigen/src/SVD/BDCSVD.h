@@ -364,15 +364,15 @@ void BDCSVD<MatrixType>::copyUV(MatrixXr naiveU, MatrixXr naiveV,
 // submatrix we are currently working on.
 
 //@param firstCol : The Index of the first column of the submatrix of m_computed
-//and for m_naiveU;
+// and for m_naiveU;
 //@param lastCol : The Index of the last column of the submatrix of m_computed
-//and for m_naiveU;
+// and for m_naiveU;
 // lastCol + 1 - firstCol is the size of the submatrix.
 //@param firstRowW : The Index of the first row of the matrix W that we are to
-//change. (see the reference paper section 1 for more information on W)
+// change. (see the reference paper section 1 for more information on W)
 //@param firstRowW : Same as firstRowW with the column.
 //@param shift : Each time one takes the left submatrix, one must add 1 to the
-//shift. Why? Because! We actually want the last column of the U submatrix
+// shift. Why? Because! We actually want the last column of the U submatrix
 // to become the first column (*coeff) and to shift all the other columns to the
 // right. There are more details on the reference paper.
 template <typename MatrixType>

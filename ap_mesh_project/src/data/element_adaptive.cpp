@@ -1,12 +1,14 @@
 #include "../../include/data/element_adaptive.h"
 
+#include <cstdint>
+
 ElementAdaptive::ElementAdaptive() : id_(0), area_(0) {}
 
 ElementAdaptive::~ElementAdaptive() {}
 
-void ElementAdaptive::SetId(const unsigned long id) { this->id_ = id; }
+void ElementAdaptive::SetId(const std::uint64_t id) { this->id_ = id; }
 
-unsigned long ElementAdaptive::GetId() { return this->id_; }
+std::uint64_t ElementAdaptive::GetId() { return this->id_; }
 
 double ElementAdaptive::GetArea() const { return this->area_; }
 

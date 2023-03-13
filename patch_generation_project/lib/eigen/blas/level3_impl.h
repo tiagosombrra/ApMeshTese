@@ -765,7 +765,9 @@ int EIGEN_BLAS_FUNC(hemm)(char *side, char *uplo, int *m, int *n,
     if (UPLO(*uplo) == UP)
       matrix(c, *m, *n, *ldc) +=
           alpha * matrix(b, *m, *n, *ldb) *
-          matrix(a, *n, *n, *lda).selfadjointView<Upper>(); /*internal::product_selfadjoint_matrix<Scalar,DenseIndex,ColMajor,false,false,
+          matrix(a, *n, *n, *lda)
+              .selfadjointView<
+                  Upper>(); /*internal::product_selfadjoint_matrix<Scalar,DenseIndex,ColMajor,false,false,
 RowMajor,true,Conj,  ColMajor>
 ::run(*m, *n, b, *ldb, a, *lda, c, *ldc, alpha);*/
     else if (UPLO(*uplo) == LO)

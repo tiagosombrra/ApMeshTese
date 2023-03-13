@@ -4,6 +4,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <list>
+#include <memory>
 
 #include "../data/element_adaptive.h"
 #include "../data/node_adaptive.h"
@@ -21,7 +22,7 @@ class CurvatureDiscrete : public Curvature {
 
   NodeAdaptive noh_;
   // lista dos elementos de 'm' incidentes em 'n'
-  std::list<ElementAdaptive*> elements_;
+  std::list<std::shared_ptr<ElementAdaptive>> elements_;
   // área dos elementos incidentes em 'n'
   double a_;
   // assume M_PI ou 2 * M_PI

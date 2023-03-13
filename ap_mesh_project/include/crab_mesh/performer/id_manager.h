@@ -6,7 +6,7 @@
 namespace Performer {
 class IdManager {
  public:
-  IdManager(ULInt id = 1, UInt size = 1);
+  explicit IdManager(ULInt id = 1, UInt size = 1);
   virtual ~IdManager();
 
   virtual void setId(UInt i, ULInt id);

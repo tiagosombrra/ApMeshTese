@@ -427,7 +427,7 @@ struct unaligned_dense_assignment_loop<false> {
   static EIGEN_DONT_INLINE void run(Kernel& kernel, Index start, Index end)
 #else
   template <typename Kernel>
-  EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void run(Kernel &kernel,
+  EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void run(Kernel& kernel,
                                                         Index start, Index end)
 #endif
   {

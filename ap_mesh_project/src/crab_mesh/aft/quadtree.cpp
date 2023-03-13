@@ -1,6 +1,9 @@
 #include "../../../include/crab_mesh/aft/quadtree.h"
 
-void escreve(Quadtree *q, int i) {
+#include <cstdint>
+#include <memory>
+
+void escreve(std::shared_ptr<Quadtree> q, int i) {
   static int passo = 0;
 
   string s;
@@ -42,8 +45,8 @@ void escreve(Quadtree *q, int i) {
 
   for (QuadtreeCellList::iterator iter = folhas.begin(); iter != folhas.end();
        iter++) {
-    Vertex *min = (*iter)->getMin();
-    Vertex *max = (*iter)->getMax();
+    std::shared_ptr<Vertex> min((*iter)->getMin());
+    std::shared_ptr<Vertex> max((*iter)->getMax());
 
     Vertex v1(min->getX(), min->getY(), ++id);
     Vertex v2(max->getX(), min->getY(), ++id);
@@ -126,52 +129,28 @@ void escreve(Quadtree *q, int i) {
        << passo << endl;
 }
 
-Quadtree::Quadtree(Boundary *boundary, double factor) : Shape() {
+Quadtree::Quadtree(std::shared_ptr<Boundary> boundary, double factor)
+    : Shape() {
   setBoundary(boundary);
   setFactor(factor);
-  setRoot(NULL);
-
-  // #if USE_OPENGL
-  //     setColor(0.0, 1.0, 0.0);
-  //     ////figura
-  //     //setColor(0.0, 0.0, 0.0);
-  //     ////endfigura
-  // #endif //#if USE_OPENGL
+  setRoot(nullptr);
 
   lastVertexId = lastEdgeId = lastFaceId = 0;
 }
 
-Quadtree::~Quadtree() {
-  // quando boundary == NULL, entao a quadtree mate estah envolvida.
-  // nesse caso, os root->min e root->max sao os mesmos para as
-  // duas quadtrees, assim como a boundary. logo, root->min, root->max e
-  // boundary sao apagadas somente por uma das quadtrees
-
-  if (root) {
-    if (boundary) {
-      delete root->getMin();
-      delete root->getMax();
-    }
-
-    delete root;
-  }
-
-  if (boundary) {
-    delete boundary;
-  }
-
-  leaves.clear();
-}
+Quadtree::~Quadtree() { leaves.clear(); }
 
 void Quadtree::setFactor(double factor) { this->factor = factor; }
 
 double Quadtree::getFactor() { return factor; }
 
-void Quadtree::setBoundary(Boundary *boundary) { this->boundary = boundary; }
+void Quadtree::setBoundary(std::shared_ptr<Boundary> boundary) {
+  this->boundary = boundary;
+}
 
-Boundary *Quadtree::getBoundary() { return boundary; }
+std::shared_ptr<Boundary> Quadtree::getBoundary() { return boundary; }
 
-void Quadtree::setRoot(QuadtreeCell *root) {
+void Quadtree::setRoot(std::shared_ptr<QuadtreeCell> root) {
   this->root = root;
 
   if (root) {
@@ -182,7 +161,7 @@ void Quadtree::setRoot(QuadtreeCell *root) {
     breadthSearch.push_back(root);
 
     while (!breadthSearch.empty()) {
-      QuadtreeCell *cell = breadthSearch.front();
+      std::shared_ptr<QuadtreeCell> cell = breadthSearch.front();
       breadthSearch.pop_front();
 
       if (cell->subdivided()) {
@@ -197,9 +176,9 @@ void Quadtree::setRoot(QuadtreeCell *root) {
   }
 }
 
-QuadtreeCell *Quadtree::getRoot() { return root; }
+std::shared_ptr<QuadtreeCell> Quadtree::getRoot() { return root; }
 
-void Quadtree::addLeaves(QuadtreeCell *cell) {
+void Quadtree::addLeaves(std::shared_ptr<QuadtreeCell> cell) {
   leaves.remove(cell);
 
   leaves.push_back(cell->getChild(QUAD_BOTTOM_LEFT));
@@ -212,14 +191,18 @@ QuadtreeCellList Quadtree::getLeaves() { return leaves; }
 
 int Quadtree::getNumCells() { return root ? root->getNumCells() : 0; }
 
-Vertex *Quadtree::getMin() { return root ? root->getMin() : NULL; }
+std::shared_ptr<Vertex> Quadtree::getMin() {
+  return root ? root->getMin() : nullptr;
+}
 
-Vertex *Quadtree::getMax() { return root ? root->getMax() : NULL; }
+std::shared_ptr<Vertex> Quadtree::getMax() {
+  return root ? root->getMax() : nullptr;
+}
 
-long int Quadtree::getCellId() { return ++id; }
+std::uint64_t Quadtree::getCellId() { return ++id; }
 
-void Quadtree::findCell(Edge *e) {
-  QuadtreeCell *q = root->findCell(e);
+void Quadtree::findCell(std::shared_ptr<Edge> e) {
+  std::shared_ptr<QuadtreeCell> q = root->findCell(e);
 
   if (!q) {
     return;
@@ -234,11 +217,11 @@ void Quadtree::findCell(Edge *e) {
   }
 }
 
-bool Quadtree::in(Vertex *v) { return root->in(v); }
+bool Quadtree::in(std::shared_ptr<Vertex> v) { return root->in(v); }
 
-bool Quadtree::on(Vertex *v) { return root->on(v); }
+bool Quadtree::on(std::shared_ptr<Vertex> v) { return root->on(v); }
 
-bool Quadtree::out(Vertex *v) { return root->out(v); }
+bool Quadtree::out(std::shared_ptr<Vertex> v) { return root->out(v); }
 
 enum MethodStatus Quadtree::generate(const FaceList &oldmesh) {
   // 1o Passo
@@ -261,10 +244,11 @@ enum MethodStatus Quadtree::generate(const FaceList &oldmesh) {
       maxX = midX + spanY / 2.0;
     }
 
-    Vertex *min = new Vertex(minX, minY);
-    Vertex *max = new Vertex(maxX, maxY);
+    std::shared_ptr<Vertex> min = std::make_shared<Vertex>(minX, minY);
+    std::shared_ptr<Vertex> max = std::make_shared<Vertex>(maxX, maxY);
 
-    root = new QuadtreeCell(getCellId(), /*mainDrive, */ this, min, max);
+    root = std::make_shared<QuadtreeCell>(getCellId(), this->shared_from_this(),
+                                          min, max);
   }
 
   leaves.push_back(root);
@@ -299,10 +283,10 @@ enum MethodStatus Quadtree::refineToLevel() {
   // 2o Passo
   EdgeList edges = boundary->getEdges();
 
-  long int minLevel = __LONG_MAX__;
+  std::uint64_t minLevel = __LONG_MAX__;
 
   for (EdgeList::iterator iter = edges.begin(); iter != edges.end(); iter++) {
-    long int level = (*iter)->getCell()->getLevel();
+    std::uint64_t level = (*iter)->getCell()->getLevel();
 
     if (level < minLevel) {
       minLevel = level;
@@ -318,7 +302,7 @@ enum MethodStatus Quadtree::refineAccordingToNeighbors() {
   QuadtreeCellList oldLeaves = leaves;
 
   while (!oldLeaves.empty()) {
-    QuadtreeCell *cell = oldLeaves.front();
+    std::shared_ptr<QuadtreeCell> cell = oldLeaves.front();
     oldLeaves.pop_front();
 
     if (cell->subdivideAccordingToNeighbors()) {
@@ -347,11 +331,11 @@ bool Quadtree::execute(const FaceList &oldmesh) {
   return true;
 }
 
-long int Quadtree::vertexId() { return ++lastVertexId; }
+std::uint64_t Quadtree::vertexId() { return ++lastVertexId; }
 
-long int Quadtree::edgeId() { return ++lastEdgeId; }
+std::uint64_t Quadtree::edgeId() { return ++lastEdgeId; }
 
-long int Quadtree::faceId() { return ++lastFaceId; }
+std::uint64_t Quadtree::faceId() { return ++lastFaceId; }
 
 EdgeList Quadtree::getFront() { return front; }
 
@@ -361,13 +345,13 @@ VertexList Quadtree::getVertices() { return vertices; }
 
 FaceList Quadtree::getMesh() { return mesh; }
 
-void Quadtree::add(Vertex *v) { vertices.push_back(v); }
+void Quadtree::add(std::shared_ptr<Vertex> v) { vertices.push_back(v); }
 
-void Quadtree::add(Edge *e) { edges.push_back(e); }
+void Quadtree::add(std::shared_ptr<Edge> e) { edges.push_back(e); }
 
-void Quadtree::add(Face *f) { mesh.push_back(f); }
+void Quadtree::add(std::shared_ptr<Face> f) { mesh.push_back(f); }
 
-void Quadtree::addFront(Edge *e) {
+void Quadtree::addFront(std::shared_ptr<Edge> e) {
   front.push_back(e);
 
   e->setFree(true);
@@ -420,7 +404,7 @@ string Quadtree::getText() {
 //{
 //    if (root)
 //    {
-//        /*Vertex *v[4] = {
+//        /*std::shared_ptr<Vertex> v[4] = {
 //            new Vertex(root->getMin()->getX(), root->getMin()->getY()),
 //            new Vertex(root->getMax()->getX(), root->getMin()->getY()),
 //            new Vertex(root->getMax()->getX(), root->getMax()->getY()),
@@ -444,10 +428,10 @@ string Quadtree::getText() {
 //        e[2]->draw();
 //        e[3]->draw();
 
-//        e[0]->setVertices(NULL, NULL);
-//        e[1]->setVertices(NULL, NULL);
-//        e[2]->setVertices(NULL, NULL);
-//        e[3]->setVertices(NULL, NULL);
+//        e[0]->setVertices(nullptr, nullptr);
+//        e[1]->setVertices(nullptr, nullptr);
+//        e[2]->setVertices(nullptr, nullptr);
+//        e[3]->setVertices(nullptr, nullptr);
 
 //        delete e[0];
 //        delete e[1];

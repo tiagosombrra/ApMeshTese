@@ -42,8 +42,8 @@ class LU : public FullPivLU<MatrixType> {
                                          // parameter
       MatrixType::MaxColsAtCompileTime   // the kernel is a subspace of the
                                          // domain space, whose dimension is the
-                                        // number of columns of the original
-                                        // matrix
+                                         // number of columns of the original
+                                         // matrix
       >
       KernelResultType;
 

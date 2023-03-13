@@ -11,7 +11,7 @@ class Patch {
  public:
   Patch();
   explicit Patch(std::shared_ptr<Patch> patch);
-  ~Patch() = default;
+  virtual ~Patch() = default;
 
   unsigned int GetId() const;
   void SetId(unsigned int id);

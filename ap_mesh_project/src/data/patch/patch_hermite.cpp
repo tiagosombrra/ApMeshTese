@@ -37,8 +37,10 @@ PatchHermite::PatchHermite(std::shared_ptr<PatchHermite> patch_hermite)
 //		C3
 //	C4		C2
 //		C1
-PatchHermite::PatchHermite(std::shared_ptr<CurveAdaptive> curve1, std::shared_ptr<CurveAdaptive> curve2,
-                           std::shared_ptr<CurveAdaptive> curve3, std::shared_ptr<CurveAdaptive> curve4,
+PatchHermite::PatchHermite(std::shared_ptr<CurveAdaptive> curve1,
+                           std::shared_ptr<CurveAdaptive> curve2,
+                           std::shared_ptr<CurveAdaptive> curve3,
+                           std::shared_ptr<CurveAdaptive> curve4,
                            VectorAdaptive tw00, VectorAdaptive tw10,
                            VectorAdaptive tw01, VectorAdaptive tw11,
                            bool signal_curve1, bool signal_curve2,
@@ -63,14 +65,18 @@ PatchHermite::PatchHermite(std::shared_ptr<CurveAdaptive> curve1, std::shared_pt
 
   // 2. Coloca o Patch na lista das curvas
   //
-  auto curve_1 = std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve1);
-  curve_1->InsertPatch(this);
-  auto curve_2 = std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve2);
-  curve_2->InsertPatch(this);
-  auto curve_3 = std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve3);
-  curve_3->InsertPatch(this);
-  auto curve_4 = std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve4);
-  curve_4->InsertPatch(this);
+  auto curve_1 =
+      std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve1);
+  curve_1->InsertPatch(this->shared_from_this());
+  auto curve_2 =
+      std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve2);
+  curve_2->InsertPatch(this->shared_from_this());
+  auto curve_3 =
+      std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve3);
+  curve_3->InsertPatch(this->shared_from_this());
+  auto curve_4 =
+      std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve4);
+  curve_4->InsertPatch(this->shared_from_this());
 
   // 3. Seta os atributos de acordo com as curvas
   //
@@ -430,7 +436,7 @@ VectorAdaptive PatchHermite::Qv(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
-  //	 -> ALOCA um Vetor (retorna ele)
+  //	-> ALOCA um Vetor (retorna ele)
   //  -> ALTERA a matriz U !!!
   //  -> ALTERA a matriz V !!!
   //
@@ -460,7 +466,7 @@ VectorAdaptive PatchHermite::Quu(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
-  //	 -> ALOCA um Vetor (retorna ele)
+  //	-> ALOCA um Vetor (retorna ele)
   //  -> ALTERA a matriz U !!!
   //  -> ALTERA a matriz V !!!
   //
@@ -492,7 +498,7 @@ VectorAdaptive PatchHermite::Quv(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
-  //	 -> ALOCA um Vetor (retorna ele)
+  //	-> ALOCA um Vetor (retorna ele)
   //  -> ALTERA a matriz U !!!
   //  -> ALTERA a matriz V !!!
   //

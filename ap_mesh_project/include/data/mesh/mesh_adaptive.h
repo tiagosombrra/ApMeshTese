@@ -1,7 +1,9 @@
-#ifndef DATA_MESH_MESH_ADAPTIVE_H
-#define DATA_MESH_MESH_ADAPTIVE_H
+// Copyright (c) 2023 Tiago Guimarães Sombra. Todos os direitos reservados.
+#ifndef AP_MESH_PROJECT_INCLUDE_DATA_MESH_MESH_ADAPTIVE_H_
+#define AP_MESH_PROJECT_INCLUDE_DATA_MESH_MESH_ADAPTIVE_H_
 
 #include <iostream>
+#include <memory>
 #include <vector>
 
 #include "sub_mesh.h"
@@ -11,16 +13,18 @@ class MeshAdaptive {
   MeshAdaptive();
   ~MeshAdaptive() = default;
 
-  void InsertSubMeshAdaptiveByPosition(SubMesh* sub_mesh_adaptive,
-                                       const signed int position);
-  void InsertSubMeshAdaptive(SubMesh* sub_mesh_adaptive);
+  void InsertSubMeshAdaptiveByPosition(
+      std::shared_ptr<SubMesh> sub_mesh_adaptive, const signed int position);
+  void InsertSubMeshAdaptive(std::shared_ptr<SubMesh> sub_mesh_adaptive);
   void RemoveSubMeshAdaptive();
   unsigned int GetNumberSubMeshesAdaptive() const;
-  SubMesh* GetSubMeshAdaptiveByPosition(const unsigned int position);
+  std::shared_ptr<SubMesh> GetSubMeshAdaptiveByPosition(
+      const unsigned int position);
   void ResizeSubMeshAdaptiveByPosition(const signed int new_size);
+  std::vector<std::shared_ptr<SubMesh>> GetSubMeshAdaptive();
 
  protected:
-  vector<SubMesh*> sub_meshes_;
+  vector<std::shared_ptr<SubMesh>> sub_meshes_;
 };
 
-#endif  // DATA_MESH_MESH_ADAPTIVE_H
+#endif  // AP_MESH_PROJECT_INCLUDE_DATA_MESH_MESH_ADAPTIVE_H_

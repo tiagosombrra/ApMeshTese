@@ -37,7 +37,7 @@ set noclip points set clip one set noclip two set
     0 set x2label "" offset 0,
     0 set timefmt "%d/%m/%y\n%H:%M" set xrange
     [10:1000] noreverse nowriteback set x2range [*:*] noreverse nowriteback
-    #(currently [-10:10])set ylabel "MFLOPS" offset 0,
+#(currently[- 10 : 10]) set ylabel "MFLOPS" offset 0,
     0 set y2label "" offset 0,
     0 set yrange [*:*] noreverse nowriteback #(currently [-10:10])set y2range
     [*:*] noreverse nowriteback #(currently [-10:10])set zlabel "" offset 0,

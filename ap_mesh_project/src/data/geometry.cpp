@@ -2,11 +2,11 @@
 
 Geometry::Geometry() {}
 
-void Geometry::InsertCurve(CurveAdaptive *curve) {
+void Geometry::InsertCurve(std::shared_ptr<CurveAdaptive> curve) {
   this->curves_.push_back(curve);
 }
 
-void Geometry::InsertCurve(CurveAdaptive *curve, int position) {
+void Geometry::InsertCurve(std::shared_ptr<CurveAdaptive> curve, int position) {
   this->curves_[position] = curve;
 }
 
@@ -14,13 +14,13 @@ unsigned int Geometry::GetNumberCurves() const {
   return static_cast<int>(curves_.size());
 }
 
-CurveAdaptive *Geometry::GetCurve(const unsigned int position) {
+std::shared_ptr<CurveAdaptive> Geometry::GetCurve(const unsigned int position) {
   return (position < this->curves_.size()) ? this->curves_[position] : nullptr;
 }
 
-void Geometry::InsertPatch(Patch *patch) { this->patches_.push_back(patch); }
+void Geometry::InsertPatch(std::shared_ptr<Patch> patch) { this->patches_.push_back(patch); }
 
-void Geometry::InsertPatch(Patch *patch, int position) {
+void Geometry::InsertPatch(std::shared_ptr<Patch> patch, int position) {
   this->patches_[position] = patch;
 }
 
@@ -28,27 +28,22 @@ unsigned int Geometry::GetNumberPatches() const {
   return static_cast<int>(patches_.size());
 }
 
-Patch *Geometry::GetPatch(const unsigned int position) {
+std::shared_ptr<Patch> Geometry::GetPatch(const unsigned int position) {
   return (position < this->patches_.size()) ? this->patches_[position]
                                             : nullptr;
 }
 
-CurveAdaptiveParametricBezier *Geometry::VerifyCurveGeometry(
-    PointAdaptive *point0, PointAdaptive *point1, PointAdaptive *point2,
-    PointAdaptive *point3) {
-  for (vector<CurveAdaptive *>::iterator it = this->curves_.begin();
-       it != this->curves_.end(); it++) {
-    if (static_cast<CurveAdaptiveParametricBezier *>(*it)->GetPoint0().
-        operator==(point0) &&
-        static_cast<CurveAdaptiveParametricBezier *>(*it)->GetPoint1().
-        operator==(point1) &&
-        static_cast<CurveAdaptiveParametricBezier *>(*it)->GetPoint2().
-        operator==(point2) &&
-        static_cast<CurveAdaptiveParametricBezier *>(*it)->GetPoint3().
-        operator==(point3)) {
-      return static_cast<CurveAdaptiveParametricBezier *>(*it);
+std::shared_ptr<CurveAdaptiveParametricBezier> Geometry::VerifyCurveGeometry(
+    std::shared_ptr<PointAdaptive> point0, std::shared_ptr<PointAdaptive> point1, std::shared_ptr<PointAdaptive> point2,
+    std::shared_ptr<PointAdaptive> point3) {
+  for (auto it = curves_.begin(); it != curves_.end(); it++) {
+    std::shared_ptr<CurveAdaptiveParametricBezier> curve =
+        std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(*it);
+    if (curve && curve->GetPoint0() == *point0 && curve->GetPoint1() == *point1 &&
+        curve->GetPoint2() == *point2 && curve->GetPoint3() == *point3) {
+      return curve;
     }
   }
-
   return nullptr;
 }
+

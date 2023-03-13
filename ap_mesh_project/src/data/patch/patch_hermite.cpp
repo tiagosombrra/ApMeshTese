@@ -5,7 +5,7 @@ extern unsigned int I_MAX;
 
 PatchHermite::PatchHermite() : PatchCoons() {}
 
-PatchHermite::PatchHermite(PatchHermite* patch_hermite)
+PatchHermite::PatchHermite(std::shared_ptr<PatchHermite> patch_hermite)
     : PatchCoons(patch_hermite) {
   this->pt00_ = patch_hermite->pt00_;
   this->pt01_ = patch_hermite->pt01_;
@@ -37,8 +37,8 @@ PatchHermite::PatchHermite(PatchHermite* patch_hermite)
 //		C3
 //	C4		C2
 //		C1
-PatchHermite::PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
-                           CurveAdaptive* curve3, CurveAdaptive* curve4,
+PatchHermite::PatchHermite(std::shared_ptr<CurveAdaptive> curve1, std::shared_ptr<CurveAdaptive> curve2,
+                           std::shared_ptr<CurveAdaptive> curve3, std::shared_ptr<CurveAdaptive> curve4,
                            VectorAdaptive tw00, VectorAdaptive tw10,
                            VectorAdaptive tw01, VectorAdaptive tw11,
                            bool signal_curve1, bool signal_curve2,
@@ -63,39 +63,31 @@ PatchHermite::PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
 
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurveAdaptiveParametricHermite*>(curve1)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricHermite*>(curve2)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricHermite*>(curve3)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricHermite*>(curve4)->InsertPatch(this);
+  auto curve_1 = std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve1);
+  curve_1->InsertPatch(this);
+  auto curve_2 = std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve2);
+  curve_2->InsertPatch(this);
+  auto curve_3 = std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve3);
+  curve_3->InsertPatch(this);
+  auto curve_4 = std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve4);
+  curve_4->InsertPatch(this);
 
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->pt00_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve1)->GetPoint0();
-  this->pt01_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve3)->GetPoint0();
-  this->pt10_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve1)->GetPoint1();
-  this->pt11_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve3)->GetPoint1();
+  this->pt00_ = curve_1->GetPoint0();
+  this->pt01_ = curve_3->GetPoint0();
+  this->pt10_ = curve_1->GetPoint1();
+  this->pt11_ = curve_3->GetPoint1();
 
-  this->qv00_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve4)->GetVector0();
-  this->qv01_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve4)->GetVector1();
-  this->qv10_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve2)->GetVector0();
-  this->qv11_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve2)->GetVector1();
+  this->qv00_ = curve_4->GetVector0();
+  this->qv01_ = curve_4->GetVector1();
+  this->qv10_ = curve_2->GetVector0();
+  this->qv11_ = curve_2->GetVector1();
 
-  this->qu00_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve1)->GetVector0();
-  this->qu01_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve3)->GetVector0();
-  this->qu10_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve1)->GetVector1();
-  this->qu11_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve3)->GetVector1();
+  this->qu00_ = curve_1->GetVector0();
+  this->qu01_ = curve_3->GetVector0();
+  this->qu10_ = curve_1->GetVector1();
+  this->qu11_ = curve_3->GetVector1();
 
   this->tw00_ = tw00;
   this->tw01_ = tw01;

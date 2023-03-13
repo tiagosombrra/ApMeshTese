@@ -11,7 +11,7 @@ extern double DISCRETIZATION_CURVE_FACTOR_INTERNAL;
 
 #if USE_OPENMP
 list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
-    CurveAdaptive *curve, Performer::IdManager *id_manager,
+    std::shared_ptr<CurveAdaptive> curve, Performer::IdManager *id_manager,
     double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
@@ -23,7 +23,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
   // ponto médio do segmentos
   PointAdaptive midpoint;
 
-  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
+  static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -51,13 +51,13 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
 
     // 1.2.2. Calcule o ponto médio do segmento
     midpoint =
-        static_cast<CurveAdaptiveParametric *>(curve)
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)
             ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
     midpoint.SetId(id_manager->next(0));
 
     // 1.2.2.1 Encontre o parâmetro do ponto médio
     midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->FindParameterByPoint(
             midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
@@ -74,20 +74,20 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
     lenght_par = lenght_new / curve->GetLength();
 
     bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
-                       static_cast<CurveAdaptiveParametric *>(curve));
+                       static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.Rediscretization();
-  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
+  (static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))->UpdateParameters(parameters);
 
   list<PointAdaptive *> list_new_points;
 
@@ -102,7 +102,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
     NodeAdaptive *point_intermediate =
-        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
+        new NodeAdaptive((static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))
                              ->FindPointByParameter((*param_iterator)));
     point_intermediate->SetId(id_manager->next(0));
     list_new_points.push_back(point_intermediate);
@@ -124,7 +124,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
 }
 
 list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
-    CurveAdaptive *curve, Performer::IdManager *id_manager,
+    std::shared_ptr<CurveAdaptive> curve, Performer::IdManager *id_manager,
     double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
@@ -136,7 +136,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
   // ponto médio do segmentos
   PointAdaptive midpoint;
 
-  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
+  static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -164,7 +164,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
 
     // 1.2.2. Calcule o ponto médio do segmento
     midpoint =
-        static_cast<CurveAdaptiveParametric *>(curve)
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)
             ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
@@ -221,24 +221,24 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
 
     // 1.2.6. Encontre o parâmetro do ponto médio
     midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->FindParameterByPoint(
             midpoint);
 
     bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
-                       static_cast<CurveAdaptiveParametric *>(curve));
+                       static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.Rediscretization();
-  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
+  (static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))->UpdateParameters(parameters);
 
   list<PointAdaptive *> list_new_points;
 
@@ -249,7 +249,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
     NodeAdaptive *n =
-        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
+        new NodeAdaptive((static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))
                              ->FindPointByParameter((*param_iterator)));
     n->SetId(id_manager->next(0));
     list_new_points.push_back(n);
@@ -275,7 +275,7 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
 
   // 1. Para cada curva do patch
   for (unsigned int i = 0; i < coons_patch->GetNumBerCurves(); ++i) {
-    CurveAdaptive *curve = coons_patch->GetCurve(i);
+    std::shared_ptr<CurveAdaptive> curve = coons_patch->GetCurve(i);
     //((CurveAdaptiveParametric*)c)->ordenaLista ( );
     // #pragma omp critical
     //        {
@@ -284,12 +284,12 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
 
     if (i == 0 or i == 1) {
       list<double>::iterator last_parameter =
-          static_cast<CurveAdaptiveParametric *>(curve)->parameters_.end();
+          static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->parameters_.end();
       --last_parameter;
 
       int parameter = 0;
 
-      for (auto param_iterator = static_cast<CurveAdaptiveParametric *>(curve)
+      for (auto param_iterator = static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)
                                      ->parameters_.begin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
@@ -297,11 +297,11 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
         if (i == 0)
           vertex = avanco.getBoundary()->addVertex(
               *param_iterator, 0.0,
-              static_cast<CurveAdaptiveParametric *>(curve));
+              static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
         else if (i == 1)
           vertex = avanco.getBoundary()->addVertex(
               1.0, *param_iterator,
-              static_cast<CurveAdaptiveParametric *>(curve));
+              static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
 
         NodeAdaptive *noh =
             static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
@@ -314,14 +314,14 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
       }
     } else if (i == 2 or i == 3) {
       list<double>::reverse_iterator last_parameter =
-          static_cast<CurveAdaptiveParametric *>(curve)->parameters_.rend();
+          static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->parameters_.rend();
       --last_parameter;
 
       int parameter =
-          static_cast<CurveAdaptiveParametric *>(curve)->GetNumBerPoints() - 1;
+          static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->GetNumBerPoints() - 1;
 
       for (list<double>::reverse_iterator param_iterator =
-               (static_cast<CurveAdaptiveParametric *>(curve))
+               (static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))
                    ->parameters_.rbegin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
@@ -329,11 +329,11 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
         if (i == 2)
           vertex = avanco.getBoundary()->addVertex(
               *param_iterator, 1.0,
-              static_cast<CurveAdaptiveParametric *>(curve));
+              static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
         else if (i == 3)
           vertex = avanco.getBoundary()->addVertex(
               0.0, *param_iterator,
-              static_cast<CurveAdaptiveParametric *>(curve));
+              static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
 
         NodeAdaptive *noh =
             static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
@@ -347,7 +347,7 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
     }
   }
 
-  avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
+  avanco.getBoundary()->close(static_cast<std::shared_ptr<CurveAdaptiveParametric>>(
       coons_patch->GetCurve(coons_patch->GetNumBerCurves() - 1)));
   // essa é a malha anterior!
   SubMesh *sub_mesh_old = coons_patch->GetSubMesh();
@@ -511,7 +511,7 @@ tri->GetNoh
 #endif  // #USE_OPENMP
 
 list<PointAdaptive *> Adapter::AdaptCurveByCurve(
-    CurveAdaptive *curve, map<PointAdaptive *, PointAdaptive *> &map_points,
+    std::shared_ptr<CurveAdaptive> curve, map<PointAdaptive *, PointAdaptive *> &map_points,
     Performer::IdManager *id_manager, double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
@@ -523,7 +523,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
   // ponto médio do segmentos
   PointAdaptive midpoint;
 
-  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
+  static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -551,12 +551,12 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
 
     // 1.2.2. Calcule o ponto médio do segmento
     midpoint =
-        static_cast<CurveAdaptiveParametric *>(curve)
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)
             ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
 
     // 1.2.2.1 Encontre o parâmetro do ponto médio
     midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->FindParameterByPoint(
             midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
@@ -573,20 +573,20 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
     lenght_par = lenght_new / curve->GetLength();
 
     bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
-                       static_cast<CurveAdaptiveParametric *>(curve));
+                       static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.Rediscretization();
-  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
+  (static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))->UpdateParameters(parameters);
 
   list<PointAdaptive *> list_new_points;
 
@@ -622,7 +622,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
   for (list<double>::iterator param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
     NodeAdaptive *noh =
-        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
+        new NodeAdaptive((static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))
                              ->FindPointByParameter((*param_iterator)));
     noh->SetId(id_manager->next(0));
     list_new_points.push_back(noh);
@@ -635,7 +635,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
 }
 
 list<PointAdaptive *> Adapter::AdaptCurveBySurface(
-    CurveAdaptive *curve, map<PointAdaptive *, PointAdaptive *> &map_points,
+    std::shared_ptr<CurveAdaptive> curve, map<PointAdaptive *, PointAdaptive *> &map_points,
     Performer::IdManager *id_manager, double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
@@ -647,7 +647,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
   // ponto médio do segmentos
   PointAdaptive midpoint;
 
-  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
+  static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -675,12 +675,12 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
 
     // 1.2.2. Calcule o ponto médio do segmento
     midpoint =
-        static_cast<CurveAdaptiveParametric *>(curve)
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)
             ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
 
     // Teste para curvatura com a curva
     midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->FindParameterByPoint(
             midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
@@ -720,24 +720,24 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
 
     // 1.2.6. Encontre o parâmetro do ponto médio
     midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
+        static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->FindParameterByPoint(
             midpoint);
 
     bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
-                       static_cast<CurveAdaptiveParametric *>(curve));
+                       static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.Rediscretization();
-  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
+  (static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))->UpdateParameters(parameters);
 
   list<PointAdaptive *> list_new_points;
 
@@ -772,7 +772,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
   for (list<double>::iterator param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
     NodeAdaptive *noh =
-        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
+        new NodeAdaptive((static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))
                              ->FindPointByParameter((*param_iterator)));
     noh->SetId(id_manager->next(0));
     list_new_points.push_back(noh);
@@ -801,17 +801,18 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
 
   // 1. Para cada curva do patch
   for (unsigned int i = 0; i < coons_patch->GetNumBerCurves(); ++i) {
-    CurveAdaptive *curve = coons_patch->GetCurve(i);
-    (static_cast<CurveAdaptiveParametric *>(curve))->SortPointsByParameters();
+    std::shared_ptr<CurveAdaptive> curve = coons_patch->GetCurve(i);
+    std::shared_ptr<CurveAdaptiveParametric> curve_parametric = std::dynamic_pointer_cast<CurveAdaptiveParametric>(curve);
+    curve_parametric->SortPointsByParameters();
 
     if (i == 0 or i == 1) {
       list<double>::iterator last_parameter =
-          (static_cast<CurveAdaptiveParametric *>(curve))->parameters_.end();
+          (static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))->parameters_.end();
       --last_parameter;
 
       int parameter = 0;
 
-      for (auto param_iterator = static_cast<CurveAdaptiveParametric *>(curve)
+      for (auto param_iterator = static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)
                                      ->parameters_.begin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
@@ -819,11 +820,11 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
         if (i == 0)
           vertex = avanco.getBoundary()->addVertex(
               *param_iterator, 0.0,
-              static_cast<CurveAdaptiveParametric *>(curve));
+              static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
         else if (i == 1)
           vertex = avanco.getBoundary()->addVertex(
               1.0, *param_iterator,
-              static_cast<CurveAdaptiveParametric *>(curve));
+              static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
 
         NodeAdaptive *noh =
             static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
@@ -836,14 +837,14 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
       }
     } else if (i == 2 or i == 3) {
       list<double>::reverse_iterator last_parameter =
-          (static_cast<CurveAdaptiveParametric *>(curve))->parameters_.rend();
+          (static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))->parameters_.rend();
       --last_parameter;
 
       int parameter =
-          static_cast<CurveAdaptiveParametric *>(curve)->GetNumBerPoints() - 1;
+          static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve)->GetNumBerPoints() - 1;
 
       for (list<double>::reverse_iterator param_iterator =
-               (static_cast<CurveAdaptiveParametric *>(curve))
+               (static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve))
                    ->parameters_.rbegin();
            param_iterator != last_parameter; ++param_iterator) {
         Vertex *vertex;
@@ -851,11 +852,11 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
         if (i == 2)
           vertex = avanco.getBoundary()->addVertex(
               *param_iterator, 1.0,
-              static_cast<CurveAdaptiveParametric *>(curve));
+              static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
         else if (i == 3)
           vertex = avanco.getBoundary()->addVertex(
               0.0, *param_iterator,
-              static_cast<CurveAdaptiveParametric *>(curve));
+              static_cast<std::shared_ptr<CurveAdaptiveParametric>>(curve));
 
         NodeAdaptive *noh =
             static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
@@ -869,7 +870,7 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
     }
   }
 
-  avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
+  avanco.getBoundary()->close(static_cast<std::shared_ptr<CurveAdaptiveParametric>>(
       coons_patch->GetCurve(coons_patch->GetNumBerCurves() - 1)));
 
   SubMesh *sub_mesh_old =

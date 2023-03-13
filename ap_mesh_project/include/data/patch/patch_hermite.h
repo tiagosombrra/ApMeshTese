@@ -10,13 +10,13 @@
 class PatchHermite : public PatchCoons {
  public:
   PatchHermite();
-  explicit PatchHermite(PatchHermite* patch_hermite);
+  explicit PatchHermite(std::shared_ptr<PatchHermite> patch_hermite);
   // Ordem das curvas:
   //		C3
   //	C4		C2
   //		C1
-  PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
-               CurveAdaptive* curve3, CurveAdaptive* curve4,
+  PatchHermite(std::shared_ptr<CurveAdaptive> curve1, std::shared_ptr<CurveAdaptive> curve2,
+               std::shared_ptr<CurveAdaptive> curve3, std::shared_ptr<CurveAdaptive> curve4,
                VectorAdaptive tw00, VectorAdaptive tw10, VectorAdaptive tw01,
                VectorAdaptive tw11, bool signal_curve1 = true,
                bool signal_curve2 = true, bool signal_curve3 = true,

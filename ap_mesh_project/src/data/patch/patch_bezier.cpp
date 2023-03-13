@@ -17,7 +17,7 @@ PatchBezier::PatchBezier()
       id_process_(0),
       id_patch_bezier_(0) {}
 
-PatchBezier::PatchBezier(PatchBezier* patch_bezier) : PatchCoons(patch_bezier) {
+PatchBezier::PatchBezier(std::shared_ptr<PatchBezier> patch_bezier) : PatchCoons(patch_bezier) {
   this->pt03_ = patch_bezier->pt03_;
   this->pt13_ = patch_bezier->pt13_;
   this->pt23_ = patch_bezier->pt23_;
@@ -46,8 +46,8 @@ PatchBezier::PatchBezier(PatchBezier* patch_bezier) : PatchCoons(patch_bezier) {
 //		C3
 //	C4		C2
 //		C1
-PatchBezier::PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
-                         CurveAdaptive* curve3, CurveAdaptive* curve4,
+PatchBezier::PatchBezier(std::shared_ptr<CurveAdaptive> curve1, std::shared_ptr<CurveAdaptive> curve2,
+                         std::shared_ptr<CurveAdaptive> curve3, std::shared_ptr<CurveAdaptive> curve4,
                          PointAdaptive pt11, PointAdaptive pt21,
                          PointAdaptive pt12, PointAdaptive pt22,
                          bool signal_curve1, bool signal_curve2,
@@ -69,40 +69,32 @@ PatchBezier::PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
   //
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurveAdaptiveParametricBezier*>(curve1)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricBezier*>(curve2)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricBezier*>(curve3)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricBezier*>(curve4)->InsertPatch(this);
+  auto curve_1 = std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(curve1);
+  auto curve_2 = std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(curve2);
+  auto curve_3 = std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(curve3);
+  auto curve_4 = std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(curve4);
+  curve_1->InsertPatch(this);
+  curve_2->InsertPatch(this);
+  curve_3->InsertPatch(this);
+  curve_4->InsertPatch(this);
   //
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->pt00_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve1)->GetPoint0();
-  this->pt10_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve1)->GetPoint1();
-  this->pt20_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve1)->GetPoint2();
+  this->pt00_ = curve_1->GetPoint0();
+  this->pt10_ = curve_1->GetPoint1();
+  this->pt20_ = curve_1->GetPoint2();
 
-  this->pt30_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve2)->GetPoint0();
-  this->pt31_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve2)->GetPoint1();
-  this->pt32_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve2)->GetPoint2();
+  this->pt30_ = curve_2->GetPoint0();
+  this->pt31_ = curve_2->GetPoint1();
+  this->pt32_ = curve_2->GetPoint2();
 
-  this->pt13_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve3)->GetPoint1();
-  this->pt23_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve3)->GetPoint2();
-  this->pt33_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve3)->GetPoint3();
+  this->pt13_ = curve_3->GetPoint1();
+  this->pt23_ = curve_3->GetPoint2();
+  this->pt33_ = curve_3->GetPoint3();
 
-  this->pt01_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve4)->GetPoint1();
-  this->pt02_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve4)->GetPoint2();
-  this->pt03_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve4)->GetPoint3();
+  this->pt01_ = curve_4->GetPoint1();
+  this->pt02_ = curve_4->GetPoint2();
+  this->pt03_ = curve_4->GetPoint3();
 
   this->pt11_ = pt11;
   this->pt21_ = pt21;
@@ -231,13 +223,13 @@ PatchBezier ::PatchBezier(const PointAdaptive pt00, const PointAdaptive pt01,
   // 1. Inclui as curvas na lista de curvas de CoonsPatch
   //
   this->curves_.push_back(
-      new CurveAdaptiveParametricBezier(pt00_, pt10_, pt20_, pt30_));
+      std::make_shared<CurveAdaptiveParametricBezier>(pt00_, pt10_, pt20_, pt30_));
   this->curves_.push_back(
-      new CurveAdaptiveParametricBezier(pt30_, pt31_, pt32_, pt33_));
+      std::make_shared<CurveAdaptiveParametricBezier>(pt30_, pt31_, pt32_, pt33_));
   this->curves_.push_back(
-      new CurveAdaptiveParametricBezier(pt03_, pt13_, pt23_, pt33_));
+      std::make_shared<CurveAdaptiveParametricBezier>(pt03_, pt13_, pt23_, pt33_));
   this->curves_.push_back(
-      new CurveAdaptiveParametricBezier(pt00_, pt01_, pt02_, pt03_));
+      std::make_shared<CurveAdaptiveParametricBezier>(pt00_, pt01_, pt02_, pt03_));
   //
   // 2. Aloca espaço para as matrizes
   //

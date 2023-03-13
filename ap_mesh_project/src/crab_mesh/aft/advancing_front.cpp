@@ -1,11 +1,14 @@
 #include "../../../include/crab_mesh/aft/advancing_front.h"
 
-AdvancingFront::AdvancingFront(double factor, double tolerance,
+#include <memory>
+
+AdvancingFront::AdvancingFront(double factor, [[maybe_unused]] double tolerance,
                                unsigned int numImproves, double phi)
     : Shape() {
-  boundary = new Boundary();
-  quadtree = new Quadtree(boundary, factor);
+  boundary = std::make_shared<Boundary>();
+  quadtree = std::make_shared<Quadtree>(boundary, factor);
 
+  // cout << "AdvancingFront tolerance: " << tolerance << endl;
   // Shape::setTolerance(tolerance);
 
   boundarySorted = true;
@@ -15,11 +18,15 @@ AdvancingFront::AdvancingFront(double factor, double tolerance,
   lastVertexId = lastEdgeId = lastFaceId = 0;
 }
 
-AdvancingFront::AdvancingFront(Boundary *boundary, Quadtree *quadtree,
-                               double tolerance, unsigned int numImproves)
+AdvancingFront::AdvancingFront(std::shared_ptr<Boundary> boundary,
+                               std::shared_ptr<Quadtree> quadtree,
+                               [[maybe_unused]] double tolerance,
+                               unsigned int numImproves)
     : Shape() {
   setBoundary(boundary);
   setQuadtree(quadtree);
+
+  // cout << "AdvancingFront tolerance: " << tolerance << endl;
   // Shape::setTolerance(tolerance);
 
   setBoundarySorted(true);
@@ -27,44 +34,6 @@ AdvancingFront::AdvancingFront(Boundary *boundary, Quadtree *quadtree,
 
   lastVertexId = lastEdgeId = lastFaceId = 0;
   phi = 0.5;
-}
-
-AdvancingFront::~AdvancingFront() {
-  while (!mesh.empty()) {
-    Face *f = mesh.front();
-    mesh.pop_front();
-
-    f->setVertices(NULL, NULL, NULL);
-
-    delete f;
-  }
-
-  while (!innerEdges.empty()) {
-    Edge *e = innerEdges.front();
-    innerEdges.pop_front();
-
-    e->setVertices(NULL, NULL);
-
-    delete e;
-  }
-
-  while (!innerVertices.empty()) {
-    Vertex *v = innerVertices.front();
-    innerVertices.pop_front();
-
-    delete v;
-  }
-
-  vertices.clear();
-  frontVertices.clear();
-
-  edges.clear();
-  rejected.clear();
-  front.clear();
-
-  delete quadtree;
-
-  quadtree = NULL;
 }
 
 void AdvancingFront::makeInitialFront() {
@@ -93,7 +62,7 @@ void AdvancingFront::makeInitialFront() {
   EdgeList quadtreeFront = quadtree->getFront();
 
   while (!quadtreeFront.empty()) {
-    Edge *e = quadtreeFront.front();
+    std::shared_ptr<Edge> e = quadtreeFront.front();
     quadtreeFront.pop_front();
 
     front.push_back(e);
@@ -133,7 +102,7 @@ void AdvancingFront::sortFront() {
   EdgeList sorted, inBoundary;
 
   while (!front.empty()) {
-    Edge *least = front.front();
+    std::shared_ptr<Edge> least = front.front();
 
     if (least->isInBoundary()) {
       front.pop_front();
@@ -161,7 +130,7 @@ void AdvancingFront::sortFront() {
   front.swap(sorted);
 
   while (!inBoundary.empty()) {
-    Edge *least = inBoundary.front();
+    std::shared_ptr<Edge> least = inBoundary.front();
     EdgeList::iterator leastIter = inBoundary.begin();
 
     for (EdgeList::iterator iter = ++inBoundary.begin();
@@ -180,7 +149,8 @@ void AdvancingFront::sortFront() {
   front.insert(front.begin(), sorted.begin(), sorted.end());
 }
 
-bool AdvancingFront::interceptionTest(Edge *e, Vertex *candidate,
+bool AdvancingFront::interceptionTest(std::shared_ptr<Edge> e,
+                                      std::shared_ptr<Vertex> candidate,
                                       bool inFaceTest, bool onlyFrontEdges) {
   bool intercepts = false;
 
@@ -238,7 +208,7 @@ bool AdvancingFront::interceptionTest(Edge *e, Vertex *candidate,
       }
     }
 
-    f.setVertices(NULL, NULL, NULL);
+    f.setVertices(nullptr, nullptr, nullptr);
 
     // cout << "fim inte teste" << endl;
   }
@@ -246,7 +216,7 @@ bool AdvancingFront::interceptionTest(Edge *e, Vertex *candidate,
   return intercepts;
 }
 
-bool AdvancingFront::interceptionTest(Edge *e) {
+bool AdvancingFront::interceptionTest(std::shared_ptr<Edge> e) {
   for (EdgeList::iterator iter = edges.begin(); iter != edges.end(); iter++) {
     if ((*iter) == e) {
       continue;
@@ -264,8 +234,9 @@ bool AdvancingFront::interceptionTest(Edge *e) {
   return false;
 }
 
-Vertex *AdvancingFront::makeIdealVertex(Edge *e, double &h) {
-  Vertex *v = e->normal();
+std::shared_ptr<Vertex> AdvancingFront::makeIdealVertex(std::shared_ptr<Edge> e,
+                                                        double &h) {
+  std::shared_ptr<Vertex> v = e->normal();
 
   h *= e->getCell()->height();
 
@@ -279,13 +250,14 @@ Vertex *AdvancingFront::makeIdealVertex(Edge *e, double &h) {
   return v;
 }
 
-bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
+bool AdvancingFront::findBestVertex(std::shared_ptr<Edge> e,
+                                    std::shared_ptr<Vertex> &best,
                                     bool geometryPhase) {
   bool vertexExistedBefore = true;
 
   double h = 1.0;
 
-  best = (geometryPhase) ? makeIdealVertex(e, h) : NULL;
+  best = (geometryPhase) ? makeIdealVertex(e, h) : nullptr;
 
   VertexList bestVertices;
 
@@ -296,7 +268,7 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
 
   for (VertexList::iterator iter = frontVertices.begin();
        iter != frontVertices.end(); iter++) {
-    Vertex *candidate = (*iter);
+    std::shared_ptr<Vertex> candidate = (*iter);
 
     if ((candidate == e->getV1()) || (candidate == e->getV2()) ||
         (candidate->matches(e->getV1())) || (candidate->matches(e->getV2()))) {
@@ -323,16 +295,14 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
 
       if (dist < 0.0) {
         // cout << "debug " << e->getId() << endl;
-
-        delete best;
-
-        best = NULL;
+        best = nullptr;
 
         // std::cerr << "matches = " << matches << "; outbox = " << outbox << ";
         // outdistance = " << outdistance << "; outnormal = " << outnormal <<
         //            "; intercepted = " << intercepted << ";
         //            bestVertices.size() = " << bestVertices.size() << ";
-        //            return = false, NULL; reason = dist < 0.0" << std::endl;
+        //            return = false, nullptr; reason = dist < 0.0" <<
+        //            std::endl;
 
         return false;
       } else if (dist <= h * 0.1) {
@@ -342,14 +312,12 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
         // outdistance = " << outdistance << "; outnormal = " << outnormal <<
         //            "; intercepted = " << intercepted << ";
         //            bestVertices.size() = " << bestVertices.size() << ";
-        //            return = false,  NULL; reason = dist < h*0.1" <<
+        //            return = false,  nullptr; reason = dist < h*0.1" <<
         //            std::endl;
 
         bestVertices.clear();
 
-        delete best;
-
-        best = NULL;
+        best = nullptr;
 
         return false;
       }
@@ -383,11 +351,10 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
     bool intercept = interceptionTest(e, best);
 
     if (intercept) {
-      delete best;
+      best = nullptr;
 
-      best = NULL;
-
-      // std::cerr << "false,  NULL; reason = intercept == true" << std::endl;
+      // std::cerr << "false,  nullptr; reason = intercept == true" <<
+      // std::endl;
 
       return false;
     } else {
@@ -405,11 +372,10 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
       }
 
       if (tooClose) {
-        delete best;
+        best = nullptr;
 
-        best = NULL;
-
-        // std::cerr << "false,  NULL; reason = tooClose == true" << std::endl;
+        // std::cerr << "false,  nullptr; reason = tooClose == true" <<
+        // std::endl;
 
         return false;
       } else {
@@ -421,27 +387,28 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
       }
     }
 
-    // std::cerr << "false, NOTNULL; reason = new vertex not close to existing"
+    // std::cerr << "false, NOTNULL; reason = std::make_shared<vertex not close
+    // to existing"
     // << std::endl;
 
     vertexExistedBefore = false;
   } else if (!bestVertices.empty()) {
     if (geometryPhase) {
-      delete best;
+      best = nullptr;
     }
 
     best = bestVertices.front();
     bestVertices.pop_front();
 
-    Vertex *v1 = new Vertex(e->getV1()->getX() - best->getX(),
-                            e->getV1()->getY() - best->getY());
-    Vertex *v2 = new Vertex(e->getV2()->getX() - best->getX(),
-                            e->getV2()->getY() - best->getY());
+    std::shared_ptr<Vertex> v1 = std::make_shared<Vertex>(
+        e->getV1()->getX() - best->getX(), e->getV1()->getY() - best->getY());
+    std::shared_ptr<Vertex> v2 = std::make_shared<Vertex>(
+        e->getV2()->getX() - best->getX(), e->getV2()->getY() - best->getY());
 
     double maxAngle = v1->angle(v2);
 
     while (!bestVertices.empty()) {
-      Vertex *candidate = bestVertices.front();
+      std::shared_ptr<Vertex> candidate = bestVertices.front();
       bestVertices.pop_front();
 
       v1->setPosition(e->getV1()->getX() - candidate->getX(),
@@ -454,15 +421,15 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
       if (angle > maxAngle) {
         maxAngle = angle;
         best = candidate;
-      } else if (fabs(maxAngle - angle) < TOLERANCIA_AFT) {
+      } else if (fabs(maxAngle - angle) < TOLERANCE_AFT) {
         // caso em que os 2 vertices, candidate e best sao geometricamente
         // iguais, mas topologicamente diferentes
-        Edge *candidateEdge1, *candidateEdge2;
-        candidateEdge1 = candidateEdge2 = NULL;
+        std::shared_ptr<Edge> candidateEdge1, candidateEdge2;
+        candidateEdge1 = candidateEdge2 = nullptr;
 
         for (EdgeList::iterator iter = front.begin(); iter != front.end();
              iter++) {
-          Edge *eAux = (*iter);
+          std::shared_ptr<Edge> eAux = (*iter);
 
           if (eAux->getV2() == candidate) {
             candidateEdge1 = eAux;
@@ -488,12 +455,13 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
       }
     }
 
-    delete v1;
-    delete v2;
+    v1 = nullptr;
+    v2 = nullptr;
 
     // std::cerr << "true, NOTNULL; reason = existing vertex" << std::endl;
   } else {
-    // std::cerr << "false, NOTNULL; reason = new vertex" << std::endl;
+    // std::cerr << "false, NOTNULL; reason = std::make_shared<vertex" <<
+    // std::endl;
 
     vertexExistedBefore = false;
   }
@@ -501,7 +469,8 @@ bool AdvancingFront::findBestVertex(Edge *e, Vertex *&best,
   return vertexExistedBefore;
 }
 
-void AdvancingFront::insertInFront(Edge *last, Edge *e) {
+void AdvancingFront::insertInFront(std::shared_ptr<Edge> last,
+                                   std::shared_ptr<Edge> e) {
   if (boundarySorted) {
     if (last) {
       bool inserted = false;
@@ -549,8 +518,9 @@ void AdvancingFront::insertInFront(Edge *last, Edge *e) {
   }
 }
 
-Edge *AdvancingFront::findEdge(Vertex *v1, Vertex *v2) {
-  Edge *e = NULL;
+std::shared_ptr<Edge> AdvancingFront::findEdge(std::shared_ptr<Vertex> v1,
+                                               std::shared_ptr<Vertex> v2) {
+  std::shared_ptr<Edge> e = nullptr;
 
   for (EdgeList::iterator iter = edges.begin(); iter != edges.end(); iter++) {
     if ((*iter)->equals(v1, v2)) {
@@ -562,7 +532,7 @@ Edge *AdvancingFront::findEdge(Vertex *v1, Vertex *v2) {
   return e;
 }
 
-EdgeList AdvancingFront::findAdjacentEdges(Vertex *v) {
+EdgeList AdvancingFront::findAdjacentEdges(std::shared_ptr<Vertex> v) {
   EdgeList adjacency;
 
   EdgeSet adjacentEdges = v->getAdjacentEdges();
@@ -572,7 +542,8 @@ EdgeList AdvancingFront::findAdjacentEdges(Vertex *v) {
   return adjacency;
 }
 
-FaceList AdvancingFront::findAdjacentFaces(const FaceList &faces, Vertex *v) {
+FaceList AdvancingFront::findAdjacentFaces(const FaceList &faces,
+                                           std::shared_ptr<Vertex> v) {
   FaceList adjacency;
 
   for (FaceList::const_iterator iter = faces.begin(); iter != faces.end();
@@ -586,7 +557,9 @@ FaceList AdvancingFront::findAdjacentFaces(const FaceList &faces, Vertex *v) {
   return adjacency;
 }
 
-void AdvancingFront::removeFromFront(Vertex *v1, Vertex *v2, Vertex *v3) {
+void AdvancingFront::removeFromFront(std::shared_ptr<Vertex> v1,
+                                     std::shared_ptr<Vertex> v2,
+                                     std::shared_ptr<Vertex> v3) {
   // verifica se v1 eh adjacente a alguma aresta livre, ou seja,
   // da fronteira corrente. se for adjacente, nao remove. se nao for
   // adjacente, remove
@@ -659,15 +632,15 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased,
     frontVertices.push_back((*iter)->getV1());
   }
 
-  Edge *last = NULL;
+  std::shared_ptr<Edge> last = nullptr;
 
   if (frontBased && geometryPhase) {
-    last = new Edge();
+    last = std::make_shared<Edge>();
     front.push_back(last);
   }
 
   while (true) {
-    Edge *e = NULL;
+    std::shared_ptr<Edge> e = nullptr;
 
     if (frontBased) {
       if (front.empty()) {
@@ -686,13 +659,11 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased,
     }
 
     if (frontBased && (e == last)) {
-      delete last;
-      last = NULL;
-
+      last = nullptr;
       continue;
     }
 
-    Vertex *best = NULL;
+    std::shared_ptr<Vertex> best = nullptr;
     bool existed = findBestVertex(e, best, geometryPhase);
 
     if (!best) {
@@ -728,13 +699,13 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased,
       innerVertices.remove(best);
       frontVertices.remove(best);
 
-      delete best;
+      best = nullptr;
 
       continue;
     }
 
-    Edge *e1, *e2;
-    e1 = e2 = NULL;
+    std::shared_ptr<Edge> e1, e2;
+    e1 = e2 = nullptr;
 
     if (existed) {
       e1 = findEdge(e->getV1(), best);
@@ -750,14 +721,10 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased,
 
       e1->setFree(false);
     } else {
-      e1 = new Edge(e->getV1(), best, ++lastEdgeId);
+      e1 = std::make_shared<Edge>(e->getV1(), best, ++lastEdgeId);
 
       e->getV1()->addAdjacentEdge(e1);
       best->addAdjacentEdge(e1);
-
-      // #if USE_OPENGL
-      //             e1->setColor(0.0, 0.0, 1.0);
-      // #endif //#if USE_OPENGL
 
       innerEdges.push_back(e1);
       edges.push_back(e1);
@@ -780,14 +747,10 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased,
 
       e2->setFree(false);
     } else {
-      e2 = new Edge(best, e->getV2(), ++lastEdgeId);
+      e2 = std::make_shared<Edge>(best, e->getV2(), ++lastEdgeId);
 
       e->getV2()->addAdjacentEdge(e2);
       best->addAdjacentEdge(e2);
-
-      // #if USE_OPENGL
-      //             e2->setColor(0.0, 0.0, 1.0);
-      // #endif //#if USE_OPENGL
 
       innerEdges.push_back(e2);
       edges.push_back(e2);
@@ -805,7 +768,8 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased,
 
     removeFromFront(e->getV1(), e->getV2(), best);
 
-    Face *f = new Face(e->getV1(), e->getV2(), best, ++lastFaceId);
+    std::shared_ptr<Face> f =
+        std::make_shared<Face>(e->getV1(), e->getV2(), best, ++lastFaceId);
 
     mesh.push_back(f);
   }
@@ -814,23 +778,10 @@ enum MethodStatus AdvancingFront::makeMesh(bool frontBased,
 }
 
 void AdvancingFront::fillMesh() {
-  /*for (FaceList::iterator iter = mesh.begin();
-        iter != mesh.end(); iter++)
-  {
-      //cout << "triangulo "
-            << "(" << (*iter)->getV1()->getX() << ", " <<
-  (*iter)->getV1()->getY() << ") "
-            << "(" << (*iter)->getV2()->getX() << ", " <<
-  (*iter)->getV2()->getY() << ") "
-            << "(" << (*iter)->getV3()->getX() << ", " <<
-  (*iter)->getV3()->getY() << ") "
-            <<  endl;
-  }*/
-
   VertexList quadVertices = quadtree->getVertices();
 
   while (!quadVertices.empty()) {
-    Vertex *v = quadVertices.front();
+    std::shared_ptr<Vertex> v = quadVertices.front();
     quadVertices.pop_front();
 
     innerVertices.push_back(v);
@@ -854,7 +805,7 @@ void AdvancingFront::fillMesh() {
   EdgeList quadEdges = quadtree->getEdges();
 
   while (!quadEdges.empty()) {
-    Edge *e = quadEdges.front();
+    std::shared_ptr<Edge> e = quadEdges.front();
     quadEdges.pop_front();
 
     innerEdges.push_back(e);
@@ -886,7 +837,7 @@ bool AdvancingFront::laplacianSmoothing(bool &changed) {
 
   for (VertexList::iterator iter = innerVertices.begin();
        iter != innerVertices.end(); iter++) {
-    Vertex *v = (*iter);
+    std::shared_ptr<Vertex> v = (*iter);
 
     double weight = 1.0;
 
@@ -899,11 +850,11 @@ bool AdvancingFront::laplacianSmoothing(bool &changed) {
     EdgeList adjacency = findAdjacentEdges(v);
 
     while (!adjacency.empty()) {
-      Edge *e = adjacency.front();
+      std::shared_ptr<Edge> e = adjacency.front();
 
       adjacency.pop_front();
 
-      Vertex *v2 = (e->getV1() == v) ? e->getV2() : e->getV1();
+      std::shared_ptr<Vertex> v2 = (e->getV1() == v) ? e->getV2() : e->getV1();
 
       numx += weight * (v2->getX() - oldx);
       numy += weight * (v2->getY() - oldy);
@@ -911,7 +862,7 @@ bool AdvancingFront::laplacianSmoothing(bool &changed) {
       den += weight;
     }
 
-    den = (den > TOLERANCIA_AFT) ? phi / den : 0;
+    den = (den > TOLERANCE_AFT) ? phi / den : 0;
 
     numx *= den;
     numy *= den;
@@ -928,7 +879,7 @@ bool AdvancingFront::laplacianSmoothing(bool &changed) {
 
       for (FaceList::iterator iter2 = faces.begin(); iter2 != faces.end();
            iter2++) {
-        if ((*iter2)->orientedSurface() <= TOLERANCIA_AFT) {
+        if ((*iter2)->orientedSurface() <= TOLERANCE_AFT) {
           negativeSurface = true;
 
           break;
@@ -971,17 +922,17 @@ bool AdvancingFront::isBoundarySorted() { return boundarySorted; }
 //    return Shape::tolerance;
 //}
 
-void AdvancingFront::setBoundary(Boundary *boundary) {
+void AdvancingFront::setBoundary(std::shared_ptr<Boundary> boundary) {
   this->boundary = boundary;
 }
 
-Boundary *AdvancingFront::getBoundary() { return boundary; }
+std::shared_ptr<Boundary> AdvancingFront::getBoundary() { return boundary; }
 
-void AdvancingFront::setQuadtree(Quadtree *quadtree) {
+void AdvancingFront::setQuadtree(std::shared_ptr<Quadtree> quadtree) {
   this->quadtree = quadtree;
 }
 
-Quadtree *AdvancingFront::getQuadtree() { return quadtree; }
+std::shared_ptr<Quadtree> AdvancingFront::getQuadtree() { return quadtree; }
 
 VertexList AdvancingFront::getVertices() { return vertices; }
 
@@ -999,7 +950,7 @@ void AdvancingFront::addVertices(VertexList vertices) {
   }
 
   while (!vertices.empty()) {
-    Vertex *v = vertices.front();
+    std::shared_ptr<Vertex> v = vertices.front();
     vertices.pop_front();
 
     v->setId(++lastVertexId);
@@ -1016,7 +967,7 @@ void AdvancingFront::addEdges(EdgeList edges) {
   }
 
   while (!edges.empty()) {
-    Edge *e = edges.front();
+    std::shared_ptr<Edge> e = edges.front();
     edges.pop_front();
 
     e->setId(++lastEdgeId);
@@ -1028,7 +979,7 @@ void AdvancingFront::addEdges(EdgeList edges) {
 
 void AdvancingFront::addMesh(FaceList mesh) {
   while (!mesh.empty()) {
-    Face *f = mesh.front();
+    std::shared_ptr<Face> f = mesh.front();
     mesh.pop_front();
 
     f->setId(++lastFaceId);
@@ -1037,7 +988,7 @@ void AdvancingFront::addMesh(FaceList mesh) {
   }
 }
 
-bool AdvancingFront::belongsToAdvFront(Edge *e) {
+bool AdvancingFront::belongsToAdvFront(std::shared_ptr<Edge> e) {
   for (EdgeList::iterator iter = front.begin(); iter != front.end(); iter++) {
     if ((*iter) == e) {
       return true;
@@ -1053,9 +1004,9 @@ enum MethodStatus AdvancingFront::makeGeometryBasedMesh() {
   }
 
   if (front.size() == 3) {
-    Vertex *v = (*(++front.begin()))->getV1();
-    Face *f = new Face(front.front()->getV1(), v, front.back()->getV1(),
-                       ++lastFaceId);
+    std::shared_ptr<Vertex> v = (*(++front.begin()))->getV1();
+    std::shared_ptr<Face> f = std::make_shared<Face>(
+        front.front()->getV1(), v, front.back()->getV1(), ++lastFaceId);
     mesh.push_back(f);
 
     return ADVF_GEOMETRY_MESH_DONE;
@@ -1082,7 +1033,7 @@ enum MethodStatus AdvancingFront::makeTopologyBasedMesh() {
   }
 
   while (!rejected.empty()) {
-    Edge *e = rejected.front();
+    std::shared_ptr<Edge> e = rejected.front();
     rejected.pop_front();
 
     // #if USE_OPENGL
@@ -1278,7 +1229,7 @@ string AdvancingFront::getText() {
 //        (*iter)->unhighlight();
 //    }
 
-//    e.setVertices(NULL, NULL);
+//    e.setVertices(nullptr, nullptr);
 
 // #if DEBUG_MODE
 //     if (!vertices.empty())

@@ -1,6 +1,10 @@
 #ifndef _QUADTREE_H_
 #define _QUADTREE_H_
 
+#include <cstdint>
+#include <memory>
+#include <string>
+
 #include "../../data/definitions.h"
 #include "boundary.h"
 #include "edge.h"
@@ -15,54 +19,54 @@ using namespace Par2DJMesh::Basics;
 
 namespace Par2DJMesh {
 namespace AFT {
-class Quadtree : public Shape {
+class Quadtree : public Shape, std::enable_shared_from_this<Quadtree> {
  private:
   double factor;
 
-  QuadtreeCell *root;
+  std::shared_ptr<QuadtreeCell> root;
 
   QuadtreeCellList leaves;
 
-  Boundary *boundary;
+  std::shared_ptr<Boundary> boundary;
 
   // para a geracao baseada em templates
   EdgeList front;
   EdgeList edges;
   VertexList vertices;
   FaceList mesh;
-  long int lastVertexId;
-  long int lastEdgeId;
-  long int lastFaceId;
+  std::uint64_t lastVertexId;
+  std::uint64_t lastEdgeId;
+  std::uint64_t lastFaceId;
 
  public:
-  Quadtree(Boundary *boundary = NULL, double factor = 0.85);
+  Quadtree(std::shared_ptr<Boundary> boundary = nullptr, double factor = 0.85);
   ~Quadtree();
 
   void setFactor(double factor);
   double getFactor();
 
-  void setBoundary(Boundary *boundary);
-  Boundary *getBoundary();
+  void setBoundary(std::shared_ptr<Boundary> boundary);
+  std::shared_ptr<Boundary> getBoundary();
 
-  void setRoot(QuadtreeCell *root);
-  QuadtreeCell *getRoot();
+  void setRoot(std::shared_ptr<QuadtreeCell> root);
+  std::shared_ptr<QuadtreeCell> getRoot();
 
   // retira cell como folha e adiciona os filhos de cell
-  void addLeaves(QuadtreeCell *cell);
+  void addLeaves(std::shared_ptr<QuadtreeCell> cell);
   QuadtreeCellList getLeaves();
 
   int getNumCells();
 
-  Vertex *getMin();
-  Vertex *getMax();
+  std::shared_ptr<Vertex> getMin();
+  std::shared_ptr<Vertex> getMax();
 
-  long int getCellId();
+  std::uint64_t getCellId();
 
-  void findCell(Edge *e);
+  void findCell(std::shared_ptr<Edge> e);
 
-  bool in(Vertex *v);
-  bool on(Vertex *v);
-  bool out(Vertex *v);
+  bool in(std::shared_ptr<Vertex> v);
+  bool on(std::shared_ptr<Vertex> v);
+  bool out(std::shared_ptr<Vertex> v);
 
   enum MethodStatus generate(const FaceList &oldmesh);
   enum MethodStatus refineToLevel();
@@ -71,30 +75,23 @@ class Quadtree : public Shape {
   bool execute(const FaceList &oldmesh);
 
   // para a geracao baseada em templates
-  long int vertexId();
-  long int edgeId();
-  long int faceId();
+  std::uint64_t vertexId();
+  std::uint64_t edgeId();
+  std::uint64_t faceId();
 
   EdgeList getFront();
   EdgeList getEdges();
   VertexList getVertices();
   FaceList getMesh();
 
-  void add(Vertex *v);
-  void add(Edge *e);
-  void add(Face *f);
-  void addFront(Edge *e);
+  void add(std::shared_ptr<Vertex> v);
+  void add(std::shared_ptr<Edge> e);
+  void add(std::shared_ptr<Face> f);
+  void addFront(std::shared_ptr<Edge> e);
 
   enum MethodStatus makeTemplateBasedMesh();
 
   string getText() override;
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void unhighlight();
-
-  //    void draw();
-  // #endif //#if USE_OPENGL
 };
 }  // namespace AFT
 }  // namespace Par2DJMesh

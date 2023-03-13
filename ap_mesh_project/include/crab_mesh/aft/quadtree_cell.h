@@ -1,6 +1,10 @@
 #ifndef _QUADTREE_CELL_H_
 #define _QUADTREE_CELL_H_
 
+#include <cstdint>
+#include <memory>
+#include <string>
+
 #include "../../data/definitions.h"
 #include "boundary.h"
 #include "edge.h"
@@ -13,36 +17,36 @@ using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;
 using namespace Par2DJMesh::Basics;
 
-extern double TOLERANCIA_AFT;
+extern double TOLERANCE_AFT;
 
 namespace Par2DJMesh {
 namespace AFT {
-class QuadtreeCell : public Shape {
+class QuadtreeCell : public Shape, std::enable_shared_from_this<QuadtreeCell> {
  private:
-  unsigned long int level;
+  std::uint64_t level;
   double size;
   bool highlighted;
   bool highlightedAsNeighbor;
 
   // para a geracao baseada em templates
-  Vertex *v[8];
-  Edge *e[8];
+  std::shared_ptr<Vertex> v[8];
+  std::shared_ptr<Edge> e[8];
 
-  Vertex *min;
-  Vertex *max;
-  Vertex **mids;
+  std::shared_ptr<Vertex> min;
+  std::shared_ptr<Vertex> max;
+  std::shared_ptr<std::array<std::shared_ptr<Vertex>, 5>> mids;
 
-  QuadtreeCell *children[4];
-  QuadtreeCell *parent;
+  std::shared_ptr<QuadtreeCell> children[4];
+  std::shared_ptr<QuadtreeCell> parent;
 
-  Quadtree *tree;
+  std::shared_ptr<Quadtree> tree;
 
   QuadtreeCellList neighbors[4];
 
   EdgeList edges;
 
  private:
-  Vertex **makeMids();
+  std::shared_ptr<std::array<std::shared_ptr<Vertex>, 5>> makeMids();
 
   void subdivide(bool setChildrenEdges = true);
 
@@ -51,9 +55,10 @@ class QuadtreeCell : public Shape {
   void setChildrenEdges();
 
   // para a geracao baseada em templates
-  Edge *makeE(int i);
-  Edge *makeE(int i, int j);
-  Edge *makeE(Vertex *v1, Vertex *v2);
+  std::shared_ptr<Edge> makeE(int i);
+  std::shared_ptr<Edge> makeE(int i, int j);
+  std::shared_ptr<Edge> makeE(std::shared_ptr<Vertex> v1,
+                              std::shared_ptr<Vertex> v2);
 
   void makeMeshType1();
   void makeMeshType2(int c);
@@ -63,28 +68,29 @@ class QuadtreeCell : public Shape {
   void makeMeshType6();
 
  public:
-  QuadtreeCell(long int id,
-               // MainDrive *mainDrive,
-               Quadtree *tree = NULL, Vertex *min = NULL, Vertex *max = NULL,
-               QuadtreeCell *parent = NULL, long int level = 0);
+  QuadtreeCell(std::uint64_t id, std::shared_ptr<Quadtree> tree = nullptr,
+               std::shared_ptr<Vertex> min = nullptr,
+               std::shared_ptr<Vertex> max = nullptr,
+               std::shared_ptr<QuadtreeCell> parent = nullptr,
+               std::uint64_t level = 0);
   ~QuadtreeCell();
 
-  void setQuadtree(Quadtree *tree);
+  void setQuadtree(std::shared_ptr<Quadtree> tree);
 
-  void setLevel(long int level);
-  long int getLevel();
+  void setLevel(std::uint64_t level);
+  std::uint64_t getLevel();
 
   double getSize();
 
-  void setParent(QuadtreeCell *parent);
-  QuadtreeCell *getParent();
+  void setParent(std::shared_ptr<QuadtreeCell> parent);
+  std::shared_ptr<QuadtreeCell> getParent();
 
-  void setChild(int position, QuadtreeCell *child);
-  QuadtreeCell *getChild(int position);
+  void setChild(int position, std::shared_ptr<QuadtreeCell> child);
+  std::shared_ptr<QuadtreeCell> getChild(int position);
 
-  void setBox(Vertex *min, Vertex *max);
-  Vertex *getMin();
-  Vertex *getMax();
+  void setBox(std::shared_ptr<Vertex> min, std::shared_ptr<Vertex> max);
+  std::shared_ptr<Vertex> getMin();
+  std::shared_ptr<Vertex> getMax();
 
   void setNeighbors(int direction, QuadtreeCellList neighbors);
   QuadtreeCellList getNeighbors(int direction);
@@ -96,25 +102,25 @@ class QuadtreeCell : public Shape {
   VertexList getVertices();
   EdgeList getEdges();
 
-  bool shouldSubdivide(Edge *e);
-  bool shouldSubdivide(Face *f);
+  bool shouldSubdivide(std::shared_ptr<Edge> e);
+  bool shouldSubdivide(std::shared_ptr<Face> f);
 
-  void addEdge(Edge *e);
-  void removeEdge(Edge *e);
+  void addEdge(std::shared_ptr<Edge> e);
+  void removeEdge(std::shared_ptr<Edge> e);
   void clearEdges();
-  QuadtreeCell *findCell(Edge *e);
-  QuadtreeCell *findCell(Face *f);
+  std::shared_ptr<QuadtreeCell> findCell(std::shared_ptr<Edge> e);
+  std::shared_ptr<QuadtreeCell> findCell(std::shared_ptr<Face> f);
 
-  bool in(Vertex *v);
-  bool on(Vertex *v);
-  bool out(Vertex *v);
+  bool in(std::shared_ptr<Vertex> v);
+  bool on(std::shared_ptr<Vertex> v);
+  bool out(std::shared_ptr<Vertex> v);
 
   double height();
   double surface();
 
-  bool subdivide(Edge *e);
-  bool subdivide(Face *f);
-  void subdivideToLevel(unsigned long int level);
+  bool subdivide(std::shared_ptr<Edge> e);
+  bool subdivide(std::shared_ptr<Face> f);
+  void subdivideToLevel(std::uint64_t level);
   bool subdivideAccordingToNeighbors();
 
   bool subdivided();
@@ -128,17 +134,6 @@ class QuadtreeCell : public Shape {
   void makeTemplateBasedMesh();
 
   string getText() override;
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void highlight(bool highlightEdges, /*debug*/bool
-  //     dontHighlightNeighbors = false/*endebug*/); void highlightAsNeighbor();
-  //     void unhighlight(); void unhighlight(bool highlightEdges, /*debug*/bool
-  //     dontHighlightNeighbors = false/*endebug*/); void
-  //     unhighlightAsNeighbor();
-
-  //    void draw();
-  // #endif //#if USE_OPENGL
 };
 }  // namespace AFT
 }  // namespace Par2DJMesh

@@ -1,6 +1,9 @@
 #ifndef _EDGE_H_
 #define _EDGE_H_
 
+#include <cstdint>
+#include <memory>
+
 #include "../../data/curve/curve_adaptive_parametric.h"
 #include "../../data/definitions.h"
 #include "quadtree_cell.h"
@@ -18,12 +21,12 @@ class Edge : public Shape {
  private:
   bool free;
   bool inBoundary;
-  Vertex *v[2];
-  Vertex *mid;
-  Vertex *vector;
+  std::shared_ptr<Vertex> v[2];
+  std::shared_ptr<Vertex> mid;
+  std::shared_ptr<Vertex> vector;
   double len;
 
-  QuadtreeCell *cell;
+  std::shared_ptr<QuadtreeCell> cell;
 
   double xmin;
   double xmax;
@@ -36,21 +39,22 @@ class Edge : public Shape {
 
   // Daniel Siqueira
   // ponteiro para a curva
-  CurveAdaptiveParametric *c;
+  std::shared_ptr<CurveAdaptiveParametric> c;
 
  public:
-  Vertex *makeMid();
-  Vertex *makeVector();
+  std::shared_ptr<Vertex> makeMid();
+  std::shared_ptr<Vertex> makeVector();
 
  public:
-  Edge(Vertex *v1 = NULL, Vertex *v2 = NULL, long int id = 0);
-  ~Edge();
+  Edge(std::shared_ptr<Vertex> v1 = nullptr,
+       std::shared_ptr<Vertex> v2 = nullptr, std::uint64_t id = 0);
+  ~Edge() = default;
 
-  void setV1(Vertex *v);
-  void setV2(Vertex *v);
-  void setVertices(Vertex *v1, Vertex *v2);
-  Vertex *getV1();
-  Vertex *getV2();
+  void setV1(std::shared_ptr<Vertex> v);
+  void setV2(std::shared_ptr<Vertex> v);
+  void setVertices(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
+  std::shared_ptr<Vertex> getV1();
+  std::shared_ptr<Vertex> getV2();
 
   void setInBoundary(bool inBoundary);
   bool isInBoundary();
@@ -62,59 +66,49 @@ class Edge : public Shape {
   void setFree(bool free);
   bool isFree();
 
-  void setCell(QuadtreeCell *cell);
-  QuadtreeCell *getCell();
+  void setCell(std::shared_ptr<QuadtreeCell> cell);
+  std::shared_ptr<QuadtreeCell> getCell();
 
-  Vertex *getMid();
+  std::shared_ptr<Vertex> getMid();
 
   double length();
 
-  bool intercept(Edge *e);
-  bool intercept(Vertex *v1, Vertex *v2);
-  bool intercept(Vertex *v);
+  bool intercept(std::shared_ptr<Edge> e);
+  bool intercept(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
+  bool intercept(std::shared_ptr<Vertex> v);
   bool intercept(double x, double y);
 
-  double straightDistance(Vertex *v);
-  double distance(Vertex *v);
+  double straightDistance(std::shared_ptr<Vertex> v);
+  double distance(std::shared_ptr<Vertex> v);
   double distance(double x, double y);
 
-  double dot(Vertex *v);
+  double dot(std::shared_ptr<Vertex> v);
 
-  bool left(Vertex *v);
+  bool left(std::shared_ptr<Vertex> v);
   bool left(double x, double y);
 
-  bool right(Vertex *v);
+  bool right(std::shared_ptr<Vertex> v);
   bool right(double x, double y);
 
-  bool accordingToNormal(Vertex *v, bool inEdgeTest = false);
+  bool accordingToNormal(std::shared_ptr<Vertex> v, bool inEdgeTest = false);
 
-  double angle(Edge *e);
-  double angle(Vertex *v1, Vertex *v2);
+  double angle(std::shared_ptr<Edge> e);
+  double angle(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
 
-  Vertex *normal();
+  std::shared_ptr<Vertex> normal();
 
-  bool equals(Edge *e);
-  bool equals(Vertex *v1, Vertex *v2);
-  bool matches(Edge *e);
-  bool matches(Vertex *v1, Vertex *v2);
+  bool equals(std::shared_ptr<Edge> e);
+  bool equals(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
+  bool matches(std::shared_ptr<Edge> e);
+  bool matches(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
 
   // metodos do Daniel Siqueira
-  void setCurva(CurveAdaptiveParametric *);
+  void setCurva(std::shared_ptr<CurveAdaptiveParametric>);
   void setLen(double len);
   double getLen();
   void makeParamMid();
 
   string getText() override;
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void highlight(bool highlightCell);
-  //     void unhighlight();
-  //     void unhighlight(bool highlightCell);
-
-  //    void draw();
-  //    void drawNormal();
-  // #endif //#if USE_OPENGL
 };
 }  // namespace Basics
 }  // namespace Par2DJMesh

@@ -1,50 +1,31 @@
 #include "../../../include/crab_mesh/aft/face.h"
 
-Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, long int id) : Shape(id) {
-  mid = NULL;
+#include <memory>
+
+Face::Face(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2,
+           std::shared_ptr<Vertex> v3, long int id)
+    : Shape(id) {
+  mid = nullptr;
 
   setVertices(v1, v2, v3);
 
   h = 0.0;
-
-  // #if USE_OPENGL
-  //     //setColor(0.0, 0.0, 0.0);
-  //     setColor(1.0, 0.0, 0.0);
-  //     highlighted = false;
-  // #endif //#if USE_OPENGL
 }
 
-Face::Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid, long int id)
+Face::Face(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2,
+           std::shared_ptr<Vertex> v3, std::shared_ptr<Vertex> mid, long int id)
     : Shape(id) {
-  this->mid = NULL;
+  this->mid = nullptr;
 
   setVertices(v1, v2, v3);
-
-  if (this->mid) delete this->mid;
 
   this->mid = mid;
 
   h = 0.0;
-
-  // #if USE_OPENGL
-  //     //setColor(0.0, 0.0, 0.0);
-  //     setColor(1.0, 0.0, 0.0);
-  //     highlighted = false;
-  // #endif //#if USE_OPENGL
 }
 
-Face::~Face() {
-  if ((mid) && (mid != v[0]) && (mid != v[1]) && (mid != v[2])) delete mid;
-
-  mid = NULL;
-
-  if (v[0]) delete v[0];
-  if (v[1]) delete v[1];
-  if (v[2]) delete v[2];
-}
-
-Vertex *Face::makeMid() {
-  Vertex *m = new Vertex();
+std::shared_ptr<Vertex> Face::makeMid() {
+  std::shared_ptr<Vertex> m = std::make_shared<Vertex>();
 
   if (v[0] && v[1] && v[2]) {
     m->setPosition((v[0]->getX() + v[1]->getX() + v[2]->getX()) / 3.0,
@@ -57,35 +38,34 @@ Vertex *Face::makeMid() {
   return m;
 }
 
-void Face::setV1(Vertex *v) { this->v[0] = v; }
+void Face::setV1(std::shared_ptr<Vertex> v) { this->v[0] = v; }
 
-void Face::setV2(Vertex *v) { this->v[1] = v; }
+void Face::setV2(std::shared_ptr<Vertex> v) { this->v[1] = v; }
 
-void Face::setV3(Vertex *v) { this->v[2] = v; }
+void Face::setV3(std::shared_ptr<Vertex> v) { this->v[2] = v; }
 
-void Face::setVertices(Vertex *v1, Vertex *v2, Vertex *v3) {
+void Face::setVertices(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2,
+                       std::shared_ptr<Vertex> v3) {
   setV1(v1);
   setV2(v2);
   setV3(v3);
 
   if (mid) {
-    delete mid;
-
-    mid = NULL;
+    mid = nullptr;
   }
 
   mid = makeMid();
 }
 
-Vertex *Face::getV1() { return v[0]; }
+std::shared_ptr<Vertex> Face::getV1() { return v[0]; }
 
-Vertex *Face::getV2() { return v[1]; }
+std::shared_ptr<Vertex> Face::getV2() { return v[1]; }
 
-Vertex *Face::getV3() { return v[2]; }
+std::shared_ptr<Vertex> Face::getV3() { return v[2]; }
 
-Vertex *Face::getMid() { return mid; }
+std::shared_ptr<Vertex> Face::getMid() { return mid; }
 
-Vertex *Face::circumcenter() {
+std::shared_ptr<Vertex> Face::circumcenter() {
   /*static*/ double x1, y1, x2, y2, x3, y3, x, y;
   /*static*/ double x12PlusY12, x22PlusY22, x32PlusY32;
   /*static*/ double detNum1, detNum2, detDen, den;
@@ -111,12 +91,12 @@ Vertex *Face::circumcenter() {
   x = detNum1 / den;
   y = detNum2 / den;
 
-  Vertex *center = new Vertex(x, y);
+  std::shared_ptr<Vertex> center = std::make_shared<Vertex>(x, y);
 
   return center;
 }
 
-Vertex *Face::incenter() {
+std::shared_ptr<Vertex> Face::incenter() {
   /*static*/ double a, b, c, sum, x, y;
 
   a = v[0]->distance(v[1]);
@@ -128,7 +108,7 @@ Vertex *Face::incenter() {
   x = (a * v[2]->getX() + b * v[0]->getX() + c * v[1]->getX()) / sum;
   y = (a * v[2]->getY() + b * v[0]->getY() + c * v[1]->getY()) / sum;
 
-  Vertex *center = new Vertex(x, y);
+  std::shared_ptr<Vertex> center = std::make_shared<Vertex>(x, y);
 
   return center;
 }
@@ -142,10 +122,10 @@ bool Face::in(double x, double y) {
 
   v.setPosition(x, y);
 
-  return in(&v);
+  return in(std::make_shared<Vertex>(v));
 }
 
-bool Face::in(Vertex *v) {
+bool Face::in(std::shared_ptr<Vertex> v) {
   /*static*/ double l1, l2, l3;
 
   l1 = l2 = l3 = 0.0;
@@ -156,17 +136,17 @@ bool Face::in(Vertex *v) {
   return ((l1 > 0.0) && (l2 > 0.0) && (l3 > 0.0));
 }
 
-bool Face::on(Vertex *v) { return (!in(v) && !out(v)); }
+bool Face::on(std::shared_ptr<Vertex> v) { return (!in(v) && !out(v)); }
 
 bool Face::out(double x, double y) {
   /*static*/ Vertex v;
 
   v.setPosition(x, y);
 
-  return out(&v);
+  return out(std::make_shared<Vertex>(v));
 }
 
-bool Face::out(Vertex *v) {
+bool Face::out(std::shared_ptr<Vertex> v) {
   /*static*/ double l1, l2, l3;
 
   l1 = l2 = l3 = 0.0;
@@ -177,12 +157,12 @@ bool Face::out(Vertex *v) {
   barycentricCoordinates(v, l1, l2, l3);
 
   // return ((l1 >= 0.0) && (l2 >= 0.0) && (l3 >= 0.0));
-  return ((l1 < -TOLERANCIA_AFT) || (l2 < -TOLERANCIA_AFT) ||
-          (l3 < -TOLERANCIA_AFT));
+  return ((l1 < -TOLERANCE_AFT) || (l2 < -TOLERANCE_AFT) ||
+          (l3 < -TOLERANCE_AFT));
 }
 
-void Face::barycentricCoordinates(Vertex *v, double &l1, double &l2,
-                                  double &l3) {
+void Face::barycentricCoordinates(std::shared_ptr<Vertex> v, double &l1,
+                                  double &l2, double &l3) {
   /*static*/ double s;
   // #pragma omp critical
   //     {
@@ -217,8 +197,8 @@ double Face::quality() {
   rInsc = DBL_MAX;
   rCirc = DBL_MIN;
 
-  Vertex *insc = incenter();
-  Vertex *circ = circumcenter();
+  std::shared_ptr<Vertex> insc = incenter();
+  std::shared_ptr<Vertex> circ = circumcenter();
 
   e.setVertices(v[0], v[1]);
 
@@ -250,10 +230,10 @@ double Face::quality() {
 
   rCirc = (d > rCirc) ? d : rCirc;
 
-  e.setVertices(NULL, NULL);
+  e.setVertices(nullptr, nullptr);
 
-  delete insc;
-  delete circ;
+  insc = nullptr;
+  circ = nullptr;
 
   return 2.0 * rInsc / rCirc;
 }
@@ -265,7 +245,7 @@ bool Face::isBad() {
   return (gama() / gamaEquil > 1.5);
 }
 
-bool Face::hasEdge(Vertex *v1, Vertex *v2) {
+bool Face::hasEdge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) {
   return (((this->v[0] == v1) && (this->v[1] == v2)) ||
           ((this->v[0] == v2) && (this->v[1] == v1)) ||
           ((this->v[1] == v1) && (this->v[2] == v2)) ||
@@ -274,10 +254,12 @@ bool Face::hasEdge(Vertex *v1, Vertex *v2) {
           ((this->v[2] == v2) && (this->v[0] == v1)));
 }
 
-bool Face::hasEdge(Edge *e) { return hasEdge(e->getV1(), e->getV2()); }
+bool Face::hasEdge(std::shared_ptr<Edge> e) {
+  return hasEdge(e->getV1(), e->getV2());
+}
 
-bool Face::isAdjacent(Face *f) {
-  if ((f == NULL) || (f == this)) {
+bool Face::isAdjacent(std::shared_ptr<Face> f) {
+  if ((f == nullptr) || (f == this->shared_from_this())) {
     return false;
   }
 
@@ -285,7 +267,7 @@ bool Face::isAdjacent(Face *f) {
           (hasEdge(f->v[2], f->v[0])));
 }
 
-bool Face::hits(Face *f) {
+bool Face::hits(std::shared_ptr<Face> f) {
   /*static*/ bool intercept = false;
 
   if ((in(f->v[0])) || (in(f->v[1])) || (in(f->v[2])) || (f->in(v[0])) ||
@@ -293,100 +275,10 @@ bool Face::hits(Face *f) {
     intercept = true;
   }
 
-  /*if (!intercept)
-  {
-      Edge *e1 = new Edge();
-      Edge *e2 = new Edge();
-
-      e1->setVertices(v[0], v[1]);
-
-      e2->setVertices(f->v[0], f->v[1]);
-
-      if (!e1->equals(e2)) intercept = e1->intercept(e2);
-
-      if (!intercept)
-      {
-          e1->setVertices(v[0], v[1]);
-
-          e2->setVertices(f->v[1], f->v[2]);
-
-          if (!e1->equals(e2)) intercept = e1->intercept(e2);
-      }
-
-      if (!intercept)
-      {
-          e1->setVertices(v[0], v[1]);
-
-          e2->setVertices(f->v[2], f->v[0]);
-
-          if (!e1->equals(e2)) intercept = e1->intercept(e2);
-      }
-
-      if (!intercept)
-      {
-          e1->setVertices(v[1], v[2]);
-
-          e2->setVertices(f->v[0], f->v[1]);
-
-          if (!e1->equals(e2)) intercept = e1->intercept(e2);
-      }
-
-      if (!intercept)
-      {
-          e1->setVertices(v[1], v[2]);
-
-          e2->setVertices(f->v[1], f->v[2]);
-
-          if (!e1->equals(e2)) intercept = e1->intercept(e2);
-      }
-
-      if (!intercept)
-      {
-          e1->setVertices(v[1], v[2]);
-
-          e2->setVertices(f->v[2], f->v[0]);
-
-          if (!e1->equals(e2)) intercept = e1->intercept(e2);
-      }
-
-      if (!intercept)
-      {
-          e1->setVertices(v[2], v[0]);
-
-          e2->setVertices(f->v[0], f->v[1]);
-
-          if (!e1->equals(e2)) intercept = e1->intercept(e2);
-      }
-
-      if (!intercept)
-      {
-          e1->setVertices(v[2], v[0]);
-
-          e2->setVertices(f->v[1], f->v[2]);
-
-          if (!e1->equals(e2)) intercept = e1->intercept(e2);
-      }
-
-      if (!intercept)
-      {
-          e1->setVertices(v[2], v[0]);
-
-          e2->setVertices(f->v[2], f->v[0]);
-
-          if (!e1->equals(e2)) intercept = e1->intercept(e2);
-      }
-
-      e1->setVertices(NULL, NULL);
-      e2->setVertices(NULL, NULL);
-
-      delete e1;
-      delete e2;
-  }*/
-
   return intercept;
 }
 
-bool Face::hits(Edge *e) {
+bool Face::hits(std::shared_ptr<Edge> e) {
   return ((e->intercept(v[0], v[1])) || (e->intercept(v[1], v[2])) ||
           (e->intercept(v[2], v[0])));
 }
@@ -401,35 +293,3 @@ string Face::getText() {
 
   return s;
 }
-
-// #if USE_OPENGL
-//  void Face::highlight()
-//{
-//     highlighted = true;
-// }
-
-// void Face::unhighlight()
-//{
-//    highlighted = false;
-//}
-
-// void Face::draw()
-//{
-//    if (!highlighted)
-//    {
-//        return;
-//    }
-
-//    //glEnable(GL_LINE_SMOOTH);
-//    glEnable(GL_BLEND);
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//    //glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-
-//    glColor3d(r, g, b);
-//    glBegin(GL_TRIANGLES);
-//    glVertex2d(v[0]->getX(), v[0]->getY());
-//    glVertex2d(v[1]->getX(), v[1]->getY());
-//    glVertex2d(v[2]->getX(), v[2]->getY());
-//    glEnd();
-//}
-// #endif //#if USE_OPENGL

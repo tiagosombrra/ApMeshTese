@@ -1,6 +1,7 @@
 
 #define NOGMM
 #define NOMTL
+#define EIGEN_GOOGLEHASH_SUPPORT 1
 
 #include <ext/hash_map>
 #include <google/dense_hash_map>

@@ -1,7 +1,12 @@
 #include "../../../include/crab_mesh/aft/edge.h"
 
-Edge::Edge(Vertex *v1, Vertex *v2, long int id) : Shape(id) {
-  mid = vector = NULL;
+#include <cstdint>
+#include <memory>
+
+Edge::Edge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2,
+           std::uint64_t id)
+    : Shape(id) {
+  mid = vector = nullptr;
 
   xmax = ymax = DBL_MAX;
   xmin = ymin = DBL_MIN;
@@ -9,30 +14,14 @@ Edge::Edge(Vertex *v1, Vertex *v2, long int id) : Shape(id) {
   len = -1.0;
 
   setVertices(v1, v2);
-  setCell(NULL);
+  setCell(nullptr);
   setFree(true);
   setInBoundary(false);
-  setCurva(NULL);
-  // #if USE_OPENGL
-  //     setWidth(1.0);
-  //     //figura
-  //     //setColor(1.0, 1.0, 1.0);
-  //     setColor(0.0, 0.0, 0.0);
-  //     //endfigura
-  // #endif //#if USE_OPENGL
+  setCurva(nullptr);
 }
 
-Edge::~Edge() {
-  if (v[0]) {
-    delete v[0];
-  }
-  if (v[1]) delete v[1];
-  if (mid) delete mid;
-  if (vector) delete vector;
-}
-
-Vertex *Edge::makeMid() {
-  Vertex *v = new Vertex();
+std::shared_ptr<Vertex> Edge::makeMid() {
+  std::shared_ptr<Vertex> v = std::make_shared<Vertex>();
 
   if (this->v[0] && this->v[1]) {
     v->setPosition((this->v[0]->getX() + this->v[1]->getX()) / 2.0,
@@ -42,8 +31,8 @@ Vertex *Edge::makeMid() {
   return v;
 }
 
-Vertex *Edge::makeVector() {
-  Vertex *v = new Vertex();
+std::shared_ptr<Vertex> Edge::makeVector() {
+  std::shared_ptr<Vertex> v = std::make_shared<Vertex>();
 
   if (this->v[0] && this->v[1]) {
     v->setPosition(this->v[1]->getX() - this->v[0]->getX(),
@@ -53,11 +42,11 @@ Vertex *Edge::makeVector() {
   return v;
 }
 
-void Edge::setV1(Vertex *v) { this->v[0] = v; }
+void Edge::setV1(std::shared_ptr<Vertex> v) { this->v[0] = v; }
 
-void Edge::setV2(Vertex *v) { this->v[1] = v; }
+void Edge::setV2(std::shared_ptr<Vertex> v) { this->v[1] = v; }
 
-void Edge::setVertices(Vertex *v1, Vertex *v2) {
+void Edge::setVertices(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) {
   setV1(v1);
   setV2(v2);
 
@@ -80,24 +69,20 @@ void Edge::setVertices(Vertex *v1, Vertex *v2) {
   }
 
   if (mid) {
-    delete mid;
-
-    mid = NULL;
+    mid = nullptr;
   }
 
   if (vector) {
-    delete vector;
-
-    vector = NULL;
+    vector = nullptr;
   }
 
   mid = makeMid();
   vector = makeVector();
 }
 
-Vertex *Edge::getV1() { return v[0]; }
+std::shared_ptr<Vertex> Edge::getV1() { return v[0]; }
 
-Vertex *Edge::getV2() { return v[1]; }
+std::shared_ptr<Vertex> Edge::getV2() { return v[1]; }
 
 void Edge::setInBoundary(bool inBoundary) { this->inBoundary = inBoundary; }
 
@@ -114,17 +99,19 @@ void Edge::setFree(bool free) { this->free = free; }
 
 bool Edge::isFree() { return free; }
 
-void Edge::setCell(QuadtreeCell *cell) { this->cell = cell; }
+void Edge::setCell(std::shared_ptr<QuadtreeCell> cell) { this->cell = cell; }
 
-QuadtreeCell *Edge::getCell() { return cell; }
+std::shared_ptr<QuadtreeCell> Edge::getCell() { return cell; }
 
-Vertex *Edge::getMid() { return mid; }
+std::shared_ptr<Vertex> Edge::getMid() { return mid; }
 
 double Edge::length() { return vector->norm(); }
 
-bool Edge::intercept(Edge *e) { return intercept(e->v[0], e->v[1]); }
+bool Edge::intercept(std::shared_ptr<Edge> e) {
+  return intercept(e->v[0], e->v[1]);
+}
 
-bool Edge::intercept(Vertex *va, Vertex *vb) {
+bool Edge::intercept(std::shared_ptr<Vertex> va, std::shared_ptr<Vertex> vb) {
   /*if ((va == v[0]) || (va == v[1]) || (vb == v[0]) || (vb == v[1]))
   {
       return false;
@@ -186,12 +173,16 @@ bool Edge::intercept(Vertex *va, Vertex *vb) {
   ca.setPosition(tivx - eivx, tivy - eivy);
   cb.setPosition(tfvx - eivx, tfvy - eivy);
 
-  return ((ab.cross(&ac) * ab.cross(&ad) < 0) &&
-          (cd.cross(&ca) * cd.cross(&cb) < 0));
+  return ((ab.cross(std::make_shared<Vertex>(ac)) *
+               ab.cross(std::make_shared<Vertex>(ad)) <
+           0) &&
+          (cd.cross(std::make_shared<Vertex>(ca)) *
+               cd.cross(std::make_shared<Vertex>(cb)) <
+           0));
 }
 
-bool Edge::intercept(Vertex *v) {
-  return (distance(v) < TOLERANCIA_AFT);
+bool Edge::intercept(std::shared_ptr<Vertex> v) {
+  return (distance(v) < TOLERANCE_AFT);
 
   /*static Vertex ac, bc;
 
@@ -217,10 +208,10 @@ bool Edge::intercept(double x, double y) {
 
   v.setPosition(x, y);
 
-  return intercept(&v);
+  return intercept(std::make_shared<Vertex>(v));
 }
 
-double Edge::straightDistance(Vertex *v) {
+double Edge::straightDistance(std::shared_ptr<Vertex> v) {
   return 2.0 * v->surface(this->v[0], this->v[1]) / length();
 
   /*static Vertex w, p;
@@ -244,7 +235,7 @@ double Edge::straightDistance(Vertex *v) {
   return p.distance(v);*/
 }
 
-double Edge::distance(Vertex *v) {
+double Edge::distance(std::shared_ptr<Vertex> v) {
   /*static*/ Vertex ac, vec;
 
   ac.setPosition(v->getX() - this->v[0]->getX(),
@@ -255,7 +246,7 @@ double Edge::distance(Vertex *v) {
   ac.scalarMultiplication(1.0 / ac.norm());
   vec.scalarMultiplication(1.0 / vec.norm());
 
-  if (ac.dot(&vec) < TOLERANCIA_AFT) {
+  if (ac.dot(std::make_shared<Vertex>(vec)) < TOLERANCE_AFT) {
     return this->v[0]->distance(v);
   }
 
@@ -265,7 +256,7 @@ double Edge::distance(Vertex *v) {
   ac.scalarMultiplication(1.0 / ac.norm());
   vec.scalarMultiplication(-1.0);
 
-  if (ac.dot(&vec) < TOLERANCIA_AFT) {
+  if (ac.dot(std::make_shared<Vertex>(vec)) < TOLERANCE_AFT) {
     return this->v[1]->distance(v);
   }
 
@@ -348,8 +339,8 @@ double Edge::distance(Vertex *v) {
   //        }
   //    }
   //
-  //    Edge *e1 = new Edge(0, v[0], v);
-  //    Edge *e2 = new Edge(0, v, v[1]);
+  //    std::shared_ptr<Edge> e1 = std::make_shared<Edge(0, v[0], v);
+  //    std::shared_ptr<Edge> e2 = std::make_shared<Edge(0, v, v[1]);
   //
   //    if (angle(e1) >= M_PI/2.0)
   //    {
@@ -389,19 +380,21 @@ double Edge::distance(double x, double y) {
 
   v.setPosition(x, y);
 
-  return distance(&v);
+  return distance(std::make_shared<Vertex>(v));
 }
 
-double Edge::dot(Vertex *v) {
+double Edge::dot(std::shared_ptr<Vertex> v) {
   /*static*/ Vertex vAux;
 
   vAux.setPosition(v->getX() - this->v[0]->getX(),
                    v->getY() - this->v[0]->getY());
 
-  return vector->dot(&vAux);
+  return vector->dot(std::make_shared<Vertex>(vAux));
 }
 
-bool Edge::left(Vertex *v) { return left(v->getX(), v->getY()); }
+bool Edge::left(std::shared_ptr<Vertex> v) {
+  return left(v->getX(), v->getY());
+}
 
 bool Edge::left(double x, double y) {
   /*static*/ Vertex vAux;
@@ -411,7 +404,9 @@ bool Edge::left(double x, double y) {
   return vAux.right(vector);
 }
 
-bool Edge::right(Vertex *v) { return right(v->getX(), v->getY()); }
+bool Edge::right(std::shared_ptr<Vertex> v) {
+  return right(v->getX(), v->getY());
+}
 
 bool Edge::right(double x, double y) {
   /*static*/ Vertex vAux;
@@ -421,7 +416,7 @@ bool Edge::right(double x, double y) {
   return vAux.left(vector);
 }
 
-bool Edge::accordingToNormal(Vertex *v, bool inEdgeTest) {
+bool Edge::accordingToNormal(std::shared_ptr<Vertex> v, bool inEdgeTest) {
   if (inEdgeTest) {
     return !right(v);
   }
@@ -429,7 +424,7 @@ bool Edge::accordingToNormal(Vertex *v, bool inEdgeTest) {
   return left(v);
 }
 
-double Edge::angle(Edge *e) {
+double Edge::angle(std::shared_ptr<Edge> e) {
   /*static*/ Vertex va, vb, vc;
 
   if (v[0]->matches(e->v[0])) {
@@ -455,24 +450,24 @@ double Edge::angle(Edge *e) {
   vb.setPosition(vb.getX() - va.getX(), vb.getY() - va.getY());
   vc.setPosition(vc.getX() - va.getX(), vc.getY() - va.getY());
 
-  return vb.angle(&vc);
+  return vb.angle(std::make_shared<Vertex>(vc));
 }
 
-double Edge::angle(Vertex *va, Vertex *vb) {
+double Edge::angle(std::shared_ptr<Vertex> va, std::shared_ptr<Vertex> vb) {
   /*static*/ Edge e;
   /*static*/ double result;
 
   e.setVertices(va, vb);
 
-  result = angle(&e);
+  result = angle(std::make_shared<Edge>(e));
 
-  e.setVertices(NULL, NULL);
+  e.setVertices(nullptr, nullptr);
 
   return result;
 }
 
-Vertex *Edge::normal() {
-  Vertex *normal = new Vertex();
+std::shared_ptr<Vertex> Edge::normal() {
+  std::shared_ptr<Vertex> normal = std::make_shared<Vertex>();
 
   if (v[0]->matches(v[1])) {
     normal->setPosition(0.0, 0.0);
@@ -500,23 +495,25 @@ Vertex *Edge::normal() {
   return normal;
 }
 
-bool Edge::equals(Edge *e) {
+bool Edge::equals(std::shared_ptr<Edge> e) {
   return (((v[0] == e->v[0]) && (v[1] == e->v[1])) ||
           ((v[0] == e->v[1]) && (v[1] == e->v[0])));
 }
 
-bool Edge::equals(Vertex *v1, Vertex *v2) {
+bool Edge::equals(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) {
   return (((this->v[0] == v1) && (this->v[1] == v2)) ||
           ((this->v[0] == v2) && (this->v[1] == v1)));
 }
 
-bool Edge::matches(Edge *e) { return ((v[0] == e->v[0]) && (v[1] == e->v[1])); }
+bool Edge::matches(std::shared_ptr<Edge> e) {
+  return ((v[0] == e->v[0]) && (v[1] == e->v[1]));
+}
 
-bool Edge::matches(Vertex *v1, Vertex *v2) {
+bool Edge::matches(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) {
   return ((this->v[0] == v1) && (this->v[1] == v2));
 }
 
-void Edge::setCurva(CurveAdaptiveParametric *c) { this->c = c; }
+void Edge::setCurva(std::shared_ptr<CurveAdaptiveParametric> c) { this->c = c; }
 
 void Edge::setLen(double len) { this->len = len; }
 
@@ -528,9 +525,7 @@ void Edge::makeParamMid() {
   }
 
   if (mid) {
-    delete mid;
-
-    mid = NULL;
+    mid = nullptr;
   }
 
   double t = -1.0;
@@ -541,7 +536,7 @@ void Edge::makeParamMid() {
 
     t = c->CalculateMidparameterByParamters(v[0]->getX(), v[1]->getX());
 
-    mid = new Vertex(t, 0.0);
+    mid = std::make_shared<Vertex>(t, 0.0);
 
     len = c->CalculateParametricLength(v[0]->getX(), v[1]->getX()) /
           c->GetLength();
@@ -551,7 +546,7 @@ void Edge::makeParamMid() {
 
     t = c->CalculateMidparameterByParamters(v[0]->getY(), v[1]->getY());
 
-    mid = new Vertex(1.0, t);
+    mid = std::make_shared<Vertex>(1.0, t);
 
     len = c->CalculateParametricLength(v[0]->getY(), v[1]->getY()) /
           c->GetLength();
@@ -561,7 +556,7 @@ void Edge::makeParamMid() {
 
     t = c->CalculateMidparameterByParamters(v[1]->getX(), v[0]->getX());
 
-    mid = new Vertex(t, 1.0);
+    mid = std::make_shared<Vertex>(t, 1.0);
 
     len = c->CalculateParametricLength(v[1]->getX(), v[0]->getX()) /
           c->GetLength();
@@ -571,7 +566,7 @@ void Edge::makeParamMid() {
 
     t = c->CalculateMidparameterByParamters(v[1]->getY(), v[0]->getY());
 
-    mid = new Vertex(0.0, t);
+    mid = std::make_shared<Vertex>(0.0, t);
 
     len = c->CalculateParametricLength(v[1]->getY(), v[0]->getY()) /
           c->GetLength();
@@ -591,65 +586,3 @@ string Edge::getText() {
 
   return s;
 }
-
-// #if USE_OPENGL
-//  void Edge::highlight()
-//{
-//     highlight(true);
-// }
-
-// void Edge::highlight(bool highlightCell)
-//{
-//    width = 3.0;
-
-//    if (highlightCell && cell)
-//    {
-//        cell->highlight(false);
-//    }
-//}
-
-// void Edge::unhighlight()
-//{
-//    unhighlight(true);
-//}
-
-// void Edge::unhighlight(bool unhighlightCell)
-//{
-//    width = 1.0;
-
-//    if (unhighlightCell && cell)
-//    {
-//        cell->unhighlight(false);
-//    }
-//}
-
-// void Edge::draw()
-//{
-//    glLineWidth(width);
-
-//    glColor3d(r, g, b);
-//    glBegin(GL_LINES);
-//    glVertex2d(v[0]->getX(), v[0]->getY());
-//    glVertex2d(v[1]->getX(), v[1]->getY());
-//    glEnd();
-
-//    glLineWidth(1.0);
-//}
-
-// void Edge::drawNormal()
-//{
-//    glLineWidth(1.0);
-
-//    Vertex *normal = this->normal();
-//    normal->scalarMultiplication(1.0/normal->norm()*length()/10.0);
-//    normal->sum(mid);
-
-//    glColor3d(r, g, b);
-//    glBegin(GL_LINES);
-//    glVertex2d(mid->getX(), mid->getY());
-//    glVertex2d(normal->getX(), normal->getY());
-//    glEnd();
-
-//    delete normal;
-//}
-// #endif //#if USE_OPENGL

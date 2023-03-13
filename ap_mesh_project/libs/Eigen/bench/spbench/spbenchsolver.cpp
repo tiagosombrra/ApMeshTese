@@ -61,7 +61,7 @@ int main(int argc, char** args) {
       printStatheader(statbuf);
       statbuf.close();
     } else
-      std::cerr << "Unable to open the provided file for writting... \n";
+      std::cerr << "Unable to open the provided file for writing... \n";
   }
 
   // Get the maximum number of iterations and the tolerance

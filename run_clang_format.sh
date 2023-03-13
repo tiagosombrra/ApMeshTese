@@ -3,14 +3,26 @@
 THIS_PATH="$(realpath "$0")"
 THIS_DIR="$(dirname "$THIS_PATH")"
 
-# Find all files in THIS_DIR which end in .ino, .cpp, etc., as specified
-# in the regular expression just below
-FILE_LIST="$(find "$THIS_DIR" | grep -E ".*(\.ino|\.cpp|\.c|\.h|\.hpp|\.hh)$")"
+# Adicionar os caminhos das pastas que deseja formatar aqui
+PROJECT_DIRS=()
+if [ -d "$THIS_DIR/ap_mesh_project/include" ]; then
+  PROJECT_DIRS+=("$THIS_DIR/ap_mesh_project/include")
+fi
+if [ -d "$THIS_DIR/ap_mesh_project/src" ]; then
+  PROJECT_DIRS+=("$THIS_DIR/ap_mesh_project/src")
+fi
 
+# Encontrar todos os arquivos nas pastas especificadas que terminam com .ino, .cpp, etc.
+# e salvar a lista de arquivos em uma variável
+FILE_LIST=""
+for dir in "${PROJECT_DIRS[@]}"; do
+  files=$(find "$dir" -type f \( -name "*.h" -o -name "*.hpp" -o -name "*.hh" -o -name "*.c" -o -name "*.cpp" -o -name "*.cc" \))
+  FILE_LIST="$FILE_LIST\n$files"
+done
+
+# Exibir a lista de arquivos encontrados
 echo -e "Files found to format = \n\"\"\"\n$FILE_LIST\n\"\"\""
 
-# Format each file.
-# - NB: do NOT put quotes around `$FILE_LIST` below or else the `clang-format` command will 
-#   mistakenly see the entire blob of newline-separated file names as a SINGLE file name instead 
-#   of as a new-line separated list of *many* file names!
+# Formatar cada arquivo encontrado
 clang-format --verbose -i --style=Google $FILE_LIST
+

@@ -1,3 +1,7 @@
+#include <execinfo.h>
+
+#include <memory>
+#include <stdexcept>
 #include <string>
 
 #include "../include/data/curve/curve_adaptive_parametric_bezier.h"
@@ -8,35 +12,38 @@
 #include "../include/data/patch/patch_hermite.h"
 #include "../include/data/vector_adaptive.h"
 #include "../include/data/vertex_adaptive.h"
-#include "../include/generator/GeradorAdaptativoPorCurvatura.h"
-#include "../include/input_output/Modelos3d.h"
-#include "../include/input_output/PatchBezierReader.h"
-#include "../include/input_output/ReaderPatches.h"
-#include "../include/timer/Timer.h"
+#include "../include/generator/generator_adaptive.h"
+#include "../include/input_output/models_3d.h"
+#include "../include/input_output/patch_reader.h"
+#include "../include/timer/timer.h"
 
 #if USE_MPI
 int RANK_MPI, SIZE_MPI;
 #endif  // #if USE_OPENMPI
-int PASSOS = 4;
+int STEPS = 3;
 double TRIANGLE_MEDIO = 0.0;
-double TOLERANCIA_ESTIMATIVE = 1.0;
+double ESTIMATIVE_TOLERANCE = 1.0;
 // distância entre um parâmetro e outro
 double DELTA = 0.0001;
 // distância máxima entre dois pontos
-double TOLERANCIA = 0.0001;
-double TOLERANCIA_CURVATURA = 0.0001;
-double TOLERANCIA_AFT = 0.0001;
-double PROPORCAO =
-    1.0;  // proporção usada no avanço de fronteira (antes era 0.5)
-double SUAVIZACAO = 7;  // número de vezes que se dará a suavização laplaciana
-double FATOR_SUAVIZACAO = 0.5;  // fator usado na suavização laplaciana
-double EPSYLON = 0.0000001;     // trashrold
-double DISCRETIZACAO_CURVA = 1.414213562;
-double DISCRETIZACAO_INTER = sqrt(DISCRETIZACAO_CURVA);
+double TOLERANCE = 0.0001;
+double TOLERANCE_CURVATURE = 0.0001;
+double TOLERANCE_AFT = 0.0001;
+// proporção usada no avanço de fronteira (antes era 0.5)
+double RATIO_AFT = 1.0;
+// número de vezes que se dará a suavização laplaciana
+double SMOOTHING_LAPLACIAN_NUMBER = 7;
+// fator usado na suavização laplaciana
+double SMOOTHING_LAPLACIAN_FACTOR = 0.5;
+double EPSYLON = 0.0000001;  // trashrold
+double DISCRETIZATION_CURVE_FACTOR = 1.414213562;
+double DISCRETIZATION_CURVE_FACTOR_INTERNAL = sqrt(DISCRETIZATION_CURVE_FACTOR);
 double TIME_READ_FILE = 0.0;
-int I_MAX = 50000;  // i maximo do método findUV()
-std::set<PointAdaptive *> LIST_ALL_POINTS_MODEL;
-std::set<SubMesh *> LIST_ALL_SUB_MESH_MODEL;
+unsigned int I_MAX = 50000;  // i maximo do método findUV()
+double MAX_TIME = 999999999;
+int MAX_THREADS = 1;
+std::set<PointAdaptive*> LIST_ALL_POINTS_MODEL;
+std::set<SubMesh*> LIST_ALL_SUB_MESH_MODEL;
 std::string NAME_MODEL;
 std::string INPUT_MODEL;
 std::string NUMBER_PROCESS;
@@ -52,76 +59,109 @@ std::string USE_TEMPLATE;
 // argv[5] = "NAME_MODEL"
 // argv[6] = "USE_TEMPLATE" -> y or n
 
-int main(int argc, char **argv) {
+void printStackTrace() {
+  std::cout << "Stack trace:" << std::endl;
+
+  void* stackTrace[50];
+  int size = backtrace(stackTrace, 50);
+  char** symbols = backtrace_symbols(stackTrace, size);
+
+  for (int i = 0; i < size; i++) {
+    std::cout << symbols[i] << std::endl;
+  }
+
+  free(symbols);
+}
+
+int main(int argc, char** argv) {
+  try {
 #if USE_MPI
-  MPI_Init(&argc, &argv);
-  MPI_Comm_size(MPI_COMM_WORLD, &SIZE_MPI);
-  MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
-  MPI_Status status;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &SIZE_MPI);
+    MPI_Comm_rank(MPI_COMM_WORLD, &RANK_MPI);
+    MPI_Status status;
+
+    if (atoi(argv[1]) < SIZE_MPI) {
+      SIZE_MPI = atoi(argv[1]);
+    }
 
 #endif
 
-  if (argc < 7) {
-    cout << "Erro!!! Number of parameters is incorrect (" << argc
-         << ") , correct number is 7." << endl;
-    return -1;
-  }
+    if (argc < 7) {
+      cout << "Erro!!! Number of parameters is incorrect (" << argc
+           << ") , correct number is 7." << endl;
+      return -1;
+    }
 
-  // contador do tempo para carregar a malha na memória
-  // (sizeRank, sizeThread, sizeType)
-  Timer *timer = new Timer(atoi(argv[1]), atoi(argv[2]), 11);
+    // contador do tempo para carregar a malha na memória
+    // (sizeRank, sizeThread, sizeType)
+    auto timer = std::make_shared<Timer>(atoi(argv[1]), atoi(argv[2]), 11);
+    if (timer != nullptr) {
+      cout << "Objeto criado corretamente" << endl;
+    } else {
+      cout << "Objeto não foi criado corretamente" << endl;
+    }
 
-  // cout<<atoi(argv[1])<<atoi(argv[2])<<endl;
-  // cout<<RANK_MPI<<THREAD_ROOT<<endl;
-  INPUT_MODEL = argv[3];
+    // cout<<atoi(argv[1])<<atoi(argv[2])<<endl
+    // cout<<RANK_MPI<<THREAD_ROOT<<endl;
+    INPUT_MODEL = argv[3];
 
-  // writeMeshOn ou writeMeshOff da escrita da malha
-  WRITE_MESH = argv[4];
+    // writeMeshOn ou writeMeshOff da escrita da malha
+    WRITE_MESH = argv[4];
 
-  // nome do modelo para escrita da malha de saída
-  NAME_MODEL = argv[5];
+    // nome do modelo para escrita da malha de saída
+    NAME_MODEL = argv[5];
 
-  // habilita e desabilita a geração por templates
-  USE_TEMPLATE = argv[6];
+    // habilita e desabilita a geração por templates
+    USE_TEMPLATE = argv[6];
 
-  // contador do tempo de inicialização em segundos em todos os processos
+    // contador do tempo de inicialização em segundos em todos os processos
 #if USE_MPI
 #if USE_OPENMP
-  timer->initTimerParallel(RANK_MPI, THREAD_ROOT, 10);  // Full
+    timer->InitTimerParallel(RANK_MPI, THREAD_ROOT, 10);  // Full
 #else
-  timer->initTimerParallel(RANK_MPI, 0, 10);  // Full
+    timer->InitTimerParallel(RANK_MPI, 0, 10);  // Full
 #endif
 #elif USE_OPENMP
-  timer->initTimerParallel(0, THREAD_ROOT, 10);  // Full
+    timer->InitTimerParallel(0, THREAD_ROOT, 10);  // Full
 #else
-  timer->initTimerParallel(0, 0, 10);  // Full
+    timer->InitTimerParallel(0, 0, 10);  // Full
 #endif
 
-  GeradorAdaptativoPorCurvatura ger;
+    GeneratorAdaptive generator;
 
 #if USE_MPI
-  if (ger.execute(argc, argv, timer, status) == 0) {
-    cout << endl << "Tempo do processo " << RANK_MPI << endl;
+    if (generator.Execute(argv, timer, status) == 0) {
+      cout << "Método do processo " << RANK_MPI << " com " << argv[2]
+           << " thread(s) finalizado com Sucesso!" << endl;
 
-    timer->printTime(RANK_MPI);
-    cout << "Método do processo " << RANK_MPI << " com " << argv[2]
-         << " thread(s) finalizado com Sucesso!" << endl;
-    delete timer;
-
-    return MPI_Finalize();
-  }
+      return MPI_Finalize();
+    } else {
+      cout << endl
+           << "Erro na execução generator.Execute()." << RANK_MPI << endl;
+    }
 #else
-  if (ger.execute(argc, argv, timer) == 0) {
-    cout << "Método com " << argv[1] << " processo(s) e " << argv[2]
-         << " thread(s) finalizado com Sucesso!" << endl;
-    return 0;
-  } else if (argc < 4) {
-    cout << "Erro!!! Apenas" << argc
-         << " parâmetros inseridos, quantidade correta é 5 parâmetros" << endl;
-    return -1;
-  } else {
-    cout << "Erro na execução no método main()" << endl;
-    return -1;
-  }
+    if (generator.Execute(argv, timer) == 0) {
+      cout << "Método com " << argv[1] << " processo(s) e " << MAX_THREADS
+           << " thread(s) finalizado com Sucesso!" << endl;
+
+      return 0;
+    } else if (argc < 4) {
+      cout << "Erro!!! Apenas" << argc
+           << " parâmetros inseridos, quantidade correta é 5 parâmetros"
+           << endl;
+
+      return -1;
+    } else {
+      cout << "Erro na execução no método main()" << endl;
+
+      return -1;
+    }
 #endif
+  } catch (const std::bad_weak_ptr& e) {
+    std::cerr << "Erro: " << e.what() << std::endl;
+    printStackTrace();
+  }
+
+  return 0;
 }

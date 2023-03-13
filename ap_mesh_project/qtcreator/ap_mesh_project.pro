@@ -59,15 +59,12 @@ SOURCES += \
     ../src/crab_mesh/aft/vertex.cpp \
     ../src/data/vertex_adaptive.cpp \
     ../src/data/vector_adaptive.cpp \
-    ../src/estimate/ChargeEstimateProcess.cpp \
-    ../src/generator/Gerador.cpp \
-    ../src/generator/GeradorAdaptativo.cpp \
-    ../src/generator/GeradorAdaptativoPorCurvatura.cpp \
-    ../src/input_output/Arquivo.cpp \
-    ../src/input_output/Modelos3d.cpp \
-    ../src/input_output/PatchBezierReader.cpp \
-    ../src/input_output/ReaderPatches.cpp \
-    ../src/input_output/WriteOBJFile.cpp \
+    ../src/estimate/charge_estimate_process.cpp \
+    ../src/generator/generator_adaptive.cpp \
+    ../src/input_output/file.cpp \
+    ../src/input_output/models_3d.cpp \
+    ../src/input_output/patch_reader.cpp \
+    ../src/input_output/write_obj_file.cpp \
     ../src/parallel/ApMeshCommunicator.cpp \
     ../src/parallel/Communicator.cpp \
     ../src/parallel/Message.cpp \
@@ -80,7 +77,7 @@ SOURCES += \
     ../src/parallel/ThreadManager.cpp \
     ../src/parallel/TMCommunicator.cpp \
     ../src/parallel/Transferable.cpp \
-    ../src/timer/Timer.cpp \
+    ../src/timer/timer.cpp \
     ../src/main.cpp
 
 # Default rules for deployment.
@@ -130,15 +127,12 @@ HEADERS += \
     ../include/crab_mesh/aft/vertex.h \
     ../include/data/vertex_adaptive.h \
     ../include/data/vector_adaptive.h \
-    ../include/estimate/ChargeEstimateProcess.h \
-    ../include/generator/Gerador.h \
-    ../include/generator/GeradorAdaptativo.h \
-    ../include/generator/GeradorAdaptativoPorCurvatura.h \
-    ../include/input_output/Arquivo.h \
-    ../include/input_output/Modelos3d.h \
-    ../include/input_output/PatchBezierReader.h \
-    ../include/input_output/ReaderPatches.h \
-    ../include/input_output/WriteOBJFIle.h \
+    ../include/estimate/charge_estimate_process.h \
+    ../include/generator/generator_adaptive.h \
+    ../include/input_output/file.h \
+    ../include/input_output/models_3d.h \
+    ../include/input_output/patch_reader.h \
+    ../include/input_output/write_obj_file.h \
     ../include/parallel/ApMeshCommunicator.h \
     ../include/parallel/Communicator.h \
     ../include/parallel/definitions.h \
@@ -152,4 +146,4 @@ HEADERS += \
     ../include/parallel/ThreadManager.h \
     ../include/parallel/TMCommunicator.h \
     ../include/parallel/Transferable.h \
-    ../include/timer/Timer.h
+    ../include/timer/timer.h

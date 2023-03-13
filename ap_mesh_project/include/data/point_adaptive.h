@@ -8,7 +8,7 @@ class PointAdaptive {
   PointAdaptive();
   PointAdaptive(double x, double y, double z);
   PointAdaptive(double x, double y, double z, unsigned long id);
-  ~PointAdaptive() = default;
+  virtual ~PointAdaptive() = default;
 
   bool operator==(const PointAdaptive& point) const;
   bool operator==(const PointAdaptive* point) const;

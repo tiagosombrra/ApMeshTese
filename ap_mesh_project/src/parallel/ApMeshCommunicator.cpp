@@ -9,6 +9,7 @@ bool ApMeshCommunicator::isMaster() const {
   return (this->rank() == this->root());
 }
 
-Parallel::Transferable *ApMeshCommunicator::unpack(Parallel::Package &p) const {
+Parallel::Transferable *ApMeshCommunicator::unpack(
+    [[maybe_unused]] Parallel::Package &p) const {
   return NULL;
 }

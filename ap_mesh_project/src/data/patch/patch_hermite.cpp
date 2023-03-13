@@ -1,11 +1,11 @@
 #include "../../../include/data/patch/patch_hermite.h"
 
-extern double TOLERANCIA;  // distância máxima entre dois pontos
-extern double I_MAX;
+extern double TOLERANCE;  // distância máxima entre dois pontos
+extern unsigned int I_MAX;
 
 PatchHermite::PatchHermite() : PatchCoons() {}
 
-PatchHermite::PatchHermite(PatchHermite* patch_hermite)
+PatchHermite::PatchHermite(std::shared_ptr<PatchHermite> patch_hermite)
     : PatchCoons(patch_hermite) {
   this->pt00_ = patch_hermite->pt00_;
   this->pt01_ = patch_hermite->pt01_;
@@ -37,8 +37,10 @@ PatchHermite::PatchHermite(PatchHermite* patch_hermite)
 //		C3
 //	C4		C2
 //		C1
-PatchHermite::PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
-                           CurveAdaptive* curve3, CurveAdaptive* curve4,
+PatchHermite::PatchHermite(std::shared_ptr<CurveAdaptive> curve1,
+                           std::shared_ptr<CurveAdaptive> curve2,
+                           std::shared_ptr<CurveAdaptive> curve3,
+                           std::shared_ptr<CurveAdaptive> curve4,
                            VectorAdaptive tw00, VectorAdaptive tw10,
                            VectorAdaptive tw01, VectorAdaptive tw11,
                            bool signal_curve1, bool signal_curve2,
@@ -63,39 +65,35 @@ PatchHermite::PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
 
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurveAdaptiveParametricHermite*>(curve1)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricHermite*>(curve2)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricHermite*>(curve3)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricHermite*>(curve4)->InsertPatch(this);
+  auto curve_1 =
+      std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve1);
+  curve_1->InsertPatch(this->shared_from_this());
+  auto curve_2 =
+      std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve2);
+  curve_2->InsertPatch(this->shared_from_this());
+  auto curve_3 =
+      std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve3);
+  curve_3->InsertPatch(this->shared_from_this());
+  auto curve_4 =
+      std::dynamic_pointer_cast<CurveAdaptiveParametricHermite>(curve4);
+  curve_4->InsertPatch(this->shared_from_this());
 
   // 3. Seta os atributos de acordo com as curvas
   //
-  this->pt00_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve1)->GetPoint0();
-  this->pt01_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve3)->GetPoint0();
-  this->pt10_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve1)->GetPoint1();
-  this->pt11_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve3)->GetPoint1();
+  this->pt00_ = curve_1->GetPoint0();
+  this->pt01_ = curve_3->GetPoint0();
+  this->pt10_ = curve_1->GetPoint1();
+  this->pt11_ = curve_3->GetPoint1();
 
-  this->qv00_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve4)->GetVector0();
-  this->qv01_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve4)->GetVector1();
-  this->qv10_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve2)->GetVector0();
-  this->qv11_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve2)->GetVector1();
+  this->qv00_ = curve_4->GetVector0();
+  this->qv01_ = curve_4->GetVector1();
+  this->qv10_ = curve_2->GetVector0();
+  this->qv11_ = curve_2->GetVector1();
 
-  this->qu00_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve1)->GetVector0();
-  this->qu01_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve3)->GetVector0();
-  this->qu10_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve1)->GetVector1();
-  this->qu11_ =
-      static_cast<CurveAdaptiveParametricHermite*>(curve3)->GetVector1();
+  this->qu00_ = curve_1->GetVector0();
+  this->qu01_ = curve_3->GetVector0();
+  this->qu10_ = curve_1->GetVector1();
+  this->qu11_ = curve_3->GetVector1();
 
   this->tw00_ = tw00;
   this->tw01_ = tw01;
@@ -268,7 +266,7 @@ tuple<double, double> PatchHermite::FindUV(const PointAdaptive& point) {
       cout << "-nan pivo1" << endl;
     }
 
-    while ((fabs(pivot) < TOLERANCIA) and (k < 2)) {
+    while ((fabs(pivot) < TOLERANCE) and (k < 2)) {
       ++k;
       pivot = A[k][0];
     }
@@ -281,7 +279,7 @@ tuple<double, double> PatchHermite::FindUV(const PointAdaptive& point) {
       A[k][i] = a;
     }
 
-    if (fabs(pivot) < TOLERANCIA) {
+    if (fabs(pivot) < TOLERANCE) {
       cout << "Erro! Não é possível encontrar as coordenadas paramétricas no "
               "ponto p"
            << point.GetId() << " (" << point.GetX() << ", " << point.GetY()
@@ -294,7 +292,7 @@ tuple<double, double> PatchHermite::FindUV(const PointAdaptive& point) {
     double A_20 = A[2][0];
 
     for (short j = 0; j < 3; ++j) {
-      if (!(fabs(pivot) < TOLERANCIA)) {
+      if (!(fabs(pivot) < TOLERANCE)) {
         A[0][j] = static_cast<double>(A[0][j]) / pivot;
         A[1][j] = A[1][j] - A_10 * (A[0][j]);
         A[2][j] = A[2][j] - A_20 * (A[0][j]);
@@ -311,7 +309,7 @@ tuple<double, double> PatchHermite::FindUV(const PointAdaptive& point) {
       cout << "-nan pivo2" << endl;
     }
 
-    if (fabs(pivot) < TOLERANCIA) {
+    if (fabs(pivot) < TOLERANCE) {
       pivot = A[2][1];
 
       for (int i = 0; i < 3; ++i) {
@@ -325,7 +323,7 @@ tuple<double, double> PatchHermite::FindUV(const PointAdaptive& point) {
     double A_21 = A[0][1];
 
     for (short j = 0; j < 3; ++j) {
-      if (!(fabs(pivot) < TOLERANCIA)) {
+      if (!(fabs(pivot) < TOLERANCE)) {
         A[1][j] = static_cast<double>(A[1][j]) / pivot;
         A[0][j] = A[0][j] - A_01 * (A[1][j]);
         A[2][j] = A[2][j] - A_21 * (A[1][j]);
@@ -356,21 +354,21 @@ tuple<double, double> PatchHermite::FindUV(const PointAdaptive& point) {
     //        cout << "u = " << u_i << " " << "v = " << v_i << endl;
     //        cout << "delta_u = " << delta_u << " " << "delta_v = " << delta_v
     //        << endl;
-  } while (fabs(delta_u) >= TOLERANCIA or fabs(delta_v) >= TOLERANCIA);
-  // while ( p.distanciaPara(p_i) >= TOLERANCIA );
+  } while (fabs(delta_u) >= TOLERANCE or fabs(delta_v) >= TOLERANCE);
+  // while ( p.distanciaPara(p_i) >= TOLERANCE );
 
   if (std::isnan(delta_u) || std::isnan(delta_v)) {
     cout << "-nan delta_u_v 2" << endl;
   }
 
-  if (u_i <= TOLERANCIA)
+  if (u_i <= TOLERANCE)
     u_i = 0.0;
-  else if (u_i >= 1.0 - TOLERANCIA)
+  else if (u_i >= 1.0 - TOLERANCE)
     u_i = 1.0;
 
-  if (v_i <= TOLERANCIA)
+  if (v_i <= TOLERANCE)
     v_i = 0.0;
-  else if (v_i >= 1.0 - TOLERANCIA)
+  else if (v_i >= 1.0 - TOLERANCE)
     v_i = 1.0;
 
   // cout << "u = " << u_i << " " << "v = " << v_i << endl;
@@ -438,7 +436,7 @@ VectorAdaptive PatchHermite::Qv(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
-  //	 -> ALOCA um Vetor (retorna ele)
+  //	-> ALOCA um Vetor (retorna ele)
   //  -> ALTERA a matriz U !!!
   //  -> ALTERA a matriz V !!!
   //
@@ -468,7 +466,7 @@ VectorAdaptive PatchHermite::Quu(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
-  //	 -> ALOCA um Vetor (retorna ele)
+  //	-> ALOCA um Vetor (retorna ele)
   //  -> ALTERA a matriz U !!!
   //  -> ALTERA a matriz V !!!
   //
@@ -500,7 +498,7 @@ VectorAdaptive PatchHermite::Quv(double u, double v) {
   // Qt:
   //
   //  -> ALOCA um Ponto (mas destroi aqui mesmo)
-  //	 -> ALOCA um Vetor (retorna ele)
+  //	-> ALOCA um Vetor (retorna ele)
   //  -> ALTERA a matriz U !!!
   //  -> ALTERA a matriz V !!!
   //

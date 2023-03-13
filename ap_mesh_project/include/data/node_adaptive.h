@@ -3,6 +3,7 @@
 #define DATA_NODE_ADAPTIVE_H
 
 #include <list>
+#include <memory>
 
 #include "element_adaptive.h"
 #include "point_adaptive.h"
@@ -15,13 +16,13 @@ class NodeAdaptive : public PointAdaptive {
   explicit NodeAdaptive(const PointAdaptive &point);
   ~NodeAdaptive();
 
-  void InsertElement(ElementAdaptive *element);
+  void InsertElement(std::shared_ptr<ElementAdaptive> element);
   unsigned int GetNumberElements() const;
-  ElementAdaptive *GetElement(const unsigned int position);
+  std::shared_ptr<ElementAdaptive> GetElement(const unsigned int position);
   void ClearElements();
 
-  const std::list<ElementAdaptive *> &GetElements() const;
-  void setElements(const std::list<ElementAdaptive *> &elements);
+  const std::list<std::shared_ptr<ElementAdaptive>> &GetElements() const;
+  void setElements(const std::list<std::shared_ptr<ElementAdaptive>> &elements);
 
   double GetGa() const;
   void SetGa(double ga);
@@ -37,7 +38,7 @@ class NodeAdaptive : public PointAdaptive {
 
  protected:
   // lista de elementos no nó
-  std::list<ElementAdaptive *> elements_;
+  std::list<std::shared_ptr<ElementAdaptive>> elements_;
 
   double ga_;  // curvatura analítica gaussiana
   double gd_;  // curvatura discreta gaussiana

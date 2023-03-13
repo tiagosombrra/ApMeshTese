@@ -2,9 +2,11 @@
  */
 #include "../../include/data/triangle_adaptive.h"
 
+#include <cstdint>
 #include <iostream>
+#include <memory>
 
-extern double TOLERANCIA;
+extern double TOLERANCE;
 
 TriangleAdaptive::TriangleAdaptive()
     : ElementAdaptive(),
@@ -15,16 +17,17 @@ TriangleAdaptive::TriangleAdaptive()
       angle_n2_(0),
       angle_n3_(0) {}
 
-TriangleAdaptive::TriangleAdaptive(NodeAdaptive* n1, NodeAdaptive* n2,
-                                   NodeAdaptive* n3)
+TriangleAdaptive::TriangleAdaptive(std::shared_ptr<NodeAdaptive> n1,
+                                   std::shared_ptr<NodeAdaptive> n2,
+                                   std::shared_ptr<NodeAdaptive> n3)
     : ElementAdaptive() {
   this->n1_ = n1;
   this->n2_ = n2;
   this->n3_ = n3;
 
-  this->n1_->InsertElement(this);
-  this->n2_->InsertElement(this);
-  this->n3_->InsertElement(this);
+  this->n1_->InsertElement(this->shared_from_this());
+  this->n2_->InsertElement(this->shared_from_this());
+  this->n3_->InsertElement(this->shared_from_this());
 
   this->angle_n1_ = CalculateAngleN1();
   this->angle_n2_ = CalculateAngleN2();
@@ -37,7 +40,7 @@ TriangleAdaptive::TriangleAdaptive(NodeAdaptive* n1, NodeAdaptive* n2,
 TriangleAdaptive::~TriangleAdaptive() {}
 
 // retorna o i-ésimo nó
-NodeAdaptive TriangleAdaptive::GetNoh(unsigned const int position) const {
+NodeAdaptive TriangleAdaptive::GetNoh(const std::uint64_t position) const {
   if (position == 1) {
     return *(this->n1_);
   } else if (position == 2) {
@@ -80,15 +83,15 @@ double TriangleAdaptive::CalculateAngleN3() {
 
 // retorna o ângulo do nó n
 double TriangleAdaptive::GetAngle(const NodeAdaptive& node) {
-  if (this->n1_->CalculateDistance(node) <= TOLERANCIA) {
+  if (this->n1_->CalculateDistance(node) <= TOLERANCE) {
     return this->angle_n1_;
   }
 
-  if (this->n2_->CalculateDistance(node) <= TOLERANCIA) {
+  if (this->n2_->CalculateDistance(node) <= TOLERANCE) {
     return this->angle_n2_;
   }
 
-  if (this->n3_->CalculateDistance(node) <= TOLERANCIA) {
+  if (this->n3_->CalculateDistance(node) <= TOLERANCE) {
     return this->angle_n3_;
   }
 
@@ -108,8 +111,8 @@ void TriangleAdaptive::CalculateNormal() {
   this->vector_normal_ = vector1 * vector2;
 }
 
-void TriangleAdaptive::ReplaceNode(const NodeAdaptive* old_node,
-                                   NodeAdaptive* new_node) {
+void TriangleAdaptive::ReplaceNode(const std::shared_ptr<NodeAdaptive> old_node,
+                                   std::shared_ptr<NodeAdaptive> new_node) {
   if (this->n1_ == old_node) {
     this->n1_ = new_node;
   } else if (this->n2_ == old_node) {

@@ -14,8 +14,9 @@ class CurveAdaptiveParametricBezier : public CurveAdaptiveParametric {
                                 const PointAdaptive point1,
                                 const PointAdaptive point2,
                                 const PointAdaptive point3);
-  explicit CurveAdaptiveParametricBezier(CurveAdaptiveParametricBezier *);
-  ~CurveAdaptiveParametricBezier();
+  explicit CurveAdaptiveParametricBezier(
+      std::shared_ptr<CurveAdaptiveParametricBezier>);
+  ~CurveAdaptiveParametricBezier() = default;
 
   double CalculateCurvature(double parameter) override;
 

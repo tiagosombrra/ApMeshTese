@@ -17,15 +17,14 @@
 #define EIGEN_STACK_ALLOCATION_LIMIT 0
 #define EIGEN_RUNTIME_NO_MALLOC
 
-#include "main.h"
-#include <unsupported/Eigen/SVD>
 #include <Eigen/LU>
+#include <unsupported/Eigen/SVD>
 
+#include "main.h"
 
-// check if "svd" is the good image of "m"  
-template<typename MatrixType, typename SVD>
-void svd_check_full(const MatrixType& m, const SVD& svd)
-{
+// check if "svd" is the good image of "m"
+template <typename MatrixType, typename SVD>
+void svd_check_full(const MatrixType& m, const SVD& svd) {
   typedef typename MatrixType::Index Index;
   Index rows = m.rows();
   Index cols = m.cols();
@@ -38,7 +37,6 @@ void svd_check_full(const MatrixType& m, const SVD& svd)
   typedef Matrix<Scalar, RowsAtCompileTime, RowsAtCompileTime> MatrixUType;
   typedef Matrix<Scalar, ColsAtCompileTime, ColsAtCompileTime> MatrixVType;
 
-  
   MatrixType sigma = MatrixType::Zero(rows, cols);
   sigma.diagonal() = svd.singularValues().template cast<Scalar>();
   MatrixUType u = svd.matrixU();
@@ -46,16 +44,12 @@ void svd_check_full(const MatrixType& m, const SVD& svd)
   VERIFY_IS_APPROX(m, u * sigma * v.adjoint());
   VERIFY_IS_UNITARY(u);
   VERIFY_IS_UNITARY(v);
-} // end svd_check_full
-
-
+}  // end svd_check_full
 
 // Compare to a reference value
-template<typename MatrixType, typename SVD>
-void svd_compare_to_full(const MatrixType& m,
-			 unsigned int computationOptions,
-			 const SVD& referenceSvd)
-{
+template <typename MatrixType, typename SVD>
+void svd_compare_to_full(const MatrixType& m, unsigned int computationOptions,
+                         const SVD& referenceSvd) {
   typedef typename MatrixType::Index Index;
   Index rows = m.rows();
   Index cols = m.cols();
@@ -64,21 +58,18 @@ void svd_compare_to_full(const MatrixType& m,
   SVD svd(m, computationOptions);
 
   VERIFY_IS_APPROX(svd.singularValues(), referenceSvd.singularValues());
-  if(computationOptions & ComputeFullU)
+  if (computationOptions & ComputeFullU)
     VERIFY_IS_APPROX(svd.matrixU(), referenceSvd.matrixU());
-  if(computationOptions & ComputeThinU)
+  if (computationOptions & ComputeThinU)
     VERIFY_IS_APPROX(svd.matrixU(), referenceSvd.matrixU().leftCols(diagSize));
-  if(computationOptions & ComputeFullV)
+  if (computationOptions & ComputeFullV)
     VERIFY_IS_APPROX(svd.matrixV(), referenceSvd.matrixV());
-  if(computationOptions & ComputeThinV)
+  if (computationOptions & ComputeThinV)
     VERIFY_IS_APPROX(svd.matrixV(), referenceSvd.matrixV().leftCols(diagSize));
-} // end svd_compare_to_full
+}  // end svd_compare_to_full
 
-
-
-template<typename MatrixType, typename SVD>
-void svd_solve(const MatrixType& m, unsigned int computationOptions)
-{
+template <typename MatrixType, typename SVD>
+void svd_solve(const MatrixType& m, unsigned int computationOptions) {
   typedef typename MatrixType::Scalar Scalar;
   typedef typename MatrixType::Index Index;
   Index rows = m.rows();
@@ -96,49 +87,49 @@ void svd_solve(const MatrixType& m, unsigned int computationOptions)
   SVD svd(m, computationOptions);
   SolutionType x = svd.solve(rhs);
   // evaluate normal equation which works also for least-squares solutions
-  VERIFY_IS_APPROX(m.adjoint()*m*x,m.adjoint()*rhs);
-} // end svd_solve
-
+  VERIFY_IS_APPROX(m.adjoint() * m * x, m.adjoint() * rhs);
+}  // end svd_solve
 
 // test computations options
 // 2 functions because Jacobisvd can return before the second function
-template<typename MatrixType, typename SVD>
-void svd_test_computation_options_1(const MatrixType& m, const SVD& fullSvd)
-{
-  svd_check_full< MatrixType, SVD >(m, fullSvd);
-  svd_solve< MatrixType, SVD >(m, ComputeFullU | ComputeFullV);
+template <typename MatrixType, typename SVD>
+void svd_test_computation_options_1(const MatrixType& m, const SVD& fullSvd) {
+  svd_check_full<MatrixType, SVD>(m, fullSvd);
+  svd_solve<MatrixType, SVD>(m, ComputeFullU | ComputeFullV);
 }
 
-
-template<typename MatrixType, typename SVD>
-void svd_test_computation_options_2(const MatrixType& m, const SVD& fullSvd)
-{
-  svd_compare_to_full< MatrixType, SVD >(m, ComputeFullU, fullSvd);
-  svd_compare_to_full< MatrixType, SVD >(m, ComputeFullV, fullSvd);
-  svd_compare_to_full< MatrixType, SVD >(m, 0, fullSvd);
+template <typename MatrixType, typename SVD>
+void svd_test_computation_options_2(const MatrixType& m, const SVD& fullSvd) {
+  svd_compare_to_full<MatrixType, SVD>(m, ComputeFullU, fullSvd);
+  svd_compare_to_full<MatrixType, SVD>(m, ComputeFullV, fullSvd);
+  svd_compare_to_full<MatrixType, SVD>(m, 0, fullSvd);
 
   if (MatrixType::ColsAtCompileTime == Dynamic) {
     // thin U/V are only available with dynamic number of columns
- 
-    svd_compare_to_full< MatrixType, SVD >(m, ComputeFullU|ComputeThinV, fullSvd);
-    svd_compare_to_full< MatrixType, SVD >(m,              ComputeThinV, fullSvd);
-    svd_compare_to_full< MatrixType, SVD >(m, ComputeThinU|ComputeFullV, fullSvd);
-    svd_compare_to_full< MatrixType, SVD >(m, ComputeThinU             , fullSvd);
-    svd_compare_to_full< MatrixType, SVD >(m, ComputeThinU|ComputeThinV, fullSvd);
+
+    svd_compare_to_full<MatrixType, SVD>(m, ComputeFullU | ComputeThinV,
+                                         fullSvd);
+    svd_compare_to_full<MatrixType, SVD>(m, ComputeThinV, fullSvd);
+    svd_compare_to_full<MatrixType, SVD>(m, ComputeThinU | ComputeFullV,
+                                         fullSvd);
+    svd_compare_to_full<MatrixType, SVD>(m, ComputeThinU, fullSvd);
+    svd_compare_to_full<MatrixType, SVD>(m, ComputeThinU | ComputeThinV,
+                                         fullSvd);
     svd_solve<MatrixType, SVD>(m, ComputeFullU | ComputeThinV);
     svd_solve<MatrixType, SVD>(m, ComputeThinU | ComputeFullV);
     svd_solve<MatrixType, SVD>(m, ComputeThinU | ComputeThinV);
-    
+
     typedef typename MatrixType::Index Index;
     Index diagSize = (std::min)(m.rows(), m.cols());
     SVD svd(m, ComputeThinU | ComputeThinV);
-    VERIFY_IS_APPROX(m, svd.matrixU().leftCols(diagSize) * svd.singularValues().asDiagonal() * svd.matrixV().leftCols(diagSize).adjoint());
+    VERIFY_IS_APPROX(m, svd.matrixU().leftCols(diagSize) *
+                            svd.singularValues().asDiagonal() *
+                            svd.matrixV().leftCols(diagSize).adjoint());
   }
 }
 
-template<typename MatrixType, typename SVD> 
-void svd_verify_assert(const MatrixType& m)
-{
+template <typename MatrixType, typename SVD>
+void svd_verify_assert(const MatrixType& m) {
   typedef typename MatrixType::Scalar Scalar;
   typedef typename MatrixType::Index Index;
   Index rows = m.rows();
@@ -163,9 +154,8 @@ void svd_verify_assert(const MatrixType& m)
   VERIFY_RAISES_ASSERT(svd.matrixV())
   svd.singularValues();
   VERIFY_RAISES_ASSERT(svd.solve(rhs))
-    
-  if (ColsAtCompileTime == Dynamic)
-  {
+
+  if (ColsAtCompileTime == Dynamic) {
     svd.compute(a, ComputeThinU);
     svd.matrixU();
     VERIFY_RAISES_ASSERT(svd.matrixV())
@@ -174,62 +164,64 @@ void svd_verify_assert(const MatrixType& m)
     svd.matrixV();
     VERIFY_RAISES_ASSERT(svd.matrixU())
     VERIFY_RAISES_ASSERT(svd.solve(rhs))
-  }
-  else
-  {
+  } else {
     VERIFY_RAISES_ASSERT(svd.compute(a, ComputeThinU))
     VERIFY_RAISES_ASSERT(svd.compute(a, ComputeThinV))
   }
 }
 
-// work around stupid msvc error when constructing at compile time an expression that involves
-// a division by zero, even if the numeric type has floating point
-template<typename Scalar>
-EIGEN_DONT_INLINE Scalar zero() { return Scalar(0); }
+// work around stupid msvc error when constructing at compile time an expression
+// that involves a division by zero, even if the numeric type has floating point
+template <typename Scalar>
+EIGEN_DONT_INLINE Scalar zero() {
+  return Scalar(0);
+}
 
 // workaround aggressive optimization in ICC
-template<typename T> EIGEN_DONT_INLINE  T sub(T a, T b) { return a - b; }
+template <typename T>
+EIGEN_DONT_INLINE T sub(T a, T b) {
+  return a - b;
+}
 
-
-template<typename MatrixType, typename SVD>
-void svd_inf_nan()
-{
-  // all this function does is verify we don't iterate infinitely on nan/inf values
+template <typename MatrixType, typename SVD>
+void svd_inf_nan() {
+  // all this function does is verify we don't iterate infinitely on nan/inf
+  // values
 
   SVD svd;
   typedef typename MatrixType::Scalar Scalar;
   Scalar some_inf = Scalar(1) / zero<Scalar>();
   VERIFY(sub(some_inf, some_inf) != sub(some_inf, some_inf));
-  svd.compute(MatrixType::Constant(10,10,some_inf), ComputeFullU | ComputeFullV);
+  svd.compute(MatrixType::Constant(10, 10, some_inf),
+              ComputeFullU | ComputeFullV);
 
-  Scalar some_nan = zero<Scalar> () / zero<Scalar> ();
+  Scalar some_nan = zero<Scalar>() / zero<Scalar>();
   VERIFY(some_nan != some_nan);
-  svd.compute(MatrixType::Constant(10,10,some_nan), ComputeFullU | ComputeFullV);
+  svd.compute(MatrixType::Constant(10, 10, some_nan),
+              ComputeFullU | ComputeFullV);
 
-  MatrixType m = MatrixType::Zero(10,10);
-  m(internal::random<int>(0,9), internal::random<int>(0,9)) = some_inf;
+  MatrixType m = MatrixType::Zero(10, 10);
+  m(internal::random<int>(0, 9), internal::random<int>(0, 9)) = some_inf;
   svd.compute(m, ComputeFullU | ComputeFullV);
 
-  m = MatrixType::Zero(10,10);
-  m(internal::random<int>(0,9), internal::random<int>(0,9)) = some_nan;
+  m = MatrixType::Zero(10, 10);
+  m(internal::random<int>(0, 9), internal::random<int>(0, 9)) = some_nan;
   svd.compute(m, ComputeFullU | ComputeFullV);
 }
 
-
-template<typename SVD>
-void svd_preallocate()
-{
+template <typename SVD>
+void svd_preallocate() {
   Vector3f v(3.f, 2.f, 1.f);
   MatrixXf m = v.asDiagonal();
 
   internal::set_is_malloc_allowed(false);
   VERIFY_RAISES_ASSERT(VectorXf v(10);)
-    SVD svd;
+  SVD svd;
   internal::set_is_malloc_allowed(true);
   svd.compute(m);
   VERIFY_IS_APPROX(svd.singularValues(), v);
 
-  SVD svd2(3,3);
+  SVD svd2(3, 3);
   internal::set_is_malloc_allowed(false);
   svd2.compute(m);
   internal::set_is_malloc_allowed(true);
@@ -243,7 +235,7 @@ void svd_preallocate()
   svd2.compute(m);
   internal::set_is_malloc_allowed(true);
 
-  SVD svd3(3,3,ComputeFullU|ComputeFullV);
+  SVD svd3(3, 3, ComputeFullU | ComputeFullV);
   internal::set_is_malloc_allowed(false);
   svd2.compute(m);
   internal::set_is_malloc_allowed(true);
@@ -251,11 +243,6 @@ void svd_preallocate()
   VERIFY_IS_APPROX(svd2.matrixU(), Matrix3f::Identity());
   VERIFY_IS_APPROX(svd2.matrixV(), Matrix3f::Identity());
   internal::set_is_malloc_allowed(false);
-  svd2.compute(m, ComputeFullU|ComputeFullV);
+  svd2.compute(m, ComputeFullU | ComputeFullV);
   internal::set_is_malloc_allowed(true);
 }
-
-
-
-
-

@@ -1,22 +1,28 @@
 #ifndef DATA_PATCH_PATCH_BEZIER_H
 #define DATA_PATCH_PATCH_BEZIER_H
 
+#include <memory>
+#include <tuple>
+
 #include "../../data/curve/curve_adaptive_parametric_bezier.h"
 #include "patch_coons.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
 // cima em relação ao Patch !!!
 
-class PatchBezier : public PatchCoons {
+class PatchBezier : public PatchCoons,
+                    std::enable_shared_from_this<PatchBezier> {
  public:
   PatchBezier();
-  explicit PatchBezier(PatchBezier* patch_bezier);
+  explicit PatchBezier(std::shared_ptr<PatchBezier> patch_bezier);
   // Ordem das curvas:
   //		C3
   //	C4		C2
   //		C1
-  PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
-              CurveAdaptive* curve3, CurveAdaptive* curve4, PointAdaptive pt11,
+  PatchBezier(std::shared_ptr<CurveAdaptive> curve1,
+              std::shared_ptr<CurveAdaptive> curve2,
+              std::shared_ptr<CurveAdaptive> curve3,
+              std::shared_ptr<CurveAdaptive> curve4, PointAdaptive pt11,
               PointAdaptive pt21, PointAdaptive pt12, PointAdaptive pt22,
               bool signal_curve1 = true, bool signal_curve2 = true,
               bool signal_curve3 = true, bool signal_curve4 = true);

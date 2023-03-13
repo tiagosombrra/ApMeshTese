@@ -49,8 +49,8 @@ int main() {
 
   bench<Action_matrix_matrix_product<blas_interface<REAL_TYPE> > >(
       MIN_MM, MAX_MM, NB_POINT);
-  //   bench<Action_ata_product<blas_interface<REAL_TYPE> >
-  //   >(MIN_MM,MAX_MM,NB_POINT);
+  bench<Action_ata_product<blas_interface<REAL_TYPE> > >(MIN_MM, MAX_MM,
+                                                         NB_POINT);
   bench<Action_aat_product<blas_interface<REAL_TYPE> > >(MIN_MM, MAX_MM,
                                                          NB_POINT);
 

@@ -1,29 +1,35 @@
 #include "../../include/adapter/adapter.h"
 
-extern double TOLERANCIA;
-extern double TOLERANCIA_AFT;
-extern double TOLERANCIA_CURVATURA;
-extern double PROPORCAO;
-extern double SUAVIZACAO;
-extern double FATOR_SUAVIZACAO;
-extern double DISCRETIZACAO_CURVA;
-extern double DISCRETIZACAO_INTER;
+#include <cstddef>
+#include <memory>
+
+#include "../../include/data/node_adaptive.h"
+
+extern double TOLERANCE;
+extern double TOLERANCE_AFT;
+extern double TOLERANCE_CURVATURE;
+extern double RATIO_AFT;
+extern double SMOOTHING_LAPLACIAN_NUMBER;
+extern double SMOOTHING_LAPLACIAN_FACTOR;
+extern double DISCRETIZATION_CURVE_FACTOR;
+extern double DISCRETIZATION_CURVE_FACTOR_INTERNAL;
 
 #if USE_OPENMP
-list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
-    CurveAdaptive *curve, Performer::IdManager *id_manager,
+list<std::shared_ptr<PointAdaptive>> Adapter::AdaptCurveByCurveOmp(
+    std::shared_ptr<CurveAdaptive> curve,
+    std::shareshared_ptr<Performer::IdManager> id_manager,
     double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<PointAdaptive *> points = curve->GetPoints();
-  list<PointAdaptive *>::iterator point_current = points.begin();
-  list<PointAdaptive *>::iterator point_next = points.begin();
+  list<std::shared_ptr<PointAdaptive>> points = curve->GetPoints();
+  list<std::shared_ptr<PointAdaptive>>::iterator point_current = points.begin();
+  list<std::shared_ptr<PointAdaptive>>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
   PointAdaptive midpoint;
 
-  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
+  curve_parametric->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -39,7 +45,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
     // parametro correspondente ao ponto central do segmento
     double midpoint_segment = 0;
     // pow ( 2, exp ); // o fator de rediscretização
-    double factor_disc = DISCRETIZACAO_CURVA;
+    double factor_disc = DISCRETIZATION_CURVE_FACTOR;
     // curvatura analítica do ponto central de um segmento
     double ka_midpoint = 0;
     // média das curvaturas discretas dos extremos de um segmento
@@ -50,15 +56,12 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
         curve->CalculateLengthPoints(*(*point_current), *(*point_next));
 
     // 1.2.2. Calcule o ponto médio do segmento
-    midpoint =
-        static_cast<CurveAdaptiveParametric *>(curve)
-            ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
+    midpoint = curve_parametric->CalculateMidpointByPoints(*(*point_current),
+                                                           *(*point_next));
     midpoint.SetId(id_manager->next(0));
 
     // 1.2.2.1 Encontre o parâmetro do ponto médio
-    midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
-            midpoint);
+    midpoint_segment = curve_parametric->FindParameterByPoint(midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
     ka_midpoint = curve->CalculateCurvature(midpoint_segment);
@@ -74,36 +77,38 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
     lenght_par = lenght_new / curve->GetLength();
 
     bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
-                       static_cast<CurveAdaptiveParametric *>(curve));
+                       curve_parametric);
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(curve_parametric)) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.Rediscretization();
-  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
+  (curve_parametric)->UpdateParameters(parameters);
 
-  list<PointAdaptive *> list_new_points;
+  list<std::shared_ptr<PointAdaptive>> list_new_points;
 
-  NodeAdaptive *point_front = static_cast<NodeAdaptive *>(points.front());
+  std::shared_ptr<NodeAdaptive> point_front =
+      std::dynamic_pointer_cast<NodeAdaptive>(points.front());
   point_front->SetId(id_manager->next(0));
 
-  NodeAdaptive *point_back = static_cast<NodeAdaptive *>(points.back());
+  std::shared_ptr<NodeAdaptive> point_back =
+      std::dynamic_pointer_cast<NodeAdaptive>(points.back());
   point_back->SetId(id_manager->next(0));
 
   list_new_points.push_front(point_front);
 
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    NodeAdaptive *point_intermediate =
-        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
-                             ->FindPointByParameter((*param_iterator)));
+    std::shared_ptr<NodeAdaptive> point_intermediate =
+        std::make_shared<NodeAdaptive>(
+            (curve_parametric)->FindPointByParameter((*param_iterator)));
     point_intermediate->SetId(id_manager->next(0));
     list_new_points.push_back(point_intermediate);
   }
@@ -123,20 +128,21 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurveOmp(
   //    return c;
 }
 
-list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
-    CurveAdaptive *curve, Performer::IdManager *id_manager,
+list<std::shared_ptr<PointAdaptive>> Adapter::AdaptCurveBySurfaceOmp(
+    std::shared_ptr<CurveAdaptive> curve,
+    std::shareshared_ptr<Performer::IdManager> id_manager,
     double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<PointAdaptive *> points = curve->GetPoints();
-  list<PointAdaptive *>::iterator point_current = points.begin();
-  list<PointAdaptive *>::iterator point_next = points.begin();
+  list<std::shared_ptr<PointAdaptive>> points = curve->GetPoints();
+  list<std::shared_ptr<PointAdaptive>>::iterator point_current = points.begin();
+  list<std::shared_ptr<PointAdaptive>>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
   PointAdaptive midpoint;
 
-  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
+  curve_parametric->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -152,7 +158,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
     // parametro correspondente ao ponto central do segmento
     double midpoint_segment = 0;
     // pow ( 2, exp ); // o fator de rediscretização
-    double factor_disc = DISCRETIZACAO_CURVA;
+    double factor_disc = DISCRETIZATION_CURVE_FACTOR;
     // curvatura analítica do ponto central de um segmento
     double ka_midpoint = 0;
     // média das curvaturas discretas dos extremos de um segmento
@@ -163,50 +169,61 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
         curve->CalculateLengthPoints(*(*point_current), *(*point_next));
 
     // 1.2.2. Calcule o ponto médio do segmento
-    midpoint =
-        static_cast<CurveAdaptiveParametric *>(curve)
-            ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
+    midpoint = curve_parametric->CalculateMidpointByPoints(*(*point_current),
+                                                           *(*point_next));
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
-    CurvatureAnalytical ka_p0(midpoint,
-                              *(static_cast<PatchCoons *>(curve->GetPatch(0))));
+    CurvatureAnalytical ka_p0(
+        midpoint,
+        *(static_cast<std::shared_ptr<PatchCoons>>(curve->GetPatch(0))));
     ka_midpoint = ka_p0.CalculateGaussCurvature();
 
     if (curve->GetNumBerPatches() == 1) {
       // testamos se ka é ZERO!
-      if (fabs(ka_midpoint) < TOLERANCIA) {
+      if (fabs(ka_midpoint) < TOLERANCE) {
         ka_midpoint = ka_p0.CalculateMeanCurvature();
-        kd_average = ((static_cast<NodeAdaptive *>((*point_current)))->GetHd() +
-                      (static_cast<NodeAdaptive *>((*point_next))->GetHd())) /
-                     2.0;
+        kd_average =
+            ((std::dynamic_pointer_cast<NodeAdaptive>((*point_current)))
+                 ->GetHd() +
+             (std::dynamic_pointer_cast<NodeAdaptive>((*point_next))
+                  ->GetHd())) /
+            2.0;
       } else {
-        kd_average = ((static_cast<NodeAdaptive *>((*point_current)))->GetGd() +
-                      (static_cast<NodeAdaptive *>((*point_next)))->GetGd()) /
-                     2.0;
+        kd_average =
+            ((std::dynamic_pointer_cast<NodeAdaptive>((*point_current)))
+                 ->GetGd() +
+             (std::dynamic_pointer_cast<NodeAdaptive>((*point_next)))
+                 ->GetGd()) /
+            2.0;
       }
     } else {
       double Ha = ka_p0.CalculateMeanCurvature();
 
       for (unsigned int i = 1; i < curve->GetNumBerPatches(); i++) {
         CurvatureAnalytical ka_pi(
-            midpoint, *(static_cast<PatchCoons *>(curve->GetPatch(i))));
+            midpoint,
+            *(static_cast<std::shared_ptr<PatchCoons>>(curve->GetPatch(i))));
         double Ga_pi = ka_pi.CalculateGaussCurvature();
 
         ka_midpoint = (fabs(ka_midpoint) > fabs(Ga_pi)) ? ka_midpoint : Ga_pi;
 
         // testamos se ka é ZERO!
-        if (fabs(ka_midpoint) < TOLERANCIA) {
+        if (fabs(ka_midpoint) < TOLERANCE) {
           double Ha_pi = ka_pi.CalculateMeanCurvature();
 
           ka_midpoint = (Ha > Ha_pi) ? Ha : Ha_pi;
           kd_average =
-              ((static_cast<NodeAdaptive *>((*point_current)))->GetHd() +
-               (static_cast<NodeAdaptive *>((*point_next))->GetHd())) /
+              ((std::dynamic_pointer_cast<NodeAdaptive>((*point_current)))
+                   ->GetHd() +
+               (std::dynamic_pointer_cast<NodeAdaptive>((*point_next))
+                    ->GetHd())) /
               2.0;
         } else {
           kd_average =
-              ((static_cast<NodeAdaptive *>((*point_current)))->GetGd() +
-               (static_cast<NodeAdaptive *>((*point_next)))->GetGd()) /
+              ((std::dynamic_pointer_cast<NodeAdaptive>((*point_current)))
+                   ->GetGd() +
+               (std::dynamic_pointer_cast<NodeAdaptive>((*point_next)))
+                   ->GetGd()) /
               2.0;
         }
       }
@@ -220,62 +237,62 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurfaceOmp(
     lenght_par = lenght_new / curve->GetLength();
 
     // 1.2.6. Encontre o parâmetro do ponto médio
-    midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
-            midpoint);
+    midpoint_segment = curve_parametric->FindParameterByPoint(midpoint);
 
     bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
-                       static_cast<CurveAdaptiveParametric *>(curve));
+                       curve_parametric);
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(curve_parametric)) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.Rediscretization();
-  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
+  (curve_parametric)->UpdateParameters(parameters);
 
-  list<PointAdaptive *> list_new_points;
+  list<std::shared_ptr<PointAdaptive>> list_new_points;
 
-  NodeAdaptive *point_front = static_cast<NodeAdaptive *>(points.front());
+  std::shared_ptr<NodeAdaptive> point_front =
+      std::dynamic_pointer_cast<NodeAdaptive>(points.front());
   point_front->SetId(id_manager->next(0));
   list_new_points.push_front(point_front);
 
   for (auto param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    NodeAdaptive *n =
-        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
-                             ->FindPointByParameter((*param_iterator)));
+    std::shared_ptr<NodeAdaptive> n = std::make_shared<NodeAdaptive>(
+        (curve_parametric)->FindPointByParameter((*param_iterator)));
     n->SetId(id_manager->next(0));
     list_new_points.push_back(n);
   }
 
-  NodeAdaptive *point_back = static_cast<NodeAdaptive *>(points.back());
+  std::shared_ptr<NodeAdaptive> point_back =
+      std::dynamic_pointer_cast<NodeAdaptive>(points.back());
   point_back->SetId(id_manager->next(0));
   list_new_points.push_back(point_back);
 
   return list_new_points;
 }
 
-SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
-                                 Performer::IdManager *id_manager,
-                                 double factor_disc_global) {
-  SubMesh *sub_mesh_new = new SubMesh;
+std::shared_ptr<SubMesh> Adapter::AdaptDomainOmp(
+    std::shared_ptr<PatchCoons> coons_patch,
+    std::shareshared_ptr<Performer::IdManager> id_manager,
+    double factor_disc_global) {
+  std::shared_ptr<SubMesh> sub_mesh_new = new SubMesh;
   // pow ( 2, exp ); // o fator de rediscretização
-  double factor_disc = DISCRETIZACAO_INTER;
+  double factor_disc = DISCRETIZATION_CURVE_FACTOR_INTERNAL;
   // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
-  AdvancingFront avanco(PROPORCAO, TOLERANCIA_AFT, SUAVIZACAO,
-                        FATOR_SUAVIZACAO);
-  map<Vertex *, NodeAdaptive *> map;
+  AdvancingFront avanco(RATIO_AFT, TOLERANCE_AFT, SMOOTHING_LAPLACIAN_NUMBER,
+                        SMOOTHING_LAPLACIAN_FACTOR);
+  map<std::shared_ptr<Vertex>, std::shared_ptr<NodeAdaptive>> map;
 
   // 1. Para cada curva do patch
   for (unsigned int i = 0; i < coons_patch->GetNumBerCurves(); ++i) {
-    CurveAdaptive *curve = coons_patch->GetCurve(i);
+    std::shared_ptr<CurveAdaptive> curve = coons_patch->GetCurve(i);
     //((CurveAdaptiveParametric*)c)->ordenaLista ( );
     // #pragma omp critical
     //        {
@@ -284,27 +301,24 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
 
     if (i == 0 or i == 1) {
       list<double>::iterator last_parameter =
-          static_cast<CurveAdaptiveParametric *>(curve)->parameters_.end();
+          curve_parametric->parameters_.end();
       --last_parameter;
 
       int parameter = 0;
 
-      for (auto param_iterator = static_cast<CurveAdaptiveParametric *>(curve)
-                                     ->parameters_.begin();
+      for (auto param_iterator = curve_parametric->parameters_.begin();
            param_iterator != last_parameter; ++param_iterator) {
-        Vertex *vertex;
+        std::shared_ptr<Vertex> vertex;
 
         if (i == 0)
-          vertex = avanco.getBoundary()->addVertex(
-              *param_iterator, 0.0,
-              static_cast<CurveAdaptiveParametric *>(curve));
+          vertex = avanco.getBoundary()->addVertex(*param_iterator, 0.0,
+                                                   curve_parametric);
         else if (i == 1)
-          vertex = avanco.getBoundary()->addVertex(
-              1.0, *param_iterator,
-              static_cast<CurveAdaptiveParametric *>(curve));
+          vertex = avanco.getBoundary()->addVertex(1.0, *param_iterator,
+                                                   curve_parametric);
 
-        NodeAdaptive *noh =
-            static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
+        std::shared_ptr<NodeAdaptive> noh =
+            std::dynamic_pointer_cast<NodeAdaptive>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -314,29 +328,25 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
       }
     } else if (i == 2 or i == 3) {
       list<double>::reverse_iterator last_parameter =
-          static_cast<CurveAdaptiveParametric *>(curve)->parameters_.rend();
+          curve_parametric->parameters_.rend();
       --last_parameter;
 
-      int parameter =
-          static_cast<CurveAdaptiveParametric *>(curve)->GetNumBerPoints() - 1;
+      int parameter = curve_parametric->GetNumBerPoints() - 1;
 
       for (list<double>::reverse_iterator param_iterator =
-               (static_cast<CurveAdaptiveParametric *>(curve))
-                   ->parameters_.rbegin();
+               (curve_parametric)->parameters_.rbegin();
            param_iterator != last_parameter; ++param_iterator) {
-        Vertex *vertex;
+        std::shared_ptr<Vertex> vertex;
 
         if (i == 2)
-          vertex = avanco.getBoundary()->addVertex(
-              *param_iterator, 1.0,
-              static_cast<CurveAdaptiveParametric *>(curve));
+          vertex = avanco.getBoundary()->addVertex(*param_iterator, 1.0,
+                                                   curve_parametric);
         else if (i == 3)
-          vertex = avanco.getBoundary()->addVertex(
-              0.0, *param_iterator,
-              static_cast<CurveAdaptiveParametric *>(curve));
+          vertex = avanco.getBoundary()->addVertex(0.0, *param_iterator,
+                                                   curve_parametric);
 
-        NodeAdaptive *noh =
-            static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
+        std::shared_ptr<NodeAdaptive> noh =
+            std::dynamic_pointer_cast<NodeAdaptive>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -347,10 +357,11 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
     }
   }
 
-  avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
-      coons_patch->GetCurve(coons_patch->GetNumBerCurves() - 1)));
+  avanco.getBoundary()->close(
+      static_cast<std::shared_ptr<CurveAdaptiveParametric>>(
+          coons_patch->GetCurve(coons_patch->GetNumBerCurves() - 1)));
   // essa é a malha anterior!
-  SubMesh *sub_mesh_old = coons_patch->GetSubMesh();
+  std::shared_ptr<SubMesh> sub_mesh_old = coons_patch->GetSubMesh();
 
   // constroi a lista de triangulos antigos para o gerador de malha
   FaceList mesh_old;
@@ -358,8 +369,9 @@ SubMesh *Adapter::AdaptDomainOmp(PatchCoons *coons_patch,
   double area_total = 0;
 
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
-    TriangleAdaptive *tri =
-        static_cast<TriangleAdaptive *>(sub_mesh_old->GetElement(i));
+    std::shared_ptr<TriangleAdaptive> tri =
+        static_cast<std::shared_ptr<TriangleAdaptive>>(
+            sub_mesh_old->GetElement(i));
 
     /*Noh centro (	( tri->GetNoh ( 1 ).x + tri->GetNoh ( 2 ).x +
 tri->GetNoh
@@ -370,18 +382,18 @@ tri->GetNoh
 / 3.0
 ); tuple < double, double > centro_par = patch->encontrar_u_v ( centro );*/
 
-    Vertex *v1 = new Vertex(get<0>(tri->GetParametersN1()),
-                            get<1>(tri->GetParametersN1()));
-    Vertex *v2 = new Vertex(get<0>(tri->GetParametersN2()),
-                            get<1>(tri->GetParametersN2()));
-    Vertex *v3 = new Vertex(get<0>(tri->GetParametersN3()),
-                            get<1>(tri->GetParametersN3()));
+    std::shared_ptr<Vertex> v1 = new Vertex(get<0>(tri->GetParametersN1()),
+                                            get<1>(tri->GetParametersN1()));
+    std::shared_ptr<Vertex> v2 = new Vertex(get<0>(tri->GetParametersN2()),
+                                            get<1>(tri->GetParametersN2()));
+    std::shared_ptr<Vertex> v3 = new Vertex(get<0>(tri->GetParametersN3()),
+                                            get<1>(tri->GetParametersN3()));
     // Vertex* c = new Vertex  ( get<0>( centro_par ), get<1>( centro_par ) );
 
     // cout << "APC.cpp: u = " << get<0>( centro_par ) << " v = " << get<1>(
     // centro_par ) << endl;
 
-    Face *face = new Face(v1, v2, v3, tri->GetId() /*, c*/);
+    std::shared_ptr<Face> face = new Face(v1, v2, v3, tri->GetId() /*, c*/);
     area_total += tri->GetArea();
 
     mesh_old.push_back(face);
@@ -392,9 +404,10 @@ tri->GetNoh
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
     double length_old = 0;
 
-    TriangleAdaptive *tri =
-        static_cast<TriangleAdaptive *>(sub_mesh_old->GetElement(i));
-    Face *face = (*face_list_iterator);
+    std::shared_ptr<TriangleAdaptive> tri =
+        static_cast<std::shared_ptr<TriangleAdaptive>>(
+            sub_mesh_old->GetElement(i));
+    std::shared_ptr<Face> face = (*face_list_iterator);
 
     length_old = sqrt(tri->GetArea() / area_total);
 
@@ -402,9 +415,9 @@ tri->GetNoh
     double ka = 0.0;
     double kd = 0.0;
 
-    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCIA &&
-        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCIA &&
-        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCIA) {
+    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCE &&
+        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCE &&
+        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCE) {
       ka = (tri->GetNoh(1).GetGa() + tri->GetNoh(2).GetGa() +
             tri->GetNoh(3).GetGa()) /
            3.0;
@@ -459,10 +472,10 @@ tri->GetNoh
   VertexList new_vertices = avanco.getInnerVertices();
 
   while (!new_vertices.empty()) {
-    Vertex *vertex = new_vertices.front();
+    std::shared_ptr<Vertex> vertex = new_vertices.front();
     new_vertices.pop_front();
 
-    NodeAdaptive *noh = new NodeAdaptive(
+    std::shared_ptr<NodeAdaptive> noh = std::make_shared<NodeAdaptive>(
         coons_patch->Parameterize(vertex->getX(), vertex->getY()));
 
     noh->SetId(id_manager->next(0));
@@ -475,23 +488,23 @@ tri->GetNoh
 
   // gera os triangulos
   while (!new_mesh.empty()) {
-    Face *face = new_mesh.front();
+    std::shared_ptr<Face> face = new_mesh.front();
     new_mesh.pop_front();
 
-    ElementAdaptive *element =
-        new TriangleAdaptive(static_cast<NodeAdaptive *>(map[face->getV1()]),
-                             static_cast<NodeAdaptive *>(map[face->getV2()]),
-                             static_cast<NodeAdaptive *>(map[face->getV3()]));
+    std::shared<ElementAdaptive> element = std::make_shared<TriangleAdaptive>(
+        std::dynamic_pointer_cast<NodeAdaptive>(map[face->getV1()]),
+        std::dynamic_pointer_cast<NodeAdaptive>(map[face->getV2()]),
+        std::dynamic_pointer_cast<NodeAdaptive>(map[face->getV3()]));
 
     element->SetId(/*id_ele++*/ id_manager->next(1));
 
-    (static_cast<TriangleAdaptive *>(element))
+    (static_cast<std::shared_ptr<TriangleAdaptive>>(element))
         ->SetParametersN1(
             make_tuple(face->getV1()->getX(), face->getV1()->getY()));
-    (static_cast<TriangleAdaptive *>(element))
+    (static_cast<std::shared_ptr<TriangleAdaptive>>(element))
         ->SetParametersN2(
             make_tuple(face->getV2()->getX(), face->getV2()->getY()));
-    (static_cast<TriangleAdaptive *>(element))
+    (static_cast<std::shared_ptr<TriangleAdaptive>>(element))
         ->SetParametersN3(
             make_tuple(face->getV3()->getX(), face->getV3()->getY()));
 
@@ -500,7 +513,7 @@ tri->GetNoh
 
   // apaga os triangulos da malha antiga
   while (!mesh_old.empty()) {
-    Face *face = mesh_old.front();
+    std::shared_ptr<Face> face = mesh_old.front();
     mesh_old.pop_front();
 
     delete face;
@@ -510,20 +523,25 @@ tri->GetNoh
 }
 #endif  // #USE_OPENMP
 
-list<PointAdaptive *> Adapter::AdaptCurveByCurve(
-    CurveAdaptive *curve, map<PointAdaptive *, PointAdaptive *> &map_points,
-    Performer::IdManager *id_manager, double factor_disc_global) {
+list<std::shared_ptr<PointAdaptive>> Adapter::AdaptCurveByCurve(
+    std::shared_ptr<CurveAdaptive> curve,
+    map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>>
+        &map_points,
+    std::shared_ptr<Performer::IdManager> id_manager,
+    double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<PointAdaptive *> points = curve->GetPoints();
-  list<PointAdaptive *>::iterator point_current = points.begin();
-  list<PointAdaptive *>::iterator point_next = points.begin();
+  list<std::shared_ptr<PointAdaptive>> points = curve->GetPoints();
+  list<std::shared_ptr<PointAdaptive>>::iterator point_current = points.begin();
+  list<std::shared_ptr<PointAdaptive>>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
   PointAdaptive midpoint;
 
-  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
+  auto curve_parametric =
+      std::dynamic_pointer_cast<CurveAdaptiveParametric>(curve);
+  curve_parametric->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -539,7 +557,7 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
     // parametro correspondente ao ponto central do segmento
     double midpoint_segment = 0;
     // pow ( 2, exp ); // o fator de rediscretização
-    double factor_disc = DISCRETIZACAO_CURVA;
+    double factor_disc = DISCRETIZATION_CURVE_FACTOR;
     // curvatura analítica do ponto central de um segmento
     double ka_midpoint = 0;
     // média das curvaturas discretas dos extremos de um segmento
@@ -550,14 +568,11 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
         curve->CalculateLengthPoints(*(*point_current), *(*point_next));
 
     // 1.2.2. Calcule o ponto médio do segmento
-    midpoint =
-        static_cast<CurveAdaptiveParametric *>(curve)
-            ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
+    midpoint = curve_parametric->CalculateMidpointByPoints(*(*point_current),
+                                                           *(*point_next));
 
     // 1.2.2.1 Encontre o parâmetro do ponto médio
-    midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
-            midpoint);
+    midpoint_segment = curve_parametric->FindParameterByPoint(midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
     ka_midpoint = curve->CalculateCurvature(midpoint_segment);
@@ -573,57 +588,56 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
     lenght_par = lenght_new / curve->GetLength();
 
     bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
-                       static_cast<CurveAdaptiveParametric *>(curve));
+                       curve_parametric);
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(curve_parametric)) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.Rediscretization();
-  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
+  curve_parametric->UpdateParameters(parameters);
 
-  list<PointAdaptive *> list_new_points;
+  list<std::shared_ptr<PointAdaptive>> list_new_points;
 
-  NodeAdaptive *point_front = static_cast<NodeAdaptive *>(points.front());
+  auto point_front = std::make_shared<NodeAdaptive>(*points.front());
   point_front->SetId(id_manager->next(0));
 
-  NodeAdaptive *point_back = static_cast<NodeAdaptive *>(points.back());
+  auto point_back = std::make_shared<NodeAdaptive>(*points.back());
   point_back->SetId(id_manager->next(0));
 
-  NodeAdaptive *new_noh1, *new_noh2;
+  std::shared_ptr<NodeAdaptive> new_noh1, new_noh2;
 
-  map<PointAdaptive *, PointAdaptive *>::iterator point_iterator =
-      map_points.find(point_front);
+  map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>>::iterator
+      point_iterator = map_points.find(point_front);
 
   if (point_iterator == map_points.end()) {
-    new_noh1 = new NodeAdaptive(*point_front);
+    new_noh1 = std::make_shared<NodeAdaptive>(*point_front);
     new_noh1->SetId(id_manager->next(0));
     map_points[point_front] = new_noh1;
   } else {
-    new_noh1 = static_cast<NodeAdaptive *>(map_points[point_front]);
+    new_noh1 = std::make_shared<NodeAdaptive>(*map_points[point_front]);
   }
 
   point_iterator = map_points.find(point_back);
 
   if (point_iterator == map_points.end()) {
-    new_noh2 = new NodeAdaptive(*point_back);
+    new_noh2 = std::make_shared<NodeAdaptive>(*point_back);
     new_noh2->SetId(id_manager->next(0));
     map_points[point_back] = new_noh2;
   } else {
-    new_noh2 = static_cast<NodeAdaptive *>(map_points[point_back]);
+    new_noh2 = std::make_shared<NodeAdaptive>(*map_points[point_back]);
   }
 
   for (list<double>::iterator param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    NodeAdaptive *noh =
-        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
-                             ->FindPointByParameter((*param_iterator)));
+    std::shared_ptr<NodeAdaptive> noh = std::make_shared<NodeAdaptive>(
+        curve_parametric->FindPointByParameter((*param_iterator)));
     noh->SetId(id_manager->next(0));
     list_new_points.push_back(noh);
   }
@@ -634,20 +648,25 @@ list<PointAdaptive *> Adapter::AdaptCurveByCurve(
   return list_new_points;
 }
 
-list<PointAdaptive *> Adapter::AdaptCurveBySurface(
-    CurveAdaptive *curve, map<PointAdaptive *, PointAdaptive *> &map_points,
-    Performer::IdManager *id_manager, double factor_disc_global) {
+list<std::shared_ptr<PointAdaptive>> Adapter::AdaptCurveBySurface(
+    std::shared_ptr<CurveAdaptive> curve,
+    map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>>
+        &map_points,
+    std::shared_ptr<Performer::IdManager> id_manager,
+    double factor_disc_global) {
   // os parametros gerados na rediscretização
   list<double> parameters;
   // os pontos da curva
-  list<PointAdaptive *> points = curve->GetPoints();
-  list<PointAdaptive *>::iterator point_current = points.begin();
-  list<PointAdaptive *>::iterator point_next = points.begin();
+  list<std::shared_ptr<PointAdaptive>> points = curve->GetPoints();
+  list<std::shared_ptr<PointAdaptive>>::iterator point_current = points.begin();
+  list<std::shared_ptr<PointAdaptive>>::iterator point_next = points.begin();
   ++point_next;
   // ponto médio do segmentos
   PointAdaptive midpoint;
 
-  static_cast<CurveAdaptiveParametric *>(curve)->SortPointsByParameters();
+  auto curve_parametric =
+      std::dynamic_pointer_cast<CurveAdaptiveParametric>(curve);
+  curve_parametric->SortPointsByParameters();
 
   // 1.1. Inicialize a árvore binária com a raiz para toda a curva
   BinTree bin_tree;
@@ -663,7 +682,7 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
     // parametro correspondente ao ponto central do segmento
     double midpoint_segment = 0;
     // pow ( 2, exp ); // o fator de rediscretização
-    double factor_disc = DISCRETIZACAO_CURVA;
+    double factor_disc = DISCRETIZATION_CURVE_FACTOR;
     // curvatura analítica do ponto central de um segmento
     double ka_midpoint = 0;
     // média das curvaturas discretas dos extremos de um segmento
@@ -674,40 +693,42 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
         curve->CalculateLengthPoints(*(*point_current), *(*point_next));
 
     // 1.2.2. Calcule o ponto médio do segmento
-    midpoint =
-        static_cast<CurveAdaptiveParametric *>(curve)
-            ->CalculateMidpointByPoints(*(*point_current), *(*point_next));
+    midpoint = curve_parametric->CalculateMidpointByPoints(*(*point_current),
+                                                           *(*point_next));
 
     // Teste para curvatura com a curva
-    midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
-            midpoint);
+    midpoint_segment = curve_parametric->FindParameterByPoint(midpoint);
 
     // 1.2.3. Calcule as curvaturas analítica e discreta do ponto médio
-    CurvatureAnalytical ka_p0(midpoint,
-                              *(static_cast<PatchCoons *>(curve->GetPatch(0))));
+    CurvatureAnalytical ka_p0(
+        midpoint, *(std::dynamic_pointer_cast<PatchCoons>(curve->GetPatch(0))));
 
     for (unsigned int i = 0; i < curve->GetNumBerPatches(); i++) {
+      auto patch = curve->GetPatch(i);
       CurvatureAnalytical ka_p1(
-          midpoint, *(static_cast<PatchCoons *>(curve->GetPatch(i))));
+          midpoint, *(std::dynamic_pointer_cast<PatchCoons>(patch)));
       double Ga_p0 = ka_p0.CalculateGaussCurvature();
       double Ga_p1 = ka_p1.CalculateGaussCurvature();
 
       ka_midpoint = (fabs(Ga_p0) > fabs(Ga_p1)) ? Ga_p0 : Ga_p1;
 
       // testamos se ka é ZERO!
-      if (fabs(ka_midpoint) < TOLERANCIA) {
+      if (fabs(ka_midpoint) < TOLERANCE) {
         double Ha_p0 = ka_p0.CalculateMeanCurvature();
         double Ha_p1 = ka_p1.CalculateMeanCurvature();
 
         ka_midpoint = (Ha_p0 > Ha_p1) ? Ha_p0 : Ha_p1;
-        kd_average = (static_cast<NodeAdaptive *>((*point_current))->GetHd() +
-                      static_cast<NodeAdaptive *>((*point_next))->GetHd()) /
-                     2.0;
+        kd_average =
+            (std::dynamic_pointer_cast<NodeAdaptive>((*point_current))
+                 ->GetHd() +
+             std::dynamic_pointer_cast<NodeAdaptive>((*point_next))->GetHd()) /
+            2.0;
       } else {
-        kd_average = (static_cast<NodeAdaptive *>((*point_current))->GetGd() +
-                      static_cast<NodeAdaptive *>((*point_next))->GetGd()) /
-                     2.0;
+        kd_average =
+            (std::dynamic_pointer_cast<NodeAdaptive>((*point_current))
+                 ->GetGd() +
+             std::dynamic_pointer_cast<NodeAdaptive>((*point_next))->GetGd()) /
+            2.0;
       }
     }
 
@@ -719,61 +740,58 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
     lenght_par = lenght_new / curve->GetLength();
 
     // 1.2.6. Encontre o parâmetro do ponto médio
-    midpoint_segment =
-        static_cast<CurveAdaptiveParametric *>(curve)->FindParameterByPoint(
-            midpoint);
+    midpoint_segment = curve_parametric->FindParameterByPoint(midpoint);
 
     bin_tree.Subdivide(midpoint_segment, lenght_par * factor_disc_global,
-                       static_cast<CurveAdaptiveParametric *>(curve));
+                       curve_parametric);
 
     ++point_next;
     ++point_current;
   }
 
   // transforma a bintree numa bintree restrita
-  while (bin_tree.Restrict(static_cast<CurveAdaptiveParametric *>(curve))) {
+  while (bin_tree.Restrict(curve_parametric)) {
   }
 
   // 1.3. Atualiza a lista de pontos da curva de acordo com as folhas da
   // BinTree
   parameters = bin_tree.Rediscretization();
-  (static_cast<CurveAdaptiveParametric *>(curve))->UpdateParameters(parameters);
+  (curve_parametric)->UpdateParameters(parameters);
 
-  list<PointAdaptive *> list_new_points;
+  list<std::shared_ptr<PointAdaptive>> list_new_points;
 
-  NodeAdaptive *point_front = static_cast<NodeAdaptive *>(points.front());
+  auto point_front = std::make_shared<NodeAdaptive>(*points.front());
   point_front->SetId(id_manager->next(0));
-  NodeAdaptive *point_back = static_cast<NodeAdaptive *>(points.back());
+  auto point_back = std::make_shared<NodeAdaptive>(*points.back());
   point_back->SetId(id_manager->next(0));
 
-  NodeAdaptive *new_noh1, *new_noh2;
+  std::shared_ptr<NodeAdaptive> new_noh1, new_noh2;
 
-  map<PointAdaptive *, PointAdaptive *>::iterator point_iterator =
-      map_points.find(point_front);
+  map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>>::iterator
+      point_iterator = map_points.find(point_front);
 
   if (point_iterator == map_points.end()) {
-    new_noh1 = new NodeAdaptive(*point_front);
+    new_noh1 = std::make_shared<NodeAdaptive>(*point_front);
     new_noh1->SetId(id_manager->next(0));
     map_points[point_front] = new_noh1;
   } else {
-    new_noh1 = static_cast<NodeAdaptive *>(map_points[point_front]);
+    new_noh1 = std::make_shared<NodeAdaptive>(*map_points[point_front]);
   }
 
   point_iterator = map_points.find(point_back);
 
   if (point_iterator == map_points.end()) {
-    new_noh2 = new NodeAdaptive(*point_back);
+    new_noh2 = std::make_shared<NodeAdaptive>(*point_back);
     new_noh2->SetId(id_manager->next(0));
     map_points[point_back] = new_noh2;
   } else {
-    new_noh2 = static_cast<NodeAdaptive *>(map_points[point_back]);
+    new_noh2 = std::make_shared<NodeAdaptive>(*map_points[point_back]);
   }
 
   for (list<double>::iterator param_iterator = ++parameters.begin();
        param_iterator != --parameters.end(); param_iterator++) {
-    NodeAdaptive *noh =
-        new NodeAdaptive((static_cast<CurveAdaptiveParametric *>(curve))
-                             ->FindPointByParameter((*param_iterator)));
+    std::shared_ptr<NodeAdaptive> noh = std::make_shared<NodeAdaptive>(
+        (curve_parametric)->FindPointByParameter((*param_iterator)));
     noh->SetId(id_manager->next(0));
     list_new_points.push_back(noh);
   }
@@ -786,46 +804,47 @@ list<PointAdaptive *> Adapter::AdaptCurveBySurface(
 
 // Usa a QuadTree. Gera uma nova malha e atualiza a malha do patch. A malha
 // gerada deve ser inserida no modelo pelo Gerador Adaptativo
-SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
-                              Performer::IdManager *id_manager,
-                              double factor_disc_global) {
-  SubMesh *sub_mesh_new = new SubMesh;
+std::shared_ptr<SubMesh> Adapter::AdaptDomain(
+    std::shared_ptr<PatchCoons> coons_patch,
+    std::shared_ptr<Performer::IdManager> id_manager,
+    double factor_disc_global) {
+  auto sub_mesh_new = std::make_shared<SubMesh>();
   double factor_disc =
-      DISCRETIZACAO_INTER;  // pow ( 2, exp ); // o fator de rediscretização
+      DISCRETIZATION_CURVE_FACTOR_INTERNAL;  // pow ( 2, exp ); // o fator de
+                                             // rediscretização
 
   // avanço ( proporção do triângulo, tolerância, número de vezes o refinamento)
-  AdvancingFront avanco(PROPORCAO, TOLERANCIA_AFT, SUAVIZACAO,
-                        FATOR_SUAVIZACAO);
-  map<Vertex *, NodeAdaptive *> map;
+  AdvancingFront avanco(RATIO_AFT, TOLERANCE_AFT, SMOOTHING_LAPLACIAN_NUMBER,
+                        SMOOTHING_LAPLACIAN_FACTOR);
+  map<std::shared_ptr<Vertex>, std::shared_ptr<NodeAdaptive>> map;
 
   // 1. Para cada curva do patch
   for (unsigned int i = 0; i < coons_patch->GetNumBerCurves(); ++i) {
-    CurveAdaptive *curve = coons_patch->GetCurve(i);
-    (static_cast<CurveAdaptiveParametric *>(curve))->SortPointsByParameters();
+    std::shared_ptr<CurveAdaptive> curve = coons_patch->GetCurve(i);
+    std::shared_ptr<CurveAdaptiveParametric> curve_parametric =
+        std::dynamic_pointer_cast<CurveAdaptiveParametric>(curve);
+    curve_parametric->SortPointsByParameters();
 
     if (i == 0 or i == 1) {
       list<double>::iterator last_parameter =
-          (static_cast<CurveAdaptiveParametric *>(curve))->parameters_.end();
+          (curve_parametric)->parameters_.end();
       --last_parameter;
 
       int parameter = 0;
 
-      for (auto param_iterator = (static_cast<CurveAdaptiveParametric *>(curve))
-                                     ->parameters_.begin();
+      for (auto param_iterator = curve_parametric->parameters_.begin();
            param_iterator != last_parameter; ++param_iterator) {
-        Vertex *vertex;
+        std::shared_ptr<Vertex> vertex;
 
         if (i == 0)
-          vertex = avanco.getBoundary()->addVertex(
-              *param_iterator, 0.0,
-              static_cast<CurveAdaptiveParametric *>(curve));
+          vertex = avanco.getBoundary()->addVertex(*param_iterator, 0.0,
+                                                   curve_parametric);
         else if (i == 1)
-          vertex = avanco.getBoundary()->addVertex(
-              1.0, *param_iterator,
-              static_cast<CurveAdaptiveParametric *>(curve));
+          vertex = avanco.getBoundary()->addVertex(1.0, *param_iterator,
+                                                   curve_parametric);
 
-        NodeAdaptive *noh =
-            static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
+        auto noh =
+            std::dynamic_pointer_cast<NodeAdaptive>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -835,29 +854,25 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
       }
     } else if (i == 2 or i == 3) {
       list<double>::reverse_iterator last_parameter =
-          (static_cast<CurveAdaptiveParametric *>(curve))->parameters_.rend();
+          (curve_parametric)->parameters_.rend();
       --last_parameter;
 
-      int parameter =
-          static_cast<CurveAdaptiveParametric *>(curve)->GetNumBerPoints() - 1;
+      int parameter = curve_parametric->GetNumBerPoints() - 1;
 
       for (list<double>::reverse_iterator param_iterator =
-               (static_cast<CurveAdaptiveParametric *>(curve))
-                   ->parameters_.rbegin();
+               (curve_parametric)->parameters_.rbegin();
            param_iterator != last_parameter; ++param_iterator) {
-        Vertex *vertex;
+        std::shared_ptr<Vertex> vertex;
 
         if (i == 2)
-          vertex = avanco.getBoundary()->addVertex(
-              *param_iterator, 1.0,
-              static_cast<CurveAdaptiveParametric *>(curve));
+          vertex = avanco.getBoundary()->addVertex(*param_iterator, 1.0,
+                                                   curve_parametric);
         else if (i == 3)
-          vertex = avanco.getBoundary()->addVertex(
-              0.0, *param_iterator,
-              static_cast<CurveAdaptiveParametric *>(curve));
+          vertex = avanco.getBoundary()->addVertex(0.0, *param_iterator,
+                                                   curve_parametric);
 
-        NodeAdaptive *noh =
-            static_cast<NodeAdaptive *>(curve->GetPoint(parameter));
+        auto noh =
+            std::dynamic_pointer_cast<NodeAdaptive>(curve->GetPoint(parameter));
 
         map[vertex] = noh;
 
@@ -868,10 +883,11 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
     }
   }
 
-  avanco.getBoundary()->close(static_cast<CurveAdaptiveParametric *>(
-      coons_patch->GetCurve(coons_patch->GetNumBerCurves() - 1)));
+  avanco.getBoundary()->close(
+      std::dynamic_pointer_cast<CurveAdaptiveParametric>(
+          coons_patch->GetCurve(coons_patch->GetNumBerCurves() - 1)));
 
-  SubMesh *sub_mesh_old =
+  std::shared_ptr<SubMesh> sub_mesh_old =
       coons_patch->GetSubMesh();  // essa é a malha anterior!
 
   // constroi a lista de triangulos antigos para o gerador de malha
@@ -880,8 +896,9 @@ SubMesh *Adapter::AdaptDomain(PatchCoons *coons_patch,
   double area_total = 0;  // área de todos os elementos
 
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
-    TriangleAdaptive *tri =
-        static_cast<TriangleAdaptive *>(sub_mesh_old->GetElement(i));
+    std::shared_ptr<TriangleAdaptive> tri =
+        std::dynamic_pointer_cast<TriangleAdaptive>(
+            sub_mesh_old->GetElement(i));
 
     /*Noh centro (	( tri->GetNoh ( 1 ).x + tri->GetNoh ( 2 ).x +
 tri->GetNoh
@@ -892,18 +909,21 @@ tri->GetNoh
 / 3.0
 ); tuple < double, double > centro_par = patch->encontrar_u_v ( centro );*/
 
-    Vertex *v1 = new Vertex(get<0>(tri->GetParametersN1()),
-                            get<1>(tri->GetParametersN1()));
-    Vertex *v2 = new Vertex(get<0>(tri->GetParametersN2()),
-                            get<1>(tri->GetParametersN2()));
-    Vertex *v3 = new Vertex(get<0>(tri->GetParametersN3()),
-                            get<1>(tri->GetParametersN3()));
-    // Vertex* c = new Vertex  ( get<0>( centro_par ), get<1>( centro_par ) );
+    auto v1 = std::make_shared<Vertex>(get<0>(tri->GetParametersN1()),
+                                       get<1>(tri->GetParametersN1()));
+    auto v2 = std::make_shared<Vertex>(get<0>(tri->GetParametersN2()),
+                                       get<1>(tri->GetParametersN2()));
+    auto v3 = std::make_shared<Vertex>(get<0>(tri->GetParametersN3()),
+                                       get<1>(tri->GetParametersN3()));
+
+    // Vertex* c = std::make_shared<Vertex>  ( get<0>( centro_par ), get<1>(
+    // centro_par ) );
 
     // cout << "APC.cpp: u = " << get<0>( centro_par ) << " v = " << get<1>(
     // centro_par ) << endl;
 
-    Face *face = new Face(v1, v2, v3, tri->GetId() /*, c*/);
+    std::shared_ptr<Face> face =
+        std::make_shared<Face>(v1, v2, v3, tri->GetId());
     area_total += tri->GetArea();
 
     mesh_old.push_back(face);
@@ -914,9 +934,11 @@ tri->GetNoh
   for (unsigned int i = 0; i < sub_mesh_old->GetNumberElements(); ++i) {
     double length_old = 0;
 
-    TriangleAdaptive *tri =
-        static_cast<TriangleAdaptive *>(sub_mesh_old->GetElement(i));
-    Face *face = (*face_list_iterator);
+    std::shared_ptr<TriangleAdaptive> tri =
+        std::dynamic_pointer_cast<TriangleAdaptive>(
+            sub_mesh_old->GetElement(i));
+
+    std::shared_ptr<Face> face = (*face_list_iterator);
 
     length_old = sqrt(tri->GetArea() / area_total);
 
@@ -924,9 +946,9 @@ tri->GetNoh
     double ka = 0.0;
     double kd = 0.0;
 
-    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCIA &&
-        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCIA &&
-        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCIA) {
+    if (fabs(tri->GetNoh(1).GetGa()) >= TOLERANCE &&
+        fabs(tri->GetNoh(2).GetGa()) >= TOLERANCE &&
+        fabs(tri->GetNoh(3).GetGa()) >= TOLERANCE) {
       ka = (tri->GetNoh(1).GetGa() + tri->GetNoh(2).GetGa() +
             tri->GetNoh(3).GetGa()) /
            3.0;
@@ -943,11 +965,6 @@ tri->GetNoh
     }
 
     lenght_new = CalculateNewSize(ka, kd, factor_disc, length_old);
-
-    /*if ( h_novo > h_velho )
-    cout << "desrefina" << endl;
-else
-    cout << "refina" << endl;*/
 
     face->h = lenght_new * factor_disc_global;
 
@@ -983,10 +1000,10 @@ else
   VertexList new_vertices = avanco.getInnerVertices();
 
   while (!new_vertices.empty()) {
-    Vertex *vertex = new_vertices.front();
+    std::shared_ptr<Vertex> vertex = new_vertices.front();
     new_vertices.pop_front();
 
-    NodeAdaptive *noh = new NodeAdaptive(
+    std::shared_ptr<NodeAdaptive> noh = std::make_shared<NodeAdaptive>(
         coons_patch->Parameterize(vertex->getX(), vertex->getY()));
 
     noh->SetId(id_manager->next(0));
@@ -999,23 +1016,23 @@ else
 
   // gera os triangulos
   while (!new_mesh.empty()) {
-    Face *face = new_mesh.front();
+    std::shared_ptr<Face> face = new_mesh.front();
     new_mesh.pop_front();
 
-    ElementAdaptive *element =
-        new TriangleAdaptive(static_cast<NodeAdaptive *>(map[face->getV1()]),
-                             static_cast<NodeAdaptive *>(map[face->getV2()]),
-                             static_cast<NodeAdaptive *>(map[face->getV3()]));
+    auto element = std::make_shared<TriangleAdaptive>(
+        std::dynamic_pointer_cast<NodeAdaptive>(map[face->getV1()]),
+        std::dynamic_pointer_cast<NodeAdaptive>(map[face->getV2()]),
+        std::dynamic_pointer_cast<NodeAdaptive>(map[face->getV3()]));
 
     element->SetId(id_manager->next(1));
 
-    (static_cast<TriangleAdaptive *>(element))
+    (static_cast<std::shared_ptr<TriangleAdaptive>>(element))
         ->SetParametersN1(
             make_tuple(face->getV1()->getX(), face->getV1()->getY()));
-    (static_cast<TriangleAdaptive *>(element))
+    (static_cast<std::shared_ptr<TriangleAdaptive>>(element))
         ->SetParametersN2(
             make_tuple(face->getV2()->getX(), face->getV2()->getY()));
-    (static_cast<TriangleAdaptive *>(element))
+    (static_cast<std::shared_ptr<TriangleAdaptive>>(element))
         ->SetParametersN3(
             make_tuple(face->getV3()->getX(), face->getV3()->getY()));
 
@@ -1024,10 +1041,9 @@ else
 
   // apaga os triangulos da malha antiga
   while (!mesh_old.empty()) {
-    Face *face = mesh_old.front();
+    std::shared_ptr<Face> face = mesh_old.front();
     mesh_old.pop_front();
-
-    delete face;
+    face = nullptr;
   }
 
   return sub_mesh_new;
@@ -1037,18 +1053,16 @@ double Adapter::CalculateNewSize(const double ka, const double kd,
                                  const double factor_disc,
                                  const double length_old) {
   // Cenário 1 : ka está muito próxima a kd
-  if (((ka - TOLERANCIA_CURVATURA) < kd) &&
-      (kd < (ka + TOLERANCIA_CURVATURA))) {
+  if (((ka - TOLERANCE_CURVATURE) < kd) && (kd < (ka + TOLERANCE_CURVATURE))) {
     // está próximo ao plano, desrefine
-    if (fabs(ka) < TOLERANCIA_CURVATURA) {
+    if (fabs(ka) < TOLERANCE_CURVATURE) {
       return length_old * factor_disc;
     } else {
       // a discretização reflete bem a superfície, não faça nada!
       return length_old;
     }
-  }
-  // Outros cenários : refine
-  else {
+  } else {
+    // Outros cenários : refine
     return length_old / factor_disc;
   }
 }

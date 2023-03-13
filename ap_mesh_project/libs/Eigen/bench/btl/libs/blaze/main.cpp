@@ -32,12 +32,12 @@ int main() {
       MIN_MV, MAX_MV, NB_POINT);
   bench<Action_atv_product<blaze_interface<REAL_TYPE> > >(MIN_MV, MAX_MV,
                                                           NB_POINT);
-  //   bench<Action_matrix_matrix_product<blaze_interface<REAL_TYPE> >
-  //   >(MIN_MM,MAX_MM,NB_POINT);
-  //   bench<Action_ata_product<blaze_interface<REAL_TYPE> >
-  //   >(MIN_MM,MAX_MM,NB_POINT);
-  //   bench<Action_aat_product<blaze_interface<REAL_TYPE> >
-  //   >(MIN_MM,MAX_MM,NB_POINT);
+  bench<Action_matrix_matrix_product<blaze_interface<REAL_TYPE> > >(
+      MIN_MM, MAX_MM, NB_POINT);
+  bench<Action_ata_product<blaze_interface<REAL_TYPE> > >(MIN_MM, MAX_MM,
+                                                          NB_POINT);
+  bench<Action_aat_product<blaze_interface<REAL_TYPE> > >(MIN_MM, MAX_MM,
+                                                          NB_POINT);
 
   return 0;
 }

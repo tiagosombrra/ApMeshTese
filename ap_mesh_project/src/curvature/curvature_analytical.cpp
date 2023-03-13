@@ -1,6 +1,6 @@
 #include "../../include/curvature/curvature_analytical.h"
 
-extern double TOLERANCIA;
+extern double TOLERANCE;
 
 // Dill, J. C. (1981). An Application of Color Graphics to the Display of
 // Surface Curvature. Comp. Graph., Vol. 15, pag. 153-161. SIGGRAPH 81.
@@ -51,7 +51,7 @@ double CurvatureAnalytical::CalculateMeanCurvature() {
   // Vetor ^ Vetor -> produto escalar
   double prodModule = prod_.CalculateModule();
 
-  if (prodModule <= TOLERANCIA) return 0.0;  // regra de L'Hôpital
+  if (prodModule <= TOLERANCE) return 0.0;  // regra de L'Hôpital
 
   double qvModule = qv_.CalculateModule();
   double quModule = qu_.CalculateModule();
@@ -66,13 +66,13 @@ double CurvatureAnalytical::CalculateMeanCurvature() {
   // cout << "==========================================================" <<
   // endl;
 
-  return (fabs(resultado) <= TOLERANCIA) ? 0.0 : resultado;
+  return (fabs(resultado) <= TOLERANCE) ? 0.0 : resultado;
 }
 
 double CurvatureAnalytical::CalculateGaussCurvature() {
   double prodModule = prod_.CalculateModule();
 
-  if (prodModule <= TOLERANCIA) return 0.0;  // regra de L'Hôpital
+  if (prodModule <= TOLERANCE) return 0.0;  // regra de L'Hôpital
 
   // K = ( A.C - B² ) / | Qu x Qv |⁴
   double resultado =
@@ -81,5 +81,5 @@ double CurvatureAnalytical::CalculateGaussCurvature() {
 
   // cout << "Ga = " << resultado << endl;
 
-  return (fabs(resultado) <= TOLERANCIA) ? 0.0 : resultado;
+  return (fabs(resultado) <= TOLERANCE) ? 0.0 : resultado;
 }

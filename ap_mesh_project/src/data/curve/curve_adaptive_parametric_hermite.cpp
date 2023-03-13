@@ -1,5 +1,7 @@
 #include "../../../include/data/curve/curve_adaptive_parametric_hermite.h"
 
+#include <memory>
+
 CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite()
     : CurveAdaptiveParametric() {
   // 1. Preenche a matriz 'M' de 'CurvaParamétrica com a matriz de Hermite
@@ -61,14 +63,15 @@ CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite()
   this->mat_geo_gy_ = this->GetMatBase() * this->GetMatGeoGy();
   this->mat_geo_gz_ = this->GetMatBase() * this->GetMatGeoGz();
 
-  delete &mat_base_;
+  // delete &mat_base_;
 
   // IMPORTANTE: Ao usar esse construtor, não esquecer de setar os pontos
   // inicial e final e os vetores tangentes inicial e final !!!
 }
 
-CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(const PointAdaptive point0, const PointAdaptive point1, const VectorAdaptive vector0,
-    const VectorAdaptive vector1)
+CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(
+    const PointAdaptive point0, const PointAdaptive point1,
+    const VectorAdaptive vector0, const VectorAdaptive vector1)
     : CurveAdaptiveParametric(point0, point1),
       vector0_(vector0),
       vector1_(vector1) {
@@ -137,13 +140,12 @@ CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(const PointAdapti
 }
 
 CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(
-    CurveAdaptiveParametricHermite *curve_adaptive_parametric_hermite)
+    std::shared_ptr<CurveAdaptiveParametricHermite>
+        curve_adaptive_parametric_hermite)
     : CurveAdaptiveParametric(curve_adaptive_parametric_hermite) {
   this->vector0_ = curve_adaptive_parametric_hermite->vector0_;
   this->vector1_ = curve_adaptive_parametric_hermite->vector1_;
 }
-
-CurveAdaptiveParametricHermite::~CurveAdaptiveParametricHermite() {}
 
 double CurveAdaptiveParametricHermite::CalculateCurvature(double t) {
   // B'(t)= 3(1-t)²(P1-point_0_)+6t(1-t)(P2-P1)+3t²(P3-P2)

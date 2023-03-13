@@ -1,5 +1,7 @@
 #include "../../include/curvature/curvature_discrete.h"
 
+#include <memory>
+
 // Kim, S. J., Jeong, W. K. e Kim, C. H. LOD generation with discrete curva-
 // ture error metric. Em Proceedings of 2nd Korea Israel Bi-National Conference
 // on Geometrical Modeling and Computer Graphics in the WWW Era (1999), pp.
@@ -8,41 +10,39 @@
 CurvatureDiscrete::CurvatureDiscrete(const NodeAdaptive& noh) {
   // O construtor ordena a lista de elementos do nó, por garantia...
   // para cada o elemento da lista de adjacências de n
-  //		some sua área ao A deste objeto
-  //		GetAngle ( n ) e some a sum_phi
-
-  //	cout << "********** Curvatura discreta **********" << endl;
-
-  //	cout << "ordenaAdjacência" << endl;
+  // some sua área ao A deste objeto
+  // GetAngle ( n ) e some a sum_phi
+  // cout << "********** Curvatura discreta **********" << endl;
+  // cout << "ordenaAdjacência" << endl;
 
   this->AdjacencySort(noh);
 
   this->a_ = 0;
   this->sum_phi_ = 0;
 
-  std::list<ElementAdaptive*>::const_iterator element_iterator;
+  // cout << "for ( ite = n.guarda_chuva.begin ( ); ite != n.guarda_chuva.end
+  // ( ); ++ite )\n{" << endl;
 
-  //	cout << "for ( ite = n.guarda_chuva.begin ( ); ite != n.guarda_chuva.end
-  //( ); ++ite )\n{" << endl;
+  std::list<std::shared_ptr<ElementAdaptive>>::const_iterator element_iterator;
 
   for (element_iterator = noh.GetElements().begin();
        element_iterator != noh.GetElements().end(); ++element_iterator) {
-    //		cout << "\tA += " << (*ite)->getArea( ) << endl;
+    // cout << "\tA += " << (*ite)->getArea( ) << endl;
     this->a_ += (*element_iterator)->GetArea();
-    //		cout << "\tA == " << this->A << endl;
-    //		cout << "\tsum_phi += " << (*ite)->GetAngle ( n ) << endl;
+    // cout << "\tA == " << this->A << endl;
+    // cout << "\tsum_phi += " << (*ite)->GetAngle ( n ) << endl;
     this->sum_phi_ += (*element_iterator)->GetAngle(noh);
-    //		cout << "\tsum_phi == " << this->sum_phi << endl;
+    // cout << "\tsum_phi == " << this->sum_phi << endl;
   }
 
   this->noh_ = noh;
 
-  //	cout << "******************************" << endl;
+  // cout << "******************************" << endl;
 }
 
 double CurvatureDiscrete::CalculateMeanCurvature() {
-  ElementAdaptive* first_element;
-  ElementAdaptive* next_element;
+  std::shared_ptr<ElementAdaptive> first_element;
+  std::shared_ptr<ElementAdaptive> next_element;
   double angle_gama = 0;  // ângulo entre dois elementos adjacentes
 
   while (this->elements_.size() > 1) {
@@ -74,22 +74,22 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh) {
 
   // copiando os elementos da adjacência de n para a lista de elementos desta
   // classe
-  //		copie a lista n.guarda_cuva para nova_lista
-  std::list<ElementAdaptive*> new_list_elements;
+  // copie a lista n.guarda_cuva para nova_lista
+  std::list<std::shared_ptr<ElementAdaptive>> new_list_elements;
   new_list_elements = noh.GetElements();
 
-  //		retire o primeiro elemento E da nova_lista e insira em elementos
-  ElementAdaptive* element_front = new_list_elements.front();
+  // retire o primeiro elemento E da nova_lista e insira em elementos
+  std::shared_ptr<ElementAdaptive> element_front = new_list_elements.front();
   this->elements_.push_back(element_front);
   new_list_elements.pop_front();
 
-  //		enquanto encontrar um elemento adjacente à esquerda de E faça
-  //			retire E' de nova_lista e insira ao final de elementos
-  //			E recebe E'
+  // enquanto encontrar um elemento adjacente à esquerda de E faça
+  // 	retire E' de nova_lista e insira ao final de elementos
+  // 	E recebe E'
   bool find_adj_left = true;  // encontrou um adjacente à esquerda
 
   while (find_adj_left) {
-    ElementAdaptive* element =
+    std::shared_ptr<ElementAdaptive> element =
         adjacent_.GetElementLeft(noh, element_front, new_list_elements);
     if (element) {
       this->elements_.push_back(element);
@@ -98,14 +98,14 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh) {
       find_adj_left = false;
   }
 
-  //		se nova_lista não estiver vazia
-  //			fator = M_PI ( n está na borda! )
-  //			E recebe primeiro elemento da lista elementos ( sem
+  // se nova_lista não estiver vazia
+  // 	fator = M_PI ( n está na borda! )
+  // 	E recebe primeiro elemento da lista elementos ( sem
   // retirar
   //) 			enquanto encontrar um elemento adjacente à direita de E
   // faça
 
-  //				retire E' de nova_lista e insira no início de
+  // 		retire E' de nova_lista e insira no início de
   // elementos 				E recebe E'
   if (!new_list_elements.empty()) {
     this->factor_disc_ = M_PI;  // n está na borda !!!
@@ -114,7 +114,7 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh) {
     bool find_adj_right = true;  // encontrou um adjacente à direita
 
     while (find_adj_right) {
-      ElementAdaptive* element =
+      std::shared_ptr<ElementAdaptive> element =
           adjacent_.GetElementRight(noh, element_front, new_list_elements);
       if (element) {
         this->elements_.push_front(element);
@@ -123,8 +123,8 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh) {
         find_adj_right = false;
     }
   }
-  //		senão
-  //			se o primeiro elemento P de elementos for adjacente ao
+  // senão
+  // 	se o primeiro elemento P de elementos for adjacente ao
   // último U 				fator = 2*M_PI ( n está no interior )
   // senão 				fator = M_PI ( n está na borda
   //)

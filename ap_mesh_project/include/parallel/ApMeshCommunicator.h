@@ -5,11 +5,11 @@
 
 class ApMeshCommunicator : public Parallel::TMCommunicator {
  public:
-  ApMeshCommunicator(bool sharedParallelismEnabled);
-  virtual ~ApMeshCommunicator();
-  virtual bool isMaster() const;
+  explicit ApMeshCommunicator(bool sharedParallelismEnabled);
+  ~ApMeshCommunicator();
+  bool isMaster() const override;
   using Parallel::TMCommunicator::unpack;
-  virtual Parallel::Transferable *unpack(Parallel::Package &p) const;
+  Parallel::Transferable *unpack(Parallel::Package &p) const override;
 };
 
 #endif  // APMESHCOMMUNICATOR_H

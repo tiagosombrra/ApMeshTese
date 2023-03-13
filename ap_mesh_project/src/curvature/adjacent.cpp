@@ -1,6 +1,8 @@
 #include "../../include/curvature/adjacent.h"
 
-extern double TOLERANCIA;
+#include <memory>
+
+extern double TOLERANCE;
 
 // P de Primeiro, U de Último !!! :D
 // confirma que U é adjacente à esquerda de P
@@ -98,11 +100,11 @@ bool Adjacent::ConfirmRightAdjacency(const NodeAdaptive& noh,
   return false;
 }
 
-ElementAdaptive* Adjacent::GetElementLeft(
-    const NodeAdaptive& noh, ElementAdaptive* element,
-    std::list<ElementAdaptive*>& list_element) {
-  ElementAdaptive* element_result = nullptr;
-  std::list<ElementAdaptive*>::iterator element_iterator;
+std::shared_ptr<ElementAdaptive> Adjacent::GetElementLeft(
+    const NodeAdaptive& noh, std::shared_ptr<ElementAdaptive> element,
+    std::list<std::shared_ptr<ElementAdaptive>>& list_element) {
+  std::shared_ptr<ElementAdaptive> element_result = nullptr;
+  std::list<std::shared_ptr<ElementAdaptive>>::iterator element_iterator;
 
   for (element_iterator = list_element.begin();
        element_iterator != list_element.end(); ++element_iterator) {
@@ -117,11 +119,11 @@ ElementAdaptive* Adjacent::GetElementLeft(
 }
 
 // busca na lista um elemento adjacente à direita de elem
-ElementAdaptive* Adjacent::GetElementRight(
-    const NodeAdaptive& noh, ElementAdaptive* element,
-    std::list<ElementAdaptive*>& list_element) {
-  ElementAdaptive* element_result = nullptr;
-  std::list<ElementAdaptive*>::iterator element_iterator;
+std::shared_ptr<ElementAdaptive> Adjacent::GetElementRight(
+    const NodeAdaptive& noh, std::shared_ptr<ElementAdaptive> element,
+    std::list<std::shared_ptr<ElementAdaptive>>& list_element) {
+  std::shared_ptr<ElementAdaptive> element_result = nullptr;
+  std::list<std::shared_ptr<ElementAdaptive>>::iterator element_iterator;
 
   for (element_iterator = list_element.begin();
        element_iterator != list_element.end(); ++element_iterator) {
@@ -151,7 +153,7 @@ int Adjacent::ConcavityElement(const NodeAdaptive& noh,
   double d;
   d = first_element.GetVectorNormal() ^ vector;
 
-  if (fabs(d) <= TOLERANCIA) return 0;
+  if (fabs(d) <= TOLERANCE) return 0;
 
   if (d > 0)
     return -1;

@@ -1,6 +1,8 @@
 #ifndef DATA_CURVE_CURVE_ADAPTIVE_PARAMETRIC_HERMITE_H
 #define DATA_CURVE_CURVE_ADAPTIVE_PARAMETRIC_HERMITE_H
 
+#include <memory>
+
 #include "curve_adaptive_parametric.h"
 
 class CurveAdaptiveParametricHermite : public CurveAdaptiveParametric {
@@ -10,8 +12,9 @@ class CurveAdaptiveParametricHermite : public CurveAdaptiveParametric {
                                  const PointAdaptive point1,
                                  const VectorAdaptive vector0,
                                  const VectorAdaptive vector1);
-  explicit CurveAdaptiveParametricHermite(CurveAdaptiveParametricHermite*);
-  ~CurveAdaptiveParametricHermite();
+  explicit CurveAdaptiveParametricHermite(
+      std::shared_ptr<CurveAdaptiveParametricHermite>);
+  ~CurveAdaptiveParametricHermite() = default;
   double CalculateCurvature(double t) override;
 
   VectorAdaptive GetVector0() const;

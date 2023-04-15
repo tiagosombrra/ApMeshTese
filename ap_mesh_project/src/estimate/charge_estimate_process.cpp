@@ -16,22 +16,22 @@ static bool SortByNt(const PatchBezier* lhs, const PatchBezier* rhs) {
 // retonar uma lista de patch de bezier ordenadChargeEstimateProcessestimativa
 // de carga em ordem decrescente.
 std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
-    Geometry* geometry, Timer* timer) {
+    Geometry* geometry, Timer& timer) {
   std::list<PatchBezier*> list_patch_bezier;
   std::list<PatchBezier*> list_patch_bezier_order;
 
   PatchReader* patch_bezier_reader = new PatchReader();
-  timer->EndTimerParallel(0, 0, 10);  // Full
-  timer->InitTimerParallel(0, 0, 5);  // Leitura arquivo
+  timer.EndTimerParallel(0, 0, 10);  // Full
+  timer.InitTimerParallel(0, 0, 5);  // Leitura arquivo
 
   list_patch_bezier = patch_bezier_reader->LoaderBPFile(INPUT_MODEL);
 
-  timer->EndTimerParallel(0, 0, 5);  // Leitura arquivo
-  TIME_READ_FILE = timer->timer_parallel_[0][0][5];
+  timer.EndTimerParallel(0, 0, 5);  // Leitura arquivo
+  TIME_READ_FILE = timer.timer_parallel_[0][0][5];
 
-  timer->InitTimerParallel(0, 0, 5);  // Full
+  timer.InitTimerParallel(0, 0, 5);  // Full
 
-  timer->InitTimerParallel(0, 0, 1);  // Estimativa de carga process 0
+  timer.InitTimerParallel(0, 0, 1);  // Estimativa de carga process 0
 
   delete patch_bezier_reader;
 
@@ -172,7 +172,7 @@ std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
     list_patch_bezier_order.sort(SortByNt);
   }
 
-  timer->EndTimerParallel(0, 0, 1);  // Estimativa de carga process 0
+  timer.EndTimerParallel(0, 0, 1);  // Estimativa de carga process 0
 
   return list_patch_bezier_order;
 }
@@ -740,7 +740,7 @@ double ChargeEstimateProcess::CalculateAreaTriangleMedioRad(
 }
 
 double ChargeEstimateProcess::CalculateAreaTriangleMedio(PatchBezier* patch,
-                                                         Timer* timer,
+                                                         Timer& timer,
                                                          int degree) {
   MeshAdaptive* mesh = new MeshAdaptive;
   SubMesh* sub_mesh = InitialMeshEstimate(patch, degree);
@@ -901,7 +901,7 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
 }
 
 bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
-                                                    Timer* timer, int degree) {
+                                                    Timer& timer, int degree) {
   GeneratorAdaptive* ger = new GeneratorAdaptive();
 #if USE_OPENMP
   double erro = ger->CalculateErrorGlobalOmp(mesh, timer);

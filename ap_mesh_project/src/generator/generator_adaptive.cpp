@@ -1,21 +1,22 @@
 #include "../../include/generator/generator_adaptive.h"
 
+#include <memory>
 #include <ostream>
 
 extern int MAX_THREADS;
 GeneratorAdaptive::GeneratorAdaptive() {}
 
 #if USE_MPI
-int GeneratorAdaptive::Execute(char* argv[], Timer* timer, MPI_Status status)
+int GeneratorAdaptive::Execute(char* argv[], Timer& timer, MPI_Status status)
 #else
-int GeneratorAdaptive::Execute(char* argv[], Timer* timer)
+int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
 #endif  // USE_MPI
 {
   for (char** arg = argv; *arg != nullptr; ++arg) {
     std::cout << "argv[]:" << *arg << std::endl;
   }
 
-  Geometry* geometry = new Geometry;
+  std::unique_ptr<Geometry> geometry = std::make_unique<Geometry>();
 
 #if USE_MPI
   if (RANK_MPI == 0) {
@@ -152,12 +153,12 @@ int GeneratorAdaptive::Execute(char* argv[], Timer* timer)
         }
 
       } else {
-        timer->InitTimerParallel(RANK_MPI, 0, 0);  // Send
+        timer.InitTimerParallel(RANK_MPI, 0, 0);  // Send
         MPI_Send(&TIME_READ_FILE, 1, MPI_DOUBLE, j, TAG_TIME, MPI_COMM_WORLD);
         MPI_Send(&i, 1, MPI_INT, j, TAG_SIZE_OF_DOUBLE, MPI_COMM_WORLD);
         MPI_Send(&patches_process, i, MPI_DOUBLE, j, TAG_DOUBLE,
                  MPI_COMM_WORLD);
-        timer->EndTimerParallel(RANK_MPI, 0, 0);  // Send
+        timer.EndTimerParallel(RANK_MPI, 0, 0);  // Send
       }
     }
 
@@ -170,7 +171,7 @@ int GeneratorAdaptive::Execute(char* argv[], Timer* timer)
 #endif
 
   } else {
-    timer->InitTimerParallel(RANK_MPI, 0, 9);  // Recv
+    timer.InitTimerParallel(RANK_MPI, 0, 9);  // Recv
 
     MPI_Recv(&TIME_READ_FILE, 1, MPI_DOUBLE, 0, TAG_TIME, MPI_COMM_WORLD,
              &status);
@@ -183,7 +184,7 @@ int GeneratorAdaptive::Execute(char* argv[], Timer* timer)
     MPI_Recv(&patches, size_patches, MPI_DOUBLE, 0, TAG_DOUBLE, MPI_COMM_WORLD,
              &status);
 
-    timer->EndTimerParallel(RANK_MPI, 0, 9);  // Recv
+    timer.EndTimerParallel(RANK_MPI, 0, 9);  // Recv
 
     // gerador de malha para o processo (n)
 #if USE_OPENMP
@@ -199,12 +200,13 @@ int GeneratorAdaptive::Execute(char* argv[], Timer* timer)
 
   // Inclusão dos patches no Modelo
   Models3d models3d;
-  model.SetGeometry(models3d.ModelPneu(geometry));
+  models3d.ModelPneu(geometry);
+  model.SetGeometry(std::move(geometry));
 
   //  if (argv[3]) {
-  //    timer->InitTimerParallel(0, 0, 5);  // Leitura arquivo
+  //    timer.InitTimerParallel(0, 0, 5);  // Leitura arquivo
   //    model.SetGeometry(patch_reader.ReaderFilePatches(geometry, argv[3]));
-  //    timer->EndTimerParallel(0, 0, 5);  // Leitura arquivo
+  //    timer.EndTimerParallel(0, 0, 5);  // Leitura arquivo
   //  } else {
   //    Models3d models3d;
   //    model.SetGeometry(models3d.ModelPneu(geometry));
@@ -222,7 +224,7 @@ int GeneratorAdaptive::Execute(char* argv[], Timer* timer)
 
 #if USE_MPI
 std::list<PatchBezier*> GeneratorAdaptive::EstimateChargeofPatches(
-    Geometry* geometry, Timer* timer) {
+    Geometry* geometry, Timer& timer) {
   ChargeEstimateProcess* charge_estimate_process = new ChargeEstimateProcess();
   std::list<PatchBezier*> patches =
       charge_estimate_process->ChargeEstimate(geometry, timer);
@@ -466,11 +468,11 @@ Geometry* GeneratorAdaptive::UnpakGeometry(double patches[], int size_patches) {
 
 #if USE_MPI
 void GeneratorAdaptive::Generator(double patches[], int size_patches,
-                                  Timer* timer, int id_range,
+                                  Timer& timer, int id_range,
                                   [[maybe_unused]] int size_rank,
                                   int size_thread)
 #else
-void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
+void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
                                   int size_rank, int size_thread)
 #endif
 {
@@ -482,7 +484,7 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
   Geometry* geometry = model.GetGeometry();
 #else
   this->communicator_ = new Parallel::TMCommunicator(false);
-  Geometry* geometry = model.GetGeometry();
+  auto geometry = model.GetGeometry();
 #endif
 
   int size_patch = geometry->GetNumberPatches();
@@ -515,17 +517,17 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
 #else
   this->id_managers_[0] = this->MakeIdManager(communicator_, 0);
 #if USE_MPI
-  timer->InitTimerParallel(RANK_MPI, 0, 2);  // Malha inicial
+  timer.InitTimerParallel(RANK_MPI, 0, 2);  // Malha inicial
 #else
-  timer->InitTimerParallel(0, 0, 2);    // Malha inicial
+  timer.InitTimerParallel(0, 0, 2);    // Malha inicial
 #endif  // USE_MPI
 
-  GeneratorInitialMesh(geometry, mesh_, timer, size_thread, size_patch);
+  GeneratorInitialMesh(*geometry, mesh_, timer, size_thread, size_patch);
 
 #if USE_MPI
-  timer->EndTimerParallel(RANK_MPI, 0, 2);   // Malha inicial
+  timer.EndTimerParallel(RANK_MPI, 0, 2);   // Malha inicial
 #else
-  timer->EndTimerParallel(0, 0, 2);     // Malha inicial
+  timer.EndTimerParallel(0, 0, 2);     // Malha inicial
 #endif  // USE_MPI
 #endif  // USE_OPENMP
 
@@ -541,15 +543,15 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
   }
 #else
 #if USE_MPI
-  timer->InitTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
+  timer.InitTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
 #else
-  timer->InitTimerParallel(0, 0, 7);    // Calculo do erro Global
+  timer.InitTimerParallel(0, 0, 7);    // Calculo do erro Global
 #endif  // USE_MPI
   this->error_local_process_ = this->ErrorGlobal(mesh_, timer);
 #if USE_MPI
-  timer->EndTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
+  timer.EndTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
 #else
-  timer->EndTimerParallel(0, 0, 7);     // Calculo do erro Global
+  timer.EndTimerParallel(0, 0, 7);     // Calculo do erro Global
 #endif  // USE_MPI
 #endif  // USE_OPENMP
 
@@ -583,10 +585,10 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
       break;
     }
     // #if USE_MPI
-    //         timer->InitTimerParallel(RANK_MPI,0,9); // SendRecv
+    //         timer.InitTimerParallel(RANK_MPI,0,9); // SendRecv
     //         MPI_Allreduce(&this->error_local_process_,
     //         &this->error_local_process_, 1, MPI_DOUBLE, MPI_SUM,
-    //         MPI_COMM_WORLD); timer->EndTimerParallel(RANK_MPI,0,9); //
+    //         MPI_COMM_WORLD); timer.EndTimerParallel(RANK_MPI,0,9); //
     //         SendRecv this->error_local_process_ = this->error_local_process_
     //         / sizeRank;
     // #endif //USE_MPI
@@ -597,19 +599,19 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
     mesh_ = new MeshAdaptive;
     mesh_->ResizeSubMeshAdaptiveByPosition(geometry->GetNumberPatches());
 #if USE_MPI
-    timer->InitTimerParallel(RANK_MPI, 0, 3);  // Adaptação da curva
+    timer.InitTimerParallel(RANK_MPI, 0, 3);  // Adaptação da curva
 #else
-    timer->InitTimerParallel(0, 0, 3);         // Adaptação da curva
+    timer.InitTimerParallel(0, 0, 3);         // Adaptação da curva
 #endif  // USE_MPI
 
     // Adapta as curvas pela curvatura da curva / Atualiza a discretização das
     // curvas
-    AdaptCurve(geometry);
+    AdaptCurve(*geometry);
 
 #if USE_MPI
-    timer->EndTimerParallel(RANK_MPI, 0, 3);  // Adaptação da curva
+    timer.EndTimerParallel(RANK_MPI, 0, 3);  // Adaptação da curva
 #else
-    timer->EndTimerParallel(0, 0, 3);          // Adaptação da curva
+    timer.EndTimerParallel(0, 0, 3);          // Adaptação da curva
 #endif  // USE_MPI
 
     // Adapta as patches / Atualiza os patches
@@ -617,15 +619,15 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
     AdaptDomainOmp(geometry, mesh_, timer, size_thread, size_patch);
 #else
 #if USE_MPI
-    timer->InitTimerParallel(RANK_MPI, 0, 4);  // Adaptação do domínio
+    timer.InitTimerParallel(RANK_MPI, 0, 4);  // Adaptação do domínio
 #else
-    timer->InitTimerParallel(0, 0, 4);  // Adaptação do domínio
+    timer.InitTimerParallel(0, 0, 4);  // Adaptação do domínio
 #endif  // USE_MPI
-    AdaptDomain(geometry, mesh_);
+    AdaptDomain(*geometry, mesh_);
 #if USE_MPI
-    timer->EndTimerParallel(RANK_MPI, 0, 4);   // Adaptação do domínio
+    timer.EndTimerParallel(RANK_MPI, 0, 4);   // Adaptação do domínio
 #else
-    timer->EndTimerParallel(0, 0, 4);   // Adaptação do domínio
+    timer.EndTimerParallel(0, 0, 4);   // Adaptação do domínio
 #endif  // USE_MPI
 #endif  // USE_OPENMP
 
@@ -640,15 +642,15 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
     }
 #else
 #if USE_MPI
-    timer->InitTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
+    timer.InitTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
 #else
-    timer->InitTimerParallel(0, 0, 7);  // Calculo do erro Global
+    timer.InitTimerParallel(0, 0, 7);  // Calculo do erro Global
 #endif  // USE_MPI
     this->error_local_process_ = this->ErrorGlobal(mesh_, timer);
 #if USE_MPI
-    timer->EndTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
+    timer.EndTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
 #else
-    timer->EndTimerParallel(0, 0, 7);   // Calculo do erro Global
+    timer.EndTimerParallel(0, 0, 7);   // Calculo do erro Global
 #endif  // USE_MPI
 #endif
 
@@ -676,8 +678,8 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
   }
 
 #if USE_MPI
-  timer->EndTimerParallel(RANK_MPI, 0, 10);  // Full
-  timer->PrintTime(RANK_MPI);
+  timer.EndTimerParallel(RANK_MPI, 0, 10);  // Full
+  timer.PrintTime(RANK_MPI);
 #endif  // USE_MPI
 
   // Escreve o(s) arquivo(s) com suas respectivas malhas em cada step_
@@ -702,8 +704,8 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
   }
 #else
 
-  timer->EndTimerParallel(0, 0, 10);  // Full
-  timer->PrintTime();
+  timer.EndTimerParallel(0, 0, 10);  // Full
+  timer.PrintTime();
 
   if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
     for (MeshVector::iterator it = save_mesh_.begin(); it != save_mesh_.end();
@@ -723,31 +725,31 @@ void GeneratorAdaptive::Generator(Model& model, Timer* timer, int id_range,
 #endif  // USE_MPI
 }
 
-void GeneratorAdaptive::AdaptCurve(Geometry* geometry) {
-  list<PointAdaptive*> new_points[geometry->GetNumberCurves()];
+void GeneratorAdaptive::AdaptCurve(Geometry& geometry) {
+  list<PointAdaptive*> new_points[geometry.GetNumberCurves()];
   map<PointAdaptive*, PointAdaptive*> map_points;
 
-  for (unsigned int i = 0; i < geometry->GetNumberCurves(); ++i) {
-    new_points[i] = adapter_.AdaptCurveByCurve(
-        geometry->GetCurve(i), map_points, this->id_managers_[0], 1);
+  for (unsigned int i = 0; i < geometry.GetNumberCurves(); ++i) {
+    new_points[i] = adapter_.AdaptCurveByCurve(geometry.GetCurve(i), map_points,
+                                               this->id_managers_[0], 1);
     // cout << "AdaptCurveByCurve curva: " << i
     //      << " newpoint[i] size: " << new_points[i].size() << endl;
-    geometry->GetCurve(i)->SetPoints(new_points[i]);
+    geometry.GetCurve(i)->SetPoints(new_points[i]);
     new_points[i] = adapter_.AdaptCurveBySurface(
-        geometry->GetCurve(i), map_points, this->id_managers_[0], 1);
-    geometry->GetCurve(i)->SetPoints(new_points[i]);
+        geometry.GetCurve(i), map_points, this->id_managers_[0], 1);
+    geometry.GetCurve(i)->SetPoints(new_points[i]);
     // cout << "AdaptCurveBySurface curva: " << i
     //      << " newpoint[i] size: " << new_points[i].size() << endl;
   }
 }
 
-void GeneratorAdaptive::AdaptDomain(Geometry* geometry, MeshAdaptive* mesh) {
-  for (unsigned int i = 0; i < geometry->GetNumberPatches(); ++i) {
-    PatchCoons* p = static_cast<PatchCoons*>(geometry->GetPatch(i));
+void GeneratorAdaptive::AdaptDomain(Geometry& geometry, MeshAdaptive* mesh) {
+  for (unsigned int i = 0; i < geometry.GetNumberPatches(); ++i) {
+    PatchCoons* p = static_cast<PatchCoons*>(geometry.GetPatch(i));
     SubMesh* sub_mesh = adapter_.AdaptDomain(p, this->id_managers_[0], 1);
     sub_mesh->SetPatch(p);
     mesh->InsertSubMeshAdaptiveByPosition(sub_mesh, i);
-    geometry->GetPatch(i)->SetSubMesh(mesh->GetSubMeshAdaptiveByPosition(i));
+    geometry.GetPatch(i)->SetSubMesh(mesh->GetSubMeshAdaptiveByPosition(i));
   }
 }
 
@@ -839,7 +841,7 @@ SubMesh* GeneratorAdaptive::GeneratorInitialMeshOmp(
 }
 
 double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
-                                                  Timer* timer,
+                                                  Timer& timer,
                                                   [[maybe_unused]] int rank,
                                                   int size_thread) {
   unsigned int Ns = 0;  // número de submalhas
@@ -851,11 +853,11 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
 #pragma omp parallel num_threads(size_thread) firstprivate(Ns) reduction(+ : Nj)
   {
 #if USE_MPI
-    timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(),
-                             7);  // calculo do erro global
+    timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(),
+                            7);  // calculo do erro global
 #else
-    timer->InitTimerParallel(0, omp_get_thread_num(),
-                             7);  // calculo do erro global
+    timer.InitTimerParallel(0, omp_get_thread_num(),
+                            7);  // calculo do erro global
 #endif  // USE_MPI
 #pragma omp for
     for (unsigned int i = 0; i < Ns; ++i) {
@@ -869,14 +871,14 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
       // reduction(+ :Nj)
       for (unsigned int j = 0; j < Nv; ++j) {
 #if USE_MPI
-        timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(),
-                                7);  // calculo do erro global
-        timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(),
-                                 6);  // MediaGauss
+        timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(),
+                               7);  // calculo do erro global
+        timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(),
+                                6);  // MediaGauss
 #else
-        timer->EndTimerParallel(0, omp_get_thread_num(),
-                                7);  // calculo do erro global
-        timer->InitTimerParallel(0, omp_get_thread_num(), 6);  // MediaGauss
+        timer.EndTimerParallel(0, omp_get_thread_num(),
+                               7);  // calculo do erro global
+        timer.InitTimerParallel(0, omp_get_thread_num(), 6);  // MediaGauss
 #endif  // USE_MPI
 
         PointAdaptive* n = sub->GetNoh(j);
@@ -903,14 +905,14 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
         ((NodeAdaptive*)n)->SetHa(Ha);
         ((NodeAdaptive*)n)->SetHd(Hd);
 #if USE_MPI
-        timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(),
-                                6);  // MediaGauss
-        timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(),
-                                 7);  // calculo do erro global
+        timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(),
+                               6);  // MediaGauss
+        timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(),
+                                7);  // calculo do erro global
 #else
-        timer->EndTimerParallel(0, omp_get_thread_num(), 6);   // MediaGauss
-        timer->InitTimerParallel(0, omp_get_thread_num(),
-                                 7);  // calculo do erro global
+        timer.EndTimerParallel(0, omp_get_thread_num(), 6);   // MediaGauss
+        timer.InitTimerParallel(0, omp_get_thread_num(),
+                                7);  // calculo do erro global
 #endif  // USE_MPI
 
         double power = 0.0;
@@ -941,11 +943,11 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
     }  // Parallel for
 
 #if USE_MPI
-    timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(),
-                            7);  // calculo do erro global
+    timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(),
+                           7);  // calculo do erro global
 #else
-    timer->EndTimerParallel(0, omp_get_thread_num(),
-                            7);          // calculo do erro global
+    timer.EndTimerParallel(0, omp_get_thread_num(),
+                           7);          // calculo do erro global
 #endif  // USE_MPI
   }
 
@@ -954,7 +956,7 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
   return Nj;
 }
 
-int GeneratorAdaptive::GeneratorOmp(Model& model, Timer* timer, int id_range,
+int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
                                     [[maybe_unused]] int size_rank,
                                     int size_thread)
 
@@ -996,7 +998,7 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer* timer, int id_range,
       this->id_managers_[id] = this->MakeIdManagerOmp(communicator_, id);
     }
 
-    timer->InitTimerParallel(0, id, 2);  // Malha inicial
+    timer.InitTimerParallel(0, id, 2);  // Malha inicial
 
     // 1. Gera a malha inicial
 #pragma omp for
@@ -1007,7 +1009,7 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer* timer, int id_range,
       malha->InsertSubMeshAdaptiveByPosition(sub, i);
     }
 
-    timer->EndTimerParallel(0, id, 2);  // Malha inicial
+    timer.EndTimerParallel(0, id, 2);  // Malha inicial
   }
 
   // 2. Insere a malha inicial no modelo ( que guarda todas as malhas geradas )
@@ -1075,7 +1077,7 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer* timer, int id_range,
     // 4.2. Adapta as curvas pela curvatura da curva / 4.3. Atualiza a
     // discretização das curvas
     map<PointAdaptive*, PointAdaptive*> mapaPontos;
-    timer->InitTimerParallel(0, 0, 3);  // adpt. das curvas
+    timer.InitTimerParallel(0, 0, 3);  // adpt. das curvas
 
     for (int i = 0; i < sizeCurvas; ++i) {
       novosPontos[i] = adapter_.AdaptCurveByCurve(geo->GetCurve(i), mapaPontos,
@@ -1087,14 +1089,14 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer* timer, int id_range,
       // ((CurvaParametrica*)geo->getCurva(i))->ordenaLista ( );
     }
 
-    timer->EndTimerParallel(0, 0, 3);  // adpt. das cruvas
+    timer.EndTimerParallel(0, 0, 3);  // adpt. das cruvas
 
 #pragma omp parallel num_threads(size_thread) shared(geo, sizePatch, malha)
     {
       Int id = communicator_->threadId();
       //((Performer::RangedIdManager *)this->idManagers[id])->setMin(1,0) ;
 
-      timer->InitTimerParallel(0, id, 4);  // adpt. do domínio
+      timer.InitTimerParallel(0, id, 4);  // adpt. do domínio
 
       // 4.3. Adapta as patches
 #pragma omp for
@@ -1106,7 +1108,7 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer* timer, int id_range,
         geo->GetPatch(i)->SetSubMesh(malha->GetSubMeshAdaptiveByPosition(i));
       }
 
-      timer->EndTimerParallel(0, id, 4);  // adpt. do domínio
+      timer.EndTimerParallel(0, id, 4);  // adpt. do domínio
     }
 
     //        // 4.5. Atualiza os patches
@@ -1139,16 +1141,16 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer* timer, int id_range,
 }
 
 void GeneratorAdaptive::AdaptDomainOmp(Geometry* geo, MeshAdaptive* malha,
-                                       Timer* timer, int sizeThread,
+                                       Timer& timer, int sizeThread,
                                        int sizePatch) {
 #pragma omp parallel num_threads(sizeThread) shared(geo, sizePatch, malha)
   {
     Int id = communicator_->threadId();
 
 #if USE_MPI
-    timer->InitTimerParallel(RANK_MPI, id, 4);  // Adaptação do domínio
+    timer.InitTimerParallel(RANK_MPI, id, 4);  // Adaptação do domínio
 #else
-    timer->InitTimerParallel(0, id, 4);  // Adaptação do domínio
+    timer.InitTimerParallel(0, id, 4);  // Adaptação do domínio
 #endif  // USE_MPI
 
     // 4.3. Adapta as patches
@@ -1161,9 +1163,9 @@ void GeneratorAdaptive::AdaptDomainOmp(Geometry* geo, MeshAdaptive* malha,
       geo->GetPatch(i)->SetSubMesh(malha->GetSubMeshAdaptiveByPosition(i));
     }
 #if USE_MPI
-    timer->EndTimerParallel(RANK_MPI, id, 4);  // Adaptação do domínio
+    timer.EndTimerParallel(RANK_MPI, id, 4);  // Adaptação do domínio
 #else
-    timer->EndTimerParallel(0, id, 4);   // Adaptação do domínio
+    timer.EndTimerParallel(0, id, 4);   // Adaptação do domínio
 #endif  // USE_MPI
   }
 }
@@ -1264,7 +1266,7 @@ SubMesh* GeneratorAdaptive::InitialMesh(PatchCoons* patch,
 // a lista de pontos da curva é preenchida durante a geração da malha inicial
 
 // calcula o erro global da malha
-double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
+double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer& timer,
                                       [[maybe_unused]] int rank,
                                       [[maybe_unused]] int sizeThread) {
   unsigned int Ns = 0;  // número de submalhas
@@ -1280,21 +1282,21 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
 #if USE_OPENMP
   // Seção de código para MPI + OpenMP
   // calculo do erro global
-  timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+  timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
 #else
   // Seção de código para MPI sem OpenMP
   // calculo do erro global
-  timer->InitTimerParallel(RANK_MPI, 0, 7);
+  timer.InitTimerParallel(RANK_MPI, 0, 7);
 #endif
 #else
 #if USE_OPENMP
   // Seção de código para OpenMP sem MPI
   // calculo do erro global
-  timer->InitTimerParallel(0, omp_get_thread_num(), 7);
+  timer.InitTimerParallel(0, omp_get_thread_num(), 7);
 #else
   // Seção de código sem MPI e sem OpenMP
   // calculo do erro global
-  timer->InitTimerParallel(0, 0, 7);
+  timer.InitTimerParallel(0, 0, 7);
 #endif
 #endif
 
@@ -1311,29 +1313,29 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
 #if USE_OPENMP
       // Seção de código para MPI + OpenMP
       // calculo do erro global
-      timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+      timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
       // MediaGauss
-      timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(), 6);
+      timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(), 6);
 #else
       // Seção de código para MPI sem OpenMP
       // calculo do erro global
-      timer->EndTimerParallel(RANK_MPI, 0, 7);
+      timer.EndTimerParallel(RANK_MPI, 0, 7);
       // MediaGauss
-      timer->InitTimerParallel(RANK_MPI, 0, 6);
+      timer.InitTimerParallel(RANK_MPI, 0, 6);
 #endif
 #else
 #if USE_OPENMP
       // Seção de código para OpenMP sem MPI
       // calculo do erro global
-      timer->EndTimerParallel(0, omp_get_thread_num(), 7);
+      timer.EndTimerParallel(0, omp_get_thread_num(), 7);
       // MediaGauss
-      timer->InitTimerParallel(0, omp_get_thread_num(), 6);
+      timer.InitTimerParallel(0, omp_get_thread_num(), 6);
 #else
       // Seção de código sem MPI e sem OpenMP
       // calculo do erro global
-      timer->EndTimerParallel(0, 0, 7);
+      timer.EndTimerParallel(0, 0, 7);
       // MediaGauss
-      timer->InitTimerParallel(0, 0, 6);
+      timer.InitTimerParallel(0, 0, 6);
 #endif
 #endif
 
@@ -1357,29 +1359,29 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
 #if USE_OPENMP
       // Seção de código para MPI + OpenMP
       // MediaGauss
-      timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(), 6);
+      timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(), 6);
       // calculo do erro global
-      timer->InitTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+      timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
 #else
       // Seção de código para MPI sem OpenMP
       // MediaGauss
-      timer->EndTimerParallel(RANK_MPI, 0, 6);
+      timer.EndTimerParallel(RANK_MPI, 0, 6);
       // calculo do erro global
-      timer->InitTimerParallel(RANK_MPI, 0, 7);
+      timer.InitTimerParallel(RANK_MPI, 0, 7);
 #endif
 #else
 #if USE_OPENMP
       // Seção de código para OpenMP sem MPI
       // MediaGauss
-      timer->EndTimerParallel(0, omp_get_thread_num(), 6);
+      timer.EndTimerParallel(0, omp_get_thread_num(), 6);
       // calculo do erro global
-      timer->InitTimerParallel(0, omp_get_thread_num(), 7);
+      timer.InitTimerParallel(0, omp_get_thread_num(), 7);
 #else
       // Seção de código sem MPI e sem OpenMP
       // calculo do erro global
-      timer->EndTimerParallel(0, 0, 7);
+      timer.EndTimerParallel(0, 0, 7);
       // MediaGauss
-      timer->InitTimerParallel(0, 0, 6);
+      timer.InitTimerParallel(0, 0, 6);
 #endif
 #endif
 
@@ -1400,7 +1402,7 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
     }
 
     if (Njs > 0.0 && curvPower > 0.0) {
-      Njs = (double)sqrt(Njs / curvPower) / Nv;
+      Njs = static_cast<double>(sqrt(Njs / curvPower) / Nv);
     }
 
     Nj += Njs;
@@ -1413,21 +1415,21 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer* timer,
 #if USE_OPENMP
   // Seção de código para MPI + OpenMP
   // calculo do erro global
-  timer->EndTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+  timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
 #else
   // Seção de código para MPI sem OpenMP
   // calculo do erro global
-  timer->EndTimerParallel(RANK_MPI, 0, 7);
+  timer.EndTimerParallel(RANK_MPI, 0, 7);
 #endif
 #else
 #if USE_OPENMP
   // Seção de código para OpenMP sem MPI
   // calculo do erro global
-  timer->EndTimerParallel(0, omp_get_thread_num(), 7);
+  timer.EndTimerParallel(0, omp_get_thread_num(), 7);
 #else
   // Seção de código sem MPI e sem OpenMP
   // calculo do erro global
-  timer->EndTimerParallel(0, 0, 7);
+  timer.EndTimerParallel(0, 0, 7);
 #endif
 #endif
 
@@ -2083,8 +2085,8 @@ void escreveElementos(int step_, SubMesh* sub, int i) {
        << " para o step_ " << step_ << endl;
 }
 
-void GeneratorAdaptive::GeneratorInitialMesh(Geometry* geometry,
-                                             MeshAdaptive* mesh, Timer* timer,
+void GeneratorAdaptive::GeneratorInitialMesh(Geometry& geometry,
+                                             MeshAdaptive* mesh, Timer& timer,
                                              int size_thread, int size_patch) {
 #if USE_OPENMP
 #pragma omp parallel num_threads(size_thread) shared(mesh, geometry, size_patch)
@@ -2095,9 +2097,9 @@ void GeneratorAdaptive::GeneratorInitialMesh(Geometry* geometry,
       this->id_managers_[id] = this->MakeIdManagerOmp(communicator_, id);
     }
 #if USE_MPI
-    timer->InitTimerParallel(RANK_MPI, id, 2);  // Malha inicial
+    timer.InitTimerParallel(RANK_MPI, id, 2);  // Malha inicial
 #else
-    timer->InitTimerParallel(0, id, 2);  // Malha inicial
+    timer.InitTimerParallel(0, id, 2);  // Malha inicial
 #endif  // USE_MPI
 
     // 1. Gera a mesh inicial
@@ -2110,14 +2112,14 @@ void GeneratorAdaptive::GeneratorInitialMesh(Geometry* geometry,
     }
 
 #if USE_MPI
-    timer->EndTimerParallel(RANK_MPI, id, 2);  // Malha inicial
+    timer.EndTimerParallel(RANK_MPI, id, 2);  // Malha inicial
 #else
-    timer->EndTimerParallel(0, id, 2);   // Malha inicial
+    timer.EndTimerParallel(0, id, 2);   // Malha inicial
 #endif  // USE_MPI
   }
 #else
   for (int i = 0; i < size_patch; ++i) {
-    PatchCoons* patch = static_cast<PatchCoons*>(geometry->GetPatch(i));
+    PatchCoons* patch = static_cast<PatchCoons*>(geometry.GetPatch(i));
     SubMesh* sub_mesh = this->InitialMesh(static_cast<PatchCoons*>(patch),
                                           this->id_managers_[0]);
     mesh->InsertSubMeshAdaptiveByPosition(sub_mesh, i);

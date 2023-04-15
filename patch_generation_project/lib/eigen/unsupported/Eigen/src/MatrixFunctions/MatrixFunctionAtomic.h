@@ -10,66 +10,63 @@
 #ifndef EIGEN_MATRIX_FUNCTION_ATOMIC
 #define EIGEN_MATRIX_FUNCTION_ATOMIC
 
-namespace Eigen { 
+namespace Eigen {
 
 /** \ingroup MatrixFunctions_Module
-  * \class MatrixFunctionAtomic
-  * \brief Helper class for computing matrix functions of atomic matrices.
-  *
-  * \internal
-  * Here, an atomic matrix is a triangular matrix whose diagonal
-  * entries are close to each other.
-  */
+ * \class MatrixFunctionAtomic
+ * \brief Helper class for computing matrix functions of atomic matrices.
+ *
+ * \internal
+ * Here, an atomic matrix is a triangular matrix whose diagonal
+ * entries are close to each other.
+ */
 template <typename MatrixType>
-class MatrixFunctionAtomic
-{
-  public:
+class MatrixFunctionAtomic {
+ public:
+  typedef typename MatrixType::Scalar Scalar;
+  typedef typename MatrixType::Index Index;
+  typedef typename NumTraits<Scalar>::Real RealScalar;
+  typedef typename internal::stem_function<Scalar>::type StemFunction;
+  typedef Matrix<Scalar, MatrixType::RowsAtCompileTime, 1> VectorType;
 
-    typedef typename MatrixType::Scalar Scalar;
-    typedef typename MatrixType::Index Index;
-    typedef typename NumTraits<Scalar>::Real RealScalar;
-    typedef typename internal::stem_function<Scalar>::type StemFunction;
-    typedef Matrix<Scalar, MatrixType::RowsAtCompileTime, 1> VectorType;
+  /** \brief Constructor
+   * \param[in]  f  matrix function to compute.
+   */
+  MatrixFunctionAtomic(StemFunction f) : m_f(f) {}
 
-    /** \brief Constructor
-      * \param[in]  f  matrix function to compute.
-      */
-    MatrixFunctionAtomic(StemFunction f) : m_f(f) { }
+  /** \brief Compute matrix function of atomic matrix
+   * \param[in]  A  argument of matrix function, should be upper triangular and
+   * atomic \returns  f(A), the matrix function evaluated at the given matrix
+   */
+  MatrixType compute(const MatrixType& A);
 
-    /** \brief Compute matrix function of atomic matrix
-      * \param[in]  A  argument of matrix function, should be upper triangular and atomic
-      * \returns  f(A), the matrix function evaluated at the given matrix
-      */
-    MatrixType compute(const MatrixType& A);
+ private:
+  // Prevent copying
+  MatrixFunctionAtomic(const MatrixFunctionAtomic&);
+  MatrixFunctionAtomic& operator=(const MatrixFunctionAtomic&);
 
-  private:
+  void computeMu();
+  bool taylorConverged(Index s, const MatrixType& F, const MatrixType& Fincr,
+                       const MatrixType& P);
 
-    // Prevent copying
-    MatrixFunctionAtomic(const MatrixFunctionAtomic&);
-    MatrixFunctionAtomic& operator=(const MatrixFunctionAtomic&);
+  /** \brief Pointer to scalar function */
+  StemFunction* m_f;
 
-    void computeMu();
-    bool taylorConverged(Index s, const MatrixType& F, const MatrixType& Fincr, const MatrixType& P);
+  /** \brief Size of matrix function */
+  Index m_Arows;
 
-    /** \brief Pointer to scalar function */
-    StemFunction* m_f;
+  /** \brief Mean of eigenvalues */
+  Scalar m_avgEival;
 
-    /** \brief Size of matrix function */
-    Index m_Arows;
+  /** \brief Argument shifted by mean of eigenvalues */
+  MatrixType m_Ashifted;
 
-    /** \brief Mean of eigenvalues */
-    Scalar m_avgEival;
-
-    /** \brief Argument shifted by mean of eigenvalues */
-    MatrixType m_Ashifted;
-
-    /** \brief Constant used to determine whether Taylor series has converged */
-    RealScalar m_mu;
+  /** \brief Constant used to determine whether Taylor series has converged */
+  RealScalar m_mu;
 };
 
 template <typename MatrixType>
-MatrixType MatrixFunctionAtomic<MatrixType>::compute(const MatrixType& A)
-{
+MatrixType MatrixFunctionAtomic<MatrixType>::compute(const MatrixType& A) {
   // TODO: Use that A is upper triangular
   m_Arows = A.rows();
   m_avgEival = A.trace() / Scalar(RealScalar(m_Arows));
@@ -78,10 +75,11 @@ MatrixType MatrixFunctionAtomic<MatrixType>::compute(const MatrixType& A)
   MatrixType F = m_f(m_avgEival, 0) * MatrixType::Identity(m_Arows, m_Arows);
   MatrixType P = m_Ashifted;
   MatrixType Fincr;
-  for (Index s = 1; s < 1.1 * m_Arows + 10; s++) { // upper limit is fairly arbitrary
+  for (Index s = 1; s < 1.1 * m_Arows + 10;
+       s++) {  // upper limit is fairly arbitrary
     Fincr = m_f(m_avgEival, static_cast<int>(s)) * P;
     F += Fincr;
-    P = Scalar(RealScalar(1.0/(s + 1))) * P * m_Ashifted;
+    P = Scalar(RealScalar(1.0 / (s + 1))) * P * m_Ashifted;
     if (taylorConverged(s, F, Fincr, P)) {
       return F;
     }
@@ -92,8 +90,7 @@ MatrixType MatrixFunctionAtomic<MatrixType>::compute(const MatrixType& A)
 
 /** \brief Compute \c m_mu. */
 template <typename MatrixType>
-void MatrixFunctionAtomic<MatrixType>::computeMu()
-{
+void MatrixFunctionAtomic<MatrixType>::computeMu() {
   const MatrixType N = MatrixType::Identity(m_Arows, m_Arows) - m_Ashifted;
   VectorType e = VectorType::Ones(m_Arows);
   N.template triangularView<Upper>().solveInPlace(e);
@@ -102,9 +99,10 @@ void MatrixFunctionAtomic<MatrixType>::computeMu()
 
 /** \brief Determine whether Taylor series has converged */
 template <typename MatrixType>
-bool MatrixFunctionAtomic<MatrixType>::taylorConverged(Index s, const MatrixType& F,
-						       const MatrixType& Fincr, const MatrixType& P)
-{
+bool MatrixFunctionAtomic<MatrixType>::taylorConverged(Index s,
+                                                       const MatrixType& F,
+                                                       const MatrixType& Fincr,
+                                                       const MatrixType& P) {
   const Index n = F.rows();
   const RealScalar F_norm = F.cwiseAbs().rowwise().sum().maxCoeff();
   const RealScalar Fincr_norm = Fincr.cwiseAbs().rowwise().sum().maxCoeff();
@@ -114,9 +112,9 @@ bool MatrixFunctionAtomic<MatrixType>::taylorConverged(Index s, const MatrixType
     for (Index r = 0; r < n; r++) {
       RealScalar mx = 0;
       for (Index i = 0; i < n; i++)
-        mx = (std::max)(mx, std::abs(m_f(m_Ashifted(i, i) + m_avgEival, static_cast<int>(s+r))));
-      if (r != 0)
-        rfactorial *= RealScalar(r);
+        mx = (std::max)(mx, std::abs(m_f(m_Ashifted(i, i) + m_avgEival,
+                                         static_cast<int>(s + r))));
+      if (r != 0) rfactorial *= RealScalar(r);
       delta = (std::max)(delta, mx / rfactorial);
     }
     const RealScalar P_norm = P.cwiseAbs().rowwise().sum().maxCoeff();
@@ -126,6 +124,6 @@ bool MatrixFunctionAtomic<MatrixType>::taylorConverged(Index s, const MatrixType
   return false;
 }
 
-} // end namespace Eigen
+}  // end namespace Eigen
 
-#endif // EIGEN_MATRIX_FUNCTION_ATOMIC
+#endif  // EIGEN_MATRIX_FUNCTION_ATOMIC

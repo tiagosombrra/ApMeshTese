@@ -24,38 +24,35 @@
 //            resize() method
 //            [] operator for setting element
 //            value_type defined
-template<double init_function(int,int), class Vector>
-BTL_DONT_INLINE void init_row(Vector & X, int size, int row){
-
+template <double init_function(int, int), class Vector>
+BTL_DONT_INLINE void init_row(Vector& X, int size, int row) {
   X.resize(size);
 
-  for (int j=0;j<X.size();j++){
-    X[j]=typename Vector::value_type(init_function(row,j));
+  for (int j = 0; j < X.size(); j++) {
+    X[j] = typename Vector::value_type(init_function(row, j));
   }
 }
-
 
 // Matrix is a Vector of Vector
 // The Matrix class must satisfy the following part of STL vector concept :
 //            resize() method
 //            [] operator for setting rows
-template<double init_function(int,int),class Vector>
-BTL_DONT_INLINE void init_matrix(Vector &  A, int size){
+template <double init_function(int, int), class Vector>
+BTL_DONT_INLINE void init_matrix(Vector& A, int size) {
   A.resize(size);
-  for (int row=0; row<A.size() ; row++){
-    init_row<init_function>(A[row],size,row);
+  for (int row = 0; row < A.size(); row++) {
+    init_row<init_function>(A[row], size, row);
   }
 }
 
-template<double init_function(int,int),class Matrix>
-BTL_DONT_INLINE void init_matrix_symm(Matrix&  A, int size){
+template <double init_function(int, int), class Matrix>
+BTL_DONT_INLINE void init_matrix_symm(Matrix& A, int size) {
   A.resize(size);
-  for (int row=0; row<A.size() ; row++)
-    A[row].resize(size);
-  for (int row=0; row<A.size() ; row++){
-    A[row][row] = init_function(row,row);
-    for (int col=0; col<row ; col++){
-      double x = init_function(row,col);
+  for (int row = 0; row < A.size(); row++) A[row].resize(size);
+  for (int row = 0; row < A.size(); row++) {
+    A[row][row] = init_function(row, row);
+    for (int col = 0; col < row; col++) {
+      double x = init_function(row, col);
       A[row][col] = A[col][row] = x;
     }
   }

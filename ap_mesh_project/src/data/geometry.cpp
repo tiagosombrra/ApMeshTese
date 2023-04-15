@@ -3,19 +3,19 @@
 Geometry::Geometry() {}
 
 Geometry::~Geometry() {
-  // 1. apaga a lista de curvas
-  while (!this->curves_.empty()) {
-    CurveAdaptive *curve = this->curves_.back();
-    this->curves_.pop_back();
-    delete curve;
-  }
+  // // 1. apaga a lista de curvas
+  // while (!this->curves_.empty()) {
+  //   CurveAdaptive *curve = this->curves_.back();
+  //   this->curves_.pop_back();
+  //   delete curve;
+  // }
 
-  // 3. apaga a lista de patches
-  while (!this->patches_.empty()) {
-    Patch *patch = this->patches_.back();
-    this->patches_.pop_back();
-    delete patch;
-  }
+  // // 3. apaga a lista de patches
+  // while (!this->patches_.empty()) {
+  //   Patch *patch = this->patches_.back();
+  //   this->patches_.pop_back();
+  //   delete patch;
+  // }
 }
 
 void Geometry::InsertCurve(CurveAdaptive *curve) {

@@ -9,24 +9,24 @@
 #ifndef Definitions_h
 #define Definitions_h
 
-//Verificação de sistema operacional
+// Verificação de sistema operacional
 #ifdef __APPLE__
 #include <Eigen/Eigen>
 #elif __linux__
 #include "../../lib/eigen/Eigen/Eigen"
 #else
-#   error "Unknown compiler"
+#error "Unknown compiler"
 #endif
 
 #include <iostream>
-#include <vector>
 #include <map>
+#include <vector>
 
 using namespace std;
 using namespace Eigen;
 
-//tuple<id_patch, id_point, vector(x,y,z)>
-typedef tuple< int, int, Vector3d> TuplePoint;
+// tuple<id_patch, id_point, vector(x,y,z)>
+typedef tuple<int, int, Vector3d> TuplePoint;
 typedef vector<TuplePoint> VectorTuplePoints;
 
 typedef pair<int, int> IdPatchPoint;

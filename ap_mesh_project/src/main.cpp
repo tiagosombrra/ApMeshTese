@@ -1,3 +1,4 @@
+#include <memory>
 #include <string>
 
 #include "../include/data/curve/curve_adaptive_parametric_bezier.h"
@@ -76,7 +77,8 @@ int main(int argc, char **argv) {
 
   // contador do tempo para carregar a malha na memória
   // (sizeRank, sizeThread, sizeType)
-  Timer *timer = new Timer(atoi(argv[1]), atoi(argv[2]), 11);
+  std::unique_ptr<Timer> timer =
+      std::make_unique<Timer>(atoi(argv[1]), atoi(argv[2]), 11);
 
   // cout<<atoi(argv[1])<<atoi(argv[2])<<endl;
   // cout<<RANK_MPI<<THREAD_ROOT<<endl;
@@ -107,7 +109,7 @@ int main(int argc, char **argv) {
   GeneratorAdaptive generator;
 
 #if USE_MPI
-  if (generator.Execute(argv, timer, status) == 0) {
+  if (generator.Execute(argv, *timer, status) == 0) {
     cout << "Método do processo " << RANK_MPI << " com " << argv[2]
          << " thread(s) finalizado com Sucesso!" << endl;
 
@@ -116,7 +118,7 @@ int main(int argc, char **argv) {
     cout << endl << "Erro na execução generator.Execute()." << RANK_MPI << endl;
   }
 #else
-  if (generator.Execute(argv, timer) == 0) {
+  if (generator.Execute(argv, *timer.get()) == 0) {
     cout << "Método com " << argv[1] << " processo(s) e " << MAX_THREADS
          << " thread(s) finalizado com Sucesso!" << endl;
 

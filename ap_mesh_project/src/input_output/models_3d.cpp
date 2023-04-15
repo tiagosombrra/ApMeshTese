@@ -2,7 +2,7 @@
 
 Models3d::Models3d() {}
 
-Geometry* Models3d::ModelPlanBook(Geometry* geometry) {
+void Models3d::ModelPlanBook(std::unique_ptr<Geometry>& geometry) {
   //=============================== PATCH 1 ==================================
   PointAdaptive* p100 = new VertexAdaptive(0.00000, 1.00000, 0.00000);
   PointAdaptive* p110 = new VertexAdaptive(0.00000, 0.50000, 0.00000);
@@ -199,11 +199,9 @@ Geometry* Models3d::ModelPlanBook(Geometry* geometry) {
   geometry->InsertCurve(patch5_c3);
   geometry->InsertCurve(patch5_c4);
   //======================== FIM DO PATCH 5 ==================================
-
-  return geometry;
 }
 
-Geometry* Models3d::ModelTresPatches(Geometry* geometry) {
+void Models3d::ModelTresPatches(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do three_patches_curve
   //==============================================================================
@@ -327,10 +325,10 @@ Geometry* Models3d::ModelTresPatches(Geometry* geometry) {
   //==============================================================================
   // FIM do Exemplo three_patches_curve
   //==============================================================================
-  return geometry;
 }
 
-Geometry* Models3d::ModelDoisPatchesPlanosCurva1(Geometry* geometry) {
+void Models3d::ModelDoisPatchesPlanosCurva1(
+    std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do two_patches_curve
   //==============================================================================
@@ -415,10 +413,10 @@ Geometry* Models3d::ModelDoisPatchesPlanosCurva1(Geometry* geometry) {
   //==============================================================================
   // FIM do Exemplo two_patches
   //==============================================================================
-  return geometry;
 }
 
-Geometry* Models3d::ModelDoisPatchesPlanosCurva(Geometry* geometry) {
+void Models3d::ModelDoisPatchesPlanosCurva(
+    std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do Utahteapot
   //==============================================================================
@@ -502,10 +500,9 @@ Geometry* Models3d::ModelDoisPatchesPlanosCurva(Geometry* geometry) {
   // geo->InsertCurve ( patch2_c3 );
   geometry->InsertCurve(patch2_c4);
   //======================== FIM DO PATCH 2 ==================================
-  return geometry;
 }
 
-Geometry* Models3d::ModelCurvaBezier(Geometry* geometry) {
+void Models3d::ModelCurvaBezier(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo usando curva de Bezier
   //==============================================================================
@@ -551,10 +548,9 @@ Geometry* Models3d::ModelCurvaBezier(Geometry* geometry) {
   //==============================================================================
   // Fim do exemplo usando curva de Bezier
   //==============================================================================
-  return geometry;
 }
 
-Geometry* Models3d::ModelParaboloide(Geometry* geometry) {
+void Models3d::ModelParaboloide(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do PARABOLÓIDE HIPERBÓLICO
   //==============================================================================
@@ -607,10 +603,9 @@ Geometry* Models3d::ModelParaboloide(Geometry* geometry) {
   //==============================================================================
   // FIM do Exemplo do PARABOLÓIDE HIPERBÓLICO
   //==============================================================================
-  return geometry;
 }
 
-Geometry* Models3d::ModelPneu(Geometry* geometry) {
+void Models3d::ModelPneu(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do pneu
   //==============================================================================
@@ -664,13 +659,13 @@ Geometry* Models3d::ModelPneu(Geometry* geometry) {
   geometry->InsertCurve(c4);
   geometry->InsertCurve(c5);
   geometry->InsertCurve(c6);
-  return geometry;
+
   //==============================================================================
   // Fim do Exemplo do pneu
-  //==============================================================================
+  //=======================================================================
 }
 
-Geometry* Models3d::ModelLadoDescendente(Geometry* geometry) {
+void Models3d::ModelLadoDescendente(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo de uma superfície com um dos lados descendentes
   //==============================================================================
@@ -710,14 +705,12 @@ Geometry* Models3d::ModelLadoDescendente(Geometry* geometry) {
   geometry->InsertCurve(c3);
   geometry->InsertCurve(c4);
 
-  return geometry;
-
   //==============================================================================
   // FIM do Exemplo de uma superfície com um dos lados descendentes
-  //==============================================================================
+  //=======================================================================
 }
 
-Geometry* Models3d::ModelBaseCircular(Geometry* geometry) {
+void Models3d::ModelBaseCircular(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo da base circular
   //==============================================================================
@@ -756,13 +749,12 @@ Geometry* Models3d::ModelBaseCircular(Geometry* geometry) {
   geometry->InsertCurve(c2);
   geometry->InsertCurve(c3);
   geometry->InsertCurve(c4);
-  return geometry;
   //==============================================================================
   // FIM do Exemplo da base circular
-  //==============================================================================
+  //=======================================================================
 }
 
-Geometry* Models3d::ModelBaseQuadrada(Geometry* geometry) {
+void Models3d::ModelBaseQuadrada(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do patch com base quadrada
   //==============================================================================
@@ -802,13 +794,12 @@ Geometry* Models3d::ModelBaseQuadrada(Geometry* geometry) {
   geometry->InsertCurve(c2);
   geometry->InsertCurve(c3);
   geometry->InsertCurve(c4);
-  return geometry;
   //==============================================================================
   // FIM do exemplo do patch com base quadrada
-  //==============================================================================
+  //=======================================================================
 }
 
-Geometry* Models3d::ModelBordaCurva(Geometry* geometry) {
+void Models3d::ModelBordaCurva(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do patch com borda curva
   //==============================================================================
@@ -848,13 +839,12 @@ Geometry* Models3d::ModelBordaCurva(Geometry* geometry) {
   geometry->InsertCurve(c2);
   geometry->InsertCurve(c3);
   geometry->InsertCurve(c4);
-  return geometry;
   //==============================================================================
   // FIM do exemplo do patch com borda curva
-  //==============================================================================
+  //=======================================================================
 }
 
-Geometry* Models3d::ModelDoisPatches(Geometry* geometry) {
+void Models3d::ModelDoisPatches(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo de dois patches vizinhos
   //==============================================================================
@@ -919,13 +909,12 @@ Geometry* Models3d::ModelDoisPatches(Geometry* geometry) {
   geometry->InsertCurve(c5);
   geometry->InsertCurve(c6);
   geometry->InsertCurve(c7);
-  return geometry;
   //==============================================================================
   // Fim do Exemplo de dois patches vizinhos
-  //==============================================================================
+  //=======================================================================
 }
 
-Geometry* Models3d::ModelNariz(Geometry* geometry) {
+void Models3d::ModelNariz(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do nariz
   //==============================================================================
@@ -1550,14 +1539,13 @@ Geometry* Models3d::ModelNariz(Geometry* geometry) {
   geometry->InsertCurve(patch14_c2);
   // geo->InsertCurve ( patch14_c3 );
   // geo->InsertCurve ( patch14_c4 );
-  return geometry;
   //=========================== FIM DO PATCH 14
   //==================================
   // Fim do Exemplo do Nariz
-  //==============================================================================
+  //=======================================================================
 }
 
-Geometry* Models3d::ModelUtahteapot(Geometry* geometry) {
+void Models3d::ModelUtahteapot(std::unique_ptr<Geometry>& geometry) {
   //==============================================================================
   // Exemplo do Utahteapot
   //==============================================================================
@@ -2938,5 +2926,4 @@ Geometry* Models3d::ModelUtahteapot(Geometry* geometry) {
   //==============================================================================
   // Fim do exemplo do Utahteapot
   //==============================================================================
-  return geometry;
 }

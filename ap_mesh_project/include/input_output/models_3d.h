@@ -1,5 +1,8 @@
-#ifndef INPUT_OUTPUT_MODELS_3D_H
-#define INPUT_OUTPUT_MODELS_3D_H
+// Copyright (c) 2023 Tiago Sombra
+#ifndef AP_MESH_PROJECT_INCLUDE_INPUT_OUTPUT_MODELS_3D_H_
+#define AP_MESH_PROJECT_INCLUDE_INPUT_OUTPUT_MODELS_3D_H_
+
+#include <memory>
 
 #include "../data/curve/curve_adaptive_parametric_bezier.h"
 #include "../data/curve/curve_adaptive_parametric_hermite.h"
@@ -10,21 +13,21 @@
 class Models3d {
  public:
   Models3d();
-  Geometry *ModelBook(Geometry *geometry);
-  Geometry *ModelPlanBook(Geometry *geometry);
-  Geometry *ModelTresPatches(Geometry *geometry);
-  Geometry *ModelDoisPatchesPlanosCurva1(Geometry *geometry);
-  Geometry *ModelDoisPatchesPlanosCurva(Geometry *geometry);
-  Geometry *ModelCurvaBezier(Geometry *geometry);
-  Geometry *ModelParaboloide(Geometry *geometry);
-  Geometry *ModelPneu(Geometry *geometry);
-  Geometry *ModelLadoDescendente(Geometry *geometry);
-  Geometry *ModelBaseCircular(Geometry *geometry);
-  Geometry *ModelBaseQuadrada(Geometry *geometry);
-  Geometry *ModelBordaCurva(Geometry *geometry);
-  Geometry *ModelDoisPatches(Geometry *geometry);
-  Geometry *ModelNariz(Geometry *geometry);
-  Geometry *ModelUtahteapot(Geometry *geometry);
+  void ModelBook(std::unique_ptr<Geometry> &geometry);
+  void ModelPlanBook(std::unique_ptr<Geometry> &geometry);
+  void ModelTresPatches(std::unique_ptr<Geometry> &geometry);
+  void ModelDoisPatchesPlanosCurva1(std::unique_ptr<Geometry> &geometry);
+  void ModelDoisPatchesPlanosCurva(std::unique_ptr<Geometry> &geometry);
+  void ModelCurvaBezier(std::unique_ptr<Geometry> &geometry);
+  void ModelParaboloide(std::unique_ptr<Geometry> &geometry);
+  void ModelPneu(std::unique_ptr<Geometry> &geometry);
+  void ModelLadoDescendente(std::unique_ptr<Geometry> &geometry);
+  void ModelBaseCircular(std::unique_ptr<Geometry> &geometry);
+  void ModelBaseQuadrada(std::unique_ptr<Geometry> &geometry);
+  void ModelBordaCurva(std::unique_ptr<Geometry> &geometry);
+  void ModelDoisPatches(std::unique_ptr<Geometry> &geometry);
+  void ModelNariz(std::unique_ptr<Geometry> &geometry);
+  void ModelUtahteapot(std::unique_ptr<Geometry> &geometry);
 };
 
-#endif  // INPUT_OUTPUT_MODELS_3D_H
+#endif  // AP_MESH_PROJECT_INCLUDE_INPUT_OUTPUT_MODELS_3D_H_

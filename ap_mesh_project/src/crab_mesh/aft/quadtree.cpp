@@ -1,6 +1,6 @@
 #include "../../../include/crab_mesh/aft/quadtree.h"
 
-void escreve(Quadtree *q, int i) {
+void escreve(std::shared_ptr<Quadtree> q, int i) {
   static int passo = 0;
 
   string s;
@@ -42,8 +42,8 @@ void escreve(Quadtree *q, int i) {
 
   for (QuadtreeCellList::iterator iter = folhas.begin(); iter != folhas.end();
        iter++) {
-    Vertex *min = (*iter)->getMin();
-    Vertex *max = (*iter)->getMax();
+    auto min = (*iter)->getMin();
+    auto max = (*iter)->getMax();
 
     Vertex v1(min->getX(), min->getY(), ++id);
     Vertex v2(max->getX(), min->getY(), ++id);
@@ -126,50 +126,24 @@ void escreve(Quadtree *q, int i) {
        << passo << endl;
 }
 
-Quadtree::Quadtree(Boundary *boundary, double factor) : Shape() {
+Quadtree::Quadtree(std::shared_ptr<Boundary> boundary, double factor)
+    : Shape(), lastVertexId(0), lastEdgeId(0), lastFaceId(0) {
   setBoundary(boundary);
   setFactor(factor);
   setRoot(NULL);
-
-  // #if USE_OPENGL
-  //     setColor(0.0, 1.0, 0.0);
-  //     ////figura
-  //     //setColor(0.0, 0.0, 0.0);
-  //     ////endfigura
-  // #endif //#if USE_OPENGL
-
-  lastVertexId = lastEdgeId = lastFaceId = 0;
 }
 
-Quadtree::~Quadtree() {
-  // quando boundary == NULL, entao a quadtree mate estah envolvida.
-  // nesse caso, os root->min e root->max sao os mesmos para as
-  // duas quadtrees, assim como a boundary. logo, root->min, root->max e
-  // boundary sao apagadas somente por uma das quadtrees
-
-  if (root) {
-    if (boundary) {
-      delete root->getMin();
-      delete root->getMax();
-    }
-
-    delete root;
-  }
-
-  if (boundary) {
-    delete boundary;
-  }
-
-  leaves.clear();
-}
+Quadtree::~Quadtree() { leaves.clear(); }
 
 void Quadtree::setFactor(double factor) { this->factor = factor; }
 
 double Quadtree::getFactor() { return factor; }
 
-void Quadtree::setBoundary(Boundary *boundary) { this->boundary = boundary; }
+void Quadtree::setBoundary(std::shared_ptr<Boundary> boundary) {
+  this->boundary = boundary;
+}
 
-Boundary *Quadtree::getBoundary() { return boundary; }
+std::shared_ptr<Boundary> Quadtree::getBoundary() { return boundary; }
 
 void Quadtree::setRoot(QuadtreeCell *root) {
   this->root = root;
@@ -182,7 +156,7 @@ void Quadtree::setRoot(QuadtreeCell *root) {
     breadthSearch.push_back(root);
 
     while (!breadthSearch.empty()) {
-      QuadtreeCell *cell = breadthSearch.front();
+      auto cell = breadthSearch.front();
       breadthSearch.pop_front();
 
       if (cell->subdivided()) {
@@ -212,14 +186,18 @@ QuadtreeCellList Quadtree::getLeaves() { return leaves; }
 
 int Quadtree::getNumCells() { return root ? root->getNumCells() : 0; }
 
-Vertex *Quadtree::getMin() { return root ? root->getMin() : NULL; }
+std::shared_ptr<Vertex> Quadtree::getMin() {
+  return root ? root->getMin() : NULL;
+}
 
-Vertex *Quadtree::getMax() { return root ? root->getMax() : NULL; }
+std::shared_ptr<Vertex> Quadtree::getMax() {
+  return root ? root->getMax() : NULL;
+}
 
 long int Quadtree::getCellId() { return ++id; }
 
-void Quadtree::findCell(Edge *e) {
-  QuadtreeCell *q = root->findCell(e);
+void Quadtree::findCell(std::shared_ptr<Edge> e) {
+  auto q = root->findCell(e);
 
   if (!q) {
     return;
@@ -234,24 +212,24 @@ void Quadtree::findCell(Edge *e) {
   }
 }
 
-bool Quadtree::in(Vertex *v) { return root->in(v); }
+bool Quadtree::in(std::shared_ptr<Vertex> v) { return root->in(v); }
 
-bool Quadtree::on(Vertex *v) { return root->on(v); }
+bool Quadtree::on(std::shared_ptr<Vertex> v) { return root->on(v); }
 
-bool Quadtree::out(Vertex *v) { return root->out(v); }
+bool Quadtree::out(std::shared_ptr<Vertex> v) { return root->out(v); }
 
-enum MethodStatus Quadtree::generate(const FaceList &oldmesh) {
+enum MethodStatus Quadtree::generate(FaceList &oldmesh) {
   // 1o Passo
   if (!root) {
     double minX, minY, maxX, maxY;
 
-    boundary->getBox(&minX, &minY, &maxX, &maxY);
+    boundary->getBox(minX, minY, maxX, maxY);
 
-    double spanX = maxX - minX;
-    double spanY = maxY - minY;
+    auto spanX = maxX - minX;
+    auto spanY = maxY - minY;
 
-    double midX = (minX + maxX) / 2.0;
-    double midY = (minY + maxY) / 2.0;
+    auto midX = (minX + maxX) / 2.0;
+    auto midY = (minY + maxY) / 2.0;
 
     if (spanX > spanY) {
       minY = midY - spanX / 2.0;
@@ -261,10 +239,10 @@ enum MethodStatus Quadtree::generate(const FaceList &oldmesh) {
       maxX = midX + spanY / 2.0;
     }
 
-    Vertex *min = new Vertex(minX, minY);
-    Vertex *max = new Vertex(maxX, maxY);
+    auto min = std::make_shared<Vertex>(minX, minY);
+    auto max = std::make_shared<Vertex>(maxX, maxY);
 
-    root = new QuadtreeCell(getCellId(), /*mainDrive, */ this, min, max);
+    root = std::make_shared<QuadtreeCell>(getCellId(), this, min, max).get();
   }
 
   leaves.push_back(root);
@@ -275,14 +253,10 @@ enum MethodStatus Quadtree::generate(const FaceList &oldmesh) {
     root->subdivide((*iter));
   }
 
-  //    escreve(this, 1);
-
   for (FaceList::const_iterator iter = oldmesh.begin(); iter != oldmesh.end();
        iter++) {
     root->subdivide((*iter));
   }
-
-  //	escreve(this, 2);
 
   for (EdgeList::iterator iter = edges.begin(); iter != edges.end(); iter++) {
     findCell((*iter));
@@ -318,7 +292,7 @@ enum MethodStatus Quadtree::refineAccordingToNeighbors() {
   QuadtreeCellList oldLeaves = leaves;
 
   while (!oldLeaves.empty()) {
-    QuadtreeCell *cell = oldLeaves.front();
+    auto cell = oldLeaves.front();
     oldLeaves.pop_front();
 
     if (cell->subdivideAccordingToNeighbors()) {
@@ -326,12 +300,10 @@ enum MethodStatus Quadtree::refineAccordingToNeighbors() {
     }
   }
 
-  //	escreve(this, 3);
-
   return QUAD_REFINE_ACCORDING_TO_NEIGHBORS_DONE;
 }
 
-bool Quadtree::execute(const FaceList &oldmesh) {
+bool Quadtree::execute(FaceList &oldmesh) {
   if (generate(oldmesh) != QUAD_INITIAL_TREE_DONE) {
     return false;
   }
@@ -361,13 +333,13 @@ VertexList Quadtree::getVertices() { return vertices; }
 
 FaceList Quadtree::getMesh() { return mesh; }
 
-void Quadtree::add(Vertex *v) { vertices.push_back(v); }
+void Quadtree::add(std::shared_ptr<Vertex> v) { vertices.push_back(v); }
 
-void Quadtree::add(Edge *e) { edges.push_back(e); }
+void Quadtree::add(std::shared_ptr<Edge> e) { edges.push_back(e); }
 
-void Quadtree::add(Face *f) { mesh.push_back(f); }
+void Quadtree::add(std::shared_ptr<Face> f) { mesh.push_back(f); }
 
-void Quadtree::addFront(Edge *e) {
+void Quadtree::addFront(std::shared_ptr<Edge> e) {
   front.push_back(e);
 
   e->setFree(true);
@@ -379,22 +351,14 @@ void Quadtree::addFront(Edge *e) {
 enum MethodStatus Quadtree::makeTemplateBasedMesh() {
   root->sortNeighbors();
 
-  // cout << "ordenou vizinhos" << endl;
-
   lastVertexId = boundary->getLastVertexId();
   lastEdgeId = boundary->getLastEdgeId();
 
   root->makeOuterVertices();
 
-  // cout << "criou vertices" << endl;
-
   root->makeOuterEdges();
 
-  // cout << "criou arestas" << endl;
-
   root->makeTemplateBasedMesh();
-
-  // cout << "fez a malha" << endl;
 
   return QUAD_MAKE_TEMPLATE_BASED_MESH_DONE;
 }
@@ -404,62 +368,3 @@ string Quadtree::getText() {
 
   return s;
 }
-
-// #if USE_OPENGL
-//  void Quadtree::highlight()
-//{
-//     setColor(0.0, 0.0, 1.0);
-// }
-
-// void Quadtree::unhighlight()
-//{
-//    setColor(1.0, 0.0, 0.0);
-//}
-
-// void Quadtree::draw()
-//{
-//    if (root)
-//    {
-//        /*Vertex *v[4] = {
-//            new Vertex(root->getMin()->getX(), root->getMin()->getY()),
-//            new Vertex(root->getMax()->getX(), root->getMin()->getY()),
-//            new Vertex(root->getMax()->getX(), root->getMax()->getY()),
-//            new Vertex(root->getMin()->getX(), root->getMax()->getY())
-//        };
-
-//        Edge *e[4] = {
-//            new Edge(v[0], v[1]),
-//            new Edge(v[1], v[2]),
-//            new Edge(v[2], v[3]),
-//            new Edge(v[3], v[0])
-//        };
-
-//        e[0]->setColor(r, g, b);
-//        e[1]->setColor(r, g, b);
-//        e[2]->setColor(r, g, b);
-//        e[3]->setColor(r, g, b);
-
-//        e[0]->draw();
-//        e[1]->draw();
-//        e[2]->draw();
-//        e[3]->draw();
-
-//        e[0]->setVertices(NULL, NULL);
-//        e[1]->setVertices(NULL, NULL);
-//        e[2]->setVertices(NULL, NULL);
-//        e[3]->setVertices(NULL, NULL);
-
-//        delete e[0];
-//        delete e[1];
-//        delete e[2];
-//        delete e[3];
-
-//        delete v[0];
-//        delete v[1];
-//        delete v[2];
-//        delete v[3];*/
-
-//        root->draw();
-//    }
-//}
-// #endif //#if USE_OPENGL

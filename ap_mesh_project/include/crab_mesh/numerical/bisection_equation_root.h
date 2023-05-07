@@ -1,7 +1,9 @@
 #ifndef _DATA_NUMERICAL_BISECTION_EQUATION_ROOT_H_
 #define _DATA_NUMERICAL_BISECTION_EQUATION_ROOT_H_
 
-#include "../../data/definitions.h"
+#include <memory>
+
+#include "../../definitions.h"
 #include "equation_root.h"
 
 namespace Data {
@@ -12,59 +14,57 @@ class BisectionEquationRoot : public Data::Numerical::EquationRoot {
   /// testStepSize = true
   ///  if both testFunction and testStepSize are false, then they are converted
   ///  to true
-  virtual double execute(EquationRootFunction *function, int maxSteps,
-                         double tolerance, bool testFunction, bool testStepSize,
+  virtual double execute(std::shared_ptr<EquationRootFunction> function,
+                         int maxSteps, double tolerance, bool testFunction,
+                         bool testStepSize, bool &ok);
+  virtual double execute(std::shared_ptr<EquationRootFunction> function,
+                         int maxSteps, double tolerance, bool &ok);
+  virtual double execute(std::shared_ptr<EquationRootFunction> function,
                          bool &ok);
-  virtual double execute(EquationRootFunction *function, int maxSteps,
-                         double tolerance, bool &ok);
-  virtual double execute(EquationRootFunction *function, bool &ok);
-  virtual double execute(EquationRootFunction *function);
+  virtual double execute(std::shared_ptr<EquationRootFunction> function);
 };
 
 class ClosestBisectionEquationRoot
     : public Data::Numerical::BisectionEquationRoot {
  public:
   using Data::Numerical::BisectionEquationRoot::execute;
-  virtual double execute(EquationRootFunction *function, int maxSteps,
-                         double tolerance, bool testFunction, bool testStepSize,
-                         bool &ok);
+  virtual double execute(std::shared_ptr<EquationRootFunction> function,
+                         int maxSteps, double tolerance, bool testFunction,
+                         bool testStepSize, bool &ok);
 
  protected:
-  virtual double recursiveExecute(EquationRootFunction *function, double min,
-                                  double max, double fmin, double fmax,
-                                  int maxSteps, double tolerance,
-                                  bool testFunction, bool testStepSize,
-                                  bool &ok, double &fval);
+  virtual double recursiveExecute(
+      std::shared_ptr<EquationRootFunction> function, double min, double max,
+      double fmin, double fmax, int maxSteps, double tolerance,
+      bool testFunction, bool testStepSize, bool &ok, double &fval);
 };
 
 class MaxBisectionEquationRoot : public Data::Numerical::BisectionEquationRoot {
  public:
   using Data::Numerical::BisectionEquationRoot::execute;
-  virtual double execute(EquationRootFunction *function, int maxSteps,
-                         double tolerance, bool testFunction, bool testStepSize,
-                         bool &ok);
+  virtual double execute(std::shared_ptr<EquationRootFunction> function,
+                         int maxSteps, double tolerance, bool testFunction,
+                         bool testStepSize, bool &ok);
 
  protected:
-  virtual double recursiveExecute(EquationRootFunction *function, double min,
-                                  double max, double fmin, double fmax,
-                                  int maxSteps, double tolerance,
-                                  bool testFunction, bool testStepSize,
-                                  bool &ok, double &fval);
+  virtual double recursiveExecute(
+      std::shared_ptr<EquationRootFunction> function, double min, double max,
+      double fmin, double fmax, int maxSteps, double tolerance,
+      bool testFunction, bool testStepSize, bool &ok, double &fval);
 };
 
 class MinBisectionEquationRoot : public Data::Numerical::BisectionEquationRoot {
  public:
   using Data::Numerical::BisectionEquationRoot::execute;
-  virtual double execute(EquationRootFunction *function, int maxSteps,
-                         double tolerance, bool testFunction, bool testStepSize,
-                         bool &ok);
+  virtual double execute(std::shared_ptr<EquationRootFunction> function,
+                         int maxSteps, double tolerance, bool testFunction,
+                         bool testStepSize, bool &ok);
 
  protected:
-  virtual double recursiveExecute(EquationRootFunction *function, double min,
-                                  double max, double fmin, double fmax,
-                                  int maxSteps, double tolerance,
-                                  bool testFunction, bool testStepSize,
-                                  bool &ok, double &fval);
+  virtual double recursiveExecute(
+      std::shared_ptr<EquationRootFunction> function, double min, double max,
+      double fmin, double fmax, int maxSteps, double tolerance,
+      bool testFunction, bool testStepSize, bool &ok, double &fval);
 };
 }  // namespace Numerical
 }  // namespace Data

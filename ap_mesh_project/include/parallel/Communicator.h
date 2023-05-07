@@ -65,9 +65,7 @@ class Communicator {
 
   virtual Int rank() const = 0;
 
-  // virtual Int *ranks(UInt &size, Int process = -1) const = 0;
   virtual Data::IntVector ranks(Int process = -1) const = 0;
-  // virtual Int numThreads(Int process = -1) const = 0;
 
   virtual Int numProcesses() const = 0;
 

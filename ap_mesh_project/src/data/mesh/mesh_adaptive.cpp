@@ -2,21 +2,15 @@
 
 MeshAdaptive::MeshAdaptive() : sub_meshes_({}) {}
 
-MeshAdaptive::~MeshAdaptive() {
-  // 1. apaga a lista de SubMalhas
-  while (!this->sub_meshes_.empty()) {
-    // SubMalha* SM = this->subMalhas.back ( );
-    this->sub_meshes_.pop_back();
-    // delete SM;
-  }
-}
+MeshAdaptive::~MeshAdaptive() {}
 
-void MeshAdaptive::InsertSubMeshAdaptiveByPosition(SubMesh* sub_mesh_adaptive,
-                                                   const signed int position) {
+void MeshAdaptive::InsertSubMeshAdaptiveByPosition(
+    std::shared_ptr<SubMesh> &sub_mesh_adaptive, const signed int position) {
   this->sub_meshes_[position] = sub_mesh_adaptive;
 }
 
-void MeshAdaptive::InsertSubMeshAdaptive(SubMesh* sub_mesh_adaptive) {
+void MeshAdaptive::InsertSubMeshAdaptive(
+    std::shared_ptr<SubMesh> &sub_mesh_adaptive) {
   this->sub_meshes_.push_back(sub_mesh_adaptive);
 }
 
@@ -26,10 +20,10 @@ unsigned int MeshAdaptive::GetNumberSubMeshesAdaptive() const {
   return (unsigned int)this->sub_meshes_.size();
 }
 
-SubMesh* MeshAdaptive::GetSubMeshAdaptiveByPosition(
+std::shared_ptr<SubMesh> MeshAdaptive::GetSubMeshAdaptiveByPosition(
     const unsigned int position) {
   return (position < this->sub_meshes_.size()) ? this->sub_meshes_[position]
-                                               : nullptr;
+                                               : this->sub_meshes_.back();
 }
 
 void MeshAdaptive::ResizeSubMeshAdaptiveByPosition(const signed int new_size) {

@@ -1,27 +1,33 @@
 #ifndef DATA_PATCH_PATCH_HERMITE_H
 #define DATA_PATCH_PATCH_HERMITE_H
 
+#include <memory>
+
 #include "../../data/curve/curve_adaptive_parametric_hermite.h"
-#include "../../data/definitions.h"
+#include "../../definitions.h"
 #include "patch_coons.h"
 
 // As curvas devem ser definidas da esquerda para a direita, de baixo para
 // cima em relação ao Patch !!!
-class PatchHermite : public PatchCoons {
+class PatchHermite : public PatchCoons,
+                     std::enable_shared_from_this<PatchHermite> {
  public:
   PatchHermite();
-  explicit PatchHermite(PatchHermite* patch_hermite);
+  virtual ~PatchHermite() override {}
+
+  explicit PatchHermite(std::shared_ptr<PatchHermite> patch_hermite);
   // Ordem das curvas:
   //		C3
   //	C4		C2
   //		C1
-  PatchHermite(CurveAdaptive* curve1, CurveAdaptive* curve2,
-               CurveAdaptive* curve3, CurveAdaptive* curve4,
+  PatchHermite(const std::shared_ptr<CurveAdaptive>& curve1,
+               const std::shared_ptr<CurveAdaptive>& curve2,
+               const std::shared_ptr<CurveAdaptive>& curve3,
+               const std::shared_ptr<CurveAdaptive>& curve4,
                VectorAdaptive tw00, VectorAdaptive tw10, VectorAdaptive tw01,
                VectorAdaptive tw11, bool signal_curve1 = true,
                bool signal_curve2 = true, bool signal_curve3 = true,
                bool signal_curve4 = true);
-  ~PatchHermite() = default;
 
   PointAdaptive CalculatePointUV();
   void PrintAllMatrixPatchHermite();

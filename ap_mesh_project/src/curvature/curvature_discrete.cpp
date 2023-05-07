@@ -20,18 +20,12 @@ CurvatureDiscrete::CurvatureDiscrete(const NodeAdaptive& noh) {
   this->a_ = 0;
   this->sum_phi_ = 0;
 
-  std::list<ElementAdaptive*>::const_iterator element_iterator;
-
-  //	cout << "for ( ite = n.guarda_chuva.begin ( ); ite != n.guarda_chuva.end
-  //( ); ++ite )\n{" << endl;
-
-  for (element_iterator = noh.GetElements().begin();
-       element_iterator != noh.GetElements().end(); ++element_iterator) {
+  for (auto& element : noh.GetElements()) {
     //		cout << "\tA += " << (*ite)->getArea( ) << endl;
-    this->a_ += (*element_iterator)->GetArea();
+    this->a_ += element->GetArea();
     //		cout << "\tA == " << this->A << endl;
     //		cout << "\tsum_phi += " << (*ite)->GetAngle ( n ) << endl;
-    this->sum_phi_ += (*element_iterator)->GetAngle(noh);
+    this->sum_phi_ += element->GetAngle(noh);
     //		cout << "\tsum_phi == " << this->sum_phi << endl;
   }
 
@@ -41,8 +35,8 @@ CurvatureDiscrete::CurvatureDiscrete(const NodeAdaptive& noh) {
 }
 
 double CurvatureDiscrete::CalculateMeanCurvature() {
-  ElementAdaptive* first_element;
-  ElementAdaptive* next_element;
+  std::shared_ptr<ElementAdaptive> first_element;
+  std::shared_ptr<ElementAdaptive> next_element;
   double angle_gama = 0;  // ângulo entre dois elementos adjacentes
 
   while (this->elements_.size() > 1) {
@@ -75,11 +69,11 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh) {
   // copiando os elementos da adjacência de n para a lista de elementos desta
   // classe
   //		copie a lista n.guarda_cuva para nova_lista
-  std::list<ElementAdaptive*> new_list_elements;
+  std::list<std::shared_ptr<ElementAdaptive>> new_list_elements;
   new_list_elements = noh.GetElements();
 
   //		retire o primeiro elemento E da nova_lista e insira em elementos
-  ElementAdaptive* element_front = new_list_elements.front();
+  auto element_front = new_list_elements.front();
   this->elements_.push_back(element_front);
   new_list_elements.pop_front();
 
@@ -89,7 +83,7 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh) {
   bool find_adj_left = true;  // encontrou um adjacente à esquerda
 
   while (find_adj_left) {
-    ElementAdaptive* element =
+    auto element =
         adjacent_.GetElementLeft(noh, element_front, new_list_elements);
     if (element) {
       this->elements_.push_back(element);
@@ -114,7 +108,7 @@ void CurvatureDiscrete::AdjacencySort(const NodeAdaptive& noh) {
     bool find_adj_right = true;  // encontrou um adjacente à direita
 
     while (find_adj_right) {
-      ElementAdaptive* element =
+      auto element =
           adjacent_.GetElementRight(noh, element_front, new_list_elements);
       if (element) {
         this->elements_.push_front(element);

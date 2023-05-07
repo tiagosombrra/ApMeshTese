@@ -33,7 +33,8 @@ INC_PATH := $(addprefix -I, $(addsuffix /include, $(DIRS)))
 LIB_PATH := $(addprefix -L, $(addsuffix /src, $(DIRS)))
 
 # Variáveis de opções de compilação
-CXXFLAGS_EXTRA = -O3 -W -Wall -ftree-vectorize -flto -fno-strict-aliasing -Wno-cast-function-type -fsanitize=address
+CXXFLAGS_MEMORY_LEAK ?= $()
+CXXFLAGS_EXTRA = -O3 -W -Wall $(CXXFLAGS_MEMORY_LEAK)
 CXXFLAGS      = -std=c++17 $(CXXFLAGS_EXTRA)
 CXXFLAGS_OMP  = -fopenmp $(CXXFLAGS)
 

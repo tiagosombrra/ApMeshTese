@@ -1,25 +1,28 @@
 #ifndef DATA_PATCH_PATCH_COONS_H
 #define DATA_PATCH_PATCH_COONS_H
 
+#include <memory>
 #include <tuple>
 #include <vector>
 
-#include "../../data/definitions.h"
-#include "../curve/curve_adaptive.h"
+#include "../../definitions.h"
+//#include "../curve/curve_adaptive.h"
 #include "../point_adaptive.h"
 #include "../vector_adaptive.h"
 #include "patch.h"
 
+class CurveAdaptive;
+
 class PatchCoons : public Patch {
  public:
   PatchCoons();
-  PatchCoons(PatchCoons* patch_coons);
-  PatchCoons(const vector<CurveAdaptive*> curves);
+  PatchCoons(std::shared_ptr<PatchCoons> patch_coons);
+  PatchCoons(const std::vector<std::shared_ptr<CurveAdaptive>>& curves);
   virtual ~PatchCoons();
 
-  void InsertCurve(CurveAdaptive* curve);
+  void InsertCurve(std::shared_ptr<CurveAdaptive>& curve);
   unsigned int GetNumBerCurves() const;
-  CurveAdaptive* GetCurve(const unsigned int position);
+  std::shared_ptr<CurveAdaptive> GetCurve(const unsigned int position);
   // encontra as coordenadas parâmetricas u, v de um dado ponto p no patch,
   // ou a projeção desse ponto na superfície
   virtual tuple<double, double> FindUV(const PointAdaptive& p) = 0;
@@ -44,7 +47,7 @@ class PatchCoons : public Patch {
   virtual VectorAdaptive Qvv(const PointAdaptive& point) = 0;
 
  protected:
-  vector<CurveAdaptive*> curves_;
+  std::vector<std::shared_ptr<CurveAdaptive>> curves_;
 };
 
 #endif  // DATA_PATCH_PATCH_COONS_H

@@ -1,12 +1,11 @@
 #ifndef INPUT_OUTPUT_FILE_H
 #define INPUT_OUTPUT_FILE_H
 
-#include <cstdlib>
-#include <cstring>
 #include <fstream>
 #include <iostream>
-#include <list>
+#include <sstream>
 #include <string>
+#include <vector>
 
 #include "../data/model.h"
 
@@ -19,15 +18,15 @@ class File {
   void ReadFileTo();
 
  protected:
-  void ReadCurves(const string reading);   // lê todas as curvas do arquivo
-  void ReadPatches(const string reading);  // lê todos os patches do arquivo
-  void CreateCurvesTo();                   // cria as curvas a partir da list
-  void CreatePatchesTo();                  // cria os patches a partir da list
-  char* ConvertString(string font);
+  void ReadCurves(const string& reading);   // lê todas as curvas do arquivo
+  void ReadPatches(const string& reading);  // lê todos os patches do arquivo
+  void CreateCurvesTo();                    // cria as curvas a partir da list
+  void CreatePatchesTo();                   // cria os patches a partir da list
+  std::vector<double> GetDoubles(const std::string& str);
 
-  string name_;
-  ifstream INPUT_MODEL;
-  list<string> curves_;
-  list<string> patches_;
+  std::string name_;
+  std::ifstream input_model_;
+  std::vector<string> curves_;
+  std::vector<string> patches_;
 };
 #endif  // INPUT_OUTPUT_FILE_H

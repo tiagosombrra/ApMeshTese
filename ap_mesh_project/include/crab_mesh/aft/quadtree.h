@@ -1,7 +1,9 @@
 #ifndef _QUADTREE_H_
 #define _QUADTREE_H_
 
-#include "../../data/definitions.h"
+#include <memory>
+
+#include "../../definitions.h"
 #include "boundary.h"
 #include "edge.h"
 #include "face.h"
@@ -23,7 +25,7 @@ class Quadtree : public Shape {
 
   QuadtreeCellList leaves;
 
-  Boundary *boundary;
+  std::shared_ptr<Boundary> boundary;
 
   // para a geracao baseada em templates
   EdgeList front;
@@ -35,14 +37,14 @@ class Quadtree : public Shape {
   long int lastFaceId;
 
  public:
-  Quadtree(Boundary *boundary = NULL, double factor = 0.85);
+  Quadtree(std::shared_ptr<Boundary> boundary = nullptr, double factor = 0.85);
   ~Quadtree();
 
   void setFactor(double factor);
   double getFactor();
 
-  void setBoundary(Boundary *boundary);
-  Boundary *getBoundary();
+  void setBoundary(std::shared_ptr<Boundary> boundary);
+  std::shared_ptr<Boundary> getBoundary();
 
   void setRoot(QuadtreeCell *root);
   QuadtreeCell *getRoot();
@@ -53,22 +55,22 @@ class Quadtree : public Shape {
 
   int getNumCells();
 
-  Vertex *getMin();
-  Vertex *getMax();
+  std::shared_ptr<Vertex> getMin();
+  std::shared_ptr<Vertex> getMax();
 
   long int getCellId();
 
-  void findCell(Edge *e);
+  void findCell(std::shared_ptr<Edge> e);
 
-  bool in(Vertex *v);
-  bool on(Vertex *v);
-  bool out(Vertex *v);
+  bool in(std::shared_ptr<Vertex> v);
+  bool on(std::shared_ptr<Vertex> v);
+  bool out(std::shared_ptr<Vertex> v);
 
-  enum MethodStatus generate(const FaceList &oldmesh);
+  enum MethodStatus generate(FaceList &oldmesh);
   enum MethodStatus refineToLevel();
   enum MethodStatus refineAccordingToNeighbors();
 
-  bool execute(const FaceList &oldmesh);
+  bool execute(FaceList &oldmesh);
 
   // para a geracao baseada em templates
   long int vertexId();
@@ -80,21 +82,14 @@ class Quadtree : public Shape {
   VertexList getVertices();
   FaceList getMesh();
 
-  void add(Vertex *v);
-  void add(Edge *e);
-  void add(Face *f);
-  void addFront(Edge *e);
+  void add(std::shared_ptr<Vertex> v);
+  void add(std::shared_ptr<Edge> e);
+  void add(std::shared_ptr<Face> f);
+  void addFront(std::shared_ptr<Edge> e);
 
   enum MethodStatus makeTemplateBasedMesh();
 
   string getText() override;
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void unhighlight();
-
-  //    void draw();
-  // #endif //#if USE_OPENGL
 };
 }  // namespace AFT
 }  // namespace Par2DJMesh

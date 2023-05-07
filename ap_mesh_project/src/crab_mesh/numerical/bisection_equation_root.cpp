@@ -4,8 +4,8 @@ using namespace Data;
 using namespace Data::Numerical;
 
 double Data::Numerical::BisectionEquationRoot::execute(
-    EquationRootFunction *function, int maxSteps, double tolerance,
-    bool testFunction, bool testStepSize, bool &ok) {
+    std::shared_ptr<EquationRootFunction> function, int maxSteps,
+    double tolerance, bool testFunction, bool testStepSize, bool &ok) {
   ok = true;
 
   if ((!testFunction) && (!testStepSize)) {
@@ -65,25 +65,26 @@ double Data::Numerical::BisectionEquationRoot::execute(
 }
 
 double Data::Numerical::BisectionEquationRoot::execute(
-    EquationRootFunction *function, int maxSteps, double tolerance, bool &ok) {
+    std::shared_ptr<EquationRootFunction> function, int maxSteps,
+    double tolerance, bool &ok) {
   return this->execute(function, maxSteps, tolerance, true, true, ok);
 }
 
 double Data::Numerical::BisectionEquationRoot::execute(
-    EquationRootFunction *function, bool &ok) {
+    std::shared_ptr<EquationRootFunction> function, bool &ok) {
   return this->execute(function, 1000, 0.0001, ok);
 }
 
 double Data::Numerical::BisectionEquationRoot::execute(
-    EquationRootFunction *function) {
+    std::shared_ptr<EquationRootFunction> function) {
   bool ok;
 
   return this->execute(function, ok);
 }
 
 double Data::Numerical::ClosestBisectionEquationRoot::recursiveExecute(
-    EquationRootFunction *function, double min, double max, double fmin,
-    double fmax, int maxSteps, double tolerance, bool testFunction,
+    std::shared_ptr<EquationRootFunction> function, double min, double max,
+    double fmin, double fmax, int maxSteps, double tolerance, bool testFunction,
     bool testStepSize, bool &ok, double &fval) {
   ok = true;
 
@@ -179,8 +180,8 @@ double Data::Numerical::ClosestBisectionEquationRoot::recursiveExecute(
 }
 
 double Data::Numerical::ClosestBisectionEquationRoot::execute(
-    EquationRootFunction *function, int maxSteps, double tolerance,
-    bool testFunction, bool testStepSize, bool &ok) {
+    std::shared_ptr<EquationRootFunction> function, int maxSteps,
+    double tolerance, bool testFunction, bool testStepSize, bool &ok) {
   ok = true;
 
   if ((!testFunction) && (!testStepSize)) {
@@ -230,8 +231,8 @@ double Data::Numerical::ClosestBisectionEquationRoot::execute(
 }
 
 double Data::Numerical::MaxBisectionEquationRoot::recursiveExecute(
-    EquationRootFunction *function, double min, double max, double fmin,
-    double fmax, int maxSteps, double tolerance, bool testFunction,
+    std::shared_ptr<EquationRootFunction> function, double min, double max,
+    double fmin, double fmax, int maxSteps, double tolerance, bool testFunction,
     bool testStepSize, bool &ok, double &fval) {
   ok = true;
 
@@ -329,8 +330,8 @@ double Data::Numerical::MaxBisectionEquationRoot::recursiveExecute(
 }
 
 double Data::Numerical::MaxBisectionEquationRoot::execute(
-    EquationRootFunction *function, int maxSteps, double tolerance,
-    bool testFunction, bool testStepSize, bool &ok) {
+    std::shared_ptr<EquationRootFunction> function, int maxSteps,
+    double tolerance, bool testFunction, bool testStepSize, bool &ok) {
   ok = true;
 
   if ((!testFunction) && (!testStepSize)) {
@@ -370,8 +371,8 @@ double Data::Numerical::MaxBisectionEquationRoot::execute(
 }
 
 double Data::Numerical::MinBisectionEquationRoot::recursiveExecute(
-    EquationRootFunction *function, double min, double max, double fmin,
-    double fmax, int maxSteps, double tolerance, bool testFunction,
+    std::shared_ptr<EquationRootFunction> function, double min, double max,
+    double fmin, double fmax, int maxSteps, double tolerance, bool testFunction,
     bool testStepSize, bool &ok, double &fval) {
   ok = true;
 
@@ -469,8 +470,8 @@ double Data::Numerical::MinBisectionEquationRoot::recursiveExecute(
 }
 
 double Data::Numerical::MinBisectionEquationRoot::execute(
-    EquationRootFunction *function, int maxSteps, double tolerance,
-    bool testFunction, bool testStepSize, bool &ok) {
+    std::shared_ptr<EquationRootFunction> function, int maxSteps,
+    double tolerance, bool testFunction, bool testStepSize, bool &ok) {
   ok = true;
 
   if ((!testFunction) && (!testStepSize)) {

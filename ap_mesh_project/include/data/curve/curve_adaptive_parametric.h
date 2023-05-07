@@ -3,10 +3,11 @@
 
 #include <iostream>
 #include <list>
+#include <memory>
 
 #include "../../crab_mesh/numerical/bisection_equation_root.h"
 #include "../../crab_mesh/numerical/equation_root_function.h"
-#include "../../data/definitions.h"
+#include "../../definitions.h"
 #include "../vector_adaptive.h"
 #include "../vertex_adaptive.h"
 #include "curve_adaptive.h"
@@ -20,7 +21,7 @@ class CurveAdaptiveParametric : public CurveAdaptive {
   // os valores indicados na observação do construtor default !!!
   CurveAdaptiveParametric(const PointAdaptive point0,
                           const PointAdaptive point1);
-  explicit CurveAdaptiveParametric(CurveAdaptiveParametric*);
+  explicit CurveAdaptiveParametric(std::shared_ptr<CurveAdaptiveParametric>);
   ~CurveAdaptiveParametric();
 
   // calcula o comprimento de curva de p1 a p2
@@ -76,7 +77,7 @@ class CurveAdaptiveParametric : public CurveAdaptive {
                        const PointAdaptive& point1);
 
   // parâmetros dos pontos
-  list<double> parameters_;
+  std::list<double> parameters_;
 
  protected:
   // retorna o ponto calculado por T x M x Gx,y,z

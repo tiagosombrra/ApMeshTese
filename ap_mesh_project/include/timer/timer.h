@@ -8,12 +8,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "../data/definitions.h"
-
-using namespace std;
-extern double TIME_READ_FILE;
-extern std::string NAME_MODEL;
-extern std::string NUMBER_PROCESS;
+#include "../definitions.h"
 
 //[0]= Inicialização
 //[1]= Estimativa de carga
@@ -41,8 +36,8 @@ class Timer {
   void PrintTime();
   void PrintTime(int rank_process);
   double GetRankThreadTime(int rank, int thread, int type);
-  vector<double> GetMaxTime();
-  vector<double> GetMinTime();
+  std::vector<double> GetMaxTime();
+  std::vector<double> GetMinTime();
 
   vector<vector<vector<timeval>>> GetTimerParallelInit() const;
   void SetTimerParallelInit(const vector<vector<vector<timeval>>> &value);

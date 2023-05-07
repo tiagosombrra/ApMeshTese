@@ -2,6 +2,7 @@
 #define DATA_MESH_MESH_ADAPTIVE_H
 
 #include <iostream>
+#include <memory>
 #include <vector>
 
 #include "sub_mesh.h"
@@ -11,16 +12,16 @@ class MeshAdaptive {
   MeshAdaptive();
   ~MeshAdaptive();
 
-  void InsertSubMeshAdaptiveByPosition(SubMesh* sub_mesh_adaptive,
-                                       const signed int position);
-  void InsertSubMeshAdaptive(SubMesh* sub_mesh_adaptive);
+  void InsertSubMeshAdaptiveByPosition(
+      std::shared_ptr<SubMesh>& sub_mesh_adaptive, const signed int position);
+  void InsertSubMeshAdaptive(std::shared_ptr<SubMesh>& sub_mesh_adaptive);
   void RemoveSubMeshAdaptive();
   unsigned int GetNumberSubMeshesAdaptive() const;
-  SubMesh* GetSubMeshAdaptiveByPosition(const unsigned int position);
+  std::shared_ptr<SubMesh> GetSubMeshAdaptiveByPosition(const unsigned int position);
   void ResizeSubMeshAdaptiveByPosition(const signed int new_size);
 
  protected:
-  vector<SubMesh*> sub_meshes_;
+  std::vector<std::shared_ptr<SubMesh>> sub_meshes_;
 };
 
 #endif  // DATA_MESH_MESH_ADAPTIVE_H

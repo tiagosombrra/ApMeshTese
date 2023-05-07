@@ -1,4 +1,4 @@
-CONFIG += c++11 console
+CONFIG += c++17 console
 CONFIG -= app_bundle
 QMAKE_CXXFLAGS += -O3 -fopenmp     #-g  -pg    -std=gnu++0x#-march=native #-m64 #-mavx #-O0 valgrind
 QMAKE_LFLAGS += -O3 -fopenmp       #-g  -pg   -std=gnu++0x#-march=native #-m64 #-mavx
@@ -89,6 +89,7 @@ HEADERS += \
     ../include/adapter/adapter.h \
     ../include/crab_mesh/aft/advancing_front.h \
     ../include/crab_mesh/aft/boundary.h \
+    ../include/crab_mesh/aft/face.h \
     ../include/crab_mesh/aft/quadtree.h \
     ../include/crab_mesh/aft/quadtree_cell.h \
     ../include/crab_mesh/aft/shape.h \
@@ -108,10 +109,8 @@ HEADERS += \
     ../include/data/curve/curve_adaptive_parametric.h \
     ../include/data/curve/curve_adaptive_parametric_bezier.h \
     ../include/data/curve/curve_adaptive_parametric_hermite.h \
-    ../include/data/definitions.h \
     ../include/crab_mesh/aft/edge.h \
     ../include/data/element_adaptive.h \
-    ../include/data/Face.h \
     ../include/data/geometry.h \
     ../include/data/mesh/mesh_adaptive.h \
     ../include/data/mesh/sub_mesh.h \
@@ -127,6 +126,7 @@ HEADERS += \
     ../include/crab_mesh/aft/vertex.h \
     ../include/data/vertex_adaptive.h \
     ../include/data/vector_adaptive.h \
+    ../include/definitions.h \
     ../include/estimate/charge_estimate_process.h \
     ../include/generator/generator_adaptive.h \
     ../include/input_output/file.h \

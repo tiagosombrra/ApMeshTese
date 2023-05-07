@@ -1,61 +1,40 @@
 #include "../../include/estimate/charge_estimate_process.h"
 
+#include "../../include/definitions.h"
 #include "../../include/generator/generator_adaptive.h"
 
-extern std::string INPUT_MODEL;
+extern double timeReadFile, kEstimativeTolerance;
+extern std::string inputModel, writeMesh;
 
 ChargeEstimateProcess::ChargeEstimateProcess()
-    : minor_error_(10000), minor_degree_(0) {}
+    : minor_error_(std::numeric_limits<double>::max()),
+      minor_degree_(0),
+      triangle_medio_(0) {}
 
 ChargeEstimateProcess::~ChargeEstimateProcess() {}
 
-static bool SortByNt(const PatchBezier* lhs, const PatchBezier* rhs) {
+static bool SortByNt(const std::shared_ptr<PatchBezier>& lhs,
+                     const std::shared_ptr<PatchBezier>& rhs) {
   return lhs->GetKaMedio() > rhs->GetKaMedio();
 }
 
 // retonar uma lista de patch de bezier ordenadChargeEstimateProcessestimativa
 // de carga em ordem decrescente.
-std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
-    Geometry* geometry, Timer& timer) {
-  std::list<PatchBezier*> list_patch_bezier;
-  std::list<PatchBezier*> list_patch_bezier_order;
+std::list<std::shared_ptr<PatchBezier>> ChargeEstimateProcess::ChargeEstimate(
+    std::shared_ptr<Geometry>& geometry, Timer& timer) {
+  std::list<std::shared_ptr<PatchBezier>> list_patch_bezier;
+  std::list<std::shared_ptr<PatchBezier>> list_patch_bezier_order;
 
-  PatchReader* patch_bezier_reader = new PatchReader();
   timer.EndTimerParallel(0, 0, 10);  // Full
   timer.InitTimerParallel(0, 0, 5);  // Leitura arquivo
 
-  list_patch_bezier = patch_bezier_reader->LoaderBPFile(INPUT_MODEL);
+  PatchReader patch_bezier_reader;
+  list_patch_bezier = patch_bezier_reader.LoaderBPFile(inputModel);
 
   timer.EndTimerParallel(0, 0, 5);  // Leitura arquivo
-  TIME_READ_FILE = timer.timer_parallel_[0][0][5];
-
+  timeReadFile = timer.timer_parallel_[0][0][5];
   timer.InitTimerParallel(0, 0, 5);  // Full
-
   timer.InitTimerParallel(0, 0, 1);  // Estimativa de carga process 0
-
-  delete patch_bezier_reader;
-
-  PointAdaptive* p00;
-  PointAdaptive* p01;
-  PointAdaptive* p02;
-  PointAdaptive* p03;
-  PointAdaptive* p10;
-  PointAdaptive* p11;
-  PointAdaptive* p12;
-  PointAdaptive* p13;
-  PointAdaptive* p20;
-  PointAdaptive* p21;
-  PointAdaptive* p22;
-  PointAdaptive* p23;
-  PointAdaptive* p30;
-  PointAdaptive* p31;
-  PointAdaptive* p32;
-  PointAdaptive* p33;
-
-  CurveAdaptive* patch_c1;
-  CurveAdaptive* patch_c2;
-  CurveAdaptive* patch_c3;
-  CurveAdaptive* patch_c4;
 
   double area_minor = 1000;
   double area_major = 0;
@@ -64,107 +43,131 @@ std::list<PatchBezier*> ChargeEstimateProcess::ChargeEstimate(
 
   [[maybe_unused]] double elementos = 0;
 
-  for (std::list<PatchBezier*>::iterator it = list_patch_bezier.begin();
-       it != list_patch_bezier.end(); it++) {
-    p00 = new VertexAdaptive((*it)->GetPt00().GetX(), (*it)->GetPt00().GetY(),
-                             (*it)->GetPt00().GetZ());
-    p10 = new VertexAdaptive((*it)->GetPt10().GetX(), (*it)->GetPt10().GetY(),
-                             (*it)->GetPt10().GetZ());
-    p20 = new VertexAdaptive((*it)->GetPt20().GetX(), (*it)->GetPt20().GetY(),
-                             (*it)->GetPt20().GetZ());
-    p30 = new VertexAdaptive((*it)->GetPt30().GetX(), (*it)->GetPt30().GetY(),
-                             (*it)->GetPt30().GetZ());
+  std::shared_ptr<CurveAdaptiveParametric> patch_c1;
+  std::shared_ptr<CurveAdaptiveParametric> patch_c2;
+  std::shared_ptr<CurveAdaptiveParametric> patch_c3;
+  std::shared_ptr<CurveAdaptiveParametric> patch_c4;
 
-    p01 = new VertexAdaptive((*it)->GetPt01().GetX(), (*it)->GetPt01().GetY(),
-                             (*it)->GetPt01().GetZ());
-    p11 = new VertexAdaptive((*it)->GetPt11().GetX(), (*it)->GetPt11().GetY(),
-                             (*it)->GetPt11().GetZ());
-    p21 = new VertexAdaptive((*it)->GetPt21().GetX(), (*it)->GetPt21().GetY(),
-                             (*it)->GetPt21().GetZ());
-    p31 = new VertexAdaptive((*it)->GetPt31().GetX(), (*it)->GetPt31().GetY(),
-                             (*it)->GetPt31().GetZ());
+  for (auto& patch : list_patch_bezier) {
+    auto p00 = std::make_shared<VertexAdaptive>((patch)->GetPt00().GetX(),
+                                                (patch)->GetPt00().GetY(),
+                                                (patch)->GetPt00().GetZ());
+    auto p10 = std::make_shared<VertexAdaptive>((patch)->GetPt10().GetX(),
+                                                (patch)->GetPt10().GetY(),
+                                                (patch)->GetPt10().GetZ());
+    auto p20 = std::make_shared<VertexAdaptive>((patch)->GetPt20().GetX(),
+                                                (patch)->GetPt20().GetY(),
+                                                (patch)->GetPt20().GetZ());
+    auto p30 = std::make_shared<VertexAdaptive>((patch)->GetPt30().GetX(),
+                                                (patch)->GetPt30().GetY(),
+                                                (patch)->GetPt30().GetZ());
 
-    p02 = new VertexAdaptive((*it)->GetPt02().GetX(), (*it)->GetPt02().GetY(),
-                             (*it)->GetPt02().GetZ());
-    p12 = new VertexAdaptive((*it)->GetPt12().GetX(), (*it)->GetPt12().GetY(),
-                             (*it)->GetPt12().GetZ());
-    p22 = new VertexAdaptive((*it)->GetPt22().GetX(), (*it)->GetPt22().GetY(),
-                             (*it)->GetPt22().GetZ());
-    p32 = new VertexAdaptive((*it)->GetPt32().GetX(), (*it)->GetPt32().GetY(),
-                             (*it)->GetPt32().GetZ());
+    auto p01 = std::make_shared<VertexAdaptive>((patch)->GetPt01().GetX(),
+                                                (patch)->GetPt01().GetY(),
+                                                (patch)->GetPt01().GetZ());
+    auto p11 = std::make_shared<VertexAdaptive>((patch)->GetPt11().GetX(),
+                                                (patch)->GetPt11().GetY(),
+                                                (patch)->GetPt11().GetZ());
+    auto p21 = std::make_shared<VertexAdaptive>((patch)->GetPt21().GetX(),
+                                                (patch)->GetPt21().GetY(),
+                                                (patch)->GetPt21().GetZ());
+    auto p31 = std::make_shared<VertexAdaptive>((patch)->GetPt31().GetX(),
+                                                (patch)->GetPt31().GetY(),
+                                                (patch)->GetPt31().GetZ());
 
-    p03 = new VertexAdaptive((*it)->GetPt03().GetX(), (*it)->GetPt03().GetY(),
-                             (*it)->GetPt03().GetZ());
-    p13 = new VertexAdaptive((*it)->GetPt13().GetX(), (*it)->GetPt13().GetY(),
-                             (*it)->GetPt13().GetZ());
-    p23 = new VertexAdaptive((*it)->GetPt23().GetX(), (*it)->GetPt23().GetY(),
-                             (*it)->GetPt23().GetZ());
-    p33 = new VertexAdaptive((*it)->GetPt33().GetX(), (*it)->GetPt33().GetY(),
-                             (*it)->GetPt33().GetZ());
+    auto p02 = std::make_shared<VertexAdaptive>((patch)->GetPt02().GetX(),
+                                                (patch)->GetPt02().GetY(),
+                                                (patch)->GetPt02().GetZ());
+    auto p12 = std::make_shared<VertexAdaptive>((patch)->GetPt12().GetX(),
+                                                (patch)->GetPt12().GetY(),
+                                                (patch)->GetPt12().GetZ());
+    auto p22 = std::make_shared<VertexAdaptive>((patch)->GetPt22().GetX(),
+                                                (patch)->GetPt22().GetY(),
+                                                (patch)->GetPt22().GetZ());
+    auto p32 = std::make_shared<VertexAdaptive>((patch)->GetPt32().GetX(),
+                                                (patch)->GetPt32().GetY(),
+                                                (patch)->GetPt32().GetZ());
 
-    if (geometry->VerifyCurveGeometry(p00, p10, p20, p30) == nullptr) {
-      patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
+    auto p03 = std::make_shared<VertexAdaptive>((patch)->GetPt03().GetX(),
+                                                (patch)->GetPt03().GetY(),
+                                                (patch)->GetPt03().GetZ());
+    auto p13 = std::make_shared<VertexAdaptive>((patch)->GetPt13().GetX(),
+                                                (patch)->GetPt13().GetY(),
+                                                (patch)->GetPt13().GetZ());
+    auto p23 = std::make_shared<VertexAdaptive>((patch)->GetPt23().GetX(),
+                                                (patch)->GetPt23().GetY(),
+                                                (patch)->GetPt23().GetZ());
+    auto p33 = std::make_shared<VertexAdaptive>((patch)->GetPt33().GetX(),
+                                                (patch)->GetPt33().GetY(),
+                                                (patch)->GetPt33().GetZ());
+
+    if (geometry->VerifyCurveGeometry(*p00, *p10, *p20, *p30) == nullptr) {
+      patch_c1 = std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p10,
+                                                                 *p20, *p30);
       geometry->InsertCurve(patch_c1);
     } else {
-      patch_c1 = geometry->VerifyCurveGeometry(p00, p10, p20, p30);
+      patch_c1 = geometry->VerifyCurveGeometry(*p00, *p10, *p20, *p30);
     }
 
-    if (geometry->VerifyCurveGeometry(p30, p31, p32, p33) == nullptr) {
-      patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
+    if (geometry->VerifyCurveGeometry(*p30, *p31, *p32, *p33) == nullptr) {
+      patch_c2 = std::make_shared<CurveAdaptiveParametricBezier>(*p30, *p31,
+                                                                 *p32, *p33);
       geometry->InsertCurve(patch_c2);
     } else {
-      patch_c2 = geometry->VerifyCurveGeometry(p30, p31, p32, p33);
+      patch_c2 = geometry->VerifyCurveGeometry(*p30, *p31, *p32, *p33);
     }
 
-    if (geometry->VerifyCurveGeometry(p03, p13, p23, p33) == nullptr) {
-      patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
+    if (geometry->VerifyCurveGeometry(*p03, *p13, *p23, *p33) == nullptr) {
+      patch_c3 = std::make_shared<CurveAdaptiveParametricBezier>(*p03, *p13,
+                                                                 *p23, *p33);
       geometry->InsertCurve(patch_c3);
     } else {
-      patch_c3 = geometry->VerifyCurveGeometry(p03, p13, p23, p33);
+      patch_c3 = geometry->VerifyCurveGeometry(*p03, *p13, *p23, *p33);
     }
 
-    if (geometry->VerifyCurveGeometry(p00, p01, p02, p03) == nullptr) {
-      patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
+    if (geometry->VerifyCurveGeometry(*p00, *p01, *p02, *p03) == nullptr) {
+      patch_c4 = std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p01,
+                                                                 *p02, *p03);
       geometry->InsertCurve(patch_c4);
     } else {
-      patch_c4 = geometry->VerifyCurveGeometry(p00, p01, p02, p03);
+      patch_c4 = geometry->VerifyCurveGeometry(*p00, *p01, *p02, *p03);
     }
 
-    (*it) = new PatchBezier(patch_c1, patch_c2, patch_c3, patch_c4, *p11, *p21,
-                            *p12, *p22);
+    patch = std::make_shared<PatchBezier>(patch_c1, patch_c2, patch_c3,
+                                          patch_c4, *p11, *p21, *p12, *p22);
 
-    (*it)->SetArea(CalculateAreaPatch((*it), 4));
-    // cout << "Área do patch: " << (*it)->getArea() << endl;
+    patch->SetArea(CalculateAreaPatch(patch, 4));
+    // cout << "Área do patch: " << (patch)->getArea() << endl;
 
-    if ((*it)->GetArea() < area_minor) {
-      area_minor = (*it)->GetArea();
-    } else if ((*it)->GetArea() > area_major) {
-      area_major = (*it)->GetArea();
+    if (patch->GetArea() < area_minor) {
+      area_minor = patch->GetArea();
+    } else if (patch->GetArea() > area_major) {
+      area_major = patch->GetArea();
     }
 
-    (*it)->SetKaMedio(CalculateKaMedioPatch((*it), 25));
+    patch->SetKaMedio(CalculateKaMedioPatch(patch, 25));
 
-    if ((*it)->GetKaMedio() < kam_minor) {
-      kam_minor = (*it)->GetKaMedio();
-    } else if ((*it)->GetKaMedio() > kam_major) {
-      kam_major = (*it)->GetKaMedio();
+    if (patch->GetKaMedio() < kam_minor) {
+      kam_minor = patch->GetKaMedio();
+    } else if (patch->GetKaMedio() > kam_major) {
+      kam_major = patch->GetKaMedio();
     }
 
-    (*it)->SetAreaTriangle(CalculateAreaTriangleMedioRad((*it)));
-    TRIANGLE_MEDIO = (*it)->GetAreaTriangle();
+    patch->SetAreaTriangle(CalculateAreaTriangleMedioRad(patch));
+    triangle_medio_ = patch->GetAreaTriangle();
 
-    (*it)->SetNumberTriangle((*it)->GetArea() / (*it)->GetAreaTriangle());
+    patch->SetNumberTriangle(patch->GetArea() / patch->GetAreaTriangle());
 
-    elementos += (*it)->GetNumberTriangle();
+    elementos += patch->GetNumberTriangle();
 
-    geometry->InsertPatch((*it));
+    geometry->InsertPatch(patch);
 
-    list_patch_bezier_order.push_back((*it));
+    list_patch_bezier_order.push_back(patch);
 
-    curvatures_.push_back((*it)->GetKaMedio());
+    curvatures_.push_back(patch->GetKaMedio());
   }
 
-  if (WRITE_MESH == std::string("m")) {
+  if (writeMesh == std::string("m")) {
     write_obj_file_.WriteCurvaturePatches(curvatures_, kam_major);
   }
 
@@ -240,8 +243,8 @@ std::vector<PointAdaptive> ChargeEstimateProcess::InterpolateControlPointsCurve(
   return list_pcs;
 }
 
-double ChargeEstimateProcess::CalculateKaMedioPatch(PatchBezier* patch,
-                                                    int points) {
+double ChargeEstimateProcess::CalculateKaMedioPatch(
+    std::shared_ptr<PatchBezier>& patch, int points) {
   if (points < 4) {
     cout << "Numero Mínimo de Pontos para o cálculo da curvatara média é 4 ou "
             "9 ou 17 ou 25"
@@ -254,30 +257,19 @@ double ChargeEstimateProcess::CalculateKaMedioPatch(PatchBezier* patch,
 
   if (points <= 25) {
     if (points >= 4) {
-      PointAdaptive* ponto_a = new PointAdaptive();
-      PointAdaptive ponto_aa = patch->Parameterize(0.25, 0.25);
-      ponto_a = &ponto_aa;
+      PointAdaptive ponto_a = patch->Parameterize(0.25, 0.25);
+      PointAdaptive ponto_b = patch->Parameterize(0.75, 0.25);
+      PointAdaptive ponto_c = patch->Parameterize(0.25, 0.75);
+      PointAdaptive ponto_d = patch->Parameterize(0.75, 0.75);
 
-      PointAdaptive* ponto_b = new PointAdaptive();
-      PointAdaptive ponto_bb = patch->Parameterize(0.75, 0.25);
-      ponto_b = &ponto_bb;
-
-      PointAdaptive* ponto_c = new PointAdaptive();
-      PointAdaptive ponto_cc = patch->Parameterize(0.25, 0.75);
-      ponto_c = &ponto_cc;
-
-      PointAdaptive* ponto_d = new PointAdaptive();
-      PointAdaptive ponto_dd = patch->Parameterize(0.75, 0.75);
-      ponto_d = &ponto_dd;
-
-      CurvatureAnalytical kaa(*(static_cast<NodeAdaptive*>(ponto_a)),
-                              *(static_cast<PatchCoons*>(patch)));
-      CurvatureAnalytical kab(*(static_cast<NodeAdaptive*>(ponto_b)),
-                              *(static_cast<PatchCoons*>(patch)));
-      CurvatureAnalytical kac(*(static_cast<NodeAdaptive*>(ponto_c)),
-                              *(static_cast<PatchCoons*>(patch)));
-      CurvatureAnalytical kad(*(static_cast<NodeAdaptive*>(ponto_d)),
-                              *(static_cast<PatchCoons*>(patch)));
+      CurvatureAnalytical kaa(static_cast<NodeAdaptive>(ponto_a),
+                              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+      CurvatureAnalytical kab(static_cast<NodeAdaptive>(ponto_b),
+                              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+      CurvatureAnalytical kac(static_cast<NodeAdaptive>(ponto_c),
+                              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+      CurvatureAnalytical kad(static_cast<NodeAdaptive>(ponto_d),
+                              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
 
       double ka_ponto_a = kaa.CalculateGaussCurvature();
       // if (fabs(ka_ponto_a) < 0, 0001) {
@@ -316,36 +308,27 @@ double ChargeEstimateProcess::CalculateKaMedioPatch(PatchBezier* patch,
       i++;
 
       if (points >= 9) {
-        PointAdaptive* ponto_e = new PointAdaptive();
-        PointAdaptive ponto_ee = patch->Parameterize(0.5, 0.5);
-        ponto_e = &ponto_ee;
+        PointAdaptive ponto_e = patch->Parameterize(0.5, 0.5);
+        PointAdaptive ponto_f = patch->Parameterize(0.0, 0.0);
+        PointAdaptive ponto_g = patch->Parameterize(1.0, 0.0);
+        PointAdaptive ponto_h = patch->Parameterize(0.0, 1.0);
+        PointAdaptive ponto_i = patch->Parameterize(1.0, 1.0);
 
-        PointAdaptive* ponto_f = new PointAdaptive();
-        PointAdaptive ponto_ff = patch->Parameterize(0.0, 0.0);
-        ponto_f = &ponto_ff;
-
-        PointAdaptive* ponto_g = new PointAdaptive();
-        PointAdaptive ponto_gg = patch->Parameterize(1.0, 0.0);
-        ponto_g = &ponto_gg;
-
-        PointAdaptive* ponto_h = new PointAdaptive();
-        PointAdaptive ponto_hh = patch->Parameterize(0.0, 1.0);
-        ponto_h = &ponto_hh;
-
-        PointAdaptive* ponto_i = new PointAdaptive();
-        PointAdaptive ponto_ii = patch->Parameterize(1.0, 1.0);
-        ponto_i = &ponto_ii;
-
-        CurvatureAnalytical kae(*(static_cast<NodeAdaptive*>(ponto_e)),
-                                *(static_cast<PatchCoons*>(patch)));
-        CurvatureAnalytical kaf(*(static_cast<NodeAdaptive*>(ponto_f)),
-                                *(static_cast<PatchCoons*>(patch)));
-        CurvatureAnalytical kag(*(static_cast<NodeAdaptive*>(ponto_g)),
-                                *(static_cast<PatchCoons*>(patch)));
-        CurvatureAnalytical kah(*(static_cast<NodeAdaptive*>(ponto_h)),
-                                *(static_cast<PatchCoons*>(patch)));
-        CurvatureAnalytical kai(*(static_cast<NodeAdaptive*>(ponto_i)),
-                                *(static_cast<PatchCoons*>(patch)));
+        CurvatureAnalytical kae(
+            static_cast<NodeAdaptive>(ponto_e),
+            *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+        CurvatureAnalytical kaf(
+            static_cast<NodeAdaptive>(ponto_f),
+            *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+        CurvatureAnalytical kag(
+            static_cast<NodeAdaptive>(ponto_g),
+            *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+        CurvatureAnalytical kah(
+            static_cast<NodeAdaptive>(ponto_h),
+            *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+        CurvatureAnalytical kai(
+            static_cast<NodeAdaptive>(ponto_i),
+            *(std::dynamic_pointer_cast<PatchCoons>(patch)));
 
         double ke_ponto_e = kae.CalculateGaussCurvature();
         // if (fabs(ke_ponto_e) < 0, 0001) {
@@ -393,54 +376,39 @@ double ChargeEstimateProcess::CalculateKaMedioPatch(PatchBezier* patch,
         i++;
 
         if (points >= 17) {
-          PointAdaptive* ponto_j = new PointAdaptive();
-          PointAdaptive ponto_jj = patch->Parameterize(0.125, 0.125);
-          ponto_j = &ponto_jj;
+          PointAdaptive ponto_j = patch->Parameterize(0.125, 0.125);
+          PointAdaptive ponto_l = patch->Parameterize(0.5, 0.125);
+          PointAdaptive ponto_m = patch->Parameterize(0.875, 0.125);
+          PointAdaptive ponto_n = patch->Parameterize(0.125, 0.5);
+          PointAdaptive ponto_o = patch->Parameterize(0.875, 0.5);
+          PointAdaptive ponto_p = patch->Parameterize(0.125, 0.875);
+          PointAdaptive ponto_q = patch->Parameterize(0.5, 0.875);
+          PointAdaptive ponto_r = patch->Parameterize(0.875, 0.875);
 
-          PointAdaptive* ponto_l = new PointAdaptive();
-          PointAdaptive ponto_ll = patch->Parameterize(0.5, 0.125);
-          ponto_l = &ponto_ll;
-
-          PointAdaptive* ponto_m = new PointAdaptive();
-          PointAdaptive ponto_mm = patch->Parameterize(0.875, 0.125);
-          ponto_m = &ponto_mm;
-
-          PointAdaptive* ponto_n = new PointAdaptive();
-          PointAdaptive ponto_nn = patch->Parameterize(0.125, 0.5);
-          ponto_n = &ponto_nn;
-
-          PointAdaptive* ponto_o = new PointAdaptive();
-          PointAdaptive ponto_oo = patch->Parameterize(0.875, 0.5);
-          ponto_o = &ponto_oo;
-
-          PointAdaptive* ponto_p = new PointAdaptive();
-          PointAdaptive ponto_pp = patch->Parameterize(0.125, 0.875);
-          ponto_p = &ponto_pp;
-
-          PointAdaptive* ponto_q = new PointAdaptive();
-          PointAdaptive ponto_qq = patch->Parameterize(0.5, 0.875);
-          ponto_q = &ponto_qq;
-
-          PointAdaptive* ponto_r = new PointAdaptive();
-          PointAdaptive ponto_rr = patch->Parameterize(0.875, 0.875);
-          ponto_r = &ponto_rr;
-
-          CurvatureAnalytical kaj(*(static_cast<NodeAdaptive*>(ponto_j)),
-                                  *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kal(*(static_cast<NodeAdaptive*>(ponto_l)),
-                                  *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kam(*(static_cast<NodeAdaptive*>(ponto_m)),
-                                  *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kan(*(static_cast<NodeAdaptive*>(ponto_n)),
-                                  *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kao(*(static_cast<NodeAdaptive*>(ponto_o)),
-                                  *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kap(*(static_cast<NodeAdaptive*>(ponto_p)),
-                                  *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kaq(*(static_cast<NodeAdaptive*>(ponto_q)),
-                                  *(static_cast<PatchCoons*>(patch)));
-          CurvatureAnalytical kar(*(static_cast<NodeAdaptive*>(ponto_r)),
-                                  *(static_cast<PatchCoons*>(patch)));
+          CurvatureAnalytical kaj(
+              static_cast<NodeAdaptive>(ponto_j),
+              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+          CurvatureAnalytical kal(
+              static_cast<NodeAdaptive>(ponto_l),
+              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+          CurvatureAnalytical kam(
+              static_cast<NodeAdaptive>(ponto_m),
+              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+          CurvatureAnalytical kan(
+              static_cast<NodeAdaptive>(ponto_n),
+              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+          CurvatureAnalytical kao(
+              static_cast<NodeAdaptive>(ponto_o),
+              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+          CurvatureAnalytical kap(
+              static_cast<NodeAdaptive>(ponto_p),
+              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+          CurvatureAnalytical kaq(
+              static_cast<NodeAdaptive>(ponto_q),
+              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+          CurvatureAnalytical kar(
+              static_cast<NodeAdaptive>(ponto_r),
+              *(std::dynamic_pointer_cast<PatchCoons>(patch)));
 
           double kj_ponto_j = kaj.CalculateGaussCurvature();
           // if (fabs(kj_ponto_j) < 0, 0001) {
@@ -515,54 +483,39 @@ double ChargeEstimateProcess::CalculateKaMedioPatch(PatchBezier* patch,
           i++;
 
           if (points == 25) {
-            PointAdaptive* ponto_s = new PointAdaptive();
-            PointAdaptive ponto_ss = patch->Parameterize(0.25, 0.0);
-            ponto_s = &ponto_ss;
+            PointAdaptive ponto_s = patch->Parameterize(0.25, 0.0);
+            PointAdaptive ponto_t = patch->Parameterize(0.75, 0.0);
+            PointAdaptive ponto_u = patch->Parameterize(0.0, 0.25);
+            PointAdaptive ponto_v = patch->Parameterize(1.0, 0.25);
+            PointAdaptive ponto_w = patch->Parameterize(0.0, 0.75);
+            PointAdaptive ponto_x = patch->Parameterize(1.0, 0.75);
+            PointAdaptive ponto_y = patch->Parameterize(0.25, 1.0);
+            PointAdaptive ponto_z = patch->Parameterize(0.75, 1.0);
 
-            PointAdaptive* ponto_t = new PointAdaptive();
-            PointAdaptive ponto_tt = patch->Parameterize(0.75, 0.0);
-            ponto_t = &ponto_tt;
-
-            PointAdaptive* ponto_u = new PointAdaptive();
-            PointAdaptive ponto_uu = patch->Parameterize(0.0, 0.25);
-            ponto_u = &ponto_uu;
-
-            PointAdaptive* ponto_v = new PointAdaptive();
-            PointAdaptive ponto_vv = patch->Parameterize(1.0, 0.25);
-            ponto_v = &ponto_vv;
-
-            PointAdaptive* ponto_w = new PointAdaptive();
-            PointAdaptive ponto_ww = patch->Parameterize(0.0, 0.75);
-            ponto_w = &ponto_ww;
-
-            PointAdaptive* ponto_x = new PointAdaptive();
-            PointAdaptive ponto_xx = patch->Parameterize(1.0, 0.75);
-            ponto_x = &ponto_xx;
-
-            PointAdaptive* ponto_y = new PointAdaptive();
-            PointAdaptive ponto_yy = patch->Parameterize(0.25, 1.0);
-            ponto_y = &ponto_yy;
-
-            PointAdaptive* ponto_z = new PointAdaptive();
-            PointAdaptive ponto_zz = patch->Parameterize(0.75, 1.0);
-            ponto_z = &ponto_zz;
-
-            CurvatureAnalytical kas(*(static_cast<NodeAdaptive*>(ponto_s)),
-                                    *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kat(*(static_cast<NodeAdaptive*>(ponto_t)),
-                                    *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kau(*(static_cast<NodeAdaptive*>(ponto_u)),
-                                    *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kav(*(static_cast<NodeAdaptive*>(ponto_v)),
-                                    *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kaw(*(static_cast<NodeAdaptive*>(ponto_w)),
-                                    *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kax(*(static_cast<NodeAdaptive*>(ponto_x)),
-                                    *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kay(*(static_cast<NodeAdaptive*>(ponto_y)),
-                                    *(static_cast<PatchCoons*>(patch)));
-            CurvatureAnalytical kaz(*(static_cast<NodeAdaptive*>(ponto_z)),
-                                    *(static_cast<PatchCoons*>(patch)));
+            CurvatureAnalytical kas(
+                static_cast<NodeAdaptive>(ponto_s),
+                *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+            CurvatureAnalytical kat(
+                static_cast<NodeAdaptive>(ponto_t),
+                *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+            CurvatureAnalytical kau(
+                static_cast<NodeAdaptive>(ponto_u),
+                *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+            CurvatureAnalytical kav(
+                static_cast<NodeAdaptive>(ponto_v),
+                *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+            CurvatureAnalytical kaw(
+                static_cast<NodeAdaptive>(ponto_w),
+                *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+            CurvatureAnalytical kax(
+                static_cast<NodeAdaptive>(ponto_x),
+                *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+            CurvatureAnalytical kay(
+                static_cast<NodeAdaptive>(ponto_y),
+                *(std::dynamic_pointer_cast<PatchCoons>(patch)));
+            CurvatureAnalytical kaz(
+                static_cast<NodeAdaptive>(ponto_z),
+                *(std::dynamic_pointer_cast<PatchCoons>(patch)));
 
             double ks_ponto_s = kas.CalculateGaussCurvature();
             // if (fabs(ks_ponto_s) < 0, 0001) {
@@ -649,8 +602,8 @@ double ChargeEstimateProcess::CalculateKaMedioPatch(PatchBezier* patch,
   return result / points;
 }
 
-double ChargeEstimateProcess::CalculateAreaPatch(PatchBezier* patch,
-                                                 int pointsGaussLegandre) {
+double ChargeEstimateProcess::CalculateAreaPatch(
+    std::shared_ptr<PatchBezier>& patch, int pointsGaussLegandre) {
   VectorAdaptive V;
   double I = 0.0;
   double beta[pointsGaussLegandre];
@@ -716,7 +669,7 @@ double ChargeEstimateProcess::CalculateAreaPatch(PatchBezier* patch,
 }
 
 double ChargeEstimateProcess::CalculateAreaTriangleMedioRad(
-    PatchBezier* patch) {
+    std::shared_ptr<PatchBezier>& patch) {
   double Kam = patch->GetKaMedio();
 
   // cout << "Kam " << Kam << endl;
@@ -739,11 +692,10 @@ double ChargeEstimateProcess::CalculateAreaTriangleMedioRad(
   return area;
 }
 
-double ChargeEstimateProcess::CalculateAreaTriangleMedio(PatchBezier* patch,
-                                                         Timer& timer,
-                                                         int degree) {
-  MeshAdaptive* mesh = new MeshAdaptive;
-  SubMesh* sub_mesh = InitialMeshEstimate(patch, degree);
+double ChargeEstimateProcess::CalculateAreaTriangleMedio(
+    std::shared_ptr<PatchBezier>& patch, Timer& timer, int degree) {
+  auto mesh = std::make_shared<MeshAdaptive>();
+  auto sub_mesh = InitialMeshEstimate(patch, degree);
   mesh->InsertSubMeshAdaptive(sub_mesh);
   // delete sub;
 
@@ -751,7 +703,7 @@ double ChargeEstimateProcess::CalculateAreaTriangleMedio(PatchBezier* patch,
     ++degree;
     //        cout<<"grau: "<<grau<<endl;
     //        cout<<"sub: "<<sub<<endl;
-    SubMesh* sub1 = InitialMeshEstimate(patch, degree);
+    auto sub1 = InitialMeshEstimate(patch, degree);
     mesh->RemoveSubMeshAdaptive();
     mesh->InsertSubMeshAdaptive(sub1);
     // delete sub1;
@@ -759,26 +711,26 @@ double ChargeEstimateProcess::CalculateAreaTriangleMedio(PatchBezier* patch,
 
   // cout<<"menor_grau: "<<menor_grau<<endl;
 
-  SubMesh* sub2 = InitialMeshEstimate(patch, minor_degree_);
+  auto sub2 = InitialMeshEstimate(patch, minor_degree_);
   mesh->RemoveSubMeshAdaptive();
   mesh->InsertSubMeshAdaptive(sub2);
 
-  static_cast<PatchBezier*>(patch)->SetAreaTriangle(
+  patch->SetAreaTriangle(
       mesh->GetSubMeshAdaptiveByPosition(0)->GetElement(0)->GetArea());
-  // delete malha;
+
   return patch->GetAreaTriangle();
 }
 
-long ChargeEstimateProcess::CalculateNumbersTriangle(PatchBezier* patch,
-                                                     int degree) {
-  SubMesh* sub = InitialMeshEstimate(patch, degree);
+long ChargeEstimateProcess::CalculateNumbersTriangle(
+    std::shared_ptr<PatchBezier>& patch, int degree) {
+  auto sub = InitialMeshEstimate(patch, degree);
 
   return sub->GetNumberElements();
 }
 
 // grau tem que ser multiplo de grau == 2^n
-SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
-                                                    int degree) {
+std::shared_ptr<SubMesh> ChargeEstimateProcess::InitialMeshEstimate(
+    std::shared_ptr<PatchCoons> patch, int degree) {
   int idv = 1;
   int ide = 1;
   int jump = degree;
@@ -786,10 +738,10 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
   int total_1 = 0;
   int total_2 = 0;
 
-  CurveAdaptive* c1 = patch->GetCurve(0);
-  CurveAdaptive* c2 = patch->GetCurve(1);
-  CurveAdaptive* c3 = patch->GetCurve(2);
-  CurveAdaptive* c4 = patch->GetCurve(3);
+  auto c1 = patch->GetCurve(0);
+  auto c2 = patch->GetCurve(1);
+  auto c3 = patch->GetCurve(2);
+  auto c4 = patch->GetCurve(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())
@@ -801,25 +753,25 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
   if (c4->GetNumBerPoints())
     c4 = nullptr;  // c4 já foi trabalhada no patch vizinho
 
-  SubMesh* sub = new SubMesh;
+  auto sub = std::make_shared<SubMesh>();
 
   for (double v = 0.0; v <= 1.0; v += 1.0 / degree) {
     for (double u = 0.0; u <= 1.0; u += 1.0 / degree) {
-      PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
-      p->SetId(idv++);
+      auto noh = std::make_shared<NodeAdaptive>(patch->Parameterize(u, v));
+      noh->SetId(idv++);
 
       // cout << "u = " << u << " v = " << v << endl;
       if (v == 0 and c1)  // p está na curva 1
-        c1->InsertPoint(p);
+        c1->InsertPoint(noh);
       else if (v == 1 and c3)  // p está na curva 3
-        c3->InsertPoint(p);
+        c3->InsertPoint(noh);
 
       if (u == 0 and c4)  // p está na curva 4
-        c4->InsertPoint(p);
+        c4->InsertPoint(noh);
       else if (u == 1 and c2)  // p está na curva 2
-        c2->InsertPoint(p);
+        c2->InsertPoint(noh);
 
-      sub->SetNoh(static_cast<NodeAdaptive*>(p));
+      sub->SetNoh(noh);
       total_1++;
     }
   }
@@ -829,9 +781,9 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
     for (double u = 1.0 / (2.0 * degree); u <= 1.0 - (1.0 / (2.0 * degree));
          u += 1.0 / degree) {
       //   cout << "u = " << u << " v = " << v << endl;
-      PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
-      sub->SetNoh(static_cast<NodeAdaptive*>(p));
-      p->SetId(idv++);
+      auto noh = std::make_shared<NodeAdaptive>(patch->Parameterize(u, v));
+      sub->SetNoh(noh);
+      noh->SetId(idv++);
     }
   }
 
@@ -844,65 +796,58 @@ SubMesh* ChargeEstimateProcess::InitialMeshEstimate(PatchCoons* patch,
       total_1 = total_1 - 1;
     }
 
-    ElementAdaptive* e1 = new TriangleAdaptive(
+    auto e1 = std::make_shared<TriangleAdaptive>(
         sub->GetNoh(i), sub->GetNoh(i + 1), sub->GetNoh(i + total_1));
-    ((TriangleAdaptive*)e1)->SetParametersN1(patch->FindUV(*(sub->GetNoh(i))));
-    ((TriangleAdaptive*)e1)
-        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + 1))));
-    ((TriangleAdaptive*)e1)
-        ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
+
+    e1->SetParametersN1(patch->FindUV(*(sub->GetNoh(i))));
+    e1->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + 1))));
+    e1->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e1->SetId(ide++);
     sub->SetElement(e1);
 
-    ElementAdaptive* e2 =
-        new TriangleAdaptive(sub->GetNoh(i + 1), sub->GetNoh(i + length + 1),
-                             sub->GetNoh(i + total_1));
-    ((TriangleAdaptive*)e2)
-        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + 1))));
-    ((TriangleAdaptive*)e2)
-        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + length + 1))));
-    ((TriangleAdaptive*)e2)
-        ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
+    auto e2 = std::make_shared<TriangleAdaptive>(sub->GetNoh(i + 1),
+                                                 sub->GetNoh(i + length + 1),
+                                                 sub->GetNoh(i + total_1));
+
+    e2->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + 1))));
+    e2->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + length + 1))));
+    e2->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e2->SetId(ide++);
     sub->SetElement(e2);
 
-    ElementAdaptive* e3 =
-        new TriangleAdaptive(sub->GetNoh(i + length + 1),
-                             sub->GetNoh(i + length), sub->GetNoh(i + total_1));
-    ((TriangleAdaptive*)e3)
-        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + length + 1))));
-    ((TriangleAdaptive*)e3)
-        ->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + length))));
-    ((TriangleAdaptive*)e3)
-        ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
+    auto e3 = std::make_shared<TriangleAdaptive>(sub->GetNoh(i + length + 1),
+                                                 sub->GetNoh(i + length),
+                                                 sub->GetNoh(i + total_1));
+
+    e3->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + length + 1))));
+    e3->SetParametersN2(patch->FindUV(*(sub->GetNoh(i + length))));
+    e3->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e3->SetId(ide++);
     sub->SetElement(e3);
 
-    ElementAdaptive* e4 = new TriangleAdaptive(
+    auto e4 = std::make_shared<TriangleAdaptive>(
         sub->GetNoh(i + length), sub->GetNoh(i), sub->GetNoh(i + total_1));
-    ((TriangleAdaptive*)e4)
-        ->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + length))));
-    ((TriangleAdaptive*)e4)->SetParametersN2(patch->FindUV(*(sub->GetNoh(i))));
-    ((TriangleAdaptive*)e4)
-        ->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
+
+    e4->SetParametersN1(patch->FindUV(*(sub->GetNoh(i + length))));
+    e4->SetParametersN2(patch->FindUV(*(sub->GetNoh(i))));
+    e4->SetParametersN3(patch->FindUV(*(sub->GetNoh(i + total_1))));
     e4->SetId(ide++);
     sub->SetElement(e4);
-    // cout<<"i "<<i<<endl;
   }
 
   // 5. define a submalha do patch
   patch->SetSubMesh(sub);
   sub->SetPatch(patch);
 
-  MeshAdaptive* mesh = new MeshAdaptive;
+  auto mesh = std::make_shared<MeshAdaptive>();
   mesh->InsertSubMeshAdaptive(sub);
 
   return sub;
 }
 
-bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
-                                                    Timer& timer, int degree) {
-  GeneratorAdaptive* ger = new GeneratorAdaptive();
+bool ChargeEstimateProcess::CalculateErroEstimative(
+    std::shared_ptr<MeshAdaptive>& mesh, Timer& timer, int degree) {
+  auto ger = std::make_shared<GeneratorAdaptive>();
 #if USE_OPENMP
   double erro = ger->CalculateErrorGlobalOmp(mesh, timer);
 #else
@@ -910,14 +855,14 @@ bool ChargeEstimateProcess::CalculateErroEstimative(MeshAdaptive* mesh,
 #endif
   // delete ger;
 
-  // cout << "erro: " << erro << " tolerancia: " << ESTIMATIVE_TOLERANCE <<
+  // cout << "erro: " << erro << " tolerancia: " << kEstimativeTolerance <<
   // endl;
 
   if (erro < minor_error_) {
     minor_degree_ = degree;
   }
 
-  if (erro <= ESTIMATIVE_TOLERANCE) {
+  if (erro <= kEstimativeTolerance) {
     //  cout<<"return: false" <<endl;
     return false;
   }

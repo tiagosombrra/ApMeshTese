@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <list>
+#include <memory>
 
 #include "../data/node_adaptive.h"
 #include "../data/triangle_adaptive.h"
@@ -17,12 +18,12 @@ class Adjacent {
   bool ConfirmRightAdjacency(const NodeAdaptive& noh,
                              const ElementAdaptive& first_element,
                              const ElementAdaptive& last_element);
-  ElementAdaptive* GetElementLeft(const NodeAdaptive& noh,
-                                  ElementAdaptive* element,
-                                  std::list<ElementAdaptive*>& list_element);
-  ElementAdaptive* GetElementRight(const NodeAdaptive& noh,
-                                   ElementAdaptive* element,
-                                   std::list<ElementAdaptive*>& list_element);
+  std::shared_ptr<ElementAdaptive> GetElementLeft(
+      const NodeAdaptive& noh, std::shared_ptr<ElementAdaptive>& element,
+      std::list<std::shared_ptr<ElementAdaptive>>& list_element);
+  std::shared_ptr<ElementAdaptive> GetElementRight(
+      const NodeAdaptive& noh, std::shared_ptr<ElementAdaptive>& element,
+      std::list<std::shared_ptr<ElementAdaptive>>& list_element);
   int ConcavityElement(const NodeAdaptive& noh,
                        const ElementAdaptive& first_element,
                        const ElementAdaptive& next_element);

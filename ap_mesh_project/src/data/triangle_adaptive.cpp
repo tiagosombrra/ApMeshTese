@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-extern double TOLERANCE;
+extern double kTolerance;
 
 TriangleAdaptive::TriangleAdaptive()
     : ElementAdaptive(),
@@ -15,16 +15,18 @@ TriangleAdaptive::TriangleAdaptive()
       angle_n2_(0),
       angle_n3_(0) {}
 
-TriangleAdaptive::TriangleAdaptive(NodeAdaptive* n1, NodeAdaptive* n2,
-                                   NodeAdaptive* n3)
+TriangleAdaptive::TriangleAdaptive(const std::shared_ptr<NodeAdaptive>& n1,
+                                   const std::shared_ptr<NodeAdaptive>& n2,
+                                   const std::shared_ptr<NodeAdaptive>& n3)
     : ElementAdaptive() {
   this->n1_ = n1;
   this->n2_ = n2;
   this->n3_ = n3;
 
-  this->n1_->InsertElement(this);
-  this->n2_->InsertElement(this);
-  this->n3_->InsertElement(this);
+  auto triangle_adaptive = std::shared_ptr<ElementAdaptive>(this);
+  this->n1_->InsertElement(triangle_adaptive);
+  this->n2_->InsertElement(triangle_adaptive);
+  this->n3_->InsertElement(triangle_adaptive);
 
   this->angle_n1_ = CalculateAngleN1();
   this->angle_n2_ = CalculateAngleN2();
@@ -80,15 +82,15 @@ double TriangleAdaptive::CalculateAngleN3() {
 
 // retorna o ângulo do nó n
 double TriangleAdaptive::GetAngle(const NodeAdaptive& node) {
-  if (this->n1_->CalculateDistance(node) <= TOLERANCE) {
+  if (this->n1_->CalculateDistance(node) <= kTolerance) {
     return this->angle_n1_;
   }
 
-  if (this->n2_->CalculateDistance(node) <= TOLERANCE) {
+  if (this->n2_->CalculateDistance(node) <= kTolerance) {
     return this->angle_n2_;
   }
 
-  if (this->n3_->CalculateDistance(node) <= TOLERANCE) {
+  if (this->n3_->CalculateDistance(node) <= kTolerance) {
     return this->angle_n3_;
   }
 
@@ -108,8 +110,9 @@ void TriangleAdaptive::CalculateNormal() {
   this->vector_normal_ = vector1 * vector2;
 }
 
-void TriangleAdaptive::ReplaceNode(const NodeAdaptive* old_node,
-                                   NodeAdaptive* new_node) {
+void TriangleAdaptive::ReplaceNode(
+    const std::shared_ptr<NodeAdaptive>& old_node,
+    const std::shared_ptr<NodeAdaptive>& new_node) {
   if (this->n1_ == old_node) {
     this->n1_ = new_node;
   } else if (this->n2_ == old_node) {

@@ -1,6 +1,6 @@
 #include "../../include/timer/timer.h"
 
-extern double MAX_TIME;
+extern double kMaxTime;
 
 Timer::Timer() {
   this->timer_parallel_init_.resize(1);
@@ -161,7 +161,7 @@ double Timer::GetRankThreadTime(int rank, int thread, int type) {
   return timer_parallel_[rank][thread][type];
 }
 
-vector<double> Timer::GetMaxTime() {
+std::vector<double> Timer::GetMaxTime() {
   vector<double> max;
   max.resize(this->timer_parallel_[0][0].size());
 
@@ -182,12 +182,12 @@ vector<double> Timer::GetMaxTime() {
   return max;
 }
 
-vector<double> Timer::GetMinTime() {
+std::vector<double> Timer::GetMinTime() {
   vector<double> min;
   min.resize(this->timer_parallel_[0][0].size());
 
   for (unsigned int i = 0; i < this->timer_parallel_[0][0].size(); ++i) {
-    min[i] = MAX_TIME;
+    min[i] = kMaxTime;
   }
 
   for (unsigned int i = 0; i < this->timer_parallel_.size(); ++i) {

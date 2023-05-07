@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-extern double EPSYLON;
+extern double kEpsylon;
 
 PointAdaptive::PointAdaptive() : id_(-1), x_(0), y_(0), z_(0) {}
 
@@ -29,9 +29,9 @@ void PointAdaptive::SetZ(double z) { z_ = z; }
 void PointAdaptive::SetY(double y) { y_ = y; }
 
 bool PointAdaptive::operator==(const PointAdaptive& point) const {
-  if ((fabs(this->x_ - point.x_) <= EPSYLON) &&
-      (fabs(this->y_ - point.y_) <= EPSYLON) &&
-      (fabs(this->z_ - point.z_) <= EPSYLON)) {
+  if ((fabs(this->x_ - point.x_) <= kEpsylon) &&
+      (fabs(this->y_ - point.y_) <= kEpsylon) &&
+      (fabs(this->z_ - point.z_) <= kEpsylon)) {
     return true;
   }
 
@@ -39,9 +39,9 @@ bool PointAdaptive::operator==(const PointAdaptive& point) const {
 }
 
 bool PointAdaptive::operator==(const PointAdaptive* point) const {
-  if ((fabs(this->x_ - point->x_) <= EPSYLON) &&
-      (fabs(this->y_ - point->y_) <= EPSYLON) &&
-      (fabs(this->z_ - point->z_) <= EPSYLON))
+  if ((fabs(this->x_ - point->x_) <= kEpsylon) &&
+      (fabs(this->y_ - point->y_) <= kEpsylon) &&
+      (fabs(this->z_ - point->z_) <= kEpsylon))
 
   {
     return true;
@@ -57,6 +57,6 @@ double PointAdaptive::CalculateDistance(const PointAdaptive& point) const {
 }
 
 void PointAdaptive::PrintPoint() {
-  std::cout << "Ponto " << this->id_ << " = ( " << this->x_ << ", " << this->y_
+  std::cout << "Point " << this->id_ << " = ( " << this->x_ << ", " << this->y_
             << ", " << this->z_ << ")" << std::endl;
 }

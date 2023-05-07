@@ -1,6 +1,8 @@
 #ifndef DATA_CURVE_CURVE_ADAPTIVE_PARAMETRIC_BEZIER_H
 #define DATA_CURVE_CURVE_ADAPTIVE_PARAMETRIC_BEZIER_H
 
+#include <memory>
+
 #include "curve_adaptive_parametric.h"
 
 class CurveAdaptiveParametricBezier : public CurveAdaptiveParametric {
@@ -14,7 +16,9 @@ class CurveAdaptiveParametricBezier : public CurveAdaptiveParametric {
                                 const PointAdaptive point1,
                                 const PointAdaptive point2,
                                 const PointAdaptive point3);
-  explicit CurveAdaptiveParametricBezier(CurveAdaptiveParametricBezier *);
+  explicit CurveAdaptiveParametricBezier(
+      std::shared_ptr<CurveAdaptiveParametricBezier>
+          curve_adaptive_parametric_bezier);
   ~CurveAdaptiveParametricBezier();
 
   double CalculateCurvature(double parameter) override;

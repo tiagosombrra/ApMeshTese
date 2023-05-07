@@ -1,20 +1,25 @@
 #include "../../include/data/vector_adaptive.h"
 
-VectorAdaptive::VectorAdaptive() : x_(0), y_(0), z_(0) {}
+VectorAdaptive::VectorAdaptive()
+    : x_(0), y_(0), z_(0), module_(CalculateModule()) {}
 
 VectorAdaptive::VectorAdaptive(double x, double y, double z)
-    : x_(x), y_(y), z_(z) {}
+    : x_(x), y_(y), z_(z), module_(CalculateModule()) {}
 
 VectorAdaptive::VectorAdaptive(const VectorAdaptive& vector)
-    : x_(vector.x_), y_(vector.y_), z_(vector.z_) {}
+    : x_(vector.x_), y_(vector.y_), z_(vector.z_), module_(CalculateModule()) {}
 
 VectorAdaptive::VectorAdaptive(const PointAdaptive& point)
-    : x_(point.GetX()), y_(point.GetY()), z_(point.GetZ()) {}
+    : x_(point.GetX()),
+      y_(point.GetY()),
+      z_(point.GetZ()),
+      module_(CalculateModule()) {}
 
 VectorAdaptive::VectorAdaptive(const PointAdaptive& p, const PointAdaptive& q)
     : x_(q.GetX() - p.GetX()),
       y_(q.GetY() - p.GetY()),
-      z_(q.GetZ() - p.GetZ()) {}
+      z_(q.GetZ() - p.GetZ()),
+      module_(CalculateModule()) {}
 
 VectorAdaptive VectorAdaptive::operator+(const VectorAdaptive& vector) const {
   VectorAdaptive soma(this->x_ + vector.x_, this->y_ + vector.y_,
@@ -57,6 +62,7 @@ const VectorAdaptive& VectorAdaptive::operator=(const VectorAdaptive& vector) {
   this->x_ = vector.x_;
   this->y_ = vector.y_;
   this->z_ = vector.z_;
+  this->module_ = CalculateModule();
 
   return *this;
 }
@@ -65,32 +71,30 @@ const VectorAdaptive& VectorAdaptive::operator=(const PointAdaptive& point) {
   this->x_ = point.GetX();
   this->y_ = point.GetY();
   this->z_ = point.GetZ();
+  this->module_ = CalculateModule();
 
   return *this;
 }
 
 double VectorAdaptive::CalculateModule() const {
-  return (
-      sqrt(this->x_ * this->x_ + this->y_ * this->y_ + this->z_ * this->z_));
+  return std::hypot(std::hypot(this->x_, this->y_), this->z_);
 }
 
-double VectorAdaptive::CalculateAngle(VectorAdaptive& vector) const {
-  VectorAdaptive c(this->x_, this->y_, this->z_);
+double VectorAdaptive::CalculateAngle(const VectorAdaptive& vector) const {
+  const VectorAdaptive& c = *this;
 
-  double cos = static_cast<double>(c ^ vector) /
-               (c.CalculateModule() * vector.CalculateModule());
+  const double cos =
+      (c ^ vector) / (c.CalculateModule() * vector.CalculateModule());
+  const double clamped_cos = std::fmin(1.0, std::fmax(-1.0, cos));
 
-  return (acos((cos > 1.0) ? 1.0 : ((cos < -1.0) ? -1.0 : cos)));
+  return clamped_cos;
 }
 
 VectorAdaptive VectorAdaptive::CalculateUnitVector() {
-  double module = this->CalculateModule();
+  double module_inv = 1.0 / module_;
 
-  VectorAdaptive unit_vector(static_cast<double>(this->x_) / module,
-                             static_cast<double>(this->y_) / module,
-                             static_cast<double>(this->z_) / module);
-
-  return unit_vector;
+  return VectorAdaptive(this->x_ * module_inv, this->y_ * module_inv,
+                        this->z_ * module_inv);
 }
 
 double VectorAdaptive::GetX() const { return x_; }

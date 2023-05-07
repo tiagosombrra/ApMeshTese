@@ -4,6 +4,8 @@
 #include <cmath>
 #include <cstdlib>
 #include <map>
+#include <memory>
+#include <typeinfo>
 
 #include "../crab_mesh/aft/advancing_front.h"
 #include "../crab_mesh/aft/boundary.h"
@@ -14,35 +16,43 @@
 #include "../curvature/curvature_analytical.h"
 #include "../curvature/curvature_discrete.h"
 #include "../data/curve/curve_adaptive_parametric.h"
-#include "../data/definitions.h"
 #include "../data/mesh/sub_mesh.h"
 #include "../data/patch/patch_coons.h"
 #include "../data/tree/bin_tree.h"
+#include "../definitions.h"
 #include "../parallel/TMCommunicator.h"
 
 class Adapter {
  public:
 #if USE_OPENMP
-  list<PointAdaptive*> AdaptCurveByCurveOmp(CurveAdaptive* curve,
-                                            Performer::IdManager* id_manager,
-                                            double factor_disc_global = 1.0);
-  list<PointAdaptive*> AdaptCurveBySurfaceOmp(CurveAdaptive* curve,
-                                              Performer::IdManager* id_manager,
-                                              double factor_disc_global = 1.0);
-  SubMesh* AdaptDomainOmp(PatchCoons* coons_patch,
-                          Performer::IdManager* id_manager,
-                          double factor_disc_global = 1.0);
+  std::list<std::shared_ptr<PointAdaptive>> AdaptCurveByCurveOmp(
+      std::shared_ptr<CurveAdaptiveParametric>& curve,
+      std::shared_ptr<Performer::IdManager>& id_manager,
+      double factor_disc_global = 1.0);
+  std::list<std::shared_ptr<PointAdaptive>> AdaptCurveBySurfaceOmp(
+      std::shared_ptr<CurveAdaptiveParametric>& curve,
+      std::shared_ptr<Performer::IdManager>& id_manager,
+      double factor_disc_global = 1.0);
+  std::shared_ptr<SubMesh> AdaptDomainOmp(
+      std::shared_ptr<PatchCoons>& coons_patch,
+      std::shared_ptr<Performer::IdManager>& id_manager,
+      double factor_disc_global = 1.0);
 #endif  // #USE_OPENMP
 
-  list<PointAdaptive*> AdaptCurveByCurve(
-      CurveAdaptive* curve, map<PointAdaptive*, PointAdaptive*>& map_points,
-      Performer::IdManager* id_manager, double factor_disc_global = 1.0);
-  list<PointAdaptive*> AdaptCurveBySurface(
-      CurveAdaptive* curve, map<PointAdaptive*, PointAdaptive*>& map_points,
-      Performer::IdManager* id_manager, double factor_disc_global = 1.0);
-  SubMesh* AdaptDomain(PatchCoons* coons_patch,
-                       Performer::IdManager* id_manager,
-                       double factor_disc_global = 1.0);
+  std::list<std::shared_ptr<PointAdaptive>> AdaptCurveByCurve(std::shared_ptr<CurveAdaptiveParametric>& curve,
+      map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive> > &map_points,
+      std::shared_ptr<Performer::IdManager>& id_manager,
+      double factor_disc_global = 1.0);
+  std::list<std::shared_ptr<PointAdaptive>> AdaptCurveBySurface(
+      std::shared_ptr<CurveAdaptiveParametric>& curve,
+      map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>>&
+          map_points,
+      std::shared_ptr<Performer::IdManager>& id_manager,
+      double factor_disc_global = 1.0);
+  std::shared_ptr<SubMesh> AdaptDomain(
+      std::shared_ptr<PatchCoons>& coons_patch,
+      std::shared_ptr<Performer::IdManager>& id_manager,
+      double factor_disc_global = 1.0);
 
  private:
   double CalculateNewSize(const double ka, const double kd,

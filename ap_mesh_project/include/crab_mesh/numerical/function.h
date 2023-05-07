@@ -1,7 +1,7 @@
 #ifndef _DATA_NUMERICAL_FUNCTION_H_
 #define _DATA_NUMERICAL_FUNCTION_H_
 
-#include "../../data/definitions.h"
+#include "../../definitions.h"
 #include "multi_variable_function.h"
 
 namespace Data {
@@ -10,7 +10,7 @@ class Function : public Data::Numerical::MultiVariableFunction<1> {
  public:
   virtual double f(double x) = 0;
 
-  virtual double f(const double x[1]);
+  virtual double f(const double x[1]) override;
 };
 }  // namespace Numerical
 }  // namespace Data

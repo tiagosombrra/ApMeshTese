@@ -138,7 +138,8 @@ CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(
 }
 
 CurveAdaptiveParametricHermite::CurveAdaptiveParametricHermite(
-    CurveAdaptiveParametricHermite *curve_adaptive_parametric_hermite)
+    std::shared_ptr<CurveAdaptiveParametricHermite>
+        curve_adaptive_parametric_hermite)
     : CurveAdaptiveParametric(curve_adaptive_parametric_hermite) {
   this->vector0_ = curve_adaptive_parametric_hermite->vector0_;
   this->vector1_ = curve_adaptive_parametric_hermite->vector1_;

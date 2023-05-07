@@ -1,147 +1,74 @@
 #include "../../include/input_output/file.h"
 
-File::File(const char* name) {
-  this->INPUT_MODEL.open(name);
-  if (this->INPUT_MODEL.fail())
+File::File(const char *name) {
+  this->input_model_.open(name);
+  if (this->input_model_.fail())
     cout << "não abriu o arquivo em disco!" << endl;
   else
     this->name_ = name;
 }
 
-File::~File() { this->INPUT_MODEL.close(); }
+File::~File() { this->input_model_.close(); }
 
 // ler as linhas que definem as curvas
-void File::ReadCurves(const string reading) {
+void File::ReadCurves(const string &reading) {
   // "P" de point_1_ ou P2, os pontos inicial e final da curva
   // "D" de DP1 ou DP2, as derivadas nos pontos inicial e final
   if (reading[0] == 'P' or reading[0] == 'D') this->curves_.push_back(reading);
 }
 
 // ler as linhas que definem os patches
-void File::ReadPatches(const string reading) {
+void File::ReadPatches(const string &reading) {
   // "D" de DEFINE_PATCH
   if (reading[0] == 'D') this->patches_.push_back(reading);
 }
 
-// converta uma string em um char*, por causa do strtok() do C
-char* File::ConvertString(string font) {
-  char* destiny;
-
-  destiny = (char*)malloc(font.length() * sizeof(char));
-
-  for (unsigned int i = 0; i < font.length(); ++i) destiny[i] = font[i];
-
-  return destiny;
-}
-
 string File::GetName() { return name_; }
+
+std::vector<double> File::GetDoubles(const std::string &str) {
+  std::vector<double> result;
+  std::string sub;
+
+  size_t start = 0, end = 0;
+  while (end != std::string::npos) {
+    end = str.find_first_of(" <>,", start);
+    sub = str.substr(start, end - start);
+
+    if (!sub.empty()) {
+      double value = std::stod(sub, nullptr);
+      result.push_back(value);
+    }
+
+    start = str.find_first_not_of(" <>,", end);
+  }
+
+  return result;
+}
 
 // criar as curvas
 void File::CreateCurvesTo() {
-  char* temp = nullptr;
-  char* str = nullptr;
-  double pt0[3];   // ponto inicial
-  double pt1[3];   // ponto final
-  double dpt0[3];  // derivada no ponto inicial
-  double dpt1[3];  // derivada no ponto final
-
-  list<string>::iterator itr = this->curves_.begin();
-  list<string>::iterator fim = this->curves_.end();
-
-  // leia quatro strings da list para definir uma curva
-  while (itr != fim) {
-    // lê o ponto inicial
-    temp = ConvertString(*itr);  // aloca temp em convertaString
-    str = strtok(temp, " <");
-    str = strtok(nullptr, "<,");
-    pt0[0] = atof(str);
-    str = strtok(nullptr, ",,");
-    pt0[1] = atof(str);
-    str = strtok(nullptr, ",>");
-    pt0[2] = atof(str);
-    ++itr;
-
-    delete temp;  // deleta o temp alocado em convertaString
-
-    // lê o ponto final
-    temp = ConvertString(*itr);
-    str = strtok(temp, " <");
-    str = strtok(nullptr, "<,");
-    pt1[0] = atof(str);
-    str = strtok(nullptr, ",,");
-    pt1[1] = atof(str);
-    str = strtok(nullptr, ",>");
-    pt1[2] = atof(str);
-    ++itr;
-
-    delete temp;  // deleta o temp alocado em convertaString
-
-    // lê a derivada no ponto inicial
-    temp = ConvertString(*itr);
-    str = strtok(temp, " <");
-    str = strtok(nullptr, "<,");
-    dpt0[0] = atof(str);
-    str = strtok(nullptr, ",,");
-    dpt0[1] = atof(str);
-    str = strtok(nullptr, ",>");
-    dpt0[2] = atof(str);
-    ++itr;
-
-    delete temp;  // deleta o temp alocado em convertaString
-
-    // lê a derivada no ponto final
-    temp = ConvertString(*itr);
-    str = strtok(temp, " <");
-    str = strtok(nullptr, "<,");
-    dpt1[0] = atof(str);
-    str = strtok(nullptr, ",,");
-    dpt1[1] = atof(str);
-    str = strtok(nullptr, ",>");
-    dpt1[2] = atof(str);
-    ++itr;
-
-    delete temp;  // deleta o temp alocado em convertaString
-
+  for (const auto &curve : curves_) {
+    auto points = GetDoubles(curve);
     // substituir pelo construtor de curvas
-    cout << "\nContrui uma curva com ponto inicial ( " << pt0[0] << ", "
-         << pt0[1] << ", " << pt0[2] << ")\n"
-         << "ponto final: (" << pt1[0] << ", " << pt1[1] << ", " << pt1[2]
-         << ")\n"
-         << "Derivada no ponto inicial: (" << dpt0[0] << ", " << dpt0[1] << ", "
-         << dpt0[2] << ")\n"
-         << "Derivada no ponto final: (" << dpt1[0] << ", " << dpt1[1] << ", "
-         << dpt1[2] << ")" << endl;
-
-  }  // fim do while
-
-  delete str;
+    cout << "\nContrui uma curva com ponto inicial ( " << points[0] << ", "
+         << points[1] << ", " << points[2] << ")\n"
+         << "ponto final: (" << points[3] << ", " << points[4] << ", "
+         << points[5] << ")\n"
+         << "Derivada no ponto inicial: (" << points[6] << ", " << points[7]
+         << ", " << points[8] << ")\n"
+         << "Derivada no ponto final: (" << points[9] << ", " << points[10]
+         << ", " << points[11] << ")" << endl;
+  }
 }
 
 // criar os patches
 void File::CreatePatchesTo() {
-  char* temp = nullptr;
-  char* str = nullptr;
-
-  list<string>::iterator itr = this->patches_.begin();
-  list<string>::iterator fim = this->patches_.end();
-
-  while (itr != fim) {
-    temp = ConvertString(*itr);
-    str = strtok(temp, " <");
-    str = strtok(nullptr, "<,");
-    cout << str << endl;
-    str = strtok(nullptr, ",,");
-    cout << str << endl;
-    str = strtok(nullptr, ",,");
-    cout << str << endl;
-    str = strtok(nullptr, ",>");
-    cout << str << endl;
-    ++itr;
-
-    delete temp;  // deleta o temp alocado em convertaString
-  }               // fim do while
-
-  delete str;
+  for (const auto &patch : patches_) {
+    auto points = GetDoubles(patch);
+    for (const auto &point : points) {
+      cout << "point_patch: " << point << endl;
+    }
+  }
 }
 
 // ler um arquivo para definir um Modelo
@@ -156,13 +83,13 @@ void File::ReadFileTo() {
   bool read_patches = false;               // pode ler uma linha de patch
   string end_of_patches = "FIM_DE_PATCHS_HERMITES";  // fim do bloco de patches
 
-  while (INPUT_MODEL.good()) {
-    getline(INPUT_MODEL, line);  // pega uma linha do arquivo
+  while (input_model_.good()) {
+    getline(input_model_, line);  // pega uma linha do arquivo
 
     if (line == init_curves)  // começa a definição das curvas no arquivo
     {
       read_curves = true;  // você pode ler as linhas e definir os pontos e suas
-                           // derivadas das curvas
+      // derivadas das curvas
       continue;
     } else if (line == end_of_curves)  // não há mais definições de curvas
     {

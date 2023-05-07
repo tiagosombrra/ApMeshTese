@@ -1,7 +1,7 @@
 #include "../../../include/data/patch/patch_bezier.h"
 
-extern double TOLERANCE;  // distância máxima entre dois pontos
-extern unsigned int I_MAX;
+extern unsigned int kImax;
+extern double kTolerance;
 
 PatchBezier::PatchBezier()
     : PatchCoons(),
@@ -9,15 +9,16 @@ PatchBezier::PatchBezier()
       signal_curve2_(true),
       signal_curve3_(true),
       signal_curve4_(true),
-      area_(0),
-      ka_medio_(0),
-      segment_medio_(0),
-      area_triangle_(0),
-      number_triangle_(0),
+      area_(0.0),
+      ka_medio_(0.0),
+      segment_medio_(0.0),
+      area_triangle_(0.0),
+      number_triangle_(0.0),
       id_process_(0),
       id_patch_bezier_(0) {}
 
-PatchBezier::PatchBezier(PatchBezier* patch_bezier) : PatchCoons(patch_bezier) {
+PatchBezier::PatchBezier(std::shared_ptr<PatchBezier> patch_bezier)
+    : PatchCoons(patch_bezier) {
   this->pt03_ = patch_bezier->pt03_;
   this->pt13_ = patch_bezier->pt13_;
   this->pt23_ = patch_bezier->pt23_;
@@ -40,14 +41,29 @@ PatchBezier::PatchBezier(PatchBezier* patch_bezier) : PatchCoons(patch_bezier) {
   this->mat_geo_gz_ = patch_bezier->mat_geo_gz_;
   this->mat_base_u_ = patch_bezier->mat_base_u_;
   this->mat_base_v_ = patch_bezier->mat_base_v_;
+
+  this->signal_curve1_ = true;
+  this->signal_curve2_ = true;
+  this->signal_curve3_ = true;
+  this->signal_curve4_ = true;
+
+  this->area_ = 0.0;
+  this->ka_medio_ = 0.0;
+  this->segment_medio_ = 0.0;
+  this->area_triangle_ = 0.0;
+  this->number_triangle_ = 0.0;
+  this->id_process_ = 0;
+  this->id_patch_bezier_ = 0;
 }
 
 // Ordem das curvas:
 //		C3
 //	C4		C2
 //		C1
-PatchBezier::PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
-                         CurveAdaptive* curve3, CurveAdaptive* curve4,
+PatchBezier::PatchBezier(const std::shared_ptr<CurveAdaptiveParametric>& curve1,
+                         const std::shared_ptr<CurveAdaptiveParametric>& curve2,
+                         const std::shared_ptr<CurveAdaptiveParametric>& curve3,
+                         const std::shared_ptr<CurveAdaptiveParametric>& curve4,
                          PointAdaptive pt11, PointAdaptive pt21,
                          PointAdaptive pt12, PointAdaptive pt22,
                          bool signal_curve1, bool signal_curve2,
@@ -69,40 +85,45 @@ PatchBezier::PatchBezier(CurveAdaptive* curve1, CurveAdaptive* curve2,
   //
   // 2. Coloca o Patch na lista das curvas
   //
-  static_cast<CurveAdaptiveParametricBezier*>(curve1)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricBezier*>(curve2)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricBezier*>(curve3)->InsertPatch(this);
-  static_cast<CurveAdaptiveParametricBezier*>(curve4)->InsertPatch(this);
+  auto patch = std::make_shared<Patch>();
+  static_pointer_cast<CurveAdaptiveParametricBezier>(curve1)->InsertPatch(
+      patch);
+  static_pointer_cast<CurveAdaptiveParametricBezier>(curve2)->InsertPatch(
+      patch);
+  static_pointer_cast<CurveAdaptiveParametricBezier>(curve3)->InsertPatch(
+      patch);
+  static_pointer_cast<CurveAdaptiveParametricBezier>(curve4)->InsertPatch(
+      patch);
   //
   // 3. Seta os atributos de acordo com as curvas
   //
   this->pt00_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve1)->GetPoint0();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve1)->GetPoint0();
   this->pt10_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve1)->GetPoint1();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve1)->GetPoint1();
   this->pt20_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve1)->GetPoint2();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve1)->GetPoint2();
 
   this->pt30_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve2)->GetPoint0();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve2)->GetPoint0();
   this->pt31_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve2)->GetPoint1();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve2)->GetPoint1();
   this->pt32_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve2)->GetPoint2();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve2)->GetPoint2();
 
   this->pt13_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve3)->GetPoint1();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve3)->GetPoint1();
   this->pt23_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve3)->GetPoint2();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve3)->GetPoint2();
   this->pt33_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve3)->GetPoint3();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve3)->GetPoint3();
 
   this->pt01_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve4)->GetPoint1();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve4)->GetPoint1();
   this->pt02_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve4)->GetPoint2();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve4)->GetPoint2();
   this->pt03_ =
-      static_cast<CurveAdaptiveParametricBezier*>(curve4)->GetPoint3();
+      static_pointer_cast<CurveAdaptiveParametricBezier>(curve4)->GetPoint3();
 
   this->pt11_ = pt11;
   this->pt21_ = pt21;
@@ -228,16 +249,24 @@ PatchBezier ::PatchBezier(const PointAdaptive pt00, const PointAdaptive pt01,
   this->signal_curve3_ = signal_curve3;
   this->signal_curve4_ = signal_curve4;
 
+  this->area_ = 0.0;
+  this->ka_medio_ = 0.0;
+  this->segment_medio_ = 0.0;
+  this->area_triangle_ = 0.0;
+  this->number_triangle_ = 0.0;
+  this->id_process_ = 0;
+  this->id_patch_bezier_ = 0;
+
   // 1. Inclui as curvas na lista de curvas de CoonsPatch
   //
-  this->curves_.push_back(
-      new CurveAdaptiveParametricBezier(pt00_, pt10_, pt20_, pt30_));
-  this->curves_.push_back(
-      new CurveAdaptiveParametricBezier(pt30_, pt31_, pt32_, pt33_));
-  this->curves_.push_back(
-      new CurveAdaptiveParametricBezier(pt03_, pt13_, pt23_, pt33_));
-  this->curves_.push_back(
-      new CurveAdaptiveParametricBezier(pt00_, pt01_, pt02_, pt03_));
+  this->curves_.push_back(std::make_shared<CurveAdaptiveParametricBezier>(
+      pt00_, pt10_, pt20_, pt30_));
+  this->curves_.push_back(std::make_shared<CurveAdaptiveParametricBezier>(
+      pt30_, pt31_, pt32_, pt33_));
+  this->curves_.push_back(std::make_shared<CurveAdaptiveParametricBezier>(
+      pt03_, pt13_, pt23_, pt33_));
+  this->curves_.push_back(std::make_shared<CurveAdaptiveParametricBezier>(
+      pt00_, pt01_, pt02_, pt03_));
   //
   // 2. Aloca espaço para as matrizes
   //
@@ -325,11 +354,6 @@ PatchBezier ::PatchBezier(const PointAdaptive pt00, const PointAdaptive pt01,
   this->mat_geo_gz_ = this->GetB() * this->GetGz() * this->GetB();
 }
 
-PatchBezier::~PatchBezier() {
-  // delete &mat_base_v_;
-  // delete &mat_base_u_;
-}
-
 PointAdaptive PatchBezier::CalculatePointUV() {
   PointAdaptive point;
 
@@ -404,14 +428,14 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& point) {
     int k = 0;
     double pivot = matrix(0, 0);
 
-    while ((fabs(pivot) < TOLERANCE) and (k < 2)) {
+    while ((fabs(pivot) < kTolerance) and (k < 2)) {
       ++k;
       pivot = matrix(k, 0);
     }
 
     matrix.row(k).swap(matrix.row(0));
 
-    if (fabs(pivot) < TOLERANCE) {
+    if (fabs(pivot) < kTolerance) {
       cout << "Erro! Não é possível encontrar as coordenadas paramétricas no "
               "ponto p"
            << point.GetId() << " (" << point.GetX() << ", " << point.GetY()
@@ -431,7 +455,7 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& point) {
 
     pivot = matrix(1, 1);
 
-    if (fabs(pivot) < TOLERANCE) {
+    if (fabs(pivot) < kTolerance) {
       pivot = matrix(2, 1);
       matrix.row(2).swap(matrix.row(1));
     }
@@ -465,7 +489,7 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& point) {
       v_i += delta_v;
     }
 
-    if (++iMax > I_MAX) {
+    if (++iMax > kImax) {
 #if USE_PRINT_COMENT
       cout << "iMax alcançado!" << endl;
 #endif  // #if USE_PRINT_COMENT
@@ -475,17 +499,17 @@ tuple<double, double> PatchBezier::FindUV(const PointAdaptive& point) {
     // cout << "u = " << u_i << " " << "v = " << v_i << endl;
     // cout << "delta_u = " << delta_u << " " << "delta_v = " << delta_v <<
     // endl;
-  } while (fabs(delta_u) >= TOLERANCE or fabs(delta_v) >= TOLERANCE);
-  // while ( p.distanciaPara(p_i) >= TOLERANCE );
+  } while (fabs(delta_u) >= kTolerance || fabs(delta_v) >= kTolerance);
+  // while ( p.distanciaPara(p_i) >= kTolerance );
 
-  if (u_i <= TOLERANCE)
+  if (u_i <= kTolerance)
     u_i = 0.0;
-  else if (u_i >= 1.0 - TOLERANCE)
+  else if (u_i >= 1.0 - kTolerance)
     u_i = 1.0;
 
-  if (v_i <= TOLERANCE)
+  if (v_i <= kTolerance)
     v_i = 0.0;
-  else if (v_i >= 1.0 - TOLERANCE)
+  else if (v_i >= 1.0 - kTolerance)
     v_i = 1.0;
 
   if (std::isnan(u_i) || std::isnan(v_i)) {

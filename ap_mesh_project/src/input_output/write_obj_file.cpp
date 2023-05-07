@@ -1,5 +1,9 @@
 #include "../../include/input_output/write_obj_file.h"
 
+#include "../../include/definitions.h"
+
+extern std::string nameModel;
+
 WriteOBJFile::WriteOBJFile() {}
 
 WriteOBJFile::~WriteOBJFile() {}
@@ -7,7 +11,7 @@ WriteOBJFile::~WriteOBJFile() {}
 void WriteOBJFile::WriteCurvaturePatches(std::vector<double> patches,
                                          double max_value) {
   stringstream name_file;
-  name_file << NAME_MODEL + "_analise_curvature_patches.log";
+  name_file << nameModel + "_analise_curvature_patches.log";
 
   ofstream file(name_file.str().c_str());
 
@@ -90,7 +94,7 @@ bool WriteOBJFile::WriteMeshOBJFile(MeshAdaptive* mesh, unsigned int step,
   Nv = Nt = 0;
 
   for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = mesh->GetSubMeshAdaptiveByPosition(i);
+    auto sub = mesh->GetSubMeshAdaptiveByPosition(i);
 
     Nv += sub->GetNumberNos();
     Nt += sub->GetNumberElements();
@@ -99,10 +103,10 @@ bool WriteOBJFile::WriteMeshOBJFile(MeshAdaptive* mesh, unsigned int step,
   file << "# of vertices" << endl << Nv << endl << endl;
 
   for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = mesh->GetSubMeshAdaptiveByPosition(i);
+    auto sub = mesh->GetSubMeshAdaptiveByPosition(i);
 
     for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
-      NodeAdaptive* n = sub->GetNoh(j);
+      auto n = sub->GetNoh(j);
       file << "v " << n->GetX() << " " << n->GetY() << " " << n->GetZ() << endl;
     }
   }
@@ -110,10 +114,10 @@ bool WriteOBJFile::WriteMeshOBJFile(MeshAdaptive* mesh, unsigned int step,
   file << "# of faces " << endl << Nt << endl;
 
   for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = mesh->GetSubMeshAdaptiveByPosition(i);
+    auto sub = mesh->GetSubMeshAdaptiveByPosition(i);
 
     for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
-      TriangleAdaptive* t = (TriangleAdaptive*)sub->GetElement(j);
+      auto t = std::static_pointer_cast<TriangleAdaptive>(sub->GetElement(j));
       file << "f " << t->GetNoh(1).GetId() << " " << t->GetNoh(2).GetId() << " "
            << t->GetNoh(3).GetId() << endl;
     }

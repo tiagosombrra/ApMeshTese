@@ -7,7 +7,7 @@ Performer::RangedIdManager::RangedIdManager(ULInt id, ULInt min, ULInt offset,
     : Performer::IdManager(id, size) {
   this->offset = this->range = 0;
 
-  this->mins = new ULInt[this->size];
+  this->mins.resize(size);
 
   for (UInt i = 0; i < this->size; i++) {
     this->setMin(i, min);
@@ -17,7 +17,7 @@ Performer::RangedIdManager::RangedIdManager(ULInt id, ULInt min, ULInt offset,
   this->setOffset(offset);
 }
 
-Performer::RangedIdManager::~RangedIdManager() { delete[] this->mins; }
+Performer::RangedIdManager::~RangedIdManager() {}
 
 void Performer::RangedIdManager::setId(UInt i, ULInt id) {
   Performer::IdManager::setId(i, id);
@@ -58,15 +58,6 @@ ULInt Performer::RangedIdManager::next(UInt i) {
     this->mins[i] += this->offset;
     this->ids[i] = this->mins[i];
   }
-  // #pragma omp critical
-  //     {
-  //         std::ofstream ofs;
-  //         ofs.open ("backtrace", std::ofstream::out | std::ofstream::app);
-  //         //std::cout<<"i:"<<i<<" this->ids[i]:"<<this->ids[i]<<"
-  //         thread:"<<omp_get_thread_num()<<endl; ofs<<"i:"<<i<<"
-  //         this->ids[i]:"<<this->ids[i]<<"
-  //         thread:"<<omp_get_thread_num()<<endl;
-  //     }
   return this->ids[i]++;
 }
 

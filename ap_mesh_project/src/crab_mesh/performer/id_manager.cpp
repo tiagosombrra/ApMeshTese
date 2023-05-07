@@ -5,14 +5,14 @@ using namespace Performer;
 Performer::IdManager::IdManager(ULInt id, UInt size) {
   this->size = size;
 
-  this->ids = new ULInt[size];
+  this->ids.resize(size);
 
   for (UInt i = 0; i < size; i++) {
     this->setId(i, id);
   }
 }
 
-Performer::IdManager::~IdManager() { delete[] this->ids; }
+Performer::IdManager::~IdManager() {}
 
 void Performer::IdManager::setId(UInt i, ULInt id) { this->ids[i] = id; }
 

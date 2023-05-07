@@ -1,7 +1,10 @@
 #ifndef _QUADTREE_CELL_H_
 #define _QUADTREE_CELL_H_
 
-#include "../../data/definitions.h"
+#include <memory>
+#include <vector>
+
+#include "../../definitions.h"
 #include "boundary.h"
 #include "edge.h"
 #include "face.h"
@@ -13,8 +16,6 @@ using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;
 using namespace Par2DJMesh::Basics;
 
-extern double TOLERANCE_AFT;
-
 namespace Par2DJMesh {
 namespace AFT {
 class QuadtreeCell : public Shape {
@@ -25,12 +26,12 @@ class QuadtreeCell : public Shape {
   bool highlightedAsNeighbor;
 
   // para a geracao baseada em templates
-  Vertex *v[8];
-  Edge *e[8];
+  std::shared_ptr<Vertex> v[8];
+  std::shared_ptr<Edge> e[8];
 
-  Vertex *min;
-  Vertex *max;
-  Vertex **mids;
+  std::shared_ptr<Vertex> min;
+  std::shared_ptr<Vertex> max;
+  std::vector<std::shared_ptr<Vertex>> mids;
 
   QuadtreeCell *children[4];
   QuadtreeCell *parent;
@@ -42,7 +43,7 @@ class QuadtreeCell : public Shape {
   EdgeList edges;
 
  private:
-  Vertex **makeMids();
+  std::vector<std::shared_ptr<Vertex>> makeMids();
 
   void subdivide(bool setChildrenEdges = true);
 
@@ -51,9 +52,10 @@ class QuadtreeCell : public Shape {
   void setChildrenEdges();
 
   // para a geracao baseada em templates
-  Edge *makeE(int i);
-  Edge *makeE(int i, int j);
-  Edge *makeE(Vertex *v1, Vertex *v2);
+  std::shared_ptr<Edge> makeE(int i);
+  std::shared_ptr<Edge> makeE(int i, int j);
+  std::shared_ptr<Edge> makeE(std::shared_ptr<Vertex> v1,
+                              std::shared_ptr<Vertex> v2);
 
   void makeMeshType1();
   void makeMeshType2(int c);
@@ -63,10 +65,10 @@ class QuadtreeCell : public Shape {
   void makeMeshType6();
 
  public:
-  QuadtreeCell(long int id,
-               // MainDrive *mainDrive,
-               Quadtree *tree = NULL, Vertex *min = NULL, Vertex *max = NULL,
-               QuadtreeCell *parent = NULL, long int level = 0);
+  QuadtreeCell(long int id, Quadtree *tree = nullptr,
+               std::shared_ptr<Vertex> min = nullptr,
+               std::shared_ptr<Vertex> max = nullptr,
+               QuadtreeCell *parent = nullptr, long int level = 0);
   ~QuadtreeCell();
 
   void setQuadtree(Quadtree *tree);
@@ -82,9 +84,9 @@ class QuadtreeCell : public Shape {
   void setChild(int position, QuadtreeCell *child);
   QuadtreeCell *getChild(int position);
 
-  void setBox(Vertex *min, Vertex *max);
-  Vertex *getMin();
-  Vertex *getMax();
+  void setBox(std::shared_ptr<Vertex> min, std::shared_ptr<Vertex> max);
+  std::shared_ptr<Vertex> getMin();
+  std::shared_ptr<Vertex> getMax();
 
   void setNeighbors(int direction, QuadtreeCellList neighbors);
   QuadtreeCellList getNeighbors(int direction);
@@ -96,24 +98,24 @@ class QuadtreeCell : public Shape {
   VertexList getVertices();
   EdgeList getEdges();
 
-  bool shouldSubdivide(Edge *e);
-  bool shouldSubdivide(Face *f);
+  bool shouldSubdivide(std::shared_ptr<Edge> e);
+  bool shouldSubdivide(std::shared_ptr<Face> f);
 
-  void addEdge(Edge *e);
-  void removeEdge(Edge *e);
+  void addEdge(std::shared_ptr<Edge> e);
+  void removeEdge(std::shared_ptr<Edge> e);
   void clearEdges();
-  QuadtreeCell *findCell(Edge *e);
-  QuadtreeCell *findCell(Face *f);
+  QuadtreeCell *findCell(std::shared_ptr<Edge> e);
+  QuadtreeCell *findCell(std::shared_ptr<Face> f);
 
-  bool in(Vertex *v);
-  bool on(Vertex *v);
-  bool out(Vertex *v);
+  bool in(std::shared_ptr<Vertex> v);
+  bool on(std::shared_ptr<Vertex> v);
+  bool out(std::shared_ptr<Vertex> v);
 
   double height();
   double surface();
 
-  bool subdivide(Edge *e);
-  bool subdivide(Face *f);
+  bool subdivide(std::shared_ptr<Edge> e);
+  bool subdivide(std::shared_ptr<Face> f);
   void subdivideToLevel(unsigned long int level);
   bool subdivideAccordingToNeighbors();
 
@@ -128,17 +130,6 @@ class QuadtreeCell : public Shape {
   void makeTemplateBasedMesh();
 
   string getText() override;
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void highlight(bool highlightEdges, /*debug*/bool
-  //     dontHighlightNeighbors = false/*endebug*/); void highlightAsNeighbor();
-  //     void unhighlight(); void unhighlight(bool highlightEdges, /*debug*/bool
-  //     dontHighlightNeighbors = false/*endebug*/); void
-  //     unhighlightAsNeighbor();
-
-  //    void draw();
-  // #endif //#if USE_OPENGL
 };
 }  // namespace AFT
 }  // namespace Par2DJMesh

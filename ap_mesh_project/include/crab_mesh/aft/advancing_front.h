@@ -1,7 +1,9 @@
 #ifndef ADVANCING_FRONT_H_
 #define ADVANCING_FRONT_H_
 
-#include "../../data/definitions.h"
+#include <memory>
+
+#include "../../definitions.h"
 #include "boundary.h"
 #include "edge.h"
 #include "face.h"
@@ -13,9 +15,6 @@
 using namespace Par2DJMesh;
 using namespace Par2DJMesh::AFT;
 using namespace Par2DJMesh::Basics;
-
-extern double TOLERANCE_AFT;
-extern std::string USE_TEMPLATE;
 
 namespace Par2DJMesh {
 namespace AFT {
@@ -32,9 +31,8 @@ class AdvancingFront : public Shape {
   double phi;
   unsigned int numImproves;
 
-  Boundary *boundary;
-
-  Quadtree *quadtree;
+  std::shared_ptr<Boundary> boundary;
+  std::shared_ptr<Quadtree> quadtree;
 
   FaceList mesh;
 
@@ -53,20 +51,26 @@ class AdvancingFront : public Shape {
 
   // Testa intersecoes com arestas jah existentes
   // e com as faces jah existentes
-  bool interceptionTest(Edge *e, Vertex *candidate, bool inFaceTest = true,
-                        bool onlyFrontEdges = false);
-  bool interceptionTest(Edge *e);
+  bool interceptionTest(std::shared_ptr<Edge> e,
+                        std::shared_ptr<Vertex> candidate,
+                        bool inFaceTest = true, bool onlyFrontEdges = false);
+  bool interceptionTest(std::shared_ptr<Edge> e);
 
-  Vertex *makeIdealVertex(Edge *e, double &h);
-  virtual bool findBestVertex(Edge *e, Vertex *&best, bool geometryPhase);
+  std::shared_ptr<Vertex> makeIdealVertex(std::shared_ptr<Edge> e, double &h);
+  virtual bool findBestVertex(std::shared_ptr<Edge> e,
+                              std::shared_ptr<Vertex> &best,
+                              bool geometryPhase);
 
-  void insertInFront(Edge *last, Edge *e);
+  void insertInFront(std::shared_ptr<Edge> last, std::shared_ptr<Edge> e);
 
-  Edge *findEdge(Vertex *v1, Vertex *v2);
-  EdgeList findAdjacentEdges(Vertex *v);
-  FaceList findAdjacentFaces(const FaceList &faces, Vertex *v);
+  std::shared_ptr<Edge> findEdge(std::shared_ptr<Vertex> v1,
+                                 std::shared_ptr<Vertex> v2);
+  EdgeList findAdjacentEdges(std::shared_ptr<Vertex> v);
+  FaceList findAdjacentFaces(const FaceList &faces, std::shared_ptr<Vertex> v);
 
-  void removeFromFront(Vertex *v1, Vertex *v2 = NULL, Vertex *v3 = NULL);
+  void removeFromFront(std::shared_ptr<Vertex> v1,
+                       std::shared_ptr<Vertex> v2 = nullptr,
+                       std::shared_ptr<Vertex> v3 = nullptr);
 
   virtual enum MethodStatus makeMesh(bool frontBased,
                                      bool geometryPhase = true);
@@ -78,12 +82,11 @@ class AdvancingFront : public Shape {
  public:
   AdvancingFront(double factor = 0.85, double tolerance = 1.e-8,
                  unsigned int numImproves = 5, double phi = 0.5);
-  AdvancingFront(Boundary *boundary, Quadtree *quadtree,
-                 double tolerance = 1.e-8, unsigned int numImproves = 5);
+  AdvancingFront(std::shared_ptr<Boundary> boundary,
+                 std::shared_ptr<Quadtree> quadtree, double tolerance = 1.e-8,
+                 unsigned int numImproves = 5);
 
   virtual ~AdvancingFront();
-
-  //    static double getTolerance();
 
   void setBoundarySorted(bool boundarySorted);
   bool isBoundarySorted();
@@ -91,11 +94,11 @@ class AdvancingFront : public Shape {
   void setNumImproves(unsigned int numImproves);
   unsigned int getNumImproves();
 
-  void setBoundary(Boundary *boundary);
-  Boundary *getBoundary();
+  void setBoundary(std::shared_ptr<Boundary> boundary);
+  std::shared_ptr<Boundary> getBoundary();
 
-  void setQuadtree(Quadtree *quadtree);
-  Quadtree *getQuadtree();
+  void setQuadtree(std::shared_ptr<Quadtree> quadtree);
+  std::shared_ptr<Quadtree> getQuadtree();
 
   VertexList getVertices();
   VertexList getInnerVertices();
@@ -110,23 +113,15 @@ class AdvancingFront : public Shape {
   void addEdgesToFront(EdgeList front);
   void addMesh(FaceList mesh);
 
-  bool belongsToAdvFront(Edge *e);
+  bool belongsToAdvFront(std::shared_ptr<Edge> e);
 
   virtual enum MethodStatus makeGeometryBasedMesh();
   virtual enum MethodStatus makeTopologyBasedMesh();
   enum MethodStatus improveMesh();
 
-  bool execute(const FaceList &oldmesh);
+  bool execute(FaceList &oldmesh);
 
-  string getText();
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void unhighlight();
-
-  //    void draw();
-  //    void drawNormals();
-  // #endif //#if USE_OPENGL
+  string getText() override;
 };
 }  // namespace AFT
 }  // namespace Par2DJMesh

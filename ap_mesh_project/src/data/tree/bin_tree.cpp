@@ -2,10 +2,24 @@
  */
 #include "../../../include/data/tree/bin_tree.h"
 
-extern double TOLERANCE;
+extern double kTolerance;
 
-BinTree::BinTree(double initial_param_coord, double final_param_coord,
-                 BinTree* bin_tree) {
+BinTree::BinTree(BinTree* bin_tree, double initial_param_coord,
+                 double final_param_coord) {
+  this->initial_param_coord_ = initial_param_coord;
+  this->final_param_coord_ = final_param_coord;
+  this->bt_father_ = nullptr;
+  if (bin_tree) {
+    this->level_ = bin_tree->level_ + 1;
+  } else {
+    this->level_ = 0;
+  }
+  this->bt_left_child_ = this->bt_right_child_ = nullptr;
+  this->bt_left_neighbor_ = this->bt_right_neighbor_ = nullptr;
+}
+
+BinTree::BinTree(std::shared_ptr<BinTree>& bin_tree, double initial_param_coord,
+                 double final_param_coord) {
   this->initial_param_coord_ = initial_param_coord;
   this->final_param_coord_ = final_param_coord;
   this->bt_father_ = bin_tree;
@@ -18,18 +32,10 @@ BinTree::BinTree(double initial_param_coord, double final_param_coord,
   this->bt_left_neighbor_ = this->bt_right_neighbor_ = nullptr;
 }
 
-BinTree::~BinTree() {
-  if (this->bt_left_child_) {
-    delete (this->bt_left_child_);
-  }
-
-  if (this->bt_right_child_) {
-    delete (this->bt_right_child_);
-  }
-}
+BinTree::~BinTree() {}
 
 // diz se uma célula é folha
-bool BinTree::IsLeaf() {
+bool BinTree::IsLeaf() const {
   if (this->bt_left_child_ || this->bt_right_child_) {
     return false;
   }
@@ -51,7 +57,7 @@ double BinTree::GetSize() {
   return (this->final_param_coord_ - this->initial_param_coord_);
 }
 
-bool BinTree::Restrict(CurveAdaptiveParametric* curve) {
+bool BinTree::Restrict(std::shared_ptr<CurveAdaptiveParametric>& curve) {
   if (!this->IsLeaf()) {
     return this->bt_left_child_->Restrict(curve);
   }
@@ -73,15 +79,17 @@ bool BinTree::Restrict(CurveAdaptiveParametric* curve) {
   return this->bt_right_neighbor_->Restrict(curve);
 }
 
-void BinTree::Subdivide(CurveAdaptiveParametric* curve) {
+void BinTree::Subdivide(std::shared_ptr<CurveAdaptiveParametric>& curve) {
   double new_t;  // t que divide a curva ao meio
   new_t = curve->CalculateMidparameterByParamters(this->initial_param_coord_,
                                                   this->final_param_coord_);
 
-  BinTree* bt_left = new BinTree(this->initial_param_coord_, new_t, this);
+  auto bt_left =
+      std::make_shared<BinTree>(this, this->initial_param_coord_, new_t);
   this->bt_left_child_ = bt_left;
 
-  BinTree* bt_right = new BinTree(new_t, this->final_param_coord_, this);
+  auto bt_right =
+      std::make_shared<BinTree>(this, new_t, this->final_param_coord_);
   this->bt_right_child_ = bt_right;
 
   this->bt_left_child_->bt_left_neighbor_ = this->bt_left_neighbor_;
@@ -100,9 +108,9 @@ void BinTree::Subdivide(CurveAdaptiveParametric* curve) {
 
 // Subdivide uma célula e define suas duas células filhas
 void BinTree::Subdivide(double t, double t_par,
-                        CurveAdaptiveParametric* curve) {
+                        std::shared_ptr<CurveAdaptiveParametric>& curve) {
   if (this->IsLeaf()) {
-    if ((this->GetSize() - t_par) < TOLERANCE) {
+    if ((this->GetSize() - t_par) < kTolerance) {
       return;
     }
     Subdivide(curve);
@@ -111,18 +119,18 @@ void BinTree::Subdivide(double t, double t_par,
   double middle = curve->CalculateMidparameterByParamters(
       this->initial_param_coord_, this->final_param_coord_);
 
-  if (t <= middle + TOLERANCE) {
+  if (t <= middle + kTolerance) {
     this->bt_left_child_->Subdivide(t, t_par, curve);
   }
 
-  if (t >= middle - TOLERANCE) {
+  if (t >= middle - kTolerance) {
     this->bt_right_child_->Subdivide(t, t_par, curve);
   }
 }
 
 // retorna uma célula que contém ti <= t <=tf
-BinTree* BinTree::Locate(double t) {
-  BinTree* bt = this;
+std::shared_ptr<BinTree> BinTree::Locate(double t) {
+  auto bt = std::shared_ptr<BinTree>(this);
   double middle = 0.0;
 
   while (!bt->IsLeaf()) {
@@ -137,7 +145,8 @@ BinTree* BinTree::Locate(double t) {
 }
 
 // percorre a árvore em pré-ordem
-void BinTree::Traverse(BinTree* bin_tree, list<double>& coordinates) {
+void BinTree::Traverse(const std::shared_ptr<BinTree>& bin_tree,
+                       std::list<double>& coordinates) const {
   if (bin_tree->IsLeaf()) {
     coordinates.push_back(bin_tree->initial_param_coord_);
   }
@@ -152,12 +161,12 @@ void BinTree::Traverse(BinTree* bin_tree, list<double>& coordinates) {
 // retorna as coordenadas das folhas
 // essa lista deve ser usada pelo adaptador de curva para gerar a nova
 // lista de pontos da curva rediscretizada
-list<double> BinTree::Rediscretization() {
+std::list<double> BinTree::Rediscretization() {
   // essa lista deve ser usada pelo adaptador de curva para gerar a nova
   // lista de pontos da curva rediscretizada
-  list<double> coordinates;
+  std::list<double> coordinates;
 
-  this->Traverse(this, coordinates);
+  this->Traverse(shared_from_this(), coordinates);
 
   coordinates.push_back(1.0);
 

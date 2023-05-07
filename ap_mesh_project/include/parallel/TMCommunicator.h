@@ -1,6 +1,8 @@
 #ifndef _PARALLEL_TM_COMMUNICATOR_H_
 #define _PARALLEL_TM_COMMUNICATOR_H_
 
+#include <memory>
+
 #include "Definitions.h"
 #include "MPICommunicator.h"
 #include "NoCommunicator.h"

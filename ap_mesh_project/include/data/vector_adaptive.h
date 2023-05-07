@@ -2,6 +2,7 @@
 #define DATA_VECTOR_ADAPTIVE_H
 
 #include <cmath>
+#include <memory>
 
 #include "point_adaptive.h"
 
@@ -32,7 +33,7 @@ class VectorAdaptive {
 
   double CalculateModule() const;
   // ângulo entre dois vetores
-  double CalculateAngle(VectorAdaptive& vector) const;
+  double CalculateAngle(const VectorAdaptive &vector) const;
   // vetor unitário
   VectorAdaptive CalculateUnitVector();
 
@@ -50,5 +51,6 @@ class VectorAdaptive {
   double x_;
   double y_;
   double z_;
+  double module_;
 };
 #endif  // DATA_VECTOR_ADAPTIVE_H

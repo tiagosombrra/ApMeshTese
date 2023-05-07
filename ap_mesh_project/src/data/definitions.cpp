@@ -1,4 +1,4 @@
-#include "../../include/data/definitions.h"
+#include "../../include/definitions.h"
 
 #include <cstdio>
 #include <cstdlib>

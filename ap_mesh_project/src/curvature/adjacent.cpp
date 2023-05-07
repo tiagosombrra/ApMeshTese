@@ -1,6 +1,6 @@
 #include "../../include/curvature/adjacent.h"
 
-extern double TOLERANCE;
+extern double kTolerance;
 
 // P de Primeiro, U de Último !!! :D
 // confirma que U é adjacente à esquerda de P
@@ -11,39 +11,39 @@ bool Adjacent::ConfirmLeftAdjacency(const NodeAdaptive& noh,
   //	se noh = P.n1 então verifique se U possui a sequência P.n1 P.n3
 
   if (noh == first_element.GetNoh(1)) {
-    if (((first_element.GetNoh(1) == last_element.GetNoh(1)) and
-         (first_element.GetNoh(3) == last_element.GetNoh(2))) or
+    if (((first_element.GetNoh(1) == last_element.GetNoh(1)) &&
+         (first_element.GetNoh(3) == last_element.GetNoh(2))) ||
 
-        ((first_element.GetNoh(1) == last_element.GetNoh(3)) and
-         (first_element.GetNoh(3) == last_element.GetNoh(1))) or
+        ((first_element.GetNoh(1) == last_element.GetNoh(3)) &&
+         (first_element.GetNoh(3) == last_element.GetNoh(1))) ||
 
-        ((first_element.GetNoh(1) == last_element.GetNoh(2)) and
+        ((first_element.GetNoh(1) == last_element.GetNoh(2)) &&
          (first_element.GetNoh(3) == last_element.GetNoh(3))))
       return true;
   }
 
   //	se noh = P.n2 então verifique se U possui a sequência P.n2 P.n1
   if (noh == first_element.GetNoh(2)) {
-    if (((first_element.GetNoh(2) == last_element.GetNoh(1)) and
-         (first_element.GetNoh(1) == last_element.GetNoh(2))) or
+    if (((first_element.GetNoh(2) == last_element.GetNoh(1)) &&
+         (first_element.GetNoh(1) == last_element.GetNoh(2))) ||
 
-        ((first_element.GetNoh(2) == last_element.GetNoh(3)) and
-         (first_element.GetNoh(1) == last_element.GetNoh(1))) or
+        ((first_element.GetNoh(2) == last_element.GetNoh(3)) &&
+         (first_element.GetNoh(1) == last_element.GetNoh(1))) ||
 
-        ((first_element.GetNoh(2) == last_element.GetNoh(2)) and
+        ((first_element.GetNoh(2) == last_element.GetNoh(2)) &&
          (first_element.GetNoh(1) == last_element.GetNoh(3))))
       return true;
   }
 
   //	se noh = P.n3 então verifique se U possui a sequência P.n3 P.n2
   if (noh == first_element.GetNoh(3)) {
-    if (((first_element.GetNoh(3) == last_element.GetNoh(1)) and
-         (first_element.GetNoh(2) == last_element.GetNoh(2))) or
+    if (((first_element.GetNoh(3) == last_element.GetNoh(1)) &&
+         (first_element.GetNoh(2) == last_element.GetNoh(2))) ||
 
-        ((first_element.GetNoh(3) == last_element.GetNoh(3)) and
-         (first_element.GetNoh(2) == last_element.GetNoh(1))) or
+        ((first_element.GetNoh(3) == last_element.GetNoh(3)) &&
+         (first_element.GetNoh(2) == last_element.GetNoh(1))) ||
 
-        ((first_element.GetNoh(3) == last_element.GetNoh(2)) and
+        ((first_element.GetNoh(3) == last_element.GetNoh(2)) &&
          (first_element.GetNoh(2) == last_element.GetNoh(3))))
       return true;
   }
@@ -58,39 +58,39 @@ bool Adjacent::ConfirmRightAdjacency(const NodeAdaptive& noh,
   //	quem é o noh para P? ( n1, n2 ou n3? )
   //	se noh = P.n1 então verifique se U possui a sequência P.n2 P.n1
   if (noh == first_element.GetNoh(1)) {
-    if (((last_element.GetNoh(1) == first_element.GetNoh(1)) and
-         (last_element.GetNoh(3) == first_element.GetNoh(2))) or
+    if (((last_element.GetNoh(1) == first_element.GetNoh(1)) &&
+         (last_element.GetNoh(3) == first_element.GetNoh(2))) ||
 
-        ((last_element.GetNoh(3) == first_element.GetNoh(1)) and
-         (last_element.GetNoh(2) == first_element.GetNoh(2))) or
+        ((last_element.GetNoh(3) == first_element.GetNoh(1)) &&
+         (last_element.GetNoh(2) == first_element.GetNoh(2))) ||
 
-        ((last_element.GetNoh(2) == first_element.GetNoh(1)) and
+        ((last_element.GetNoh(2) == first_element.GetNoh(1)) &&
          (last_element.GetNoh(1) == first_element.GetNoh(2))))
       return true;
   }
 
   //	se noh = P.n2 então verifique se U possui a sequência P.n3 P.n2
   if (noh == first_element.GetNoh(2)) {
-    if (((last_element.GetNoh(1) == first_element.GetNoh(2)) and
-         (last_element.GetNoh(3) == first_element.GetNoh(3))) or
+    if (((last_element.GetNoh(1) == first_element.GetNoh(2)) &&
+         (last_element.GetNoh(3) == first_element.GetNoh(3))) ||
 
-        ((last_element.GetNoh(3) == first_element.GetNoh(2)) and
-         (last_element.GetNoh(2) == first_element.GetNoh(3))) or
+        ((last_element.GetNoh(3) == first_element.GetNoh(2)) &&
+         (last_element.GetNoh(2) == first_element.GetNoh(3))) ||
 
-        ((last_element.GetNoh(2) == first_element.GetNoh(2)) and
+        ((last_element.GetNoh(2) == first_element.GetNoh(2)) &&
          (last_element.GetNoh(1) == first_element.GetNoh(3))))
       return true;
   }
 
   //	se noh = P.n3 então verifique se U possui a sequência P.n1 P.n3
   if (noh == first_element.GetNoh(3)) {
-    if (((last_element.GetNoh(1) == first_element.GetNoh(3)) and
-         (last_element.GetNoh(3) == first_element.GetNoh(1))) or
+    if (((last_element.GetNoh(1) == first_element.GetNoh(3)) &&
+         (last_element.GetNoh(3) == first_element.GetNoh(1))) ||
 
-        ((last_element.GetNoh(3) == first_element.GetNoh(3)) and
-         (last_element.GetNoh(2) == first_element.GetNoh(1))) or
+        ((last_element.GetNoh(3) == first_element.GetNoh(3)) &&
+         (last_element.GetNoh(2) == first_element.GetNoh(1))) ||
 
-        ((last_element.GetNoh(2) == first_element.GetNoh(3)) and
+        ((last_element.GetNoh(2) == first_element.GetNoh(3)) &&
          (last_element.GetNoh(1) == first_element.GetNoh(1))))
       return true;
   }
@@ -98,11 +98,11 @@ bool Adjacent::ConfirmRightAdjacency(const NodeAdaptive& noh,
   return false;
 }
 
-ElementAdaptive* Adjacent::GetElementLeft(
-    const NodeAdaptive& noh, ElementAdaptive* element,
-    std::list<ElementAdaptive*>& list_element) {
-  ElementAdaptive* element_result = nullptr;
-  std::list<ElementAdaptive*>::iterator element_iterator;
+std::shared_ptr<ElementAdaptive> Adjacent::GetElementLeft(
+    const NodeAdaptive& noh, std::shared_ptr<ElementAdaptive>& element,
+    std::list<std::shared_ptr<ElementAdaptive>>& list_element) {
+  std::shared_ptr<ElementAdaptive> element_result = nullptr;
+  std::list<std::shared_ptr<ElementAdaptive>>::iterator element_iterator;
 
   for (element_iterator = list_element.begin();
        element_iterator != list_element.end(); ++element_iterator) {
@@ -117,11 +117,11 @@ ElementAdaptive* Adjacent::GetElementLeft(
 }
 
 // busca na lista um elemento adjacente à direita de elem
-ElementAdaptive* Adjacent::GetElementRight(
-    const NodeAdaptive& noh, ElementAdaptive* element,
-    std::list<ElementAdaptive*>& list_element) {
-  ElementAdaptive* element_result = nullptr;
-  std::list<ElementAdaptive*>::iterator element_iterator;
+std::shared_ptr<ElementAdaptive> Adjacent::GetElementRight(
+    const NodeAdaptive& noh, std::shared_ptr<ElementAdaptive>& element,
+    std::list<std::shared_ptr<ElementAdaptive>>& list_element) {
+  std::shared_ptr<ElementAdaptive> element_result = nullptr;
+  std::list<std::shared_ptr<ElementAdaptive>>::iterator element_iterator;
 
   for (element_iterator = list_element.begin();
        element_iterator != list_element.end(); ++element_iterator) {
@@ -151,12 +151,15 @@ int Adjacent::ConcavityElement(const NodeAdaptive& noh,
   double d;
   d = first_element.GetVectorNormal() ^ vector;
 
-  if (fabs(d) <= TOLERANCE) return 0;
+  if (fabs(d) <= kTolerance) {
+    return 0;
+  }
 
-  if (d > 0)
+  if (d > 0) {
     return -1;
-  else
+  } else {
     return 1;
+  }
 }
 
 double Adjacent::AngleElement(const ElementAdaptive& first_element,

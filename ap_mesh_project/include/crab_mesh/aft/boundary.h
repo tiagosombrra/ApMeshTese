@@ -1,8 +1,10 @@
 #ifndef _BOUNDARY_H_
 #define _BOUNDARY_H_
 
+#include <memory>
+
 #include "../../data/curve/curve_adaptive_parametric.h"
-#include "../../data/definitions.h"
+#include "../../definitions.h"
 #include "edge.h"
 #include "quadtree.h"
 #include "quadtree_cell.h"
@@ -23,10 +25,10 @@ class Boundary : public Shape {
   long int lastVertexId;
   long int lastEdgeId;
 
-  Vertex *first;
+  std::shared_ptr<Vertex> first;
 
  private:
-  Edge *makeEdge(Vertex *v);
+  std::shared_ptr<Edge> makeEdge(std::shared_ptr<Vertex> v);
 
  public:
   Boundary();
@@ -41,27 +43,20 @@ class Boundary : public Shape {
   long int getLastVertexId();
   long int getLastEdgeId();
 
-  Vertex *addVertex(double x, double y, CurveAdaptiveParametric *c);
-  Vertex *addVertex(long int id, double x, double y);
-  bool close(CurveAdaptiveParametric *c);
+  std::shared_ptr<Vertex> addVertex(double x, double y,
+                                    std::shared_ptr<CurveAdaptiveParametric> c);
+  std::shared_ptr<Vertex> addVertex(long int id, double x, double y);
+  bool close(std::shared_ptr<CurveAdaptiveParametric> c);
 
-  Edge *getEdge(long int id);
-  Vertex *getVertex(long int id);
+  std::shared_ptr<Edge> getEdge(long int id);
+  std::shared_ptr<Vertex> getVertex(long int id);
 
-  void getBox(double *minX, double *minY, double *maxX, double *maxY);
+  void getBox(double &minX, double &minY, double &maxX, double &maxY);
 
-  bool belongs(Edge *e);
-  bool belongs(Vertex *v1, Vertex *v2);
+  bool belongs(std::shared_ptr<Edge> e);
+  bool belongs(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
 
   string getText() override;
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void unhighlight();
-
-  //    void draw();
-  //    void drawNormals();
-  // #endif //#if USE_OPENGL
 };
 }  // namespace AFT
 }  // namespace Par2DJMesh

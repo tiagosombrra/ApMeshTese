@@ -1,12 +1,14 @@
 #include "../../../include/data/curve/curve_adaptive_parametric.h"
 
-extern double DELTA;
-extern double TOLERANCE;
+#include "../../../include/definitions.h"
+
+extern double kDelta, kTolerance;
 
 // Global function
-vector<CurveAdaptiveParametric*> ptr_aux;
+std::vector<std::shared_ptr<CurveAdaptiveParametric>> ptr_aux;
 
-bool Compare(PointAdaptive* point1, PointAdaptive* point2) {
+bool Compare(const std::shared_ptr<PointAdaptive>& point1,
+             const std::shared_ptr<PointAdaptive>& point2) {
   double parameter1, parameter2;
 
 #if USE_OPENMP
@@ -39,7 +41,7 @@ CurveAdaptiveParametric::CurveAdaptiveParametric(const PointAdaptive point0,
 }
 
 CurveAdaptiveParametric::CurveAdaptiveParametric(
-    CurveAdaptiveParametric* curve_adaptive_parametric)
+    std::shared_ptr<CurveAdaptiveParametric> curve_adaptive_parametric)
     : CurveAdaptive(curve_adaptive_parametric) {
   this->point0_ = curve_adaptive_parametric->point0_;
   this->point1_ = curve_adaptive_parametric->point1_;
@@ -50,13 +52,7 @@ CurveAdaptiveParametric::CurveAdaptiveParametric(
   this->mat_parameters_ = curve_adaptive_parametric->mat_parameters_;
 }
 
-CurveAdaptiveParametric::~CurveAdaptiveParametric() {
-  // delete &mat_geo_gx_;
-  // delete &mat_geo_gy_;
-  // delete &mat_geo_gz_;
-  // delete &mat_base_;
-  // delete &mat_parameters_;
-}
+CurveAdaptiveParametric::~CurveAdaptiveParametric() {}
 
 // calcula o comprimento de curva de p1 a p2
 double CurveAdaptiveParametric::CalculateLengthPoints(
@@ -93,44 +89,44 @@ double CurveAdaptiveParametric::CalculateCurvature(double) { return -1; }
 double CurveAdaptiveParametric::CalculateParametricLength(double parameter1,
                                                           double parameter2) {
   /* A cada incremento de t,
-     p recebe as coordenadas do ponto na curva correspondente
-     a t; a distância entre p e o ponto anterior
-     p_ant é calculada.
+   p recebe as coordenadas do ponto na curva correspondente
+   a t; a distância entre p e o ponto anterior
+   p_ant é calculada.
 
-     Essa distância é somada a distância total d. */
+   Essa distância é somada a distância total d. */
 
   /*if ( t1 > t2 ) // caso t1 esteja à direita de t2 na curva
-  {
-      double aux = t1;
-      t1 = t2;
-      t2 = aux;
-  }
+{
+    double aux = t1;
+    t1 = t2;
+    t2 = aux;
+}
 
-  Ponto p; // ponto da iteração atual
-  Ponto p_ant; // ponto da iteracao anterior
+Ponto p; // ponto da iteração atual
+Ponto p_ant; // ponto da iteracao anterior
 
-  double t = t1; // parâmetro de iteração
-  double d = 0.0; // distância total entre os dois pontos
+double t = t1; // parâmetro de iteração
+double d = 0.0; // distância total entre os dois pontos
 
-  // 1. cria Ponto 'p_ant'
-  p_ant = this->Parameterize ( t1 );
+// 1. cria Ponto 'p_ant'
+p_ant = this->Parameterize ( t1 );
 
-  do
-  {
-      t += DELTA;
+do
+{
+    t += kDelta;
 
-      // 2. cria Ponto 'p'
-      p = this->Parameterize ( t );
+    // 2. cria Ponto 'p'
+    p = this->Parameterize ( t );
 
-      // incrementa distancia
-      d += p_ant.distanciaPara ( p );
+    // incrementa distancia
+    d += p_ant.distanciaPara ( p );
 
-      // copia o conteudo de 'p' para o ponto anterior
-      p_ant = p;
-  }
-  while ( t <= ( t2 - DELTA ) );
+    // copia o conteudo de 'p' para o ponto anterior
+    p_ant = p;
+}
+while ( t <= ( t2 - kDelta ) );
 
-  return d;*/
+return d;*/
 
   // encontrando o comprimento por gauss legendre
   return CalculateLength(parameter1, parameter2, 9, 4);
@@ -140,8 +136,8 @@ double CurveAdaptiveParametric::CalculateParametricLength(double parameter1,
 double CurveAdaptiveParametric::FindParameterByPoint(
     const PointAdaptive& point) {
   struct DistanceFunction : public Data::Numerical::EquationRootFunction {
-    const PointAdaptive* point;
-    CurveAdaptiveParametric* curva;
+    std::shared_ptr<PointAdaptive> point;
+    std::shared_ptr<CurveAdaptiveParametric> curva;
 
     double min() { return 0.0; };
     double max() { return 1.0; };
@@ -153,16 +149,16 @@ double CurveAdaptiveParametric::FindParameterByPoint(
     };
   };
 
-  DistanceFunction distance_function;
-  distance_function.curva = this;
-  distance_function.point = &point;
+  auto distance_function = std::make_shared<DistanceFunction>();
+  distance_function->curva = std::make_shared<CurveAdaptiveParametric>(*this);
+  distance_function->point = std::make_shared<PointAdaptive>(point);
 
   Data::Numerical::ClosestBisectionEquationRoot closet_bisection_eq_root;
 
   bool return_function = true;
 
   double parameter =
-      closet_bisection_eq_root.execute(&distance_function, return_function);
+      closet_bisection_eq_root.execute(distance_function, return_function);
 
   return return_function ? parameter : -1.0;
 
@@ -173,7 +169,7 @@ double CurveAdaptiveParametric::FindParameterByPoint(
   //        long double t_min = 0.0; // parâmetro do pondo da curva mais próximo
   //        a p Ponto *pi = new Ponto; // ponto de palpite
 
-  //        for ( long double t = 0.0; t <= 1.0; t += DELTA )
+  //        for ( long double t = 0.0; t <= 1.0; t += kDelta )
   //        {
   //            *pi = Parameterize ( t );
   //            di = pi->distanciaPara ( p );
@@ -192,7 +188,7 @@ double CurveAdaptiveParametric::FindParameterByPoint(
   //		semelhante ao método da bisseção. Quanto mais próximo
   //		p estiver dos extremos, menor será a precisão */
 
-  //	double frp = DELTA; // fator de reposicionamento
+  //	double frp = kDelta; // fator de reposicionamento
   //	double tm = 0.5; // método da bisseção
   //	double delta_t = 0.0; // o quanto o parâmetro terá de percorrer
   //	double d_point_0_ = this->point_0_.distanciaPara ( p ); // distância de
@@ -200,11 +196,11 @@ double CurveAdaptiveParametric::FindParameterByPoint(
   // distância de point_1_ a p
 
   //	// o ponto está muuuuito próximo de point_0_ ?
-  //	if ( d_point_0_ <= DELTA )
+  //	if ( d_point_0_ <= kDelta )
   //		tm = 0.0; // retorna tm = 0.0
 
   //	// o ponto está muuuuito próximo de point_1_ ?
-  //	if ( d_P1 <= DELTA )
+  //	if ( d_P1 <= kDelta )
   //		tm = 1.0; // retorna tm = 1.0
 
   //	Ponto Si;
@@ -226,10 +222,10 @@ double CurveAdaptiveParametric::FindParameterByPoint(
   //		// 5. calcula 'tm' (este eh o ultimo valor de 'tm' calculado)
   //		tm += delta_t * frp;
   //	}
-  //	while ( Si.distanciaPara ( p ) > TOLERANCE );
+  //	while ( Si.distanciaPara ( p ) > kTolerance );
 
-  //	if ( tm < DELTA ) tm = 0.0; // t está muito próximo a 0
-  //	else if ( tm > ( 1.0 - DELTA ) ) tm = 1.0; // t está muito próximo a 1
+  //	if ( tm < kDelta ) tm = 0.0; // t está muito próximo a 0
+  //	else if ( tm > ( 1.0 - kDelta ) ) tm = 1.0; // t está muito próximo a 1
 
   //	return tm; // retorna o ultimo valor de 'tm' calculado
 }
@@ -321,18 +317,18 @@ double CurveAdaptiveParametric::CalculateMidparameterByParamters(
   //
   if (length_hint_total > length_half) {
     while (length_hint_total >= length_half) {
-      length_hint_total -=
-          CalculateParametricLength(length_hint_half - DELTA, length_hint_half);
-      length_hint_half -= DELTA;
+      length_hint_total -= CalculateParametricLength(length_hint_half - kDelta,
+                                                     length_hint_half);
+      length_hint_half -= kDelta;
     }
-    length_hint_half += DELTA;
+    length_hint_half += kDelta;
   } else {
     while (length_hint_total <= length_half) {
-      length_hint_total +=
-          CalculateParametricLength(length_hint_half, length_hint_half + DELTA);
-      length_hint_half += DELTA;
+      length_hint_total += CalculateParametricLength(length_hint_half,
+                                                     length_hint_half + kDelta);
+      length_hint_half += kDelta;
     }
-    length_hint_half -= DELTA;
+    length_hint_half -= kDelta;
   }
 
   return length_hint_half;
@@ -341,16 +337,16 @@ double CurveAdaptiveParametric::CalculateMidparameterByParamters(
 // ordena a lista de pontos de acordo com suas coordenadas paramétricas
 void CurveAdaptiveParametric::SortPointsByParameters() {
 #if USE_OPENMP
-  ptr_aux[omp_get_thread_num()] = this;
+  ptr_aux[omp_get_thread_num()] =
+      std::make_shared<CurveAdaptiveParametric>(*this);
 #else
-  ptr_aux[0] = this;
+  ptr_aux[0] = std::make_shared<CurveAdaptiveParametric>(*this);
 #endif  // USE_OPENMP
-
   this->points_.sort(Compare);
 }
 
 void CurveAdaptiveParametric::UpdateParameters(
-    const list<double> new_parameters) {
+    const std::list<double> new_parameters) {
   this->parameters_ = new_parameters;
 }
 
@@ -648,12 +644,12 @@ double CurveAdaptiveParametric::CalculateMidpointBisection(double parameter1,
   for (int i = 0; i < 5000; i++) {
     half = (newa + newb) / 2.0;
 
-    if (fabs(newb - newa) < TOLERANCE) {
+    if (fabs(newb - newa) < kTolerance) {
       return half;
     } else {
       double yH = l - 2.0 * CalculateParametricLength(a, half);
 
-      if (fabs(yH) < TOLERANCE) {
+      if (fabs(yH) < kTolerance) {
         return half;
       }
 

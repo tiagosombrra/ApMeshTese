@@ -1,6 +1,8 @@
 #ifndef _PERFORMER_ID_MANAGER_H_
 #define _PERFORMER_ID_MANAGER_H_
 
+#include <vector>
+
 #include "definitions.h"
 
 namespace Performer {
@@ -20,7 +22,7 @@ class IdManager {
   virtual ULInt next() = 0;
 
  protected:
-  ULInt *ids;
+  std::vector<ULInt> ids;
   UInt size;
 };
 }  // namespace Performer

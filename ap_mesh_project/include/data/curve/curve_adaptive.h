@@ -2,6 +2,7 @@
 #define DATA_CURVE_CURVE_ADAPTIVE_H
 
 #include <list>
+#include <memory>
 #include <vector>
 
 #include "../node_adaptive.h"
@@ -11,22 +12,22 @@
 class CurveAdaptive {
  public:
   CurveAdaptive();
-  explicit CurveAdaptive(CurveAdaptive*);
+  explicit CurveAdaptive(std::shared_ptr<CurveAdaptive> curve_adaptive);
   virtual ~CurveAdaptive();
 
   void SetId(unsigned int id);
   double GetLength();
-  void InsertPoint(PointAdaptive* point);
+  void InsertPoint(std::shared_ptr<PointAdaptive> point);
   unsigned int GetNumBerPoints() const;
   // retorna o i-ésimo ponto
-  PointAdaptive* GetPoint(const unsigned int position);
+  std::shared_ptr<PointAdaptive> GetPoint(const unsigned int position);
   // troca a lista de pontos
-  void SetPoints(std::list<PointAdaptive*> new_points);
-  std::list<PointAdaptive*>& GetPoints();
-  void InsertPatch(Patch* patch);
+  void SetPoints(std::list<std::shared_ptr<PointAdaptive>> new_points);
+  std::list<std::shared_ptr<PointAdaptive>> GetPoints();
+  void InsertPatch(const std::shared_ptr<Patch>& patch);
   unsigned int GetNumBerPatches() const;
   // retorna o i-ésimo patch
-  Patch* GetPatch(const unsigned int position);
+  std::shared_ptr<Patch> GetPatch(const unsigned int position);
   // verifica se uma curva é de borda
   bool CheckIsOnBorder();
 
@@ -46,8 +47,8 @@ class CurveAdaptive {
   // comprimento total da curva
   double length_;
   // será usada na discretização
-  list<PointAdaptive*> points_;
+  std::list<std::shared_ptr<PointAdaptive>> points_;
   // uma curva só com um patch é de borda
-  vector<Patch*> patches_;
+  std::vector<std::shared_ptr<Patch>> patches_;
 };
 #endif  // DATA_CURVE_CURVE_ADAPTIVE_H

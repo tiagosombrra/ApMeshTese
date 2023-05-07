@@ -1,6 +1,8 @@
 #ifndef _PERFORMER_RANGED_ID_MANAGER_H_
 #define _PERFORMER_RANGED_ID_MANAGER_H_
 
+#include <vector>
+
 #include "definitions.h"
 #include "id_manager.h"
 
@@ -33,7 +35,7 @@ class RangedIdManager : public Performer::IdManager {
   virtual void adjustAll();
 
  protected:
-  ULInt *mins;
+  std::vector<ULInt> mins;
   ULInt offset;
   ULInt range;
 };

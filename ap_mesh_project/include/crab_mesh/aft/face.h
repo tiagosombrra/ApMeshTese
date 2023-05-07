@@ -1,6 +1,8 @@
 #ifndef _FACE_H_
 #define _FACE_H_
 
+#include <memory>
+
 #include "../../data/definitions.h"
 #include "edge.h"
 #include "shape.h"
@@ -13,67 +15,59 @@ namespace Par2DJMesh {
 namespace Basics {
 class Face : public Shape {
  private:
-  // #if USE_OPENGL
-  //     bool highlighted;
-  // #endif //#if USE_OPENGL
-
-  Vertex *v[3];
-  Vertex *mid;
+  std::shared_ptr<Vertex> v[3];
+  std::shared_ptr<Vertex> mid;
 
  private:
-  Vertex *makeMid();
+  std::shared_ptr<Vertex> makeMid();
 
  public:
   double h;
 
-  Face(Vertex *v1 = NULL, Vertex *v2 = NULL, Vertex *v3 = NULL,
-       long int id = 0);
-  Face(Vertex *v1, Vertex *v2, Vertex *v3, Vertex *mid, long int id);
+  Face(std::shared_ptr<Vertex> v1 = nullptr,
+       std::shared_ptr<Vertex> v2 = nullptr,
+       std::shared_ptr<Vertex> v3 = nullptr, long int id = 0);
+  Face(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2,
+       std::shared_ptr<Vertex> v3, std::shared_ptr<Vertex> mid, long int id);
   ~Face();
 
-  void setV1(Vertex *v);
-  void setV2(Vertex *v);
-  void setV3(Vertex *v);
-  void setVertices(Vertex *v1, Vertex *v2, Vertex *v3);
-  Vertex *getV1();
-  Vertex *getV2();
-  Vertex *getV3();
+  void setV1(std::shared_ptr<Vertex> v);
+  void setV2(std::shared_ptr<Vertex> v);
+  void setV3(std::shared_ptr<Vertex> v);
+  void setVertices(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2,
+                   std::shared_ptr<Vertex> v3);
+  std::shared_ptr<Vertex> getV1();
+  std::shared_ptr<Vertex> getV2();
+  std::shared_ptr<Vertex> getV3();
 
-  Vertex *getMid();
-  Vertex *circumcenter();
-  Vertex *incenter();
+  std::shared_ptr<Vertex> getMid();
+  std::shared_ptr<Vertex> circumcenter();
+  std::shared_ptr<Vertex> incenter();
 
   double surface();
   double orientedSurface();
 
   bool in(double x, double y);
-  bool in(Vertex *v);
-  bool on(Vertex *v);
+  bool in(Vertex v);
+  bool on(Vertex v);
   bool out(double x, double y);
-  bool out(Vertex *v);
+  bool out(Vertex v);
 
-  void barycentricCoordinates(Vertex *v, double &l1, double &l2, double &l3);
+  void barycentricCoordinates(Vertex v, double &l1, double &l2, double &l3);
 
   double gama();
   double quality();
   bool isBad();
 
-  bool hasEdge(Vertex *v1, Vertex *v2);
-  bool hasEdge(Edge *e);
-  bool isAdjacent(Face *f);
+  bool hasEdge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2);
+  bool hasEdge(std::shared_ptr<Edge> e);
+  bool isAdjacent(std::shared_ptr<Face> f);
 
   // testa se uma face intercepta outra
-  bool hits(Face *f);
-  bool hits(Edge *e);
+  bool hits(std::shared_ptr<Face> f);
+  bool hits(std::shared_ptr<Edge> e);
 
   string getText();
-
-  // #if USE_OPENGL
-  //     void highlight();
-  //     void unhighlight();
-
-  //    void draw();
-  // #endif //#if USE_OPENGL
 };
 }  // namespace Basics
 }  // namespace Par2DJMesh

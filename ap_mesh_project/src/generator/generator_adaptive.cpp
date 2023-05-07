@@ -1,9 +1,14 @@
 #include "../../include/generator/generator_adaptive.h"
 
-#include <memory>
 #include <ostream>
 
-extern int MAX_THREADS;
+#include "../../include/definitions.h"
+
+extern int sizeMpi, rankMpi, maxThreads, kSteps;
+extern double timeReadFile, kTolerance, kEpsylon;
+extern std::string nameModel, numberProcess, writeMesh;
+extern vector<std::shared_ptr<CurveAdaptiveParametric>> ptr_aux;
+
 GeneratorAdaptive::GeneratorAdaptive() {}
 
 #if USE_MPI
@@ -16,12 +21,12 @@ int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
     std::cout << "argv[]:" << *arg << std::endl;
   }
 
-  std::unique_ptr<Geometry> geometry = std::make_unique<Geometry>();
+  std::shared_ptr<Geometry> geometry = std::make_shared<Geometry>();
 
 #if USE_MPI
-  if (RANK_MPI == 0) {
+  if (rankMpi == 0) {
     // estimativa e ordenação dos patches para carga de distribuiçao dos patches
-    std::list<PatchBezier*> patches = EstimateChargeofPatches(geometry, timer);
+    auto patches = EstimateChargeofPatches(geometry, timer);
 
     // distribuição dos patches entre os (n) processos de acordo com suas cargas
     // ordenadas
@@ -29,7 +34,7 @@ int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
 
 #if USE_PRINT_ESTIMATE
     // mostra a distribuição de patches para cada processo
-    calculateEstimateProcessElements(SIZE_MPI, listBezierPt);
+    calculateEstimateProcessElements(sizeMpi, listBezierPt);
 #endif  // USE_PRINT_ESTIMATE
 
     double patches_process0[patches.size() * 48];
@@ -37,110 +42,108 @@ int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
 
     int i = 0, izero = 0;
 
-    for (int j = 0; j < SIZE_MPI; j++) {
+    for (int j = 0; j < sizeMpi; j++) {
       i = 0;
-
-      for (std::list<PatchBezier*>::iterator it = patches.begin();
-           it != patches.end(); it++) {
-        if (j == (*it)->GetIdProcess()) {
-          patches_process[i] = (*it)->GetPt00().GetX();
+      for (const auto& patch : patches) {
+        if (j == patch->GetIdProcess()) {
+          patches_process[i] = patch->GetPt00().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt00().GetY();
+          patches_process[i] = patch->GetPt00().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt00().GetZ();
+          patches_process[i] = patch->GetPt00().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt10().GetX();
+          patches_process[i] = patch->GetPt10().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt10().GetY();
+          patches_process[i] = patch->GetPt10().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt10().GetZ();
+          patches_process[i] = patch->GetPt10().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt20().GetX();
+          patches_process[i] = patch->GetPt20().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt20().GetY();
+          patches_process[i] = patch->GetPt20().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt20().GetZ();
+          patches_process[i] = patch->GetPt20().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt30().GetX();
+          patches_process[i] = patch->GetPt30().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt30().GetY();
+          patches_process[i] = patch->GetPt30().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt30().GetZ();
+          patches_process[i] = patch->GetPt30().GetZ();
           i++;
 
-          patches_process[i] = (*it)->GetPt01().GetX();
+          patches_process[i] = patch->GetPt01().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt01().GetY();
+          patches_process[i] = patch->GetPt01().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt01().GetZ();
+          patches_process[i] = patch->GetPt01().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt11().GetX();
+          patches_process[i] = patch->GetPt11().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt11().GetY();
+          patches_process[i] = patch->GetPt11().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt11().GetZ();
+          patches_process[i] = patch->GetPt11().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt21().GetX();
+          patches_process[i] = patch->GetPt21().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt21().GetY();
+          patches_process[i] = patch->GetPt21().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt21().GetZ();
+          patches_process[i] = patch->GetPt21().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt31().GetX();
+          patches_process[i] = patch->GetPt31().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt31().GetY();
+          patches_process[i] = patch->GetPt31().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt31().GetZ();
-          i++;
-
-          patches_process[i] = (*it)->GetPt02().GetX();
-          i++;
-          patches_process[i] = (*it)->GetPt02().GetY();
-          i++;
-          patches_process[i] = (*it)->GetPt02().GetZ();
-          i++;
-          patches_process[i] = (*it)->GetPt12().GetX();
-          i++;
-          patches_process[i] = (*it)->GetPt12().GetY();
-          i++;
-          patches_process[i] = (*it)->GetPt12().GetZ();
-          i++;
-          patches_process[i] = (*it)->GetPt22().GetX();
-          i++;
-          patches_process[i] = (*it)->GetPt22().GetY();
-          i++;
-          patches_process[i] = (*it)->GetPt22().GetZ();
-          i++;
-          patches_process[i] = (*it)->GetPt32().GetX();
-          i++;
-          patches_process[i] = (*it)->GetPt32().GetY();
-          i++;
-          patches_process[i] = (*it)->GetPt32().GetZ();
+          patches_process[i] = patch->GetPt31().GetZ();
           i++;
 
-          patches_process[i] = (*it)->GetPt03().GetX();
+          patches_process[i] = patch->GetPt02().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt03().GetY();
+          patches_process[i] = patch->GetPt02().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt03().GetZ();
+          patches_process[i] = patch->GetPt02().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt13().GetX();
+          patches_process[i] = patch->GetPt12().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt13().GetY();
+          patches_process[i] = patch->GetPt12().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt13().GetZ();
+          patches_process[i] = patch->GetPt12().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt23().GetX();
+          patches_process[i] = patch->GetPt22().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt23().GetY();
+          patches_process[i] = patch->GetPt22().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt23().GetZ();
+          patches_process[i] = patch->GetPt22().GetZ();
           i++;
-          patches_process[i] = (*it)->GetPt33().GetX();
+          patches_process[i] = patch->GetPt32().GetX();
           i++;
-          patches_process[i] = (*it)->GetPt33().GetY();
+          patches_process[i] = patch->GetPt32().GetY();
           i++;
-          patches_process[i] = (*it)->GetPt33().GetZ();
+          patches_process[i] = patch->GetPt32().GetZ();
+          i++;
+
+          patches_process[i] = patch->GetPt03().GetX();
+          i++;
+          patches_process[i] = patch->GetPt03().GetY();
+          i++;
+          patches_process[i] = patch->GetPt03().GetZ();
+          i++;
+          patches_process[i] = patch->GetPt13().GetX();
+          i++;
+          patches_process[i] = patch->GetPt13().GetY();
+          i++;
+          patches_process[i] = patch->GetPt13().GetZ();
+          i++;
+          patches_process[i] = patch->GetPt23().GetX();
+          i++;
+          patches_process[i] = patch->GetPt23().GetY();
+          i++;
+          patches_process[i] = patch->GetPt23().GetZ();
+          i++;
+          patches_process[i] = patch->GetPt33().GetX();
+          i++;
+          patches_process[i] = patch->GetPt33().GetY();
+          i++;
+          patches_process[i] = patch->GetPt33().GetZ();
           i++;
         }
       }
@@ -153,12 +156,12 @@ int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
         }
 
       } else {
-        timer.InitTimerParallel(RANK_MPI, 0, 0);  // Send
-        MPI_Send(&TIME_READ_FILE, 1, MPI_DOUBLE, j, TAG_TIME, MPI_COMM_WORLD);
+        timer.InitTimerParallel(rankMpi, 0, 0);  // Send
+        MPI_Send(&timeReadFile, 1, MPI_DOUBLE, j, TAG_TIME, MPI_COMM_WORLD);
         MPI_Send(&i, 1, MPI_INT, j, TAG_SIZE_OF_DOUBLE, MPI_COMM_WORLD);
         MPI_Send(&patches_process, i, MPI_DOUBLE, j, TAG_DOUBLE,
                  MPI_COMM_WORLD);
-        timer.EndTimerParallel(RANK_MPI, 0, 0);  // Send
+        timer.EndTimerParallel(rankMpi, 0, 0);  // Send
       }
     }
 
@@ -171,9 +174,9 @@ int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
 #endif
 
   } else {
-    timer.InitTimerParallel(RANK_MPI, 0, 9);  // Recv
+    timer.InitTimerParallel(rankMpi, 0, 9);  // Recv
 
-    MPI_Recv(&TIME_READ_FILE, 1, MPI_DOUBLE, 0, TAG_TIME, MPI_COMM_WORLD,
+    MPI_Recv(&timeReadFile, 1, MPI_DOUBLE, 0, TAG_TIME, MPI_COMM_WORLD,
              &status);
 
     int size_patches = 0;
@@ -184,7 +187,7 @@ int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
     MPI_Recv(&patches, size_patches, MPI_DOUBLE, 0, TAG_DOUBLE, MPI_COMM_WORLD,
              &status);
 
-    timer.EndTimerParallel(RANK_MPI, 0, 9);  // Recv
+    timer.EndTimerParallel(rankMpi, 0, 9);  // Recv
 
     // gerador de malha para o processo (n)
 #if USE_OPENMP
@@ -200,8 +203,8 @@ int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
 
   // Inclusão dos patches no Modelo
   Models3d models3d;
-  models3d.ModelPneu(geometry);
-  model.SetGeometry(std::move(geometry));
+  models3d.ModelPlanBook(geometry);
+  model.SetGeometry(geometry);
 
   //  if (argv[3]) {
   //    timer.InitTimerParallel(0, 0, 5);  // Leitura arquivo
@@ -223,68 +226,68 @@ int GeneratorAdaptive::Execute(char* argv[], Timer& timer)
 }
 
 #if USE_MPI
-std::list<PatchBezier*> GeneratorAdaptive::EstimateChargeofPatches(
-    Geometry* geometry, Timer& timer) {
-  ChargeEstimateProcess* charge_estimate_process = new ChargeEstimateProcess();
-  std::list<PatchBezier*> patches =
+std::list<std::shared_ptr<PatchBezier>>
+GeneratorAdaptive::EstimateChargeofPatches(std::shared_ptr<Geometry>& geometry,
+                                           Timer& timer) {
+  auto charge_estimate_process = std::make_shared<ChargeEstimateProcess>();
+  std::list<std::shared_ptr<PatchBezier>> patches =
       charge_estimate_process->ChargeEstimate(geometry, timer);
-  delete charge_estimate_process;
 
   return patches;
 }
 
-std::vector<CurveAdaptive*> GeneratorAdaptive::CreateVectorOfCurves(
-    std::list<PatchBezier*> patches) {
-  CurveAdaptive* curve;
-  std::vector<CurveAdaptive*> curves;
+std::vector<std::shared_ptr<CurveAdaptive>>
+GeneratorAdaptive::CreateVectorOfCurves(
+    std::list<std::shared_ptr<PatchBezier>> patches) {
+  std::shared_ptr<CurveAdaptive> curve;
+  std::vector<std::shared_ptr<CurveAdaptive>> curves;
 
-  for (std::list<PatchBezier*>::iterator it = patches.begin();
-       it != patches.end(); it++) {
+  for (const auto& patch : patches) {
     if (curves.size() > 0) {
-      if (VerifyCurve((*it)->GetPt00(), (*it)->GetPt10(), (*it)->GetPt20(),
-                      (*it)->GetPt30(), curves)) {
-        curve = new CurveAdaptiveParametricBezier(
-            (*it)->GetPt00(), (*it)->GetPt10(), (*it)->GetPt20(),
-            (*it)->GetPt30());
+      if (VerifyCurve(patch->GetPt00(), patch->GetPt10(), patch->GetPt20(),
+                      patch->GetPt30(), curves)) {
+        curve = std::make_shared<CurveAdaptiveParametricBezier>(
+            patch->GetPt00(), patch->GetPt10(), patch->GetPt20(),
+            patch->GetPt30());
         curves.push_back(curve);
       }
-      if (VerifyCurve((*it)->GetPt30(), (*it)->GetPt31(), (*it)->GetPt32(),
-                      (*it)->GetPt33(), curves)) {
-        curve = new CurveAdaptiveParametricBezier(
-            (*it)->GetPt30(), (*it)->GetPt31(), (*it)->GetPt32(),
-            (*it)->GetPt33());
+      if (VerifyCurve(patch->GetPt30(), patch->GetPt31(), patch->GetPt32(),
+                      patch->GetPt33(), curves)) {
+        curve = std::make_shared<CurveAdaptiveParametricBezier>(
+            patch->GetPt30(), patch->GetPt31(), patch->GetPt32(),
+            patch->GetPt33());
         curves.push_back(curve);
       }
-      if (VerifyCurve((*it)->GetPt03(), (*it)->GetPt13(), (*it)->GetPt23(),
-                      (*it)->GetPt33(), curves)) {
-        curve = new CurveAdaptiveParametricBezier(
-            (*it)->GetPt03(), (*it)->GetPt13(), (*it)->GetPt23(),
-            (*it)->GetPt33());
+      if (VerifyCurve(patch->GetPt03(), patch->GetPt13(), patch->GetPt23(),
+                      patch->GetPt33(), curves)) {
+        curve = std::make_shared<CurveAdaptiveParametricBezier>(
+            patch->GetPt03(), patch->GetPt13(), patch->GetPt23(),
+            patch->GetPt33());
         curves.push_back(curve);
       }
-      if (VerifyCurve((*it)->GetPt00(), (*it)->GetPt01(), (*it)->GetPt02(),
-                      (*it)->GetPt03(), curves)) {
-        curve = new CurveAdaptiveParametricBezier(
-            (*it)->GetPt00(), (*it)->GetPt01(), (*it)->GetPt02(),
-            (*it)->GetPt03());
+      if (VerifyCurve(patch->GetPt00(), patch->GetPt01(), patch->GetPt02(),
+                      patch->GetPt03(), curves)) {
+        curve = std::make_shared<CurveAdaptiveParametricBezier>(
+            patch->GetPt00(), patch->GetPt01(), patch->GetPt02(),
+            patch->GetPt03());
         curves.push_back(curve);
       }
     } else if (curves.size() == 0) {
-      curve =
-          new CurveAdaptiveParametricBezier((*it)->GetPt00(), (*it)->GetPt10(),
-                                            (*it)->GetPt20(), (*it)->GetPt30());
+      curve = std::make_shared<CurveAdaptiveParametricBezier>(
+          patch->GetPt00(), patch->GetPt10(), patch->GetPt20(),
+          patch->GetPt30());
       curves.push_back(curve);
-      curve =
-          new CurveAdaptiveParametricBezier((*it)->GetPt30(), (*it)->GetPt31(),
-                                            (*it)->GetPt32(), (*it)->GetPt33());
+      curve = std::make_shared<CurveAdaptiveParametricBezier>(
+          patch->GetPt30(), patch->GetPt31(), patch->GetPt32(),
+          patch->GetPt33());
       curves.push_back(curve);
-      curve =
-          new CurveAdaptiveParametricBezier((*it)->GetPt03(), (*it)->GetPt13(),
-                                            (*it)->GetPt23(), (*it)->GetPt33());
+      curve = std::make_shared<CurveAdaptiveParametricBezier>(
+          patch->GetPt03(), patch->GetPt13(), patch->GetPt23(),
+          patch->GetPt33());
       curves.push_back(curve);
-      curve =
-          new CurveAdaptiveParametricBezier((*it)->GetPt00(), (*it)->GetPt01(),
-                                            (*it)->GetPt02(), (*it)->GetPt03());
+      curve = std::make_shared<CurveAdaptiveParametricBezier>(
+          patch->GetPt00(), patch->GetPt01(), patch->GetPt02(),
+          patch->GetPt03());
       curves.push_back(curve);
     }
   }
@@ -292,30 +295,27 @@ std::vector<CurveAdaptive*> GeneratorAdaptive::CreateVectorOfCurves(
   return curves;
 }
 
-std::list<PatchBezier*> GeneratorAdaptive::OrderPatchesDistribProcess(
-    std::list<PatchBezier*> patches) {
-  std::vector<std::pair<double, int> > process_pairs;
-  std::list<PatchBezier*> patches_order;
+std::list<std::shared_ptr<PatchBezier>>
+GeneratorAdaptive::OrderPatchesDistribProcess(
+    std::list<std::shared_ptr<PatchBezier>>& patches) {
+  std::vector<std::pair<double, int>> process_pairs;
+  std::list<std::shared_ptr<PatchBezier>> patches_order;
 
-  if (SIZE_MPI > 1) {
-    for (int i = 0; i < SIZE_MPI; i++) {
+  if (sizeMpi > 1) {
+    for (int i = 0; i < sizeMpi; i++) {
       process_pairs.push_back(std::make_pair(0.0, i));
     }
 
-    for (std::list<PatchBezier*>::iterator it = patches.begin();
-         it != patches.end(); it++) {
+    for (const auto& patch : patches) {
       std::sort(process_pairs.begin(), process_pairs.end());
-
-      (*it)->SetIdProcess(process_pairs.front().second);
-
-      process_pairs.front().first += (*it)->GetNumberTriangle();
+      patch->SetIdProcess(process_pairs.front().second);
+      process_pairs.front().first += patch->GetNumberTriangle();
     }
 
-    for (int i = 0; i < SIZE_MPI; i++) {
-      for (std::list<PatchBezier*>::iterator it = patches.begin();
-           it != patches.end(); it++) {
-        if ((*it)->GetIdProcess() == i) {
-          patches_order.push_back((*it));
+    for (int i = 0; i < sizeMpi; i++) {
+      for (const auto& patch : patches) {
+        if (patch->GetIdProcess() == i) {
+          patches_order.push_back(patch);
         }
       }
     }
@@ -323,28 +323,34 @@ std::list<PatchBezier*> GeneratorAdaptive::OrderPatchesDistribProcess(
     return patches_order;
 
   } else {
-    for (std::list<PatchBezier*>::iterator it = patches.begin();
-         it != patches.end(); it++) {
-      (*it)->SetIdProcess(0);
+    for (const auto& patch : patches) {
+      patch->SetIdProcess(0);
     }
 
     return patches;
   }
 }
 
-bool GeneratorAdaptive::VerifyCurve(PointAdaptive p0, PointAdaptive p1,
-                                    PointAdaptive p2, PointAdaptive p3,
-                                    std::vector<CurveAdaptive*> curves) {
-  for (vector<CurveAdaptive*>::iterator it = curves.begin(); it != curves.end();
-       it++) {
-    if (static_cast<CurveAdaptiveParametricBezier*>(*it)->GetPoint0().
-        operator==(p0) &&
-        static_cast<CurveAdaptiveParametricBezier*>(*it)->GetPoint1().
-        operator==(p1) &&
-        static_cast<CurveAdaptiveParametricBezier*>(*it)->GetPoint2().
-        operator==(p2) &&
-        static_cast<CurveAdaptiveParametricBezier*>(*it)->GetPoint3().
-        operator==(p3)) {
+bool GeneratorAdaptive::VerifyCurve(
+    PointAdaptive p0, PointAdaptive p1, PointAdaptive p2, PointAdaptive p3,
+    std::vector<std::shared_ptr<CurveAdaptive>> curves) {
+  for (const auto& curve : curves) {
+    if (std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(curve)
+            ->GetPoint0()
+            .
+            operator==(p0) &&
+        std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(curve)
+            ->GetPoint1()
+            .
+            operator==(p1) &&
+        std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(curve)
+            ->GetPoint2()
+            .
+            operator==(p2) &&
+        std::dynamic_pointer_cast<CurveAdaptiveParametricBezier>(curve)
+            ->GetPoint3()
+            .
+            operator==(p3)) {
       return false;
     }
   }
@@ -353,109 +359,117 @@ bool GeneratorAdaptive::VerifyCurve(PointAdaptive p0, PointAdaptive p1,
 }
 
 void GeneratorAdaptive::CalculateEstimateProcessElements(
-    int size_process, std::list<PatchBezier*> patches) {
-  double estimate[size_process];
+    int size_process, std::list<std::shared_ptr<PatchBezier>> patches) {
+  std::vector<double> estimate(size_process, 0.0);
 
-  for (std::list<PatchBezier*>::iterator it = patches.begin();
-       it != patches.end(); it++) {
-    estimate[(*it)->GetIdProcess()] += (*it)->GetNumberTriangle();
+  for (const auto& patch : patches) {
+    estimate[patch->GetIdProcess()] += patch->GetNumberTriangle();
   }
 
-  for (int i = 0; i < SIZE_MPI; ++i) {
+  for (int i = 0; i < sizeMpi; ++i) {
     cout << "Estimativa para o processo " << i << " = " << estimate[i] << endl;
   }
 }
 
-std::list<PatchBezier*>::iterator GeneratorAdaptive::GetIteratorListPatches(
-    int size_patches, std::list<PatchBezier*> patches) {
-  std::list<PatchBezier*>::iterator it = patches.begin();
+std::list<std::shared_ptr<PatchBezier>>::iterator
+GeneratorAdaptive::GetIteratorListPatches(
+    int size_patches, std::list<std::shared_ptr<PatchBezier>> patches) {
+  auto it = patches.begin();
   advance(it, size_patches);
   return it;
 }
 
-Geometry* GeneratorAdaptive::UnpakGeometry(double patches[], int size_patches) {
-  Geometry* geometry = new Geometry;
+std::shared_ptr<Geometry> GeneratorAdaptive::UnpakGeometry(double patches[],
+                                                           int size_patches) {
+  auto geometry = std::make_shared<Geometry>();
 
-  PointAdaptive* p00;
-  PointAdaptive* p01;
-  PointAdaptive* p02;
-  PointAdaptive* p03;
-  PointAdaptive* p10;
-  PointAdaptive* p11;
-  PointAdaptive* p12;
-  PointAdaptive* p13;
-  PointAdaptive* p20;
-  PointAdaptive* p21;
-  PointAdaptive* p22;
-  PointAdaptive* p23;
-  PointAdaptive* p30;
-  PointAdaptive* p31;
-  PointAdaptive* p32;
-  PointAdaptive* p33;
+  std::shared_ptr<CurveAdaptiveParametric> patch_c1;
+  std::shared_ptr<CurveAdaptiveParametric> patch_c2;
+  std::shared_ptr<CurveAdaptiveParametric> patch_c3;
+  std::shared_ptr<CurveAdaptiveParametric> patch_c4;
 
-  CurveAdaptive* patch_c1;
-  CurveAdaptive* patch_c2;
-  CurveAdaptive* patch_c3;
-  CurveAdaptive* patch_c4;
-
-  PatchBezier* patch_bezier;
+  std::shared_ptr<PatchBezier> patch_bezier;
 
   for (int i = 0; i < size_patches; i = i + 48) {
-    p00 = new VertexAdaptive(patches[i], patches[i + 1], patches[i + 2]);
-    p10 = new VertexAdaptive(patches[i + 3], patches[i + 4], patches[i + 5]);
-    p20 = new VertexAdaptive(patches[i + 6], patches[i + 7], patches[i + 8]);
-    p30 = new VertexAdaptive(patches[i + 9], patches[i + 10], patches[i + 11]);
+    auto p00 = std::make_shared<VertexAdaptive>(patches[i], patches[i + 1],
+                                                patches[i + 2]);
+    auto p10 = std::make_shared<VertexAdaptive>(patches[i + 3], patches[i + 4],
+                                                patches[i + 5]);
+    auto p20 = std::make_shared<VertexAdaptive>(patches[i + 6], patches[i + 7],
+                                                patches[i + 8]);
+    auto p30 = std::make_shared<VertexAdaptive>(patches[i + 9], patches[i + 10],
+                                                patches[i + 11]);
 
-    p01 = new VertexAdaptive(patches[i + 12], patches[i + 13], patches[i + 14]);
-    p11 = new VertexAdaptive(patches[i + 15], patches[i + 16], patches[i + 17]);
-    p21 = new VertexAdaptive(patches[i + 18], patches[i + 19], patches[i + 20]);
-    p31 = new VertexAdaptive(patches[i + 21], patches[i + 22], patches[i + 23]);
+    auto p01 = std::make_shared<VertexAdaptive>(
+        patches[i + 12], patches[i + 13], patches[i + 14]);
+    auto p11 = std::make_shared<VertexAdaptive>(
+        patches[i + 15], patches[i + 16], patches[i + 17]);
+    auto p21 = std::make_shared<VertexAdaptive>(
+        patches[i + 18], patches[i + 19], patches[i + 20]);
+    auto p31 = std::make_shared<VertexAdaptive>(
+        patches[i + 21], patches[i + 22], patches[i + 23]);
 
-    p02 = new VertexAdaptive(patches[i + 24], patches[i + 25], patches[i + 26]);
-    p12 = new VertexAdaptive(patches[i + 27], patches[i + 28], patches[i + 29]);
-    p22 = new VertexAdaptive(patches[i + 30], patches[i + 31], patches[i + 32]);
-    p32 = new VertexAdaptive(patches[i + 33], patches[i + 34], patches[i + 35]);
+    auto p02 = std::make_shared<VertexAdaptive>(
+        patches[i + 24], patches[i + 25], patches[i + 26]);
+    auto p12 = std::make_shared<VertexAdaptive>(
+        patches[i + 27], patches[i + 28], patches[i + 29]);
+    auto p22 = std::make_shared<VertexAdaptive>(
+        patches[i + 30], patches[i + 31], patches[i + 32]);
+    auto p32 = std::make_shared<VertexAdaptive>(
+        patches[i + 33], patches[i + 34], patches[i + 35]);
 
-    p03 = new VertexAdaptive(patches[i + 36], patches[i + 37], patches[i + 38]);
-    p13 = new VertexAdaptive(patches[i + 39], patches[i + 40], patches[i + 41]);
-    p23 = new VertexAdaptive(patches[i + 42], patches[i + 43], patches[i + 44]);
-    p33 = new VertexAdaptive(patches[i + 45], patches[i + 46], patches[i + 47]);
+    auto p03 = std::make_shared<VertexAdaptive>(
+        patches[i + 36], patches[i + 37], patches[i + 38]);
+    auto p13 = std::make_shared<VertexAdaptive>(
+        patches[i + 39], patches[i + 40], patches[i + 41]);
+    auto p23 = std::make_shared<VertexAdaptive>(
+        patches[i + 42], patches[i + 43], patches[i + 44]);
+    auto p33 = std::make_shared<VertexAdaptive>(
+        patches[i + 45], patches[i + 46], patches[i + 47]);
 
-    patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
-    patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
-    patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
-    patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
+    patch_c1 =
+        std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p10, *p20, *p30);
+    patch_c2 =
+        std::make_shared<CurveAdaptiveParametricBezier>(*p30, *p31, *p32, *p33);
+    patch_c3 =
+        std::make_shared<CurveAdaptiveParametricBezier>(*p03, *p13, *p23, *p33);
+    patch_c4 =
+        std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p01, *p02, *p03);
 
-    if (geometry->VerifyCurveGeometry(p00, p10, p20, p30) == nullptr) {
-      patch_c1 = new CurveAdaptiveParametricBezier(*p00, *p10, *p20, *p30);
+    if (geometry->VerifyCurveGeometry(*p00, *p10, *p20, *p30) == nullptr) {
+      patch_c1 = std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p10,
+                                                                 *p20, *p30);
       geometry->InsertCurve(patch_c1);
     } else {
-      patch_c1 = geometry->VerifyCurveGeometry(p00, p10, p20, p30);
+      patch_c1 = geometry->VerifyCurveGeometry(*p00, *p10, *p20, *p30);
     }
 
-    if (geometry->VerifyCurveGeometry(p30, p31, p32, p33) == nullptr) {
-      patch_c2 = new CurveAdaptiveParametricBezier(*p30, *p31, *p32, *p33);
+    if (geometry->VerifyCurveGeometry(*p30, *p31, *p32, *p33) == nullptr) {
+      patch_c2 = std::make_shared<CurveAdaptiveParametricBezier>(*p30, *p31,
+                                                                 *p32, *p33);
       geometry->InsertCurve(patch_c2);
     } else {
-      patch_c2 = geometry->VerifyCurveGeometry(p30, p31, p32, p33);
+      patch_c2 = geometry->VerifyCurveGeometry(*p30, *p31, *p32, *p33);
     }
 
-    if (geometry->VerifyCurveGeometry(p03, p13, p23, p33) == nullptr) {
-      patch_c3 = new CurveAdaptiveParametricBezier(*p03, *p13, *p23, *p33);
+    if (geometry->VerifyCurveGeometry(*p03, *p13, *p23, *p33) == nullptr) {
+      patch_c3 = std::make_shared<CurveAdaptiveParametricBezier>(*p03, *p13,
+                                                                 *p23, *p33);
       geometry->InsertCurve(patch_c3);
     } else {
-      patch_c3 = geometry->VerifyCurveGeometry(p03, p13, p23, p33);
+      patch_c3 = geometry->VerifyCurveGeometry(*p03, *p13, *p23, *p33);
     }
 
-    if (geometry->VerifyCurveGeometry(p00, p01, p02, p03) == nullptr) {
-      patch_c4 = new CurveAdaptiveParametricBezier(*p00, *p01, *p02, *p03);
+    if (geometry->VerifyCurveGeometry(*p00, *p01, *p02, *p03) == nullptr) {
+      patch_c4 = std::make_shared<CurveAdaptiveParametricBezier>(*p00, *p01,
+                                                                 *p02, *p03);
       geometry->InsertCurve(patch_c4);
     } else {
-      patch_c4 = geometry->VerifyCurveGeometry(p00, p01, p02, p03);
+      patch_c4 = geometry->VerifyCurveGeometry(*p00, *p01, *p02, *p03);
     }
 
-    patch_bezier = new PatchBezier(patch_c1, patch_c2, patch_c3, patch_c4, *p11,
-                                   *p21, *p12, *p22);
+    patch_bezier = std::make_shared<PatchBezier>(
+        patch_c1, patch_c2, patch_c3, patch_c4, *p11, *p21, *p12, *p22);
     patch_bezier->SetId(i / 48);
 
     geometry->InsertPatch(patch_bezier);
@@ -477,19 +491,19 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
 #endif
 {
 #if USE_MPI
-  this->communicator_ = new ApMeshCommunicator(true);
-  Geometry* geometry = UnpakGeometry(patches, size_patches);
+  this->communicator_ = std::make_shared<ApMeshCommunicator>(true);
+  auto geometry = UnpakGeometry(patches, size_patches);
 #elif USE_OPENMP
-  this->communicator_ = new ApMeshCommunicator(true);
-  Geometry* geometry = model.GetGeometry();
+  this->communicator_ = std::make_shared<ApMeshCommunicator>(true);
+  auto geometry = model.GetGeometry();
 #else
-  this->communicator_ = new Parallel::TMCommunicator(false);
+  this->communicator_ = std::make_shared<Parallel::TMCommunicator>(false);
   auto geometry = model.GetGeometry();
 #endif
 
   int size_patch = geometry->GetNumberPatches();
 
-  mesh_ = new MeshAdaptive;
+  mesh_ = std::make_shared<MeshAdaptive>();
   mesh_->ResizeSubMeshAdaptiveByPosition(size_patch);
 
   this->id_manager_ = nullptr;
@@ -498,10 +512,11 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
 
   this->step_ = 0;
 
-  MAX_THREADS = size_thread =
-      size_thread > static_cast<Parallel::TMCommunicator*>(this->communicator_)
-                        ->getMaxThreads()
-          ? static_cast<Parallel::TMCommunicator*>(this->communicator_)
+  maxThreads = size_thread =
+      size_thread >
+              static_cast<Parallel::TMCommunicator*>(this->communicator_.get())
+                  ->getMaxThreads()
+          ? static_cast<Parallel::TMCommunicator*>(this->communicator_.get())
                 ->getMaxThreads()
           : size_thread;
 
@@ -517,15 +532,15 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
 #else
   this->id_managers_[0] = this->MakeIdManager(communicator_, 0);
 #if USE_MPI
-  timer.InitTimerParallel(RANK_MPI, 0, 2);  // Malha inicial
+  timer.InitTimerParallel(rankMpi, 0, 2);  // Malha inicial
 #else
   timer.InitTimerParallel(0, 0, 2);    // Malha inicial
 #endif  // USE_MPI
 
-  GeneratorInitialMesh(*geometry, mesh_, timer, size_thread, size_patch);
+  GeneratorInitialMesh(geometry, mesh_, timer, size_thread, size_patch);
 
 #if USE_MPI
-  timer.EndTimerParallel(RANK_MPI, 0, 2);   // Malha inicial
+  timer.EndTimerParallel(rankMpi, 0, 2);   // Malha inicial
 #else
   timer.EndTimerParallel(0, 0, 2);     // Malha inicial
 #endif  // USE_MPI
@@ -543,13 +558,13 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
   }
 #else
 #if USE_MPI
-  timer.InitTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
+  timer.InitTimerParallel(rankMpi, 0, 7);  // Calculo do erro Global
 #else
   timer.InitTimerParallel(0, 0, 7);    // Calculo do erro Global
 #endif  // USE_MPI
   this->error_local_process_ = this->ErrorGlobal(mesh_, timer);
 #if USE_MPI
-  timer.EndTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
+  timer.EndTimerParallel(rankMpi, 0, 7);  // Calculo do erro Global
 #else
   timer.EndTimerParallel(0, 0, 7);     // Calculo do erro Global
 #endif  // USE_MPI
@@ -563,8 +578,8 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
 
 #if USE_MPI
 #if USE_PRINT_RESULTS
-  cout << "*************** ERRO " << this->step_ << " rank " << RANK_MPI
-       << " = " << this->error_local_process_ << endl;
+  cout << "*************** ERRO " << this->step_ << " rank " << rankMpi << " = "
+       << this->error_local_process_ << endl;
 #endif  // #if USE_PRINT_RESULTS
 #else
 #if USE_PRINT_RESULTS
@@ -573,22 +588,22 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
 #endif  // #if USE_PRINT_RESULTS
 #endif  // USE_MPI
 
-  if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
+  if (writeMesh == std::string("m") || writeMesh == std::string("q")) {
     SaveMesh(mesh_, step_);
   }
 
   // this->error_local_process_ = 1000;
 
   // Gerar malha enquanto o erro global for acima do erro desejado
-  while (this->step_ < STEPS) {
-    if (this->error_local_process_ < EPSYLON) {
+  while (this->step_ < kSteps) {
+    if (this->error_local_process_ < kEpsylon) {
       break;
     }
     // #if USE_MPI
-    //         timer.InitTimerParallel(RANK_MPI,0,9); // SendRecv
+    //         timer.InitTimerParallel(rankMpi,0,9); // SendRecv
     //         MPI_Allreduce(&this->error_local_process_,
     //         &this->error_local_process_, 1, MPI_DOUBLE, MPI_SUM,
-    //         MPI_COMM_WORLD); timer.EndTimerParallel(RANK_MPI,0,9); //
+    //         MPI_COMM_WORLD); timer.EndTimerParallel(rankMpi,0,9); //
     //         SendRecv this->error_local_process_ = this->error_local_process_
     //         / sizeRank;
     // #endif //USE_MPI
@@ -596,12 +611,12 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
     this->step_++;
 
     // Aloca uma nova malha
-    mesh_ = new MeshAdaptive;
+    mesh_ = std::make_shared<MeshAdaptive>();
     mesh_->ResizeSubMeshAdaptiveByPosition(geometry->GetNumberPatches());
 #if USE_MPI
-    timer.InitTimerParallel(RANK_MPI, 0, 3);  // Adaptação da curva
+    timer.InitTimerParallel(rankMpi, 0, 3);  // Adaptação da curva
 #else
-    timer.InitTimerParallel(0, 0, 3);         // Adaptação da curva
+    timer.InitTimerParallel(0, 0, 3);        // Adaptação da curva
 #endif  // USE_MPI
 
     // Adapta as curvas pela curvatura da curva / Atualiza a discretização das
@@ -609,9 +624,9 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
     AdaptCurve(*geometry);
 
 #if USE_MPI
-    timer.EndTimerParallel(RANK_MPI, 0, 3);  // Adaptação da curva
+    timer.EndTimerParallel(rankMpi, 0, 3);  // Adaptação da curva
 #else
-    timer.EndTimerParallel(0, 0, 3);          // Adaptação da curva
+    timer.EndTimerParallel(0, 0, 3);         // Adaptação da curva
 #endif  // USE_MPI
 
     // Adapta as patches / Atualiza os patches
@@ -619,13 +634,13 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
     AdaptDomainOmp(geometry, mesh_, timer, size_thread, size_patch);
 #else
 #if USE_MPI
-    timer.InitTimerParallel(RANK_MPI, 0, 4);  // Adaptação do domínio
+    timer.InitTimerParallel(rankMpi, 0, 4);  // Adaptação do domínio
 #else
     timer.InitTimerParallel(0, 0, 4);  // Adaptação do domínio
 #endif  // USE_MPI
     AdaptDomain(*geometry, mesh_);
 #if USE_MPI
-    timer.EndTimerParallel(RANK_MPI, 0, 4);   // Adaptação do domínio
+    timer.EndTimerParallel(rankMpi, 0, 4);   // Adaptação do domínio
 #else
     timer.EndTimerParallel(0, 0, 4);   // Adaptação do domínio
 #endif  // USE_MPI
@@ -642,13 +657,13 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
     }
 #else
 #if USE_MPI
-    timer.InitTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
+    timer.InitTimerParallel(rankMpi, 0, 7);  // Calculo do erro Global
 #else
     timer.InitTimerParallel(0, 0, 7);  // Calculo do erro Global
 #endif  // USE_MPI
     this->error_local_process_ = this->ErrorGlobal(mesh_, timer);
 #if USE_MPI
-    timer.EndTimerParallel(RANK_MPI, 0, 7);  // Calculo do erro Global
+    timer.EndTimerParallel(rankMpi, 0, 7);  // Calculo do erro Global
 #else
     timer.EndTimerParallel(0, 0, 7);   // Calculo do erro Global
 #endif  // USE_MPI
@@ -662,7 +677,7 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
 
 #if USE_MPI
 #if USE_PRINT_RESULTS
-    cout << "*************** ERRO " << this->step_ << " rank " << RANK_MPI
+    cout << "*************** ERRO " << this->step_ << " rank " << rankMpi
          << " = " << this->error_local_process_ << endl;
 #endif  // #if USE_PRINT_RESULTS
 #else
@@ -672,33 +687,31 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
 #endif  // #if USE_PRINT_RESULTS
 #endif  // USE_MPI
 
-    if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
+    if (writeMesh == std::string("m") || writeMesh == std::string("q")) {
       SaveMesh(mesh_, step_);
     }
   }
 
 #if USE_MPI
-  timer.EndTimerParallel(RANK_MPI, 0, 10);  // Full
-  timer.PrintTime(RANK_MPI);
+  timer.EndTimerParallel(rankMpi, 0, 10);  // Full
+  timer.PrintTime(rankMpi);
 #endif  // USE_MPI
 
   // Escreve o(s) arquivo(s) com suas respectivas malhas em cada step_
 #if USE_MPI
   for (unsigned int i = 0; i < error_step_.size(); ++i) {
-    cout << "Erro do processo " << RANK_MPI << " no step_ " << i << " = "
+    cout << "Erro do processo " << rankMpi << " no step_ " << i << " = "
          << error_step_[i] << endl;
   }
 
-  if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
-    for (MeshVector::iterator it = save_mesh_.begin(); it != save_mesh_.end();
-         it++) {
-      if (WRITE_MESH == std::string("q")) {
-        PrintElments((*it).second, (*it).first, this->error_step_, RANK_MPI);
-        WriteQualityMesh((*it).second, (*it).first, this->error_step_,
-                         RANK_MPI);
-      } else if (WRITE_MESH == std::string("m")) {
-        PrintElments((*it).second, (*it).first, this->error_step_, RANK_MPI);
-        WriteMesh((*it).second, (*it).first, this->error_step_, RANK_MPI);
+  if (writeMesh == std::string("m") || writeMesh == std::string("q")) {
+    for (const auto& it : save_mesh_) {
+      if (writeMesh == std::string("q")) {
+        PrintElments(it.second, it.first, this->error_step_, rankMpi);
+        WriteQualityMesh(it.second, it.first, this->error_step_, rankMpi);
+      } else if (writeMesh == std::string("m")) {
+        PrintElments(it.second, it.first, this->error_step_, rankMpi);
+        WriteMesh(it.second, it.first, this->error_step_, rankMpi);
       }
     }
   }
@@ -707,15 +720,14 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
   timer.EndTimerParallel(0, 0, 10);  // Full
   timer.PrintTime();
 
-  if (WRITE_MESH == std::string("m") || WRITE_MESH == std::string("q")) {
-    for (MeshVector::iterator it = save_mesh_.begin(); it != save_mesh_.end();
-         it++) {
-      if (WRITE_MESH == std::string("q")) {
-        PrintElments((*it).second, (*it).first, this->error_step_);
-        WriteQualityMesh((*it).second, (*it).first, this->error_step_);
+  if (writeMesh == std::string("m") || writeMesh == std::string("q")) {
+    for (const auto& mesh : save_mesh_) {
+      if (writeMesh == std::string("q")) {
+        PrintElments(mesh.second, mesh.first, this->error_step_);
+        WriteQualityMesh(mesh.second, mesh.first, this->error_step_);
       } else {
-        PrintElments((*it).second, (*it).first, this->error_step_);
-        WriteMesh((*it).second, (*it).first, this->error_step_);
+        PrintElments(mesh.second, mesh.first, this->error_step_);
+        WriteMesh(mesh.second, mesh.first, this->error_step_);
       }
     }
     for (unsigned int i = 0; i < error_step_.size(); ++i) {
@@ -726,40 +738,52 @@ void GeneratorAdaptive::Generator(Model& model, Timer& timer, int id_range,
 }
 
 void GeneratorAdaptive::AdaptCurve(Geometry& geometry) {
-  list<PointAdaptive*> new_points[geometry.GetNumberCurves()];
-  map<PointAdaptive*, PointAdaptive*> map_points;
+  std::list<std::shared_ptr<PointAdaptive>>
+      new_points[geometry.GetNumberCurves()];
+  map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>>
+      map_points;
 
   for (unsigned int i = 0; i < geometry.GetNumberCurves(); ++i) {
-    new_points[i] = adapter_.AdaptCurveByCurve(geometry.GetCurve(i), map_points,
-                                               this->id_managers_[0], 1);
-    // cout << "AdaptCurveByCurve curva: " << i
-    //      << " newpoint[i] size: " << new_points[i].size() << endl;
+    auto curve_ptr = geometry.GetCurve(i);
+    auto id_manager_ptr =
+        std::shared_ptr<Performer::IdManager>(this->id_managers_[0]);
+    new_points[i] =
+        adapter_.AdaptCurveByCurve(curve_ptr, map_points, id_manager_ptr, 1);
+
+    cout << "AdaptCurveByCurve curva: " << i
+         << " newpoint[i] size: " << new_points[i].size() << endl;
     geometry.GetCurve(i)->SetPoints(new_points[i]);
-    new_points[i] = adapter_.AdaptCurveBySurface(
-        geometry.GetCurve(i), map_points, this->id_managers_[0], 1);
-    geometry.GetCurve(i)->SetPoints(new_points[i]);
-    // cout << "AdaptCurveBySurface curva: " << i
-    //      << " newpoint[i] size: " << new_points[i].size() << endl;
+    //    new_points[i] =
+    //        adapter_.AdaptCurveBySurface(curve_ptr, map_points,
+    //        id_manager_ptr, 1);
+    //    geometry.GetCurve(i)->SetPoints(new_points[i]);
+    cout << "AdaptCurveBySurface curva: " << i
+         << " newpoint[i] size: " << new_points[i].size() << endl;
   }
 }
 
-void GeneratorAdaptive::AdaptDomain(Geometry& geometry, MeshAdaptive* mesh) {
+void GeneratorAdaptive::AdaptDomain(Geometry& geometry,
+                                    std::shared_ptr<MeshAdaptive>& mesh) {
   for (unsigned int i = 0; i < geometry.GetNumberPatches(); ++i) {
-    PatchCoons* p = static_cast<PatchCoons*>(geometry.GetPatch(i));
-    SubMesh* sub_mesh = adapter_.AdaptDomain(p, this->id_managers_[0], 1);
-    sub_mesh->SetPatch(p);
+    auto patch = static_pointer_cast<PatchCoons>(geometry.GetPatch(i));
+    auto id_manager_ptr =
+        std::shared_ptr<Performer::IdManager>(this->id_managers_[0]);
+    auto new_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
+    auto sub_mesh = adapter_.AdaptDomain(patch, id_manager_ptr, 1);
+    sub_mesh->SetPatch(patch);
     mesh->InsertSubMeshAdaptiveByPosition(sub_mesh, i);
-    geometry.GetPatch(i)->SetSubMesh(mesh->GetSubMeshAdaptiveByPosition(i));
+    geometry.GetPatch(i)->SetSubMesh(new_mesh);
   }
 }
 
 #if USE_OPENMP
-SubMesh* GeneratorAdaptive::GeneratorInitialMeshOmp(
-    PatchCoons* patch, Performer::IdManager* id_manager) {
-  CurveAdaptive* c1 = patch->GetCurve(0);
-  CurveAdaptive* c2 = patch->GetCurve(1);
-  CurveAdaptive* c3 = patch->GetCurve(2);
-  CurveAdaptive* c4 = patch->GetCurve(3);
+std::shared_ptr<SubMesh> GeneratorAdaptive::GeneratorInitialMeshOmp(
+    std::shared_ptr<PatchCoons>& patch,
+    std::shared_ptr<Performer::IdManager>& id_manager) {
+  auto c1 = patch->GetCurve(0);
+  auto c2 = patch->GetCurve(1);
+  auto c3 = patch->GetCurve(2);
+  auto c4 = patch->GetCurve(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())
@@ -771,7 +795,7 @@ SubMesh* GeneratorAdaptive::GeneratorInitialMeshOmp(
   if (c4->GetNumBerPoints())
     c4 = nullptr;  // c4 já foi trabalhada no patch vizinho
 
-  SubMesh* sub_mesh = new SubMesh;
+  auto sub_mesh = std::make_shared<SubMesh>();
 
   //========================= Malha Grosseira
   //====================================
@@ -779,7 +803,7 @@ SubMesh* GeneratorAdaptive::GeneratorInitialMeshOmp(
 
   for (double v = 0.0; v <= 1.0; v += 1) {
     for (double u = 0.0; u <= 1.0; u += 1) {
-      PointAdaptive* point = new NodeAdaptive(patch->Parameterize(u, v));
+      auto point = std::make_shared<NodeAdaptive>(patch->Parameterize(u, v));
       point->SetId(id_manager->next(0));
 
       if (v == 0 && c1)  // p está na curva 1 (c1 = nullptr)
@@ -792,43 +816,45 @@ SubMesh* GeneratorAdaptive::GeneratorInitialMeshOmp(
       else if (u == 1 && c2)  // p está na curva 2
         c2->InsertPoint(point);
 
-      sub_mesh->SetNoh(static_cast<NodeAdaptive*>(point));
+      auto noh = static_pointer_cast<NodeAdaptive>(point);
+      sub_mesh->SetNoh(noh);
     }
   }
 
-  PointAdaptive* point = new NodeAdaptive(patch->Parameterize(0.5, 0.5));
+  auto point = std::make_shared<NodeAdaptive>(patch->Parameterize(0.5, 0.5));
   point->SetId(id_manager->next(0));
-  sub_mesh->SetNoh(static_cast<NodeAdaptive*>(point));
+  auto noh = static_pointer_cast<NodeAdaptive>(point);
+  sub_mesh->SetNoh(noh);
 
-  ElementAdaptive* e1 = new TriangleAdaptive(
+  auto e1 = std::make_shared<TriangleAdaptive>(
       sub_mesh->GetNoh(0), sub_mesh->GetNoh(1), sub_mesh->GetNoh(4));
-  (static_cast<TriangleAdaptive*>(e1))->SetParametersN1(make_tuple(0, 0));
-  (static_cast<TriangleAdaptive*>(e1))->SetParametersN2(make_tuple(1, 0));
-  (static_cast<TriangleAdaptive*>(e1))->SetParametersN3(make_tuple(0.5, 0.5));
+  e1->SetParametersN1(make_tuple(0, 0));
+  e1->SetParametersN2(make_tuple(1, 0));
+  e1->SetParametersN3(make_tuple(0.5, 0.5));
   e1->SetId(id_manager->next(1));
   sub_mesh->SetElement(e1);
 
-  ElementAdaptive* e2 = new TriangleAdaptive(
+  auto e2 = std::make_shared<TriangleAdaptive>(
       sub_mesh->GetNoh(1), sub_mesh->GetNoh(3), sub_mesh->GetNoh(4));
-  (static_cast<TriangleAdaptive*>(e2))->SetParametersN1(make_tuple(1, 0));
-  (static_cast<TriangleAdaptive*>(e2))->SetParametersN2(make_tuple(1, 1));
-  (static_cast<TriangleAdaptive*>(e2))->SetParametersN3(make_tuple(0.5, 0.5));
+  e2->SetParametersN1(make_tuple(1, 0));
+  e2->SetParametersN2(make_tuple(1, 1));
+  e2->SetParametersN3(make_tuple(0.5, 0.5));
   e2->SetId(id_manager->next(1));
   sub_mesh->SetElement(e2);
 
-  ElementAdaptive* e3 = new TriangleAdaptive(
+  auto e3 = std::make_shared<TriangleAdaptive>(
       sub_mesh->GetNoh(3), sub_mesh->GetNoh(2), sub_mesh->GetNoh(4));
-  (static_cast<TriangleAdaptive*>(e3))->SetParametersN1(make_tuple(1, 1));
-  (static_cast<TriangleAdaptive*>(e3))->SetParametersN2(make_tuple(0, 1));
-  (static_cast<TriangleAdaptive*>(e3))->SetParametersN3(make_tuple(0.5, 0.5));
+  e3->SetParametersN1(make_tuple(1, 1));
+  e3->SetParametersN2(make_tuple(0, 1));
+  e3->SetParametersN3(make_tuple(0.5, 0.5));
   e3->SetId(id_manager->next(1));
   sub_mesh->SetElement(e3);
 
-  ElementAdaptive* e4 = new TriangleAdaptive(
+  auto e4 = std::make_shared<TriangleAdaptive>(
       sub_mesh->GetNoh(2), sub_mesh->GetNoh(0), sub_mesh->GetNoh(4));
-  (static_cast<TriangleAdaptive*>(e4))->SetParametersN1(make_tuple(0, 1));
-  (static_cast<TriangleAdaptive*>(e4))->SetParametersN2(make_tuple(0, 0));
-  (static_cast<TriangleAdaptive*>(e4))->SetParametersN3(make_tuple(0.5, 0.5));
+  e4->SetParametersN1(make_tuple(0, 1));
+  e4->SetParametersN2(make_tuple(0, 0));
+  e4->SetParametersN3(make_tuple(0.5, 0.5));
   e4->SetId(id_manager->next(1));
   sub_mesh->SetElement(e4);
   //==============================================================================*/
@@ -840,10 +866,9 @@ SubMesh* GeneratorAdaptive::GeneratorInitialMeshOmp(
   return sub_mesh;
 }
 
-double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
-                                                  Timer& timer,
-                                                  [[maybe_unused]] int rank,
-                                                  int size_thread) {
+double GeneratorAdaptive::CalculateErrorGlobalOmp(
+    std::shared_ptr<MeshAdaptive>& mesh, Timer& timer,
+    [[maybe_unused]] int rank, int size_thread) {
   unsigned int Ns = 0;  // número de submalhas
   double Nj = 0.0;      // erro global da malha
 
@@ -853,7 +878,7 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
 #pragma omp parallel num_threads(size_thread) firstprivate(Ns) reduction(+ : Nj)
   {
 #if USE_MPI
-    timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(),
+    timer.InitTimerParallel(rankMpi, omp_get_thread_num(),
                             7);  // calculo do erro global
 #else
     timer.InitTimerParallel(0, omp_get_thread_num(),
@@ -861,8 +886,8 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
 #endif  // USE_MPI
 #pragma omp for
     for (unsigned int i = 0; i < Ns; ++i) {
-      SubMesh* sub = mesh->GetSubMeshAdaptiveByPosition(i);
-      unsigned int Nv = sub->GetNumberNos();
+      auto sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
+      unsigned int Nv = sub_mesh->GetNumberNos();
       double curvPower = 0.0;
       double Njs = 0.0;
 
@@ -871,9 +896,9 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
       // reduction(+ :Nj)
       for (unsigned int j = 0; j < Nv; ++j) {
 #if USE_MPI
-        timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(),
+        timer.EndTimerParallel(rankMpi, omp_get_thread_num(),
                                7);  // calculo do erro global
-        timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(),
+        timer.InitTimerParallel(rankMpi, omp_get_thread_num(),
                                 6);  // MediaGauss
 #else
         timer.EndTimerParallel(0, omp_get_thread_num(),
@@ -881,11 +906,12 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
         timer.InitTimerParallel(0, omp_get_thread_num(), 6);  // MediaGauss
 #endif  // USE_MPI
 
-        PointAdaptive* n = sub->GetNoh(j);
-        Patch* p = sub->GetPatch();
-        CurvatureAnalytical ka(*(static_cast<NodeAdaptive*>(n)),
-                               *(static_cast<PatchCoons*>(p)));
-        CurvatureDiscrete kd(*(static_cast<NodeAdaptive*>(n)));
+        auto noh = sub_mesh->GetNoh(j);
+        auto patch = sub_mesh->GetPatch();
+        CurvatureAnalytical ka(
+            *std::static_pointer_cast<PointAdaptive>(noh).get(),
+            *std::static_pointer_cast<PatchCoons>(patch).get());
+        CurvatureDiscrete kd(*noh.get());
         double Ga = ka.CalculateGaussCurvature();
         double Gd = kd.CalculateGaussCurvature();
         double Ha = ka.CalculateMeanCurvature();
@@ -900,14 +926,15 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
 
         // atualiza as curvaturas do nó ( para que não sejam recalculadas na
         // adaptação das curvas e do domínio )
-        ((NodeAdaptive*)n)->SetGa(Ga);
-        ((NodeAdaptive*)n)->SetGd(Gd);
-        ((NodeAdaptive*)n)->SetHa(Ha);
-        ((NodeAdaptive*)n)->SetHd(Hd);
+        noh->SetGa(Ga);
+        noh->SetGd(Gd);
+        noh->SetHa(Ha);
+        noh->SetHd(Hd);
+
 #if USE_MPI
-        timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(),
+        timer.EndTimerParallel(rankMpi, omp_get_thread_num(),
                                6);  // MediaGauss
-        timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(),
+        timer.InitTimerParallel(rankMpi, omp_get_thread_num(),
                                 7);  // calculo do erro global
 #else
         timer.EndTimerParallel(0, omp_get_thread_num(), 6);   // MediaGauss
@@ -918,12 +945,12 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
         double power = 0.0;
         double diff = 0.0;
 
-        if (fabs(Ga) >= TOLERANCE) {
+        if (fabs(Ga) >= kTolerance) {
           diff = Gd - Ga;
           power = pow(diff, 2);
           Njs += power;
           curvPower += pow(Ga, 2);
-        } else if (fabs(Ha) >= TOLERANCE) {
+        } else if (fabs(Ha) >= kTolerance) {
           diff = Hd - Ha;
           power = pow(diff, 2);
           Njs += power;
@@ -943,7 +970,7 @@ double GeneratorAdaptive::CalculateErrorGlobalOmp(MeshAdaptive* mesh,
     }  // Parallel for
 
 #if USE_MPI
-    timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(),
+    timer.EndTimerParallel(rankMpi, omp_get_thread_num(),
                            7);  // calculo do erro global
 #else
     timer.EndTimerParallel(0, omp_get_thread_num(),
@@ -964,7 +991,7 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
   this->id_manager_ = nullptr;
   this->id_off_set_ = 0;
   this->id_range_ = id_range;
-  this->communicator_ = new ApMeshCommunicator(true);
+  this->communicator_ = std::make_shared<ApMeshCommunicator>(true);
 
 #if USE_MPI
   [[maybe_unused]] Int nProcesses = 1;
@@ -973,11 +1000,11 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
   rank = this->communicator_->rank();
 #endif  // #if USE_MPI
 
-  Geometry* geo = model.GetGeometry();
-  int sizePatch = geo->GetNumberPatches();
+  auto geometry = model.GetGeometry();
+  int sizePatch = geometry->GetNumberPatches();
 
-  MeshAdaptive* malha = new MeshAdaptive;
-  malha->ResizeSubMeshAdaptiveByPosition(sizePatch);
+  auto mesh = std::make_shared<MeshAdaptive>();
+  mesh->ResizeSubMeshAdaptiveByPosition(sizePatch);
 
   this->step_ = 0;
 
@@ -990,12 +1017,12 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
     this->id_managers_.resize(size_thread, nullptr);
   }
 
-#pragma omp parallel num_threads(size_thread) shared(malha, geo, sizePatch)
+#pragma omp parallel num_threads(size_thread) shared(mesh, geometry, sizePatch)
   {
     Int id = communicator_->threadId();
 
     if (!this->id_managers_[id]) {
-      this->id_managers_[id] = this->MakeIdManagerOmp(communicator_, id);
+      this->id_managers_[id] = this->MakeIdManagerOmp(communicator_, id).get();
     }
 
     timer.InitTimerParallel(0, id, 2);  // Malha inicial
@@ -1003,21 +1030,22 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
     // 1. Gera a malha inicial
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
-      PatchCoons* patch = static_cast<PatchCoons*>(geo->GetPatch(i));
-      SubMesh* sub = this->GeneratorInitialMeshOmp(
-          static_cast<PatchCoons*>(patch), this->id_managers_[id]);
-      malha->InsertSubMeshAdaptiveByPosition(sub, i);
+      auto patch = static_pointer_cast<PatchCoons>(geometry->GetPatch(i));
+      auto id_manager_ptr =
+          std::shared_ptr<Performer::IdManager>(this->id_managers_[0]);
+      auto sub = this->GeneratorInitialMeshOmp(patch, id_manager_ptr);
+      mesh->InsertSubMeshAdaptiveByPosition(sub, i);
     }
 
     timer.EndTimerParallel(0, id, 2);  // Malha inicial
   }
 
   // 2. Insere a malha inicial no modelo ( que guarda todas as malhas geradas )
-  model.InsertMeshAdaptive(malha);
+  model.InsertMeshAdaptive(mesh);
 
   // 3. Calcula o erro global para a malha inicial
   this->error_local_process_ =
-      this->CalculateErrorGlobalOmp(malha, timer, 0, size_thread);
+      this->CalculateErrorGlobalOmp(mesh, timer, 0, size_thread);
 
 #if USE_PRINT_ERRO
   cout << "ERRO  " << this->step_ << " = " << this->error_local_process_
@@ -1025,13 +1053,13 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
 #endif  // #if USE_PRINT_ERRO
 
 #if USE_SAVE_MESH
-  WriteMesh(malha, step_);
+  WriteMesh(mesh, step_);
 #endif  // #USE_SAVE_MESH
 
   this->error_local_process_ = 1.0;
 
   // 4. enquanto o erro global de uma malha gerada não for menor que o desejado
-  while (this->error_local_process_ > EPSYLON) {
+  while (this->error_local_process_ > kEpsylon) {
     if (step_ >= 2) {
       break;
     }
@@ -1039,14 +1067,15 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
     this->step_++;
 
     // 4.1. Aloca uma nova malha
-    malha = new MeshAdaptive;
-    malha->ResizeSubMeshAdaptiveByPosition(sizePatch);
+    mesh = std::make_shared<MeshAdaptive>();
+    mesh->ResizeSubMeshAdaptiveByPosition(sizePatch);
 
-    list<PointAdaptive*> novosPontos[geo->GetNumberCurves()];
+    std::list<std::shared_ptr<PointAdaptive>>
+        new_points[geometry->GetNumberCurves()];
 
     // map<Ponto *, Ponto *> mapaPontos;
 
-    int sizeCurvas = geo->GetNumberCurves();
+    int sizeCurvas = geometry->GetNumberCurves();
 
     //
     //        sizeThread = 1;
@@ -1076,22 +1105,27 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
 
     // 4.2. Adapta as curvas pela curvatura da curva / 4.3. Atualiza a
     // discretização das curvas
-    map<PointAdaptive*, PointAdaptive*> mapaPontos;
+    map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>>
+        map_points;
     timer.InitTimerParallel(0, 0, 3);  // adpt. das curvas
 
     for (int i = 0; i < sizeCurvas; ++i) {
-      novosPontos[i] = adapter_.AdaptCurveByCurve(geo->GetCurve(i), mapaPontos,
-                                                  this->id_managers_[0], 1);
-      geo->GetCurve(i)->SetPoints(novosPontos[i]);
-      novosPontos[i] = adapter_.AdaptCurveBySurface(
-          geo->GetCurve(i), mapaPontos, this->id_managers_[0], 1);
-      geo->GetCurve(i)->SetPoints(novosPontos[i]);
+      auto curve_ptr = std::static_pointer_cast<CurveAdaptiveParametric>(
+          geometry->GetCurve(i));
+      auto id_manager_ptr =
+          std::shared_ptr<Performer::IdManager>(this->id_managers_[0]);
+      new_points[i] =
+          adapter_.AdaptCurveByCurve(curve_ptr, map_points, id_manager_ptr, 1);
+      geometry->GetCurve(i)->SetPoints(new_points[i]);
+      new_points[i] = adapter_.AdaptCurveBySurface(curve_ptr, map_points,
+                                                   id_manager_ptr, 1);
+      geometry->GetCurve(i)->SetPoints(new_points[i]);
       // ((CurvaParametrica*)geo->getCurva(i))->ordenaLista ( );
     }
 
     timer.EndTimerParallel(0, 0, 3);  // adpt. das cruvas
 
-#pragma omp parallel num_threads(size_thread) shared(geo, sizePatch, malha)
+#pragma omp parallel num_threads(size_thread) shared(geometry, sizePatch, mesh)
     {
       Int id = communicator_->threadId();
       //((Performer::RangedIdManager *)this->idManagers[id])->setMin(1,0) ;
@@ -1101,11 +1135,14 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
       // 4.3. Adapta as patches
 #pragma omp for
       for (int i = 0; i < sizePatch; ++i) {
-        PatchCoons* p = static_cast<PatchCoons*>(geo->GetPatch(i));
-        SubMesh* sub = adapter_.AdaptDomainOmp(p, this->id_managers_[id], 1);
-        sub->SetPatch(p);
-        malha->InsertSubMeshAdaptiveByPosition(sub, i);
-        geo->GetPatch(i)->SetSubMesh(malha->GetSubMeshAdaptiveByPosition(i));
+        auto patch = static_pointer_cast<PatchCoons>(geometry->GetPatch(i));
+        auto id_manager_ptr =
+            std::shared_ptr<Performer::IdManager>(this->id_managers_[0]);
+        auto sub_mesh = adapter_.AdaptDomainOmp(patch, id_manager_ptr, 1);
+        sub_mesh->SetPatch(patch);
+        mesh->InsertSubMeshAdaptiveByPosition(sub_mesh, i);
+        auto new_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
+        geometry->GetPatch(i)->SetSubMesh(new_mesh);
       }
 
       timer.EndTimerParallel(0, id, 4);  // adpt. do domínio
@@ -1119,7 +1156,7 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
 
     // 4.6. Insere a malha gerada no modelo ( que guarda todas as malhas geradas
     // )
-    model.InsertMeshAdaptive(malha);
+    model.InsertMeshAdaptive(mesh);
 
     // 4.7. Escreve um artigo "neutral file" da malha gerada
 
@@ -1129,7 +1166,7 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
 
     // 4.7. Calcula o erro global para a malha
     this->error_local_process_ =
-        this->CalculateErrorGlobalOmp(malha, timer, 0, size_thread);
+        this->CalculateErrorGlobalOmp(mesh, timer, 0, size_thread);
 
 #if USE_PRINT_ERRO
     cout << "ERRO  " << this->step_ << " = " << this->error_local_process_
@@ -1140,15 +1177,16 @@ int GeneratorAdaptive::GeneratorOmp(Model& model, Timer& timer, int id_range,
   return 0;
 }
 
-void GeneratorAdaptive::AdaptDomainOmp(Geometry* geo, MeshAdaptive* malha,
+void GeneratorAdaptive::AdaptDomainOmp(std::shared_ptr<Geometry>& geometry,
+                                       std::shared_ptr<MeshAdaptive>& mesh,
                                        Timer& timer, int sizeThread,
                                        int sizePatch) {
-#pragma omp parallel num_threads(sizeThread) shared(geo, sizePatch, malha)
+#pragma omp parallel num_threads(sizeThread) shared(geometry, sizePatch, mesh)
   {
     Int id = communicator_->threadId();
 
 #if USE_MPI
-    timer.InitTimerParallel(RANK_MPI, id, 4);  // Adaptação do domínio
+    timer.InitTimerParallel(rankMpi, id, 4);  // Adaptação do domínio
 #else
     timer.InitTimerParallel(0, id, 4);  // Adaptação do domínio
 #endif  // USE_MPI
@@ -1156,14 +1194,17 @@ void GeneratorAdaptive::AdaptDomainOmp(Geometry* geo, MeshAdaptive* malha,
     // 4.3. Adapta as patches
 #pragma omp for
     for (int i = 0; i < sizePatch; ++i) {
-      PatchCoons* p = static_cast<PatchCoons*>(geo->GetPatch(i));
-      SubMesh* sub = adapter_.AdaptDomainOmp(p, this->id_managers_[id], 1);
-      sub->SetPatch(p);
-      malha->InsertSubMeshAdaptiveByPosition(sub, i);
-      geo->GetPatch(i)->SetSubMesh(malha->GetSubMeshAdaptiveByPosition(i));
+      auto patch = static_pointer_cast<PatchCoons>(geometry->GetPatch(i));
+      auto id_manager_ptr =
+          std::shared_ptr<Performer::IdManager>(this->id_managers_[0]);
+      auto sub_mesh = adapter_.AdaptDomainOmp(patch, id_manager_ptr, 1);
+      sub_mesh->SetPatch(patch);
+      mesh->InsertSubMeshAdaptiveByPosition(sub_mesh, i);
+      auto new_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
+      geometry->GetPatch(i)->SetSubMesh(new_mesh);
     }
 #if USE_MPI
-    timer.EndTimerParallel(RANK_MPI, id, 4);  // Adaptação do domínio
+    timer.EndTimerParallel(rankMpi, id, 4);  // Adaptação do domínio
 #else
     timer.EndTimerParallel(0, id, 4);   // Adaptação do domínio
 #endif  // USE_MPI
@@ -1172,12 +1213,13 @@ void GeneratorAdaptive::AdaptDomainOmp(Geometry* geo, MeshAdaptive* malha,
 
 #endif  // USE_OPENMP
 
-SubMesh* GeneratorAdaptive::InitialMesh(PatchCoons* patch,
-                                        Performer::IdManager* idManager) {
-  CurveAdaptive* c1 = patch->GetCurve(0);
-  CurveAdaptive* c2 = patch->GetCurve(1);
-  CurveAdaptive* c3 = patch->GetCurve(2);
-  CurveAdaptive* c4 = patch->GetCurve(3);
+std::shared_ptr<SubMesh> GeneratorAdaptive::InitialMesh(
+    std::shared_ptr<PatchCoons>& patch,
+    std::shared_ptr<Performer::IdManager>& idManager) {
+  auto c1 = patch->GetCurve(0);
+  auto c2 = patch->GetCurve(1);
+  auto c3 = patch->GetCurve(2);
+  auto c4 = patch->GetCurve(3);
 
   // 1. verifica quais curvas ainda não foram discretizadas
   if (c1->GetNumBerPoints())
@@ -1189,7 +1231,7 @@ SubMesh* GeneratorAdaptive::InitialMesh(PatchCoons* patch,
   if (c4->GetNumBerPoints())
     c4 = nullptr;  // c4 já foi trabalhada no patch vizinho
 
-  SubMesh* sub = new SubMesh;
+  auto sub_mesh = std::make_shared<SubMesh>();
 
   //========================= Malha Grosseira
   //====================================
@@ -1197,96 +1239,97 @@ SubMesh* GeneratorAdaptive::InitialMesh(PatchCoons* patch,
   for (double v = 0.0; v <= 1.0; v += 1) {
     for (double u = 0.0; u <= 1.0; u += 1) {
       //			cout << "u = " << u << " v = " << v << endl;
-      PointAdaptive* p = new NodeAdaptive(patch->Parameterize(u, v));
-      p->SetId(idManager->next(0));
+      auto point = std::make_shared<NodeAdaptive>(patch->Parameterize(u, v));
+      point->SetId(idManager->next(0));
 
       //			cout << "ponto " << p->id << " " <<  p->x << " "
       //<< p->y << " " << p->z << endl; 			cout << "===="
       //<< endl;
 
       if (v == 0 && c1)  // p está na curva 1 (c1 = nullptr)
-        c1->InsertPoint(p);
+        c1->InsertPoint(point);
       else if (v == 1 && c3)  // p está na curva 3
-        c3->InsertPoint(p);
+        c3->InsertPoint(point);
 
       if (u == 0 && c4)  // p está na curva 4
-        c4->InsertPoint(p);
+        c4->InsertPoint(point);
       else if (u == 1 && c2)  // p está na curva 2
-        c2->InsertPoint(p);
-
-      sub->SetNoh(static_cast<NodeAdaptive*>(p));
+        c2->InsertPoint(point);
+      auto noh = static_pointer_cast<NodeAdaptive>(point);
+      sub_mesh->SetNoh(noh);
     }
   }
 
-  PointAdaptive* p = new NodeAdaptive(patch->Parameterize(0.5, 0.5));
-  sub->SetNoh(static_cast<NodeAdaptive*>(p));
-  p->SetId(idManager->next(0));
+  auto point = std::make_shared<NodeAdaptive>(patch->Parameterize(0.5, 0.5));
+  auto noh = static_pointer_cast<NodeAdaptive>(point);
+  sub_mesh->SetNoh(noh);
+  point->SetId(idManager->next(0));
 
-  ElementAdaptive* e1 =
-      new TriangleAdaptive(sub->GetNoh(0), sub->GetNoh(1), sub->GetNoh(4));
-  ((TriangleAdaptive*)e1)->SetParametersN1(make_tuple(0, 0));
-  ((TriangleAdaptive*)e1)->SetParametersN2(make_tuple(1, 0));
-  ((TriangleAdaptive*)e1)->SetParametersN3(make_tuple(0.5, 0.5));
+  auto e1 = std::make_shared<TriangleAdaptive>(
+      sub_mesh->GetNoh(0), sub_mesh->GetNoh(1), sub_mesh->GetNoh(4));
+  e1->SetParametersN1(make_tuple(0, 0));
+  e1->SetParametersN2(make_tuple(1, 0));
+  e1->SetParametersN3(make_tuple(0.5, 0.5));
   e1->SetId(idManager->next(1));
-  sub->SetElement(e1);
+  sub_mesh->SetElement(e1);
 
-  ElementAdaptive* e2 =
-      new TriangleAdaptive(sub->GetNoh(1), sub->GetNoh(3), sub->GetNoh(4));
-  ((TriangleAdaptive*)e2)->SetParametersN1(make_tuple(1, 0));
-  ((TriangleAdaptive*)e2)->SetParametersN2(make_tuple(1, 1));
-  ((TriangleAdaptive*)e2)->SetParametersN3(make_tuple(0.5, 0.5));
+  auto e2 = std::make_shared<TriangleAdaptive>(
+      sub_mesh->GetNoh(1), sub_mesh->GetNoh(3), sub_mesh->GetNoh(4));
+  e2->SetParametersN1(make_tuple(1, 0));
+  e2->SetParametersN2(make_tuple(1, 1));
+  e2->SetParametersN3(make_tuple(0.5, 0.5));
   e2->SetId(idManager->next(1));
-  sub->SetElement(e2);
+  sub_mesh->SetElement(e2);
 
-  ElementAdaptive* e3 =
-      new TriangleAdaptive(sub->GetNoh(3), sub->GetNoh(2), sub->GetNoh(4));
-  ((TriangleAdaptive*)e3)->SetParametersN1(make_tuple(1, 1));
-  ((TriangleAdaptive*)e3)->SetParametersN2(make_tuple(0, 1));
-  ((TriangleAdaptive*)e3)->SetParametersN3(make_tuple(0.5, 0.5));
+  auto e3 = std::make_shared<TriangleAdaptive>(
+      sub_mesh->GetNoh(3), sub_mesh->GetNoh(2), sub_mesh->GetNoh(4));
+  e3->SetParametersN1(make_tuple(1, 1));
+  e3->SetParametersN2(make_tuple(0, 1));
+  e3->SetParametersN3(make_tuple(0.5, 0.5));
   e3->SetId(idManager->next(1));
-  sub->SetElement(e3);
+  sub_mesh->SetElement(e3);
 
-  ElementAdaptive* e4 =
-      new TriangleAdaptive(sub->GetNoh(2), sub->GetNoh(0), sub->GetNoh(4));
-  ((TriangleAdaptive*)e4)->SetParametersN1(make_tuple(0, 1));
-  ((TriangleAdaptive*)e4)->SetParametersN2(make_tuple(0, 0));
-  ((TriangleAdaptive*)e4)->SetParametersN3(make_tuple(0.5, 0.5));
+  auto e4 = std::make_shared<TriangleAdaptive>(
+      sub_mesh->GetNoh(2), sub_mesh->GetNoh(0), sub_mesh->GetNoh(4));
+  e4->SetParametersN1(make_tuple(0, 1));
+  e4->SetParametersN2(make_tuple(0, 0));
+  e4->SetParametersN3(make_tuple(0.5, 0.5));
   e4->SetId(idManager->next(1));
-  sub->SetElement(e4);
+  sub_mesh->SetElement(e4);
   //==============================================================================*/
 
   // 5. define a submalha do patch
-  patch->SetSubMesh(sub);
-  sub->SetPatch(patch);
+  patch->SetSubMesh(sub_mesh);
+  sub_mesh->SetPatch(patch);
 
-  return sub;
+  return sub_mesh;
 }
 
 // gera a malha inicial e insere na lista de malhas do modelo
 // a lista de pontos da curva é preenchida durante a geração da malha inicial
 
 // calcula o erro global da malha
-double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer& timer,
-                                      [[maybe_unused]] int rank,
+double GeneratorAdaptive::ErrorGlobal(std::shared_ptr<MeshAdaptive>& mesh,
+                                      Timer& timer, [[maybe_unused]] int rank,
                                       [[maybe_unused]] int sizeThread) {
-  unsigned int Ns = 0;  // número de submalhas
-  unsigned int Nv = 0;  // número de vértices
-  double Njs = 0;       // erro global da submalha
-  double curvPower = 0.0;
+  [[maybe_unused]] unsigned int Ns = 0;  // número de submalhas
+  [[maybe_unused]] unsigned int Nv = 0;  // número de vértices
+  [[maybe_unused]] double Njs = 0;       // erro global da submalha
+  [[maybe_unused]] double curvPower = 0.0;
   double Nj = 0;  // erro global da malha
-  SubMesh* sub = 0;
+  auto sub_mesh = std::make_shared<SubMesh>();
 
-  Ns = malha->GetNumberSubMeshesAdaptive();
+  Ns = mesh->GetNumberSubMeshesAdaptive();
 
 #if USE_MPI
 #if USE_OPENMP
   // Seção de código para MPI + OpenMP
   // calculo do erro global
-  timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+  timer.InitTimerParallel(rankMpi, omp_get_thread_num(), 7);
 #else
   // Seção de código para MPI sem OpenMP
   // calculo do erro global
-  timer.InitTimerParallel(RANK_MPI, 0, 7);
+  timer.InitTimerParallel(rankMpi, 0, 7);
 #endif
 #else
 #if USE_OPENMP
@@ -1302,8 +1345,8 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer& timer,
 
   // Calcula o erro global de cada submalha
   for (unsigned int i = 0; i < Ns; ++i) {
-    sub = malha->GetSubMeshAdaptiveByPosition(i);
-    Nv = sub->GetNumberNos();
+    sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
+    Nv = sub_mesh->GetNumberNos();
     Njs = 0.0;
     curvPower = 0.0;
 
@@ -1313,15 +1356,15 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer& timer,
 #if USE_OPENMP
       // Seção de código para MPI + OpenMP
       // calculo do erro global
-      timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+      timer.EndTimerParallel(rankMpi, omp_get_thread_num(), 7);
       // MediaGauss
-      timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(), 6);
+      timer.InitTimerParallel(rankMpi, omp_get_thread_num(), 6);
 #else
       // Seção de código para MPI sem OpenMP
       // calculo do erro global
-      timer.EndTimerParallel(RANK_MPI, 0, 7);
+      timer.EndTimerParallel(rankMpi, 0, 7);
       // MediaGauss
-      timer.InitTimerParallel(RANK_MPI, 0, 6);
+      timer.InitTimerParallel(rankMpi, 0, 6);
 #endif
 #else
 #if USE_OPENMP
@@ -1339,35 +1382,36 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer& timer,
 #endif
 #endif
 
-      PointAdaptive* point_adaptive = sub->GetNoh(j);
-      Patch* p = sub->GetPatch();
-      CurvatureAnalytical ka(*(static_cast<NodeAdaptive*>(point_adaptive)),
-                             *(static_cast<PatchCoons*>(p)));
-      CurvatureDiscrete kd(*(static_cast<NodeAdaptive*>(point_adaptive)));
+      auto noh = sub_mesh->GetNoh(j);
+      auto patch = sub_mesh->GetPatch();
+      CurvatureAnalytical ka(
+          *std::static_pointer_cast<PointAdaptive>(noh).get(),
+          *std::static_pointer_cast<PatchCoons>(patch).get());
+      CurvatureDiscrete kd(*noh.get());
       double Ga = ka.CalculateGaussCurvature();
       double Gd = kd.CalculateGaussCurvature();
       double Ha = ka.CalculateMeanCurvature();
       double Hd = kd.CalculateMeanCurvature();
       // atualiza as curvaturas do nó ( para que não sejam recalculadas na
       // adaptação das curvas e do domínio )
-      (static_cast<NodeAdaptive*>(point_adaptive))->SetGa(Ga);
-      (static_cast<NodeAdaptive*>(point_adaptive))->SetGd(Gd);
-      (static_cast<NodeAdaptive*>(point_adaptive))->SetHa(Ha);
-      (static_cast<NodeAdaptive*>(point_adaptive))->SetHd(Hd);
+      noh->SetGa(Ga);
+      noh->SetGd(Gd);
+      noh->SetHa(Ha);
+      noh->SetHd(Hd);
 
 #if USE_MPI
 #if USE_OPENMP
       // Seção de código para MPI + OpenMP
       // MediaGauss
-      timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(), 6);
+      timer.EndTimerParallel(rankMpi, omp_get_thread_num(), 6);
       // calculo do erro global
-      timer.InitTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+      timer.InitTimerParallel(rankMpi, omp_get_thread_num(), 7);
 #else
       // Seção de código para MPI sem OpenMP
       // MediaGauss
-      timer.EndTimerParallel(RANK_MPI, 0, 6);
+      timer.EndTimerParallel(rankMpi, 0, 6);
       // calculo do erro global
-      timer.InitTimerParallel(RANK_MPI, 0, 7);
+      timer.InitTimerParallel(rankMpi, 0, 7);
 #endif
 #else
 #if USE_OPENMP
@@ -1388,12 +1432,12 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer& timer,
       double power = 0.0;
       double diff = 0.0;
 
-      if (fabs(Ga) >= TOLERANCE) {
+      if (fabs(Ga) >= kTolerance) {
         diff = Gd - Ga;
         power = pow(diff, 2);
         Njs += power;
         curvPower += pow(Ga, 2);
-      } else if (fabs(Ha) >= TOLERANCE) {
+      } else if (fabs(Ha) >= kTolerance) {
         diff = Hd - Ha;
         power = pow(diff, 2);
         Njs += power;
@@ -1415,11 +1459,11 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer& timer,
 #if USE_OPENMP
   // Seção de código para MPI + OpenMP
   // calculo do erro global
-  timer.EndTimerParallel(RANK_MPI, omp_get_thread_num(), 7);
+  timer.EndTimerParallel(rankMpi, omp_get_thread_num(), 7);
 #else
   // Seção de código para MPI sem OpenMP
   // calculo do erro global
-  timer.EndTimerParallel(RANK_MPI, 0, 7);
+  timer.EndTimerParallel(rankMpi, 0, 7);
 #endif
 #else
 #if USE_OPENMP
@@ -1436,8 +1480,8 @@ double GeneratorAdaptive::ErrorGlobal(MeshAdaptive* malha, Timer& timer,
   return Nj;
 }
 
-Performer::IdManager* GeneratorAdaptive::MakeIdManager(
-    const Parallel::TMCommunicator* comm, Int id) const {
+std::shared_ptr<Performer::IdManager> GeneratorAdaptive::MakeIdManager(
+    const std::shared_ptr<Parallel::TMCommunicator>& comm, Int id) const {
   UInt numProcs = comm->numProcesses();
   UInt rank = comm->rank();
 
@@ -1446,8 +1490,7 @@ Performer::IdManager* GeneratorAdaptive::MakeIdManager(
   this->id_off_set_ = numProcs * this->id_range_;
   ULInt tidrange = this->id_range_ / comm->getMaxThreads();
 
-  Performer::RangedIdManager* manager =
-      new Performer::RangedIdManager(1, 1, 1, 1, 2);
+  auto manager = std::make_shared<Performer::RangedIdManager>(1, 1, 1, 1, 2);
 
   ULInt threadOffset = id * tidrange;
 
@@ -1461,8 +1504,8 @@ Performer::IdManager* GeneratorAdaptive::MakeIdManager(
   return manager;
 }
 
-Performer::IdManager* GeneratorAdaptive::MakeIdManagerOmp(
-    const Parallel::TMCommunicator* comm, Int id) const {
+std::shared_ptr<Performer::IdManager> GeneratorAdaptive::MakeIdManagerOmp(
+    const std::shared_ptr<Parallel::TMCommunicator>& comm, Int id) const {
   Int iNoh, iElemet;
   if (this->id_managers_[id]) {
     iNoh = this->id_managers_[id]->getId(0);
@@ -1480,8 +1523,7 @@ Performer::IdManager* GeneratorAdaptive::MakeIdManagerOmp(
   this->id_off_set_ = numProcs * this->id_range_;
   ULInt tidrange = this->id_range_ / comm->getMaxThreads();
 
-  Performer::RangedIdManager* manager =
-      new Performer::RangedIdManager(1, 1, 1, 1, 2);
+  auto manager = std::make_shared<Performer::RangedIdManager>(1, 1, 1, 1, 2);
 
   ULInt threadOffset = id * tidrange;
 
@@ -1493,8 +1535,9 @@ Performer::IdManager* GeneratorAdaptive::MakeIdManagerOmp(
   return manager;
 }
 
-Performer::IdManager* GeneratorAdaptive::MakeIdManagerElementOmp(
-    const Parallel::TMCommunicator* comm, Int id) const {
+std::shared_ptr<Performer::IdManager>
+GeneratorAdaptive::MakeIdManagerElementOmp(
+    const std::shared_ptr<Parallel::TMCommunicator>& comm, Int id) const {
   Int iNoh;
   if (this->id_managers_[id]) {
     iNoh = this->id_managers_[id]->getId(0);
@@ -1510,8 +1553,7 @@ Performer::IdManager* GeneratorAdaptive::MakeIdManagerElementOmp(
   this->id_off_set_ = numProcs * this->id_range_;
   ULInt tidrange = this->id_range_ / comm->getMaxThreads();
 
-  Performer::RangedIdManager* manager =
-      new Performer::RangedIdManager(1, 1, 1, 1, 2);
+  auto manager = std::make_shared<Performer::RangedIdManager>(1, 1, 1, 1, 2);
 
   ULInt threadOffset = id * tidrange;
 
@@ -1523,8 +1565,9 @@ Performer::IdManager* GeneratorAdaptive::MakeIdManagerElementOmp(
   return manager;
 }
 
-void GeneratorAdaptive::SaveErrorMesh(MeshAdaptive* malha) {
-  cout << "Salvando a Malha com " << malha->GetNumberSubMeshesAdaptive()
+void GeneratorAdaptive::SaveErrorMesh(
+    const std::shared_ptr<MeshAdaptive>& mesh) {
+  cout << "Salvando a Malha com " << mesh->GetNumberSubMeshesAdaptive()
        << " subMalhas" << endl;
 
   unsigned int Ns = 0;  // número de submalhas
@@ -1532,7 +1575,7 @@ void GeneratorAdaptive::SaveErrorMesh(MeshAdaptive* malha) {
   double Njs = 0;       // erro global da submalha
   double curvPower = 0.0;
   // double Nj = 0; // erro global da malha
-  SubMesh* sub = 0;
+  auto sub_mesh = std::make_shared<SubMesh>();
 
   // Escreve arquivo com as curvaturas
   stringstream nome;
@@ -1543,71 +1586,71 @@ void GeneratorAdaptive::SaveErrorMesh(MeshAdaptive* malha) {
 
   ofstream arquivo(nome.str().c_str());
 
-  Ns = malha->GetNumberSubMeshesAdaptive();
+  Ns = mesh->GetNumberSubMeshesAdaptive();
 
   // Calcula o erro global de cada submalha
   for (unsigned int i = 0; i < Ns; ++i) {
-    sub = malha->GetSubMeshAdaptiveByPosition(i);
-    Nv = sub->GetNumberNos();
+    sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
+    Nv = sub_mesh->GetNumberNos();
     Njs = 0.0;
     curvPower = 0.0;
 
     // Calcula o erro relativo para cada nó e soma a Nj
     for (unsigned int j = 0; j < Nv; ++j) {
-      PointAdaptive* n = sub->GetNoh(j);
-      Patch* p = sub->GetPatch();
-      CurvatureAnalytical ka(*(static_cast<NodeAdaptive*>(n)),
-                             *(static_cast<PatchCoons*>(p)));
-      CurvatureDiscrete kd(*(static_cast<NodeAdaptive*>(n)));
+      auto noh = sub_mesh->GetNoh(j);
+      auto patch = sub_mesh->GetPatch();
+      CurvatureAnalytical ka(
+          *std::static_pointer_cast<PointAdaptive>(noh).get(),
+          *std::static_pointer_cast<PatchCoons>(patch).get());
+      CurvatureDiscrete kd(*noh.get());
       double Ga = ka.CalculateGaussCurvature();
       double Gd = kd.CalculateGaussCurvature();
       double Ha = ka.CalculateMeanCurvature();
       double Hd = kd.CalculateMeanCurvature();
       // atualiza as curvaturas do nó ( para que não sejam recalculadas na
       // adaptação das curvas e do domínio )
-      ((NodeAdaptive*)n)->SetGa(Ga);
-      ((NodeAdaptive*)n)->SetGd(Gd);
-      ((NodeAdaptive*)n)->SetHa(Ha);
-      ((NodeAdaptive*)n)->SetHd(Hd);
+      noh->SetGa(Ga);
+      noh->SetGd(Gd);
+      noh->SetHa(Ha);
+      noh->SetHd(Hd);
 
-      arquivo << "P " << n->GetId() << ": ( " << n->GetX() << ", " << n->GetY()
-              << ", " << n->GetZ() << ")" << endl;
-      tuple<double, double> t_n = ((PatchHermite*)p)->FindUV(*n);
+      arquivo << "P " << noh->GetId() << ": ( " << noh->GetX() << ", "
+              << noh->GetY() << ", " << noh->GetZ() << ")" << endl;
+      tuple<double, double> t_n =
+          (static_pointer_cast<PatchHermite>(patch).get())->FindUV(*noh.get());
       arquivo << "\tu = " << get<0>(t_n) << " v = " << get<1>(t_n) << endl;
-      unsigned int num = ((NodeAdaptive*)n)->GetNumberElements();
+      unsigned int num = noh->GetNumberElements();
       arquivo << "\t" << num << " elementos incidentes:";
       for (unsigned int i = 0; i < num; ++i) {
-        ElementAdaptive* elem = ((NodeAdaptive*)n)->GetElement(i);
+        auto elem = noh->GetElement(i);
         arquivo << " T-" << elem->GetId();
       }
       arquivo << endl;
-      arquivo << "\tGd = " << ((NodeAdaptive*)n)->GetGd()
-              << " Ga = " << ((NodeAdaptive*)n)->GetGa() << endl;
-      arquivo << "\tHd = " << ((NodeAdaptive*)n)->GetHd()
-              << " Ha = " << ((NodeAdaptive*)n)->GetHa() << endl;
+      arquivo << "\tGd = " << noh->GetGd() << " Ga = " << noh->GetGa() << endl;
+      arquivo << "\tHd = " << noh->GetHd() << " Ha = " << noh->GetHa() << endl;
 
       double power = 0.0;
       double diff = 0.0;
 
-      if (fabs(Ga) >= TOLERANCE) {
+      if (fabs(Ga) >= kTolerance) {
         diff = Gd - Ga;
         power = pow(diff, 2);
         Njs += power;
         curvPower += pow(Ga, 2);
-        arquivo << "\tCd = " << ((NodeAdaptive*)n)->GetGd()
-                << " Ca = " << ((NodeAdaptive*)n)->GetGa() << endl;
+        arquivo << "\tCd = " << noh->GetGd() << " Ca = " << noh->GetGa()
+                << endl;
         arquivo << "\t|Cd - Ca| = " << fabs(diff) << endl;
-        if (fabs(diff) <= TOLERANCE)
+        if (fabs(diff) <= kTolerance)
           arquivo << "\tdiferença menor que tolerância!!" << endl;
-      } else if (fabs(Ha) >= TOLERANCE) {
+      } else if (fabs(Ha) >= kTolerance) {
         diff = Hd - Ha;
         power = pow(diff, 2);
         Njs += power;
         curvPower += pow(Ha, 2);
-        arquivo << "\tCd = " << ((NodeAdaptive*)n)->GetHd()
-                << " Ca = " << ((NodeAdaptive*)n)->GetHa() << endl;
+        arquivo << "\tCd = " << noh->GetHd() << " Ca = " << noh->GetHa()
+                << endl;
         arquivo << "\t|Cd - Ca| = " << fabs(diff) << endl;
-        if (fabs(diff) <= TOLERANCE)
+        if (fabs(diff) <= kTolerance)
           arquivo << "\tdiferença menor que tolerância!!" << endl;
       }
 
@@ -1624,7 +1667,8 @@ void GeneratorAdaptive::SaveErrorMesh(MeshAdaptive* malha) {
   cout << "Malha salva com sucesso!!!" << endl;
 }
 
-void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_) {
+void GeneratorAdaptive::WriteMesh(const std::shared_ptr<MeshAdaptive>& malha,
+                                  int step_) {
   stringstream nome;
   nome << step_;
   nome << "malha";
@@ -1648,10 +1692,10 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_) {
   Nv = Nt = 0;
 
   for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+    auto sub_mesh = malha->GetSubMeshAdaptiveByPosition(i);
 
-    Nv += sub->GetNumberNos();
-    Nt += sub->GetNumberElements();
+    Nv += sub_mesh->GetNumberNos();
+    Nt += sub_mesh->GetNumberElements();
   }
 
   arq << "%NODE" << endl << Nv << endl << endl;
@@ -1659,13 +1703,13 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_) {
   arq << "%NODE.COORD" << endl << Nv << endl;
 
   for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+    auto sub_mesh = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
-      NodeAdaptive* n = sub->GetNoh(j);
+    for (unsigned int j = 0; j < sub_mesh->GetNumberNos(); j++) {
+      auto noh = sub_mesh->GetNoh(j);
 
-      arq << n->GetId() << " " << n->GetX() << " " << n->GetY() << " "
-          << n->GetZ() << endl;
+      arq << noh->GetId() << " " << noh->GetX() << " " << noh->GetY() << " "
+          << noh->GetZ() << endl;
     }
   }
 
@@ -1696,10 +1740,11 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_) {
   arq << "%ELEMENT.T3" << endl << Nt << endl;
 
   for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+    auto sub_mesh = malha->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
-      TriangleAdaptive* t = (TriangleAdaptive*)sub->GetElement(j);
+    for (unsigned int j = 0; j < sub_mesh->GetNumberElements(); j++) {
+      auto t =
+          std::static_pointer_cast<TriangleAdaptive>(sub_mesh->GetElement(j));
 
       arq << t->GetId() << " "
           << "1 1 1 " << t->GetNoh(1).GetId() << " " << t->GetNoh(2).GetId()
@@ -1717,20 +1762,21 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_) {
   //  cout << "escreveu o arquivo para o step_ " << step_ << endl;
 }
 
-void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_,
-                                  vector<double> step_error, int rank) {
+void GeneratorAdaptive::WriteMesh(const std::shared_ptr<MeshAdaptive>& mesh,
+                                  int step_, vector<double> step_error,
+                                  int rank) {
   stringstream nome;
   if (rank == -1) {
-    nome << NAME_MODEL;
+    nome << nameModel;
     nome << "_passo_";
     nome << step_;
     nome << "_malha_";
     nome << step_;
     nome << ".pos";
   } else {
-    nome << NAME_MODEL;
+    nome << nameModel;
     nome << "_n.process_";
-    nome << NUMBER_PROCESS;
+    nome << numberProcess;
     nome << "_passo_";
     nome << step_;
     nome << "_malha_";
@@ -1748,11 +1794,11 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_,
   unsigned long int Nv, Nt;
   Nv = Nt = 0;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    auto sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
 
-    Nv += sub->GetNumberNos();
-    Nt += sub->GetNumberElements();
+    Nv += sub_mesh->GetNumberNos();
+    Nt += sub_mesh->GetNumberElements();
   }
 
   arq << "%HEADER.VERSION" << endl
@@ -1764,9 +1810,8 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_,
 
   arq << "erro global em cada step_" << endl;
   int n_pas = 0;
-  for (vector<double>::iterator it = step_error.begin(); it != step_error.end();
-       it++) {
-    arq << "step_: " << n_pas << " erro:" << (*it) << endl;
+  for (const auto& erro : step_error) {
+    arq << "step_: " << n_pas << " erro:" << erro << endl;
     n_pas++;
   }
   arq << endl;
@@ -1775,14 +1820,14 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_,
 
   arq << "%NODE.COORD" << endl << Nv << endl;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    auto sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->GetNumberNos(); j++) {
-      NodeAdaptive* n = sub->GetNoh(j);
+    for (unsigned int j = 0; j < sub_mesh->GetNumberNos(); j++) {
+      auto noh = sub_mesh->GetNoh(j);
 
-      arq << n->GetId() << " " << n->GetX() << " " << n->GetY() << " "
-          << n->GetZ() << endl;
+      arq << noh->GetId() << " " << noh->GetX() << " " << noh->GetY() << " "
+          << noh->GetZ() << endl;
     }
   }
 
@@ -1812,11 +1857,12 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_,
 
   arq << "%ELEMENT.T3" << endl << Nt << endl;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    auto sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
-      TriangleAdaptive* t = (TriangleAdaptive*)sub->GetElement(j);
+    for (unsigned int j = 0; j < sub_mesh->GetNumberElements(); j++) {
+      auto t =
+          std::static_pointer_cast<TriangleAdaptive>(sub_mesh->GetElement(j));
 
       arq << t->GetId() << " "
           << "1 1 1 " << t->GetNoh(1).GetId() << " " << t->GetNoh(2).GetId()
@@ -1838,9 +1884,9 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_,
   // cout<< "INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
   stringstream nameFile;
 
-  nameFile << NAME_MODEL;
+  nameFile << nameModel;
   nameFile << "_n.process_";
-  nameFile << NUMBER_PROCESS;
+  nameFile << numberProcess;
   nameFile << "_passo_";
   nameFile << step_;
   nameFile << "_qualite_";
@@ -1864,11 +1910,12 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_,
   std::vector<double> vec_80_90;
   std::vector<double> vec_90_100;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    auto sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
-      TriangleAdaptive* t = (TriangleAdaptive*)sub->GetElement(j);
+    for (unsigned int j = 0; j < sub_mesh->GetNumberElements(); j++) {
+      auto t =
+          std::static_pointer_cast<TriangleAdaptive>(sub_mesh->GetElement(j));
 
       double value = t->CalculateQualityTriangle();
 
@@ -1934,16 +1981,16 @@ void GeneratorAdaptive::WriteMesh(MeshAdaptive* malha, int step_,
 }
 
 void GeneratorAdaptive::WriteQualityMesh(
-    MeshAdaptive* malha, int step_, [[maybe_unused]] vector<double> step_error,
-    int rank) {
+    const std::shared_ptr<MeshAdaptive>& mesh, int step_,
+    [[maybe_unused]] vector<double> step_error, int rank) {
   // Análise dos Elementos da Malha Gerada
 
   // cout<< "INIT >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
   stringstream nameFile;
 
-  nameFile << NAME_MODEL;
+  nameFile << nameModel;
   nameFile << "_n.process_";
-  nameFile << NUMBER_PROCESS;
+  nameFile << numberProcess;
   nameFile << "_passo_";
   nameFile << step_;
   nameFile << "_qualite_";
@@ -1967,11 +2014,12 @@ void GeneratorAdaptive::WriteQualityMesh(
   std::vector<double> vec_80_90;
   std::vector<double> vec_90_100;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    auto sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
 
-    for (unsigned int j = 0; j < sub->GetNumberElements(); j++) {
-      TriangleAdaptive* t = (TriangleAdaptive*)sub->GetElement(j);
+    for (unsigned int j = 0; j < sub_mesh->GetNumberElements(); j++) {
+      auto t =
+          std::static_pointer_cast<TriangleAdaptive>(sub_mesh->GetElement(j));
 
       double value = t->CalculateQualityTriangle();
 
@@ -2036,15 +2084,17 @@ void GeneratorAdaptive::WriteQualityMesh(
   // cout<< "END >> ANÁLISE DOS ELEMENTOS DA MALHA GERADA"<< endl;
 }
 
-void GeneratorAdaptive::SaveMesh(MeshAdaptive* malha, int step_) {
+void GeneratorAdaptive::SaveMesh(const std::shared_ptr<MeshAdaptive>& malha,
+                                 int step_) {
   save_mesh_.push_back(make_pair(step_, malha));
 }
 
-void GeneratorAdaptive::SaveErrorMesh(MeshAdaptive* malha, int step_) {
+void GeneratorAdaptive::SaveErrorMesh(
+    const std::shared_ptr<MeshAdaptive>& malha, int step_) {
   save_error_mesh_.push_back(make_pair(step_, malha));
 }
 
-void escreveElementos(int step_, SubMesh* sub, int i) {
+void escreveElementos(int step_, std::shared_ptr<SubMesh>& sub_mesh, int i) {
   stringstream nome;
   nome << step_;
   nome << "submalha-";
@@ -2053,16 +2103,19 @@ void escreveElementos(int step_, SubMesh* sub, int i) {
 
   ofstream arq(nome.str().c_str());
 
-  for (unsigned int k = 0; k < sub->GetNumberElements(); ++k) {
-    ElementAdaptive* elem = sub->GetElement(k);
+  for (unsigned int k = 0; k < sub_mesh->GetNumberElements(); ++k) {
+    auto elem = sub_mesh->GetElement(k);
 
     NodeAdaptive n1(elem->GetNoh(1));
     NodeAdaptive n2(elem->GetNoh(2));
     NodeAdaptive n3(elem->GetNoh(3));
 
-    tuple<double, double> t1 = ((TriangleAdaptive*)elem)->GetParametersN1();
-    tuple<double, double> t2 = ((TriangleAdaptive*)elem)->GetParametersN2();
-    tuple<double, double> t3 = ((TriangleAdaptive*)elem)->GetParametersN3();
+    tuple<double, double> t1 =
+        std::static_pointer_cast<TriangleAdaptive>(elem)->GetParametersN1();
+    tuple<double, double> t2 =
+        std::static_pointer_cast<TriangleAdaptive>(elem)->GetParametersN2();
+    tuple<double, double> t3 =
+        std::static_pointer_cast<TriangleAdaptive>(elem)->GetParametersN3();
 
     arq << "T-" << elem->GetId() << ":\n\t"
         << "área = " << elem->GetArea() << ";\n\t"
@@ -2085,19 +2138,19 @@ void escreveElementos(int step_, SubMesh* sub, int i) {
        << " para o step_ " << step_ << endl;
 }
 
-void GeneratorAdaptive::GeneratorInitialMesh(Geometry& geometry,
-                                             MeshAdaptive* mesh, Timer& timer,
-                                             int size_thread, int size_patch) {
+void GeneratorAdaptive::GeneratorInitialMesh(
+    std::shared_ptr<Geometry>& geometry, std::shared_ptr<MeshAdaptive>& mesh,
+    Timer& timer, int size_thread, int size_patch) {
 #if USE_OPENMP
 #pragma omp parallel num_threads(size_thread) shared(mesh, geometry, size_patch)
   {
     Int id = communicator_->threadId();
 
     if (!this->id_managers_[id]) {
-      this->id_managers_[id] = this->MakeIdManagerOmp(communicator_, id);
+      this->id_managers_[id] = this->MakeIdManagerOmp(communicator_, id).get();
     }
 #if USE_MPI
-    timer.InitTimerParallel(RANK_MPI, id, 2);  // Malha inicial
+    timer.InitTimerParallel(rankMpi, id, 2);  // Malha inicial
 #else
     timer.InitTimerParallel(0, id, 2);  // Malha inicial
 #endif  // USE_MPI
@@ -2105,40 +2158,43 @@ void GeneratorAdaptive::GeneratorInitialMesh(Geometry& geometry,
     // 1. Gera a mesh inicial
 #pragma omp for
     for (int i = 0; i < size_patch; ++i) {
-      PatchCoons* patch = static_cast<PatchCoons*>(geometry->GetPatch(i));
-      SubMesh* sub_mesh = this->GeneratorInitialMeshOmp(
-          static_cast<PatchCoons*>(patch), this->id_managers_[id]);
+      auto patch = static_pointer_cast<PatchCoons>(geometry->GetPatch(i));
+      auto id_manager_ptr =
+          std::shared_ptr<Performer::IdManager>(this->id_managers_[0]);
+      auto sub_mesh = this->GeneratorInitialMeshOmp(patch, id_manager_ptr);
       mesh->InsertSubMeshAdaptiveByPosition(sub_mesh, i);
     }
 
 #if USE_MPI
-    timer.EndTimerParallel(RANK_MPI, id, 2);  // Malha inicial
+    timer.EndTimerParallel(rankMpi, id, 2);  // Malha inicial
 #else
     timer.EndTimerParallel(0, id, 2);   // Malha inicial
 #endif  // USE_MPI
   }
 #else
   for (int i = 0; i < size_patch; ++i) {
-    PatchCoons* patch = static_cast<PatchCoons*>(geometry.GetPatch(i));
-    SubMesh* sub_mesh = this->InitialMesh(static_cast<PatchCoons*>(patch),
-                                          this->id_managers_[0]);
+    auto patch = static_pointer_cast<PatchCoons>(geometry->GetPatch(i));
+    auto id_manager_ptr =
+        std::shared_ptr<Performer::IdManager>(this->id_managers_[0]);
+    auto sub_mesh = this->InitialMesh(patch, id_manager_ptr);
     mesh->InsertSubMeshAdaptiveByPosition(sub_mesh, i);
   }
 #endif  // USE_OPENMP
 }
 
-void GeneratorAdaptive::PrintElments(MeshAdaptive* malha, int step_,
+void GeneratorAdaptive::PrintElments(const std::shared_ptr<MeshAdaptive>& mesh,
+                                     int step_,
                                      [[maybe_unused]] vector<double> step_error,
                                      int rank) {
   [[maybe_unused]] unsigned long int Nv = 0, Nt = 0;
 
-  for (unsigned int i = 0; i < malha->GetNumberSubMeshesAdaptive(); i++) {
-    SubMesh* sub = malha->GetSubMeshAdaptiveByPosition(i);
+  for (unsigned int i = 0; i < mesh->GetNumberSubMeshesAdaptive(); i++) {
+    auto sub_mesh = mesh->GetSubMeshAdaptiveByPosition(i);
 
-    Nv += sub->GetNumberNos();
-    Nt += sub->GetNumberElements();
+    Nv += sub_mesh->GetNumberNos();
+    Nt += sub_mesh->GetNumberElements();
   }
 
-  cout << "#elementos_" << NAME_MODEL << "_n.process_" << NUMBER_PROCESS
+  cout << "#elementos_" << nameModel << "_n.process_" << numberProcess
        << "_passo_" << step_ << "_rank_" << rank << " = " << Nt << endl;
 }

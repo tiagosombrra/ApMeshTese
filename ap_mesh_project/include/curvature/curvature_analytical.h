@@ -11,7 +11,7 @@
 
 class CurvatureAnalytical : public Curvature {
  public:
-  CurvatureAnalytical(const PointAdaptive& v, PatchCoons& p);
+  CurvatureAnalytical(const PointAdaptive& v, PatchCoons &p);
   double CalculateMeanCurvature() override;
   double CalculateGaussCurvature() override;
 

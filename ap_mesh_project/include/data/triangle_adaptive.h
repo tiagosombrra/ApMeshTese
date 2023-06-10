@@ -20,7 +20,7 @@ class TriangleAdaptive : public ElementAdaptive {
   NodeAdaptive GetNoh(unsigned const int position) const override;
   double GetAngle(const NodeAdaptive& n) override;
 
-  void ReplaceNode(const NodeAdaptive *old_node, NodeAdaptive* new_node);
+  void ReplaceNode(const NodeAdaptive* old_node, NodeAdaptive* new_node);
   double CalculateQualityTriangle();
 
   double CalculateAngleN1();  // calcula o ângulo no nó 1

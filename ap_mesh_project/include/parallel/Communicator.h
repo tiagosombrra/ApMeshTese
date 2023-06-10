@@ -256,7 +256,7 @@ class Communicator {
   virtual void scatter(const Int *val) const;  // for the sender (root)
   virtual void scatter(Int &val, Int root) const;  // for the receiver (not
                                                    // root)
-  virtual void scatter(const UInt *val) const;  // for the sender (root)
+  virtual void scatter(const UInt *val) const;     // for the sender (root)
   virtual void scatter(UInt &val,
                        Int root) const;         // for the receiver (not root)
   virtual void scatter(const LInt *val) const;  // for the sender (root)

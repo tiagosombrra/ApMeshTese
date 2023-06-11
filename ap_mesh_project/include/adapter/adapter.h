@@ -39,8 +39,10 @@ class Adapter {
       double factor_disc_global = 1.0);
 #endif  // #USE_OPENMP
 
-  std::list<std::shared_ptr<PointAdaptive>> AdaptCurveByCurve(std::shared_ptr<CurveAdaptiveParametric>& curve,
-      map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive> > &map_points,
+  std::list<std::shared_ptr<PointAdaptive>> AdaptCurveByCurve(
+      std::shared_ptr<CurveAdaptiveParametric>& curve,
+      map<std::shared_ptr<PointAdaptive>, std::shared_ptr<PointAdaptive>>&
+          map_points,
       std::shared_ptr<Performer::IdManager>& id_manager,
       double factor_disc_global = 1.0);
   std::list<std::shared_ptr<PointAdaptive>> AdaptCurveBySurface(

@@ -1,6 +1,0 @@
-#ifndef DATA_DEFINITIONS_H_
-#define DATA_DEFINITIONS_H_
-
-
-
-#endif  // DATA_DEFINITIONS_H_

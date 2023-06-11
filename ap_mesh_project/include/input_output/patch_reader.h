@@ -28,7 +28,8 @@ class PatchReader {
                                             unsigned long);
   std::list<std::shared_ptr<PatchBezier>> LoaderBezierPatchFile(
       string fileName);
-  std::shared_ptr<Geometry> ReaderFilePatches(std::shared_ptr<Geometry> &geometry, string fileName);
+  std::shared_ptr<Geometry> ReaderFilePatches(
+      std::shared_ptr<Geometry> &geometry, string fileName);
 
  protected:
   std::list<std::shared_ptr<PatchBezier>> patches_;

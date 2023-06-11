@@ -5,6 +5,8 @@
 #include <memory>
 #include <string>
 
+enum class ErrorCode { NO_ERR, ERR };
+
 // Global defines
 
 #ifndef TRUE
@@ -133,8 +135,8 @@
 
 // Verificação de sistema operacional
 #ifdef __linux__
-#include "../libs/Eigen/Eigen/Dense"
-#include "../libs/Eigen/Eigen/Eigen"
+#include "../libs/Eigen/Dense"
+#include "../libs/Eigen/Eigen"
 #elif __APPLE__
 #include <Eigen/Eigen>
 #else

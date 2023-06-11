@@ -33,7 +33,7 @@ class VectorAdaptive {
 
   double CalculateModule() const;
   // ângulo entre dois vetores
-  double CalculateAngle(const VectorAdaptive &vector) const;
+  double CalculateAngle(const VectorAdaptive& vector) const;
   // vetor unitário
   VectorAdaptive CalculateUnitVector();
 

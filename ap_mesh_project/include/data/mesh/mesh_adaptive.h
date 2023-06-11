@@ -17,7 +17,8 @@ class MeshAdaptive {
   void InsertSubMeshAdaptive(std::shared_ptr<SubMesh>& sub_mesh_adaptive);
   void RemoveSubMeshAdaptive();
   unsigned int GetNumberSubMeshesAdaptive() const;
-  std::shared_ptr<SubMesh> GetSubMeshAdaptiveByPosition(const unsigned int position);
+  std::shared_ptr<SubMesh> GetSubMeshAdaptiveByPosition(
+      const unsigned int position);
   void ResizeSubMeshAdaptiveByPosition(const signed int new_size);
 
  protected:
